@@ -10,10 +10,13 @@ Executes the entire dissertation workflow:
 5. Enrichment analysis (Supporting)
 6. Dashboard verification
 
-Author: [Your Name]
+Author: Timothy Spivey
 Dissertation: Data Breach Disclosure Timing and Market Reactions
 Date: October 2025
 """
+
+import matplotlib
+matplotlib.use('Agg')
 
 import subprocess
 import sys
@@ -122,7 +125,7 @@ def verify_dashboard():
         'dashboard/utils.py': 'Dashboard utilities',
         'dashboard/pages/1_Event_Study.py': 'Event Study page',
         'dashboard/pages/2_Information_Asymmetry.py': 'Information Asymmetry page', 
-        'dashboard/pages/3_Enrichments.py': 'Enrichments page', 
+        'dashboard/pages/3_Enrichments.py': 'Enrichments page',
         'dashboard/.streamlit/config.toml': 'Dashboard configuration'
     }
     
