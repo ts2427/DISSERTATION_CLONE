@@ -3,85 +3,57 @@ import time
 import os
 
 print("=" * 80)
-print(" " * 20 + "MASTER DATA ENRICHMENT PIPELINE")
+print(" " * 20 + "DISSERTATION ENRICHMENT PIPELINE")
 print("=" * 80)
 
-print("\nThis script will run all 10 data enrichment scripts automatically.")
-print("Total estimated time: 30-45 minutes")
+print("\nThis script will run 6 essential data enrichment scripts.")
+print("Total estimated time: 20-25 minutes")
 print("\nPress Enter to start, or Ctrl+C to cancel...")
 input()
 
-# Define all enrichment scripts in order
+# Define essential enrichment scripts only
 pipelines = [
     {
         'number': 1,
         'name': 'Prior Breach History',
         'script': '41_prior_breaches.py',
         'est_time': '1 minute',
-        'description': 'Count repeat offenders and breach frequency'
+        'description': 'Count repeat offenders and breach frequency (H3)'
     },
     {
         'number': 2,
         'name': 'Industry-Adjusted Returns',
         'script': '42_industry_returns.py',
         'est_time': '3 minutes',
-        'description': 'Calculate industry-adjusted CARs from WRDS'
+        'description': 'Calculate industry-adjusted CARs (Robustness)'
     },
     {
         'number': 3,
-        'name': 'Analyst Coverage',
-        'script': '43_analyst_coverage.py',
-        'est_time': '2 minutes',
-        'description': 'Get analyst coverage from IBES'
-    },
-    {
-        'number': 4,
         'name': 'Institutional Ownership',
         'script': '44_institutional_ownership.py',
         'est_time': '3 minutes',
-        'description': 'Get institutional ownership from Thomson Reuters 13F'
+        'description': 'Get institutional ownership (Control variable)'
     },
     {
-        'number': 5,
+        'number': 4,
         'name': 'Breach Severity Classification',
         'script': '45_breach_severity_nlp.py',
         'est_time': '2 minutes',
-        'description': 'NLP classification of breach types and severity'
+        'description': 'NLP classification of breach types (H4)'
     },
     {
-        'number': 6,
+        'number': 5,
         'name': 'Executive Turnover',
         'script': '46_executive_changes.py',
         'est_time': '10 minutes',
-        'description': 'Detect executive changes from SEC 8-K filings'
+        'description': 'Detect executive changes from SEC filings (H5)'
     },
     {
-        'number': 7,
+        'number': 6,
         'name': 'Regulatory Enforcement',
         'script': '47_regulatory_enforcement.py',
         'est_time': '1 minute',
-        'description': 'Check FTC/FCC enforcement actions'
-    },
-    {
-        'number': 8,
-        'name': 'Dark Web Presence',
-        'script': '48_dark_web_check.py',
-        'est_time': '5 minutes',
-        'description': 'Check if breach data in HIBP database'
-    },
-    {
-        'number': 9,
-        'name': 'Media Coverage',
-        'script': '49_media_coverage.py',
-        'est_time': '15 minutes',
-        'description': 'Get news coverage from GDELT'
-    },
-    {
-        'number': 10,
-        'name': 'Cyber Insurance',
-        'script': '50_cyber_insurance.py',
-        'est_time': '5 minutes',
-        'description': 'Detect cyber insurance disclosures in 10-Ks'
+        'description': 'Check FCC/FTC enforcement actions (H6)'
     }
 ]
 
@@ -95,7 +67,7 @@ print("=" * 80)
 
 for pipeline in pipelines:
     print("\n" + "=" * 80)
-    print(f"SCRIPT {pipeline['number']}/10: {pipeline['name']}")
+    print(f"SCRIPT {pipeline['number']}/6: {pipeline['name']}")
     print("=" * 80)
     print(f"Description: {pipeline['description']}")
     print(f"Estimated time: {pipeline['est_time']}")
@@ -169,14 +141,10 @@ print("-" * 80)
 enrichment_files = [
     'prior_breach_history.csv',
     'industry_adjusted_returns.csv',
-    'analyst_coverage.csv',
     'institutional_ownership.csv',
     'breach_severity_classification.csv',
     'executive_changes.csv',
-    'regulatory_enforcement.csv',
-    'dark_web_presence.csv',
-    'media_coverage.csv',
-    'cyber_insurance.csv'
+    'regulatory_enforcement.csv'
 ]
 
 for filename in enrichment_files:
@@ -190,8 +158,15 @@ for filename in enrichment_files:
 print("\n" + "=" * 80)
 
 if all(r['success'] for r in results):
-    print("✓✓✓ ALL ENRICHMENT COMPLETE - READY FOR MERGE ✓✓✓")
-    print("\nNext step: Run scripts/51_merge_enrichments.py")
+    print("✓✓✓ ALL ESSENTIAL ENRICHMENTS COMPLETE ✓✓✓")
+    print("\nNext step: Run scripts/merge_enrichments.py")
+    print("\nEnrichments mapped to hypotheses:")
+    print("  H3: Prior Breach History")
+    print("  H4: Breach Severity Classification")
+    print("  H5: Executive Turnover")
+    print("  H6: Regulatory Enforcement")
+    print("  Control: Institutional Ownership")
+    print("  Robustness: Industry-Adjusted Returns")
 else:
     print("⚠ SOME SCRIPTS FAILED - CHECK LOGS ABOVE")
     print("\nYou can still proceed with merge using successful scripts")

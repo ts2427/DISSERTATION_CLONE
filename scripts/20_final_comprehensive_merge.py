@@ -206,6 +206,10 @@ print(f"✓ Added firm controls for {firm_controls_df.notna().any(axis=1).sum()}
 # Calculate disclosure timing
 print("\n[4/6] Calculating disclosure timing metrics...")
 
+# Ensure dates are properly formatted
+breach_df['breach_date'] = pd.to_datetime(breach_df['breach_date'])
+breach_df['reported_date'] = pd.to_datetime(breach_df['reported_date'])
+
 breach_df['disclosure_delay_days'] = (breach_df['reported_date'] - breach_df['breach_date']).dt.days
 breach_df['immediate_disclosure'] = (breach_df['disclosure_delay_days'] <= 7).astype(int)
 breach_df['delayed_disclosure'] = (breach_df['disclosure_delay_days'] > 30).astype(int)

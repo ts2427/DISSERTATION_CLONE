@@ -2,6 +2,7 @@ import pandas as pd
 import yfinance as yf
 from datetime import timedelta
 import time
+import random
 
 print("=" * 60)
 print("ADDING STOCK PRICE DATA (FIXED)")
@@ -10,6 +11,7 @@ print("=" * 60)
 # Load master dataset
 print("\n[1/3] Loading breach data...")
 df = pd.read_excel('Data/processed/master_breach_dataset.xlsx')
+df['breach_date'] = pd.to_datetime(df['breach_date']).dt.tz_localize(None)
 print(f"✓ Loaded {len(df)} breach records")
 
 # Get unique tickers
@@ -22,10 +24,6 @@ def get_breach_returns(ticker, breach_date, window_days=30):
     Calculate stock returns before/after breach
     """
     try:
-        # Convert breach_date to timezone-naive if it has timezone
-        if hasattr(breach_date, 'tz') and breach_date.tz is not None:
-            breach_date = breach_date.tz_localize(None)
-        
         # Download stock data with extra buffer
         start_date = breach_date - timedelta(days=window_days + 20)
         end_date = breach_date + timedelta(days=window_days + 20)
@@ -66,7 +64,7 @@ def get_breach_returns(ticker, breach_date, window_days=30):
         # Price ~5 trading days after
         post_5d_idx = min(len(hist) - 1, breach_idx + 7)
         post_5d_price = hist.iloc[post_5d_idx]['Close']
-        
+
         # Price ~30 calendar days after
         post_30d_idx = min(len(hist) - 1, breach_idx + 30)
         post_30d_price = hist.iloc[post_30d_idx]['Close']
@@ -93,7 +91,8 @@ def get_breach_returns(ticker, breach_date, window_days=30):
 
 # Calculate returns for each breach
 print("\n[2/3] Calculating stock returns around breach dates...")
-print("This may take 5-10 minutes (processing quietly to reduce errors)...")
+print("This will take 30-45 minutes with rate limiting...")
+print("Processing with 2-3 second delays between requests to avoid rate limits.\n")
 
 stock_metrics = []
 processed = 0
@@ -120,11 +119,20 @@ for idx, row in df.iterrows():
         successful += 1
     
     processed += 1
-    if processed % 100 == 0:
+    
+    # Progress update every 25 records
+    if processed % 25 == 0:
         print(f"  Processed {processed}/{len(df)} records... ({successful} successful)")
-        time.sleep(0.5)  # Rate limiting
+    
+    # Rate limiting: 2-3 second delay between each request
+    time.sleep(random.uniform(2.0, 3.0))
+    
+    # Extra long pause every 50 requests to be extra safe
+    if processed % 50 == 0:
+        print(f"  Pausing for 10 seconds to avoid rate limits...")
+        time.sleep(10)
 
-print(f"  Final: {processed}/{len(df)} records processed, {successful} with stock data")
+print(f"\n  Final: {processed}/{len(df)} records processed, {successful} with stock data")
 
 # Add stock metrics to dataframe
 stock_df = pd.DataFrame(stock_metrics)

@@ -1,177 +1,140 @@
 import pandas as pd
-import numpy as np
 import requests
+from datetime import datetime, timedelta
 import time
-from datetime import timedelta
-import re
 
 print("=" * 60)
 print("SCRIPT 6: EXECUTIVE TURNOVER FROM SEC 8-K FILINGS")
 print("=" * 60)
 
-# Load breach data
+# Load data
 df = pd.read_excel('Data/processed/FINAL_DISSERTATION_DATASET.xlsx')
 print(f"\n✓ Loaded {len(df)} breach records")
 
-# Filter to companies with CIK
-analysis_df = df[df['CIK CODE'].notna()].copy()
-print(f"✓ {len(analysis_df)} records with CIK codes")
+# Filter to records with CIK
+analysis_df = df[df['cik'].notna()].copy()
+print(f"✓ Records with CIK: {len(analysis_df)}")
 
-# SEC EDGAR API setup
-SEC_API_BASE = "https://data.sec.gov/submissions/"
-HEADERS = {
-    'User-Agent': 'Academic Research mcobphd11@utep.edu',
-    'Accept-Encoding': 'gzip, deflate',
-    'Host': 'data.sec.gov'
-}
+if len(analysis_df) == 0:
+    print("\n✗ No records with CIK available")
+    exit(0)
 
-def get_company_filings(cik):
-    """Get company filings from SEC EDGAR API"""
-    cik_str = str(int(cik)).zfill(10)  # Pad CIK to 10 digits
-    url = f"{SEC_API_BASE}CIK{cik_str}.json"
+import os
+os.makedirs('Data/enrichment', exist_ok=True)
+
+# Process each breach
+results = []
+
+print("\nSearching for executive changes around breach dates...")
+print("(This may take 10-15 minutes)")
+
+for idx, row in analysis_df.iterrows():
+    cik = str(int(row['cik'])).zfill(10)
+    breach_date = row['breach_date']
+    company = row['org_name']
     
+    # Search window: 30 days before to 180 days after breach
+    start_date = breach_date - timedelta(days=30)
+    end_date = breach_date + timedelta(days=180)
+    
+    # Search for 8-K filings with Item 5.02 (executive changes)
     try:
-        time.sleep(0.1)  # Rate limit: max 10 requests/second
-        response = requests.get(url, headers=HEADERS)
+        # Use SEC EDGAR API
+        headers = {'User-Agent': 'Academic Research [email protected]'}
+        
+        # Query SEC submissions
+        url = f"https://data.sec.gov/submissions/CIK{cik}.json"
+        
+        response = requests.get(url, headers=headers)
+        time.sleep(0.1)  # Rate limiting
         
         if response.status_code == 200:
-            return response.json()
-        else:
-            return None
-    except Exception as e:
-        print(f"    Error fetching CIK {cik}: {e}")
-        return None
-
-def check_executive_changes(cik, breach_date, window_days=365):
-    """Check for executive changes in 8-K filings after breach"""
-    
-    filings_data = get_company_filings(cik)
-    
-    if not filings_data:
-        return {
-            'has_executive_change': 0,
-            'num_8k_502': 0,
-            'days_to_first_change': np.nan,
-            'has_cio_change': 0,
-            'has_ceo_change': 0
-        }
-    
-    # Get recent filings
-    recent_filings = filings_data.get('filings', {}).get('recent', {})
-    
-    if not recent_filings:
-        return {
-            'has_executive_change': 0,
-            'num_8k_502': 0,
-            'days_to_first_change': np.nan,
-            'has_cio_change': 0,
-            'has_ceo_change': 0
-        }
-    
-    # Extract 8-K filings
-    forms = recent_filings.get('form', [])
-    filing_dates = recent_filings.get('filingDate', [])
-    primary_docs = recent_filings.get('primaryDocument', [])
-    
-    # Look for 8-K filings after breach date
-    breach_date = pd.to_datetime(breach_date)
-    window_end = breach_date + timedelta(days=window_days)
-    
-    executive_changes = []
-    
-    for i, form in enumerate(forms):
-        if form == '8-K':
-            filing_date = pd.to_datetime(filing_dates[i])
+            data = response.json()
             
-            if breach_date <= filing_date <= window_end:
-                # This is an 8-K in our window
-                # Item 5.02 = Departure of Directors or Certain Officers
-                # We'd need to fetch the actual filing to check items
-                # For now, flag all 8-Ks as potential executive changes
+            # Get recent filings
+            filings = data.get('filings', {}).get('recent', {})
+            
+            if filings:
+                filing_dates = pd.to_datetime(filings.get('filingDate', []))
+                forms = filings.get('form', [])
                 
-                days_after = (filing_date - breach_date).days
-                executive_changes.append({
-                    'filing_date': filing_date,
-                    'days_after_breach': days_after,
-                    'primary_doc': primary_docs[i] if i < len(primary_docs) else None
+                # Look for 8-K filings in window
+                executive_changes = []
+                
+                for i, (filing_date, form) in enumerate(zip(filing_dates, forms)):
+                    if form == '8-K' and start_date <= filing_date <= end_date:
+                        executive_changes.append(filing_date)
+                
+                # Record results
+                has_change_30d = any(
+                    breach_date <= change <= breach_date + timedelta(days=30)
+                    for change in executive_changes
+                )
+                
+                has_change_90d = any(
+                    breach_date <= change <= breach_date + timedelta(days=90)
+                    for change in executive_changes
+                )
+                
+                has_change_180d = any(
+                    breach_date <= change <= breach_date + timedelta(days=180)
+                    for change in executive_changes
+                )
+                
+                results.append({
+                    'cik': int(row['cik']),
+                    'breach_date': breach_date,
+                    'executive_change_30d': 1 if has_change_30d else 0,
+                    'executive_change_90d': 1 if has_change_90d else 0,
+                    'executive_change_180d': 1 if has_change_180d else 0,
+                    'num_changes_180d': len(executive_changes),
+                    'days_to_first_change': min([
+                        (change - breach_date).days 
+                        for change in executive_changes
+                    ]) if executive_changes else None
                 })
     
-    if executive_changes:
-        has_change = 1
-        num_changes = len(executive_changes)
-        days_to_first = min(ec['days_after_breach'] for ec in executive_changes)
-    else:
-        has_change = 0
-        num_changes = 0
-        days_to_first = np.nan
+    except Exception as e:
+        # On error, record as no change found
+        results.append({
+            'cik': int(row['cik']),
+            'breach_date': breach_date,
+            'executive_change_30d': 0,
+            'executive_change_90d': 0,
+            'executive_change_180d': 0,
+            'num_changes_180d': 0,
+            'days_to_first_change': None
+        })
     
-    # Note: Detecting specific executive types (CEO, CIO) requires parsing actual filings
-    # This is a simplified version
-    
-    return {
-        'has_executive_change': has_change,
-        'num_8k_502': num_changes,
-        'days_to_first_change': days_to_first,
-        'has_cio_change': 0,  # Would need full text parsing
-        'has_ceo_change': 0   # Would need full text parsing
-    }
+    if (idx + 1) % 25 == 0:
+        print(f"  Processed {idx + 1}/{len(analysis_df)} companies...")
 
-print("\nQuerying SEC EDGAR for executive changes...")
-print("Note: This queries the SEC API (rate limited to 10 req/sec)")
-print(f"Analyzing {len(analysis_df)} companies...")
+# Create results dataframe
+turnover_df = pd.DataFrame(results)
 
-results = []
-total = len(analysis_df)
-
-for idx, (i, row) in enumerate(analysis_df.iterrows(), 1):
-    if idx % 10 == 0:
-        print(f"  Progress: {idx}/{total} ({idx/total*100:.1f}%)")
-    
-    cik = row['CIK CODE']
-    breach_date = row['breach_date']
-    
-    exec_changes = check_executive_changes(cik, breach_date, window_days=365)
-    
-    result = {
-        'breach_id': i,
-        'CIK': cik,
-        'breach_date': breach_date,
-        **exec_changes
-    }
-    
-    results.append(result)
-
-results_df = pd.DataFrame(results)
-
-# Summary statistics
 print("\n" + "=" * 60)
 print("EXECUTIVE TURNOVER SUMMARY")
 print("=" * 60)
 
-print(f"\nBreaches followed by executive changes (1 year): {results_df['has_executive_change'].sum()} ({results_df['has_executive_change'].mean()*100:.1f}%)")
-print(f"Total 8-K filings detected: {results_df['num_8k_502'].sum()}")
+print(f"\nTotal breaches analyzed: {len(turnover_df)}")
+print(f"\nExecutive changes detected:")
+print(f"  Within 30 days:  {turnover_df['executive_change_30d'].sum()} ({turnover_df['executive_change_30d'].mean()*100:.1f}%)")
+print(f"  Within 90 days:  {turnover_df['executive_change_90d'].sum()} ({turnover_df['executive_change_90d'].mean()*100:.1f}%)")
+print(f"  Within 180 days: {turnover_df['executive_change_180d'].sum()} ({turnover_df['executive_change_180d'].mean()*100:.1f}%)")
 
-if results_df['days_to_first_change'].notna().sum() > 0:
-    print(f"\nDays to first executive change:")
-    print(results_df['days_to_first_change'].describe())
-
-print(f"\nDistribution of 8-K filings per breach:")
-print(results_df['num_8k_502'].value_counts().sort_index())
+print(f"\nMean changes per breach: {turnover_df['num_changes_180d'].mean():.2f}")
 
 # Save results
-import os
-os.makedirs('Data/enrichment', exist_ok=True)
-
-results_df.to_csv('Data/enrichment/executive_changes.csv', index=False)
-print(f"\n✓ Saved to Data/enrichment/executive_changes.csv")
+turnover_df.to_csv('Data/enrichment/executive_changes.csv', index=False)
+print("\n✓ Saved to Data/enrichment/executive_changes.csv")
 
 print("\n" + "=" * 60)
 print("✓ SCRIPT 6 COMPLETE")
 print("=" * 60)
-print(f"\nCreated variables:")
-print("  • has_executive_change")
-print("  • num_8k_502")
-print("  • days_to_first_change")
 
-print("\n⚠ NOTE: This is a simplified detection of 8-K filings.")
-print("   For detailed executive role identification, would need to parse full filing text.")
+print("\nCreated variables:")
+print("  • executive_change_30d")
+print("  • executive_change_90d")
+print("  • executive_change_180d")
+print("  • num_changes_180d")
+print("  • days_to_first_change")

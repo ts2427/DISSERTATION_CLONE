@@ -11,3 +11,54 @@ test_env/
 # OS files
 .DS_Store
 Thumbs.db
+
+# ==============================================================================
+# DATA FILES - Stored on cloud, not in GitHub
+# ==============================================================================
+# Per committee feedback: Data files should be downloaded from shared cloud folder
+# See README.md for download instructions
+
+# Processed data (main enriched dataset)
+Data/processed/*.csv
+Data/processed/*.xlsx
+Data/processed/*.parquet
+
+# Raw data
+Data/raw/*.csv
+Data/raw/*.xlsx
+Data/raw/*.dta
+Data/raw/*.sas7bdat
+
+# Temporary data files
+Data/temp/
+Data/cache/
+
+# Keep folder structure with .gitkeep files
+!Data/processed/.gitkeep
+!Data/raw/.gitkeep
+
+# ==============================================================================
+# OUTPUT FILES (optional - uncomment if you don't want outputs in Git)
+# ==============================================================================
+# outputs/tables/*.csv
+# outputs/tables/*.tex
+# outputs/figures/*.png
+# !outputs/tables/.gitkeep
+# !outputs/figures/.gitkeep
+
+# ==============================================================================
+# IDE & EDITOR FILES
+# ==============================================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ==============================================================================
+# ENVIRONMENT & SECRETS
+# ==============================================================================
+.env
+.env.local
+*.key
+wrds_config.ini

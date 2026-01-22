@@ -1,0 +1,68 @@
+{
+  "essay2": {
+    "description": "30-day Cumulative Abnormal Returns (CAR) Prediction",
+    "sample_size": 535,
+    "train_test_split": "374/161",
+    "features": [
+      "immediate_disclosure",
+      "fcc_reportable",
+      "firm_size_log",
+      "leverage",
+      "roa",
+      "prior_breaches_total",
+      "high_severity_breach",
+      "ransomware",
+      "health_breach",
+      "executive_change_30d",
+      "total_affected",
+      "is_repeat_offender"
+    ],
+    "random_forest": {
+      "test_r2": 0.2929583816170833,
+      "test_rmse": 7.636109016902041,
+      "test_mae": 5.1421478220456915,
+      "correlation": 0.5820542788060264,
+      "cv_r2_mean": -0.0889064896501878,
+      "cv_r2_std": 0.07664995544392954
+    },
+    "gradient_boosting": {
+      "test_r2": 0.46479420803538185,
+      "test_rmse": 6.6437003022427135,
+      "test_mae": 4.406643304556261,
+      "correlation": 0.6860835637959267
+    }
+  },
+  "essay3": {
+    "description": "Post-Breach Stock Return Volatility Prediction",
+    "sample_size": 528,
+    "train_test_split": "369/159",
+    "features": [
+      "return_volatility_pre",
+      "immediate_disclosure",
+      "fcc_reportable",
+      "firm_size_log",
+      "leverage",
+      "roa",
+      "large_firm",
+      "prior_breaches_total",
+      "high_severity_breach",
+      "executive_change_30d",
+      "total_affected",
+      "is_repeat_offender"
+    ],
+    "random_forest": {
+      "test_r2": 0.6214681352557281,
+      "test_rmse": 8.546771170673756,
+      "test_mae": 5.832184921842945,
+      "correlation": 0.8118513181542175,
+      "cv_r2_mean": 0.201417151257926,
+      "cv_r2_std": 0.12967817120438235
+    },
+    "gradient_boosting": {
+      "test_r2": 0.7328211672955026,
+      "test_rmse": 7.180453570539115,
+      "test_mae": 4.827037775674473,
+      "correlation": 0.8567161513000525
+    }
+  }
+}

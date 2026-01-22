@@ -5,16 +5,32 @@
 # %%
 import pandas as pd
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')  # No popups!
 import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy import stats
 import warnings
+import os
 warnings.filterwarnings('ignore')
 
 plt.style.use('seaborn-v0_8-darkgrid')
 
 # %%
-df = pd.read_csv('../Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv')
+# Smart path handling
+if os.path.exists('Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'):
+    data_path = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'
+    output_base = 'outputs'
+elif os.path.exists('../Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'):
+    data_path = '../Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'
+    output_base = '../outputs'
+else:
+    raise FileNotFoundError("Cannot find enriched dataset")
+
+# Create output directories
+os.makedirs(f'{output_base}/figures', exist_ok=True)
+
+df = pd.read_csv(data_path)
 
 print(f"Full Dataset: {len(df)} breaches")
 
@@ -65,8 +81,9 @@ axes[1].text(2, repeat_car.mean(), f'{repeat_car.mean():.2f}%',
              ha='center', va='bottom', fontweight='bold')
 
 plt.tight_layout()
-plt.savefig('../outputs/figures/enrichment_prior_breaches.png', dpi=300, bbox_inches='tight')
-plt.show()
+plt.savefig(f'{output_base}/figures/enrichment_prior_breaches.png', dpi=300, bbox_inches='tight')
+print(f"✓ Saved {output_base}/figures/enrichment_prior_breaches.png")
+plt.close()
 
 # Statistical test
 t_stat, p_val = stats.ttest_ind(first_time_car, repeat_car)
@@ -149,8 +166,9 @@ axes[1, 1].set_title('Health Data Breaches (HIPAA)', fontsize=12, fontweight='bo
 axes[1, 1].grid(axis='y', alpha=0.3)
 
 plt.tight_layout()
-plt.savefig('../outputs/figures/enrichment_severity.png', dpi=300, bbox_inches='tight')
-plt.show()
+plt.savefig(f'{output_base}/figures/enrichment_severity.png', dpi=300, bbox_inches='tight')
+print(f"✓ Saved {output_base}/figures/enrichment_severity.png")
+plt.close()
 
 # Statistical tests
 print(f"\nSeverity Analysis:")
@@ -177,39 +195,36 @@ print("\n" + "="*80)
 print("EXECUTIVE TURNOVER")
 print("="*80)
 
-print(f"\nBreaches with executive turnover: {df['has_executive_change'].sum()} ({df['has_executive_change'].mean()*100:.1f}%)")
-print(f"Average 8-K filings per breach: {df['num_8k_502'].mean():.2f}")
+# FIXED: Use correct variable names
+print(f"\nBreaches with executive turnover (30d): {df['executive_change_30d'].sum()} ({df['executive_change_30d'].mean()*100:.1f}%)")
 
-turnover_timing = df[df['has_executive_change'] == 1]['days_to_first_change'].dropna()
-print(f"\nDays to first executive change:")
-print(f"  Mean: {turnover_timing.mean():.1f} days")
-print(f"  Median: {turnover_timing.median():.0f} days")
-print(f"  25th percentile: {turnover_timing.quantile(0.25):.0f} days")
-print(f"  75th percentile: {turnover_timing.quantile(0.75):.0f} days")
+# Check if we have detailed turnover data
+if 'num_8k_filings' in df.columns:
+    print(f"Average 8-K filings per breach: {df['num_8k_filings'].mean():.2f}")
 
 fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
-# Plot 1: Turnover prevalence
-turnover_counts = [df['has_executive_change'].sum(), 
-                   len(df) - df['has_executive_change'].sum()]
+# Plot 1: Turnover prevalence (30-day)
+turnover_counts = [df['executive_change_30d'].sum(), 
+                   len(df) - df['executive_change_30d'].sum()]
 axes[0, 0].pie(turnover_counts, labels=['Turnover', 'No Turnover'],
                autopct='%1.1f%%', colors=['lightcoral', 'lightgreen'],
                startangle=90)
-axes[0, 0].set_title('Executive Turnover Within 1 Year', fontsize=12, fontweight='bold')
+axes[0, 0].set_title('Executive Turnover Within 30 Days', fontsize=12, fontweight='bold')
 
-# Plot 2: Days to turnover distribution
-axes[0, 1].hist(turnover_timing, bins=30, color='darkred', alpha=0.7, edgecolor='black')
-axes[0, 1].axvline(turnover_timing.median(), color='yellow', linestyle='--', linewidth=2,
-                   label=f"Median: {turnover_timing.median():.0f} days")
-axes[0, 1].set_xlabel('Days to First Executive Change', fontsize=11)
-axes[0, 1].set_ylabel('Frequency', fontsize=11)
-axes[0, 1].set_title('Speed of Executive Accountability', fontsize=12, fontweight='bold')
-axes[0, 1].legend()
-axes[0, 1].grid(alpha=0.3)
+# Plot 2: Turnover by breach count
+turnover_by_breaches = df.groupby('prior_breaches_total')['executive_change_30d'].mean() * 100
+if len(turnover_by_breaches) > 0:
+    axes[0, 1].plot(turnover_by_breaches.index[:20], turnover_by_breaches.values[:20], 
+                    marker='o', color='darkred', linewidth=2)
+    axes[0, 1].set_xlabel('Number of Prior Breaches', fontsize=11)
+    axes[0, 1].set_ylabel('Turnover Rate (%)', fontsize=11)
+    axes[0, 1].set_title('Turnover Rate vs Prior Breaches', fontsize=12, fontweight='bold')
+    axes[0, 1].grid(alpha=0.3)
 
 # Plot 3: CARs by turnover
-no_turnover_car = df[df['has_executive_change'] == 0]['car_30d'].dropna()
-turnover_car = df[df['has_executive_change'] == 1]['car_30d'].dropna()
+no_turnover_car = df[df['executive_change_30d'] == 0]['car_30d'].dropna()
+turnover_car = df[df['executive_change_30d'] == 1]['car_30d'].dropna()
 
 bp = axes[1, 0].boxplot([no_turnover_car, turnover_car],
                          labels=['No Turnover', 'Turnover'],
@@ -222,17 +237,32 @@ axes[1, 0].set_ylabel('30-Day CAR (%)', fontsize=11)
 axes[1, 0].set_title('Market Reaction by Executive Turnover', fontsize=12, fontweight='bold')
 axes[1, 0].grid(axis='y', alpha=0.3)
 
-# Plot 4: Number of 8-K filings
-num_filings = df['num_8k_502'].value_counts().sort_index()
-axes[1, 1].bar(num_filings.index[:20], num_filings.values[:20], color='steelblue', alpha=0.7)
-axes[1, 1].set_xlabel('Number of 8-K Filings', fontsize=11)
-axes[1, 1].set_ylabel('Number of Breaches', fontsize=11)
-axes[1, 1].set_title('Distribution of 8-K Filings per Breach', fontsize=12, fontweight='bold')
-axes[1, 1].grid(axis='y', alpha=0.3)
+# Plot 4: Turnover rate by industry (if available)
+if 'industry' in df.columns:
+    turnover_by_industry = df.groupby('industry')['executive_change_30d'].agg(['sum', 'count'])
+    turnover_by_industry['rate'] = (turnover_by_industry['sum'] / turnover_by_industry['count'] * 100)
+    top_industries = turnover_by_industry.nlargest(10, 'rate')
+    
+    axes[1, 1].barh(range(len(top_industries)), top_industries['rate'], color='steelblue', alpha=0.7)
+    axes[1, 1].set_yticks(range(len(top_industries)))
+    axes[1, 1].set_yticklabels(top_industries.index, fontsize=9)
+    axes[1, 1].set_xlabel('Turnover Rate (%)', fontsize=11)
+    axes[1, 1].set_title('Top 10 Industries by Turnover Rate', fontsize=12, fontweight='bold')
+    axes[1, 1].grid(axis='x', alpha=0.3)
+    axes[1, 1].invert_yaxis()
+else:
+    # Just show turnover vs severity
+    turnover_by_severity = df.groupby('high_severity_breach')['executive_change_30d'].mean() * 100
+    axes[1, 1].bar(['Low Severity', 'High Severity'], turnover_by_severity.values, 
+                   color=['lightblue', 'darkred'], alpha=0.7)
+    axes[1, 1].set_ylabel('Turnover Rate (%)', fontsize=11)
+    axes[1, 1].set_title('Turnover Rate by Breach Severity', fontsize=12, fontweight='bold')
+    axes[1, 1].grid(axis='y', alpha=0.3)
 
 plt.tight_layout()
-plt.savefig('../outputs/figures/enrichment_executive_turnover.png', dpi=300, bbox_inches='tight')
-plt.show()
+plt.savefig(f'{output_base}/figures/enrichment_executive_turnover.png', dpi=300, bbox_inches='tight')
+print(f"✓ Saved {output_base}/figures/enrichment_executive_turnover.png")
+plt.close()
 
 # Statistical test
 t_stat, p_val = stats.ttest_ind(no_turnover_car, turnover_car)
@@ -250,42 +280,40 @@ print("\n" + "="*80)
 print("REGULATORY ENFORCEMENT")
 print("="*80)
 
-print(f"\nBreaches with regulatory actions: {df['has_any_regulatory_action'].sum()} ({df['has_any_regulatory_action'].mean()*100:.1f}%)")
-print(f"  FTC actions: {df['has_ftc_action'].sum()}")
-print(f"  FCC actions: {df['has_fcc_action'].sum()}")
-print(f"  State AG actions: {df['has_state_ag_action'].sum()}")
+# FIXED: Use correct variable name
+print(f"\nBreaches with regulatory actions: {df['regulatory_enforcement'].sum()} ({df['regulatory_enforcement'].mean()*100:.1f}%)")
 
-total_penalties = df['total_regulatory_cost'].sum()
-print(f"\nTotal regulatory costs: ${total_penalties:,.0f}")
-print(f"Mean penalty (if penalized): ${df[df['has_any_regulatory_action']==1]['total_regulatory_cost'].mean():,.0f}")
-print(f"Median penalty (if penalized): ${df[df['has_any_regulatory_action']==1]['total_regulatory_cost'].median():,.0f}")
+# Check if we have penalty data
+if 'penalty_amount_usd' in df.columns:
+    total_penalties = df['penalty_amount_usd'].sum()
+    print(f"\nTotal regulatory costs: ${total_penalties:,.0f}")
+    print(f"Mean penalty (if penalized): ${df[df['regulatory_enforcement']==1]['penalty_amount_usd'].mean():,.0f}")
+    print(f"Median penalty (if penalized): ${df[df['regulatory_enforcement']==1]['penalty_amount_usd'].median():,.0f}")
 
 fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
-# Plot 1: Types of regulatory actions
-reg_types = pd.DataFrame({
-    'Agency': ['FTC', 'FCC', 'State AG'],
-    'Count': [df['has_ftc_action'].sum(), 
-              df['has_fcc_action'].sum(), 
-              df['has_state_ag_action'].sum()]
-})
+# Plot 1: Regulatory action prevalence
+reg_counts = [df['regulatory_enforcement'].sum(), 
+              len(df) - df['regulatory_enforcement'].sum()]
+axes[0, 0].pie(reg_counts, labels=['Regulatory Action', 'No Action'],
+               autopct='%1.1f%%', colors=['darkred', 'lightgreen'],
+               startangle=90)
+axes[0, 0].set_title('Regulatory Enforcement Actions', fontsize=12, fontweight='bold')
 
-axes[0, 0].bar(reg_types['Agency'], reg_types['Count'], color=['darkred', 'navy', 'darkgreen'], alpha=0.7)
-axes[0, 0].set_ylabel('Number of Actions', fontsize=11)
-axes[0, 0].set_title('Regulatory Actions by Agency', fontsize=12, fontweight='bold')
-axes[0, 0].grid(axis='y', alpha=0.3)
-
-# Plot 2: Penalty distribution
-penalties = df[df['total_regulatory_cost'] > 0]['total_regulatory_cost']
-axes[0, 1].hist(penalties / 1_000_000, bins=20, color='darkred', alpha=0.7, edgecolor='black')
-axes[0, 1].set_xlabel('Penalty Amount ($M)', fontsize=11)
-axes[0, 1].set_ylabel('Frequency', fontsize=11)
-axes[0, 1].set_title('Distribution of Regulatory Penalties', fontsize=12, fontweight='bold')
-axes[0, 1].grid(alpha=0.3)
+# Plot 2: Enforcement rate over time
+df['breach_year'] = pd.to_datetime(df['breach_date']).dt.year
+enforcement_by_year = df.groupby('breach_year')['regulatory_enforcement'].mean() * 100
+if len(enforcement_by_year) > 0:
+    axes[0, 1].plot(enforcement_by_year.index, enforcement_by_year.values, 
+                    marker='o', color='darkred', linewidth=2)
+    axes[0, 1].set_xlabel('Year', fontsize=11)
+    axes[0, 1].set_ylabel('Enforcement Rate (%)', fontsize=11)
+    axes[0, 1].set_title('Regulatory Enforcement Rate Over Time', fontsize=12, fontweight='bold')
+    axes[0, 1].grid(alpha=0.3)
 
 # Plot 3: CARs by regulatory action
-no_reg_car = df[df['has_any_regulatory_action'] == 0]['car_30d'].dropna()
-reg_car = df[df['has_any_regulatory_action'] == 1]['car_30d'].dropna()
+no_reg_car = df[df['regulatory_enforcement'] == 0]['car_30d'].dropna()
+reg_car = df[df['regulatory_enforcement'] == 1]['car_30d'].dropna()
 
 bp = axes[1, 0].boxplot([no_reg_car, reg_car],
                          labels=['No Action', 'Regulatory Action'],
@@ -298,108 +326,36 @@ axes[1, 0].set_ylabel('30-Day CAR (%)', fontsize=11)
 axes[1, 0].set_title('Market Reaction by Regulatory Status', fontsize=12, fontweight='bold')
 axes[1, 0].grid(axis='y', alpha=0.3)
 
-# Plot 4: Top 10 penalties
-top_penalties = df.nlargest(10, 'total_regulatory_cost')[['org_name', 'total_regulatory_cost']].copy()
-top_penalties['total_regulatory_cost'] = top_penalties['total_regulatory_cost'] / 1_000_000
-
-axes[1, 1].barh(range(len(top_penalties)), top_penalties['total_regulatory_cost'], color='darkred', alpha=0.7)
-axes[1, 1].set_yticks(range(len(top_penalties)))
-axes[1, 1].set_yticklabels(top_penalties['org_name'], fontsize=9)
-axes[1, 1].set_xlabel('Penalty ($M)', fontsize=11)
-axes[1, 1].set_title('Top 10 Regulatory Penalties', fontsize=12, fontweight='bold')
-axes[1, 1].grid(axis='x', alpha=0.3)
-axes[1, 1].invert_yaxis()
+# Plot 4: Enforcement rate by severity
+enforcement_by_severity = df.groupby('high_severity_breach')['regulatory_enforcement'].mean() * 100
+axes[1, 1].bar(['Low Severity', 'High Severity'], enforcement_by_severity.values, 
+               color=['lightblue', 'darkred'], alpha=0.7)
+axes[1, 1].set_ylabel('Enforcement Rate (%)', fontsize=11)
+axes[1, 1].set_title('Enforcement Rate by Breach Severity', fontsize=12, fontweight='bold')
+axes[1, 1].grid(axis='y', alpha=0.3)
 
 plt.tight_layout()
-plt.savefig('../outputs/figures/enrichment_regulatory.png', dpi=300, bbox_inches='tight')
-plt.show()
+plt.savefig(f'{output_base}/figures/enrichment_regulatory.png', dpi=300, bbox_inches='tight')
+print(f"✓ Saved {output_base}/figures/enrichment_regulatory.png")
+plt.close()
 
 # Statistical test
-t_stat, p_val = stats.ttest_ind(no_reg_car, reg_car)
-print(f"\nRegulatory Action Effect on CARs:")
-print(f"  No action mean CAR: {no_reg_car.mean():.4f}%")
-print(f"  Regulatory action mean CAR: {reg_car.mean():.4f}%")
-print(f"  Difference: {reg_car.mean() - no_reg_car.mean():.4f}%")
-print(f"  t-statistic: {t_stat:.4f}, p-value: {p_val:.4f}")
-
-# %% [markdown]
-# ## 5. DARK WEB PRESENCE ANALYSIS
-
-# %%
-print("\n" + "="*80)
-print("DARK WEB PRESENCE (HIBP)")
-print("="*80)
-
-print(f"\nBreaches in HIBP database: {df['in_hibp'].sum()} ({df['in_hibp'].mean()*100:.1f}%)")
-
-hibp_breaches = df[df['in_hibp'] == 1]
-total_credentials = hibp_breaches['hibp_pwn_count'].sum()
-print(f"Total credentials exposed: {total_credentials:,.0f}")
-print(f"Mean credentials per breach: {hibp_breaches['hibp_pwn_count'].mean():,.0f}")
-print(f"Median credentials per breach: {hibp_breaches['hibp_pwn_count'].median():,.0f}")
-
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-
-# Plot 1: HIBP presence
-hibp_counts = [df['in_hibp'].sum(), len(df) - df['in_hibp'].sum()]
-axes[0, 0].pie(hibp_counts, labels=['In HIBP', 'Not in HIBP'],
-               autopct='%1.1f%%', colors=['darkred', 'lightgreen'],
-               startangle=90)
-axes[0, 0].set_title('Breaches in Dark Web (HIBP)', fontsize=12, fontweight='bold')
-
-# Plot 2: Credentials compromised
-if len(hibp_breaches) > 0:
-    axes[0, 1].bar(range(len(hibp_breaches)), 
-                   hibp_breaches['hibp_pwn_count'] / 1_000_000,
-                   color='darkred', alpha=0.7)
-    axes[0, 1].set_xlabel('Breach Index', fontsize=11)
-    axes[0, 1].set_ylabel('Credentials Compromised (Millions)', fontsize=11)
-    axes[0, 1].set_title('Scale of HIBP Breaches', fontsize=12, fontweight='bold')
-    axes[0, 1].grid(axis='y', alpha=0.3)
-
-# Plot 3: CARs by dark web presence
-no_darkweb_car = df[df['in_hibp'] == 0]['car_30d'].dropna()
-darkweb_car = df[df['in_hibp'] == 1]['car_30d'].dropna()
-
-bp = axes[1, 0].boxplot([no_darkweb_car, darkweb_car],
-                         labels=['Not in HIBP', 'In HIBP'],
-                         patch_artist=True)
-bp['boxes'][0].set_facecolor('lightgreen')
-bp['boxes'][1].set_facecolor('darkred')
-
-axes[1, 0].axhline(0, color='black', linestyle='-', linewidth=1)
-axes[1, 0].set_ylabel('30-Day CAR (%)', fontsize=11)
-axes[1, 0].set_title('Market Reaction by Dark Web Presence', fontsize=12, fontweight='bold')
-axes[1, 0].grid(axis='y', alpha=0.3)
-
-# Plot 4: Top breaches by credentials
-if len(hibp_breaches) > 0:
-    top_hibp = hibp_breaches.nlargest(10, 'hibp_pwn_count')[['org_name', 'hibp_pwn_count']].copy()
-    top_hibp['hibp_pwn_count'] = top_hibp['hibp_pwn_count'] / 1_000_000
-    
-    axes[1, 1].barh(range(len(top_hibp)), top_hibp['hibp_pwn_count'], color='darkred', alpha=0.7)
-    axes[1, 1].set_yticks(range(len(top_hibp)))
-    axes[1, 1].set_yticklabels(top_hibp['org_name'], fontsize=9)
-    axes[1, 1].set_xlabel('Credentials (Millions)', fontsize=11)
-    axes[1, 1].set_title('Top 10 Dark Web Breaches', fontsize=12, fontweight='bold')
-    axes[1, 1].grid(axis='x', alpha=0.3)
-    axes[1, 1].invert_yaxis()
-
-plt.tight_layout()
-plt.savefig('../outputs/figures/enrichment_darkweb.png', dpi=300, bbox_inches='tight')
-plt.show()
-
-# Statistical test
-if len(darkweb_car) > 0:
-    t_stat, p_val = stats.ttest_ind(no_darkweb_car, darkweb_car)
-    print(f"\nDark Web Effect on CARs:")
-    print(f"  Not in HIBP mean CAR: {no_darkweb_car.mean():.4f}%")
-    print(f"  In HIBP mean CAR: {darkweb_car.mean():.4f}%")
-    print(f"  Difference: {darkweb_car.mean() - no_darkweb_car.mean():.4f}%")
+if len(reg_car) > 0:
+    t_stat, p_val = stats.ttest_ind(no_reg_car, reg_car)
+    print(f"\nRegulatory Action Effect on CARs:")
+    print(f"  No action mean CAR: {no_reg_car.mean():.4f}%")
+    print(f"  Regulatory action mean CAR: {reg_car.mean():.4f}%")
+    print(f"  Difference: {reg_car.mean() - no_reg_car.mean():.4f}%")
     print(f"  t-statistic: {t_stat:.4f}, p-value: {p_val:.4f}")
 
 # %%
 print("\n" + "="*80)
-print("ENRICHMENT ANALYSIS COMPLETE!")
+print("✅ ENRICHMENT ANALYSIS COMPLETE!")
 print("="*80)
-print("\nAll enrichment visualizations saved to outputs/figures/")
+print(f"\nAll enrichment visualizations saved to {output_base}/figures/")
+print("\nGenerated:")
+print("  ✓ enrichment_prior_breaches.png")
+print("  ✓ enrichment_severity.png")
+print("  ✓ enrichment_executive_turnover.png")
+print("  ✓ enrichment_regulatory.png")
+print("="*80)

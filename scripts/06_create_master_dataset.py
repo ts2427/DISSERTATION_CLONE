@@ -11,6 +11,7 @@ print("=" * 60)
 # Load breach data
 print("\n[1/5] Loading breach data...")
 breach_df = pd.read_excel(r'Data\DataBreaches.xlsx', engine='openpyxl')
+breach_df['breach_date'] = pd.to_datetime(breach_df['breach_date'])
 print(f"✓ Loaded {len(breach_df)} breach records")
 
 # Load vendor mappings

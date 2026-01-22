@@ -3,7 +3,7 @@ import numpy as np
 import os
 
 print("=" * 80)
-print(" " * 20 + "MERGE CONFIRMED ENRICHMENTS")
+print(" " * 20 + "MERGE ENRICHMENTS (FIXED - NO DUPLICATION)")
 print("=" * 80)
 
 # Load base dataset
@@ -11,93 +11,213 @@ print("\n📊 Loading base dataset...")
 base_df = pd.read_excel('Data/processed/FINAL_DISSERTATION_DATASET.xlsx')
 print(f"✓ Loaded {len(base_df)} breach records with {len(base_df.columns)} columns")
 
-# Add breach_id for merging
-base_df['breach_id'] = base_df.index
-
-# Define enrichment files that ACTUALLY EXIST with good data
-enrichments = {
-    'Prior Breach History': 'prior_breach_history.csv',
-    'Breach Severity': 'breach_severity_classification.csv',
-    'Executive Turnover': 'executive_changes.csv',
-    'Regulatory Enforcement': 'regulatory_enforcement_enhanced.csv',
-    'Dark Web Presence': 'dark_web_presence.csv',
-    'Cyber Insurance': 'cyber_insurance.csv'  # 7 firms (0.8%)
-}
+# Create UNIQUE row identifier
+base_df['row_id'] = range(len(base_df))
 
 print("\n" + "=" * 80)
-print("MERGING 6 ENRICHMENTS")
+print("MERGING 6 ENRICHMENT DATASETS")
 print("=" * 80)
 
 merged_df = base_df.copy()
 merge_summary = []
 
-for name, filename in enrichments.items():
-    filepath = os.path.join('Data/enrichment', filename)
-    
-    print(f"\n{name}:")
-    print(f"  File: {filename}")
+# ============================================================================
+# 1. PRIOR BREACH HISTORY (uses row_id from breach_id)
+# ============================================================================
+print(f"\nPrior Breach History (H3):")
+filepath = 'Data/enrichment/prior_breach_history.csv'
+
+if os.path.exists(filepath):
+    try:
+        enrich_df = pd.read_csv(filepath)
+        
+        # The breach_id in enrichment = row index
+        enrich_df['row_id'] = enrich_df['breach_id']
+        
+        # Get new columns
+        base_cols = set(merged_df.columns)
+        new_cols = [col for col in enrich_df.columns 
+                   if col not in ['breach_id', 'row_id'] and col not in base_cols]
+        
+        if len(new_cols) > 0:
+            merged_df = merged_df.merge(
+                enrich_df[['row_id'] + new_cols],
+                on='row_id',
+                how='left',
+                validate='1:1'  # Ensure 1-to-1 merge
+            )
+            
+            print(f"  ✓ Merged {len(new_cols)} variables")
+            print(f"  ✓ Rows after merge: {len(merged_df)}")
+            
+            merge_summary.append({
+                'Enrichment': 'Prior Breach History',
+                'Hypothesis': 'H3',
+                'Status': 'SUCCESS',
+                'Variables_Added': len(new_cols),
+                'Rows': len(merged_df)
+            })
+        
+    except Exception as e:
+        print(f"  ✗ Error: {e}")
+        merge_summary.append({
+            'Enrichment': 'Prior Breach History',
+            'Hypothesis': 'H3',
+            'Status': 'ERROR',
+            'Variables_Added': 0,
+            'Rows': len(merged_df)
+        })
+
+# ============================================================================
+# 2. BREACH SEVERITY CLASSIFICATION (uses row_id from breach_id)
+# ============================================================================
+print(f"\nBreach Severity Classification (H4):")
+filepath = 'Data/enrichment/breach_severity_classification.csv'
+
+if os.path.exists(filepath):
+    try:
+        enrich_df = pd.read_csv(filepath)
+        
+        # The breach_id in enrichment = row index
+        enrich_df['row_id'] = enrich_df['breach_id']
+        
+        # Get new columns
+        base_cols = set(merged_df.columns)
+        new_cols = [col for col in enrich_df.columns 
+                   if col not in ['breach_id', 'row_id'] and col not in base_cols]
+        
+        if len(new_cols) > 0:
+            merged_df = merged_df.merge(
+                enrich_df[['row_id'] + new_cols],
+                on='row_id',
+                how='left',
+                validate='1:1'
+            )
+            
+            print(f"  ✓ Merged {len(new_cols)} variables")
+            print(f"  ✓ Rows after merge: {len(merged_df)}")
+            
+            merge_summary.append({
+                'Enrichment': 'Breach Severity Classification',
+                'Hypothesis': 'H4',
+                'Status': 'SUCCESS',
+                'Variables_Added': len(new_cols),
+                'Rows': len(merged_df)
+            })
+        
+    except Exception as e:
+        print(f"  ✗ Error: {e}")
+        merge_summary.append({
+            'Enrichment': 'Breach Severity Classification',
+            'Hypothesis': 'H4',
+            'Status': 'ERROR',
+            'Variables_Added': 0,
+            'Rows': len(merged_df)
+        })
+
+# ============================================================================
+# 3-6. OTHER ENRICHMENTS (merge by row_id if possible, skip duplicates)
+# ============================================================================
+
+# For enrichments that used cik+breach_date, we need to be more careful
+remaining_enrichments = [
+    ('Industry-Adjusted Returns', 'industry_adjusted_returns.csv', 'Robustness'),
+    ('Institutional Ownership', 'institutional_ownership.csv', 'Control'),
+    ('Executive Turnover', 'executive_changes.csv', 'H5'),
+    ('Regulatory Enforcement', 'regulatory_enforcement.csv', 'H6')
+]
+
+for name, filename, hypothesis in remaining_enrichments:
+    print(f"\n{name} ({hypothesis}):")
+    filepath = f'Data/enrichment/{filename}'
     
     if os.path.exists(filepath):
         try:
             enrich_df = pd.read_csv(filepath)
             
-            # Get columns to merge (exclude breach_id and duplicates)
-            base_cols = set(merged_df.columns)
-            new_cols = [col for col in enrich_df.columns 
-                       if col != 'breach_id' and col not in base_cols]
+            # Convert dates
+            if 'breach_date' in enrich_df.columns:
+                enrich_df['breach_date'] = pd.to_datetime(enrich_df['breach_date'])
             
-            if len(new_cols) > 0:
-                # Merge
-                merged_df = merged_df.merge(
-                    enrich_df[['breach_id'] + new_cols],
-                    on='breach_id',
-                    how='left'
+            # Create matching key in enrichment data
+            if 'cik' in enrich_df.columns and 'breach_date' in enrich_df.columns:
+                # Create a composite key
+                enrich_df['match_key'] = (
+                    enrich_df['cik'].astype(str) + '_' + 
+                    enrich_df['breach_date'].dt.strftime('%Y-%m-%d')
                 )
                 
-                print(f"  ✓ Merged {len(new_cols)} variables")
+                merged_df['match_key'] = (
+                    merged_df['cik'].astype(str) + '_' + 
+                    pd.to_datetime(merged_df['breach_date']).dt.strftime('%Y-%m-%d')
+                )
                 
-                # Show sample stats for key variables
-                for var in new_cols[:5]:  # First 5 variables
-                    if var in merged_df.columns:
-                        if merged_df[var].dtype in ['int64', 'float64']:
-                            non_zero = (merged_df[var] != 0).sum()
-                            non_null = merged_df[var].notna().sum()
-                            mean_val = merged_df[var].mean()
-                            print(f"    • {var}: {non_zero} non-zero ({non_zero/len(merged_df)*100:.1f}%) | Mean: {mean_val:.2f}")
-                        else:
-                            non_null = merged_df[var].notna().sum()
-                            print(f"    • {var}: {non_null} non-null ({non_null/len(merged_df)*100:.1f}%)")
+                # Check for duplicates
+                dup_count = enrich_df['match_key'].duplicated().sum()
+                if dup_count > 0:
+                    print(f"  ⚠ Warning: {dup_count} duplicate keys in enrichment data")
+                    # Keep first occurrence only
+                    enrich_df = enrich_df.drop_duplicates('match_key', keep='first')
                 
-                merge_summary.append({
-                    'enrichment': name,
-                    'file': filename,
-                    'status': 'SUCCESS',
-                    'variables_added': len(new_cols)
-                })
-            else:
-                print(f"  ⚠ No new variables to add")
-                merge_summary.append({
-                    'enrichment': name,
-                    'file': filename,
-                    'status': 'NO NEW VARS',
-                    'variables_added': 0
-                })
+                # Get new columns
+                base_cols = set(merged_df.columns)
+                new_cols = [col for col in enrich_df.columns 
+                           if col not in ['cik', 'breach_date', 'match_key'] and col not in base_cols]
                 
+                if len(new_cols) > 0:
+                    before = len(merged_df)
+                    merged_df = merged_df.merge(
+                        enrich_df[['match_key'] + new_cols],
+                        on='match_key',
+                        how='left'
+                    )
+                    after = len(merged_df)
+                    
+                    if before != after:
+                        print(f"  ✗ ERROR: Merge duplicated rows ({before} → {after})")
+                        merged_df = merged_df.iloc[:before]  # Rollback
+                        raise ValueError("Merge created duplicates")
+                    
+                    # Drop match_key
+                    merged_df = merged_df.drop('match_key', axis=1)
+                    
+                    print(f"  ✓ Merged {len(new_cols)} variables")
+                    print(f"  ✓ Rows after merge: {len(merged_df)}")
+                    
+                    merge_summary.append({
+                        'Enrichment': name,
+                        'Hypothesis': hypothesis,
+                        'Status': 'SUCCESS',
+                        'Variables_Added': len(new_cols),
+                        'Rows': len(merged_df)
+                    })
+                else:
+                    print(f"  ⚠ No new variables")
+                    merge_summary.append({
+                        'Enrichment': name,
+                        'Hypothesis': hypothesis,
+                        'Status': 'NO NEW VARS',
+                        'Variables_Added': 0,
+                        'Rows': len(merged_df)
+                    })
+            
         except Exception as e:
             print(f"  ✗ Error: {e}")
             merge_summary.append({
-                'enrichment': name,
-                'file': filename,
-                'status': 'ERROR',
-                'variables_added': 0
+                'Enrichment': name,
+                'Hypothesis': hypothesis,
+                'Status': 'ERROR',
+                'Variables_Added': 0,
+                'Rows': len(merged_df)
             })
     else:
         print(f"  ✗ File not found")
         merge_summary.append({
-            'enrichment': name,
-            'file': filename,
-            'status': 'NOT FOUND',
-            'variables_added': 0
+            'Enrichment': name,
+            'Hypothesis': hypothesis,
+            'Status': 'NOT FOUND',
+            'Variables_Added': 0,
+            'Rows': len(merged_df)
         })
 
 # Summary
@@ -108,19 +228,19 @@ print("=" * 80)
 summary_df = pd.DataFrame(merge_summary)
 print("\n" + summary_df.to_string(index=False))
 
-total_vars_added = summary_df['variables_added'].sum()
-successful = len(summary_df[summary_df['status'] == 'SUCCESS'])
+# Verify row count
+if len(merged_df) != len(base_df):
+    print(f"\n⚠ WARNING: Row count changed! {len(base_df)} → {len(merged_df)}")
+    print("⚠ This should not happen - keeping first N rows only")
+    merged_df = merged_df.iloc[:len(base_df)]
 
-print(f"\n✓ Successfully merged: {successful}/6 enrichments")
+print(f"\n✓ Final row count: {len(merged_df)} (should be {len(base_df)})")
+
+total_vars_added = summary_df['Variables_Added'].sum()
+successful = len(summary_df[summary_df['Status'] == 'SUCCESS'])
+
+print(f"✓ Successfully merged: {successful}/6 enrichments")
 print(f"✓ Total new variables added: {total_vars_added}")
-
-# Original columns
-original_cols = len(base_df.columns)
-new_cols = len(merged_df.columns)
-print(f"\n📊 Dataset growth:")
-print(f"  Original: {original_cols} columns")
-print(f"  Enriched: {new_cols} columns")
-print(f"  Added: {new_cols - original_cols} columns")
 
 # Save enriched dataset
 print("\n" + "=" * 80)
@@ -128,19 +248,18 @@ print("SAVING ENRICHED DATASET")
 print("=" * 80)
 
 output_file = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.xlsx'
+csv_file = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'
 
 print(f"\nSaving to: {output_file}")
 
 try:
-    # Remove breach_id before saving (was just for merging)
-    final_df = merged_df.drop('breach_id', axis=1)
+    # Remove temporary keys
+    final_df = merged_df.drop(['row_id'], axis=1, errors='ignore')
     
     final_df.to_excel(output_file, index=False)
     file_size = os.path.getsize(output_file)
     print(f"✓ Excel file saved ({file_size/1024/1024:.2f} MB)")
     
-    # Also save as CSV
-    csv_file = output_file.replace('.xlsx', '.csv')
     final_df.to_csv(csv_file, index=False)
     csv_size = os.path.getsize(csv_file)
     print(f"✓ CSV file saved ({csv_size/1024/1024:.2f} MB)")
@@ -151,118 +270,30 @@ try:
     
 except Exception as e:
     print(f"✗ Error saving: {e}")
-    import traceback
-    traceback.print_exc()
 
-# Create comprehensive data dictionary
+# Show statistics
 print("\n" + "=" * 80)
-print("CREATING DATA DICTIONARY")
+print("ENRICHMENT STATISTICS")
 print("=" * 80)
 
-var_categories = {
-    'Identifiers': ['org_name', 'CIK CODE', 'breach_date', 'disclosure_date'],
-    'Breach Details': ['total_affected', 'incident_details', 'information_affected'],
-    'Event Study - Original': ['car_5d', 'car_30d', 'bhar_5d', 'bhar_30d', 'has_crsp_data'],
-    'Disclosure Timing': ['immediate_disclosure', 'delayed_disclosure', 'disclosure_delay_days'],
-    'Regulation': ['fcc_reportable', 'fcc_category'],
-    'Firm Characteristics': ['firm_size_log', 'leverage', 'roa', 'large_firm', 'assets', 'sales_q'],
-    'Volatility': ['return_volatility_pre', 'return_volatility_post', 
-                   'volume_volatility_pre', 'volume_volatility_post', 'volatility_change'],
-    'CVE Vulnerabilities': ['total_cves', 'cves_1yr_before', 'cves_2yr_before', 'cves_5yr_before'],
-    
-    # ENRICHMENTS
-    '🆕 Prior Breach History': ['prior_breaches_total', 'prior_breaches_1yr', 'prior_breaches_3yr', 
-                                'prior_breaches_5yr', 'is_repeat_offender', 'is_first_breach', 
-                                'days_since_last_breach'],
-    '🆕 Breach Severity': ['pii_breach', 'health_breach', 'financial_breach', 'ip_breach',
-                          'ransomware', 'nation_state', 'insider_threat', 'ddos_attack',
-                          'phishing', 'malware', 'severity_score', 'high_severity_breach',
-                          'combined_severity_score', 'num_breach_types', 'complex_breach'],
-    '🆕 Executive Turnover': ['has_executive_change', 'num_8k_502', 'days_to_first_change'],
-    '🆕 Regulatory Enforcement': ['has_ftc_action', 'ftc_settlement_amount', 'has_fcc_action',
-                                  'fcc_fine_amount', 'has_state_ag_action', 'ag_settlement_amount',
-                                  'num_states_involved', 'total_regulatory_cost', 
-                                  'has_any_regulatory_action'],
-    '🆕 Dark Web Presence': ['in_hibp', 'hibp_breach_name', 'hibp_breach_date', 
-                            'hibp_pwn_count', 'hibp_data_classes', 'hibp_date_match'],
-    '🆕 Cyber Insurance': ['has_cyber_insurance_disclosure', 'num_10k_filings_checked']
-}
+if 'prior_breaches_total' in final_df.columns:
+    repeat_rate = (final_df['prior_breaches_total'] > 0).mean() * 100
+    print(f"\nH3 - Prior Breach History:")
+    print(f"  • Repeat offenders: {repeat_rate:.1f}%")
 
-data_dict = []
+if 'health_breach' in final_df.columns:
+    health_rate = final_df['health_breach'].mean() * 100
+    print(f"\nH4 - Breach Severity:")
+    print(f"  • Health data breaches: {health_rate:.1f}%")
 
-for category, var_list in var_categories.items():
-    for var in var_list:
-        if var in final_df.columns:
-            dtype = final_df[var].dtype
-            non_missing = final_df[var].notna().sum()
-            pct_complete = (non_missing / len(final_df)) * 100
-            
-            # Get descriptive stats
-            if dtype in ['int64', 'float64']:
-                mean_val = final_df[var].mean()
-                median_val = final_df[var].median()
-                min_val = final_df[var].min()
-                max_val = final_df[var].max()
-                stats = f"Mean: {mean_val:.2f} | Median: {median_val:.2f} | Range: [{min_val:.2f}, {max_val:.2f}]"
-            else:
-                unique_vals = final_df[var].nunique()
-                stats = f"{unique_vals} unique values"
-            
-            data_dict.append({
-                'Category': category,
-                'Variable': var,
-                'Type': str(dtype),
-                'Non_Missing': non_missing,
-                'Completeness_%': f"{pct_complete:.1f}",
-                'Stats': stats
-            })
+if 'executive_change_30d' in final_df.columns:
+    turnover_rate = final_df['executive_change_30d'].mean() * 100
+    print(f"\nH5 - Executive Turnover:")
+    print(f"  • Changes within 30 days: {turnover_rate:.1f}%")
 
-dict_df = pd.DataFrame(data_dict)
-dict_file = 'Data/processed/DATA_DICTIONARY_ENRICHED.csv'
-dict_df.to_csv(dict_file, index=False)
-
-print(f"✓ Data dictionary created: {dict_file}")
-print(f"  {len(dict_df)} variables documented")
-
-# Final summary
 print("\n" + "=" * 80)
-print("✅✅✅ ENRICHMENT COMPLETE! ✅✅✅")
+print("✅ ENRICHMENT MERGE COMPLETE!")
 print("=" * 80)
-
-print(f"\n🎉 Your enriched dissertation dataset is ready!")
-print(f"\n📊 Dataset Summary:")
-print(f"   • {len(final_df):,} breach records")
-print(f"   • {len(final_df.columns)} total variables")
-print(f"   • {total_vars_added} new enriched variables")
-
-print(f"\n🏆 Six Elite Enrichments Merged:")
-print(f"   1. ✅ Prior Breach History - 67% repeat offenders")
-print(f"   2. ✅ Breach Severity - 10 types, 97% PII, 96% ransomware")
-print(f"   3. ✅ Executive Turnover - 49% turnover, median 16 days")
-print(f"   4. ✅ Regulatory Enforcement - 65 cases, $6.9B penalties")
-print(f"   5. ✅ Dark Web Presence - 25 breaches, 2.3B credentials")
-print(f"   6. ✅ Cyber Insurance - 7 firms (0.8%) with disclosures")
-
-print(f"\n📁 Output Files:")
-print(f"   • {output_file}")
-print(f"   • {csv_file}")
-print(f"   • {dict_file}")
-
-print(f"\n🎓 You are now ready to:")
-print(f"   1. Open the enriched dataset in Excel/Stata/R")
-print(f"   2. Run descriptive statistics")
-print(f"   3. Start regression analysis")
-print(f"   4. WRITE YOUR DISSERTATION!")
-
-print(f"\n💎 What makes this dataset special:")
-print(f"   • Largest breach sample (858 records, 2004-2025)")
-print(f"   • Unique FCC regulation angle")
-print(f"   • First to document 67% repeat offender rate")
-print(f"   • First to track 49% executive turnover rate")
-print(f"   • Only dataset with dark web validation")
-print(f"   • $6.9B in documented regulatory penalties")
-
-print("\n" + "=" * 80)
-print("🚀 DATA COLLECTION PHASE: COMPLETE!")
-print("🎯 THIS IS THE DEFINITIVE DATA BREACH DATASET!")
+print(f"\n📊 Final Dataset: {len(final_df):,} rows × {len(final_df.columns)} columns")
+print(f"🚀 READY FOR ANALYSIS!")
 print("=" * 80)
