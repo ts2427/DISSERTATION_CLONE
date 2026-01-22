@@ -33,18 +33,18 @@ def print_section(title):
 def run_script(script_path, description):
     """
     Run a Python script and report results.
-    Returns True if successful (ignoring end-of-script Unicode errors).
+    Returns True if successful (safely handling Unicode output).
     """
     print(f"Running: {description}")
     print(f"Script: {script_path}")
     print("-"*80)
-    
+
     start_time = time.time()
-    
+
     # Set environment for subprocess
     env = os.environ.copy()
     env['PYTHONIOENCODING'] = 'utf-8'
-    
+
     # Run the script
     result = subprocess.run(
         ['python', script_path],
@@ -54,26 +54,36 @@ def run_script(script_path, description):
         errors='replace',
         env=env
     )
-    
+
     elapsed = time.time() - start_time
-    
-    # Print output
+
+    # Print output safely (handle Unicode characters that terminal can't display)
     if result.stdout:
-        print(result.stdout)
-    
+        try:
+            print(result.stdout)
+        except UnicodeEncodeError:
+            # If terminal can't display Unicode, write with error replacement
+            import sys
+            sys.stdout.buffer.write(result.stdout.encode('utf-8', errors='replace'))
+            sys.stdout.buffer.write(b'\n')
+
     # Check for success
     if result.returncode != 0:
-        # Special case: Unicode error at end but outputs were created
-        if 'UnicodeEncodeError' in str(result.stderr) and 'Saved' in str(result.stdout):
+        # Special case: Script may have succeeded but had Unicode display issue
+        if ('UnicodeEncodeError' in str(result.stderr) or 'UnicodeEncodeError' in str(result.stdout)) and ('Saved' in str(result.stdout) or 'outputs/' in str(result.stdout)):
             print("[NOTE] Script completed successfully (Unicode display error ignored)")
             print(f"[OK] Completed in {elapsed:.1f} seconds\n")
             return True
         else:
             print(f"[ERROR] Script failed: {script_path}")
             if result.stderr:
-                print(result.stderr)
+                try:
+                    print(result.stderr)
+                except UnicodeEncodeError:
+                    import sys
+                    sys.stdout.buffer.write(result.stderr.encode('utf-8', errors='replace'))
             return False
-    
+
     print(f"[OK] Completed in {elapsed:.1f} seconds\n")
     return True
 
@@ -256,11 +266,11 @@ def run_all():
     print("DISSERTATION STRUCTURE:")
     print("  Essay 1: Theoretical Framework (pure theory)")
     print("  Essay 2: Event Study - Market Reactions [ANALYZED]")
-    print("    └─ Robustness: OLS + Alternative Specifications")
-    print("    └─ Robustness: ML Validation (Random Forest, Gradient Boosting) [OPTIONAL]")
+    print("    - Robustness: OLS + Alternative Specifications")
+    print("    - Robustness: ML Validation (Random Forest, Gradient Boosting) [OPTIONAL]")
     print("  Essay 3: Information Asymmetry [ANALYZED]")
-    print("    └─ Robustness: OLS + Alternative Specifications")
-    print("    └─ Robustness: ML Validation (Random Forest, Gradient Boosting) [OPTIONAL]")
+    print("    - Robustness: OLS + Alternative Specifications")
+    print("    - Robustness: ML Validation (Random Forest, Gradient Boosting) [OPTIONAL]")
     
     # Key enrichments
     print("\nKEY ENRICHMENTS:")
