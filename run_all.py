@@ -97,13 +97,13 @@ def verify_data():
 def verify_outputs():
     """Check what outputs were generated"""
     print_section("OUTPUT VERIFICATION")
-    
+
     # Check tables
     tables_dir = Path('outputs/tables')
     if tables_dir.exists():
         csv_tables = sorted(tables_dir.glob('*.csv'))
         tex_tables = sorted(tables_dir.glob('*.tex'))
-        
+
         print(f"Tables Generated: {len(csv_tables)} CSV, {len(tex_tables)} LaTeX")
         if csv_tables:
             for table in csv_tables:
@@ -112,13 +112,13 @@ def verify_outputs():
             print("  [WARNING] No CSV tables found")
     else:
         print("  [ERROR] Tables directory not found")
-    
+
     # Check figures
     print()
     figures_dir = Path('outputs/figures')
     if figures_dir.exists():
         figures = sorted(figures_dir.glob('*.png'))
-        
+
         print(f"Figures Generated: {len(figures)}")
         if figures:
             for figure in figures:
@@ -127,7 +127,30 @@ def verify_outputs():
             print("  [WARNING] No figures found")
     else:
         print("  [ERROR] Figures directory not found")
-    
+
+    # Check ML models (if generated)
+    print()
+    ml_dir = Path('outputs/ml_models')
+    if ml_dir.exists():
+        ml_csv = sorted(ml_dir.glob('*.csv'))
+        ml_png = sorted(ml_dir.glob('*.png'))
+        ml_json = sorted(ml_dir.glob('*.json'))
+        ml_txt = sorted(ml_dir.glob('robustness_section_template_*.txt'))
+        ml_pkl = sorted((ml_dir / 'trained_models').glob('*.pkl')) if (ml_dir / 'trained_models').exists() else []
+
+        if ml_csv or ml_png or ml_json or ml_txt or ml_pkl:
+            print(f"ML Models Generated: {len(ml_csv)} CSV, {len(ml_png)} PNG, {len(ml_json)} JSON, {len(ml_txt)} Templates, {len(ml_pkl)} Models")
+            for file in ml_csv + ml_json:
+                print(f"  [OK] {file.name}")
+            for file in ml_txt:
+                print(f"  [OK] {file.name}")
+            if ml_pkl:
+                print(f"  [OK] {len(ml_pkl)} trained models (pickled)")
+        else:
+            print("  [WARNING] ML outputs directory exists but is empty")
+    else:
+        print("  [NOTE] ML models not yet generated (run scripts 60-61 to generate)")
+
     return True
 
 def run_all():
@@ -147,7 +170,9 @@ def run_all():
         'Descriptive Statistics': False,
         'Essay 2: Event Study': False,
         'Essay 3: Information Asymmetry': False,
-        'Enrichment Analysis': False
+        'Enrichment Analysis': False,
+        'ML Model Training': False,
+        'ML Validation & Robustness Sections': False
     }
     
     # Step 0: Verify data exists
@@ -182,7 +207,26 @@ def run_all():
         'notebooks/04_enrichment_analysis.py',
         'Analyzing enrichment variables'
     )
-    
+
+    # Step 5: ML Model Training
+    print_section("STEP 5: MACHINE LEARNING MODEL TRAINING")
+    results['ML Model Training'] = run_script(
+        'scripts/60_train_ml_model.py',
+        'Training Random Forest and Gradient Boosting models for robustness validation'
+    )
+
+    # Step 6: ML Validation & Robustness Section Generation
+    if results['ML Model Training']:
+        print_section("STEP 6: ML VALIDATION & ROBUSTNESS SECTIONS")
+        results['ML Validation & Robustness Sections'] = run_script(
+            'scripts/61_ml_validation.py',
+            'Comparing ML models to OLS and generating dissertation robustness sections'
+        )
+    else:
+        print_section("STEP 6: SKIPPING ML VALIDATION")
+        print("[SKIP] ML Model Training failed - skipping validation step")
+        print("       Check error messages from Step 5 above\n")
+
     # Verify outputs were created
     verify_outputs()
     
@@ -212,7 +256,11 @@ def run_all():
     print("DISSERTATION STRUCTURE:")
     print("  Essay 1: Theoretical Framework (pure theory)")
     print("  Essay 2: Event Study - Market Reactions [ANALYZED]")
+    print("    └─ Robustness: OLS + Alternative Specifications")
+    print("    └─ Robustness: ML Validation (Random Forest, Gradient Boosting) [OPTIONAL]")
     print("  Essay 3: Information Asymmetry [ANALYZED]")
+    print("    └─ Robustness: OLS + Alternative Specifications")
+    print("    └─ Robustness: ML Validation (Random Forest, Gradient Boosting) [OPTIONAL]")
     
     # Key enrichments
     print("\nKEY ENRICHMENTS:")
@@ -223,7 +271,7 @@ def run_all():
     
     # Expected outputs
     print("\nEXPECTED OUTPUTS:")
-    print("  Tables:")
+    print("  OLS Analysis Tables:")
     print("    * table1_descriptive_stats.csv")
     print("    * table2_univariate_comparison.csv")
     print("    * table3_essay2_regressions.tex (5 models)")
@@ -235,6 +283,21 @@ def run_all():
     print("    * fig4_heterogeneity_analysis.png")
     print("    * fig5_volatility_analysis.png")
     print("    * enrichment_*.png (4 figures)")
+    print("  ML Validation (if scripts 60-61 run successfully):")
+    print("    * ml_model_results.json (model metrics)")
+    print("    * feature_importance_essay2_rf.csv")
+    print("    * feature_importance_essay3_rf.csv")
+    print("    * ols_vs_ml_essay2_comparison.csv")
+    print("    * ols_vs_ml_essay3_comparison.csv")
+    print("    * feature_importance_random_forest_(essay_2).png")
+    print("    * feature_importance_random_forest_(essay_3).png")
+    print("    * ols_vs_ml_importance_comparison.png")
+    print("    * robustness_section_template_essay2.txt")
+    print("    * robustness_section_template_essay3.txt")
+    print("    * trained_models/rf_essay2_car30d.pkl")
+    print("    * trained_models/gb_essay2_car30d.pkl")
+    print("    * trained_models/rf_essay3_volatility.pkl")
+    print("    * trained_models/gb_essay3_volatility.pkl")
     
     # Key findings
     print("\nKEY FINDINGS:")
@@ -248,9 +311,14 @@ def run_all():
     print("\n" + "-"*80)
     print("NEXT STEPS:")
     print("  1. Review outputs/tables/ and outputs/figures/")
-    print("  2. Begin writing Essay 2 and Essay 3 results sections")
-    print("  3. Use Table 3 for Essay 2, Table 4 for Essay 3")
-    print("  4. Include enrichment figures in appendix")
+    print("  2. If ML robustness sections generated:")
+    print("     - Review outputs/ml_models/robustness_section_template_essay2.txt")
+    print("     - Review outputs/ml_models/robustness_section_template_essay3.txt")
+    print("     - Copy templates into Essays 2 & 3 robustness sections")
+    print("  3. Begin writing Essay 2 and Essay 3 results sections")
+    print("  4. Use Table 3 for Essay 2, Table 4 for Essay 3")
+    print("  5. Include enrichment figures in appendix")
+    print("  6. Include ML comparison plots in essay robustness sections")
     
     print("\nFILES FOR COMMITTEE:")
     print("  * outputs/tables/table3_essay2_regressions.tex")
@@ -258,14 +326,26 @@ def run_all():
     print("  * outputs/figures/*.png (all figures)")
     
     print("\n" + "="*80)
-    
+
     # Determine overall success
+    # Critical: Essays 2 & 3 must succeed
     critical_success = results['Essay 2: Event Study'] and results['Essay 3: Information Asymmetry']
-    
+
+    # Optional: ML validation is nice-to-have
+    ml_success = results['ML Model Training'] and results['ML Validation & Robustness Sections']
+
     if critical_success:
         print("[SUCCESS] Critical analyses completed successfully!")
         if len(successful) == 4:
-            print("[PERFECT] All 4 steps completed!")
+            print("[PERFECT] All OLS analysis steps completed!")
+        if ml_success:
+            print("[BONUS] ML robustness validation also completed!")
+            print("        Robustness section templates ready in outputs/ml_models/")
+        elif results['ML Model Training'] and not results['ML Validation & Robustness Sections']:
+            print("[WARNING] ML training completed but validation failed")
+            print("         Check error messages above from Step 6")
+        elif not results['ML Model Training']:
+            print("[NOTE] ML validation not completed (optional robustness check)")
         return True
     else:
         print("[WARNING] Some critical analyses failed")
