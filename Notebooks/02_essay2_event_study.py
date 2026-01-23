@@ -422,14 +422,29 @@ if interaction_param_name:
 else:
     print("[NOTE] Could not identify interaction parameter in placebo model")
 
-# Save placebo model
+# Save placebo model (use dynamic parameter names)
+pvalues_to_save = []
+sig_to_save = []
+
+if fcc_param_name:
+    pvalues_to_save.append(placebo_model.pvalues[fcc_param])
+    sig_to_save.append(placebo_model.pvalues[fcc_param] < 0.05)
+else:
+    pvalues_to_save.append(np.nan)
+    sig_to_save.append(False)
+
+if interaction_param_name:
+    pvalues_to_save.append(placebo_model.pvalues[interaction_param])
+    sig_to_save.append(placebo_model.pvalues[interaction_param] < 0.05)
+else:
+    pvalues_to_save.append(np.nan)
+    sig_to_save.append(False)
+
 placebo_results = pd.DataFrame({
     'Test': ['FCC Main Effect', 'Immediate x FCC Interaction'],
     'Coefficient': [fcc_coef_placebo, interaction_coef_placebo],
-    'P-value': [placebo_model.pvalues['fcc_reportable'],
-                placebo_model.pvalues['immediate_disclosure:fcc_reportable']],
-    'Significant (p<0.05)': [placebo_model.pvalues['fcc_reportable'] < 0.05,
-                             placebo_model.pvalues['immediate_disclosure:fcc_reportable'] < 0.05]
+    'P-value': pvalues_to_save,
+    'Significant (p<0.05)': sig_to_save
 })
 
 placebo_results.to_csv(f'{output_base}/tables/placebo_test_results.csv', index=False)
