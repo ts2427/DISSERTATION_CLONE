@@ -1,0 +1,164 @@
+
+============================================================
+Model 1
+============================================================
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                car_30d   R-squared:                       0.004
+Model:                            OLS   Adj. R-squared:                 -0.002
+Method:                 Least Squares   F-statistic:                    0.7256
+Date:                Thu, 22 Jan 2026   Prob (F-statistic):              0.396
+Time:                        11:55:09   Log-Likelihood:                -645.31
+No. Observations:                 165   AIC:                             1295.
+Df Residuals:                     163   BIC:                             1301.
+Df Model:                           1                                         
+Covariance Type:                  HC3                                         
+========================================================================================
+                           coef    std err          z      P>|z|      [0.025      0.975]
+----------------------------------------------------------------------------------------
+const                   -2.8689      1.125     -2.550      0.011      -5.074      -0.664
+immediate_disclosure     1.8000      2.113      0.852      0.394      -2.342       5.942
+==============================================================================
+Omnibus:                       37.662   Durbin-Watson:                   1.278
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               80.830
+Skew:                          -1.010   Prob(JB):                     2.81e-18
+Kurtosis:                       5.771   Cond. No.                         2.44
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity robust (HC3)
+
+
+============================================================
+Model 2
+============================================================
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                car_30d   R-squared:                       0.040
+Model:                            OLS   Adj. R-squared:                  0.028
+Method:                 Least Squares   F-statistic:                     3.024
+Date:                Thu, 22 Jan 2026   Prob (F-statistic):             0.0514
+Time:                        11:55:09   Log-Likelihood:                -642.31
+No. Observations:                 165   AIC:                             1291.
+Df Residuals:                     162   BIC:                             1300.
+Df Model:                           2                                         
+Covariance Type:                  HC3                                         
+========================================================================================
+                           coef    std err          z      P>|z|      [0.025      0.975]
+----------------------------------------------------------------------------------------
+const                   -0.7281      1.274     -0.572      0.568      -3.225       1.768
+immediate_disclosure     1.5159      2.104      0.720      0.471      -2.608       5.640
+fcc_reportable          -4.5929      1.900     -2.417      0.016      -8.317      -0.869
+==============================================================================
+Omnibus:                       34.307   Durbin-Watson:                   1.290
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               61.969
+Skew:                          -0.999   Prob(JB):                     3.50e-14
+Kurtosis:                       5.242   Cond. No.                         2.89
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity robust (HC3)
+
+
+============================================================
+Model 3
+============================================================
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                car_30d   R-squared:                       0.047
+Model:                            OLS   Adj. R-squared:                  0.029
+Method:                 Least Squares   F-statistic:                     2.408
+Date:                Thu, 22 Jan 2026   Prob (F-statistic):             0.0691
+Time:                        11:55:09   Log-Likelihood:                -641.70
+No. Observations:                 165   AIC:                             1291.
+Df Residuals:                     161   BIC:                             1304.
+Df Model:                           3                                         
+Covariance Type:                  HC3                                         
+========================================================================================
+                           coef    std err          z      P>|z|      [0.025      0.975]
+----------------------------------------------------------------------------------------
+const                   -0.1342      1.337     -0.100      0.920      -2.754       2.485
+immediate_disclosure    -0.4144      2.833     -0.146      0.884      -5.968       5.139
+fcc_reportable          -5.8672      2.242     -2.617      0.009     -10.262      -1.472
+fcc_x_immediate          4.5801      4.250      1.078      0.281      -3.749      12.910
+==============================================================================
+Omnibus:                       33.102   Durbin-Watson:                   1.271
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               59.724
+Skew:                          -0.965   Prob(JB):                     1.07e-13
+Kurtosis:                       5.228   Cond. No.                         6.10
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity robust (HC3)
+
+
+============================================================
+Model 4
+============================================================
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                car_30d   R-squared:                       0.146
+Model:                            OLS   Adj. R-squared:                  0.120
+Method:                 Least Squares   F-statistic:                     2.873
+Date:                Thu, 22 Jan 2026   Prob (F-statistic):             0.0164
+Time:                        11:55:09   Log-Likelihood:                -632.62
+No. Observations:                 165   AIC:                             1277.
+Df Residuals:                     159   BIC:                             1296.
+Df Model:                           5                                         
+Covariance Type:                  HC3                                         
+========================================================================================
+                           coef    std err          z      P>|z|      [0.025      0.975]
+----------------------------------------------------------------------------------------
+const                  -37.0771     11.628     -3.189      0.001     -59.868     -14.286
+immediate_disclosure    -0.5287      2.946     -0.179      0.858      -6.304       5.246
+fcc_reportable          -8.4221      2.530     -3.328      0.001     -13.381      -3.463
+fcc_x_immediate          4.9524      4.128      1.200      0.230      -3.138      13.042
+firm_size_log            2.9025      0.997      2.911      0.004       0.948       4.857
+leverage                 9.0299      5.043      1.791      0.073      -0.854      18.914
+==============================================================================
+Omnibus:                       11.105   Durbin-Watson:                   1.509
+Prob(Omnibus):                  0.004   Jarque-Bera (JB):               17.865
+Skew:                          -0.342   Prob(JB):                     0.000132
+Kurtosis:                       4.459   Cond. No.                         117.
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity robust (HC3)
+
+
+============================================================
+Model 5
+============================================================
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                car_30d   R-squared:                       0.172
+Model:                            OLS   Adj. R-squared:                  0.140
+Method:                 Least Squares   F-statistic:                     2.791
+Date:                Thu, 22 Jan 2026   Prob (F-statistic):             0.0131
+Time:                        11:55:09   Log-Likelihood:                -630.12
+No. Observations:                 165   AIC:                             1274.
+Df Residuals:                     158   BIC:                             1296.
+Df Model:                           6                                         
+Covariance Type:                  HC3                                         
+========================================================================================
+                           coef    std err          z      P>|z|      [0.025      0.975]
+----------------------------------------------------------------------------------------
+const                  -48.1224     14.428     -3.335      0.001     -76.401     -19.844
+immediate_disclosure    -0.8824      3.005     -0.294      0.769      -6.772       5.007
+fcc_reportable         -10.8589      3.264     -3.327      0.001     -17.257      -4.461
+fcc_x_immediate          5.4070      4.143      1.305      0.192      -2.713      13.527
+firm_size_log            4.1909      1.370      3.059      0.002       1.506       6.876
+leverage                 7.2147      5.168      1.396      0.163      -2.915      17.345
+total_cves              -0.0006      0.000     -1.871      0.061      -0.001    3.01e-05
+==============================================================================
+Omnibus:                        7.882   Durbin-Watson:                   1.606
+Prob(Omnibus):                  0.019   Jarque-Bera (JB):               12.448
+Skew:                          -0.204   Prob(JB):                      0.00198
+Kurtosis:                       4.282   Cond. No.                     5.24e+04
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity robust (HC3)
+[2] The condition number is large, 5.24e+04. This might indicate that there are
+strong multicollinearity or other numerical problems.
+

@@ -1,0 +1,287 @@
+================================================================================
+  DISSERTATION ANALYTICS PIPELINE
+  Data Breach Disclosure Timing and Market Reactions
+  Timothy Spivey - University of South Alabama
+================================================================================
+
+================================================================================
+  STEP 0: DATA VERIFICATION
+================================================================================
+
+  [OK] Main enriched dataset (CSV) (2.0 MB)
+
+[OK] All required data files present
+
+================================================================================
+  STEP 1: DESCRIPTIVE STATISTICS
+================================================================================
+
+Running: Generating Tables 1-2 and descriptive figures
+Script: notebooks/01_descriptive_statistics.py
+--------------------------------------------------------------------------------
+[Output from notebook execution...]
+✓ Saved outputs/tables/table1_descriptive_stats.csv
+✓ Saved outputs/figures/fig1_breach_timeline.png
+[OK] Completed in 15.3 seconds
+
+================================================================================
+  STEP 2: ESSAY 2 - EVENT STUDY ANALYSIS
+================================================================================
+
+Running: Running event study regressions (5 models)
+Script: notebooks/02_essay2_event_study.py
+--------------------------------------------------------------------------------
+[Output from notebook execution...]
+MODEL 1: BASELINE - IMMEDIATE DISCLOSURE EFFECT
+[Regression summary output...]
+✓ Table 3 saved to outputs/tables/
+[OK] Completed in 22.1 seconds
+
+================================================================================
+  STEP 3: ESSAY 3 - INFORMATION ASYMMETRY
+================================================================================
+
+Running: Running volatility analysis (5 models)
+Script: notebooks/03_essay3_information_asymmetry.py
+--------------------------------------------------------------------------------
+[Output from notebook execution...]
+MODEL 1: BASELINE - VOLATILITY EFFECTS
+[Regression summary output...]
+✓ Table 4 saved to outputs/tables/
+[OK] Completed in 18.7 seconds
+
+================================================================================
+  STEP 4: ENRICHMENT DEEP DIVE
+================================================================================
+
+Running: Analyzing enrichment variables
+Script: notebooks/04_enrichment_analysis.py
+--------------------------------------------------------------------------------
+[Output from notebook execution...]
+✓ Enrichment analysis complete
+[OK] Completed in 12.4 seconds
+
+================================================================================
+  STEP 5: MACHINE LEARNING MODEL TRAINING
+================================================================================
+
+Running: Training Random Forest and Gradient Boosting models
+Script: scripts/60_train_ml_model.py
+--------------------------------------------------------------------------------
+[Output from ML training...]
+Training Random Forest for Essay 2...
+Training Gradient Boosting for Essay 2...
+Training Random Forest for Essay 3...
+Training Gradient Boosting for Essay 3...
+✓ Models saved to outputs/ml_models/trained_models/
+[OK] Completed in 35.2 seconds
+
+================================================================================
+  STEP 6: ML VALIDATION & ROBUSTNESS SECTIONS
+================================================================================
+
+Running: Comparing ML models to OLS and generating robustness sections
+Script: scripts/61_ml_validation.py
+--------------------------------------------------------------------------------
+[Output from ML validation...]
+Comparing ML results to OLS baseline...
+✓ Feature importance analysis complete
+✓ Robustness section templates generated
+[OK] Completed in 8.5 seconds
+
+================================================================================
+  OUTPUT VERIFICATION
+================================================================================
+
+Tables Generated: 8 CSV, 2 LaTeX
+  [OK] table1_descriptive_stats.csv
+  [OK] table1_descriptive_stats.tex
+  [OK] table2_univariate_comparison.csv
+  [OK] table3_essay2_regressions.tex
+  [OK] table3_essay2_summary.csv
+  [OK] table3_robustness_5day.tex
+  [OK] table4_essay3_regressions.tex
+  [OK] table4_essay3_summary.csv
+
+Figures Generated: 9
+  [OK] fig1_breach_timeline.png
+  [OK] fig2_car_distribution.png
+  [OK] fig3_enrichment_highlights.png
+  [OK] fig4_heterogeneity_analysis.png
+  [OK] fig5_volatility_analysis.png
+  [OK] enrichment_darkweb.png
+  [OK] enrichment_executive_turnover.png
+  [OK] enrichment_prior_breaches.png
+  [OK] enrichment_regulatory.png
+
+ML Models Generated: 6 CSV, 3 PNG, 1 JSON, 2 Templates, 4 Models
+  [OK] ols_vs_ml_essay2_comparison.csv
+  [OK] ols_vs_ml_essay3_comparison.csv
+  [OK] feature_importance_essay2_rf.csv
+  [OK] feature_importance_essay3_rf.csv
+  [OK] ml_model_results.json
+  [OK] feature_importance_random_forest_essay_2.png
+  [OK] ols_vs_ml_importance_comparison.png
+  [OK] robustness_section_template_essay2.txt
+  [OK] robustness_section_template_essay3.txt
+  [OK] 4 trained models (pickled)
+
+================================================================================
+  LAUNCHING STREAMLIT DASHBOARD
+================================================================================
+
+Starting Streamlit dashboard...
+  Location: Dashboard/app.py
+  URL: http://localhost:8501
+
+[OK] Streamlit dashboard starting...
+[OK] Opening dashboard in default browser...
+
+================================================================================
+  PIPELINE SUMMARY
+================================================================================
+
+[SUCCESS] Completed Steps:
+  * Descriptive Statistics
+  * Essay 2: Event Study
+  * Essay 3: Information Asymmetry
+  * Enrichment Analysis
+  * ML Model Training
+  * ML Validation & Robustness Sections
+  * Dashboard Launch
+
+Total Execution Time: 112.2 minutes
+
+--------------------------------------------------------------------------------
+DISSERTATION STRUCTURE:
+  Essay 1: Theoretical Framework (pure theory)
+  Essay 2: Event Study - Market Reactions [ANALYZED]
+    - Robustness: OLS + Alternative Specifications
+    - Robustness: ML Validation (Random Forest, Gradient Boosting) [OPTIONAL]
+  Essay 3: Information Asymmetry [ANALYZED]
+    - Robustness: OLS + Alternative Specifications
+    - Robustness: ML Validation (Random Forest, Gradient Boosting) [OPTIONAL]
+
+KEY ENRICHMENTS:
+  1. Prior Breach History (41.9% repeat offenders)
+  2. Breach Severity (11.1% health data)
+  3. Executive Turnover (42.8% within 30 days)
+  4. Regulatory Enforcement (0.6% of breaches)
+
+EXPECTED OUTPUTS:
+  OLS Analysis Tables:
+    * table1_descriptive_stats.csv
+    * table2_univariate_comparison.csv
+    * table3_essay2_regressions.tex (5 models)
+    * table4_essay3_regressions.tex (5 models)
+  Figures:
+    * fig1_breach_timeline.png
+    * fig2_car_distribution.png
+    * fig3_enrichment_highlights.png
+    * fig4_heterogeneity_analysis.png
+    * fig5_volatility_analysis.png
+    * enrichment_*.png (4 figures)
+  ML Validation (if scripts 60-61 run successfully):
+    * ml_model_results.json (model metrics)
+    * feature_importance_essay2_rf.csv
+    * feature_importance_essay3_rf.csv
+    * ols_vs_ml_essay2_comparison.csv
+    * ols_vs_ml_essay3_comparison.csv
+    * feature_importance_random_forest_(essay_2).png
+    * feature_importance_random_forest_(essay_3).png
+    * ols_vs_ml_importance_comparison.png
+    * robustness_section_template_essay2.txt
+    * robustness_section_template_essay3.txt
+    * trained_models/rf_essay2_car30d.pkl
+    * trained_models/gb_essay2_car30d.pkl
+    * trained_models/rf_essay3_volatility.pkl
+    * trained_models/gb_essay3_volatility.pkl
+
+KEY FINDINGS:
+  * Health data breaches: -4.32%*** (p<0.001)
+  * FCC regulation: -3.60%*** (p=0.003)
+  * Prior breaches: -0.11%*** per breach (p=0.002)
+  * Executive turnover: 42.8% within 30 days
+  * FCC increases volatility: +4.96%*** (p<0.001)
+
+--------------------------------------------------------------------------------
+NEXT STEPS:
+  1. Review interactive dashboard at http://localhost:8501
+  2. Review outputs/tables/ and outputs/figures/
+  3. If ML robustness sections generated:
+     - Review outputs/ml_models/robustness_section_template_essay2.txt
+     - Review outputs/ml_models/robustness_section_template_essay3.txt
+     - Copy templates into Essays 2 & 3 robustness sections
+  4. Begin writing Essay 2 and Essay 3 results sections
+  5. Use Table 3 for Essay 2, Table 4 for Essay 3
+  6. Include enrichment figures in appendix
+  7. Include ML comparison plots in essay robustness sections
+
+FILES FOR COMMITTEE:
+  * outputs/tables/table3_essay2_regressions.tex
+  * outputs/tables/table4_essay3_regressions.tex
+  * outputs/figures/*.png (all figures)
+
+================================================================================
+
+[SUCCESS] Critical analyses completed successfully!
+[PERFECT] All OLS analysis steps completed!
+[BONUS] ML robustness validation also completed!
+        Robustness section templates ready in outputs/ml_models/
+[BONUS] Dashboard launched in browser!
+        View at: http://localhost:8501
+        Dashboard will remain open for review
+
+================================================================================
+
+[COMPLETE] Pipeline finished successfully
+
+--- AT THIS POINT, BROWSER OPENS AUTOMATICALLY ---
+
+Browser Window Opens:
+┌──────────────────────────────────────────────────────────┐
+│ http://localhost:8501 - Streamlit Dashboard              │
+├──────────────────────────────────────────────────────────┤
+│                                                            │
+│ 🔒 Data Breach Disclosure Timing and Market Reactions    │
+│                                                            │
+│ Central Research Question:                                │
+│ "Is there any benefit to disclosing a data breach         │
+│  immediately, or should it be delayed?"                  │
+│                                                            │
+│ [SIDEBAR]                                                 │
+│ 📖 Welcome                                                │
+│ 🧠 Research Story                                         │
+│ 🔬 Natural Experiment                                     │
+│ 📋 Sample Validation                                      │
+│ 🌍 Data Landscape                                         │
+│ 📈 Essay 2: Market Reactions                              │
+│ 💨 Essay 3: Volatility                                    │
+│ 💡 Key Finding                                            │
+│ ✅ Conclusion                                              │
+│ 🔍 Raw Data Explorer                                      │
+│ 📚 Data Dictionary                                        │
+│                                                            │
+└──────────────────────────────────────────────────────────┘
+
+USER CAN:
+✓ Navigate through all 11 pages
+✓ View visualizations and findings
+✓ Search and filter raw data
+✓ Browse data dictionary
+✓ Export data
+✓ Copy content for presentation to committee
+✓ Close browser when done (Streamlit stays running)
+
+SCRIPT TERMINAL RETURNS TO PROMPT:
+C:\Users\mcobp\OneDrive\Desktop\DISSERTATION_CLONE>
+(user can close terminal or run other commands)
+
+STREAMLIT CONTINUES RUNNING:
+- Accessible at http://localhost:8501
+- Remains open until user closes browser or stops Streamlit
+- Can stop with: Ctrl+C in terminal running Streamlit
+
+================================================================================
+EOF - PIPELINE COMPLETE
+================================================================================
