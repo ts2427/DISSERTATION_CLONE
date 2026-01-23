@@ -404,19 +404,23 @@ print("\n" + "-"*80)
 print("Interpretation:")
 print("-"*80)
 
-if placebo_model.pvalues['fcc_reportable'] > 0.10:
-    print("✓ FCC coefficient NOT significant in placebo test (p > 0.10)")
-    print("  This confirms that CAR effect is breach-specific, not random noise")
-else:
-    print("⚠ FCC coefficient IS significant in placebo test (p < 0.10)")
-    print("  Could indicate: (1) spurious correlation, (2) model misspecification, (3) randomness")
+if fcc_param_name:
+    if placebo_model.pvalues[fcc_param] > 0.10:
+        print("✓ FCC coefficient NOT significant in placebo test (p > 0.10)")
+        print("  This confirms that CAR effect is breach-specific, not random noise")
+    else:
+        print("⚠ FCC coefficient IS significant in placebo test (p < 0.10)")
+        print("  Could indicate: (1) spurious correlation, (2) model misspecification, (3) randomness")
 
-if placebo_model.pvalues['immediate_disclosure:fcc_reportable'] > 0.10:
-    print("✓ Interaction NOT significant in placebo test (p > 0.10)")
-    print("  Main finding is robust to randomized event date assignment")
+if interaction_param_name:
+    if placebo_model.pvalues[interaction_param] > 0.10:
+        print("✓ Interaction NOT significant in placebo test (p > 0.10)")
+        print("  Main finding is robust to randomized event date assignment")
+    else:
+        print("⚠ Interaction IS significant in placebo test (p < 0.10)")
+        print("  Results may not be robust; recommend further investigation")
 else:
-    print("⚠ Interaction IS significant in placebo test (p < 0.10)")
-    print("  Results may not be robust; recommend further investigation")
+    print("[NOTE] Could not identify interaction parameter in placebo model")
 
 # Save placebo model
 placebo_results = pd.DataFrame({
