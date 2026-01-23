@@ -47,9 +47,10 @@ def run_script(script_path, description):
     env = os.environ.copy()
     env['PYTHONIOENCODING'] = 'utf-8'
 
-    # Run the script using the same Python interpreter (venv when using uv run)
+    # Use uv run to spawn subprocess in same environment
+    # This ensures the subprocess has all dependencies from uv virtual environment
     result = subprocess.run(
-        [sys.executable, script_path],
+        ['uv', 'run', 'python', script_path],
         capture_output=True,
         text=True,
         encoding='utf-8',
