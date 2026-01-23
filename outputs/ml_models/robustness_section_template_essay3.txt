@@ -11,16 +11,16 @@ We implemented tree-based ensemble methods using 5-fold cross-validation on temp
 Model specifications: Random Forest (100 trees, max_depth=10) and Gradient Boosting (100
 estimators, max_depth=4, learning_rate=0.1).
 
-Sample: 528 breaches with complete volatility and feature data
+Sample: 724 breaches with complete volatility and feature data
 Features: 12 predictor variables
-Train/Test Split: 369/159
+Train/Test Split: 506/218
 
 Results:
 Model Fit:
 - OLS baseline (from main models):                      R² = 0.474
-- Random Forest:                                         R² = 0.6215
-- Gradient Boosting:                                    R² = 0.7328
-- 5-Fold Cross-Validation (RF):                         R² = 0.2014 (±0.1297)
+- Random Forest:                                         R² = 0.6249
+- Gradient Boosting:                                    R² = 0.6656
+- 5-Fold Cross-Validation (RF):                         R² = 0.2488 (±0.1769)
 
 Feature Importance Analysis:
 ML models confirm that pre-breach volatility is overwhelmingly the strongest predictor of
@@ -46,7 +46,7 @@ already-volatile stock prices, potentially reflecting uncertainty amplification.
 Conclusion:
 Machine learning models validate our main OLS findings that FCC regulation significantly
 increases post-breach volatility (ML confirms strong FCC effect). The improvement in model fit
-(R² 0.6215 vs 0.474 for OLS) indicates that ensemble methods capture additional non-linear
+(R² 0.6249 vs 0.474 for OLS) indicates that ensemble methods capture additional non-linear
 relationships, but the core mechanisms remain those identified by OLS regression. The substantial
 correlation between OLS coefficients and ML feature importance validates our econometric
 specification. Our conclusion that pre-breach volatility dominates the volatility response is

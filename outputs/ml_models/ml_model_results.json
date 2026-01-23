@@ -1,8 +1,8 @@
 {
   "essay2": {
     "description": "30-day Cumulative Abnormal Returns (CAR) Prediction",
-    "sample_size": 535,
-    "train_test_split": "374/161",
+    "sample_size": 731,
+    "train_test_split": "511/220",
     "features": [
       "immediate_disclosure",
       "fcc_reportable",
@@ -18,24 +18,24 @@
       "is_repeat_offender"
     ],
     "random_forest": {
-      "test_r2": 0.2929583816170833,
-      "test_rmse": 7.636109016902041,
-      "test_mae": 5.1421478220456915,
-      "correlation": 0.5820542788060266,
-      "cv_r2_mean": -0.0889064896501878,
-      "cv_r2_std": 0.07664995544392954
+      "test_r2": 0.21772593639472648,
+      "test_rmse": 8.113541133820132,
+      "test_mae": 5.028784672817383,
+      "correlation": 0.5189529946449335,
+      "cv_r2_mean": -0.13000726285090533,
+      "cv_r2_std": 0.3143933643522876
     },
     "gradient_boosting": {
-      "test_r2": 0.46479420803538185,
-      "test_rmse": 6.6437003022427135,
-      "test_mae": 4.406643304556261,
-      "correlation": 0.6860835637959267
+      "test_r2": 0.3809168875819604,
+      "test_rmse": 7.217810160194744,
+      "test_mae": 4.398397294752783,
+      "correlation": 0.6523821462720909
     }
   },
   "essay3": {
     "description": "Post-Breach Stock Return Volatility Prediction",
-    "sample_size": 528,
-    "train_test_split": "369/159",
+    "sample_size": 724,
+    "train_test_split": "506/218",
     "features": [
       "return_volatility_pre",
       "immediate_disclosure",
@@ -51,18 +51,18 @@
       "is_repeat_offender"
     ],
     "random_forest": {
-      "test_r2": 0.6214681352557282,
-      "test_rmse": 8.546771170673754,
-      "test_mae": 5.832184921842943,
-      "correlation": 0.8118513181542176,
-      "cv_r2_mean": 0.201417151257926,
-      "cv_r2_std": 0.12967817120438235
+      "test_r2": 0.6248757920571149,
+      "test_rmse": 8.232532461045693,
+      "test_mae": 5.706831539448903,
+      "correlation": 0.8017218839375388,
+      "cv_r2_mean": 0.2488001866116359,
+      "cv_r2_std": 0.17692584856942462
     },
     "gradient_boosting": {
-      "test_r2": 0.7328211672955026,
-      "test_rmse": 7.180453570539115,
-      "test_mae": 4.827037775674473,
-      "correlation": 0.8567161513000525
+      "test_r2": 0.6656249938019158,
+      "test_rmse": 7.772537209257459,
+      "test_mae": 5.32784305225273,
+      "correlation": 0.8159906852229604
     }
   }
 }

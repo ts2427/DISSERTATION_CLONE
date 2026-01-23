@@ -11,16 +11,16 @@ the temporal ordering of breach events. Random Forest uses bootstrap aggregation
 (max_depth=10, min_samples_leaf=5) and Gradient Boosting uses sequential tree refinement
 (100 estimators, max_depth=4, learning_rate=0.1).
 
-Sample: 535 breaches with complete feature data
+Sample: 731 breaches with complete feature data
 Features: 12 predictor variables
-Train/Test Split: 374/161
+Train/Test Split: 511/220
 
 Results:
 Model Fit:
 - OLS baseline (from main models):                      R² = 0.055
-- Random Forest:                                         R² = 0.2930
-- Gradient Boosting:                                    R² = 0.4648
-- 5-Fold Cross-Validation (RF):                         R² = -0.0889 (±0.0766)
+- Random Forest:                                         R² = 0.2177
+- Gradient Boosting:                                    R² = 0.3809
+- 5-Fold Cross-Validation (RF):                         R² = -0.1300 (±0.3144)
 
 Feature Importance Analysis:
 ML models identify FCC regulation as the strongest predictor, consistent with our OLS findings.
@@ -42,7 +42,7 @@ This heterogeneity explains why the FCC effect is much stronger in the CVE subsa
 Conclusion:
 Machine learning models confirm FCC regulation as the dominant predictor of market reactions
 to breach disclosures, and reveal that this effect is substantially stronger for severe breaches.
-The modest improvement in model fit (R² 0.2930 vs 0.055 for OLS) suggests that while
+The modest improvement in model fit (R² 0.2177 vs 0.055 for OLS) suggests that while
 non-linear relationships exist, the main effects identified in our OLS models capture the key
 drivers of market reactions. The strong correlation between OLS coefficients and ML feature
 importance (see table) provides additional validation

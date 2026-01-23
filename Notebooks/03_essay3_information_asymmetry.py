@@ -212,7 +212,7 @@ else:
 # Save VIF results if available
 if len(vif_results) > 0:
     vif_results.to_csv(f'{output_base}/tables/vif_analysis_essay3.csv', index=False)
-    print(f"\n✓ VIF analysis saved to {output_base}/tables/vif_analysis_essay3.csv")
+    print(f"\n[OK] VIF analysis saved to {output_base}/tables/vif_analysis_essay3.csv")
 
 # %% [markdown]
 # ## Table 4: Regression Results - Essay 3
@@ -250,7 +250,7 @@ summary_df = pd.DataFrame({
 })
 summary_df.to_csv(f'{output_base}/tables/table4_essay3_summary.csv', index=False)
 
-print(f"\n✓ Table 4 saved to {output_base}/tables/")
+print(f"\n[OK] Table 4 saved to {output_base}/tables/")
 
 # %% [markdown]
 # ## Figure 5: Volatility Changes
@@ -314,7 +314,7 @@ if 'is_first_breach' in essay3_df.columns and 'is_repeat_offender' in essay3_df.
 
 plt.tight_layout()
 plt.savefig(f'{output_base}/figures/fig5_volatility_analysis.png', dpi=300, bbox_inches='tight')
-print(f"✓ Saved {output_base}/figures/fig5_volatility_analysis.png")
+print(f"[OK] Saved {output_base}/figures/fig5_volatility_analysis.png")
 plt.close()
 
 # %% [markdown]
@@ -361,9 +361,9 @@ def print_coef(model, var_name, hypothesis):
         
         if pval < 0.10:
             direction = "reduces" if coef < 0 else "increases"
-            print(f"  ✓ SUPPORTED: {hypothesis.split(':')[1].strip()} {direction} volatility change by {abs(coef):.6f}")
+            print(f"  [YES] SUPPORTED: {hypothesis.split(':')[1].strip()} {direction} volatility change by {abs(coef):.6f}")
         else:
-            print(f"  ✗ NOT SUPPORTED at p<0.10")
+            print(f"  [NO] NOT SUPPORTED at p<0.10")
     else:
         print(f"\n{hypothesis}")
         print(f"  Variable not in model")
@@ -376,11 +376,11 @@ print_coef(model4, 'immediate_disclosure:executive_change_30d', 'H4: Executive T
 print_coef(model1, 'fcc_reportable[T.True]', 'H5: FCC Regulation Effect on Volatility')
 
 print("\n" + "="*80)
-print("✅ ESSAY 3 ANALYSIS COMPLETE!")
+print("[COMPLETE] ESSAY 3 ANALYSIS COMPLETE!")
 print("="*80)
 print(f"\nOutput files saved to {output_base}/")
 print("\nGenerated:")
-print("  ✓ Table 4: Information asymmetry regressions (5 models)")
-print("  ✓ Figure 5: Volatility analysis")
-print("  ✓ Robustness check: Volume volatility")
+print("  [OK] Table 4: Information asymmetry regressions (5 models)")
+print("  [OK] Figure 5: Volatility analysis")
+print("  [OK] Robustness check: Volume volatility")
 print("="*80)
