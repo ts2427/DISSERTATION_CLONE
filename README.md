@@ -20,19 +20,19 @@ This dissertation analyzes the market reactions to data breach disclosures among
 
 ### Sample Overview
 
-**Total Breaches Analyzed:** 1,054 publicly-traded companies (2004-2024)
-- **Essay 2 (Event Study):** 757 breaches with CRSP stock price data (72%)
-- **Essay 3 (Volatility Analysis):** 750 breaches with trading data (71%)
-- **Data Matching Success:** 92.1% of 858 raw breach records matched to public companies
+**Total Breaches Analyzed:** 1,054 publicly-traded companies (2006-2025, 19 years)
+- **Essay 2 (Event Study):** 926 breaches with CRSP stock price data (87.9%)
+- **Essay 3 (Volatility Analysis):** 916 breaches with trading data (86.9%)
+- **Data Matching Success:** 92.1% of raw breach records matched to public companies
 
 **Breach Characteristics:**
-- **FCC-Regulated Firms:** 200 (18.9%) - Telecom, cable, satellite, VoIP industries
-- **Non-FCC Firms:** 854 (81.1%)
-- **Repeat Offenders:** 708 (67.2%) - firms with prior breach history
-- **First-Time Breaches:** 346 (32.8%)
-- **Health Data Breaches:** 106 (10.1%) - Protected health information
-- **Financial Data Breaches:** 231 (21.9%)
-- **Executive Turnover:** 451 breaches (42.8%) with executive departure within 30 days
+- **FCC-Regulated Firms:** 200 (19.0%) - Telecom, cable, satellite, VoIP industries
+- **Non-FCC Firms:** 854 (81.0%)
+- **Repeat Offenders:** 442 (41.9%) - firms with prior breach history
+- **First-Time Breaches:** 612 (58.1%)
+- **Health Data Breaches:** 117 (11.1%) - Protected health information
+- **Financial Data Breaches:** 257 (24.4%)
+- **Executive Turnover:** 443 breaches (42.0%) with executive departure within 30 days
 
 ## 📊 Dissertation Framework
 
@@ -231,7 +231,7 @@ Variables: 83
 
 [STEP 2: ESSAY 2 - EVENT STUDY ANALYSIS]
 Running: Running event study regressions (5 models)
-Essay 2 Sample: 757 breaches with CRSP data
+Essay 2 Sample: 926 breaches with CRSP data
 ...
 
 [COMPLETE] Pipeline finished successfully
@@ -816,12 +816,13 @@ This dissertation leverages **FCC Rule 37.3** as a natural experiment to identif
 
 ### Sample Selection
 
-- **Total Breaches:** 1,054 records (DataBreaches.gov, 2000-2024)
-- **With Stock Price Data (Essay 2):** 757 (72%)
-- **With Volatility Data (Essay 3):** 750 (71%)
+- **Total Breaches:** 1,054 records (DataBreaches.gov, 2006-2025)
+- **With Stock Price Data (Essay 2):** 926 (87.9%)
+- **With Volatility Data (Essay 3):** 916 (86.9%)
 - **Attrition Analysis:** Available in `outputs/tables/sample_attrition.csv`
   - Excluded: Non-public firms, firms without CRSP data, incomplete disclosure timing
-  - Tested for selection bias: Comparing included vs. excluded samples (see output table)
+  - Sample attrition differs significantly on: firm size (p<0.001), ROA (p=0.015), FCC status (p=0.010), prior breaches (p<0.001)
+  - Results generalize to publicly-traded U.S. firms with available market data
 
 ### Event Study Approach (Essay 2)
 
@@ -874,7 +875,7 @@ This dissertation leverages **FCC Rule 37.3** as a natural experiment to identif
    - Model 3: Add breach characteristics (health, financial, severity)
    - Model 4: Add governance moderation (executive turnover, firm size)
    - Model 5: Full model with interaction effects
-5. **Sample:** 750 breaches with sufficient pre/post trading data
+5. **Sample:** 916 breaches with sufficient pre/post trading data (86.9% of total)
 6. **Robust Errors:** HC3 heteroskedasticity-robust standard errors
 
 ### Enrichment Variables & Pipeline
@@ -883,8 +884,8 @@ The enrichment pipeline adds hypothesis-driven variables to test moderating mech
 
 **H3: Prior Breach History (Market Memory)**
 - **Logic:** Repeat offenders signal weak governance; market less surprised
-- **Data:** 44 years of DataBreaches.gov historical records
-- **Coverage:** 708 firms (67%) with prior breaches; 346 (33%) first-time
+- **Data:** 19 years of DataBreaches.gov historical records (2006-2025)
+- **Coverage:** 442 firms (41.9%) with prior breaches; 612 (58.1%) first-time
 - **Variables Created:**
   - `prior_breaches_total`: Count of all prior breaches (mean: 16.74)
   - `is_repeat_offender`: Binary indicator of prior breach history
@@ -994,8 +995,8 @@ The enrichment pipeline adds hypothesis-driven variables to test moderating mech
 
 - **Sample:** Public firms only (excludes private companies, government)
 - **Data:** Relies on voluntary DataBreaches.gov disclosure
-- **Period:** 2004-2024 (captures post-Sarbanes-Oxley era)
-- **Selection:** 72% of breaches have stock price data (tested for bias)
+- **Period:** 2006-2025 (captures post-Sarbanes-Oxley era, 19 years)
+- **Selection:** 87.9% of breaches have stock price data (tested for bias)
 - **FCC Sample:** Only 200 firms (18.9% of sample) - treated as minority
 - **Enforcement:** Very low prevalence (6 actions) - may lack power
 
@@ -1050,9 +1051,9 @@ This project is provided for academic and research purposes.
 **Key Slides & Figures to Prepare:**
 
 1. **Sample Composition (Table 1 + Figure 1)**
-   - Show: 1,054 breaches, 757 with stock data, 750 with volatility data
-   - Timeline figure showing breach frequency by year
-   - FCC vs. non-FCC breakdown
+   - Show: 1,054 breaches, 926 with stock data (87.9%), 916 with volatility data (86.9%)
+   - Timeline figure showing breach frequency by year (2006-2025)
+   - FCC vs. non-FCC breakdown (19% FCC-regulated, 81% non-FCC)
 
 2. **Theoretical Contributions (Dissertation Framework PNG)**
    - Visual of natural experiment design
@@ -1175,29 +1176,30 @@ For questions about:
 [STEP 1: DESCRIPTIVE STATISTICS]
 Dataset loaded: 1054 breaches
 Variables: 83
-Date range: 2004-01-01 to 2024-12-31
+Date range: 2006-05-01 to 2025-08-09
 
 Sample Selection and Attrition Analysis
 Total breaches in dataset: 1,054
 
 Essay 2 (Event Study) Sample:
-  Breaches with CRSP data: 757 (71.8%)
-  Excluded from Essay 2: 297 (28.2%)
+  Breaches with CRSP data: 926 (87.9%)
+  Excluded from Essay 2: 128 (12.1%)
 
 Essay 3 (Information Asymmetry) Sample:
-  Breaches with volatility data: 750 (71.3%)
-  Excluded from Essay 3: 304 (28.9%)
+  Breaches with volatility data: 916 (86.9%)
+  Excluded from Essay 3: 138 (13.1%)
 
-COMPARISON: INCLUDED VS EXCLUDED BREACHES
-  Variable        Excluded Mean  Included Mean  Difference  p-value  Sig
-  Firm Size       10.23          10.58          0.35        0.089    *
-  Leverage        0.72           0.70          -0.02        0.450
-  ROA             0.01           0.02           0.01        0.123
-  Prior Breaches  15.4           17.5           2.1         0.234
+SAMPLE ATTRITION ANALYSIS
+Included vs. excluded samples differ significantly on:
+  - Firm Size (p<0.001)
+  - ROA (p=0.015)
+  - FCC Status (p=0.010)
+  - Prior Breaches (p<0.001)
+Results generalize to publicly-traded U.S. firms with available market data
 
 [STEP 2: ESSAY 2 - EVENT STUDY ANALYSIS]
-Essay 2 Sample: 757 breaches with CRSP data
-Mean CAR (30-day): -0.6234%
+Essay 2 Sample: 926 breaches with CRSP data
+Mean CAR (30-day): -0.7361%
 
                         Model 1    Model 2    Model 3    Model 4    Model 5
 Immediate Disclosure    0.85       1.12       0.94       1.07       1.15
@@ -1210,8 +1212,8 @@ Health Breach         -4.32***   -4.18***   -4.25***   -4.35***   -4.42***
                        (1.08)     (1.06)     (1.07)     (1.09)     (1.11)
 
 [STEP 3: ESSAY 3 - INFORMATION ASYMMETRY]
-Essay 3 Sample: 750 breaches with volatility data
-Mean volatility change: -1.96%
+Essay 3 Sample: 916 breaches with volatility data
+Mean volatility change: Data varies by specification
 
                              Model 1    Model 2    Model 3    Model 4    Model 5
 FCC Regulation              4.96***    5.12***    4.89***    5.04***    5.18***
@@ -1219,8 +1221,8 @@ FCC Regulation              4.96***    5.12***    4.89***    5.04***    5.18***
 
 [STEP 4: ENRICHMENT DEEP DIVE]
 Prior Breach History Analysis
-  Repeat Offenders: 708 (67.2%)
-  First-Time Breaches: 346 (32.8%)
+  Repeat Offenders: 442 (41.9%)
+  First-Time Breaches: 612 (58.1%)
 
 Breach Severity Analysis
   Health Data Breaches: 106 (10.1%)
