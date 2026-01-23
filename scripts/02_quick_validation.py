@@ -9,7 +9,8 @@ print("=" * 60)
 # Step 1: Load breach data
 print("\n[1/3] Loading breach data...")
 try:
-    df = pd.read_excel(r'Data\DataBreaches.xlsx', engine='openpyxl')
+    data_path = Path(__file__).parent.parent / 'Data' / 'DataBreaches.xlsx'
+    df = pd.read_excel(data_path, engine='openpyxl')
     print(f"✓ Loaded {len(df)} rows, {len(df.columns)} columns")
     print(f"\nColumns: {df.columns.tolist()}")
     print(f"\nFirst 3 rows:")
@@ -21,7 +22,7 @@ except Exception as e:
 
 # Step 2: Check JSON files
 print("\n[2/3] Checking JSON files...")
-json_dir = Path(r'Data\JSON Files')
+json_dir = Path(__file__).parent.parent / 'Data' / 'JSON Files'
 json_files = sorted(list(json_dir.glob('*.json')))
 print(f"✓ Found {len(json_files)} JSON files")
 print(f"Range: {json_files[0].name} to {json_files[-1].name}")

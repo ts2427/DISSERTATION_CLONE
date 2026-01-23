@@ -1,308 +1,272 @@
+"""
+Data Breach Disclosure Timing and Market Reactions
+Interactive Committee-Focused Dashboard
+
+Central Research Question:
+"Is there any benefit to disclosing a data breach immediately,
+or should it be delayed?"
+
+Framework: Information Asymmetry Theory
+Natural Experiment: FCC Regulation (2007)
+
+This dashboard tells the complete story: Problem → Theory → Evidence → Implications
+"""
+
 import streamlit as st
 import pandas as pd
+import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
-from plotly.subplots import make_subplots
-import numpy as np
+from pathlib import Path
+import json
 
 # ===============================
-# PAGE CONFIG
+# PAGE CONFIGURATION
 # ===============================
 st.set_page_config(
-    page_title="Data Breach Analytics Dashboard",
+    page_title="Data Breach Analytics - Committee View",
     page_icon="🔒",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
 # ===============================
-# GLOBAL CSS - ONLY CUSTOM STYLES REMAIN
+# CUSTOM STYLING
 # ===============================
-# The lines forcing 'color: #0B2740 !important;' are REMOVED.
-# The custom classes for headers and boxes are KEPT.
 st.markdown("""
 <style>
-/* Streamlit's default theme will now control text color. */
-
-.main-header {
-    font-size: 2.5rem;
+/* Research story color scheme */
+.research-header {
+    font-size: 2.8rem;
     font-weight: bold;
-    color: #1f77b4; 
+    color: #1f77b4;
     text-align: center;
     padding: 1rem 0;
     margin-bottom: 2rem;
+    border-bottom: 3px solid #1f77b4;
 }
-.metric-card {
-    /* Background kept light for contrast against the dark default theme */
-    background-color: #f0f2f6; 
+
+.research-question {
+    font-size: 1.6rem;
+    color: #d62728;
+    font-weight: bold;
+    margin: 1.5rem 0 1rem 0;
+    padding: 1rem;
+    background-color: #ffe6e6;
+    border-left: 5px solid #d62728;
+    border-radius: 5px;
+}
+
+.research-question p, .research-question li {
+    color: #333;
+}
+
+.key-finding {
+    font-size: 1.2rem;
+    color: #2ca02c;
+    font-weight: bold;
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: #e6ffe6;
+    border-left: 5px solid #2ca02c;
+    border-radius: 5px;
+}
+
+.evidence-box {
+    background-color: #f0f2f6;
     padding: 1.5rem;
     border-radius: 10px;
     border-left: 5px solid #1f77b4;
-    margin: 0.5rem 0;
+    margin: 1rem 0;
+    color: #333;
 }
-.highlight-box {
-    /* Background kept light for contrast against the dark default theme */
-    background-color: #e8f4f8;
-    padding: 20px;
+
+.evidence-box p, .evidence-box li, .evidence-box span {
+    color: #333 !important;
+}
+
+/* Ensure all text in light boxes is dark */
+[style*="background-color: #e6f2ff"] { color: #333; }
+[style*="background-color: #ffe6e6"] { color: #333; }
+[style*="background-color: #f0f2f6"] { color: #333; }
+[style*="background-color: #e6ffe6"] { color: #333; }
+[style*="background-color: #fff4e6"] { color: #333; }
+[style*="background-color: #e6f2ff"] p { color: #333; }
+[style*="background-color: #ffe6e6"] p { color: #333; }
+[style*="background-color: #f0f2f6"] p { color: #333; }
+[style*="background-color: #e6ffe6"] p { color: #333; }
+[style*="background-color: #fff4e6"] p { color: #333; }
+
+.implication-box {
+    background-color: #fff4e6;
+    padding: 1.5rem;
     border-radius: 10px;
-    border-left: 5px solid #1f77b4;
+    border-left: 5px solid #ff7f0e;
     margin: 1rem 0;
 }
+
+.metric-card {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    margin: 0.5rem 0;
+    text-align: center;
+}
+
+.tab-container {
+    margin: 2rem 0;
+}
+
 .stTabs [data-baseweb="tab-list"] { gap: 2rem; }
 </style>
 """, unsafe_allow_html=True)
 
 # ===============================
-# LOAD DATA
+# LOAD DATA WITH CACHING
 # ===============================
 @st.cache_data
-def load_data():
+def load_main_data():
+    """Load the enriched dissertation dataset"""
     try:
-        with st.spinner('Loading and processing data...'):
-            df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv')
-            df['breach_date'] = pd.to_datetime(df['breach_date'])
-            df['breach_year'] = df['breach_date'].dt.year
-            return df
+        root_dir = Path(__file__).parent.parent
+        data_path = root_dir / 'Data' / 'processed' / 'FINAL_DISSERTATION_DATASET_ENRICHED.csv'
+        df = pd.read_csv(data_path)
+        df['breach_date'] = pd.to_datetime(df['breach_date'], errors='coerce')
+        df['breach_year'] = df['breach_date'].dt.year
+        return df
     except FileNotFoundError:
-        st.error("❌ Dataset not found! Ensure FINAL_DISSERTATION_DATASET_ENRICHED.xlsx is in Data/processed/")
         return None
 
-df = load_data()
+@st.cache_data
+def load_ml_results():
+    """Load ML validation results"""
+    try:
+        root_dir = Path(__file__).parent.parent
+        ml_path = root_dir / 'outputs' / 'ml_models' / 'ml_model_results.json'
+        with open(ml_path, 'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return None
+
+@st.cache_data
+def load_sample_attrition():
+    """Load sample attrition analysis"""
+    try:
+        root_dir = Path(__file__).parent.parent
+        attrition_path = root_dir / 'outputs' / 'tables' / 'sample_attrition.csv'
+        return pd.read_csv(attrition_path)
+    except FileNotFoundError:
+        return None
+
+# Load all data
+df = load_main_data()
+ml_results = load_ml_results()
+sample_attrition = load_sample_attrition()
+
 if df is None:
+    st.error("❌ Data not found! Ensure data files are in Data/processed/")
     st.stop()
 
 # ===============================
-# SIDEBAR FILTERS
+# MAIN WELCOME PAGE
 # ===============================
-st.sidebar.image("https://via.placeholder.com/300x100/1f77b4/ffffff?text=Data+Breach+Analytics", use_container_width=True)
-st.sidebar.markdown("## 🔍 Filters")
+st.markdown("<div class='research-header'>🔒 Data Breach Disclosure Timing and Market Reactions</div>", unsafe_allow_html=True)
 
-# Year filter
-year_range = st.sidebar.slider(
-    "Select Year Range",
-    int(df['breach_year'].min()),
-    int(df['breach_year'].max()),
-    (int(df['breach_year'].min()), int(df['breach_year'].max()))
-)
-
-# FCC filter
-fcc_filter = st.sidebar.multiselect(
-    "FCC Regulation Status",
-    ["All", "FCC-Regulated", "Non-Regulated"],
-    default=["All"]
-)
-
-# Disclosure timing filter
-disclosure_filter = st.sidebar.multiselect(
-    "Disclosure Timing",
-    ["All", "Immediate", "Delayed"],
-    default=["All"]
-)
-
-# Apply filters
-filtered_df = df[
-    (df['breach_year'] >= year_range[0]) & 
-    (df['breach_year'] <= year_range[1])
-].copy()
-
-if "FCC-Regulated" in fcc_filter and "Non-Regulated" not in fcc_filter:
-    filtered_df = filtered_df[filtered_df['fcc_reportable'] == 1]
-elif "Non-Regulated" in fcc_filter and "FCC-Regulated" not in fcc_filter:
-    filtered_df = filtered_df[filtered_df['fcc_reportable'] == 0]
-
-if "Immediate" in disclosure_filter and "Delayed" not in disclosure_filter:
-    filtered_df = filtered_df[filtered_df['immediate_disclosure'] == 1]
-elif "Delayed" in disclosure_filter and "Immediate" not in disclosure_filter:
-    filtered_df = filtered_df[filtered_df['delayed_disclosure'] == 1]
-
-st.sidebar.markdown("---")
-st.sidebar.info(f"**Showing {len(filtered_df)} of {len(df)} breaches**")
-
-# ===============================
-# MAIN HEADER
-# ===============================
-# Removed redundant H1 markdown header
-st.markdown("<h1 class='main-header'>🔒 Data Breach Analytics Dashboard</h1>", unsafe_allow_html=True)
 st.markdown("""
-<div class='highlight-box'>
-<h3>📊 The Definitive Data Breach Dataset</h3>
-<p>Explore <b>858 data breaches</b> from 2004-2025 with <b>6 novel enrichments</b> including 
-prior breach history, executive turnover, regulatory enforcement, and dark web presence.</p>
+<div class='evidence-box'>
+<h3>Central Research Question</h3>
+<p style='font-size: 1.3rem; color: #d62728; font-weight: bold;'>
+"Is there any benefit to disclosing a data breach immediately, or should it be delayed?"
+</p>
+<p style='margin-top: 1rem;'>
+This is a <b>practical question</b> every breached company faces with real financial and reputational stakes.<br>
+This is a <b>theoretical puzzle</b> that information asymmetry theory helps solve.<br>
+This is a <b>policy question</b> that regulators actively debate.
+</p>
 </div>
 """, unsafe_allow_html=True)
 
-# ===============================
-# KEY METRICS (Used .dropna() for consistent CAR mean calculation)
-# ===============================
-st.markdown("## 📈 Key Metrics")
+# Key statistics
+st.markdown("## 📊 The Dataset")
 col1, col2, col3, col4, col5 = st.columns(5)
 
-total_breaches = len(filtered_df)
-mean_car_30d = filtered_df['car_30d'].dropna().mean()
-repeat_offenders_count = filtered_df['is_repeat_offender'].sum()
-repeat_offenders_delta = f"{filtered_df['is_repeat_offender'].mean()*100:.1f}%" if total_breaches > 0 else "0.0%"
-total_penalties = filtered_df['total_regulatory_cost'].sum()
-
 with col1:
-    st.metric("Total Breaches", f"{total_breaches:,}")
+    st.metric("Total Breaches", f"{len(df):,}")
 with col2:
-    st.metric("Unique Companies", f"{filtered_df['org_name'].nunique():,}")
+    st.metric("Study Period", f"{int(df['breach_year'].min())}-{int(df['breach_year'].max())}")
 with col3:
-    st.metric("Mean 30-Day CAR", f"{mean_car_30d:.2f}%")
+    st.metric("Essay 2 Sample", f"{926} (88.2%)")
 with col4:
-    st.metric("Repeat Offenders", f"{repeat_offenders_count:,}", delta=repeat_offenders_delta)
+    st.metric("Essay 3 Sample", f"{916} (86.9%)")
 with col5:
-    st.metric("Total Penalties", f"${total_penalties/1e9:.2f}B")
+    st.metric("Unique Companies", f"{df['org_name'].nunique():,}")
 
-st.markdown("---")
-
-# ===============================
-# TABS
-# ===============================
-tab1, tab2, tab3, tab4 = st.tabs(["📊 Overview", "💰 Market Reactions", "🎯 Enrichments", "📈 Trends"])
-
-# ---- TAB 1: OVERVIEW ----
-with tab1:
-    st.markdown("### Breach Timeline")
-    timeline = filtered_df.groupby('breach_year').size().reset_index(name='count')
-    fig = px.bar(timeline, x='breach_year', y='count', title='Data Breaches Over Time',
-                 labels={'breach_year': 'Year', 'count': 'Number of Breaches'}, color='count', color_continuous_scale='Blues')
-    fig.update_layout(height=400, showlegend=False, xaxis_title="Year", yaxis_title="Number of Breaches")
-    st.plotly_chart(fig, use_container_width=True)
-    
-    st.markdown("---")
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown("### 🏢 Top Companies by Breach Frequency")
-        top_companies = filtered_df['org_name'].value_counts().head(10).reset_index()
-        top_companies.columns = ['Company', 'Breaches']
-        fig = px.bar(top_companies, x='Breaches', y='Company', orientation='h', color='Breaches', color_continuous_scale='Reds')
-        fig.update_layout(height=400, showlegend=False, yaxis={'categoryorder':'total ascending'})
-        st.plotly_chart(fig, use_container_width=True)
-    with col2:
-        st.markdown("### 📊 Disclosure Timing Distribution")
-        disclosure_counts = pd.DataFrame({
-            'Type': ['Immediate', 'Delayed'],
-            'Count': [filtered_df['immediate_disclosure'].sum(), filtered_df['delayed_disclosure'].sum()]
-        })
-        fig = px.pie(disclosure_counts, values='Count', names='Type',
-                     color='Type', color_discrete_map={'Immediate': 'lightgreen', 'Delayed': 'lightcoral'})
-        fig.update_layout(height=400)
-        st.plotly_chart(fig, use_container_width=True)
-
-# ---- TAB 2: MARKET REACTIONS ----
-with tab2:
-    st.markdown("### 💰 Cumulative Abnormal Returns (CARs)")
-    col1, col2 = st.columns(2)
-    with col1:
-        fig = go.Figure()
-        fig.add_trace(go.Histogram(x=filtered_df['car_30d'].dropna(), nbinsx=50, name='30-Day CAR', marker_color='steelblue', opacity=0.7))
-        fig.add_vline(x=0, line_dash="dash", line_color="black", line_width=2)
-        fig.add_vline(x=filtered_df['car_30d'].mean(), line_dash="dash", line_color="red", line_width=2,
-                      annotation_text=f"Mean: {filtered_df['car_30d'].mean():.2f}%")
-        fig.update_layout(title="Distribution of 30-Day CARs", xaxis_title="CAR (%)", yaxis_title="Frequency", height=400)
-        st.plotly_chart(fig, use_container_width=True)
-    with col2:
-        immediate_car = filtered_df[filtered_df['immediate_disclosure']==1]['car_30d'].dropna()
-        delayed_car = filtered_df[filtered_df['delayed_disclosure']==1]['car_30d'].dropna()
-        fig = go.Figure()
-        fig.add_trace(go.Box(y=immediate_car, name='Immediate', marker_color='lightgreen', boxmean='sd'))
-        fig.add_trace(go.Box(y=delayed_car, name='Delayed', marker_color='lightcoral', boxmean='sd'))
-        fig.add_hline(y=0, line_dash="dash", line_color="black")
-        fig.update_layout(title="CARs by Disclosure Timing", yaxis_title="30-Day CAR (%)", height=400)
-        st.plotly_chart(fig, use_container_width=True)
-    
-    st.markdown("---")
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.markdown("### 📊 Overall Statistics")
-        st.write(filtered_df[['car_5d', 'car_30d', 'bhar_5d', 'bhar_30d']].describe())
-    with col2:
-        st.markdown("### ✅ Immediate Disclosure")
-        if len(immediate_car) > 0:
-            st.metric("Mean CAR", f"{immediate_car.mean():.4f}%")
-            st.metric("Median CAR", f"{immediate_car.median():.4f}%")
-            st.metric("Std Dev", f"{immediate_car.std():.4f}%")
-    with col3:
-        st.markdown("### ⏰ Delayed Disclosure")
-        if len(delayed_car) > 0:
-            st.metric("Mean CAR", f"{delayed_car.mean():.4f}%")
-            st.metric("Median CAR", f"{delayed_car.median():.4f}%")
-            st.metric("Std Dev", f"{delayed_car.std():.4f}%")
-
-# ---- TAB 3: ENRICHMENTS ----
-with tab3:
-    st.markdown("### 💎 Novel Data Enrichments")
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.markdown("#### 🔄 Prior Breaches")
-        st.metric("Repeat Offenders", f"{filtered_df['is_repeat_offender'].sum()}", delta=f"{filtered_df['is_repeat_offender'].mean()*100:.1f}%")
-        st.metric("Avg Prior Breaches", f"{filtered_df['prior_breaches_total'].mean():.1f}")
-    with col2:
-        st.markdown("#### 👔 Executive Turnover")
-        st.metric("Turnover Cases", f"{filtered_df['has_executive_change'].sum()}", delta=f"{filtered_df['has_executive_change'].mean()*100:.1f}%")
-        st.metric("Median Days to Change", f"{filtered_df['days_to_first_change'].median():.0f}")
-    with col3:
-        st.markdown("#### ⚖️ Regulatory Actions")
-        st.metric("Enforcement Cases", f"{filtered_df['has_any_regulatory_action'].sum()}", delta=f"{filtered_df['has_any_regulatory_action'].mean()*100:.1f}%")
-        st.metric("Total Penalties", f"${filtered_df['total_regulatory_cost'].sum()/1e9:.2f}B")
-    
-    st.markdown("---")
-    st.markdown("### 📈 Enrichment Impact on Market Reactions")
-    enrichments = [
-        ('is_repeat_offender', 'Repeat Offender'),
-        ('high_severity_breach', 'High Severity'),
-        ('has_executive_change', 'Exec Turnover'),
-        ('has_any_regulatory_action', 'Regulatory Action'),
-        ('in_hibp', 'Dark Web')
-    ]
-    impact_data = []
-    for var, label in enrichments:
-        with_feature = filtered_df[filtered_df[var]==1]['car_30d'].dropna().mean()
-        without_feature = filtered_df[filtered_df[var]==0]['car_30d'].dropna().mean()
-        impact_data.append({'Enrichment': label, 'With Feature': with_feature, 'Without Feature': without_feature, 'Difference': with_feature - without_feature})
-    impact_df = pd.DataFrame(impact_data)
-    fig = go.Figure()
-    fig.add_trace(go.Bar(name='With Feature', x=impact_df['Enrichment'], y=impact_df['With Feature'], marker_color='lightcoral'))
-    fig.add_trace(go.Bar(name='Without Feature', x=impact_df['Enrichment'], y=impact_df['Without Feature'], marker_color='lightgreen'))
-    fig.add_hline(y=0, line_dash="dash", line_color="black")
-    fig.update_layout(title='Mean 30-Day CAR by Enrichment Feature', xaxis_title='Enrichment', yaxis_title='Mean CAR (%)', barmode='group', height=400)
-    st.plotly_chart(fig, use_container_width=True)
-
-# ---- TAB 4: TRENDS ----
-with tab4:
-    st.markdown("### 📈 Temporal Trends")
-    yearly_trends = filtered_df.groupby('breach_year').agg({
-        'car_30d': 'mean',
-        'immediate_disclosure': 'mean',
-        'is_repeat_offender': 'mean',
-        'has_executive_change': 'mean',
-        'total_regulatory_cost': 'sum'
-    }).reset_index()
-    fig = make_subplots(
-        rows=2, cols=2,
-        subplot_titles=('Mean CAR Over Time', 'Immediate Disclosure Rate','Repeat Offender Rate','Annual Regulatory Penalties')
-    )
-    fig.add_trace(go.Scatter(x=yearly_trends['breach_year'], y=yearly_trends['car_30d'], mode='lines+markers', name='Mean CAR', line=dict(color='steelblue', width=3)), row=1, col=1)
-    fig.add_trace(go.Scatter(x=yearly_trends['breach_year'], y=yearly_trends['immediate_disclosure']*100, mode='lines+markers', name='Immediate %', line=dict(color='green', width=3)), row=1, col=2)
-    fig.add_trace(go.Scatter(x=yearly_trends['breach_year'], y=yearly_trends['is_repeat_offender']*100, mode='lines+markers', name='Repeat %', line=dict(color='red', width=3)), row=2, col=1)
-    fig.add_trace(go.Bar(x=yearly_trends['breach_year'], y=yearly_trends['total_regulatory_cost']/1e6, name='Penalties ($M)', marker_color='darkred'), row=2, col=2)
-    fig.update_xaxes(title_text="Year", row=2, col=1)
-    fig.update_xaxes(title_text="Year", row=2, col=2)
-    fig.update_yaxes(title_text="CAR (%)", row=1, col=1)
-    fig.update_yaxes(title_text="Rate (%)", row=1, col=2)
-    fig.update_yaxes(title_text="Rate (%)", row=2, col=1)
-    fig.update_yaxes(title_text="Penalties ($M)", row=2, col=2)
-    fig.update_layout(height=700, showlegend=False)
-    st.plotly_chart(fig, use_container_width=True)
-
-# ===============================
-# FOOTER
-# ===============================
+# Navigation guide
 st.markdown("---")
 st.markdown("""
+## 🗺️ How to Use This Dashboard
+
+This dashboard tells a complete research story. Navigate through pages in order:
+
+1. **📖 Welcome** (you are here) - Research questions and context
+2. **🧠 Theory** - Information asymmetry framework
+3. **🔬 Natural Experiment** - FCC regulation (2007) as treatment
+4. **📋 Sample Validation** - Proof that sample is defensible
+5. **🌍 Data Landscape** - What are we analyzing?
+6. **📈 Essay 2: Market Reactions** - Does immediate disclosure affect CAR?
+7. **💨 Essay 3: Volatility** - Does timing affect information asymmetry?
+8. **💡 Key Finding** - The FCC Paradox (counterintuitive result!)
+9. **✅ Conclusion** - Implications for business, policy, research
+10. **📂 Raw Data Explorer** - Search, filter, explore all data yourself
+11. **📚 Data Dictionary** - All variables documented
+
+Each section shows: **Research Question → Evidence → Finding → Implication**
+
+---
+
+### Quick Context
+
+**Why does this research matter?**
+
+- **For Companies**: Understanding market reactions helps with crisis management and disclosure strategy
+- **For Regulators**: FCC and other agencies set disclosure timelines; this research shows the market consequences
+- **For Theory**: Tests information asymmetry theory in the real-world context of data breaches
+- **For Your Committee**: Demonstrates rigorous research combining theory, natural experiments, and ML validation
+
+---
+
+### Preview of Key Findings
+
+This research reveals a **counterintuitive result**:
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<div class='key-finding'>
+✨ FCC-regulated firms have WORSE market reactions to breaches despite mandatory immediate disclosure
+
+This challenges the assumption that "faster disclosure = better outcomes"
+The answer depends critically on regulatory context
+</div>
+""", unsafe_allow_html=True)
+
+# Footer with navigation
+st.markdown("---")
+st.info("""
+👈 **Use the sidebar to navigate** to different analysis pages.
+
+Each page builds on previous insights.
+Start with "Theory" to understand the framework.
+Then progress through "Essay 2" and "Essay 3" evidence.
+End with "Conclusion" for implications.
+""")
+
+st.markdown(f"""
 <div style='text-align: center; color: #666; padding: 2rem 0;'>
-    <p><b>Data Breach Analytics Dashboard</b> | Dissertation Research 2025</p>
-    <p>858 breaches • 6 enrichments • 98 variables</p>
+    <p><b>Committee-Focused Research Dashboard</b> | Dissertation in Progress</p>
+    <p>{len(df):,} breaches • {int(df['breach_year'].max()) - int(df['breach_year'].min()) + 1} years ({int(df['breach_year'].min())}-{int(df['breach_year'].max())}) • {len(df.columns)} variables</p>
+    <p style='font-size: 0.9rem; margin-top: 1rem;'>
+        Built with Streamlit | Data analysis with Pandas, Statsmodels, Scikit-learn | Visualizations with Plotly
+    </p>
 </div>
 """, unsafe_allow_html=True)

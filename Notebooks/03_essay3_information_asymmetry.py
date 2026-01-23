@@ -5,6 +5,7 @@
 # %%
 import pandas as pd
 import numpy as np
+import random
 import matplotlib
 matplotlib.use('Agg')  # No popups!
 import matplotlib.pyplot as plt
@@ -15,6 +16,10 @@ from statsmodels.iolib.summary2 import summary_col
 import warnings
 import os
 warnings.filterwarnings('ignore')
+
+# Set random seed for reproducibility
+np.random.seed(42)
+random.seed(42)
 
 plt.style.use('seaborn-v0_8-darkgrid')
 
@@ -157,6 +162,57 @@ print("\n" + "="*80)
 print("MODEL 5: FULL MODEL")
 print("="*80)
 print(model5.summary())
+
+# %% [markdown]
+# ## Multicollinearity Check (VIF Analysis)
+
+# %%
+# Check for multicollinearity using Variance Inflation Factor (VIF)
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+
+# Use Model 5 (full model) for VIF analysis
+controls_full = ['firm_size_log', 'leverage', 'roa', 'prior_breaches_total',
+                 'strong_governance', 'executive_change_30d']
+
+# Build VIF data with numeric variables only
+vif_cols = ['immediate_disclosure', 'fcc_reportable'] + [c for c in controls_full if c in essay3_df.columns]
+vif_data_temp = essay3_df[vif_cols].dropna().copy()
+
+# Convert all to numeric (handle booleans/categoricals)
+for col in vif_data_temp.columns:
+    vif_data_temp[col] = pd.to_numeric(vif_data_temp[col], errors='coerce')
+vif_data_temp = vif_data_temp.dropna()
+
+# Calculate VIF only if we have numeric data
+try:
+    vif_results = pd.DataFrame()
+    vif_results['Variable'] = vif_data_temp.columns
+    vif_results['VIF'] = [variance_inflation_factor(vif_data_temp.values, i)
+                           for i in range(vif_data_temp.shape[1])]
+    vif_results = vif_results.sort_values('VIF', ascending=False).reset_index(drop=True)
+except Exception as e:
+    print(f"\n[WARNING] VIF calculation failed: {e}")
+    print("         Proceeding without VIF analysis (non-critical diagnostic)")
+    vif_results = pd.DataFrame(columns=['Variable', 'VIF'])
+
+print("\n" + "="*80)
+print("MULTICOLLINEARITY DIAGNOSTICS (VIF Analysis)")
+print("="*80)
+
+if len(vif_results) > 0:
+    print("\nVariance Inflation Factor (VIF) for Full Model Variables:")
+    print(vif_results.to_string(index=False))
+    print("\nNote: VIF > 10 indicates potential multicollinearity concerns")
+    print(f"Max VIF: {vif_results['VIF'].max():.2f}")
+    print(f"Mean VIF: {vif_results['VIF'].mean():.2f}")
+else:
+    print("[WARNING] VIF analysis skipped (data type conversion issue)")
+    print("         Core regressions are complete and valid")
+
+# Save VIF results if available
+if len(vif_results) > 0:
+    vif_results.to_csv(f'{output_base}/tables/vif_analysis_essay3.csv', index=False)
+    print(f"\n✓ VIF analysis saved to {output_base}/tables/vif_analysis_essay3.csv")
 
 # %% [markdown]
 # ## Table 4: Regression Results - Essay 3

@@ -23,6 +23,8 @@ os.environ['PYTHONIOENCODING'] = 'utf-8'
 import subprocess
 from pathlib import Path
 import time
+import webbrowser
+import platform
 
 def print_section(title):
     """Print formatted section header"""
@@ -163,6 +165,71 @@ def verify_outputs():
 
     return True
 
+def launch_dashboard():
+    """
+    Launch the Streamlit dashboard in the default browser.
+    Runs in a separate subprocess so analysis pipeline can complete.
+    Returns True if dashboard launched successfully, False otherwise.
+    """
+    print_section("LAUNCHING STREAMLIT DASHBOARD")
+
+    # Check if Dashboard/app.py exists
+    dashboard_path = Path('Dashboard/app.py')
+    if not dashboard_path.exists():
+        print("[ERROR] Dashboard not found at Dashboard/app.py")
+        print("Cannot launch dashboard without app.py\n")
+        return False
+
+    try:
+        print("Starting Streamlit dashboard...")
+        print("  Location: Dashboard/app.py")
+        print("  URL: http://localhost:8501\n")
+
+        # Launch Streamlit in a separate process
+        env = os.environ.copy()
+        env['PYTHONIOENCODING'] = 'utf-8'
+
+        # Use subprocess to launch streamlit
+        # This keeps it running in background while main script exits
+        if platform.system() == 'Windows':
+            # On Windows, use CREATE_NEW_CONSOLE to open in new window
+            subprocess.Popen(
+                ['streamlit', 'run', 'Dashboard/app.py'],
+                env=env,
+                creationflags=subprocess.CREATE_NEW_CONSOLE
+            )
+        else:
+            # On Mac/Linux, run in background
+            subprocess.Popen(
+                ['streamlit', 'run', 'Dashboard/app.py'],
+                env=env,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL
+            )
+
+        # Wait a moment for streamlit to start
+        print("[OK] Streamlit dashboard starting...")
+        time.sleep(3)
+
+        # Try to open browser
+        try:
+            print("[OK] Opening dashboard in default browser...\n")
+            webbrowser.open('http://localhost:8501')
+        except Exception as e:
+            print(f"[WARNING] Could not open browser automatically: {e}")
+            print("         Please open http://localhost:8501 manually in your browser\n")
+
+        return True
+
+    except FileNotFoundError:
+        print("[ERROR] Streamlit not installed")
+        print("        Install with: pip install streamlit")
+        print("        Then run: streamlit run Dashboard/app.py\n")
+        return False
+    except Exception as e:
+        print(f"[ERROR] Failed to launch dashboard: {e}\n")
+        return False
+
 def run_all():
     """Execute complete dissertation analytics pipeline"""
     
@@ -182,7 +249,8 @@ def run_all():
         'Essay 3: Information Asymmetry': False,
         'Enrichment Analysis': False,
         'ML Model Training': False,
-        'ML Validation & Robustness Sections': False
+        'ML Validation & Robustness Sections': False,
+        'Dashboard Launch': False
     }
     
     # Step 0: Verify data exists
@@ -239,7 +307,12 @@ def run_all():
 
     # Verify outputs were created
     verify_outputs()
-    
+
+    # Launch Dashboard if analysis succeeded
+    critical_success = results['Essay 2: Event Study'] and results['Essay 3: Information Asymmetry']
+    if critical_success:
+        results['Dashboard Launch'] = launch_dashboard()
+
     # Calculate timing
     total_time = time.time() - start_time
     
@@ -320,15 +393,28 @@ def run_all():
     # Next steps
     print("\n" + "-"*80)
     print("NEXT STEPS:")
-    print("  1. Review outputs/tables/ and outputs/figures/")
-    print("  2. If ML robustness sections generated:")
-    print("     - Review outputs/ml_models/robustness_section_template_essay2.txt")
-    print("     - Review outputs/ml_models/robustness_section_template_essay3.txt")
-    print("     - Copy templates into Essays 2 & 3 robustness sections")
-    print("  3. Begin writing Essay 2 and Essay 3 results sections")
-    print("  4. Use Table 3 for Essay 2, Table 4 for Essay 3")
-    print("  5. Include enrichment figures in appendix")
-    print("  6. Include ML comparison plots in essay robustness sections")
+    if results['Dashboard Launch']:
+        print("  1. Review interactive dashboard at http://localhost:8501")
+        print("  2. Review outputs/tables/ and outputs/figures/")
+        print("  3. If ML robustness sections generated:")
+        print("     - Review outputs/ml_models/robustness_section_template_essay2.txt")
+        print("     - Review outputs/ml_models/robustness_section_template_essay3.txt")
+        print("     - Copy templates into Essays 2 & 3 robustness sections")
+        print("  4. Begin writing Essay 2 and Essay 3 results sections")
+        print("  5. Use Table 3 for Essay 2, Table 4 for Essay 3")
+        print("  6. Include enrichment figures in appendix")
+        print("  7. Include ML comparison plots in essay robustness sections")
+    else:
+        print("  1. Review outputs/tables/ and outputs/figures/")
+        print("  2. If ML robustness sections generated:")
+        print("     - Review outputs/ml_models/robustness_section_template_essay2.txt")
+        print("     - Review outputs/ml_models/robustness_section_template_essay3.txt")
+        print("     - Copy templates into Essays 2 & 3 robustness sections")
+        print("  3. Begin writing Essay 2 and Essay 3 results sections")
+        print("  4. Use Table 3 for Essay 2, Table 4 for Essay 3")
+        print("  5. Include enrichment figures in appendix")
+        print("  6. Include ML comparison plots in essay robustness sections")
+        print("  7. To view dashboard: streamlit run Dashboard/app.py")
     
     print("\nFILES FOR COMMITTEE:")
     print("  * outputs/tables/table3_essay2_regressions.tex")
@@ -338,11 +424,9 @@ def run_all():
     print("\n" + "="*80)
 
     # Determine overall success
-    # Critical: Essays 2 & 3 must succeed
-    critical_success = results['Essay 2: Event Study'] and results['Essay 3: Information Asymmetry']
-
-    # Optional: ML validation is nice-to-have
+    # Optional: ML validation and dashboard are nice-to-have
     ml_success = results['ML Model Training'] and results['ML Validation & Robustness Sections']
+    dashboard_success = results['Dashboard Launch']
 
     if critical_success:
         print("[SUCCESS] Critical analyses completed successfully!")
@@ -356,6 +440,15 @@ def run_all():
             print("         Check error messages above from Step 6")
         elif not results['ML Model Training']:
             print("[NOTE] ML validation not completed (optional robustness check)")
+
+        if dashboard_success:
+            print("[BONUS] Dashboard launched in browser!")
+            print("        View at: http://localhost:8501")
+            print("        Dashboard will remain open for review")
+        elif not results['Dashboard Launch']:
+            print("[NOTE] Dashboard not launched (optional visualization)")
+            print("       To view dashboard later, run: streamlit run Dashboard/app.py")
+
         return True
     else:
         print("[WARNING] Some critical analyses failed")
