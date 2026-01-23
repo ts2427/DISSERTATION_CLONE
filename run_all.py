@@ -23,7 +23,6 @@ os.environ['PYTHONIOENCODING'] = 'utf-8'
 import subprocess
 from pathlib import Path
 import time
-import webbrowser
 import platform
 
 def print_section(title):
@@ -211,14 +210,7 @@ def launch_dashboard():
         # Wait a moment for streamlit to start
         print("[OK] Streamlit dashboard starting...")
         time.sleep(3)
-
-        # Try to open browser
-        try:
-            print("[OK] Opening dashboard in default browser...\n")
-            webbrowser.open('http://localhost:8501')
-        except Exception as e:
-            print(f"[WARNING] Could not open browser automatically: {e}")
-            print("         Please open http://localhost:8501 manually in your browser\n")
+        print("[OK] Dashboard will open automatically in your default browser...\n")
 
         return True
 
