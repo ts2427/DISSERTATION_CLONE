@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dissertation Framework - Data Breach Disclosure Timing</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Times New Roman', serif;
+            background: white;
+            color: black;
+        }
+        .model-container {
+            width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+        }
+        .main-title {
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        .central-question {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .question-text {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .question-subtext {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .theory-box {
+            background: #f0f8ff;
+            border: 2px solid #4169e1;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .main-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        .flow-box {
+            border: 2px solid #333;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 8px;
+            text-align: center;
+            min-width: 140px;
+            background: white;
+        }
+        .breach-box {
+            background: #ffe4b5;
+            border-color: #daa520;
+        }
+        .timing-box {
+            background: #e6e6fa;
+            border-color: #9370db;
+        }
+        .mechanism-box {
+            background: #e8f5e8;
+            border-color: #4caf50;
+        }
+        .outcome-box {
+            background: #e3f2fd;
+            border-color: #2196f3;
+        }
+        .arrow {
+            font-size: 28px;
+            color: #333;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+        .timing-paths {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .path-box {
+            display: inline-block;
+            border: 2px solid #333;
+            padding: 15px;
+            margin: 5px 15px;
+            border-radius: 5px;
+            width: 120px;
+            vertical-align: top;
+        }
+        .immediate-path {
+            background: #f0fff0;
+            border-color: #32cd32;
+        }
+        .delayed-path {
+            background: #ffe4e1;
+            border-color: #dc143c;
+        }
+        .moderators-section {
+            background: #fff8dc;
+            border: 2px solid #daa520;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+        .moderator-grid {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        .moderator-item {
+            background: white;
+            border: 1px solid #ccc;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 5px;
+            text-align: center;
+            flex: 1;
+            min-width: 140px;
+            max-width: 180px;
+        }
+        .essay-labels {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        .essay-label {
+            background: #f5f5f5;
+            border: 1px solid #999;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #666;
+        }
+        .center {
+            text-align: center;
+        }
+        .small-text {
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        .hypothesis {
+            font-weight: bold;
+            color: #8b0000;
+            font-size: 11px;
+            margin-top: 8px;
+        }
+        .key-insight {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 15px;
+            margin: 25px 0;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .finding-box {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            padding: 15px;
+            margin: 25px 0;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .finding-box-warning {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 15px;
+            margin: 25px 0;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .answer-section {
+            background: #f8f9fa;
+            border: 3px solid #6c757d;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 10px;
+        }
+        .answer-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .answer-text {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #333;
+            text-align: center;
+            font-style: italic;
+        }
+        .essay-breakdown {
+            background: white;
+            border: 2px solid #6c757d;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .essay-section {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+        .essay-title {
+            font-weight: bold;
+            font-size: 14px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+        .essay-content {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #333;
+        }
+        .why-matters {
+            background: #e7f3ff;
+            border: 2px solid #2196f3;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+        .why-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: #1976d2;
+        }
+        .why-list {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .why-item {
+            margin: 8px 0;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .controls-box {
+            background: #f8f9fa;
+            border: 2px dashed #6c757d;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+        .badge-confirmed {
+            background: #28a745;
+            color: white;
+        }
+        .badge-revised {
+            background: #ffc107;
+            color: #333;
+        }
+        .badge-weak {
+            background: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="model-container">
+        <!-- Main Title -->
+        <div class="main-title">
+            Three-Essay Dissertation Framework
+        </div>
+        <div class="subtitle">
+            Data Breach Disclosure Timing and Market Reactions:<br>
+            The Role of Regulation and Governance
+        </div>
+
+        <!-- Update Badge -->
+        <div style="text-align: center; margin: 20px 0; padding: 10px; background: #d4edda; border-radius: 5px;">
+            <strong>📊 UPDATED MODEL:</strong> Based on 1,054 breaches (2006-2025) | 926 with CRSP data (87.9%)<br>
+            <span class="small-text">Includes sample attrition analysis and all committee-requested revisions</span>
+        </div>
+
+        <!-- Central Research Question -->
+        <div class="central-question">
+            <div class="question-text">
+                CENTRAL RESEARCH QUESTION
+            </div>
+            <div class="question-text" style="font-size: 24px; margin: 15px 0;">
+                "Does immediate disclosure of data breaches<br>
+                benefit firms, or should disclosure be delayed?"
+            </div>
+            <div class="question-subtext">
+                A practical question every breached company faces with real financial and reputational stakes
+            </div>
+        </div>
+
+        <!-- Why This Question Matters -->
+        <div class="why-matters">
+            <div class="why-title">Why This Question Works for a Dissertation</div>
+            <div class="why-list">
+                <div class="why-item"><strong>1. Practical Importance:</strong> Every breached company faces this exact decision. Regulators are actively debating disclosure timeline requirements with real financial and reputational stakes.</div>
+                <div class="why-item"><strong>2. Theoretical Tension:</strong> Immediate disclosure signals transparency and limits information asymmetry (Myers-Majluf 1984). Delayed disclosure allows investigation and remediation planning. Theory predicts competing forces.</div>
+                <div class="why-item"><strong>3. Non-Obvious Answer:</strong> Results show it's context-dependent. FCC-regulated firms experience -3.60%*** larger penalties despite faster compliance, suggesting mandatory immediate disclosure can backfire when markets expect perfect information.</div>
+            </div>
+        </div>
+
+        <!-- Theoretical Foundation -->
+        <div class="theory-box">
+            <strong>Theoretical Foundation: Information Asymmetry Theory (Myers & Majluf 1984)</strong><br>
+            <span class="small-text">Managers possess private information about breach severity that markets lack.<br>
+            Disclosure timing decisions signal information quality and resolve uncertainty.<br>
+            Extended with regulatory signaling theory and governance mechanisms.</span>
+        </div>
+
+        <!-- Main Causal Flow -->
+        <div class="main-flow">
+            <div class="flow-box breach-box">
+                <strong>Data Breach<br>Occurs</strong><br>
+                <span class="small-text">Private information about severity, scope, impact</span>
+                <div class="essay-label">Essay 1: Setup</div>
+            </div>
+
+            <span class="arrow">→</span>
+
+            <div class="flow-box timing-box">
+                <strong>Disclosure Timing<br>Decision</strong><br>
+                <span class="small-text">Strategic choice:<br>Immediate vs. Delayed</span>
+                <div class="essay-label">Essay 1: Treatment</div>
+            </div>
+
+            <span class="arrow">→</span>
+
+            <div class="flow-box mechanism-box">
+                <strong>Information<br>Asymmetry</strong><br>
+                <span class="small-text">Change in market uncertainty (volatility)</span>
+                <div class="essay-label">Essay 3: Mechanism</div>
+            </div>
+
+            <span class="arrow">→</span>
+
+            <div class="flow-box outcome-box">
+                <strong>Market<br>Reaction</strong><br>
+                <span class="small-text">Cumulative abnormal returns (CAR)</span>
+                <div class="essay-label">Essay 2: Outcome</div>
+            </div>
+        </div>
+
+        <!-- Timing Paths -->
+        <div class="timing-paths">
+            <div class="path-box immediate-path">
+                <strong>IMMEDIATE<br>Disclosure</strong><br>
+                <span class="small-text">≤ 7 days</span><br>
+                <span class="hypothesis">H1: Credible signal<br>→ Lower volatility<br>→ Less negative CAR<br><span class="status-badge badge-weak">NOT SIG</span></span>
+            </div>
+
+            <div style="display: inline-block; margin: 0 20px; font-size: 20px; vertical-align: middle;">vs.</div>
+
+            <div class="path-box delayed-path">
+                <strong>DELAYED<br>Disclosure</strong><br>
+                <span class="small-text">> 30 days</span><br>
+                <span class="hypothesis">H1: Adverse selection<br>→ Higher volatility<br>→ More negative CAR<br><span class="status-badge badge-weak">NOT SIG</span></span>
+            </div>
+        </div>
+
+        <!-- Finding Box - H1 Not Significant -->
+        <div class="finding-box-warning">
+            <strong>KEY FINDING ON H1:</strong> Immediate disclosure shows +1.47% coefficient but NOT significant (p=0.180).<br>
+            <strong>Interpretation:</strong> Timing effect is <u>context-dependent</u> and moderated by regulation, not a main effect.<br>
+            Markets care more about <strong>who</strong> discloses (FCC firms, health data firms) than <strong>when</strong> they disclose.
+        </div>
+
+        <!-- Key Moderators -->
+        <div class="moderators-section">
+            <div class="center">
+                <strong>KEY MODERATING FACTORS: When Does Timing Matter?</strong><br>
+                <span class="small-text">Empirical findings from 1,054 breaches (2006-2025)</span>
+            </div>
+
+            <div class="moderator-grid">
+                <div class="moderator-item">
+                    <strong>FCC Regulation</strong><br>
+                    <span class="small-text">Mandatory 7-day rule</span><br>
+                    <span class="hypothesis">H2: <strong>-3.60%***</strong><br>(p=0.003)<br><span class="status-badge badge-confirmed">✓ CONFIRMED</span></span>
+                </div>
+
+                <div class="moderator-item">
+                    <strong>Prior Breaches</strong><br>
+                    <span class="small-text">Reputation damage</span><br>
+                    <span class="hypothesis">H3: <strong>-0.11%***</strong><br>per breach (p=0.002)<br><span class="status-badge badge-revised">⚠ REVISED</span></span>
+                </div>
+
+                <div class="moderator-item">
+                    <strong>Health Data</strong><br>
+                    <span class="small-text">HIPAA exposure</span><br>
+                    <span class="hypothesis">H4: <strong>-4.32%***</strong><br>(p<0.001)<br><span class="status-badge badge-confirmed">✓ CONFIRMED</span></span>
+                </div>
+
+                <div class="moderator-item">
+                    <strong>Executive Turnover</strong><br>
+                    <span class="small-text">Accountability signal</span><br>
+                    <span class="hypothesis">H5: <strong>-2.29%**</strong><br>(p=0.011 standalone)<br><span class="status-badge badge-confirmed">✓ PARTIAL</span></span>
+                </div>
+
+                <div class="moderator-item">
+                    <strong>Regulatory Action</strong><br>
+                    <span class="small-text">Closure signal</span><br>
+                    <span class="hypothesis">H6: <strong>-1.44%</strong><br>(p=0.721 n.s.)<br><span class="status-badge badge-weak">✗ WEAK</span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Important Controls -->
+        <div class="controls-box">
+            <div class="center">
+                <strong>IMPORTANT CONTROL VARIABLES (Significant Effects)</strong>
+            </div>
+            <div style="margin-top: 10px; text-align: center;">
+                <span class="small-text">
+                    <strong>Firm Size (log):</strong> +1.08%** (p=0.027) — Larger firms recover better<br>
+                    <strong>ROA (Profitability):</strong> +25.83%*** (p=0.004) — Profitable firms recover much better<br>
+                    <strong>Leverage:</strong> +2.95% (p=0.246 n.s.) — Debt levels not significant<br>
+                    <strong>High Severity:</strong> +5.35% (p=0.376 n.s.) — No effect when health data controlled<br>
+                    <strong>Ransomware:</strong> +0.69% (p=0.898 n.s.) — No distinct effect
+                </span>
+            </div>
+        </div>
+
+        <!-- How Essays Answer the Question -->
+        <div class="essay-breakdown">
+            <div class="center" style="font-size: 16px; font-weight: bold; margin-bottom: 20px;">
+                How the Three Essays Answer the Central Question
+            </div>
+
+            <div class="essay-section">
+                <div class="essay-title">Essay 1: Theory & Comprehensive Analysis</div>
+                <div class="essay-content">
+                    Develops the theoretical framework predicting when immediate vs. delayed disclosure is optimal based on information asymmetry, stakeholder pressure, and regulatory environment. Tests all moderators to identify boundary conditions.
+                    <br><br>
+                    <strong>Key Finding:</strong> Immediate disclosure has minimal direct benefit (+1.47%, p=0.180 n.s.), BUT regulatory context matters enormously. FCC-regulated firms experience -3.60%*** larger penalties (p=0.003), suggesting forced immediacy creates expectations penalty that outweighs transparency benefits.
+                </div>
+            </div>
+
+            <div class="essay-section">
+                <div class="essay-title">Essay 2: Evidence on Market Reactions</div>
+                <div class="essay-content">
+                    Deep dive into event study methodology and market reaction heterogeneity. Examines different event windows (5-day, 30-day), robustness checks, and timing of information incorporation into stock prices.
+                    <br><br>
+                    <strong>Key Findings:</strong> Market penalties vary dramatically by context (-43% to +34% range). Health data breaches create -4.32%*** additional penalty. Prior breaches add -0.11%*** per incident (cumulative reputation damage). Executive turnover adds -2.29%** signal. Firm profitability (ROA) provides +25.83%*** cushion.
+                </div>
+            </div>
+
+            <div class="essay-section">
+                <div class="essay-title">Essay 3: Mechanism Analysis (Information Asymmetry)</div>
+                <div class="essay-content">
+                    Reveals the mechanism linking timing to reactions through information asymmetry. Uses volatility change as proxy for uncertainty resolution. Tests governance moderation hypotheses.
+                    <br><br>
+                    <strong>Key Finding:</strong> FCC regulation increases post-breach volatility by +4.96%*** (p=0.001), confirming that regulatory mandates increase information asymmetry rather than resolve it. Immediate disclosure under regulation creates dual penalty: (1) expectations violation, (2) incomplete information disclosure.
+                </div>
+            </div>
+        </div>
+
+        <!-- The Answer -->
+        <div class="answer-section">
+            <div class="answer-title">THE DISSERTATION'S ANSWER</div>
+            <div class="answer-text">
+                "It depends on regulatory context and breach characteristics. Immediate disclosure does NOT universally benefit firms (H1 not supported). Instead, regulatory mandates (FCC -3.60%***), breach type (health data -4.32%***), and firm reputation (prior breaches -0.11%*** each) determine market penalties. The optimal strategy balances transparency benefits against expectations penalties under regulatory scrutiny."
+            </div>
+        </div>
+
+        <!-- Counterintuitive Finding -->
+        <div class="finding-box">
+            <strong>COUNTERINTUITIVE FINDING #1:</strong><br>
+            Mandatory disclosure (FCC) creates LARGER market penalties (-3.60%***, p=0.003)<br>
+            despite faster compliance, because regulation signals heightened duty violation expectations.<br>
+            Markets penalize FCC firms more heavily for breach occurrence, not disclosure delay.
+        </div>
+
+        <!-- Prior Breach Reversal -->
+        <div class="finding-box-warning">
+            <strong>COUNTERINTUITIVE FINDING #2:</strong><br>
+            Prior breaches create cumulative reputation damage (-0.11%*** per breach, p=0.002),<br>
+            NOT learning effects. Repeat offenders face compounding penalties, contrary to H3 prediction.<br>
+            <strong>Revised Interpretation:</strong> Markets view repeat breaches as evidence of persistent governance failure.
+        </div>
+
+        <!-- Key Insight -->
+        <div class="key-insight">
+            <strong>DUAL MECHANISM UNDER REGULATION:</strong><br>
+            FCC creates both credibility premium (immediate disclosure signal) [+]<br>
+            AND expectations penalty (heightened duty violation) [−−]<br>
+            Expectations penalty dominates → Net effect: -3.60%*** larger market penalty
+        </div>
+
+        <!-- Research Design Note -->
+        <div style="background: #f8f9fa; border: 1px solid #dee2e6; padding: 15px; border-radius: 5px; margin-top: 20px;">
+            <div class="center">
+                <strong>RESEARCH DESIGN & SAMPLE</strong><br>
+                <span class="small-text">
+                <strong>Total Sample:</strong> 1,054 data breaches (2006-2025, 19 years)<br>
+                <strong>Essay 2 (Event Study):</strong> 926 breaches with CRSP data (87.9% coverage)<br>
+                <strong>Essay 3 (Volatility):</strong> 916 breaches with volatility data (86.9% coverage)<br><br>
+                <strong>Treatment Group:</strong> 190 FCC-regulated firms (19.0%)<br>
+                <strong>Control Group:</strong> 864 non-FCC firms (81.0%)<br><br>
+                <strong>Sample Attrition Analysis:</strong> Excluded breaches differ significantly on firm size (p<0.001),<br>
+                ROA (p=0.015), FCC status (p=0.010), and prior breaches (p<0.001).<br>
+                Results generalize to publicly-traded U.S. firms with available market data.<br><br>
+                <strong>Methodology:</strong> Event study (30-day CAR primary, 5-day robustness) +<br>
+                OLS regression with HC3 heteroskedasticity-robust standard errors +<br>
+                Volatility change analysis (information asymmetry proxy)
+                </span>
+            </div>
+        </div>
+
+        <!-- Contributions Summary -->
+        <div style="background: #e7f3ff; border: 2px solid #2196f3; padding: 20px; border-radius: 8px; margin-top: 25px;">
+            <div class="center">
+                <strong style="font-size: 16px;">DISSERTATION CONTRIBUTIONS</strong>
+            </div>
+            <div style="margin-top: 15px; font-size: 13px; line-height: 1.8;">
+                <strong>1. Theoretical:</strong> Extends Myers-Majluf information asymmetry theory to cybersecurity disclosure context, identifying dual mechanism of regulatory signaling (credibility premium vs. expectations penalty).<br><br>
+                <strong>2. Empirical:</strong> First large-scale test (1,054 breaches) of FCC regulation impact on breach disclosure market reactions. Discovers counterintuitive expectations penalty effect (-3.60%***).<br><br>
+                <strong>3. Methodological:</strong> Novel enrichment variables (prior breach history, executive turnover tracking, health data classification, regulatory enforcement) advance cybersecurity disclosure literature.<br><br>
+                <strong>4. Practical:</strong> Informs regulatory policy debate on mandatory disclosure timelines. Shows regulation can backfire by creating expectations penalty rather than transparency benefits.
+            </div>
+        </div>
+    </div>
+</body>
+</html>

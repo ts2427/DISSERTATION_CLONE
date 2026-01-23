@@ -18,6 +18,12 @@ This dissertation analyzes the market reactions to data breach disclosures among
 - **Essay 2 (Event Study):** Do disclosure timing and FCC regulation affect stock market reactions?
 - **Essay 3 (Information Asymmetry):** Does immediate disclosure reduce volatility? Do governance factors moderate this effect?
 
+## 📊 Dissertation Framework
+
+![Dissertation Framework Visualization](dissertation_framework.png)
+
+*Visual overview of the research question, theoretical foundation, key hypotheses, moderating factors, and main findings*
+
 ### Key Findings
 
 | Finding | Effect | Significance |
