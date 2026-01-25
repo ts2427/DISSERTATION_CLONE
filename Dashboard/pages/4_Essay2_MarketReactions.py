@@ -422,12 +422,20 @@ Do these results hold with different specifications?
 
 **Specifications tested:**
 - ✓ Different event windows (5-day, 60-day CAR, BHAR)
-- ✓ Different model specifications (OLS, quantile regression)
-- ✓ Different subsamples (large/small firms, health/non-health)
-- ✓ Alternative market models (Fama-French 3-factor)
-- ✓ Robust standard errors (HC3, clustered)
+- ✓ Different disclosure thresholds (3, 5, 7, 14, 30, 60 days)
+- ✓ Different subsamples (excluding 2008 crisis, outliers, different periods)
+- ✓ Robust standard errors (HC3, clustered, bootstrap)
+- ✓ Fixed effects controls (Year FE for macro conditions, Industry FE for sector trends)
 
-**Result: Consistent FCC effect across all specifications** → Finding is robust
+**Key Finding:** FCC effect is actually **STRONGER** with fixed effects:
+- Baseline: -2.37%
+- With Year FE: -2.87% (21% stronger)
+- With Industry FE: -5.77% (144% stronger!)
+
+This means the FCC effect is **not** driven by macro conditions or industry-specific factors.
+It's a robust, independent regulatory penalty.
+
+**Result: Consistent FCC effect across 27+ specifications** → Finding is robust
 """)
 
 st.markdown("---")
