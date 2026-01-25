@@ -233,7 +233,7 @@ st.markdown("""
 
 ✓ **Temporal Variation**: Can compare same firm before/after regulation
 
-### Limitations & How We Address Them:
+### Limitations & Solutions Implemented:
 
 ⚠ **Non-Random Selection**: FCC-regulated firms are in specific industries (telecom, cable, VoIP)
 → **Solution Implemented**: Industry fixed effects in Robustness Check 5
@@ -252,7 +252,7 @@ st.markdown("""
 
 ⚠ **Spillovers Possible**: Non-FCC firms might voluntarily match FCC disclosure norms
 → **Effect on Results**: Would bias FCC effect TOWARD ZERO (underestimate effect)
-   - Conservative interpretation: If anything, our FCC effect estimate is lower bound
+   - Conservative interpretation: If anything, the FCC effect estimate is a lower bound
    - Actual effect may be larger than estimated
 """)
 
