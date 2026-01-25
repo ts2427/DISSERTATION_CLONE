@@ -169,13 +169,17 @@ python run_all.py
 
 ### ⚠️ Data Files Not in GitHub
 
-Due to repository size constraints and reproducibility best practices, all data files are stored in a shared cloud folder rather than Git/Git LFS. This prevents dependency issues and makes collaboration easier.
+Due to repository size constraints and reproducibility best practices, all data files are stored in a shared Google Drive folder rather than Git/Git LFS. This prevents dependency issues and makes collaboration easier.
 
-### Obtain Data Files
+The same Google Drive folder supports both:
+- **Local analysis:** Download and copy files to your `Data/` folder
+- **Cloud deployment:** Automatic downloads via `gdown` for Streamlit Cloud
 
-1. **Request Access** to the shared cloud folder (OneDrive/Google Drive link provided by instructor or available upon request)
+### Access Data Files
 
-2. **Download** the complete `Data/` folder (~1.8 GB)
+1. **Google Drive Folder:** [Shared Dissertation Data Folder](https://drive.google.com/drive/folders/1aeEnpS-agQeaQCpgyD9UqQJDuJD1oij-?usp=sharing)
+
+2. **For Local Analysis:** Download the complete `Data/` folder (~1.8 GB)
    - Raw breach dataset
    - WRDS stock market data (CRSP, Compustat)
    - FCC regulatory classifications
@@ -344,6 +348,7 @@ python scripts/40_MASTER_enrichment.py
 dissertation-analysis/
 │
 ├── README.md                          (This file)
+├── STREAMLIT_DEPLOYMENT.md            (Cloud deployment guide)
 ├── pyproject.toml                     (Project metadata & dependencies)
 ├── requirements.txt                   (Pip dependencies)
 ├── run_all.py                         (Main pipeline orchestrator)
@@ -394,12 +399,20 @@ dissertation-analysis/
 │       └── __init__.py                (Module initialization)
 │
 ├── Dashboard/                         (Streamlit interactive dashboard)
-│   ├── app.py                         (Main dashboard)
-│   ├── pages/
-│   │   ├── 1_Event_Study.py
-│   │   ├── 2_Information_Asymmetry.py
-│   │   └── 3_Enrichments.py
-│   └── utils.py
+│   ├── app.py                         (Main dashboard entry point)
+│   ├── utils.py                       (Shared utilities with smart data loading)
+│   │   └── load_main_dataset()        (Auto loads from local or Google Drive)
+│   └── pages/
+│       ├── 0_Research_Story.py        (Introduction & research questions)
+│       ├── 1_Natural_Experiment.py    (FCC regulation as natural experiment)
+│       ├── 2_Sample_Validation.py     (Sample composition analysis)
+│       ├── 3_Data_Landscape.py        (Breach timeline & distribution)
+│       ├── 4_Essay2_MarketReactions.py (Event study results)
+│       ├── 5_Essay3_Volatility.py     (Information asymmetry analysis)
+│       ├── 6_Key_Finding.py           (Main results summary)
+│       ├── 7_Conclusion.py            (Implications & future research)
+│       ├── 9_Raw_Data_Explorer.py     (Interactive data exploration)
+│       └── 10_Data_Dictionary.py      (Variable documentation)
 │
 ├── outputs/                           (Generated results)
 │   ├── tables/
@@ -639,6 +652,7 @@ All dependencies are listed in `pyproject.toml` and `requirements.txt`. This pro
 ### Utilities
 - `openpyxl` (≥3.1) - Excel file support
 - `streamlit` (≥1.29) - Dashboard application
+- `gdown` (≥4.7.1) - Google Drive file downloads (for cloud deployment)
 
 ### Installation Methods
 
@@ -682,7 +696,9 @@ pip install -r requirements.txt
 
 ## 🎮 Using the Dashboard
 
-An interactive Streamlit dashboard is included for exploring results.
+An interactive Streamlit dashboard is included for exploring results, with two deployment options.
+
+### Option 1: Local Dashboard (After run_all.py)
 
 ```bash
 streamlit run Dashboard/app.py
@@ -694,8 +710,78 @@ streamlit run Dashboard/app.py
 - Analyze volatility patterns
 - Examine enrichment variables
 - Interactive visualizations with Plotly
+- Fast local data loading (~1 second)
 
-**Note:** Requires successful run of `run_all.py` to generate data
+**Requirements:** Successful run of `run_all.py` to generate data
+
+### Option 2: Cloud Dashboard (Streamlit Cloud - No Setup Required)
+
+Deploy your dashboard to **Streamlit Cloud** for public access via URL. Committee members can view results without installing Python or running any scripts.
+
+**Features:**
+- Public shareable URL
+- No local setup required for viewers
+- Automatic Google Drive data loading
+- Same interactive features as local version
+
+**Deployment Steps:**
+
+1. Go to [share.streamlit.io](https://share.streamlit.io)
+2. Create account with GitHub (use your existing account)
+3. Click "New app"
+4. Configure deployment:
+   - **Repository:** `ts2427/DISSERTATION_CLONE`
+   - **Branch:** `main`
+   - **Main file:** `Dashboard/app.py`
+5. Deploy (2-3 minutes)
+6. Share the public URL with committee
+
+**How It Works:**
+- First access downloads data from Google Drive (~30 seconds)
+- Subsequent loads use Streamlit's cache (instant)
+- All dashboard features work identically to local version
+
+**Data Storage:**
+- Main dataset stored in [Google Drive folder](https://drive.google.com/drive/folders/1aeEnpS-agQeaQCpgyD9UqQJDuJD1oij-?usp=sharing)
+- Accessed automatically via `gdown` library
+- File ID: `1v0nKdwjihWGdbJLwTttFL0UkE2Jo2OIc`
+
+**Advanced: Testing Cloud Behavior Locally**
+
+To test cloud deployment before deploying:
+```bash
+# Temporarily move local data
+mv Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv.bak
+
+# Run dashboard (will download from Google Drive)
+streamlit run Dashboard/app.py
+
+# Restore data when done
+mv Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv.bak Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv
+```
+
+### Smart Data Loading Architecture
+
+**Technical Implementation:**
+
+The dashboard uses intelligent fallback logic in `Dashboard/utils.py`:
+
+```python
+@st.cache_data
+def load_main_dataset():
+    # Strategy 1: Try local file (fast, after run_all.py)
+    if local_file_exists:
+        return load_from_local_csv()  # ~1 second
+
+    # Strategy 2: Fall back to Google Drive (cloud deployment)
+    return load_from_google_drive()  # ~30 seconds first time, cached after
+```
+
+**Benefits:**
+- **Local users:** Blazingly fast (1 second)
+- **Cloud users:** Automatic data sync from Google Drive
+- **No configuration needed:** Works out of the box
+- **Transparent:** Users don't need to know where data comes from
 
 ---
 
@@ -831,6 +917,60 @@ python scripts/15_download_wrds_data.py
    ```bash
    rm -rf outputs/ml_models/
    python scripts/60_train_ml_model.py
+   ```
+
+### Dashboard Issues
+
+#### Local Dashboard Won't Start
+
+**Problem:** `streamlit run Dashboard/app.py` fails with "Data not found"
+
+**Solution:**
+1. Verify data file exists:
+   ```bash
+   ls -la Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv
+   ```
+2. Ensure `run_all.py` completed successfully:
+   ```bash
+   python run_all.py
+   ```
+3. Check that you're in the correct directory (project root, not Dashboard/)
+
+#### Cloud Dashboard Slow on First Load
+
+**Problem:** Streamlit Cloud dashboard takes 30+ seconds to load initially
+
+**Expected Behavior:** First load downloads data from Google Drive (~30 seconds). All subsequent loads are instant due to Streamlit caching.
+
+**Why This Happens:** Cloud deployment doesn't have local data files, so it downloads from Google Drive on first access.
+
+**If You Want Faster First Load:**
+- Pre-compute and upload data directly to Streamlit Cloud (contact instructor for custom deployment)
+- Or use local dashboard by running `python run_all.py` then `streamlit run Dashboard/app.py`
+
+#### Cloud Dashboard Permission Denied Error
+
+**Problem:** "Permission denied" error when accessing data from Google Drive
+
+**Solution:**
+1. Verify the Google Drive file is publicly accessible
+2. Check that file ID in `Dashboard/utils.py` is correct: `1v0nKdwjihWGdbJLwTttFL0UkE2Jo2OIc`
+3. Test locally:
+   ```bash
+   python -c "import gdown; gdown.download('https://drive.google.com/uc?id=1v0nKdwjihWGdbJLwTttFL0UkE2Jo2OIc', 'test.csv', quiet=False)"
+   ```
+
+#### Streamlit Cloud Deployment Won't Start
+
+**Problem:** Deployment fails with error about dependencies or missing files
+
+**Solution:**
+1. Ensure `requirements.txt` and `pyproject.toml` are up to date with all dependencies
+2. Check that `Dashboard/app.py` is at the correct path
+3. Review deployment logs in Streamlit Cloud dashboard (click three dots → Logs)
+4. Most common issue: Missing `gdown` in requirements - verify it's there:
+   ```bash
+   grep gdown requirements.txt
    ```
 
 ---
