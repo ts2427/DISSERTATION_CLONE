@@ -7,6 +7,7 @@ import streamlit as st
 from pathlib import Path
 import pandas as pd
 import plotly.express as px
+from utils import load_main_dataset
 
 st.set_page_config(page_title="Data Landscape", page_icon="🗺️", layout="wide")
 
@@ -45,16 +46,7 @@ What breaches are in the dataset? How are they distributed across time and indus
 """, unsafe_allow_html=True)
 
 # Load data
-@st.cache_data
-def load_data():
-    df = pd.read_csv(str(Path(__file__).parent.parent.parent / 'Data' / 'processed' / 'FINAL_DISSERTATION_DATASET_ENRICHED.csv'))
-    df['breach_date'] = pd.to_datetime(df['breach_date'], errors='coerce')
-    df['breach_year'] = df['breach_date'].dt.year
-    df['treatment_group'] = df['fcc_reportable'].apply(lambda x: 'FCC-Regulated' if x == 1 else 'Non-FCC')
-    df['period'] = df['breach_year'].apply(lambda x: 'Pre-2007' if x < 2007 else 'Post-2007')
-    return df
-
-df = load_data()
+df = load_main_dataset()
 
 # Overall metrics
 col1, col2, col3, col4 = st.columns(4)

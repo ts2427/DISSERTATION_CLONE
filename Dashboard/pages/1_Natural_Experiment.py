@@ -8,6 +8,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import plotly.express as px
 from pathlib import Path
+from utils import load_main_dataset
 
 st.set_page_config(page_title="Natural Experiment", page_icon="🔬", layout="wide")
 
@@ -163,17 +164,7 @@ st.markdown("### By Time Period")
 
 # Load actual data for visualization
 try:
-    @st.cache_data
-    def load_data():
-        data_path = str(Path(__file__).parent.parent.parent / 'Data' / 'processed' / 'FINAL_DISSERTATION_DATASET_ENRICHED.csv')
-        df = pd.read_csv(data_path)
-        df['breach_date'] = pd.to_datetime(df['breach_date'], errors='coerce')
-        df['breach_year'] = df['breach_date'].dt.year
-        df['treatment_group'] = df['fcc_reportable'].apply(lambda x: 'FCC-Regulated' if x == 1 else 'Non-FCC')
-        df['period'] = df['breach_year'].apply(lambda x: 'Pre-2007' if x < 2007 else 'Post-2007')
-        return df
-
-    df = load_data()
+    df = load_main_dataset()
 
     # Breaches by period and group
     period_group = pd.crosstab(df['period'], df['treatment_group'], margins=True)
@@ -208,17 +199,7 @@ Let's check if FCC-regulated breaches have shorter disclosure delays post-2007:
 """)
 
 try:
-    @st.cache_data
-    def load_data_timing():
-        data_path = str(Path(__file__).parent.parent.parent / 'Data' / 'processed' / 'FINAL_DISSERTATION_DATASET_ENRICHED.csv')
-        df = pd.read_csv(data_path)
-        df['breach_date'] = pd.to_datetime(df['breach_date'], errors='coerce')
-        df['breach_year'] = df['breach_date'].dt.year
-        df['treatment_group'] = df['fcc_reportable'].apply(lambda x: 'FCC-Regulated' if x == 1 else 'Non-FCC')
-        df['period'] = df['breach_year'].apply(lambda x: 'Pre-2007' if x < 2007 else 'Post-2007')
-        return df
-
-    df = load_data_timing()
+    df = load_main_dataset()
 
     # Calculate mean disclosure delay by group and period
     disclosure_timing = df.groupby(['period', 'treatment_group'])['disclosure_delay_days'].agg(['mean', 'count']).round(1)

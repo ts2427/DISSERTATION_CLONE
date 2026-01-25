@@ -6,6 +6,7 @@ Proves sample is defensible and addresses selection bias concerns
 import streamlit as st
 from pathlib import Path
 import pandas as pd
+from utils import load_main_dataset
 
 st.set_page_config(page_title="Sample Validation", page_icon="📋", layout="wide")
 
@@ -48,12 +49,8 @@ Key concerns:
 """, unsafe_allow_html=True)
 
 # Load data
-@st.cache_data
 def load_data():
-    df = pd.read_csv(str(Path(__file__).parent.parent.parent / 'Data' / 'processed' / 'FINAL_DISSERTATION_DATASET_ENRICHED.csv'))
-    df['breach_date'] = pd.to_datetime(df['breach_date'], errors='coerce')
-    df['breach_year'] = df['breach_date'].dt.year
-    return df
+    return load_main_dataset()
 
 @st.cache_data
 def load_sample_attrition():

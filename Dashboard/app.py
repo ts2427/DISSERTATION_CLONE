@@ -19,6 +19,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from pathlib import Path
 import json
+from utils import load_main_dataset
 
 # ===============================
 # PAGE CONFIGURATION
@@ -126,19 +127,6 @@ st.markdown("""
 # LOAD DATA WITH CACHING
 # ===============================
 @st.cache_data
-def load_main_data():
-    """Load the enriched dissertation dataset"""
-    try:
-        root_dir = Path(__file__).parent.parent
-        data_path = root_dir / 'Data' / 'processed' / 'FINAL_DISSERTATION_DATASET_ENRICHED.csv'
-        df = pd.read_csv(data_path)
-        df['breach_date'] = pd.to_datetime(df['breach_date'], errors='coerce')
-        df['breach_year'] = df['breach_date'].dt.year
-        return df
-    except FileNotFoundError:
-        return None
-
-@st.cache_data
 def load_ml_results():
     """Load ML validation results"""
     try:
@@ -159,8 +147,8 @@ def load_sample_attrition():
     except FileNotFoundError:
         return None
 
-# Load all data
-df = load_main_data()
+# Load all data (using smart local + cloud fallback)
+df = load_main_dataset()
 ml_results = load_ml_results()
 sample_attrition = load_sample_attrition()
 

@@ -7,6 +7,7 @@ Not the main story, but proves the data is real and accessible
 import streamlit as st
 from pathlib import Path
 import pandas as pd
+from utils import load_main_dataset
 
 st.set_page_config(page_title="Raw Data Explorer", page_icon="🔍", layout="wide")
 
@@ -46,13 +47,7 @@ Transparency: Every number in this dashboard comes directly from the data shown 
 """, unsafe_allow_html=True)
 
 # Load data
-@st.cache_data
-def load_data():
-    df = pd.read_csv(str(Path(__file__).parent.parent.parent / 'Data' / 'processed' / 'FINAL_DISSERTATION_DATASET_ENRICHED.csv'))
-    df['breach_date'] = pd.to_datetime(df['breach_date'], errors='coerce')
-    return df
-
-df = load_data()
+df = load_main_dataset()
 
 st.markdown("---")
 st.markdown("## Search & Filter the Data")

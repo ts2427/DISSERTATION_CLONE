@@ -6,6 +6,7 @@ Reference: All 83 variables documented with descriptions and sources
 import streamlit as st
 from pathlib import Path
 import pandas as pd
+from utils import load_main_dataset
 
 st.set_page_config(page_title="Data Dictionary", page_icon="📚", layout="wide")
 
@@ -45,12 +46,7 @@ Includes: variable name, description, source, data type, sample values.
 """, unsafe_allow_html=True)
 
 # Load data to get actual column info
-@st.cache_data
-def load_data():
-    df = pd.read_csv(str(Path(__file__).parent.parent.parent / 'Data' / 'processed' / 'FINAL_DISSERTATION_DATASET_ENRICHED.csv'))
-    return df
-
-df = load_data()
+df = load_main_dataset()
 
 # Create comprehensive data dictionary
 data_dictionary = {

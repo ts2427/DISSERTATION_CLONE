@@ -17,19 +17,66 @@ import json
 
 @st.cache_data
 def load_main_dataset():
-    """Load the enriched dissertation dataset"""
+    """Load the enriched dissertation dataset
+
+    Smart loading strategy:
+    1. Check local path first (for post-run_all.py local execution)
+    2. Fall back to Google Drive (for Streamlit Cloud or if local file missing)
+    """
+    from pathlib import Path
+    import os
+
+    # Strategy 1: Try local file first (fastest, works after run_all.py)
     try:
-        from pathlib import Path
-        # Get the root directory (parent of Dashboard)
         root_dir = Path(__file__).parent.parent
         data_path = root_dir / 'Data' / 'processed' / 'FINAL_DISSERTATION_DATASET_ENRICHED.csv'
-        df = pd.read_csv(data_path)
+        if data_path.exists():
+            df = pd.read_csv(data_path)
+            df['breach_date'] = pd.to_datetime(df['breach_date'], errors='coerce')
+            df['breach_year'] = df['breach_date'].dt.year
+            df['period'] = df['breach_year'].apply(lambda x: 'Pre-2007' if x < 2007 else 'Post-2007')
+            df['treatment_group'] = df['fcc_reportable'].apply(lambda x: 'FCC-Regulated' if x == 1 else 'Non-FCC')
+            return df
+    except Exception as e:
+        pass  # Will try Google Drive fallback
+
+    # Strategy 2: Fall back to Google Drive (for Streamlit Cloud)
+    try:
+        import gdown
+
+        # Google Drive file ID
+        file_id = "1v0nKdwjihWGdbJLwTttFL0UkE2Jo2OIc"
+
+        # Create temporary file path
+        temp_csv = "dissertation_data.csv"
+
+        # Download with progress indication
+        with st.spinner("Loading data from cloud storage (first time only)..."):
+            gdown.download(
+                f'https://drive.google.com/uc?id={file_id}',
+                temp_csv,
+                quiet=True,
+                use_cookies=False
+            )
+
+        # Load from temp file
+        df = pd.read_csv(temp_csv)
         df['breach_date'] = pd.to_datetime(df['breach_date'], errors='coerce')
         df['breach_year'] = df['breach_date'].dt.year
         df['period'] = df['breach_year'].apply(lambda x: 'Pre-2007' if x < 2007 else 'Post-2007')
         df['treatment_group'] = df['fcc_reportable'].apply(lambda x: 'FCC-Regulated' if x == 1 else 'Non-FCC')
+
+        # Clean up temp file
+        if os.path.exists(temp_csv):
+            try:
+                os.remove(temp_csv)
+            except:
+                pass  # OK if cleanup fails
+
         return df
-    except FileNotFoundError:
+
+    except Exception as e:
+        st.error(f"Failed to load data from both local and cloud sources. Error: {str(e)}")
         return None
 
 @st.cache_data
