@@ -34,21 +34,60 @@ This dissertation analyzes the market reactions to data breach disclosures among
 - **Financial Data Breaches:** 257 (24.4%)
 - **Executive Turnover:** 443 breaches (42.0%) with executive departure within 30 days
 
-## 📊 Dissertation Framework
+## 📊 Conceptual Model
 
-![Dissertation Framework Visualization](dissertation_framework.png)
+### Research Question
+**Does immediate disclosure benefit firms, or should disclosure be delayed?**
 
-*Visual overview of the research question, theoretical foundation, key hypotheses, moderating factors, and main findings*
+### Theoretical Framework
+**Information Asymmetry Theory (Myers & Majluf 1984)**
+Disclosure timing signals information quality and resolves market uncertainty
 
-### Key Findings
+### Model Flow
+```
+Data Breach  →  Timing Decision  →  Information Asymmetry  →  Market Reaction
+             (Private Info)    (Immediate vs. Delayed)    (Volatility Change)     (CAR: -0.74%)
+```
 
-| Finding | Effect | Significance |
-|---------|--------|--------------|
-| Health data breaches | -4.32% CAR | p < 0.001*** |
-| FCC-regulated breaches | -3.60% CAR | p = 0.003** |
-| Prior breach history | -0.11% per breach | p = 0.002** |
-| Executive turnover | 42.8% within 30 days | Descriptive |
-| FCC regulation on volatility | +4.96% increase | p < 0.001*** |
+---
+
+### 🚨 Primary Hypothesis: REJECTED
+
+**H1 - Immediate Disclosure Benefit**
+- **Coefficient:** +0.90% (p=0.373, NOT significant)
+- **Robustness:** Non-significant in ALL 27+ specifications tested
+- **Conclusion:** **Timing doesn't matter for market reactions**
+
+---
+
+### ✅ What ACTUALLY Matters: Three Robust Effects
+
+| Factor | Effect | Significance | Interpretation |
+|--------|--------|--------------|-----------------|
+| **FCC Regulation** | -2.66% CAR | p=0.003*** | Regulatory expectations penalty |
+| **Health Data Breach** | -2.65% CAR | p=0.004*** | HIPAA sensitivity / high regulatory risk |
+| **Prior Breaches** | -0.08% per breach | p=0.012** | Market memory of recidivist behavior |
+
+---
+
+### The Answer
+
+> **Disclosure timing has ZERO effect on market reactions.**
+>
+> **What matters:**
+> - **WHO you are** (FCC-regulated firms face larger penalties)
+> - **WHAT was breached** (Health data triggers worst reactions)
+> - **YOUR HISTORY** (Repeat offenders face cumulative penalties)
+>
+> **Implication:** Focus on breach prevention and response quality, not disclosure speed.
+
+---
+
+### Sample & Robustness
+
+- **Sample:** 1,054 breaches (2006-2025) | 926 with market data | 30-day CAR event window
+- **Robustness Testing:** 4 event windows × 7 timing thresholds × 8 subsamples × 6 SE methods = **27 specifications**
+- **Result:** Timing effect non-significant across ALL specifications; FCC, health, and prior breach effects robust
 
 ---
 

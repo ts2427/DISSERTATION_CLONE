@@ -1,25 +1,40 @@
 import pandas as pd
 import numpy as np
 import wrds
+import os
 
 print("=" * 60)
-print("SCRIPT 3: ANALYST COVERAGE DATA")
+print("ANALYST COVERAGE DATA (FIXED)")
 print("=" * 60)
 
 # Load breach data
 df = pd.read_excel('Data/processed/FINAL_DISSERTATION_DATASET.xlsx')
 print(f"\n✓ Loaded {len(df)} breach records")
 
+# Find ticker column
+ticker_col = None
+for col in ['Stock Ticker', 'Map', 'ticker', 'TICKER']:
+    if col in df.columns:
+        ticker_col = col
+        break
+
+if ticker_col is None:
+    print("\n✗ ERROR: No ticker column found!")
+    print("Available columns:", [col for col in df.columns if 'tick' in col.lower() or 'map' in col.lower()])
+    exit()
+
+print(f"✓ Using ticker column: '{ticker_col}'")
+
 # Connect to WRDS
 print("\nConnecting to WRDS...")
 db = wrds.Connection()
 print("✓ Connected")
 
-# Get list of tickers and date ranges
-analysis_df = df[df['Stock Ticker'].notna()].copy()
+# Get records with tickers
+analysis_df = df[df[ticker_col].notna()].copy()
 print(f"✓ {len(analysis_df)} records with stock tickers")
 
-tickers = analysis_df['Stock Ticker'].dropna().unique().tolist()
+tickers = analysis_df[ticker_col].dropna().unique().tolist()
 ticker_list = ','.join([f"'{t}'" for t in tickers])
 
 min_date = analysis_df['breach_date'].min() - pd.DateOffset(years=1)
@@ -29,7 +44,6 @@ print(f"\nQuerying IBES for {len(tickers)} tickers...")
 print(f"Date range: {min_date.date()} to {max_date.date()}")
 
 # Query IBES Summary Statistics
-# This contains number of analysts making estimates
 try:
     analyst_data = db.raw_sql(f"""
         SELECT ticker, statpers, fpedats, numest, numup, numdown,
@@ -40,20 +54,18 @@ try:
         AND statpers <= '{max_date.strftime('%Y-%m-%d')}'
         AND fpi = '1'
         AND measure = 'EPS'
-    """)
+    """, date_cols=['statpers', 'fpedats'])
     
-    print(f"✓ Downloaded {len(analyst_data)} analyst summary records")
-    
-    # Convert dates
-    analyst_data['statpers'] = pd.to_datetime(analyst_data['statpers'])
+    print(f"✓ Downloaded {len(analyst_data):,} analyst summary records")
     
     # For each breach, get analyst coverage metrics
     print("\nMatching analyst data to breach dates...")
     
     results = []
+    matched = 0
     
     for idx, row in analysis_df.iterrows():
-        ticker = row['Stock Ticker']
+        ticker = row[ticker_col]
         breach_date = pd.to_datetime(row['breach_date'])
         
         # Get analyst data closest to breach date (within 90 days before)
@@ -71,19 +83,20 @@ try:
             recent = analyst_window.iloc[-1]
             
             num_analysts = recent['numest']
-            num_upgrades = recent['numup']
-            num_downgrades = recent['numdown']
+            num_upgrades = recent['numup'] if pd.notna(recent['numup']) else 0
+            num_downgrades = recent['numdown'] if pd.notna(recent['numdown']) else 0
             mean_estimate = recent['meanest']
             std_estimate = recent['stdev']
             
             # Calculate analyst coverage metrics
             high_coverage = 1 if num_analysts >= 5 else 0
-            analyst_dispersion = std_estimate / abs(mean_estimate) if mean_estimate != 0 else np.nan
+            analyst_dispersion = std_estimate / abs(mean_estimate) if pd.notna(mean_estimate) and mean_estimate != 0 else np.nan
             
+            matched += 1
         else:
             num_analysts = 0
-            num_upgrades = np.nan
-            num_downgrades = np.nan
+            num_upgrades = 0
+            num_downgrades = 0
             mean_estimate = np.nan
             std_estimate = np.nan
             high_coverage = 0
@@ -102,6 +115,9 @@ try:
             'high_analyst_coverage': high_coverage,
             'has_analyst_coverage': 1 if num_analysts > 0 else 0
         })
+        
+        if (len(results) % 100 == 0):
+            print(f"  Processed {len(results)}/{len(analysis_df)} ({matched} matched)")
     
     results_df = pd.DataFrame(results)
     
@@ -110,54 +126,64 @@ try:
     print("ANALYST COVERAGE SUMMARY")
     print("=" * 60)
     
-    print(f"\nRecords with analyst coverage: {results_df['has_analyst_coverage'].sum()} ({results_df['has_analyst_coverage'].mean()*100:.1f}%)")
+    print(f"\nTotal processed: {len(results_df)}")
+    print(f"Records with analyst coverage: {results_df['has_analyst_coverage'].sum()} ({results_df['has_analyst_coverage'].mean()*100:.1f}%)")
     print(f"Records with high coverage (5+ analysts): {results_df['high_analyst_coverage'].sum()} ({results_df['high_analyst_coverage'].mean()*100:.1f}%)")
     
     print(f"\nAnalyst count distribution:")
-    print(results_df['num_analysts'].describe())
+    print(results_df[results_df['num_analysts'] > 0]['num_analysts'].describe())
     
-    print(f"\nTop 10 most covered firms:")
-    top_coverage = results_df.nlargest(10, 'num_analysts')[['ticker', 'num_analysts', 'breach_date']]
-    print(top_coverage.to_string(index=False))
+    if results_df['has_analyst_coverage'].sum() > 0:
+        print(f"\nTop 10 most covered firms:")
+        top_coverage = results_df.nlargest(10, 'num_analysts')[['ticker', 'num_analysts', 'breach_date']]
+        print(top_coverage.to_string(index=False))
     
     # Save results
-    import os
     os.makedirs('Data/enrichment', exist_ok=True)
     
     results_df.to_csv('Data/enrichment/analyst_coverage.csv', index=False)
     print(f"\n✓ Saved to Data/enrichment/analyst_coverage.csv")
     
     print("\n" + "=" * 60)
-    print("✓ SCRIPT 3 COMPLETE")
+    print("✓ ANALYST COVERAGE COMPLETE")
     print("=" * 60)
     print(f"\nCreated variables:")
-    print("  • num_analysts")
-    print("  • num_analyst_upgrades")
-    print("  • num_analyst_downgrades")
-    print("  • analyst_mean_estimate")
-    print("  • analyst_std_estimate")
-    print("  • analyst_dispersion")
-    print("  • high_analyst_coverage")
-    print("  • has_analyst_coverage")
+    print("  • num_analysts (count of analysts following the stock)")
+    print("  • num_analyst_upgrades (recent upgrades)")
+    print("  • num_analyst_downgrades (recent downgrades)")
+    print("  • analyst_mean_estimate (consensus EPS estimate)")
+    print("  • analyst_std_estimate (estimate dispersion)")
+    print("  • analyst_dispersion (coefficient of variation)")
+    print("  • high_analyst_coverage (1 if 5+ analysts)")
+    print("  • has_analyst_coverage (1 if any analysts)")
 
 except Exception as e:
     print(f"\n✗ Error querying IBES: {e}")
+    print(f"  Error type: {type(e).__name__}")
     print("\nThis may mean:")
     print("  1. Your WRDS subscription doesn't include IBES")
     print("  2. IBES data not available for these tickers")
-    print("  3. Date range issue")
+    print("  3. Table name or structure changed")
     print("\nCreating placeholder file...")
     
     # Create placeholder
     results_df = pd.DataFrame({
         'breach_id': range(len(analysis_df)),
-        'ticker': analysis_df['Stock Ticker'].values,
+        'ticker': analysis_df[ticker_col].values,
+        'breach_date': analysis_df['breach_date'].values,
         'num_analysts': 0,
+        'num_analyst_upgrades': 0,
+        'num_analyst_downgrades': 0,
+        'analyst_mean_estimate': np.nan,
+        'analyst_std_estimate': np.nan,
+        'analyst_dispersion': np.nan,
+        'high_analyst_coverage': 0,
         'has_analyst_coverage': 0
     })
     
+    os.makedirs('Data/enrichment', exist_ok=True)
     results_df.to_csv('Data/enrichment/analyst_coverage.csv', index=False)
-    print("✓ Created placeholder file")
+    print("✓ Created placeholder file with zero coverage")
 
 finally:
     db.close()

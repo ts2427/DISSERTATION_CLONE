@@ -1,6 +1,6 @@
 """
-PAGE 7: KEY FINDING - THE FCC PARADOX
-Synthesizes Essays 2 & 3: Why mandatory immediate disclosure creates WORSE market reactions
+PAGE 7: KEY FINDING - TIMING IS IRRELEVANT
+Synthesizes Essays 2 & 3: Market reactions depend on severity, reputation, and regulation—not timing
 """
 
 import streamlit as st
@@ -9,23 +9,23 @@ import plotly.graph_objects as go
 import plotly.express as px
 import numpy as np
 
-st.set_page_config(page_title="Key Finding: The FCC Paradox", page_icon="🔓", layout="wide")
+st.set_page_config(page_title="Key Finding: Timing is Irrelevant", page_icon="⏰", layout="wide")
 
 st.markdown("""
 <style>
 .paradox-header {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #ff7f0e;
+    color: #1f77b4;
     text-align: center;
     padding: 1rem 0;
     margin-bottom: 2rem;
-    border-bottom: 3px solid #ff7f0e;
+    border-bottom: 3px solid #1f77b4;
 }
 .paradox-box {
-    background-color: #fff4e6;
+    background-color: #e6f2ff;
     padding: 2rem;
-    border-left: 8px solid #ff7f0e;
+    border-left: 8px solid #1f77b4;
     border-radius: 8px;
     margin: 1.5rem 0;
     font-size: 1.15rem;
@@ -59,24 +59,39 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown("<div class='paradox-header'>🔓 The FCC Paradox: When Faster Disclosure = Worse Outcomes</div>", unsafe_allow_html=True)
+st.markdown("<div class='paradox-header'>⏰ The Central Finding: Timing is Irrelevant</div>", unsafe_allow_html=True)
 
 # ============================================================================
-# THE PARADOX STATEMENT
+# THE KEY INSIGHT
 # ============================================================================
 
 st.markdown("""
 <div class='paradox-box'>
-<h2>The Core Paradox</h2>
+<h2>What Information Asymmetry Theory Predicts (And Empirical Results)</h2>
 
-A well-intentioned regulation—requiring data breaches to be disclosed within 7 days—is associated with
-<b style='font-size: 1.2rem; color: #d62728;'>significantly worse stock market reactions</b>.
+<b>Myers & Majluf (1984) Prediction:</b> Markets price information asymmetry, not speed.
 
-<b style='color: #ff7f0e;'>Expected:</b> Faster disclosure → Information resolves → Market uncertainty decreases → Returns improve
+<b>Spence (1973) Signal:</b> Voluntary disclosure signals strength; mandatory compliance does not.
 
-<b style='color: #d62728;'>Actual:</b> Faster disclosure (mandated) → Information remains incomplete → Market uncertainty increases → Returns WORSEN
+<b>Across 25+ specifications: Disclosure timing has NO significant effect (p > 0.10)</b>
 
-→ This challenges the assumption that "immediate disclosure = better market outcomes"
+<b style='color: #1f77b4;'>What DOES Drive Market Reactions (Information Asymmetry Signals):</b>
+1. <b style='color: #2ca02c;'>H3 - Reputation (Prior Breaches)</b>: -0.08%** per breach (STRONGEST)
+   - Market uses breach history to assess firm vulnerability
+
+2. <b style='color: #2ca02c;'>H4 - Severity (Health Data)</b>: -2.65%***
+   - Information complexity signal: higher liability uncertainty
+
+3. <b style='color: #2ca02c;'>H2 - Regulatory Context (FCC)</b>: -2.19%*
+   - Information environment signal: sector/regulatory scrutiny
+
+<b style='color: #d62728;'>What Does NOT Matter (Signaling Breakdown):</b>
+- <b style='text-decoration: line-through;'>H1a - Voluntary Timing</b>: +0.45% (p=0.574, NOT significant)
+- <b style='text-decoration: line-through;'>H1b - Mandatory Timing</b>: Should be zero, is essentially zero
+- Both voluntary AND mandatory disclosure show NO timing effect
+
+→ <b>Theory correctly predicts:</b> Timing lacks signaling value when mandatory. Information environment drives reactions.
+→ <b>Implication:</b> Regulatory requirement destroys signal value of voluntary disclosure. Speed ≠ strength when forced by deadline.
 </div>
 """, unsafe_allow_html=True)
 
@@ -90,41 +105,69 @@ st.markdown("## Evidence from Essays 2 & 3")
 col1, col2 = st.columns(2)
 
 with col1:
-    st.markdown("""
+    # Load data for dynamic calculation
+    @st.cache_data
+    def load_car_data():
+        from pathlib import Path
+        df = pd.read_csv(str(Path(__file__).parent.parent.parent / 'Data' / 'processed' / 'FINAL_DISSERTATION_DATASET_ENRICHED.csv'))
+        return df
+
+    df_car = load_car_data()
+    fcc_car = df_car[df_car['fcc_reportable']==1]['car_30d'].dropna()
+    non_fcc_car = df_car[df_car['fcc_reportable']==0]['car_30d'].dropna()
+    fcc_mean = fcc_car.mean()
+    non_fcc_mean = non_fcc_car.mean()
+    car_diff = non_fcc_mean - fcc_mean
+
+    st.markdown(f"""
     ### Essay 2: Market Reactions (CAR)
 
     **The Finding:**
-    - FCC-regulated: **-1.62%** mean CAR (30-day)
-    - Non-FCC regulated: **+1.43%** mean CAR
-    - **Difference: 3.05 percentage points**
+    - FCC-regulated: **{fcc_mean:.2f}%** mean CAR (30-day)
+    - Non-FCC regulated: **{non_fcc_mean:.2f}%** mean CAR
+    - **Difference: {car_diff:.2f} percentage points**
 
-    **From Regression:**
-    - Coefficient: **-10.86%*** (p<0.01)
-    - Robust across all 5 models
-    - Largest with full controls
+    **From Regression (N=898):**
+    - Coefficient: **-2.19%** (p=0.033)*
+    - Significant across all 5 models
+    - Effect persists with firm controls
     - **Interpretation:**
-      - Conditional on other factors, being FCC-regulated predicts 10.86pp WORSE returns
-      - Effect is not due to firm size, leverage, or profitability
-      - Effect is specific to FCC regulatory status
+      - FCC-regulated firms experience significantly worse stock reactions
+      - Effect is robust to controlling for size, leverage, profitability
+      - Disclosure timing alone doesn't explain the penalty
     """)
 
 with col2:
-    st.markdown("""
+    # Load data for dynamic volatility calculation
+    @st.cache_data
+    def load_vol_data():
+        from pathlib import Path
+        df = pd.read_csv(str(Path(__file__).parent.parent.parent / 'Data' / 'processed' / 'FINAL_DISSERTATION_DATASET_ENRICHED.csv'))
+        return df
+
+    df_vol = load_vol_data()
+    fcc_vol_immediate = df_vol[(df_vol['fcc_reportable']==1) & (df_vol['immediate_disclosure']==1)]['volatility_change'].dropna()
+    non_fcc_vol_immediate = df_vol[(df_vol['fcc_reportable']==0) & (df_vol['immediate_disclosure']==1)]['volatility_change'].dropna()
+    fcc_vol_mean = fcc_vol_immediate.mean()
+    non_fcc_vol_mean = non_fcc_vol_immediate.mean()
+    vol_diff = fcc_vol_mean - non_fcc_vol_mean
+
+    st.markdown(f"""
     ### Essay 3: Information Asymmetry (Volatility)
 
     **The Mechanism:**
-    - FCC + Immediate: **+2.18%** volatility change
-    - Non-FCC + Immediate: **-0.35%** volatility change
-    - **Difference: 2.53 percentage points**
+    - FCC + Immediate: **{fcc_vol_mean:.2f}%** volatility change
+    - Non-FCC + Immediate: **{non_fcc_vol_mean:.2f}%** volatility change
+    - **Difference: {vol_diff:.2f} percentage points**
 
-    **From Regression:**
-    - FCC coefficient: **+1.22%** (direction positive)
-    - Pre-volatility dominates (36% of variance)
-    - FCC effect is modest but consistent
+    **From Regression (N=891):**
+    - FCC coefficient: **+2.76%** (p=0.004)**
+    - Pre-volatility dominates (68.6% importance in ML models)
+    - FCC effect is consistent and highly significant
     - **Interpretation:**
-      - FCC disclosure increases market UNCERTAINTY
-      - Non-FCC firms resolve uncertainty better
-      - Forced timing ≠ better information quality
+      - FCC-regulated breaches increase market UNCERTAINTY
+      - Even mandatory immediate disclosure fails to resolve it
+      - Forced timing ≠ improved information quality
     """)
 
 # ============================================================================
@@ -142,23 +185,23 @@ TIMELINE: Breach Occurs → Market Confused → Disclosure → Market Learns
 
 NON-FCC PATH (Can choose timing):
   1. Breach occurs
-  2. Company investigates (days 1-30)
+  2. Company investigates (days 1-30+)
   3. When severity is CLEAR, company discloses
   4. Market receives COMPLETE information
-  5. Uncertainty RESOLVED → Volatility drops
-  6. Market reaction: NEGATIVE (bad news) but not catastrophic
-  7. Result: CAR = +1.43% (small negative or neutral)
+  5. Uncertainty RESOLVED → Volatility decreases on average
+  6. Market reaction: Negative but not catastrophic
+  7. Result: Mean CAR slightly positive relative to FCC firms
 
 FCC PATH (Forced 7-day disclosure):
   1. Breach occurs
   2. Company investigates (days 1-7)
   3. After 7 days, FCC REQUIRES disclosure (whether ready or not)
   4. Market receives INCOMPLETE information (ongoing investigation)
-  5. Uncertainty REMAINS → Volatility stays HIGH
+  5. Uncertainty REMAINS HIGH → Volatility INCREASES (+2.76pp effect)
   6. Market questions: "How bad is it REALLY?"
-  7. Market factor in regulatory costs + ongoing liability
-  8. Result: CAR = -1.62% (catastrophic news reaction)
-  9. Later: More bad news emerges → Loss magnification
+  7. Market factors in regulatory costs + ongoing liability + unknowns
+  8. Result: Mean CAR -2.19pp worse than non-FCC firms
+  9. Later: More information emerges → potential for loss magnification
 
 KEY INSIGHT: Disclosure timing is BINDING, but information quality is NOT.
              Forced disclosure of incomplete information = negative signal.
@@ -177,7 +220,7 @@ The Myers & Majluf (1984) framework predicts this:
 | **Sick firm, voluntary disclosure** | Delayed | Complete | "Carefully managing info" | Negative |
 | **Sick firm, forced disclosure** | Immediate | Incomplete | "Hiding bad news" | Very Negative |
 
-**Our Evidence:**
+**Empirical Evidence:**
 - Non-FCC (voluntary timing): Can match disclosure to information quality
 - FCC (forced timing): Must disclose before ready
 - Result: FCC firms appear to have worse breaches (but may be same severity, just rushed disclosure)
@@ -292,7 +335,7 @@ You can mandate when firms speak, but you cannot mandate what they know.
 # ============================================================================
 
 st.markdown("---")
-st.markdown("## Alternative Explanations We Ruled Out")
+st.markdown("## Alternative Explanations Ruled Out")
 
 alt_cols = st.columns(3)
 
@@ -367,40 +410,64 @@ st.markdown("""
 st.markdown("---")
 
 st.markdown("""
-<div class='paradox-box' style='text-align: center; font-size: 1.3rem; background-color: #ffe6e6; color: #333;'>
-<b>FCC regulation forces speed over completeness,<br>
-and the market correctly interprets this as a negative signal about what regulators know.</b>
+<div class='paradox-box' style='text-align: center; font-size: 1.3rem; background-color: #e6ffe6; color: #333;'>
+<b>Central Finding: Markets care about WHAT was breached and WHO was breached, not WHEN.<br>
+Timing regulations are less effective than policy assumes because they ignore information quality.</b>
 </div>
 """, unsafe_allow_html=True)
 
 st.markdown("---")
 st.markdown("""
 <div class='implication-box'>
-<h3 style='color: inherit;'>Why This Matters for Your Committee</h3>
+<h3 style='color: inherit;'>Why This Finding Matters</h3>
 
-This finding has three important implications:
+This empirical result challenges core assumptions about disclosure regulation:
 
-<b>1. For Policy:</b> Regulation isn't always better when mandated faster. Effectiveness depends on whether the regulation enables better information (disclosure of complete facts) or just forces timing.
+<b>1. For Policy:</b> Timing mandates don't automatically improve markets if they sacrifice information quality.
+The FCC regulation forces speed, but markets care about complete information. Policy should incentivize
+information quality (complete disclosure + supplemental updates) not just speed.
 
-<b>2. For Theory:</b> Myers & Majluf's information asymmetry framework applies to regulatory disclosures too. The market can distinguish between "faster because transparent" and "faster because required."
+<b>2. For Theory:</b> Information asymmetry theory correctly predicts this result. Markets distinguish between
+voluntary disclosure (signals strength) and mandatory disclosure (signals compliance). The same timing looks different
+depending on context.
 
-<b>3. For Practice:</b> Companies should use disclosure strategy intentionally. Rushing to disclose incomplete information can signal weakness. Strategic disclosure (complete, even if delayed) can signal strength.
+<b>3. For Practice:</b> Companies disclosing breaches should consider whether rushing to meet a deadline
+(when information is incomplete) signals strength or weakness. Strategic complete disclosure may outperform
+rushed incomplete disclosure.
 
-<b>The Broader Point:</b> Regulation addresses market failures, but can create second-order effects. This isn't a "deregulation" call—it's a "think through consequences" call.
+<b>4. For Regulation:</b> The puzzle isn't that the FCC regulation doesn't work—it does force disclosure.
+The puzzle is that forcing disclosure earlier doesn't improve market outcomes. This suggests regulators
+should also care about information quality standards, not just timing standards.
 </div>
 """, unsafe_allow_html=True)
 
 st.markdown("---")
 st.info("""
-### Next: Moderators & Heterogeneous Effects
+### Summary: The Central Finding
 
-Does the FCC Paradox apply equally to all firms?
+**Hypothesis Tests Across Two Essays:**
 
-**The answer is NO:**
-- Health data breaches are hit harder (-15% CAR for FCC firms)
-- Prior repeat offenders get worse penalties
-- Executive turnover amplifies negative reactions
-- Regulatory enforcement shows interaction effects
+❌ **H1a (Timing Hypothesis)**: Immediate disclosure reduces CAR penalty
+- Result: NOT SUPPORTED (p > 0.10 across 25+ specs)
 
-Continue to **"Moderators"** page for detailed heterogeneous effects analysis →
+✅ **H1b (Severity-Dominance)**: Content matters more than speed
+- Result: SUPPORTED
+
+✅ **H2 (Regulatory)**: FCC status affects CAR → -2.19%* (p=0.033)
+✅ **H3 (Reputation)**: Prior breaches → -0.08%** per breach (STRONGEST)
+✅ **H4 (Severity)**: Health data → -2.65%*** CAR
+
+**And in Essay 3 (Volatility/Mechanism):**
+
+✅ **H5 (Volatility Persistence)**: Pre-breach volatility dominates → 68.6% feature importance
+❌ **H6 (Timing Reduces Volatility)**: Immediate disclosure → NO effect on volatility (p=0.95)
+✅ **H7 (Severity Increases Volatility)**: FCC firms → +2.76%** higher volatility
+
+### The Bottom Line
+
+**Timing regulations don't work as policy assumes** because they don't guarantee information quality.
+Markets reward companies that disclose complete information, not companies that disclose fast but incomplete.
+Policy should optimize for information quality, not just information speed.
+
+→ Continue to **Conclusion** page for final implications
 """)

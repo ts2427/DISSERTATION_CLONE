@@ -1,0 +1,180 @@
+====================================================================================================
+TABLE 1: DESCRIPTIVE STATISTICS
+====================================================================================================
+
+PANEL A: FULL SAMPLE (N=1,054)
+----------------------------------------------------------------------------------------------------
+                      Variable    N       Mean         Std     Min   P25 Median     P75           Max
+                 5-Day CAR (%)  926      -0.01        4.06  -26.41 -1.84  -0.12    2.05         14.21
+                30-Day CAR (%)  926      -0.74        8.82  -42.56 -5.54   0.30    3.92         34.05
+                5-Day BHAR (%)  926      -0.02        4.05  -24.28 -1.89  -0.12    2.04         15.05
+               30-Day BHAR (%)  926      -0.75        8.70  -35.09 -5.83  -0.04    3.84         41.78
+        Post-Breach Volatility  916      26.46       13.98    4.48 17.11  22.84   32.03        127.62
+             Volatility Change  916      -1.75       13.87 -121.69 -7.84  -1.13    5.00        102.47
+              Records Affected 1050 2884987.07 36033259.98    0.00  4.00  64.50 2405.00 1000000000.00
+Immediate Disclosure (≤7 days) 1054       0.19        0.39    0.00  0.00   0.00    0.00          1.00
+ Delayed Disclosure (>30 days) 1054       0.68        0.47    0.00  0.00   1.00    1.00          1.00
+            Health Data Breach 1054       0.11        0.31    0.00  0.00   0.00    0.00          1.00
+         Financial Data Breach 1054       0.24        0.43    0.00  0.00   0.00    0.00          1.00
+                    PII Breach 1054       0.98        0.14    0.00  1.00   1.00    1.00          1.00
+         Breach Severity Score 1054       7.91        2.37    0.00  6.00   8.00    9.00         18.00
+          Total Prior Breaches 1054       3.36        7.32    0.00  0.00   0.00    3.00         56.00
+       Prior Breaches (1 year) 1054       1.87        5.51    0.00  0.00   0.00    1.00         56.00
+      Prior Breaches (3 years) 1054       2.55        6.22    0.00  0.00   0.00    2.00         56.00
+               Repeat Offender 1054       0.42        0.49    0.00  0.00   0.00    1.00          1.00
+        Days Since Last Breach  442     367.09      758.02    1.00 17.00  49.00  343.50       5698.00
+        Firm Size (log assets)  973      10.48        1.23    5.01  9.75  10.49   11.03         14.74
+                      Leverage  976       0.75        0.26    0.12  0.61   0.71    0.89          2.52
+                       ROA (%)  976       0.01        0.03   -0.33  0.00   0.01    0.02          0.21
+        Executive Change (30d) 1036       0.43        0.49    0.00  0.00   0.00    1.00          1.00
+        Executive Change (90d) 1036       0.62        0.49    0.00  0.00   1.00    1.00          1.00
+        Regulatory Enforcement 1054       0.01        0.08    0.00  0.00   0.00    0.00          1.00
+                Media Articles 1054       7.31       73.86    0.00  0.00   0.00    1.00       1870.00
+           High Media Coverage 1054       0.06        0.25    0.00  0.00   0.00    0.00          1.00
+
+PANEL B: CRSP SAMPLE (N=926)
+----------------------------------------------------------------------------------------------------
+                      Variable   N       Mean         Std     Min   P25 Median     P75           Max
+                 5-Day CAR (%) 926      -0.01        4.06  -26.41 -1.84  -0.12    2.05         14.21
+                30-Day CAR (%) 926      -0.74        8.82  -42.56 -5.54   0.30    3.92         34.05
+                5-Day BHAR (%) 926      -0.02        4.05  -24.28 -1.89  -0.12    2.04         15.05
+               30-Day BHAR (%) 926      -0.75        8.70  -35.09 -5.83  -0.04    3.84         41.78
+        Post-Breach Volatility 916      26.46       13.98    4.48 17.11  22.84   32.03        127.62
+             Volatility Change 916      -1.75       13.87 -121.69 -7.84  -1.13    5.00        102.47
+              Records Affected 922 2989016.11 38190202.77    0.00  4.00  73.50 2842.25 1000000000.00
+Immediate Disclosure (≤7 days) 926       0.18        0.38    0.00  0.00   0.00    0.00          1.00
+ Delayed Disclosure (>30 days) 926       0.70        0.46    0.00  0.00   1.00    1.00          1.00
+            Health Data Breach 926       0.12        0.32    0.00  0.00   0.00    0.00          1.00
+         Financial Data Breach 926       0.24        0.43    0.00  0.00   0.00    0.00          1.00
+                    PII Breach 926       0.98        0.14    0.00  1.00   1.00    1.00          1.00
+         Breach Severity Score 926       7.93        2.37    0.00  6.00   8.00    9.00         18.00
+          Total Prior Breaches 926       3.58        7.59    0.00  0.00   0.00    3.00         56.00
+       Prior Breaches (1 year) 926       2.06        5.84    0.00  0.00   0.00    1.00         56.00
+      Prior Breaches (3 years) 926       2.73        6.55    0.00  0.00   0.00    2.00         56.00
+               Repeat Offender 926       0.42        0.49    0.00  0.00   0.00    1.00          1.00
+        Days Since Last Breach 393     366.48      779.77    1.00 16.00  49.00  308.00       5698.00
+        Firm Size (log assets) 898      10.53        1.20    5.64  9.90  10.52   11.05         14.74
+                      Leverage 900       0.76        0.26    0.14  0.61   0.72    0.90          2.52
+                       ROA (%) 900       0.01        0.03   -0.33  0.00   0.01    0.02          0.21
+        Executive Change (30d) 924       0.46        0.50    0.00  0.00   0.00    1.00          1.00
+        Executive Change (90d) 924       0.67        0.47    0.00  0.00   1.00    1.00          1.00
+        Regulatory Enforcement 926       0.01        0.08    0.00  0.00   0.00    0.00          1.00
+                Media Articles 926       4.64       32.92    0.00  0.00   0.00    1.00        593.00
+           High Media Coverage 926       0.07        0.25    0.00  0.00   0.00    0.00          1.00
+
+PANEL C: BY FCC REGULATION
+----------------------------------------------------------------------------------------------------
+                      Variable   N       Mean         Std     Min   P25 Median     P75           Max         Group
+                 5-Day CAR (%) 187      -1.02        4.68  -16.59 -2.77  -0.68    1.02          9.85 FCC Regulated
+                30-Day CAR (%) 187      -2.71       10.12  -40.60 -6.61  -1.33    2.41         21.88 FCC Regulated
+                5-Day BHAR (%) 187      -1.00        4.64  -15.93 -2.80  -0.83    1.01         10.01 FCC Regulated
+               30-Day BHAR (%) 187      -2.66        9.39  -35.09 -6.67  -1.40    2.45         23.57 FCC Regulated
+        Post-Breach Volatility 186      26.40       14.07    4.48 16.32  21.51   31.18         89.81 FCC Regulated
+             Volatility Change 186      -0.51       14.13  -79.76 -3.74   1.19    4.63         38.93 FCC Regulated
+              Records Affected 200 3459300.07 15272946.00    0.00  2.00  23.50 6624.00  110000000.00 FCC Regulated
+Immediate Disclosure (≤7 days) 200       0.29        0.46    0.00  0.00   0.00    1.00          1.00 FCC Regulated
+ Delayed Disclosure (>30 days) 200       0.57        0.50    0.00  0.00   1.00    1.00          1.00 FCC Regulated
+            Health Data Breach 200       0.02        0.14    0.00  0.00   0.00    0.00          1.00 FCC Regulated
+         Financial Data Breach 200       0.27        0.44    0.00  0.00   0.00    1.00          1.00 FCC Regulated
+                    PII Breach 200       0.98        0.12    0.00  1.00   1.00    1.00          1.00 FCC Regulated
+         Breach Severity Score 200       7.49        2.16    0.00  6.00   6.00    9.00         16.00 FCC Regulated
+          Total Prior Breaches 200       3.19        3.89    0.00  0.00   2.00    5.25         17.00 FCC Regulated
+       Prior Breaches (1 year) 200       1.27        2.29    0.00  0.00   0.00    2.00         12.00 FCC Regulated
+      Prior Breaches (3 years) 200       1.92        2.58    0.00  0.00   1.00    3.00         12.00 FCC Regulated
+               Repeat Offender 200       0.64        0.48    0.00  0.00   1.00    1.00          1.00 FCC Regulated
+        Days Since Last Breach 128     482.03      780.23    1.00 17.00 118.50  633.25       5245.00 FCC Regulated
+        Firm Size (log assets) 189      11.04        1.33    6.06 10.36  11.70   12.09         12.86 FCC Regulated
+                      Leverage 189       0.73        0.16    0.56  0.67   0.68    0.72          1.56 FCC Regulated
+                       ROA (%) 189       0.01        0.01   -0.06  0.00   0.01    0.01          0.04 FCC Regulated
+        Executive Change (30d) 200       0.43        0.50    0.00  0.00   0.00    1.00          1.00 FCC Regulated
+        Executive Change (90d) 200       0.61        0.49    0.00  0.00   1.00    1.00          1.00 FCC Regulated
+        Regulatory Enforcement 200       0.03        0.17    0.00  0.00   0.00    0.00          1.00 FCC Regulated
+                Media Articles 200       8.96       32.77    0.00  0.00   0.00    3.00        393.00 FCC Regulated
+           High Media Coverage 200       0.17        0.37    0.00  0.00   0.00    0.00          1.00 FCC Regulated
+                 5-Day CAR (%) 739       0.24        3.85  -26.41 -1.66  -0.07    2.35         14.21       Non-FCC
+                30-Day CAR (%) 739      -0.24        8.39  -42.56 -5.19   0.62    4.33         34.05       Non-FCC
+                5-Day BHAR (%) 739       0.22        3.85  -24.28 -1.71  -0.10    2.31         15.05       Non-FCC
+               30-Day BHAR (%) 739      -0.27        8.45  -29.86 -5.47   0.52    4.08         41.78       Non-FCC
+        Post-Breach Volatility 730      26.48       13.97    6.47 17.59  23.06   32.03        127.62       Non-FCC
+             Volatility Change 730      -2.06       13.79 -121.69 -8.54  -1.32    5.06        102.47       Non-FCC
+              Records Affected 850 2749854.60 39363552.98    0.00  4.00  69.50 1993.50 1000000000.00       Non-FCC
+Immediate Disclosure (≤7 days) 854       0.16        0.37    0.00  0.00   0.00    0.00          1.00       Non-FCC
+ Delayed Disclosure (>30 days) 854       0.71        0.45    0.00  0.00   1.00    1.00          1.00       Non-FCC
+            Health Data Breach 854       0.13        0.34    0.00  0.00   0.00    0.00          1.00       Non-FCC
+         Financial Data Breach 854       0.24        0.43    0.00  0.00   0.00    0.00          1.00       Non-FCC
+                    PII Breach 854       0.98        0.14    0.00  1.00   1.00    1.00          1.00       Non-FCC
+         Breach Severity Score 854       8.01        2.41    0.00  6.00   8.00    9.00         18.00       Non-FCC
+          Total Prior Breaches 854       3.40        7.91    0.00  0.00   0.00    1.75         56.00       Non-FCC
+       Prior Breaches (1 year) 854       2.01        6.02    0.00  0.00   0.00    1.00         56.00       Non-FCC
+      Prior Breaches (3 years) 854       2.70        6.79    0.00  0.00   0.00    1.00         56.00       Non-FCC
+               Repeat Offender 854       0.37        0.48    0.00  0.00   0.00    1.00          1.00       Non-FCC
+        Days Since Last Breach 314     320.23      744.96    1.00 17.00  48.50  195.75       5698.00       Non-FCC
+        Firm Size (log assets) 784      10.34        1.16    5.01  9.70  10.38   10.83         14.74       Non-FCC
+                      Leverage 787       0.76        0.28    0.12  0.56   0.74    0.91          2.52       Non-FCC
+                       ROA (%) 787       0.01        0.04   -0.33  0.00   0.01    0.02          0.21       Non-FCC
+        Executive Change (30d) 836       0.43        0.49    0.00  0.00   0.00    1.00          1.00       Non-FCC
+        Executive Change (90d) 836       0.62        0.49    0.00  0.00   1.00    1.00          1.00       Non-FCC
+        Regulatory Enforcement 854       0.00        0.00    0.00  0.00   0.00    0.00          0.00       Non-FCC
+                Media Articles 854       6.93       80.51    0.00  0.00   0.00    0.00       1870.00       Non-FCC
+           High Media Coverage 854       0.04        0.20    0.00  0.00   0.00    0.00          1.00       Non-FCC
+
+PANEL D: BY DISCLOSURE TIMING
+----------------------------------------------------------------------------------------------------
+                      Variable   N       Mean         Std     Min   P25 Median     P75           Max           Group
+                 5-Day CAR (%) 163      -0.39        4.91  -26.41 -1.69  -0.21    1.96         12.75 Immediate (≤7d)
+                30-Day CAR (%) 163      -0.85        9.71  -39.32 -5.63   0.22    3.93         30.95 Immediate (≤7d)
+                5-Day BHAR (%) 163      -0.39        4.87  -24.28 -1.70  -0.24    1.98         13.29 Immediate (≤7d)
+               30-Day BHAR (%) 163      -0.88        9.48  -34.39 -6.32  -0.03    3.91         29.73 Immediate (≤7d)
+        Post-Breach Volatility 161      27.41       16.54    9.15 16.11  21.93   31.13         89.81 Immediate (≤7d)
+             Volatility Change 161      -2.93       16.82  -79.76 -8.69  -1.20    5.22         41.80 Immediate (≤7d)
+              Records Affected 196 1831415.76 12725843.95    0.00  5.75  31.00  393.75  128000000.00 Immediate (≤7d)
+Immediate Disclosure (≤7 days) 198       1.00        0.00    1.00  1.00   1.00    1.00          1.00 Immediate (≤7d)
+ Delayed Disclosure (>30 days) 198       0.00        0.00    0.00  0.00   0.00    0.00          0.00 Immediate (≤7d)
+            Health Data Breach 198       0.02        0.14    0.00  0.00   0.00    0.00          1.00 Immediate (≤7d)
+         Financial Data Breach 198       0.31        0.46    0.00  0.00   0.00    1.00          1.00 Immediate (≤7d)
+                    PII Breach 198       0.95        0.21    0.00  1.00   1.00    1.00          1.00 Immediate (≤7d)
+         Breach Severity Score 198       6.99        2.16    0.00  6.00   6.00    9.00         13.00 Immediate (≤7d)
+          Total Prior Breaches 198       5.57        7.60    0.00  0.00   2.00    8.75         39.00 Immediate (≤7d)
+       Prior Breaches (1 year) 198       2.66        4.16    0.00  0.00   1.00    3.75         19.00 Immediate (≤7d)
+      Prior Breaches (3 years) 198       4.04        5.81    0.00  0.00   1.00    6.00         26.00 Immediate (≤7d)
+               Repeat Offender 198       0.69        0.46    0.00  0.00   1.00    1.00          1.00 Immediate (≤7d)
+        Days Since Last Breach 136     306.38      603.76    1.00 15.00  50.50  285.50       3289.00 Immediate (≤7d)
+        Firm Size (log assets) 166      10.45        1.32    5.01  9.78  10.39   11.20         14.49 Immediate (≤7d)
+                      Leverage 167       0.69        0.21    0.16  0.59   0.67    0.76          1.93 Immediate (≤7d)
+                       ROA (%) 167       0.01        0.04   -0.13 -0.00   0.01    0.01          0.21 Immediate (≤7d)
+        Executive Change (30d) 193       0.24        0.43    0.00  0.00   0.00    0.00          1.00 Immediate (≤7d)
+        Executive Change (90d) 193       0.37        0.48    0.00  0.00   0.00    1.00          1.00 Immediate (≤7d)
+        Regulatory Enforcement 198       0.02        0.12    0.00  0.00   0.00    0.00          1.00 Immediate (≤7d)
+                Media Articles 198       9.13       37.01    0.00  0.00   0.00    1.00        393.00 Immediate (≤7d)
+           High Media Coverage 198       0.13        0.33    0.00  0.00   0.00    0.00          1.00 Immediate (≤7d)
+                 5-Day CAR (%) 763       0.07        3.85  -18.74 -1.84  -0.09    2.07         14.21   Delayed (>7d)
+                30-Day CAR (%) 763      -0.71        8.62  -42.56 -5.54   0.31    3.90         34.05   Delayed (>7d)
+                5-Day BHAR (%) 763       0.05        3.85  -16.97 -1.91  -0.12    2.07         15.05   Delayed (>7d)
+               30-Day BHAR (%) 763      -0.73        8.53  -35.09 -5.76  -0.06    3.84         41.78   Delayed (>7d)
+        Post-Breach Volatility 755      26.26       13.37    4.48 17.54  23.20   32.03        127.62   Delayed (>7d)
+             Volatility Change 755      -1.49       13.15 -121.69 -7.72  -1.13    5.00        102.47   Delayed (>7d)
+              Records Affected 854 3126790.32 39489266.36    0.00  4.00  73.50 3667.25 1000000000.00   Delayed (>7d)
+Immediate Disclosure (≤7 days) 856       0.00        0.00    0.00  0.00   0.00    0.00          0.00   Delayed (>7d)
+ Delayed Disclosure (>30 days) 856       0.84        0.37    0.00  1.00   1.00    1.00          1.00   Delayed (>7d)
+            Health Data Breach 856       0.13        0.34    0.00  0.00   0.00    0.00          1.00   Delayed (>7d)
+         Financial Data Breach 856       0.23        0.42    0.00  0.00   0.00    0.00          1.00   Delayed (>7d)
+                    PII Breach 856       0.99        0.12    0.00  1.00   1.00    1.00          1.00   Delayed (>7d)
+         Breach Severity Score 856       8.12        2.37    0.00  6.00   8.00   10.00         18.00   Delayed (>7d)
+          Total Prior Breaches 856       2.85        7.16    0.00  0.00   0.00    1.00         56.00   Delayed (>7d)
+       Prior Breaches (1 year) 856       1.69        5.77    0.00  0.00   0.00    1.00         56.00   Delayed (>7d)
+      Prior Breaches (3 years) 856       2.20        6.27    0.00  0.00   0.00    1.00         56.00   Delayed (>7d)
+               Repeat Offender 856       0.36        0.48    0.00  0.00   0.00    1.00          1.00   Delayed (>7d)
+        Days Since Last Breach 306     394.07      816.76    1.00 17.00  49.00  375.50       5698.00   Delayed (>7d)
+        Firm Size (log assets) 807      10.48        1.21    5.64  9.76  10.52   11.03         14.74   Delayed (>7d)
+                      Leverage 809       0.77        0.27    0.12  0.62   0.73    0.91          2.52   Delayed (>7d)
+                       ROA (%) 809       0.01        0.03   -0.33  0.00   0.01    0.02          0.21   Delayed (>7d)
+        Executive Change (30d) 843       0.47        0.50    0.00  0.00   0.00    1.00          1.00   Delayed (>7d)
+        Executive Change (90d) 843       0.68        0.47    0.00  0.00   1.00    1.00          1.00   Delayed (>7d)
+        Regulatory Enforcement 856       0.00        0.06    0.00  0.00   0.00    0.00          1.00   Delayed (>7d)
+                Media Articles 856       6.89       80.01    0.00  0.00   0.00    0.00       1870.00   Delayed (>7d)
+           High Media Coverage 856       0.05        0.22    0.00  0.00   0.00    0.00          1.00   Delayed (>7d)
+
+====================================================================================================
+Notes: All continuous variables winsorized at 1% and 99% levels.
+Immediate disclosure defined as <=7 days from breach discovery to public disclosure.
+====================================================================================================

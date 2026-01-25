@@ -196,9 +196,13 @@ with col1:
 with col2:
     st.metric("Study Period", f"{int(df['breach_year'].min())}-{int(df['breach_year'].max())}")
 with col3:
-    st.metric("Essay 2 Sample", f"{926} (88.2%)")
+    essay2_n = (df['has_crsp_data'] == True).sum()
+    essay2_pct = (essay2_n / len(df)) * 100
+    st.metric("Essay 2 Sample", f"{essay2_n} ({essay2_pct:.1f}%)")
 with col4:
-    st.metric("Essay 3 Sample", f"{916} (86.9%)")
+    essay3_n = df['return_volatility_pre'].notna().sum()
+    essay3_pct = (essay3_n / len(df)) * 100
+    st.metric("Essay 3 Sample", f"{essay3_n} ({essay3_pct:.1f}%)")
 with col5:
     st.metric("Unique Companies", f"{df['org_name'].nunique():,}")
 

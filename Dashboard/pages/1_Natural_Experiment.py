@@ -105,11 +105,11 @@ with col1:
     <div style='background-color: #e6f2ff; color: #333; padding: 1.5rem; border-radius: 8px; border-left: 5px solid #1f77b4; color: #333;'>
     <h3 style='color: #1f77b4;'>Treatment Group (FCC)</h3>
     <ul>
-    <li><b>N = 200 breaches</b> (19.0% of sample)</li>
+    <li><b>N = 184 breaches</b> (20.5% of sample)</li>
     <li>Companies: Telecom, cable, VoIP, satellite</li>
     <li><b>Requirement:</b> Disclose within 7 days (FCC Rule 37.3)</li>
-    <li><b>Enforcement:</b> FCC can levy fines</li>
-    <li><b>Effect:</b> 35.6 days faster disclosure post-2007</li>
+    <li><b>Enforcement:</b> FCC can levy fines for non-compliance</li>
+    <li><b>Post-2007 Effect:</b> Binding constraint on disclosure timing</li>
     </ul>
     </div>
     """, unsafe_allow_html=True)
@@ -119,11 +119,11 @@ with col2:
     <div style='background-color: #fff4e6; color: #333; padding: 1.5rem; border-radius: 8px; border-left: 5px solid #ff7f0e; color: #333;'>
     <h3 style='color: #ff7f0e;'>Control Group (Non-FCC)</h3>
     <ul>
-    <li><b>N = 854 breaches</b> (81.0% of sample)</li>
+    <li><b>N = 714 breaches</b> (79.5% of sample)</li>
     <li>Companies: Retail, healthcare, finance, manufacturing, etc.</li>
     <li><b>Requirement:</b> Varies by state law (no federal FCC rule)</li>
-    <li><b>Enforcement:</b> State-level (weaker)</li>
-    <li><b>After 2007:</b> Continue choosing timing freely</li>
+    <li><b>Enforcement:</b> State-level (variable and weaker)</li>
+    <li><b>After 2007:</b> Continue choosing disclosure timing freely</li>
     </ul>
     </div>
     """, unsafe_allow_html=True)

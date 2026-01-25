@@ -1,292 +1,419 @@
 """
-Train ML Models for Breach Impact Prediction
+Machine Learning Models for Data Breach Impact Prediction
+==========================================================
 
-Trains Random Forest and XGBoost models to predict:
-1. Essay 2: 30-day Cumulative Abnormal Returns (CAR)
-2. Essay 3: Post-breach stock return volatility
+Trains Random Forest models to predict:
+1. Market reactions (30-day CAR)
+2. Information asymmetry changes (volatility)
 
-Outputs:
-- Trained models (pickled)
-- Feature importance rankings
-- Cross-validation results
-- Model metrics for comparison to OLS
+Uses complete enriched dataset with all 85 variables.
 """
 
 import pandas as pd
 import numpy as np
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
+import matplotlib.pyplot as plt
+import seaborn as sns
 from pathlib import Path
-import sys
-import json
-from sklearn.model_selection import train_test_split
+import warnings
+warnings.filterwarnings('ignore')
 
-# Add scripts to path
-sys.path.insert(0, str(Path(__file__).parent))
-
-from ml_models import BreachImpactModel, ModelEvaluator, FeatureImportanceAnalyzer
-
-print("=" * 90)
-print("TRAIN ML MODELS FOR BREACH IMPACT PREDICTION")
-print("=" * 90)
+print("=" * 80)
+print("MACHINE LEARNING MODELS - BREACH IMPACT PREDICTION")
+print("=" * 80)
 
 # Configuration
-DATA_PATH = Path(__file__).parent.parent / 'Data' / 'processed' / 'FINAL_DISSERTATION_DATASET_ENRICHED.csv'
-OUTPUT_DIR = Path(__file__).parent.parent / 'outputs' / 'ml_models'
-MODELS_DIR = OUTPUT_DIR / 'trained_models'
-
-# Create output directories
+DATA_FILE = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'
+OUTPUT_DIR = Path('outputs/ml_models')
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-MODELS_DIR.mkdir(parents=True, exist_ok=True)
-
-print(f"\n[1/6] Loading data from {DATA_PATH.name}...")
-
-if not DATA_PATH.exists():
-    print(f"ERROR: Data file not found at {DATA_PATH}")
-    sys.exit(1)
-
-df = pd.read_csv(DATA_PATH)
-print(f"  Loaded: {len(df)} breaches × {len(df.columns)} columns")
 
 # ============================================================================
-# ESSAY 2: CAR 30-DAY PREDICTION
+# LOAD DATA
 # ============================================================================
 
-print(f"\n[2/6] Training models for Essay 2 (30-day CAR prediction)...")
+print(f"\n[Step 1/6] Loading data...")
+df = pd.read_csv(DATA_FILE)
+print(f"  ✓ Loaded: {len(df):,} breaches × {len(df.columns)} columns")
 
-# Prepare data for Essay 2
-essay2_features = [
-    'immediate_disclosure', 'fcc_reportable', 'firm_size_log', 'leverage', 'roa',
-    'prior_breaches_total', 'high_severity_breach', 'ransomware', 'health_breach',
-    'executive_change_30d', 'days_to_disclosure', 'total_affected',
-    'is_repeat_offender', 'governance_score'
-]
+# Check for required variables
+print(f"\n[Step 2/6] Checking available variables...")
 
-# Filter available features
-essay2_features_available = [f for f in essay2_features if f in df.columns]
-
-# Clean data: convert to numeric and remove rows with invalid values
-essay2_data = df[essay2_features_available + ['car_30d']].copy()
-for col in essay2_features_available:
-    essay2_data[col] = pd.to_numeric(essay2_data[col], errors='coerce')
-essay2_data = essay2_data.dropna()
-
-print(f"  Sample size: {len(essay2_data)} breaches")
-print(f"  Features: {len(essay2_features_available)}")
-print(f"  Target: car_30d (Mean: {essay2_data['car_30d'].mean():.4f}, Std: {essay2_data['car_30d'].std():.4f})")
-
-# Separate features and target
-X_essay2 = essay2_data[essay2_features_available]
-y_essay2 = essay2_data['car_30d']
-
-# Train/test split (70/30)
-X_train_e2, X_test_e2, y_train_e2, y_test_e2 = train_test_split(
-    X_essay2, y_essay2, test_size=0.3, random_state=42
-)
-
-print(f"\n  Train/Test Split: {len(X_train_e2)} / {len(X_test_e2)}")
-
-# Initialize and train Random Forest (Essay 2)
-print(f"\n  Training Random Forest...")
-rf_e2 = BreachImpactModel(model_type='rf', random_state=42, verbose=False)
-rf_e2.feature_names = essay2_features_available
-rf_e2.initialize_model(n_estimators=100, max_depth=10, min_samples_leaf=5)
-rf_e2.train(X_train_e2, y_train_e2)
-rf_e2_metrics = rf_e2.evaluate(X_test_e2, y_test_e2, X_train_e2, y_train_e2)
-rf_e2.save_model(MODELS_DIR / 'rf_essay2_car30d.pkl')
-
-# Initialize and train Gradient Boosting (Essay 2)
-print(f"  Training Gradient Boosting...")
-gb_e2 = BreachImpactModel(model_type='gb', random_state=42, verbose=False)
-gb_e2.feature_names = essay2_features_available
-gb_e2.initialize_model(n_estimators=100, max_depth=4, learning_rate=0.1)
-gb_e2.train(X_train_e2, y_train_e2)
-gb_e2_metrics = gb_e2.evaluate(X_test_e2, y_test_e2, X_train_e2, y_train_e2)
-gb_e2.save_model(MODELS_DIR / 'gb_essay2_car30d.pkl')
-
-print(f"\n  Essay 2 Results:")
-print(f"    Random Forest    - R²: {rf_e2_metrics['test_r2']:.4f}, RMSE: {rf_e2_metrics['test_rmse']:.4f}")
-print(f"    Gradient Boost   - R²: {gb_e2_metrics['test_r2']:.4f}, RMSE: {gb_e2_metrics['test_rmse']:.4f}")
-
-# ============================================================================
-# ESSAY 3: POST-BREACH VOLATILITY PREDICTION
-# ============================================================================
-
-print(f"\n[3/6] Training models for Essay 3 (post-breach volatility prediction)...")
-
-# Prepare data for Essay 3
-essay3_features = [
-    'return_volatility_pre', 'immediate_disclosure', 'fcc_reportable',
-    'firm_size_log', 'leverage', 'roa', 'large_firm',
-    'prior_breaches_total', 'high_severity_breach', 'executive_change_30d',
-    'days_to_disclosure', 'total_affected', 'is_repeat_offender'
-]
-
-# Filter available features
-essay3_features_available = [f for f in essay3_features if f in df.columns]
-
-# Clean data: convert to numeric and remove rows with invalid values
-essay3_data = df[essay3_features_available + ['return_volatility_post']].copy()
-for col in essay3_features_available:
-    essay3_data[col] = pd.to_numeric(essay3_data[col], errors='coerce')
-essay3_data = essay3_data.dropna()
-
-print(f"  Sample size: {len(essay3_data)} breaches")
-print(f"  Features: {len(essay3_features_available)}")
-print(f"  Target: return_volatility_post (Mean: {essay3_data['return_volatility_post'].mean():.4f})")
-
-# Separate features and target
-X_essay3 = essay3_data[essay3_features_available]
-y_essay3 = essay3_data['return_volatility_post']
-
-# Train/test split (70/30)
-X_train_e3, X_test_e3, y_train_e3, y_test_e3 = train_test_split(
-    X_essay3, y_essay3, test_size=0.3, random_state=42
-)
-
-print(f"\n  Train/Test Split: {len(X_train_e3)} / {len(X_test_e3)}")
-
-# Initialize and train Random Forest (Essay 3)
-print(f"\n  Training Random Forest...")
-rf_e3 = BreachImpactModel(model_type='rf', random_state=42, verbose=False)
-rf_e3.feature_names = essay3_features_available
-rf_e3.initialize_model(n_estimators=100, max_depth=10, min_samples_leaf=5)
-rf_e3.train(X_train_e3, y_train_e3)
-rf_e3_metrics = rf_e3.evaluate(X_test_e3, y_test_e3, X_train_e3, y_train_e3)
-rf_e3.save_model(MODELS_DIR / 'rf_essay3_volatility.pkl')
-
-# Initialize and train Gradient Boosting (Essay 3)
-print(f"  Training Gradient Boosting...")
-gb_e3 = BreachImpactModel(model_type='gb', random_state=42, verbose=False)
-gb_e3.feature_names = essay3_features_available
-gb_e3.initialize_model(n_estimators=100, max_depth=4, learning_rate=0.1)
-gb_e3.train(X_train_e3, y_train_e3)
-gb_e3_metrics = gb_e3.evaluate(X_test_e3, y_test_e3, X_train_e3, y_train_e3)
-gb_e3.save_model(MODELS_DIR / 'gb_essay3_volatility.pkl')
-
-print(f"\n  Essay 3 Results:")
-print(f"    Random Forest    - R²: {rf_e3_metrics['test_r2']:.4f}, RMSE: {rf_e3_metrics['test_rmse']:.4f}")
-print(f"    Gradient Boost   - R²: {gb_e3_metrics['test_r2']:.4f}, RMSE: {gb_e3_metrics['test_rmse']:.4f}")
-
-# ============================================================================
-# CROSS-VALIDATION
-# ============================================================================
-
-print(f"\n[4/6] Cross-validation (5-fold time-aware splits)...")
-
-print(f"\n  Essay 2 (CAR prediction):")
-cv_rf_e2 = rf_e2.cross_validate(X_essay2, y_essay2, n_splits=5, time_aware=True)
-print(f"    Random Forest CV R²: {cv_rf_e2['mean_r2']:.4f} (±{cv_rf_e2['std_r2']:.4f})")
-
-print(f"\n  Essay 3 (Volatility prediction):")
-cv_rf_e3 = rf_e3.cross_validate(X_essay3, y_essay3, n_splits=5, time_aware=True)
-print(f"    Random Forest CV R²: {cv_rf_e3['mean_r2']:.4f} (±{cv_rf_e3['std_r2']:.4f})")
-
-# ============================================================================
-# FEATURE IMPORTANCE & ANALYSIS
-# ============================================================================
-
-print(f"\n[5/6] Analyzing feature importance...")
-
-evaluator = ModelEvaluator(output_dir=OUTPUT_DIR, verbose=False)
-importance_analyzer = FeatureImportanceAnalyzer(output_dir=OUTPUT_DIR, verbose=False)
-
-# Essay 2 feature importance
-print(f"\n  Essay 2 (CAR) - Top 10 Features:")
-importance_e2_rf = rf_e2.get_feature_importance().head(10)
-for idx, row in importance_e2_rf.iterrows():
-    print(f"    {row['feature']:<25} {row['importance_pct']:>6.2f}%")
-
-# Essay 3 feature importance
-print(f"\n  Essay 3 (Volatility) - Top 10 Features:")
-importance_e3_rf = rf_e3.get_feature_importance().head(10)
-for idx, row in importance_e3_rf.iterrows():
-    print(f"    {row['feature']:<25} {row['importance_pct']:>6.2f}%")
-
-# Generate visualizations
-print(f"\n  Generating visualizations...")
-evaluator.plot_predictions_vs_actual(y_test_e2, rf_e2.predict(X_test_e2), 'Random Forest', 'CAR 30d')
-evaluator.plot_predictions_vs_actual(y_test_e3, rf_e3.predict(X_test_e3), 'Random Forest', 'Volatility')
-
-importance_analyzer.plot_feature_importance(importance_e2_rf, 'Random Forest (Essay 2)', top_n=12)
-importance_analyzer.plot_feature_importance(importance_e3_rf, 'Random Forest (Essay 3)', top_n=12)
-
-# ============================================================================
-# SAVE RESULTS & METADATA
-# ============================================================================
-
-print(f"\n[6/6] Saving results and metadata...")
-
-# Create results summary
-results_summary = {
-    'essay2': {
-        'description': '30-day Cumulative Abnormal Returns (CAR) Prediction',
-        'sample_size': len(essay2_data),
-        'train_test_split': f"{len(X_train_e2)}/{len(X_test_e2)}",
-        'features': essay2_features_available,
-        'random_forest': {
-            'test_r2': float(rf_e2_metrics['test_r2']),
-            'test_rmse': float(rf_e2_metrics['test_rmse']),
-            'test_mae': float(rf_e2_metrics['test_mae']),
-            'correlation': float(rf_e2_metrics['correlation']),
-            'cv_r2_mean': float(cv_rf_e2['mean_r2']),
-            'cv_r2_std': float(cv_rf_e2['std_r2']),
-        },
-        'gradient_boosting': {
-            'test_r2': float(gb_e2_metrics['test_r2']),
-            'test_rmse': float(gb_e2_metrics['test_rmse']),
-            'test_mae': float(gb_e2_metrics['test_mae']),
-            'correlation': float(gb_e2_metrics['correlation']),
-        },
-    },
-    'essay3': {
-        'description': 'Post-Breach Stock Return Volatility Prediction',
-        'sample_size': len(essay3_data),
-        'train_test_split': f"{len(X_train_e3)}/{len(X_test_e3)}",
-        'features': essay3_features_available,
-        'random_forest': {
-            'test_r2': float(rf_e3_metrics['test_r2']),
-            'test_rmse': float(rf_e3_metrics['test_rmse']),
-            'test_mae': float(rf_e3_metrics['test_mae']),
-            'correlation': float(rf_e3_metrics['correlation']),
-            'cv_r2_mean': float(cv_rf_e3['mean_r2']),
-            'cv_r2_std': float(cv_rf_e3['std_r2']),
-        },
-        'gradient_boosting': {
-            'test_r2': float(gb_e3_metrics['test_r2']),
-            'test_rmse': float(gb_e3_metrics['test_rmse']),
-            'test_mae': float(gb_e3_metrics['test_mae']),
-            'correlation': float(gb_e3_metrics['correlation']),
-        },
-    }
+# Target variables
+targets = {
+    'car_30d': 'has_crsp_data',
+    'car_5d': 'has_crsp_data',
+    'bhar_30d': 'has_crsp_data',
+    'bhar_5d': 'has_crsp_data',
+    'volatility_change': None
 }
 
-# Save metadata
-with open(OUTPUT_DIR / 'ml_model_results.json', 'w') as f:
-    json.dump(results_summary, f, indent=2)
+available_targets = {}
+for target, flag in targets.items():
+    if target in df.columns:
+        if flag and flag in df.columns:
+            count = (df[flag] == True).sum()
+        else:
+            count = df[target].notna().sum()
+        available_targets[target] = count
+        print(f"  ✓ {target}: {count:,} observations")
 
-# Save feature importance tables
-importance_e2_rf.to_csv(OUTPUT_DIR / 'feature_importance_essay2_rf.csv', index=False)
-importance_e3_rf.to_csv(OUTPUT_DIR / 'feature_importance_essay3_rf.csv', index=False)
+if len(available_targets) == 0:
+    print("  ✗ No target variables found!")
+    exit()
 
-print(f"\n  Saved results to {OUTPUT_DIR}")
-print(f"  - ml_model_results.json (metrics)")
-print(f"  - feature_importance_essay2_rf.csv")
-print(f"  - feature_importance_essay3_rf.csv")
-print(f"  - Trained models in {MODELS_DIR}")
-print(f"  - Visualizations (PNG files)")
+# ============================================================================
+# PREPARE FEATURES
+# ============================================================================
 
-print(f"\n" + "=" * 90)
-print("MODEL TRAINING COMPLETE")
-print("=" * 90)
+print(f"\n[Step 3/6] Preparing features...")
 
-print(f"\nKey Results Summary:")
-print(f"\nEssay 2 (CAR Prediction):")
-print(f"  Random Forest Test R²:     {rf_e2_metrics['test_r2']:.4f}")
-print(f"  Gradient Boosting Test R²: {gb_e2_metrics['test_r2']:.4f}")
-print(f"  5-Fold CV R² (RF):         {cv_rf_e2['mean_r2']:.4f} (±{cv_rf_e2['std_r2']:.4f})")
+# Define feature groups
+feature_groups = {
+    'firm_controls': [
+        'firm_size_log', 'leverage', 'roa', 'market_to_book',
+        'cash_ratio', 'current_ratio', 'total_assets_log'
+    ],
+    'breach_characteristics': [
+        'total_affected', 'total_affected_log',
+        'days_to_disclosure', 'immediate_disclosure', 'delayed_disclosure'
+    ],
+    'prior_breaches': [
+        'prior_breaches_total', 'prior_breaches_1yr', 'prior_breaches_3yr',
+        'is_repeat_offender', 'days_since_last_breach'
+    ],
+    'breach_severity': [
+        'health_breach', 'financial_breach', 'pii_breach',
+        'severity_score', 'breach_type_count'
+    ],
+    'media_coverage': [
+        'media_coverage_count', 'high_media_coverage',
+        'major_outlet_coverage', 'major_outlet_flag', 'has_media_coverage'
+    ],
+    'governance': [
+        'sox_404_effective', 'material_weakness',
+        'executive_change_30d', 'executive_change_90d', 'executive_change_180d'
+    ],
+    'regulatory': [
+        'has_enforcement', 'enforcement_within_365d',
+        'enforcement_within_1yr', 'enforcement_within_2yr'
+    ]
+}
 
-print(f"\nEssay 3 (Volatility Prediction):")
-print(f"  Random Forest Test R²:     {rf_e3_metrics['test_r2']:.4f}")
-print(f"  Gradient Boosting Test R²: {gb_e3_metrics['test_r2']:.4f}")
-print(f"  5-Fold CV R² (RF):         {cv_rf_e3['mean_r2']:.4f} (±{cv_rf_e3['std_r2']:.4f})")
+# Collect all available features
+all_features = []
+for group_name, features in feature_groups.items():
+    available = [f for f in features if f in df.columns]
+    all_features.extend(available)
+    print(f"  • {group_name}: {len(available)}/{len(features)} available")
 
-print(f"\nNext: Run script 61_ml_validation.py to compare with OLS and generate robustness sections")
+print(f"\n  Total features available: {len(all_features)}")
+
+# Remove duplicates
+all_features = list(dict.fromkeys(all_features))
+
+# ============================================================================
+# MODEL 1: PREDICT 30-DAY CAR
+# ============================================================================
+
+print(f"\n[Step 4/6] Training Model 1: 30-day CAR prediction...")
+
+if 'car_30d' in available_targets:
+    
+    # Prepare data
+    model1_data = df[all_features + ['car_30d']].copy()
+    
+    # Convert to numeric
+    for col in all_features:
+        model1_data[col] = pd.to_numeric(model1_data[col], errors='coerce')
+    
+    # Remove missing values
+    model1_clean = model1_data.dropna()
+    
+    print(f"  Sample size: {len(model1_clean):,} observations")
+    print(f"  Features: {len(all_features)}")
+    print(f"  Target (car_30d): mean={model1_clean['car_30d'].mean():.4f}, std={model1_clean['car_30d'].std():.4f}")
+    
+    # Split data
+    X = model1_clean[all_features]
+    y = model1_clean['car_30d']
+    
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.3, random_state=42
+    )
+    
+    print(f"\n  Train/Test split: {len(X_train):,} / {len(X_test):,}")
+    
+    # Train Random Forest
+    print(f"\n  Training Random Forest...")
+    rf_model1 = RandomForestRegressor(
+        n_estimators=100,
+        max_depth=10,
+        min_samples_split=10,
+        min_samples_leaf=5,
+        random_state=42,
+        n_jobs=-1
+    )
+    
+    rf_model1.fit(X_train, y_train)
+    
+    # Predictions
+    y_pred_train = rf_model1.predict(X_train)
+    y_pred_test = rf_model1.predict(X_test)
+    
+    # Metrics
+    metrics_m1 = {
+        'train_r2': r2_score(y_train, y_pred_train),
+        'test_r2': r2_score(y_test, y_pred_test),
+        'train_rmse': np.sqrt(mean_squared_error(y_train, y_pred_train)),
+        'test_rmse': np.sqrt(mean_squared_error(y_test, y_pred_test)),
+        'test_mae': mean_absolute_error(y_test, y_pred_test)
+    }
+    
+    print(f"\n  Results:")
+    print(f"    Train R²: {metrics_m1['train_r2']:.4f}")
+    print(f"    Test R²:  {metrics_m1['test_r2']:.4f}")
+    print(f"    Test RMSE: {metrics_m1['test_rmse']:.4f}")
+    print(f"    Test MAE:  {metrics_m1['test_mae']:.4f}")
+    
+    # Cross-validation
+    print(f"\n  Running 5-fold cross-validation...")
+    cv_scores = cross_val_score(rf_model1, X, y, cv=5, scoring='r2', n_jobs=-1)
+    print(f"    CV R² (mean): {cv_scores.mean():.4f} (±{cv_scores.std():.4f})")
+    
+    # Feature importance
+    importance_m1 = pd.DataFrame({
+        'feature': all_features,
+        'importance': rf_model1.feature_importances_
+    }).sort_values('importance', ascending=False)
+    
+    importance_m1['importance_pct'] = (importance_m1['importance'] / importance_m1['importance'].sum() * 100)
+    
+    print(f"\n  Top 10 most important features:")
+    for idx, row in importance_m1.head(10).iterrows():
+        print(f"    {row['feature']:<35} {row['importance_pct']:>6.2f}%")
+    
+    # Save feature importance
+    importance_m1.to_csv(OUTPUT_DIR / 'feature_importance_car30d.csv', index=False)
+    
+else:
+    print("  ⚠ Skipping (car_30d not available)")
+    rf_model1 = None
+    metrics_m1 = None
+    importance_m1 = None
+
+# ============================================================================
+# MODEL 2: PREDICT VOLATILITY CHANGE
+# ============================================================================
+
+print(f"\n[Step 5/6] Training Model 2: Volatility change prediction...")
+
+if 'volatility_change' in available_targets:
+    
+    # Prepare data
+    model2_features = all_features.copy()
+    
+    # Add pre-breach volatility as control
+    if 'return_volatility_pre' in df.columns:
+        model2_features.append('return_volatility_pre')
+    
+    model2_data = df[model2_features + ['volatility_change']].copy()
+    
+    # Convert to numeric
+    for col in model2_features:
+        model2_data[col] = pd.to_numeric(model2_data[col], errors='coerce')
+    
+    # Remove missing values
+    model2_clean = model2_data.dropna()
+    
+    print(f"  Sample size: {len(model2_clean):,} observations")
+    print(f"  Features: {len(model2_features)}")
+    print(f"  Target (volatility_change): mean={model2_clean['volatility_change'].mean():.4f}")
+    
+    # Split data
+    X2 = model2_clean[model2_features]
+    y2 = model2_clean['volatility_change']
+    
+    X2_train, X2_test, y2_train, y2_test = train_test_split(
+        X2, y2, test_size=0.3, random_state=42
+    )
+    
+    print(f"\n  Train/Test split: {len(X2_train):,} / {len(X2_test):,}")
+    
+    # Train Random Forest
+    print(f"\n  Training Random Forest...")
+    rf_model2 = RandomForestRegressor(
+        n_estimators=100,
+        max_depth=10,
+        min_samples_split=10,
+        min_samples_leaf=5,
+        random_state=42,
+        n_jobs=-1
+    )
+    
+    rf_model2.fit(X2_train, y2_train)
+    
+    # Predictions
+    y2_pred_test = rf_model2.predict(X2_test)
+    
+    # Metrics
+    metrics_m2 = {
+        'test_r2': r2_score(y2_test, y2_pred_test),
+        'test_rmse': np.sqrt(mean_squared_error(y2_test, y2_pred_test)),
+        'test_mae': mean_absolute_error(y2_test, y2_pred_test)
+    }
+    
+    print(f"\n  Results:")
+    print(f"    Test R²:  {metrics_m2['test_r2']:.4f}")
+    print(f"    Test RMSE: {metrics_m2['test_rmse']:.4f}")
+    
+    # Feature importance
+    importance_m2 = pd.DataFrame({
+        'feature': model2_features,
+        'importance': rf_model2.feature_importances_
+    }).sort_values('importance', ascending=False)
+    
+    importance_m2['importance_pct'] = (importance_m2['importance'] / importance_m2['importance'].sum() * 100)
+    
+    print(f"\n  Top 10 most important features:")
+    for idx, row in importance_m2.head(10).iterrows():
+        print(f"    {row['feature']:<35} {row['importance_pct']:>6.2f}%")
+    
+    # Save
+    importance_m2.to_csv(OUTPUT_DIR / 'feature_importance_volatility.csv', index=False)
+    
+else:
+    print("  ⚠ Skipping (volatility_change not available)")
+    rf_model2 = None
+    metrics_m2 = None
+    importance_m2 = None
+
+# ============================================================================
+# VISUALIZATIONS
+# ============================================================================
+
+print(f"\n[Step 6/6] Creating visualizations...")
+
+if rf_model1 is not None:
+    # Plot 1: Feature Importance (CAR)
+    fig, ax = plt.subplots(figsize=(10, 8))
+    top_features = importance_m1.head(15)
+    ax.barh(range(len(top_features)), top_features['importance_pct'])
+    ax.set_yticks(range(len(top_features)))
+    ax.set_yticklabels(top_features['feature'])
+    ax.set_xlabel('Importance (%)')
+    ax.set_title('Top 15 Features - CAR Prediction')
+    ax.invert_yaxis()
+    plt.tight_layout()
+    plt.savefig(OUTPUT_DIR / 'feature_importance_car30d.png', dpi=300, bbox_inches='tight')
+    plt.close()
+    print(f"  ✓ Saved: feature_importance_car30d.png")
+    
+    # Plot 2: Predictions vs Actual (CAR)
+    fig, ax = plt.subplots(figsize=(8, 8))
+    ax.scatter(y_test, y_pred_test, alpha=0.5, s=20)
+    
+    # Perfect prediction line
+    min_val = min(y_test.min(), y_pred_test.min())
+    max_val = max(y_test.max(), y_pred_test.max())
+    ax.plot([min_val, max_val], [min_val, max_val], 'r--', lw=2, label='Perfect Prediction')
+    
+    ax.set_xlabel('Actual CAR (30-day)')
+    ax.set_ylabel('Predicted CAR (30-day)')
+    ax.set_title(f'Random Forest Predictions vs Actual\nTest R² = {metrics_m1["test_r2"]:.4f}')
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+    plt.tight_layout()
+    plt.savefig(OUTPUT_DIR / 'predictions_vs_actual_car30d.png', dpi=300, bbox_inches='tight')
+    plt.close()
+    print(f"  ✓ Saved: predictions_vs_actual_car30d.png")
+
+if rf_model2 is not None:
+    # Plot 3: Feature Importance (Volatility)
+    fig, ax = plt.subplots(figsize=(10, 8))
+    top_features2 = importance_m2.head(15)
+    ax.barh(range(len(top_features2)), top_features2['importance_pct'])
+    ax.set_yticks(range(len(top_features2)))
+    ax.set_yticklabels(top_features2['feature'])
+    ax.set_xlabel('Importance (%)')
+    ax.set_title('Top 15 Features - Volatility Change Prediction')
+    ax.invert_yaxis()
+    plt.tight_layout()
+    plt.savefig(OUTPUT_DIR / 'feature_importance_volatility.png', dpi=300, bbox_inches='tight')
+    plt.close()
+    print(f"  ✓ Saved: feature_importance_volatility.png")
+
+# ============================================================================
+# SAVE SUMMARY
+# ============================================================================
+
+print(f"\nSaving results summary...")
+
+summary = []
+
+if metrics_m1:
+    summary.append({
+        'Model': 'CAR 30-day',
+        'Sample_Size': len(model1_clean),
+        'Features': len(all_features),
+        'Train_R2': metrics_m1['train_r2'],
+        'Test_R2': metrics_m1['test_r2'],
+        'Test_RMSE': metrics_m1['test_rmse'],
+        'Test_MAE': metrics_m1['test_mae'],
+        'CV_R2_Mean': cv_scores.mean(),
+        'CV_R2_Std': cv_scores.std()
+    })
+
+if metrics_m2:
+    summary.append({
+        'Model': 'Volatility Change',
+        'Sample_Size': len(model2_clean),
+        'Features': len(model2_features),
+        'Train_R2': np.nan,
+        'Test_R2': metrics_m2['test_r2'],
+        'Test_RMSE': metrics_m2['test_rmse'],
+        'Test_MAE': metrics_m2['test_mae'],
+        'CV_R2_Mean': np.nan,
+        'CV_R2_Std': np.nan
+    })
+
+summary_df = pd.DataFrame(summary)
+summary_df.to_csv(OUTPUT_DIR / 'ml_model_summary.csv', index=False)
+
+print(f"  ✓ Saved: ml_model_summary.csv")
+
+# ============================================================================
+# FINAL SUMMARY
+# ============================================================================
+
+print(f"\n" + "=" * 80)
+print("✓ MACHINE LEARNING MODELS COMPLETE")
+print("=" * 80)
+
+if metrics_m1:
+    print(f"\nModel 1: CAR 30-day Prediction")
+    print(f"  Sample: {len(model1_clean):,} breaches")
+    print(f"  Test R²: {metrics_m1['test_r2']:.4f}")
+    print(f"  Test RMSE: {metrics_m1['test_rmse']:.4f}")
+    print(f"  5-Fold CV R²: {cv_scores.mean():.4f} (±{cv_scores.std():.4f})")
+
+if metrics_m2:
+    print(f"\nModel 2: Volatility Change Prediction")
+    print(f"  Sample: {len(model2_clean):,} breaches")
+    print(f"  Test R²: {metrics_m2['test_r2']:.4f}")
+    print(f"  Test RMSE: {metrics_m2['test_rmse']:.4f}")
+
+print(f"\n📁 All outputs saved to: {OUTPUT_DIR}/")
+print(f"\nFiles created:")
+print(f"  • ml_model_summary.csv")
+print(f"  • feature_importance_car30d.csv")
+if rf_model1:
+    print(f"  • feature_importance_car30d.png")
+    print(f"  • predictions_vs_actual_car30d.png")
+if rf_model2:
+    print(f"  • feature_importance_volatility.csv")
+    print(f"  • feature_importance_volatility.png")
+
+print(f"\n🚀 Models ready for dissertation analysis!")
+print("=" * 80)

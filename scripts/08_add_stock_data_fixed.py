@@ -12,11 +12,11 @@ print("=" * 60)
 print("\n[1/3] Loading breach data...")
 df = pd.read_excel('Data/processed/master_breach_dataset.xlsx')
 df['breach_date'] = pd.to_datetime(df['breach_date']).dt.tz_localize(None)
-print(f"✓ Loaded {len(df)} breach records")
+print(f"  Loaded {len(df)} breach records")
 
 # Get unique tickers
 tickers = df['Map'].dropna().unique()
-print(f"✓ Found {len(tickers)} unique stock tickers")
+print(f"  Found {len(tickers)} unique stock tickers")
 
 # Function to calculate stock returns around breach date
 def get_breach_returns(ticker, breach_date, window_days=30):
@@ -142,7 +142,7 @@ df_final = pd.concat([df, stock_df], axis=1)
 print("\n[3/3] Saving final dataset...")
 output_path = 'Data/processed/final_analysis_dataset.xlsx'
 df_final.to_excel(output_path, index=False)
-print(f"✓ Saved to: {output_path}")
+print(f"  Saved to: {output_path}")
 
 # Summary statistics
 print("\n" + "=" * 60)
@@ -177,7 +177,7 @@ if len(valid_returns) > 0:
     print(f"    30-day: {neg_30d}/{len(valid_returns)} ({neg_30d/len(valid_returns)*100:.1f}%)")
 
 print("\n" + "=" * 60)
-print("✓ FINAL DATASET READY FOR ANALYSIS")
+print("  FINAL DATASET READY FOR ANALYSIS")
 print("=" * 60)
 print("\nDataset includes:")
 print("  - Breach information (date, company, impact)")

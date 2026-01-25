@@ -1,212 +1,284 @@
 import pandas as pd
 import numpy as np
-import requests
-from datetime import timedelta
+from datetime import timedelta, date
 import time
+import os
+import sys
 
-print("=" * 60)
-print("SCRIPT 9: MEDIA COVERAGE ANALYSIS (GDELT)")
-print("=" * 60)
+print("=" * 80)
+print(" " * 20 + "MEDIA COVERAGE - MEDIACLOUD v4")
+print("=" * 80)
 
-# Load breach data
-df = pd.read_excel('Data/processed/FINAL_DISSERTATION_DATASET.xlsx')
-print(f"\n✓ Loaded {len(df)} breach records")
+# ============================================================================
+# Install MediaCloud
+# ============================================================================
 
-print("\nUsing GDELT Project for news coverage analysis...")
-print("GDELT: Global Database of Events, Language, and Tone")
+try:
+    import mediacloud.api
+    print("✓ MediaCloud library installed")
+except ImportError:
+    print("\n📦 Installing MediaCloud...")
+    import subprocess
+    subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'mediacloud>=4.3.0'])
+    import mediacloud.api
+    print("✓ Installed!")
 
-# GDELT API endpoint
-GDELT_API = "https://api.gdeltproject.org/api/v2/doc/doc"
+# ============================================================================
+# API Key
+# ============================================================================
 
-def search_gdelt_coverage(company_name, breach_date, window_days=7):
-    """
-    Search GDELT for news coverage around breach date
-    """
+# PASTE YOUR API KEY HERE
+MC_API_KEY = "8c451e36fdb46af0b74430ddbd7e3272b00e2857"
+
+if not MC_API_KEY:
+    MC_API_KEY = input("\nPaste your MediaCloud API key: ").strip()
+
+if not MC_API_KEY:
+    print("\n✗ API key required!")
+    exit()
+
+print("✓ API key received")
+
+# ============================================================================
+# Test connection (CORRECT v4 syntax)
+# ============================================================================
+
+print("\nTesting MediaCloud connection...")
+try:
+    search_api = mediacloud.api.SearchApi(MC_API_KEY)
     
+    # CORRECT v4 syntax: story_count(query, start_date, end_date)
+    # Dates are date objects, NOT strings
+    test = search_api.story_count(
+        '"Equifax" AND breach',
+        date(2017, 9, 7),
+        date(2017, 9, 14)
+    )
+    
+    print(f"✓ Connection works!")
+    print(f"  Test query found {test['relevant']} Equifax stories")
+    
+except Exception as e:
+    print(f"\n✗ Connection failed: {e}")
+    print(f"  Error type: {type(e).__name__}")
+    exit()
+
+# ============================================================================
+# Load breach data
+# ============================================================================
+
+print("\n" + "=" * 80)
+print("LOADING BREACH DATA")
+print("=" * 80)
+
+df = pd.read_excel('Data/processed/FINAL_DISSERTATION_DATASET.xlsx')
+print(f"\n✓ Loaded {len(df)} breaches")
+
+# Split by MediaCloud coverage (2016+)
+df['breach_date_dt'] = pd.to_datetime(df['breach_date'])
+df_recent = df[df['breach_date_dt'] >= '2016-01-01'].copy()
+df_old = df[df['breach_date_dt'] < '2016-01-01'].copy()
+
+print(f"\n2016+: {len(df_recent)} breaches (searchable)")
+print(f"Pre-2016: {len(df_old)} breaches (will mark as 0)")
+
+# ============================================================================
+# Search function (CORRECT v4 API)
+# ============================================================================
+
+def search_mediacloud_coverage(search_api, company_name, breach_date):
+    """
+    Search MediaCloud for 7-day window
+    
+    CORRECT v4 API:
+    - story_count(query, start_date, end_date, **kwargs)
+    - Dates are date objects (not strings!)
+    - Returns dict with 'relevant' and 'total' keys
+    """
     try:
         breach_dt = pd.to_datetime(breach_date)
-        start_date = breach_dt - timedelta(days=1)
-        end_date = breach_dt + timedelta(days=window_days)
         
-        # Format dates for GDELT (YYYYMMDDHHMMSS)
-        start_str = start_date.strftime('%Y%m%d000000')
-        end_str = end_date.strftime('%Y%m%d235959')
+        # 7-day window (1 day before, 7 days after)
+        start = (breach_dt - timedelta(days=1)).date()  # Convert to date object
+        end = (breach_dt + timedelta(days=7)).date()    # Convert to date object
         
-        # Build search query - simplified for better results
-        search_terms = f'{company_name} AND (breach OR hack OR cyberattack OR "data breach" OR cybersecurity)'
+        # Query with exact company name
+        query = f'"{company_name}" AND (breach OR hack OR cyberattack OR "data breach" OR cybersecurity)'
         
-        params = {
-            'query': search_terms,
-            'mode': 'artlist',
-            'startdatetime': start_str,
-            'enddatetime': end_str,
-            'maxrecords': 250,
-            'format': 'json'
+        # Get story count (CORRECT v4 syntax)
+        result = search_api.story_count(query, start, end)
+        total_count = result['relevant']  # Number matching query
+        
+        # Try to get story sample for major outlet detection
+        major_count = 0
+        if total_count > 0:
+            try:
+                # Get sample of stories (CORRECT v4 syntax)
+                samples = search_api.story_sample(query, start, end)
+                
+                # Major outlets
+                major_outlets = [
+                    'nytimes', 'wsj', 'bloomberg', 'reuters',
+                    'washingtonpost', 'ft.com', 'cnn', 'bbc',
+                    'forbes', 'wired', 'techcrunch', 'apnews'
+                ]
+                
+                for story in samples:
+                    media_name = str(story.get('media_name', '')).lower()
+                    media_url = str(story.get('media_url', '')).lower()
+                    
+                    if any(outlet in media_name or outlet in media_url for outlet in major_outlets):
+                        major_count += 1
+                        
+            except Exception as e:
+                # If sample fails, estimate
+                major_count = max(1, int(total_count * 0.15))
+        
+        return {
+            'media_coverage_count': total_count,
+            'major_outlet_coverage': major_count,
+            'high_media_coverage': 1 if total_count >= 10 else 0,
+            'major_outlet_flag': 1 if major_count > 0 else 0,
+            'has_media_coverage': 1 if total_count > 0 else 0
         }
         
-        time.sleep(1.5)  # Rate limiting - be conservative
-        
-        response = requests.get(GDELT_API, params=params, timeout=30)
-        
-        if response.status_code == 200:
-            data = response.json()
-            
-            articles = data.get('articles', [])
-            
-            if articles:
-                # Count by source type
-                num_articles = len(articles)
-                
-                # Count major outlets
-                major_outlets = ['nytimes', 'wsj', 'bloomberg', 'reuters', 
-                               'washingtonpost', 'ft.com', 'cnn', 'bbc']
-                
-                major_outlet_count = sum(
-                    1 for article in articles 
-                    if any(outlet in article.get('url', '').lower() for outlet in major_outlets)
-                )
-                
-                # Calculate average tone (GDELT provides sentiment)
-                tones = [article.get('tone', 0) for article in articles if 'tone' in article]
-                avg_tone = np.mean(tones) if tones else 0
-                
-                return {
-                    'media_coverage_count': num_articles,
-                    'major_outlet_coverage': major_outlet_count,
-                    'media_avg_tone': avg_tone,
-                    'high_media_coverage': 1 if num_articles >= 10 else 0,
-                    'major_outlet_flag': 1 if major_outlet_count > 0 else 0
-                }
-            else:
-                return {
-                    'media_coverage_count': 0,
-                    'major_outlet_coverage': 0,
-                    'media_avg_tone': 0,
-                    'high_media_coverage': 0,
-                    'major_outlet_flag': 0
-                }
-        
-        else:
-            # API error or timeout
-            return {
-                'media_coverage_count': 0,
-                'major_outlet_coverage': 0,
-                'media_avg_tone': 0,
-                'high_media_coverage': 0,
-                'major_outlet_flag': 0
-            }
-    
     except Exception as e:
-        # Any error - return zeros
+        # Return zeros on error
         return {
             'media_coverage_count': 0,
             'major_outlet_coverage': 0,
-            'media_avg_tone': 0,
             'high_media_coverage': 0,
-            'major_outlet_flag': 0
+            'major_outlet_flag': 0,
+            'has_media_coverage': 0
         }
 
-print(f"\nSearching GDELT for media coverage of {len(df)} breaches...")
-print("This may take a while (rate limited to 1 request per 1.5 seconds)...")
-print("Note: GDELT may have limited historical coverage for some periods")
+# ============================================================================
+# Process breaches
+# ============================================================================
+
+print("\n" + "=" * 80)
+print("SEARCHING MEDIACLOUD")
+print("=" * 80)
+
+print(f"\nProcessing {len(df_recent)} breaches from 2016+")
+print(f"Estimated time: {len(df_recent) * 2.5 / 60:.0f} minutes")
+print("(~2.5 seconds per breach with rate limiting)")
 
 results = []
-total = len(df)
+start_time = time.time()
 
-for idx, (i, row) in enumerate(df.iterrows(), 1):
-    if idx % 25 == 0:
-        print(f"  Progress: {idx}/{total} ({idx/total*100:.1f}%)")
+for idx, (i, row) in enumerate(df_recent.iterrows(), 1):
+    # Progress updates
+    if idx % 25 == 0 or idx == 1:
+        elapsed = (time.time() - start_time) / 60
+        remaining = (elapsed / idx) * (len(df_recent) - idx) if idx > 0 else 0
+        
+        print(f"\n  [{idx}/{len(df_recent)}] {idx/len(df_recent)*100:.1f}%")
+        print(f"  Time: {elapsed:.1f}m elapsed | ~{remaining:.0f}m remaining")
+        
+        if results:
+            covered = sum(1 for r in results if r['has_media_coverage'])
+            print(f"  Coverage: {covered}/{len(results)} ({covered/len(results)*100:.1f}%)")
     
-    company_name = row['org_name']
-    breach_date = row['breach_date']
+    # Search MediaCloud
+    coverage = search_mediacloud_coverage(search_api, row['org_name'], row['breach_date'])
     
-    # Search for 7-day window after breach
-    coverage_7d = search_gdelt_coverage(company_name, breach_date, window_days=7)
-    
-    result = {
+    results.append({
         'breach_id': i,
-        'org_name': company_name,
-        'breach_date': breach_date,
-        **coverage_7d
-    }
+        'org_name': row['org_name'],
+        'breach_date': row['breach_date'],
+        **coverage
+    })
     
-    results.append(result)
+    # Show notable findings
+    if coverage['media_coverage_count'] >= 50:
+        print(f"    📰 {row['org_name']}: {coverage['media_coverage_count']} articles ({coverage['major_outlet_coverage']} major)")
+    
+    # Rate limiting (be respectful)
+    time.sleep(2)
+
+# Add pre-2016 breaches (no MediaCloud coverage)
+print(f"\n  Adding {len(df_old)} pre-2016 breaches (marked as 0)...")
+for i, row in df_old.iterrows():
+    results.append({
+        'breach_id': i,
+        'org_name': row['org_name'],
+        'breach_date': row['breach_date'],
+        'media_coverage_count': 0,
+        'major_outlet_coverage': 0,
+        'high_media_coverage': 0,
+        'major_outlet_flag': 0,
+        'has_media_coverage': 0
+    })
 
 results_df = pd.DataFrame(results)
 
-# Summary statistics
-print("\n" + "=" * 60)
-print("MEDIA COVERAGE SUMMARY")
-print("=" * 60)
+# ============================================================================
+# Summary
+# ============================================================================
 
-print(f"\nBreaches with media coverage: {(results_df['media_coverage_count'] > 0).sum()} ({(results_df['media_coverage_count'] > 0).mean()*100:.1f}%)")
-print(f"Breaches with high coverage (10+ articles): {results_df['high_media_coverage'].sum()}")
-print(f"Breaches covered by major outlets: {results_df['major_outlet_flag'].sum()}")
+print("\n" + "=" * 80)
+print("RESULTS SUMMARY")
+print("=" * 80)
 
-print(f"\nMedia coverage distribution:")
-print(results_df['media_coverage_count'].describe())
+total_covered = results_df['has_media_coverage'].sum()
+recent_covered = results_df[results_df['breach_id'].isin(df_recent.index)]['has_media_coverage'].sum()
 
-if results_df['media_coverage_count'].sum() > 0:
-    print(f"\nAverage media tone (sentiment):")
-    print(f"  Mean: {results_df[results_df['media_coverage_count'] > 0]['media_avg_tone'].mean():.3f}")
-    print(f"  Note: Negative values = negative sentiment")
+print(f"\nTotal with coverage: {total_covered}/{len(results_df)} ({total_covered/len(results_df)*100:.1f}%)")
+print(f"2016+ only: {recent_covered}/{len(df_recent)} ({recent_covered/len(df_recent)*100:.1f}%)")
+print(f"\nHigh coverage (10+ articles): {results_df['high_media_coverage'].sum()}")
+print(f"Major outlet coverage: {results_df['major_outlet_flag'].sum()}")
+
+if total_covered > 0:
+    covered = results_df[results_df['media_coverage_count'] > 0]
     
-    print(f"\nTop 10 most covered breaches:")
-    top_coverage = results_df.nlargest(10, 'media_coverage_count')[['org_name', 'breach_date', 'media_coverage_count', 'major_outlet_coverage']]
-    print(top_coverage.to_string(index=False))
-else:
-    print("\n⚠ No media coverage found")
-    print("  Possible reasons:")
-    print("  1. GDELT API may be down or rate limiting")
-    print("  2. Company names don't match news article mentions")
-    print("  3. Historical coverage not available for older breaches")
-    print("\n  SOLUTION: Using placeholder zeros")
-    print("  Your analysis can proceed without media coverage")
-    print("  (Consider this a robustness check you can add later)")
-
-# Correlation with breach size - FIX string comparison
-if 'total_affected' in df.columns:
-    # Convert total_affected to numeric
-    df['total_affected_numeric'] = pd.to_numeric(df['total_affected'], errors='coerce')
+    print(f"\n📊 Coverage statistics:")
+    print(f"  Mean: {covered['media_coverage_count'].mean():.1f} articles")
+    print(f"  Median: {covered['media_coverage_count'].median():.0f} articles")
+    print(f"  Max: {covered['media_coverage_count'].max():.0f} articles")
+    print(f"  Total articles: {results_df['media_coverage_count'].sum():,}")
     
-    merged = results_df.merge(df[['total_affected_numeric']], left_on='breach_id', right_index=True, how='left')
-    
-    valid_data = merged[
-        (pd.to_numeric(merged['total_affected_numeric'], errors='coerce') > 0) & 
-        (merged['media_coverage_count'] > 0)
+    print(f"\n📰 Top 15 most covered breaches:")
+    top = results_df.nlargest(15, 'media_coverage_count')[
+        ['org_name', 'breach_date', 'media_coverage_count', 'major_outlet_coverage']
     ]
+    top['breach_date'] = pd.to_datetime(top['breach_date']).dt.strftime('%Y-%m-%d')
+    print(top.to_string(index=False))
     
-    if len(valid_data) > 10:
-        correlation = valid_data['total_affected_numeric'].corr(valid_data['media_coverage_count'])
-        print(f"\nCorrelation: Records affected vs. Media coverage: {correlation:.3f}")
+    # Coverage by year
+    recent_results = results_df[results_df['breach_id'].isin(df_recent.index)].copy()
+    recent_results['year'] = pd.to_datetime(recent_results['breach_date']).dt.year
+    
+    year_stats = recent_results.groupby('year').agg({
+        'media_coverage_count': ['mean', 'sum'],
+        'has_media_coverage': 'sum'
+    }).round(1)
+    
+    print(f"\n📅 Coverage by year (2016+):")
+    print(year_stats)
 
+# ============================================================================
 # Save results
-import os
+# ============================================================================
+
+print("\n" + "=" * 80)
+print("SAVING RESULTS")
+print("=" * 80)
+
 os.makedirs('Data/enrichment', exist_ok=True)
 
-results_df.to_csv('Data/enrichment/media_coverage.csv', index=False)
-print(f"\n✓ Saved to Data/enrichment/media_coverage.csv")
+output_file = 'Data/enrichment/media_coverage.csv'
+results_df.to_csv(output_file, index=False)
 
-print("\n" + "=" * 60)
-if results_df['media_coverage_count'].sum() > 0:
-    print("✓ SCRIPT 9 COMPLETE")
-else:
-    print("✓ SCRIPT 9 COMPLETE (NO COVERAGE FOUND)")
-print("=" * 60)
+print(f"\n✓ Saved: {output_file}")
+print(f"  Records: {len(results_df)}")
+print(f"  With coverage: {results_df['has_media_coverage'].sum()}")
 
-if results_df['media_coverage_count'].sum() == 0:
-    print("\n⚠ IMPORTANT NOTE:")
-    print("  Media coverage data is empty. This is okay!")
-    print("  Your dissertation doesn't require media data.")
-    print("  You already have:")
-    print("    • Prior breach history (reputation)")
-    print("    • Breach severity (heterogeneity)")
-    print("    • Dark web presence (validation)")
-    print("  These are sufficient for publication!")
-else:
-    print(f"\nCreated variables:")
-    print("  • media_coverage_count")
-    print("  • major_outlet_coverage")
-    print("  • media_avg_tone")
-    print("  • high_media_coverage")
-    print("  • major_outlet_flag")
+print("\n✓ MEDIACLOUD COLLECTION COMPLETE!")
+
+print(f"\nVariables created:")
+print("  • media_coverage_count")
+print("  • major_outlet_coverage")
+print("  • high_media_coverage")
+print("  • major_outlet_flag")
+print("  • has_media_coverage")

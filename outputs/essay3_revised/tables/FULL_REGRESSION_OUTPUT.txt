@@ -11,26 +11,26 @@ MODEL 1
 ================================================================================
                               OLS Regression Results                              
 ==================================================================================
-Dep. Variable:     return_volatility_post   R-squared:                       0.397
-Model:                                OLS   Adj. R-squared:                  0.395
-Method:                     Least Squares   F-statistic:                     64.96
-Date:                    Thu, 22 Jan 2026   Prob (F-statistic):           5.79e-26
-Time:                            12:14:43   Log-Likelihood:                -2043.0
-No. Observations:                     534   AIC:                             4092.
-Df Residuals:                         531   BIC:                             4105.
+Dep. Variable:     return_volatility_post   R-squared:                       0.395
+Model:                                OLS   Adj. R-squared:                  0.394
+Method:                     Least Squares   F-statistic:                     91.13
+Date:                    Sat, 24 Jan 2026   Prob (F-statistic):           1.01e-36
+Time:                            09:38:33   Log-Likelihood:                -3376.1
+No. Observations:                     891   AIC:                             6758.
+Df Residuals:                         888   BIC:                             6773.
 Df Model:                               2                                         
 Covariance Type:                      HC3                                         
 =========================================================================================
                             coef    std err          z      P>|z|      [0.025      0.975]
 -----------------------------------------------------------------------------------------
-const                    11.8972      1.049     11.336      0.000       9.840      13.954
-return_volatility_pre     0.4692      0.041     11.365      0.000       0.388       0.550
-immediate_disclosure      1.0036      1.156      0.868      0.385      -1.262       3.269
+const                    11.9631      1.042     11.478      0.000       9.920      14.006
+return_volatility_pre     0.5147      0.038     13.388      0.000       0.439       0.590
+immediate_disclosure     -0.0625      1.093     -0.057      0.954      -2.205       2.080
 ==============================================================================
-Omnibus:                      120.346   Durbin-Watson:                   1.388
-Prob(Omnibus):                  0.000   Jarque-Bera (JB):              274.254
-Skew:                           1.174   Prob(JB):                     2.80e-60
-Kurtosis:                       5.609   Cond. No.                         77.9
+Omnibus:                      408.350   Durbin-Watson:                   1.481
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             4911.628
+Skew:                           1.761   Prob(JB):                         0.00
+Kurtosis:                      13.949   Cond. No.                         88.6
 ==============================================================================
 
 Notes:
@@ -42,27 +42,27 @@ MODEL 2
 ================================================================================
                               OLS Regression Results                              
 ==================================================================================
-Dep. Variable:     return_volatility_post   R-squared:                       0.408
-Model:                                OLS   Adj. R-squared:                  0.405
-Method:                     Least Squares   F-statistic:                     53.59
-Date:                    Thu, 22 Jan 2026   Prob (F-statistic):           2.88e-30
-Time:                            12:14:43   Log-Likelihood:                -2038.0
-No. Observations:                     534   AIC:                             4084.
-Df Residuals:                         530   BIC:                             4101.
+Dep. Variable:     return_volatility_post   R-squared:                       0.402
+Model:                                OLS   Adj. R-squared:                  0.400
+Method:                     Least Squares   F-statistic:                     78.72
+Date:                    Sat, 24 Jan 2026   Prob (F-statistic):           3.76e-45
+Time:                            09:38:33   Log-Likelihood:                -3370.8
+No. Observations:                     891   AIC:                             6750.
+Df Residuals:                         887   BIC:                             6769.
 Df Model:                               3                                         
 Covariance Type:                      HC3                                         
 =========================================================================================
                             coef    std err          z      P>|z|      [0.025      0.975]
 -----------------------------------------------------------------------------------------
-const                    14.0204      1.254     11.184      0.000      11.563      16.477
-return_volatility_pre     0.4554      0.038     11.889      0.000       0.380       0.530
-immediate_disclosure      0.6398      1.170      0.547      0.585      -1.654       2.933
-large_firm               -3.0898      0.986     -3.133      0.002      -5.023      -1.157
+const                    13.6329      1.186     11.491      0.000      11.308      15.958
+return_volatility_pre     0.5005      0.037     13.477      0.000       0.428       0.573
+immediate_disclosure     -0.2816      1.096     -0.257      0.797      -2.429       1.866
+large_firm               -2.3721      0.744     -3.188      0.001      -3.831      -0.914
 ==============================================================================
-Omnibus:                      113.716   Durbin-Watson:                   1.378
-Prob(Omnibus):                  0.000   Jarque-Bera (JB):              255.929
-Skew:                           1.117   Prob(JB):                     2.67e-56
-Kurtosis:                       5.552   Cond. No.                         95.6
+Omnibus:                      418.478   Durbin-Watson:                   1.462
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             5424.987
+Skew:                           1.793   Prob(JB):                         0.00
+Kurtosis:                      14.544   Cond. No.                         98.3
 ==============================================================================
 
 Notes:
@@ -74,28 +74,28 @@ MODEL 3
 ================================================================================
                               OLS Regression Results                              
 ==================================================================================
-Dep. Variable:     return_volatility_post   R-squared:                       0.412
-Model:                                OLS   Adj. R-squared:                  0.408
-Method:                     Least Squares   F-statistic:                     47.69
-Date:                    Thu, 22 Jan 2026   Prob (F-statistic):           3.02e-34
-Time:                            12:14:43   Log-Likelihood:                -2036.4
-No. Observations:                     534   AIC:                             4083.
-Df Residuals:                         529   BIC:                             4104.
+Dep. Variable:     return_volatility_post   R-squared:                       0.403
+Model:                                OLS   Adj. R-squared:                  0.400
+Method:                     Least Squares   F-statistic:                     64.46
+Date:                    Sat, 24 Jan 2026   Prob (F-statistic):           7.25e-48
+Time:                            09:38:33   Log-Likelihood:                -3370.5
+No. Observations:                     891   AIC:                             6751.
+Df Residuals:                         886   BIC:                             6775.
 Df Model:                               4                                         
 Covariance Type:                      HC3                                         
 ===========================================================================================
                               coef    std err          z      P>|z|      [0.025      0.975]
 -------------------------------------------------------------------------------------------
-const                      14.7580      1.376     10.728      0.000      12.062      17.454
-return_volatility_pre       0.4516      0.038     12.019      0.000       0.378       0.525
-immediate_disclosure       -1.1710      1.799     -0.651      0.515      -4.697       2.355
-large_firm                 -4.2132      1.146     -3.677      0.000      -6.459      -1.967
-disclosure_x_governance     3.8530      2.383      1.617      0.106      -0.818       8.524
+const                      13.8339      1.261     10.971      0.000      11.363      16.305
+return_volatility_pre       0.4987      0.038     13.254      0.000       0.425       0.572
+immediate_disclosure       -0.9941      1.646     -0.604      0.546      -4.219       2.231
+large_firm                 -2.6517      0.817     -3.244      0.001      -4.254      -1.050
+disclosure_x_governance     1.5685      2.252      0.697      0.486      -2.845       5.982
 ==============================================================================
-Omnibus:                      116.183   Durbin-Watson:                   1.398
-Prob(Omnibus):                  0.000   Jarque-Bera (JB):              266.597
-Skew:                           1.132   Prob(JB):                     1.29e-58
-Kurtosis:                       5.619   Cond. No.                         180.
+Omnibus:                      421.156   Durbin-Watson:                   1.466
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             5496.220
+Skew:                           1.806   Prob(JB):                         0.00
+Kurtosis:                      14.619   Cond. No.                         202.
 ==============================================================================
 
 Notes:
@@ -107,29 +107,29 @@ MODEL 4
 ================================================================================
                               OLS Regression Results                              
 ==================================================================================
-Dep. Variable:     return_volatility_post   R-squared:                       0.423
-Model:                                OLS   Adj. R-squared:                  0.418
-Method:                     Least Squares   F-statistic:                     42.43
-Date:                    Thu, 22 Jan 2026   Prob (F-statistic):           9.55e-37
-Time:                            12:14:43   Log-Likelihood:                -2031.2
-No. Observations:                     534   AIC:                             4074.
-Df Residuals:                         528   BIC:                             4100.
+Dep. Variable:     return_volatility_post   R-squared:                       0.404
+Model:                                OLS   Adj. R-squared:                  0.401
+Method:                     Least Squares   F-statistic:                     52.03
+Date:                    Sat, 24 Jan 2026   Prob (F-statistic):           2.32e-47
+Time:                            09:38:33   Log-Likelihood:                -3369.4
+No. Observations:                     891   AIC:                             6751.
+Df Residuals:                         885   BIC:                             6780.
 Df Model:                               5                                         
 Covariance Type:                      HC3                                         
 ===========================================================================================
                               coef    std err          z      P>|z|      [0.025      0.975]
 -------------------------------------------------------------------------------------------
-const                      14.1535      1.344     10.528      0.000      11.518      16.789
-return_volatility_pre       0.4487      0.037     12.277      0.000       0.377       0.520
-immediate_disclosure       -1.0605      1.781     -0.595      0.552      -4.551       2.430
-large_firm                 -5.0041      1.156     -4.328      0.000      -7.270      -2.738
-disclosure_x_governance     3.3949      2.435      1.394      0.163      -1.378       8.168
-fcc_reportable              3.3520      1.050      3.192      0.001       1.294       5.410
+const                      13.6337      1.271     10.730      0.000      11.143      16.124
+return_volatility_pre       0.5001      0.038     13.292      0.000       0.426       0.574
+immediate_disclosure       -1.0433      1.641     -0.636      0.525      -4.260       2.173
+large_firm                 -2.8178      0.833     -3.384      0.001      -4.450      -1.186
+disclosure_x_governance     1.2051      2.307      0.522      0.601      -3.316       5.726
+fcc_reportable              1.3687      0.915      1.497      0.134      -0.424       3.161
 ==============================================================================
-Omnibus:                      125.043   Durbin-Watson:                   1.425
-Prob(Omnibus):                  0.000   Jarque-Bera (JB):              303.892
-Skew:                           1.191   Prob(JB):                     1.03e-66
-Kurtosis:                       5.826   Cond. No.                         180.
+Omnibus:                      425.593   Durbin-Watson:                   1.470
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             5687.120
+Skew:                           1.823   Prob(JB):                         0.00
+Kurtosis:                      14.827   Cond. No.                         202.
 ==============================================================================
 
 Notes:
@@ -141,30 +141,30 @@ MODEL 5
 ================================================================================
                               OLS Regression Results                              
 ==================================================================================
-Dep. Variable:     return_volatility_post   R-squared:                       0.436
-Model:                                OLS   Adj. R-squared:                  0.429
-Method:                     Least Squares   F-statistic:                     38.79
-Date:                    Thu, 22 Jan 2026   Prob (F-statistic):           4.64e-39
-Time:                            12:14:43   Log-Likelihood:                -2025.4
-No. Observations:                     534   AIC:                             4065.
-Df Residuals:                         527   BIC:                             4095.
+Dep. Variable:     return_volatility_post   R-squared:                       0.407
+Model:                                OLS   Adj. R-squared:                  0.403
+Method:                     Least Squares   F-statistic:                     43.63
+Date:                    Sat, 24 Jan 2026   Prob (F-statistic):           8.36e-47
+Time:                            09:38:33   Log-Likelihood:                -3367.5
+No. Observations:                     891   AIC:                             6749.
+Df Residuals:                         884   BIC:                             6783.
 Df Model:                               6                                         
 Covariance Type:                      HC3                                         
 ===========================================================================================
                               coef    std err          z      P>|z|      [0.025      0.975]
 -------------------------------------------------------------------------------------------
-const                      13.4643      1.337     10.071      0.000      10.844      16.085
-return_volatility_pre       0.4569      0.036     12.585      0.000       0.386       0.528
-immediate_disclosure        0.4167      1.840      0.226      0.821      -3.189       4.023
-large_firm                 -5.4170      1.150     -4.710      0.000      -7.671      -3.163
-disclosure_x_governance     6.0348      2.735      2.206      0.027       0.674      11.395
-fcc_reportable              5.4637      1.092      5.005      0.000       3.324       7.603
-fcc_x_immediate            -8.0748      2.713     -2.976      0.003     -13.392      -2.757
+const                      13.4904      1.274     10.585      0.000      10.993      15.988
+return_volatility_pre       0.5014      0.038     13.279      0.000       0.427       0.575
+immediate_disclosure       -0.4097      1.686     -0.243      0.808      -3.715       2.895
+large_firm                 -2.9257      0.835     -3.502      0.000      -4.563      -1.288
+disclosure_x_governance     2.6599      2.686      0.990      0.322      -2.604       7.923
+fcc_reportable              2.2790      0.948      2.403      0.016       0.420       4.138
+fcc_x_immediate            -4.4006      2.681     -1.642      0.101      -9.655       0.854
 ==============================================================================
-Omnibus:                      120.254   Durbin-Watson:                   1.433
-Prob(Omnibus):                  0.000   Jarque-Bera (JB):              288.087
-Skew:                           1.152   Prob(JB):                     2.77e-63
-Kurtosis:                       5.765   Cond. No.                         197.
+Omnibus:                      425.739   Durbin-Watson:                   1.467
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             5801.463
+Skew:                           1.818   Prob(JB):                         0.00
+Kurtosis:                      14.961   Cond. No.                         237.
 ==============================================================================
 
 Notes:
@@ -176,38 +176,38 @@ MODEL 6
 ================================================================================
                               OLS Regression Results                              
 ==================================================================================
-Dep. Variable:     return_volatility_post   R-squared:                       0.474
-Model:                                OLS   Adj. R-squared:                  0.465
-Method:                     Least Squares   F-statistic:                     34.46
-Date:                    Thu, 22 Jan 2026   Prob (F-statistic):           1.05e-47
-Time:                            12:14:43   Log-Likelihood:                -2006.5
-No. Observations:                     534   AIC:                             4033.
-Df Residuals:                         524   BIC:                             4076.
+Dep. Variable:     return_volatility_post   R-squared:                       0.420
+Model:                                OLS   Adj. R-squared:                  0.414
+Method:                     Least Squares   F-statistic:                     40.66
+Date:                    Sat, 24 Jan 2026   Prob (F-statistic):           7.69e-61
+Time:                            09:38:33   Log-Likelihood:                -3357.6
+No. Observations:                     891   AIC:                             6735.
+Df Residuals:                         881   BIC:                             6783.
 Df Model:                               9                                         
 Covariance Type:                      HC3                                         
 ===========================================================================================
                               coef    std err          z      P>|z|      [0.025      0.975]
 -------------------------------------------------------------------------------------------
-const                      54.3826      8.799      6.181      0.000      37.137      71.628
-return_volatility_pre       0.3967      0.032     12.399      0.000       0.334       0.459
-immediate_disclosure        0.3162      1.771      0.179      0.858      -3.154       3.787
-large_firm                 -0.5285      1.470     -0.360      0.719      -3.409       2.352
-disclosure_x_governance     5.2170      2.845      1.833      0.067      -0.360      10.794
-fcc_reportable              5.6833      1.197      4.749      0.000       3.338       8.029
-fcc_x_immediate            -6.9767      2.887     -2.417      0.016     -12.634      -1.319
-firm_size_log              -2.9921      0.811     -3.689      0.000      -4.582      -1.403
-leverage                  -13.9899      3.114     -4.492      0.000     -20.094      -7.886
-roa                        -6.5636      9.727     -0.675      0.500     -25.628      12.501
+const                      35.8759      5.872      6.109      0.000      24.366      47.385
+return_volatility_pre       0.4701      0.037     12.825      0.000       0.398       0.542
+immediate_disclosure       -0.3034      1.663     -0.182      0.855      -3.563       2.956
+large_firm                  0.4179      1.135      0.368      0.713      -1.806       2.642
+disclosure_x_governance     3.4171      2.736      1.249      0.212      -1.946       8.780
+fcc_reportable              2.7559      0.959      2.872      0.004       0.875       4.636
+fcc_x_immediate            -5.1907      2.711     -1.915      0.056     -10.504       0.123
+firm_size_log              -2.1006      0.564     -3.724      0.000      -3.206      -0.995
+leverage                   -1.4969      1.322     -1.133      0.257      -4.087       1.093
+roa                        -8.6744      7.890     -1.099      0.272     -24.138       6.789
 ==============================================================================
-Omnibus:                      123.231   Durbin-Watson:                   1.449
-Prob(Omnibus):                  0.000   Jarque-Bera (JB):              324.277
-Skew:                           1.141   Prob(JB):                     3.84e-71
-Kurtosis:                       6.061   Cond. No.                     1.00e+03
+Omnibus:                      425.831   Durbin-Watson:                   1.456
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             5775.870
+Skew:                           1.820   Prob(JB):                         0.00
+Kurtosis:                      14.930   Cond. No.                     1.03e+03
 ==============================================================================
 
 Notes:
 [1] Standard Errors are heteroscedasticity robust (HC3)
-[2] The condition number is large,  1e+03. This might indicate that there are
+[2] The condition number is large, 1.03e+03. This might indicate that there are
 strong multicollinearity or other numerical problems.
 
 
@@ -216,31 +216,31 @@ VOLATILITY CHANGE MODEL
 ================================================================================
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:                      y   R-squared:                       0.028
-Model:                            OLS   Adj. R-squared:                  0.015
-Method:                 Least Squares   F-statistic:                     2.096
-Date:                Thu, 22 Jan 2026   Prob (F-statistic):             0.0424
-Time:                        12:14:43   Log-Likelihood:                -2196.5
-No. Observations:                 534   AIC:                             4409.
-Df Residuals:                     526   BIC:                             4443.
+Dep. Variable:                      y   R-squared:                       0.025
+Model:                            OLS   Adj. R-squared:                  0.018
+Method:                 Least Squares   F-statistic:                     2.648
+Date:                Sat, 24 Jan 2026   Prob (F-statistic):             0.0103
+Time:                        09:38:33   Log-Likelihood:                -3568.7
+No. Observations:                 891   AIC:                             7153.
+Df Residuals:                     883   BIC:                             7192.
 Df Model:                           7                                         
 Covariance Type:                  HC3                                         
 ===========================================================================================
                               coef    std err          z      P>|z|      [0.025      0.975]
 -------------------------------------------------------------------------------------------
-const                     -25.5824     11.846     -2.160      0.031     -48.799      -2.366
-immediate_disclosure       -1.2561      2.335     -0.538      0.591      -5.832       3.320
-large_firm                 -4.5124      2.382     -1.895      0.058      -9.181       0.156
-disclosure_x_governance    -0.7778      3.236     -0.240      0.810      -7.120       5.564
-fcc_reportable              2.3349      1.545      1.511      0.131      -0.693       5.363
-firm_size_log               2.4708      1.141      2.166      0.030       0.235       4.707
-leverage                   -1.3508      4.290     -0.315      0.753      -9.759       7.057
-roa                        12.5219     14.313      0.875      0.382     -15.531      40.575
+const                     -12.8379      6.660     -1.928      0.054     -25.891       0.216
+immediate_disclosure        1.0328      1.742      0.593      0.553      -2.381       4.446
+large_firm                 -0.3727      1.441     -0.259      0.796      -3.197       2.452
+disclosure_x_governance    -4.0531      2.749     -1.474      0.140      -9.442       1.336
+fcc_reportable              2.4195      1.082      2.236      0.025       0.299       4.540
+firm_size_log               0.8042      0.677      1.188      0.235      -0.523       2.131
+leverage                    2.8313      1.750      1.618      0.106      -0.599       6.262
+roa                        43.6812     14.079      3.103      0.002      16.087      71.276
 ==============================================================================
-Omnibus:                      255.843   Durbin-Watson:                   1.605
-Prob(Omnibus):                  0.000   Jarque-Bera (JB):             2935.409
-Skew:                          -1.798   Prob(JB):                         0.00
-Kurtosis:                      13.909   Cond. No.                         314.
+Omnibus:                      286.257   Durbin-Watson:                   1.657
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             7430.595
+Skew:                          -0.866   Prob(JB):                         0.00
+Kurtosis:                      17.041   Cond. No.                         319.
 ==============================================================================
 
 Notes:
@@ -250,22 +250,22 @@ LOGISTIC REGRESSION
 ================================================================================
                             Logit Regression Results                            
 ================================================================================
-Dep. Variable:     volatility_increased   No. Observations:                  534
-Model:                            Logit   Df Residuals:                      526
+Dep. Variable:     volatility_increased   No. Observations:                  891
+Model:                            Logit   Df Residuals:                      883
 Method:                             MLE   Df Model:                            7
-Date:                  Thu, 22 Jan 2026   Pseudo R-squ.:                 0.03009
-Time:                          12:14:43   Log-Likelihood:                -358.39
-converged:                         True   LL-Null:                       -369.51
-Covariance Type:              nonrobust   LLR p-value:                  0.002311
+Date:                  Sat, 24 Jan 2026   Pseudo R-squ.:                 0.02842
+Time:                          09:38:33   Log-Likelihood:                -596.81
+converged:                         True   LL-Null:                       -614.26
+Covariance Type:              nonrobust   LLR p-value:                 1.162e-05
 ===========================================================================================
                               coef    std err          z      P>|z|      [0.025      0.975]
 -------------------------------------------------------------------------------------------
-const                      -0.5987      1.260     -0.475      0.635      -3.069       1.871
-immediate_disclosure       -0.2738      0.273     -1.002      0.316      -0.809       0.262
-large_firm                 -0.6406      0.297     -2.157      0.031      -1.223      -0.058
-disclosure_x_governance     0.2039      0.401      0.509      0.611      -0.581       0.989
-fcc_reportable              0.7239      0.198      3.651      0.000       0.335       1.112
-firm_size_log               0.0386      0.114      0.338      0.735      -0.185       0.263
-leverage                    0.2429      0.502      0.484      0.628      -0.741       1.226
-roa                         6.3838      2.818      2.265      0.024       0.860      11.908
+const                      -0.3778      0.933     -0.405      0.685      -2.206       1.451
+immediate_disclosure       -0.0661      0.250     -0.265      0.791      -0.556       0.423
+large_firm                 -0.3982      0.218     -1.823      0.068      -0.826       0.030
+disclosure_x_governance    -0.0347      0.374     -0.093      0.926      -0.768       0.699
+fcc_reportable              0.7375      0.179      4.120      0.000       0.387       1.088
+firm_size_log              -0.0185      0.092     -0.201      0.841      -0.199       0.162
+leverage                    0.5098      0.275      1.853      0.064      -0.029       1.049
+roa                         8.1493      2.549      3.198      0.001       3.154      13.144
 ===========================================================================================

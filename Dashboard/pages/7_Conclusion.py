@@ -55,7 +55,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown("<div class='conclusion-header'>📖 Conclusion: The FCC Paradox and What It Means</div>", unsafe_allow_html=True)
+st.markdown("<div class='conclusion-header'>⏰ Conclusion: Timing is Irrelevant; Severity, Reputation, and Regulation Matter</div>", unsafe_allow_html=True)
 
 # ============================================================================
 # SECTION 1: EXECUTIVE SUMMARY
@@ -66,28 +66,40 @@ st.markdown("## Executive Summary")
 
 st.markdown("""
 <div class='finding-summary'>
-<h3 style='color: inherit;'>What We Found</h3>
+<h3 style='color: inherit;'>Testing Information Asymmetry Theory (Myers & Majluf, 1984; Spence, 1973)</h3>
 
-This dissertation examines whether disclosure timing and regulatory requirements affect how markets respond to data breaches.
+<b>The Central Finding:</b> <b style='color: #d62728;'>Disclosure timing has NO statistically significant effect</b> on market reactions,
+tested across 25+ regression specifications (p > 0.10 in all cases).
 
-<b>The Central Finding:</b> FCC-regulated firms, which are REQUIRED to disclose breaches within 7 days, experience
-<b style='color: #d62728;'>significantly worse stock market reactions</b> compared to non-regulated firms that can choose their disclosure timing.
+<b>What This Tells Us:</b>
 
-<b style='color: #d62728;'>- FCC firms: -1.62% mean CAR (30-day abnormal return)</b>
-<b style='color: #1f77b4;'>- Non-FCC firms: +1.43% mean CAR</b>
-<b style='color: #d62728;'>- Difference: 3.05 percentage points</b>
+<b style='color: #2ca02c;'>H1a (Voluntary disclosure signals strength):</b> NOT SUPPORTED
+- Market does NOT reward faster voluntary disclosure
+- Implication: Either timing isn't perceived as voluntary choice, or timing doesn't convey firm quality signals
 
-This is counterintuitive. The regulation was designed to increase transparency and protect consumers.
-But our evidence suggests it has an unintended consequence: <b>forced disclosure of incomplete information signals weakness to the market</b>.
+<b style='color: #2ca02c;'>H1b (Mandatory disclosure lacks signal):</b> SUPPORTED
+- Forced disclosure by regulatory deadline shows NO effect on market reactions
+- Implication: Compliance with mandate doesn't signal strength, so timing is irrelevant
+
+<b style='color: #2ca02c;'>What DOES predict market reactions (H2-H4):</b>
+- <b>Reputation (H3):</b> Prior breach history → -0.08%** per breach (STRONGEST)
+- <b>Severity (H4):</b> Health data → -2.65%***
+- <b>Regulation (H2):</b> FCC status → -2.19%*
+
+<b>Theory Interpretation:</b> Myers & Majluf correctly predicts that markets price **information asymmetry** (what is known, who the firm is, what regulatory context applies), not **information speed** (how fast facts arrive).
+
+<b>Why This Matters:</b> Regulators and policymakers assume "faster disclosure = better transparency = better outcomes."
+This study shows the theory doesn't support that. When disclosure timing is mandated, it's no longer a signal of strength.
+Information asymmetry persists because mandatory disclosure may arrive before investigation is complete.
 </div>
 """, unsafe_allow_html=True)
 
 # ============================================================================
-# SECTION 2: HOW WE GOT HERE
+# SECTION 2: RESEARCH APPROACH
 # ============================================================================
 
 st.markdown("---")
-st.markdown("## How This Research Unfolded")
+st.markdown("## Research Approach and Methodology")
 
 st.markdown("""
 ### The Research Journey
@@ -113,20 +125,28 @@ st.markdown("""
 **Phase 4: Essay 2 Analysis (What are the market effects?)**
 - Dependent variable: Cumulative Abnormal Returns (CAR) at event windows (5d, 30d, 60d)
 - Method: OLS with firm controls, year fixed effects, clustered standard errors
-- Finding: FCC coefficient is -10.86% (p<0.01) after all controls
-- Robustness: Holds across different windows, subsamples, specifications
+- Main findings:
+  - Timing coefficient: +0.45% to +1.00% (NOT significant, p > 0.30)
+  - FCC coefficient: -2.19%* (p=0.033) - regulatory/sector penalty
+  - ROA coefficient: +20.67%** (p=0.006) - profitability protective
+  - Prior breaches: -0.08%** per breach (strongest effect)
+- Robustness: Held across 25+ specifications (7 timing thresholds, 4 windows, 8 subsamples, 6 SE methods)
 
 **Phase 5: Essay 3 Analysis (What's the mechanism?)**
 - Mechanism hypothesis: Information asymmetry (measured by post-disclosure volatility)
 - Why volatility?: High volatility = market uncertainty; low volatility = resolved uncertainty
-- Finding: FCC firms have HIGHER post-disclosure volatility (+1.22%, not significant p>0.05)
-- Interpretation: Forced disclosure doesn't resolve uncertainty; may increase it
+- Main findings:
+  - Pre-breach volatility: 0.51*** coefficient (explains 39.5% of post-breach volatility alone)
+  - Timing coefficient: -0.06 (NOT significant, p=0.954) - faster disclosure doesn't reduce uncertainty
+  - FCC coefficient: +2.76%** (p=0.004) - FCC firms have higher volatility despite mandatory immediate disclosure
+- Interpretation: Timing doesn't resolve information asymmetry; firm-level traits dominate
 
 **Phase 6: Synthesis (What's the big picture?)**
-- Both essays point to same mechanism: Forced disclosure ≠ complete disclosure
-- FCC rule constrains when firms can speak, but not what they know
-- Early disclosure of incomplete information = negative signal
-- Result: Worse market outcomes despite faster disclosure
+- Central insight: Timing has NO effect; severity/reputation/regulation DO
+- Both CAR (returns) and volatility (uncertainty) show timing irrelevance
+- FCC effect exists but is regulatory/sector risk, not timing-driven
+- Market correctly interprets that firm quality, breach content, and regulatory context matter more than disclosure speed
+- Result: Timing regulations don't improve outcomes because information quality ≠ information speed
 
 **Phase 7: Validation (Do the findings hold up?)**
 - Robustness checks: Different windows, specifications, subsamples → All consistent
@@ -193,7 +213,7 @@ with col1:
     - Focus on speed: 7-day, 30-day, 60-day rules
     - Implicit assumption: Faster = more transparency = better
 
-    **What Our Evidence Shows:**
+    **Evidence Shows:**
     - Forced speed can reduce information quality
     - Market penalizes companies that disclose before investigation complete
     - Result: Regulation doesn't achieve intended effect
@@ -232,7 +252,7 @@ with col2:
     - Disclose minimum required details
     - Hope market reacts mildly
 
-    **What Our Evidence Shows:**
+    **Evidence Shows:**
     - Voluntary early disclosure helps (Non-FCC +1.43% CAR)
     - Forced disclosure hurts (FCC -1.62% CAR)
     - Market distinguishes voluntary vs. mandatory
@@ -249,9 +269,9 @@ with col2:
        - One good disclosure > multiple partial updates
 
     3. **Communications Strategy**
-       - Frame disclosure as confidence (we know what happened)
-       - Frame delay as thoroughness (we're investigating properly)
-       - Market rewards "we did it right" more than "we did it fast"
+       - Frame disclosure as confidence (clear investigation outcomes)
+       - Frame delay as thoroughness (proper investigation completed)
+       - Market rewards "disclosure done right" more than "disclosure done fast"
 
     4. **Investor Relations**
        - Brief investors before public disclosure if allowed
@@ -278,7 +298,7 @@ st.markdown("""
 
 **2. Crisis Communications**
 - Traditional PR wisdom: "Get ahead of story, communicate early"
-- Our finding: "Get ahead of story, but only when you have complete information"
+- Finding: "Get ahead of story, but only when you have complete information"
 - New wisdom: "Be first with complete information, not first with incomplete"
 - Implications: Invest in rapid investigation capability, not just rapid communication
 
@@ -334,7 +354,7 @@ st.markdown("""
 - Market has evolved since 2007 (better cyber awareness)
 
 **5. Mechanism**
-- We show volatility increases; causality not directly tested
+- Volatility increases observed; causality not directly tested
 - Could be alternative mechanisms (regulatory risk, industry effects, etc.)
 - Future work should directly test information asymmetry mechanisms
 
@@ -419,8 +439,8 @@ with unintended negative consequences.
 
 ### The Broader Takeaway
 
-As we regulate more domains (privacy, AI, content moderation, carbon emissions),
-we should remember this lesson:
+Regulation of disclosure requirements across multiple domains (privacy, AI, content moderation, cybersecurity)
+should consider this lesson:
 
 **Mandate the outcomes you want (clear information), not the process that supposedly gets you there (fast disclosure).
 Let organizations figure out how to meet the outcome requirement efficiently.**
@@ -430,15 +450,11 @@ the market might reward companies with better returns, and actual consumer prote
 
 ---
 
-### Dedication
+### Implications
 
-This work is dedicated to the millions of people whose data has been breached.
-
-The finding that forced disclosure can harm companies (reducing their value and ability to invest in security)
-is sobering. But understanding unintended consequences of regulation is how we improve governance.
-
-My hope is that this evidence contributes to better policy that actually protects consumers,
-rather than policy that sounds good but backfires in practice.
+This research shows that forced disclosure can harm companies (reducing their value and ability to invest in security)
+when timing mandates sacrifice information quality. Understanding unintended consequences of regulation is essential
+for designing disclosure policy that actually protects consumers rather than policy that sounds good but backfires in practice.
 """)
 
 st.markdown("---")
@@ -454,7 +470,7 @@ please see the <b>"Raw Data Explorer"</b> and <b>"Data Dictionary"</b> pages for
 
 ---
 
-<b>Prepared by:</b> Your Dissertation Author<br>
+<b>Prepared by:</b> Timothy D. Spivey<br>
 <b>Date:</b> January 2026<br>
 <b>Data:</b> 1,054 data breaches (2004-2025), 926 with stock market analysis
 </div>

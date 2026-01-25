@@ -12,11 +12,11 @@ print("=" * 60)
 # Load master dataset
 print("\n[1/3] Loading breach data...")
 df = pd.read_excel('Data/processed/master_breach_dataset.xlsx')
-print(f"✓ Loaded {len(df)} breach records")
+print(f"  Loaded {len(df)} breach records")
 
 # Get unique tickers
 tickers = df['Map'].dropna().unique()
-print(f"✓ Found {len(tickers)} unique stock tickers")
+print(f"  Found {len(tickers)} unique stock tickers")
 
 # Cache stock data to avoid repeated downloads
 print("\n[2/3] Pre-downloading stock data for all tickers...")
@@ -47,7 +47,7 @@ for i, ticker in enumerate(tickers, 1):
         failed_tickers.append(ticker)
         continue
 
-print(f"✓ Successfully downloaded data for {len(stock_cache)}/{len(tickers)} tickers")
+print(f"  Successfully downloaded data for {len(stock_cache)}/{len(tickers)} tickers")
 if failed_tickers:
     print(f"  Failed tickers: {', '.join(failed_tickers[:10])}{'...' if len(failed_tickers) > 10 else ''}")
 
@@ -183,7 +183,7 @@ df_final = pd.concat([df, stock_df], axis=1)
 print("\nSaving final dataset...")
 output_path = 'Data/processed/final_analysis_dataset.xlsx'
 df_final.to_excel(output_path, index=False)
-print(f"✓ Saved to: {output_path}")
+print(f"  Saved to: {output_path}")
 
 # Summary statistics
 print("\n" + "=" * 60)
@@ -221,7 +221,7 @@ if len(valid_returns) > 0:
     print(f"    30-day: {neg_30d}/{len(valid_returns)} ({neg_30d/len(valid_returns)*100:.1f}%)")
 
 print("\n" + "=" * 60)
-print("✓ FINAL DATASET COMPLETE")
+print("  FINAL DATASET COMPLETE")
 print("=" * 60)
 print("\nYour dataset is ready for:")
 print("  - Correlation analysis (CVEs vs stock returns)")

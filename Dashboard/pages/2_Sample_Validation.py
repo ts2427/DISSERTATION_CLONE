@@ -80,11 +80,15 @@ with col3:
 
 st.markdown("""
 **Exclusions:**
-- No CRSP stock data (12.1%): Delisted, private, penny stocks
-- No volatility data (13.1%): Missing historical prices
-- Final samples: **926 breaches (Essay 2)**, **916 breaches (Essay 3)**
+- No CRSP stock data (14.7%): Delisted, private, penny stocks
+- No volatility data (15.3%): Missing historical price data
+- Final samples: **898 breaches (Essay 2)**, **891 breaches (Essay 3)**
 
 **Key point:** Disclosure timing does NOT predict exclusion → No selection bias on main predictor
+
+Excluded firms tend to be smaller and have fewer prior breaches, but these differences
+are controlled for in regression models. The natural experiment (FCC status) is orthogonal
+to exclusion criteria.
 """)
 
 st.markdown("---")

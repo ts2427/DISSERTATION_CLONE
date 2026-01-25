@@ -11,7 +11,7 @@ print("=" * 60)
 print("\n[1/4] Loading breach companies...")
 df = pd.read_excel(r'Data\DataBreaches.xlsx', engine='openpyxl')
 breach_companies = df['org_name'].unique()
-print(f"✓ Found {len(breach_companies)} unique companies")
+print(f"[OK] Found {len(breach_companies)} unique companies")
 
 # Create normalized versions
 breach_normalized = {}
@@ -26,7 +26,7 @@ for company in breach_companies:
 
 print(f"\nSample normalized names:")
 for i, (norm, orig) in enumerate(list(breach_normalized.items())[:5]):
-    print(f"  {orig} → {norm}")
+    print(f"  {orig}  ->  {norm}")
 
 # Extract ALL vendors from NVD data
 print(f"\n[2/4] Extracting vendors from NVD files...")
@@ -60,8 +60,8 @@ for idx, json_file in enumerate(json_files, 1):
         except (KeyError, IndexError):
             continue
 
-print(f"\n✓ Found {len(all_vendors)} unique vendors in NVD")
-print(f"✓ Total CVE records processed: {sum(vendor_cve_count.values())}")
+print(f"\n[OK] Found {len(all_vendors)} unique vendors in NVD")
+print(f"[OK] Total CVE records processed: {sum(vendor_cve_count.values())}")
 
 # Matching analysis
 print(f"\n[3/4] Matching companies to vendors...")
@@ -96,22 +96,22 @@ print(f"No matches: {len(no_matches)}")
 print(f"Match rate: {(len(exact_matches) + len(partial_matches)) / len(breach_companies) * 100:.1f}%")
 
 if exact_matches:
-    print(f"\n✓ EXACT MATCHES ({len(exact_matches)}):")
+    print(f"\n[OK] EXACT MATCHES ({len(exact_matches)}):")
     for orig, vendor, count in sorted(exact_matches, key=lambda x: x[2], reverse=True)[:10]:
-        print(f"  {orig} → {vendor} ({count} CVEs)")
+        print(f"  {orig}  ->  {vendor} ({count} CVEs)")
 
 if partial_matches:
-    print(f"\n⚠ PARTIAL MATCHES ({len(partial_matches)}) - First 10:")
+    print(f"\n[WARNING] PARTIAL MATCHES ({len(partial_matches)}) - First 10:")
     for orig, vendor, count in partial_matches[:10]:
-        print(f"  {orig} ≈ {vendor} ({count} CVEs)")
+        print(f"  {orig}   {vendor} ({count} CVEs)")
 
 if no_matches:
-    print(f"\n✗ NO MATCHES ({len(no_matches)}) - First 10:")
+    print(f"\n[NO] NO MATCHES ({len(no_matches)}) - First 10:")
     for company in no_matches[:10]:
         print(f"  {company}")
 
 print("\n" + "=" * 60)
-print("✓ MATCHING ANALYSIS COMPLETE")
+print("[OK] MATCHING ANALYSIS COMPLETE")
 print("=" * 60)
 
 # Save results for reference
@@ -123,4 +123,4 @@ results_df = pd.DataFrame({
 })
 
 results_df.to_excel('Data/processed/company_vendor_matching.xlsx', index=False)
-print(f"\n💾 Results saved to: Data/processed/company_vendor_matching.xlsx")
+print(f"\n  Results saved to: Data/processed/company_vendor_matching.xlsx")

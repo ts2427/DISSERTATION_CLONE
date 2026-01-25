@@ -44,7 +44,7 @@ try:
     ticker_list = "', '".join(tickers)
     
     crsp_query = f"""
-    SELECT a.permno, a.date, a.ticker, a.ret, a.retx, 
+    SELECT a.permno, a.date, b.ticker, a.ret, a.retx,
            a.prc, a.shrout, a.vol, a.cfacpr, a.cfacshr
     FROM crsp.dsf as a
     INNER JOIN crsp.msenames as b

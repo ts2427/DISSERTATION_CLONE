@@ -4,25 +4,25 @@ Model 1
 ============================================================
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:                car_30d   R-squared:                       0.004
-Model:                            OLS   Adj. R-squared:                 -0.002
-Method:                 Least Squares   F-statistic:                    0.7256
-Date:                Thu, 22 Jan 2026   Prob (F-statistic):              0.396
-Time:                        11:55:09   Log-Likelihood:                -645.31
-No. Observations:                 165   AIC:                             1295.
-Df Residuals:                     163   BIC:                             1301.
+Dep. Variable:                car_30d   R-squared:                       0.017
+Model:                            OLS   Adj. R-squared:                  0.009
+Method:                 Least Squares   F-statistic:                     1.550
+Date:                Sat, 24 Jan 2026   Prob (F-statistic):              0.216
+Time:                        09:35:44   Log-Likelihood:                -420.67
+No. Observations:                 119   AIC:                             845.3
+Df Residuals:                     117   BIC:                             850.9
 Df Model:                           1                                         
 Covariance Type:                  HC3                                         
 ========================================================================================
                            coef    std err          z      P>|z|      [0.025      0.975]
 ----------------------------------------------------------------------------------------
-const                   -2.8689      1.125     -2.550      0.011      -5.074      -0.664
-immediate_disclosure     1.8000      2.113      0.852      0.394      -2.342       5.942
+const                   -0.4902      0.826     -0.593      0.553      -2.110       1.130
+immediate_disclosure     2.5038      2.011      1.245      0.213      -1.438       6.446
 ==============================================================================
-Omnibus:                       37.662   Durbin-Watson:                   1.278
-Prob(Omnibus):                  0.000   Jarque-Bera (JB):               80.830
-Skew:                          -1.010   Prob(JB):                     2.81e-18
-Kurtosis:                       5.771   Cond. No.                         2.44
+Omnibus:                       21.099   Durbin-Watson:                   2.031
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               46.026
+Skew:                           0.687   Prob(JB):                     1.01e-10
+Kurtosis:                       5.719   Cond. No.                         2.47
 ==============================================================================
 
 Notes:
@@ -34,26 +34,26 @@ Model 2
 ============================================================
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:                car_30d   R-squared:                       0.040
-Model:                            OLS   Adj. R-squared:                  0.028
-Method:                 Least Squares   F-statistic:                     3.024
-Date:                Thu, 22 Jan 2026   Prob (F-statistic):             0.0514
-Time:                        11:55:09   Log-Likelihood:                -642.31
-No. Observations:                 165   AIC:                             1291.
-Df Residuals:                     162   BIC:                             1300.
+Dep. Variable:                car_30d   R-squared:                       0.019
+Model:                            OLS   Adj. R-squared:                  0.002
+Method:                 Least Squares   F-statistic:                    0.8271
+Date:                Sat, 24 Jan 2026   Prob (F-statistic):              0.440
+Time:                        09:35:44   Log-Likelihood:                -420.58
+No. Observations:                 119   AIC:                             847.2
+Df Residuals:                     116   BIC:                             855.5
 Df Model:                           2                                         
 Covariance Type:                  HC3                                         
 ========================================================================================
                            coef    std err          z      P>|z|      [0.025      0.975]
 ----------------------------------------------------------------------------------------
-const                   -0.7281      1.274     -0.572      0.568      -3.225       1.768
-immediate_disclosure     1.5159      2.104      0.720      0.471      -2.608       5.640
-fcc_reportable          -4.5929      1.900     -2.417      0.016      -8.317      -0.869
+const                   -0.2529      1.146     -0.221      0.825      -2.499       1.993
+immediate_disclosure     2.5056      2.028      1.236      0.217      -1.469       6.480
+fcc_reportable          -0.6735      1.353     -0.498      0.619      -3.325       1.978
 ==============================================================================
-Omnibus:                       34.307   Durbin-Watson:                   1.290
-Prob(Omnibus):                  0.000   Jarque-Bera (JB):               61.969
-Skew:                          -0.999   Prob(JB):                     3.50e-14
-Kurtosis:                       5.242   Cond. No.                         2.89
+Omnibus:                       19.574   Durbin-Watson:                   2.028
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               42.914
+Skew:                           0.629   Prob(JB):                     4.80e-10
+Kurtosis:                       5.660   Cond. No.                         2.70
 ==============================================================================
 
 Notes:
@@ -65,27 +65,27 @@ Model 3
 ============================================================
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:                car_30d   R-squared:                       0.047
-Model:                            OLS   Adj. R-squared:                  0.029
-Method:                 Least Squares   F-statistic:                     2.408
-Date:                Thu, 22 Jan 2026   Prob (F-statistic):             0.0691
-Time:                        11:55:09   Log-Likelihood:                -641.70
-No. Observations:                 165   AIC:                             1291.
-Df Residuals:                     161   BIC:                             1304.
+Dep. Variable:                car_30d   R-squared:                       0.024
+Model:                            OLS   Adj. R-squared:                 -0.002
+Method:                 Least Squares   F-statistic:                     1.827
+Date:                Sat, 24 Jan 2026   Prob (F-statistic):              0.146
+Time:                        09:35:44   Log-Likelihood:                -420.27
+No. Observations:                 119   AIC:                             848.5
+Df Residuals:                     115   BIC:                             859.6
 Df Model:                           3                                         
 Covariance Type:                  HC3                                         
 ========================================================================================
                            coef    std err          z      P>|z|      [0.025      0.975]
 ----------------------------------------------------------------------------------------
-const                   -0.1342      1.337     -0.100      0.920      -2.754       2.485
-immediate_disclosure    -0.4144      2.833     -0.146      0.884      -5.968       5.139
-fcc_reportable          -5.8672      2.242     -2.617      0.009     -10.262      -1.472
-fcc_x_immediate          4.5801      4.250      1.078      0.281      -3.749      12.910
+const                    0.0098      1.217      0.008      0.994      -2.375       2.395
+immediate_disclosure     1.4940      2.968      0.503      0.615      -4.322       7.310
+fcc_reportable          -1.4193      1.421     -0.999      0.318      -4.205       1.366
+fcc_x_immediate          2.8561      3.607      0.792      0.428      -4.214       9.926
 ==============================================================================
-Omnibus:                       33.102   Durbin-Watson:                   1.271
-Prob(Omnibus):                  0.000   Jarque-Bera (JB):               59.724
-Skew:                          -0.965   Prob(JB):                     1.07e-13
-Kurtosis:                       5.228   Cond. No.                         6.10
+Omnibus:                       20.230   Durbin-Watson:                   2.050
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               44.092
+Skew:                           0.656   Prob(JB):                     2.66e-10
+Kurtosis:                       5.678   Cond. No.                         5.96
 ==============================================================================
 
 Notes:
@@ -97,29 +97,29 @@ Model 4
 ============================================================
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:                car_30d   R-squared:                       0.146
-Model:                            OLS   Adj. R-squared:                  0.120
-Method:                 Least Squares   F-statistic:                     2.873
-Date:                Thu, 22 Jan 2026   Prob (F-statistic):             0.0164
-Time:                        11:55:09   Log-Likelihood:                -632.62
-No. Observations:                 165   AIC:                             1277.
-Df Residuals:                     159   BIC:                             1296.
+Dep. Variable:                car_30d   R-squared:                       0.070
+Model:                            OLS   Adj. R-squared:                  0.029
+Method:                 Least Squares   F-statistic:                     2.318
+Date:                Sat, 24 Jan 2026   Prob (F-statistic):             0.0480
+Time:                        09:35:44   Log-Likelihood:                -417.36
+No. Observations:                 119   AIC:                             846.7
+Df Residuals:                     113   BIC:                             863.4
 Df Model:                           5                                         
 Covariance Type:                  HC3                                         
 ========================================================================================
                            coef    std err          z      P>|z|      [0.025      0.975]
 ----------------------------------------------------------------------------------------
-const                  -37.0771     11.628     -3.189      0.001     -59.868     -14.286
-immediate_disclosure    -0.5287      2.946     -0.179      0.858      -6.304       5.246
-fcc_reportable          -8.4221      2.530     -3.328      0.001     -13.381      -3.463
-fcc_x_immediate          4.9524      4.128      1.200      0.230      -3.138      13.042
-firm_size_log            2.9025      0.997      2.911      0.004       0.948       4.857
-leverage                 9.0299      5.043      1.791      0.073      -0.854      18.914
+const                   -8.5960      7.893     -1.089      0.276     -24.067       6.875
+immediate_disclosure     1.9612      2.993      0.655      0.512      -3.904       7.827
+fcc_reportable          -2.6611      1.492     -1.783      0.075      -5.586       0.264
+fcc_x_immediate          2.3044      3.634      0.634      0.526      -4.818       9.427
+firm_size_log            0.2088      0.632      0.330      0.741      -1.031       1.448
+leverage                10.6653      4.974      2.144      0.032       0.917      20.413
 ==============================================================================
-Omnibus:                       11.105   Durbin-Watson:                   1.509
-Prob(Omnibus):                  0.004   Jarque-Bera (JB):               17.865
-Skew:                          -0.342   Prob(JB):                     0.000132
-Kurtosis:                       4.459   Cond. No.                         117.
+Omnibus:                       24.475   Durbin-Watson:                   2.087
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               48.170
+Skew:                           0.853   Prob(JB):                     3.47e-11
+Kurtosis:                       5.608   Cond. No.                         115.
 ==============================================================================
 
 Notes:
@@ -131,34 +131,34 @@ Model 5
 ============================================================
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:                car_30d   R-squared:                       0.172
-Model:                            OLS   Adj. R-squared:                  0.140
-Method:                 Least Squares   F-statistic:                     2.791
-Date:                Thu, 22 Jan 2026   Prob (F-statistic):             0.0131
-Time:                        11:55:09   Log-Likelihood:                -630.12
-No. Observations:                 165   AIC:                             1274.
-Df Residuals:                     158   BIC:                             1296.
+Dep. Variable:                car_30d   R-squared:                       0.075
+Model:                            OLS   Adj. R-squared:                  0.025
+Method:                 Least Squares   F-statistic:                     2.009
+Date:                Sat, 24 Jan 2026   Prob (F-statistic):             0.0702
+Time:                        09:35:44   Log-Likelihood:                -417.06
+No. Observations:                 119   AIC:                             848.1
+Df Residuals:                     112   BIC:                             867.6
 Df Model:                           6                                         
 Covariance Type:                  HC3                                         
 ========================================================================================
                            coef    std err          z      P>|z|      [0.025      0.975]
 ----------------------------------------------------------------------------------------
-const                  -48.1224     14.428     -3.335      0.001     -76.401     -19.844
-immediate_disclosure    -0.8824      3.005     -0.294      0.769      -6.772       5.007
-fcc_reportable         -10.8589      3.264     -3.327      0.001     -17.257      -4.461
-fcc_x_immediate          5.4070      4.143      1.305      0.192      -2.713      13.527
-firm_size_log            4.1909      1.370      3.059      0.002       1.506       6.876
-leverage                 7.2147      5.168      1.396      0.163      -2.915      17.345
-total_cves              -0.0006      0.000     -1.871      0.061      -0.001    3.01e-05
+const                   -3.6086      9.999     -0.361      0.718     -23.206      15.989
+immediate_disclosure     2.0374      2.998      0.680      0.497      -3.838       7.913
+fcc_reportable          -1.6808      1.969     -0.854      0.393      -5.541       2.179
+fcc_x_immediate          2.3086      3.610      0.640      0.522      -4.766       9.383
+firm_size_log           -0.3171      0.919     -0.345      0.730      -2.117       1.483
+leverage                10.8567      4.995      2.173      0.030       1.067      20.647
+total_cves               0.0002      0.000      0.828      0.407      -0.000       0.001
 ==============================================================================
-Omnibus:                        7.882   Durbin-Watson:                   1.606
-Prob(Omnibus):                  0.019   Jarque-Bera (JB):               12.448
-Skew:                          -0.204   Prob(JB):                      0.00198
-Kurtosis:                       4.282   Cond. No.                     5.24e+04
+Omnibus:                       24.726   Durbin-Watson:                   2.078
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               48.867
+Skew:                           0.860   Prob(JB):                     2.45e-11
+Kurtosis:                       5.626   Cond. No.                     6.99e+04
 ==============================================================================
 
 Notes:
 [1] Standard Errors are heteroscedasticity robust (HC3)
-[2] The condition number is large, 5.24e+04. This might indicate that there are
+[2] The condition number is large, 6.99e+04. This might indicate that there are
 strong multicollinearity or other numerical problems.
 

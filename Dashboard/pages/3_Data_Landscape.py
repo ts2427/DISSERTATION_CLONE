@@ -39,8 +39,8 @@ st.markdown("<div class='header'>🗺️ The Data Landscape</div>", unsafe_allow
 
 st.markdown("""
 <div class='context-box'>
-Before we analyze regression results, let's understand the DATA itself.
-What breaches are in our dataset? How are they distributed across time and industries?
+Before analyzing regression results, understanding the DATA itself is essential.
+What breaches are in the dataset? How are they distributed across time and industries?
 </div>
 """, unsafe_allow_html=True)
 

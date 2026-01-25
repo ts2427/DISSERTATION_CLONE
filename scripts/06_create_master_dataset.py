@@ -12,25 +12,32 @@ print("=" * 60)
 print("\n[1/5] Loading breach data...")
 breach_df = pd.read_excel(r'Data\DataBreaches.xlsx', engine='openpyxl')
 breach_df['breach_date'] = pd.to_datetime(breach_df['breach_date'])
-print(f"✓ Loaded {len(breach_df)} breach records")
+print(f"[OK] Loaded {len(breach_df)} breach records")
 
 # Load vendor mappings
 print("\n[2/5] Loading vendor mappings...")
-exact_matches = pd.read_excel('Data/processed/company_vendor_matching.xlsx')
-exact_matches = exact_matches[exact_matches['Match_Type'] == 'EXACT'][['Company', 'Vendor']]
+matching_df = pd.read_excel('Data/processed/company_vendor_matching.xlsx')
+all_matches = matching_df[['Company', 'Vendor']].drop_duplicates()
 
-corrected_matches = pd.read_excel('Data/processed/manual_vendor_mapping_updated.xlsx')
-# Only keep companies with valid vendors (not N/A or empty)
-corrected_matches = corrected_matches[
-    (corrected_matches['Corrected_Vendor'].notna()) & 
-    (corrected_matches['Corrected_Vendor'] != '') & 
-    (corrected_matches['Corrected_Vendor'] != 'N/A')
-][['Company', 'Corrected_Vendor']]
-corrected_matches.rename(columns={'Corrected_Vendor': 'Vendor'}, inplace=True)
+# Try to load manual corrections if they exist
+import os
+if os.path.exists('Data/processed/manual_vendor_mapping_updated.xlsx'):
+    print("[OK] Loading manual vendor corrections...")
+    corrected_matches = pd.read_excel('Data/processed/manual_vendor_mapping_updated.xlsx')
+    # Only keep companies with valid vendors (not N/A or empty)
+    corrected_matches = corrected_matches[
+        (corrected_matches['Corrected_Vendor'].notna()) &
+        (corrected_matches['Corrected_Vendor'] != '') &
+        (corrected_matches['Corrected_Vendor'] != 'N/A')
+    ][['Company', 'Corrected_Vendor']]
+    corrected_matches.rename(columns={'Corrected_Vendor': 'Vendor'}, inplace=True)
+    all_mappings = pd.concat([all_matches, corrected_matches], ignore_index=True)
+    all_mappings = all_mappings.drop_duplicates(subset=['Company'], keep='last')
+else:
+    print("[OK] No manual corrections found - using auto-matched vendors")
+    all_mappings = all_matches
 
-# Combine all mappings
-all_mappings = pd.concat([exact_matches, corrected_matches], ignore_index=True)
-print(f"✓ Total companies with vendor mappings: {len(all_mappings)}")
+print(f"[OK] Total companies with vendor mappings: {len(all_mappings)}")
 
 # Create company -> vendor lookup
 company_to_vendor = dict(zip(all_mappings['Company'], all_mappings['Vendor']))
@@ -40,7 +47,7 @@ breach_df['nvd_vendor'] = breach_df['org_name'].map(company_to_vendor)
 
 # Count how many breaches have vendor mappings
 mapped_breaches = breach_df['nvd_vendor'].notna().sum()
-print(f"✓ Breach records with vendor mappings: {mapped_breaches}/{len(breach_df)} ({mapped_breaches/len(breach_df)*100:.1f}%)")
+print(f"[OK] Breach records with vendor mappings: {mapped_breaches}/{len(breach_df)} ({mapped_breaches/len(breach_df)*100:.1f}%)")
 
 # Extract CVE data for mapped vendors
 print("\n[3/5] Extracting CVE data for mapped vendors...")
@@ -94,8 +101,8 @@ for idx, json_file in enumerate(json_files, 1):
         except (KeyError, IndexError):
             continue
 
-print(f"\n✓ Extracted CVE data for {len(vendor_cves)} vendors")
-print(f"✓ Total CVE records: {sum(vendor_cve_counts.values())}")
+print(f"\n[OK] Extracted CVE data for {len(vendor_cves)} vendors")
+print(f"[OK] Total CVE records: {sum(vendor_cve_counts.values())}")
 
 # Calculate CVE metrics for each breach
 print("\n[4/5] Calculating CVE metrics for each breach...")
@@ -159,7 +166,7 @@ print("\n[5/5] Saving master dataset...")
 output_path = 'Data/processed/master_breach_dataset.xlsx'
 breach_final.to_excel(output_path, index=False)
 
-print(f"✓ Saved to: {output_path}")
+print(f"[OK] Saved to: {output_path}")
 
 # Summary statistics
 print("\n" + "=" * 60)
@@ -185,7 +192,7 @@ for year, count in year_counts.items():
     print(f"  {int(year)}: {count} breaches")
 
 print("\n" + "=" * 60)
-print("✓ MASTER DATASET COMPLETE")
+print("[OK] MASTER DATASET COMPLETE")
 print("=" * 60)
 print("\nNext steps:")
 print("1. Review master_breach_dataset.xlsx")

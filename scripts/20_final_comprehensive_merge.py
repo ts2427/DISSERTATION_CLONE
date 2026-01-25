@@ -6,32 +6,32 @@ print("=" * 60)
 print("FINAL COMPREHENSIVE DATA MERGE")
 print("=" * 60)
 print("\nIntegrating all data sources:")
-print("  ✓ Breach data (858 records)")
-print("  ✓ CVE/NVD vulnerability data")
-print("  ✓ Stock returns (yfinance)")
-print("  ✓ CRSP daily returns")
-print("  ✓ Compustat fundamentals")
-print("  ✓ Market indices")
-print("  ✓ FCC regulatory classification")
+print("    Breach data (858 records)")
+print("    CVE/NVD vulnerability data")
+print("    Stock returns (yfinance)")
+print("    CRSP daily returns")
+print("    Compustat fundamentals")
+print("    Market indices")
+print("    FCC regulatory classification")
 
 # Load all datasets
 print("\n[1/6] Loading datasets...")
 
 breach_df = pd.read_excel('Data/processed/final_analysis_dataset.xlsx')
-print(f"✓ Breach data: {len(breach_df)} records")
+print(f"  Breach data: {len(breach_df)} records")
 
 # WRDS Data
 crsp_daily = pd.read_csv('Data/wrds/crsp_daily_returns.csv', parse_dates=['date'])
-print(f"✓ CRSP daily: {len(crsp_daily):,} observations")
+print(f"  CRSP daily: {len(crsp_daily):,} observations")
 
 compustat_q = pd.read_csv('Data/wrds/compustat_fundamentals.csv', parse_dates=['datadate'])
-print(f"✓ Compustat quarterly: {len(compustat_q):,} observations")
+print(f"  Compustat quarterly: {len(compustat_q):,} observations")
 
 compustat_a = pd.read_csv('Data/wrds/compustat_annual.csv', parse_dates=['datadate'])
-print(f"✓ Compustat annual: {len(compustat_a):,} observations")
+print(f"  Compustat annual: {len(compustat_a):,} observations")
 
 market = pd.read_csv('Data/wrds/market_indices.csv', parse_dates=['date'])
-print(f"✓ Market indices: {len(market):,} observations")
+print(f"  Market indices: {len(market):,} observations")
 
 # FCC classification (already in breach_df if you ran previous script)
 if 'fcc_reportable' not in breach_df.columns:
@@ -56,7 +56,7 @@ if 'fcc_reportable' not in breach_df.columns:
         return 'Non-FCC', False
     
     breach_df['fcc_category'], breach_df['fcc_reportable'] = zip(*breach_df['org_name'].apply(classify_fcc))
-    print("✓ Added FCC classification")
+    print("  Added FCC classification")
 
 # Calculate CRSP-based abnormal returns
 print("\n[2/6] Calculating CRSP-based abnormal returns...")
@@ -143,7 +143,7 @@ for idx, row in breach_df.iterrows():
     if (idx + 1) % 100 == 0:
         print(f"  Processed {idx + 1}/{len(breach_df)} ({processed} with CRSP data)")
 
-print(f"✓ Calculated returns for {processed}/{len(breach_df)} breaches")
+print(f"  Calculated returns for {processed}/{len(breach_df)} breaches")
 
 event_returns_df = pd.DataFrame(event_returns)
 
@@ -201,7 +201,7 @@ for col in firm_cols:
     if col not in breach_df.columns:
         breach_df[col] = firm_controls_df[col]
 
-print(f"✓ Added firm controls for {firm_controls_df.notna().any(axis=1).sum()} breaches")
+print(f"  Added firm controls for {firm_controls_df.notna().any(axis=1).sum()} breaches")
 
 # Calculate disclosure timing
 print("\n[4/6] Calculating disclosure timing metrics...")
@@ -297,7 +297,7 @@ for col in vol_cols:
     if col not in breach_df.columns:
         breach_df[col] = volatility_df[col]
 
-print(f"✓ Calculated volatility for {volatility_df.notna().any(axis=1).sum()} breaches")
+print(f"  Calculated volatility for {volatility_df.notna().any(axis=1).sum()} breaches")
 
 # Create analysis flags
 print("\n[6/6] Creating final analysis variables...")
@@ -325,7 +325,7 @@ if 'total_affected' in breach_df.columns:
 output_path = 'Data/processed/FINAL_DISSERTATION_DATASET.xlsx'
 breach_df.to_excel(output_path, index=False)
 
-print(f"\n✓ Saved to: {output_path}")
+print(f"\n  Saved to: {output_path}")
 
 # Comprehensive Summary
 print("\n" + "=" * 60)
@@ -347,7 +347,7 @@ print(f"FCC-reportable: {breach_df['fcc_reportable'].sum()} ({breach_df['fcc_rep
 print(f"Non-FCC: {(~breach_df['fcc_reportable']).sum()} ({(~breach_df['fcc_reportable']).sum()/len(breach_df)*100:.1f}%)")
 
 print(f"\n--- Disclosure Timing ---")
-print(f"Immediate (≤7 days): {breach_df['immediate_disclosure'].sum()}")
+print(f"Immediate ( 7 days): {breach_df['immediate_disclosure'].sum()}")
 print(f"Delayed (>30 days): {breach_df['delayed_disclosure'].sum()}")
 print(f"Average delay: {breach_df['disclosure_delay_days'].mean():.1f} days")
 
@@ -363,21 +363,21 @@ if len(crsp_valid) > 0:
     print(f"  30-day: {crsp_valid['bhar_30d'].mean():.4f}% (median: {crsp_valid['bhar_30d'].median():.4f}%)")
 
 print("\n" + "=" * 60)
-print("✓ DISSERTATION DATASET COMPLETE")
+print("  DISSERTATION DATASET COMPLETE")
 print("=" * 60)
 
 print("\nYour dataset is ready for:")
 print("\n  Essay 1: Theoretical Model (no data needed)")
 print("\n  Essay 2: Event Study")
-print("    - CAR/BHAR from CRSP ✓")
-print("    - Disclosure timing (immediate vs delayed) ✓")
-print("    - FCC regulatory classification ✓")
-print("    - Firm controls (size, ROA, leverage) ✓")
+print("    - CAR/BHAR from CRSP  ")
+print("    - Disclosure timing (immediate vs delayed)  ")
+print("    - FCC regulatory classification  ")
+print("    - Firm controls (size, ROA, leverage)  ")
 print("\n  Essay 3: Information Asymmetry")
-print("    - Return volatility (pre/post breach) ✓")
-print("    - Volume volatility (pre/post breach) ✓")
-print("    - Disclosure speed × Governance interaction ✓")
-print("    - Firm size proxy for governance ✓")
+print("    - Return volatility (pre/post breach)  ")
+print("    - Volume volatility (pre/post breach)  ")
+print("    - Disclosure speed   Governance interaction  ")
+print("    - Firm size proxy for governance  ")
 
 print(f"\nFile: {output_path}")
 print(f"Records with complete data: {breach_df['has_complete_data'].sum()}")
