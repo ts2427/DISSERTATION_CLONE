@@ -151,9 +151,12 @@ print(f"\n[Step 4/6] Creating Panel B: CRSP Sample...")
 if 'has_crsp_data' in df.columns:
     crsp_sample = df[df['has_crsp_data'] == True].copy()
     panel_b = create_summary_stats(crsp_sample, all_vars)
-    
+
+    attrition_rate = (1 - len(crsp_sample) / len(df)) * 100
     print(f"  ✓ Panel B: {len(panel_b)} variables")
-    print(f"    CRSP sample N: {len(crsp_sample):,}")
+    print(f"    CRSP sample N: {len(crsp_sample):,} ({100 - attrition_rate:.1f}% of full sample)")
+    if attrition_rate > 15:
+        print(f"    ⚠ Note: {attrition_rate:.1f}% sample attrition due to missing CRSP data")
 else:
     panel_b = None
     print(f"  ⚠ No CRSP flag found, skipping Panel B")

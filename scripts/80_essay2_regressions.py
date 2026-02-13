@@ -16,8 +16,10 @@ import pandas as pd
 import numpy as np
 import statsmodels.api as sm
 from statsmodels.iolib.summary2 import summary_col
+from statsmodels.stats.outliers_influence import variance_inflation_factor
 from pathlib import Path
 import warnings
+import matplotlib.pyplot as plt
 warnings.filterwarnings('ignore')
 
 print("=" * 80)
@@ -79,6 +81,7 @@ table2_models = []
 
 # Prepare regression data
 reg_cols = [target, 'immediate_disclosure'] + available_controls_extended + available_controls_gov
+initial_n = len(analysis_df)
 reg_df = analysis_df[reg_cols].dropna()
 
 # Convert to numeric
@@ -86,19 +89,33 @@ for col in reg_df.columns:
     reg_df[col] = pd.to_numeric(reg_df[col], errors='coerce')
 
 reg_df = reg_df.dropna()
+final_n = len(reg_df)
+dropped = initial_n - final_n
 
-print(f"  Sample size: {len(reg_df):,} observations")
+print(f"  Sample size: {final_n:,} observations (dropped {dropped:,} due to missing values)")
 
 # Model 1: Immediate disclosure only + base controls
 y = reg_df[target]
 X1 = sm.add_constant(reg_df[['immediate_disclosure'] + available_controls_base])
 model1 = sm.OLS(y, X1).fit(cov_type='HC3')
+
+# Validate output
+assert not np.any(np.isnan(model1.params)), "NaN coefficients in Model 1"
+assert not np.any(np.isinf(model1.params)), "Infinite coefficients in Model 1"
+assert model1.nobs >= 50, f"Sample size too small: {model1.nobs}"
+
 table2_models.append(model1)
 print(f"  ✓ Model 1: R² = {model1.rsquared:.4f}")
 
 # Model 2: Add extended controls
 X2 = sm.add_constant(reg_df[['immediate_disclosure'] + available_controls_extended])
 model2 = sm.OLS(y, X2).fit(cov_type='HC3')
+
+# Validate output
+assert not np.any(np.isnan(model2.params)), "NaN coefficients in Model 2"
+assert not np.any(np.isinf(model2.params)), "Infinite coefficients in Model 2"
+assert model2.nobs >= 50, f"Sample size too small: {model2.nobs}"
+
 table2_models.append(model2)
 print(f"  ✓ Model 2: R² = {model2.rsquared:.4f}")
 
@@ -106,6 +123,12 @@ print(f"  ✓ Model 2: R² = {model2.rsquared:.4f}")
 if len(available_controls_gov) > 0:
     X3 = sm.add_constant(reg_df[['immediate_disclosure'] + available_controls_extended + available_controls_gov])
     model3 = sm.OLS(y, X3).fit(cov_type='HC3')
+
+    # Validate output
+    assert not np.any(np.isnan(model3.params)), "NaN coefficients in Model 3"
+    assert not np.any(np.isinf(model3.params)), "Infinite coefficients in Model 3"
+    assert model3.nobs >= 50, f"Sample size too small: {model3.nobs}"
+
     table2_models.append(model3)
     print(f"  ✓ Model 3: R² = {model3.rsquared:.4f}")
 
@@ -137,24 +160,79 @@ with open(OUTPUT_DIR / 'TABLE2_baseline_disclosure.txt', 'w', encoding='utf-8') 
 print(f"  ✓ Saved: TABLE2_baseline_disclosure.txt")
 
 # ============================================================================
+# DIAGNOSTIC STATISTICS (VIF & RESIDUAL ANALYSIS)
+# ============================================================================
+
+print(f"\n[Diagnostic] Computing multicollinearity (VIF) for Model 2...")
+
+# Calculate VIF for Model 2 (most complete model with extended controls)
+X2_with_constant = sm.add_constant(reg_df[['immediate_disclosure'] + available_controls_extended])
+vif_data = pd.DataFrame()
+vif_data["Variable"] = X2_with_constant.columns
+vif_data["VIF"] = [variance_inflation_factor(X2_with_constant.values, i) for i in range(X2_with_constant.shape[1])]
+
+# Save VIF table
+vif_data.to_csv(OUTPUT_DIR / 'DIAGNOSTICS_VIF_multicollinearity.csv', index=False)
+print(f"  ✓ VIF (Variance Inflation Factors):")
+for idx, row in vif_data.iterrows():
+    if row['Variable'] != 'const':
+        print(f"    {row['Variable']:<30} VIF = {row['VIF']:>7.2f}")
+
+# Residual diagnostics for Model 1
+print(f"\n[Diagnostic] Creating residual plots for Model 1...")
+
+residuals = model1.resid
+fitted_vals = model1.fittedvalues
+
+# Create figure with subplots
+fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+
+# Plot 1: Residuals vs Fitted
+axes[0, 0].scatter(fitted_vals, residuals, alpha=0.5, s=20)
+axes[0, 0].axhline(y=0, color='r', linestyle='--', lw=2)
+axes[0, 0].set_xlabel('Fitted Values')
+axes[0, 0].set_ylabel('Residuals')
+axes[0, 0].set_title('Residuals vs Fitted Values')
+axes[0, 0].grid(True, alpha=0.3)
+
+# Plot 2: Q-Q Plot
+from scipy import stats
+stats.probplot(residuals, dist="norm", plot=axes[0, 1])
+axes[0, 1].set_title('Q-Q Plot')
+axes[0, 1].grid(True, alpha=0.3)
+
+# Plot 3: Scale-Location Plot
+standardized_resid = residuals / residuals.std()
+axes[1, 0].scatter(fitted_vals, np.sqrt(np.abs(standardized_resid)), alpha=0.5, s=20)
+axes[1, 0].set_xlabel('Fitted Values')
+axes[1, 0].set_ylabel('sqrt(|Standardized Residuals|)')
+axes[1, 0].set_title('Scale-Location Plot')
+axes[1, 0].grid(True, alpha=0.3)
+
+# Plot 4: Histogram of Residuals
+axes[1, 1].hist(residuals, bins=30, edgecolor='black', alpha=0.7)
+axes[1, 1].set_xlabel('Residuals')
+axes[1, 1].set_ylabel('Frequency')
+axes[1, 1].set_title('Distribution of Residuals')
+axes[1, 1].grid(True, alpha=0.3, axis='y')
+
+plt.tight_layout()
+plt.savefig(OUTPUT_DIR / 'DIAGNOSTICS_residual_plots_model1.png', dpi=300, bbox_inches='tight')
+plt.close()
+print(f"  ✓ Saved: DIAGNOSTICS_residual_plots_model1.png")
+
+# ============================================================================
 # TABLE 3: FCC REGULATION (H2)
 # ============================================================================
 
 print(f"\n[Step 4/6] Creating Table 3: FCC Regulation Effects (H2)...")
 
 if 'fcc_reportable' in analysis_df.columns:
-    
-    table3_models = []# ============================================================================
-# TABLE 3: FCC REGULATION (H2)
-# ============================================================================
 
-print(f"\n[Step 4/6] Creating Table 3: FCC Regulation Effects (H2)...")
-
-if 'fcc_reportable' in analysis_df.columns:
-    
     table3_models = []
-    
-    # Prepare data
+
+    # Prepare data for FCC regulation tests (H2)
+    # Note: Model 1 tests total FCC effect; Models 2-3 examine mechanisms through disclosure timing
     reg_cols_t3 = [target, 'fcc_reportable'] + available_controls_base + ['immediate_disclosure']
     reg_df_t3 = analysis_df[reg_cols_t3].copy()
     
@@ -167,25 +245,35 @@ if 'fcc_reportable' in analysis_df.columns:
     # Extract as numpy arrays with explicit float64
     y3 = reg_df_t3[target].values.astype(np.float64)
     
-    # Model 1: FCC + base controls
+    # Model 1: FCC + base controls (total effect of FCC regulation)
     X3_1_data = reg_df_t3[['fcc_reportable'] + available_controls_base].values.astype(np.float64)
     X3_1 = sm.add_constant(X3_1_data)
     model3_1 = sm.OLS(y3, X3_1).fit(cov_type='HC3')
+
+    # Validate output
+    assert not np.any(np.isnan(model3_1.params)), "NaN coefficients in Table 3 Model 1"
+    assert not np.any(np.isinf(model3_1.params)), "Infinite coefficients in Table 3 Model 1"
+
     table3_models.append(model3_1)
-    print(f"  ✓ Model 1: FCC + base controls, R² = {model3_1.rsquared:.4f}")
-    
-    # Model 2: FCC + immediate disclosure
+    print(f"  ✓ Model 1: FCC total effect, R² = {model3_1.rsquared:.4f}")
+
+    # Model 2: FCC + immediate disclosure (mechanism: voluntary timing choice within FCC regime)
     X3_2_data = reg_df_t3[['fcc_reportable', 'immediate_disclosure'] + available_controls_base].values.astype(np.float64)
     X3_2 = sm.add_constant(X3_2_data)
     model3_2 = sm.OLS(y3, X3_2).fit(cov_type='HC3')
+
+    # Validate output
+    assert not np.any(np.isnan(model3_2.params)), "NaN coefficients in Table 3 Model 2"
+    assert not np.any(np.isinf(model3_2.params)), "Infinite coefficients in Table 3 Model 2"
+
     table3_models.append(model3_2)
-    print(f"  ✓ Model 2: FCC + timing, R² = {model3_2.rsquared:.4f}")
-    
-    # Model 3: Interaction (FCC × Immediate)
+    print(f"  ✓ Model 2: FCC with timing mechanism, R² = {model3_2.rsquared:.4f}")
+
+    # Model 3: Interaction (FCC × Immediate disclosure)
     fcc_array = reg_df_t3['fcc_reportable'].values.astype(np.float64)
     immediate_array = reg_df_t3['immediate_disclosure'].values.astype(np.float64)
     interaction = fcc_array * immediate_array
-    
+
     X3_3_data = np.column_stack([
         fcc_array,
         immediate_array,
@@ -194,6 +282,11 @@ if 'fcc_reportable' in analysis_df.columns:
     ])
     X3_3 = sm.add_constant(X3_3_data)
     model3_3 = sm.OLS(y3, X3_3).fit(cov_type='HC3')
+
+    # Validate output
+    assert not np.any(np.isnan(model3_3.params)), "NaN coefficients in Table 3 Model 3"
+    assert not np.any(np.isinf(model3_3.params)), "Infinite coefficients in Table 3 Model 3"
+
     table3_models.append(model3_3)
     print(f"  ✓ Model 3: FCC × Immediate interaction, R² = {model3_3.rsquared:.4f}")
     

@@ -16,8 +16,11 @@ import pandas as pd
 import numpy as np
 import statsmodels.api as sm
 from statsmodels.iolib.summary2 import summary_col
+from statsmodels.stats.outliers_influence import variance_inflation_factor
 from pathlib import Path
 import warnings
+import matplotlib.pyplot as plt
+from scipy import stats
 warnings.filterwarnings('ignore')
 
 print("=" * 80)
@@ -100,18 +103,27 @@ print(f"\n[Step 3/4] Creating Table 2: Volatility Changes...")
 
 table2_models = []
 
-# Prepare data
-reg_cols_t2 = [target] + available_controls_base + available_controls_timing[:1]  # Just days_to_disclosure
+# Prepare data - include days_to_disclosure if available
+reg_cols_t2 = [target] + available_controls_base
+if 'days_to_disclosure' in available_controls_timing:
+    reg_cols_t2.append('days_to_disclosure')
 reg_cols_t2 = [c for c in reg_cols_t2 if c in analysis_df.columns]
+initial_n_t2 = len(analysis_df)
 reg_df_t2 = analysis_df[reg_cols_t2].dropna()
+dropped_t2 = initial_n_t2 - len(reg_df_t2)
 
-print(f"  Sample size: {len(reg_df_t2):,} observations")
+print(f"  Sample size: {len(reg_df_t2):,} observations (dropped {dropped_t2:,} due to missing values)")
 
 y2 = reg_df_t2[target]
 
 # Model 1: Base controls only
 X2_1 = sm.add_constant(reg_df_t2[available_controls_base])
 model2_1 = sm.OLS(y2, X2_1).fit(cov_type='HC3')
+
+# Validate output
+assert not np.any(np.isnan(model2_1.params)), "NaN coefficients in Table 2 Model 1"
+assert not np.any(np.isinf(model2_1.params)), "Infinite coefficients in Table 2 Model 1"
+
 table2_models.append(model2_1)
 print(f"  ✓ Model 1: R² = {model2_1.rsquared:.4f}")
 
@@ -119,6 +131,11 @@ print(f"  ✓ Model 1: R² = {model2_1.rsquared:.4f}")
 if 'days_to_disclosure' in reg_df_t2.columns:
     X2_2 = sm.add_constant(reg_df_t2[available_controls_base + ['days_to_disclosure']])
     model2_2 = sm.OLS(y2, X2_2).fit(cov_type='HC3')
+
+    # Validate output
+    assert not np.any(np.isnan(model2_2.params)), "NaN coefficients in Table 2 Model 2"
+    assert not np.any(np.isinf(model2_2.params)), "Infinite coefficients in Table 2 Model 2"
+
     table2_models.append(model2_2)
     print(f"  ✓ Model 2: R² = {model2_2.rsquared:.4f}")
 
@@ -127,10 +144,15 @@ if 'immediate_disclosure' in analysis_df.columns:
     reg_cols_t2_3 = [target] + available_controls_base + ['days_to_disclosure', 'immediate_disclosure']
     reg_cols_t2_3 = [c for c in reg_cols_t2_3 if c in analysis_df.columns]
     reg_df_t2_3 = analysis_df[reg_cols_t2_3].dropna()
-    
+
     y2_3 = reg_df_t2_3[target]
     X2_3 = sm.add_constant(reg_df_t2_3[[c for c in reg_cols_t2_3 if c != target]])
     model2_3 = sm.OLS(y2_3, X2_3).fit(cov_type='HC3')
+
+    # Validate output
+    assert not np.any(np.isnan(model2_3.params)), "NaN coefficients in Table 2 Model 3"
+    assert not np.any(np.isinf(model2_3.params)), "Infinite coefficients in Table 2 Model 3"
+
     table2_models.append(model2_3)
     print(f"  ✓ Model 3: R² = {model2_3.rsquared:.4f}")
 
@@ -148,7 +170,7 @@ table2_summary = summary_col(
 )
 
 # Save Table 2
-with open(OUTPUT_DIR / 'TABLE2_volatility_changes.txt', 'w') as f:
+with open(OUTPUT_DIR / 'TABLE2_volatility_changes.txt', 'w', encoding='utf-8') as f:
     f.write("=" * 100 + "\n")
     f.write("TABLE 2: POST-BREACH VOLATILITY CHANGES\n")
     f.write(f"Dependent Variable: {target.replace('_', ' ').title()}\n")
@@ -174,12 +196,14 @@ if len(available_controls_breach) > 0:
     # Prepare data - check what's actually available
     reg_cols_t3 = [target] + available_controls_base + available_controls_breach
     reg_cols_t3 = [c for c in reg_cols_t3 if c in analysis_df.columns]
+    initial_n_t3 = len(analysis_df)
     reg_df_t3 = analysis_df[reg_cols_t3].dropna()
-    
+    dropped_t3 = initial_n_t3 - len(reg_df_t3)
+
     # Recheck what's available after dropna
     available_in_t3 = [c for c in available_controls_breach if c in reg_df_t3.columns]
-    
-    print(f"  Sample size: {len(reg_df_t3):,} observations")
+
+    print(f"  Sample size: {len(reg_df_t3):,} observations (dropped {dropped_t3:,} due to missing values)")
     print(f"  Breach controls available: {available_in_t3}")
     
     y3 = reg_df_t3[target]
