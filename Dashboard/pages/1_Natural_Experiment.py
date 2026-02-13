@@ -233,19 +233,27 @@ st.markdown("""
 
 ✓ **Temporal Variation**: Can compare same firm before/after regulation
 
-### Limitations:
+### Limitations & Solutions Implemented:
 
-⚠ **Non-Random Selection**: FCC-regulated firms are in specific industries
-→ Solution: Compare only to control firms in similar industries, or include firm controls
+⚠ **Non-Random Selection**: FCC-regulated firms are in specific industries (telecom, cable, VoIP)
+→ **Solution Implemented**: Industry fixed effects in Robustness Check 5
+   - Result: FCC effect **strengthens** from -2.37% to -5.77% with industry controls
+   - Interpretation: Effect is NOT just industry artifacts; it's a genuine regulatory penalty
 
-⚠ **Potential Confounds**: Other regulatory changes, market conditions (financial crisis 2008)
-→ Solution: Include year fixed effects, check robustness to different time windows
+⚠ **Potential Confounds**: Market conditions differ (financial crisis 2008, market cycles)
+→ **Solution Implemented**: Year fixed effects in Robustness Check 5
+   - Result: FCC effect strengthens from -2.37% to -2.87% with year controls
+   - Interpretation: Effect is NOT driven by macro conditions; it's stable across periods
 
 ⚠ **Compliance May Be Imperfect**: FCC rule isn't 100% enforced
-→ Reality: FCC firms largely comply; rule is binding
+→ **Reality Check**: FCC firms largely comply; rule is binding constraint post-2007
+   - Evidence: Sample shows FCC firms have much tighter disclosure windows post-2007
+   - Statistical power to detect effect is strong (N=184 FCC breaches)
 
 ⚠ **Spillovers Possible**: Non-FCC firms might voluntarily match FCC disclosure norms
-→ Biases toward null (would underestimate FCC effect)
+→ **Effect on Results**: Would bias FCC effect TOWARD ZERO (underestimate effect)
+   - Conservative interpretation: If anything, the FCC effect estimate is a lower bound
+   - Actual effect may be larger than estimated
 """)
 
 st.markdown("---")

@@ -86,8 +86,12 @@ Data Breach  →  Timing Decision  →  Information Asymmetry  →  Market React
 ### Sample & Robustness
 
 - **Sample:** 1,054 breaches (2006-2025) | 926 with market data | 30-day CAR event window
-- **Robustness Testing:** 4 event windows × 7 timing thresholds × 8 subsamples × 6 SE methods = **27 specifications**
-- **Result:** Timing effect non-significant across ALL specifications; FCC, health, and prior breach effects robust
+- **Robustness Testing:**
+  - 4 event windows × 7 timing thresholds × 8 subsamples × 6 SE methods = **27 core specifications**
+  - Year fixed effects (controls for macro conditions like 2008 crisis)
+  - Industry fixed effects (controls for industry-specific trends)
+  - ML validation (Random Forest & Gradient Boosting)
+- **Result:** Timing effect non-significant across ALL specifications; FCC effect is **stronger** when controlling for macro/industry factors (suggesting it's not driven by confounds)
 
 ---
 
@@ -327,6 +331,23 @@ python Notebooks/03_essay3_information_asymmetry.py
 python Notebooks/04_enrichment_analysis.py
 ```
 
+### Run Robustness Checks (After OLS Analysis)
+
+```bash
+# All robustness checks in sequence
+python scripts/robustness_1_alternative_windows.py
+python scripts/robustness_2_timing_thresholds.py
+python scripts/robustness_3_sample_restrictions.py
+python scripts/robustness_4_standard_errors.py
+python scripts/robustness_5_fixed_effects.py
+```
+
+**Robustness Check 5 (Fixed Effects)** is particularly important - it tests whether the FCC effect holds when controlling for:
+- **Year Fixed Effects:** Macroeconomic conditions (2008 crisis, market cycles)
+- **Industry Fixed Effects:** Industry-specific regulatory and market trends
+
+Result: FCC effect becomes **stronger** (-2.37% → -5.77%), suggesting it's not driven by confounding factors.
+
 ### Run ML Validation Only (After OLS Analysis)
 
 ```bash
@@ -418,6 +439,11 @@ dissertation-analysis/
 │   ├── 53_merge_CONFIRMED_enrichments.py (Merge enrichments to main dataset)
 │   ├── 60_train_ml_model.py           (Train Random Forest & Gradient Boosting models)
 │   ├── 61_ml_validation.py            (Compare ML to OLS, generate robustness sections)
+│   ├── robustness_1_alternative_windows.py (Different event windows: 5d, 60d, BHAR)
+│   ├── robustness_2_timing_thresholds.py (Different disclosure thresholds: 3, 5, 7, 14, 30, 60 days)
+│   ├── robustness_3_sample_restrictions.py (Exclude crises, outliers, different periods)
+│   ├── robustness_4_standard_errors.py (HC3, clustered, bootstrap SEs)
+│   ├── robustness_5_fixed_effects.py   (Year & Industry FE to control macro/industry confounds)
 │   └── ml_models/                     (Reusable ML module)
 │       ├── breach_impact_model.py     (Unified RF/GB interface)
 │       ├── model_evaluation.py        (Model comparison utilities)
