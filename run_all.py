@@ -11,7 +11,7 @@ Executes the entire dissertation workflow with comprehensive logging:
 
 All output is captured to timestamped log file.
 
-Author: Timothy Cobern
+Author: Timothy D. Spivey
 Dissertation: Data Breach Disclosure Timing and Market Reactions
 University of South Alabama
 Date: January 2026
@@ -135,7 +135,7 @@ def run_all():
 {'=' * 80}
   DISSERTATION ANALYTICS PIPELINE
   Data Breach Disclosure Timing and Market Reactions
-  Timothy Cobern - University of South Alabama
+  Timothy D. Spivey - University of South Alabama
   Started: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 {'=' * 80}
 
@@ -245,8 +245,9 @@ Summary Statistics:
 
 Essay 2 Regression Tables:
   outputs/tables/essay2/TABLE2_baseline_disclosure.txt
-  outputs/tables/essay2/TABLE3_prior_breaches.txt
-  outputs/tables/essay2/TABLE4_breach_severity.txt
+  outputs/tables/essay2/TABLE3_fcc_regulation.txt
+  outputs/tables/essay2/TABLE4_prior_breaches.txt
+  outputs/tables/essay2/TABLE5_breach_severity.txt
 
 Essay 3 Regression Tables:
   outputs/tables/essay3/TABLE2_volatility_changes.txt

@@ -2,7 +2,7 @@
 
 ## Dissertation Analysis Project
 
-**Author:** Timothy Spivey
+**Author:** Timothy D. Spivey
 **Institution:** University of South Alabama
 **Completion Date:** January 2026
 
@@ -194,7 +194,7 @@ The same Google Drive folder supports both:
    │   ├── raw/
    │   │   └── DataBreaches.xlsx
    │   ├── processed/
-   │   │   ├── FINAL_DISSERTATION_DATASET_ENRICHED.csv (1,054 rows × 83 columns)
+   │   │   ├── FINAL_DISSERTATION_DATASET_ENRICHED.csv (1,054 rows × 82 columns)
    │   │   └── DATA_DICTIONARY_ENRICHED.csv
    │   ├── wrds/
    │   │   ├── crsp_daily_returns.csv
@@ -229,6 +229,32 @@ The same Google Drive folder supports both:
 - **WRDS Access (Optional for Reproduction):** Some intermediate scripts require WRDS credentials
   - If you have WRDS access: Set environment variable `WRDS_USERNAME` and `WRDS_PASSWORD`
   - For final analysis: Pre-computed WRDS data is included in the shared folder
+
+---
+
+## 📁 Scripts Organization
+
+### Active Analysis Scripts (scripts/ folder)
+- **60_train_ml_model.py** - Train ML models for robustness validation
+- **61_ml_validation.py** - ML validation and comparison with OLS
+- **70_summary_statistics.py** - Generate descriptive statistics (Table 1)
+- **80_essay2_regressions.py** - Main regression analysis for Essay 2 (Tables 2-5)
+- **90_essay3_regressions.py** - Main regression analysis for Essay 3 (Tables 2-3)
+- **robustness_1_alternative_windows.py** through **robustness_4_standard_errors.py** - Robustness checks
+
+These are the scripts executed by `python run_all.py`
+
+### Data Preprocessing Scripts (scripts/ folder)
+- **00_setup_wrds.py** through **54_merge_crsp_data.py** - Data creation pipeline
+- These scripts create `FINAL_DISSERTATION_DATASET_ENRICHED.csv` from raw data
+- **OPTIONAL** - Only needed if reproducing from raw data with WRDS access
+- Data file is pre-computed and provided
+
+### Archived Scripts (scripts/archive/ folder)
+- Old/deprecated versions of preprocessing scripts
+- Kept for reference and reproducibility documentation
+- Not used in main analysis pipeline
+- Safe to delete if space is a concern
 
 ---
 
@@ -1197,14 +1223,14 @@ The enrichment pipeline adds hypothesis-driven variables to test moderating mech
 
 ### APA Format
 ```
-Spivey, T. (2026). Data breach disclosure timing and market reactions
+Spivey, T. D. (2026). Data breach disclosure timing and market reactions
 [Doctoral dissertation, University of South Alabama].
 ```
 
 ### BibTeX
 ```bibtex
 @phdthesis{Spivey2026,
-  author = {Timothy Spivey},
+  author = {Timothy D. Spivey},
   title = {Data Breach Disclosure Timing and Market Reactions},
   school = {University of South Alabama},
   year = {2026}
@@ -1219,7 +1245,7 @@ This project is provided for academic and research purposes.
 
 - **Code:** [MIT License](LICENSE)
 - **Data:** Refer to individual source attributions (DataBreaches.gov, WRDS, SEC EDGAR)
-- **Dissertation:** Copyright by Timothy Spivey
+- **Dissertation:** Copyright by Timothy D. Spivey
 
 ---
 
@@ -1329,7 +1355,7 @@ This project is provided for academic and research purposes.
 
 ## 👤 Author & Contact
 
-**Timothy Spivey**
+**Timothy D. Spivey**
 University of South Alabama
 [Email/Contact information]
 
@@ -1349,7 +1375,7 @@ For questions about:
 ================================================================================
   DISSERTATION ANALYTICS PIPELINE
   Data Breach Disclosure Timing and Market Reactions
-  Timothy Spivey - University of South Alabama
+  Timothy D. Spivey - University of South Alabama
 ================================================================================
 
 [STEP 1: DESCRIPTIVE STATISTICS]
