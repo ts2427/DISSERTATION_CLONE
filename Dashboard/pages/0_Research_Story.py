@@ -142,8 +142,8 @@ with col2:
     <h3 style='color: #ff7f0e;'>💨 Essay 2: Information Asymmetry</h3>
     <p><b>Tests Information Processing Mechanism:</b></p>
     <p>✅ Pre-volatility dominates (coef = -0.53***, R²=0.39)</p>
-    <p>❌ Timing reduces volatility (NOT SUPPORTED)</p>
-    <p>✅ H2-Extended: FCC moderation = +1.83%** (increases volatility)</p>
+    <p>✅ Timing irrelevant to volatility (speed ≠ quality)</p>
+    <p>✅ H2-Extended: FCC forced disclosure = +1.83%** (increases uncertainty)</p>
     <hr>
     <p><b>Finding:</b> Forced disclosure increases uncertainty, not resolves it</p>
     </div>
