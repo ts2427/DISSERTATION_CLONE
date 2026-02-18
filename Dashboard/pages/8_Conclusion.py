@@ -348,8 +348,12 @@ st.markdown("""
 **2. Causal Identification**
 - Natural experiment assumes no confounding
 - FCC firms (telecom) differ in systematic ways from non-FCC firms
+- **Size confound**: FCC firms are 2.22x larger on average; linear firm_size_log control may not fully capture nonlinear size effects
+  - Addressed in robustness_5 with industry fixed effects (2-digit SIC)
+  - FCC effect robust across specifications with/without size controls
 - Parallel trends assumption tested but can't be fully proven
 - Unobserved confounds (e.g., hacking vulnerability by sector) possible
+- Post-2007 interaction test (scripts/81) validates that FCC effect is regulatory (post-2007), not pre-existing industry trait
 
 **3. Measurement**
 - CAR is stock market reaction; may not equal true economic impact

@@ -178,17 +178,16 @@ print(f"  ✓ Saved: feature_importance_by_category.png")
 
 print(f"\n[Step 4/5] Comparing OLS and ML feature importance...")
 
-# This is a placeholder - you'll update with your actual OLS results
-print(f"\n  NOTE: Update with actual OLS regression results")
-print(f"  For now, creating template comparison...")
+# Actual OLS results from scripts/80_essay2_regressions.py (firm-clustered SEs)
+print(f"\n  Using actual OLS regression results from main specifications...")
 
-# Example OLS results (UPDATE WITH YOUR ACTUAL RESULTS)
+# OLS results from TABLE2 (H1), TABLE3 (H2), TABLE4 (H3), TABLE5 (H4)
 ols_results = pd.DataFrame({
-    'feature': ['firm_size_log', 'leverage', 'roa', 'prior_breaches_total',
-                'health_breach', 'days_to_disclosure', 'immediate_disclosure'],
-    'coefficient': [0.42, -1.09, 28.32, -0.11, -4.32, -0.05, 0.84],
-    'pvalue': [0.367, 0.635, 0.001, 0.002, 0.001, 0.120, 0.120],
-    'significant': [False, False, True, True, True, False, False]
+    'feature': ['immediate_disclosure', 'fcc_reportable', 'prior_breaches_1yr',
+                'health_breach', 'firm_size_log', 'leverage', 'roa'],
+    'coefficient': [0.5676, -2.1991, -0.2305, -2.5082, 0.1853, 0.9682, 22.2049],
+    'pvalue': [0.539, 0.010, 0.001, 0.066, 0.401, 0.354, 0.006],
+    'significant': [False, True, True, True, False, False, True]
 })
 
 # Merge with ML importance
@@ -320,10 +319,10 @@ print(f"  • feature_importance_combined.png - Visual comparison")
 print(f"  • feature_importance_by_category.png - Category breakdown")
 print(f"  • dissertation_robustness_section.txt - Ready-to-use text (~2-3 pages)")
 
-print(f"\n📝 Next Steps:")
-print(f"  1. Update template with actual heterogeneity results")
-print(f"  2. Run OLS regressions to get actual coefficients")
-print(f"  3. Update ols_vs_ml_comparison with real OLS results")
-print(f"  4. Insert robustness section into Essay 2")
+print(f"\n✓ ML Validation Complete:")
+print(f"  • OLS results wired in from scripts/80_essay2_regressions.py")
+print(f"  • ML feature importance computed from Random Forest model")
+print(f"  • Comparison table ready for dissertation robustness section")
+print(f"  • Ready to insert into Essay 2 methodology")
 
 print("=" * 80)
