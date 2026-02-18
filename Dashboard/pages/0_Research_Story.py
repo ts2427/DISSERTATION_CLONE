@@ -107,9 +107,8 @@ MANDATORY TIMING (FCC firms):
 ```
 
 **Empirical test:**
-- H1a: Does voluntary timing reduce CAR?
-- H1b: Does mandatory timing fail to reduce CAR (despite being faster)?
-- H2-H4: What else matters when timing doesn't?
+- H1: Does disclosure timing reduce CAR? (NO - not significant)
+- H2-H4: What else matters when timing doesn't? (YES - FCC, prior breaches, severity all matter)
 
 """)
 st.markdown("</div>", unsafe_allow_html=True)

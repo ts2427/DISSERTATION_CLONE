@@ -496,9 +496,10 @@ st.info("""
 - Mechanism (Tushman & Nadler): Information demands exceed processing capacity; incomplete disclosure persists
 - Implication: Market interprets forced early disclosure as signal of INCOMPLETE information
 
-✅ **H7 (Severity Increases Uncertainty): SUPPORTED**
-- FCC effect: +2.76%** (p=0.004) - higher volatility
-- Interpretation: Complex/regulated breaches = higher information processing demands
+✅ **H2-Extended (FCC Moderation on Volatility): SUPPORTED**
+- FCC effect: +1.83%** (p<0.05) - higher volatility
+- Interpretation: Forced disclosure on compressed timeline creates information processing bottleneck
+- Forced early disclosure of incomplete information increases uncertainty (opposite of regulatory intent)
 - Consistent across all specifications and robustness tests
 
 **Theoretical Connection:**

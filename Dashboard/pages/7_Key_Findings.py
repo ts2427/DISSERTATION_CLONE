@@ -527,23 +527,36 @@ st.markdown("---")
 st.info("""
 ### Summary: The Central Finding
 
-**Hypothesis Tests Across Two Essays:**
+**Hypothesis Tests Across Three Essays:**
 
-❌ **H1a (Timing Hypothesis)**: Immediate disclosure reduces CAR penalty
-- Result: NOT SUPPORTED (p > 0.10 across 25+ specs)
+**Essay 1 (Market Reactions):**
 
-✅ **H1b (Severity-Dominance)**: Content matters more than speed
-- Result: SUPPORTED
+❌ **H1 (Timing Effect)**: Immediate disclosure reduces CAR penalty
+- Result: NOT SUPPORTED (coefficient = +0.45% to +1.00%, p > 0.30 across 25+ specs)
+- Finding: Timing does NOT predict market returns
 
-✅ **H2 (Regulatory)**: FCC status affects CAR → -2.19%* (p=0.033)
-✅ **H3 (Reputation)**: Prior breaches → -0.08%** per breach (STRONGEST)
-✅ **H4 (Severity)**: Health data → -2.65%*** CAR
+✅ **H2 (FCC Regulatory Effect)**: FCC status affects CAR → -2.19%** (p=0.033)
+- Finding: SUPPORTED - Regulatory context matters independent of timing
 
-**And in Essay 3 (Volatility/Mechanism):**
+✅ **H3 (Prior Breach Reputation Effect)**: Prior breaches → -0.08%** per breach (STRONGEST effect)
+- Finding: SUPPORTED - Market memory and vulnerability signals drive reactions
 
-✅ **H5 (Volatility Persistence)**: Pre-breach volatility dominates → 68.6% feature importance
-❌ **H6 (Timing Reduces Volatility)**: Immediate disclosure → NO effect on volatility (p=0.95)
-✅ **H7 (Severity Increases Volatility)**: FCC firms → +2.76%** higher volatility
+✅ **H4 (Breach Severity Effect)**: Health data → -2.65%*** CAR
+- Finding: SUPPORTED - Information complexity and regulatory risk drive reactions
+
+**Essay 2 (Information Asymmetry/Volatility):**
+
+✅ **H2-Extended (FCC Moderation on Volatility)**: FCC firms experience +1.83%** higher volatility
+- Finding: SUPPORTED - Forced disclosure INCREASES volatility (opposite of regulatory intent)
+- Interpretation: Incomplete information disclosure worsens information asymmetry
+
+**Essay 3 (Governance Response):**
+
+✅ **H5 (Executive Turnover)**: 46.4% of breaches trigger executive changes within 30 days
+- Finding: SUPPORTED - Governance response as organizational accountability mechanism
+
+⚠️ **H6 (Regulatory Enforcement)**: 6 enforcement cases (0.6%) - LIMITED DATA
+- Finding: Insufficient data; governance response dominates over regulatory enforcement
 
 ### The Bottom Line
 
