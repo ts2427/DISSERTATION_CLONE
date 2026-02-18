@@ -294,13 +294,19 @@ The same Google Drive folder supports both:
 
 ## 📁 Scripts Organization
 
+### Data Enrichment Scripts (scripts/ folder)
+- **99_add_cpni_hhi_variables.py** - Generate CPNI and HHI variables for Essay 1 alternative explanations testing
+  - CPNI: Binary indicator for FCC-regulated telecom firms handling Customer Proprietary Network Information
+  - HHI: Herfindahl-Hirschman Index market concentration by 3-digit SIC code and year
+  - Results: Validates that FCC penalty is robust to both controls (-1.15% to -2.44%)
+
 ### Active Analysis Scripts (scripts/ folder)
 - **60_train_ml_model.py** - Train ML models for robustness validation
 - **61_ml_validation.py** - ML validation and comparison with OLS
 - **70_summary_statistics.py** - Generate descriptive statistics (Table 1)
-- **80_essay2_regressions.py** - Main regression analysis for Essay 2 (Tables 2-5)
+- **80_essay2_regressions.py** - Main regression analysis for Essay 2 (Tables 2-5) + alternative explanations (CPNI/HHI robustness)
 - **90_essay3_regressions.py** - Main regression analysis for Essay 3 (Tables 2-3)
-- **robustness_1_alternative_windows.py** through **robustness_4_standard_errors.py** - Robustness checks
+- **robustness_1_alternative_windows.py** through **robustness_5_fixed_effects.py** - Robustness checks
 
 These are the scripts executed by `python run_all.py`
 
@@ -328,18 +334,28 @@ python run_all.py
 
 **What This Does:**
 1. Verifies data files exist
-2. Generates descriptive statistics (Table 1-2)
-3. Runs Essay 2 event study analysis (5 OLS regression models)
-4. Runs Essay 3 information asymmetry analysis (5 OLS regression models)
-5. Analyzes enrichment variables (prior breaches, severity, executive changes, regulatory enforcement)
-6. **[NEW] Trains ML models** (Random Forest and Gradient Boosting for robustness validation)
-7. **[NEW] Generates robustness section templates** (for Essay 2 and Essay 3 with ML comparisons)
-8. Generates all tables, figures, and robustness templates
+2. **[NEW] Adds CPNI and HHI variables** (Essay 1 alternative explanations testing)
+3. Generates descriptive statistics (Table 1-2)
+4. Runs Essay 1 market reactions analysis (5 OLS regression models + alternative explanations)
+5. Runs Essay 2 information asymmetry analysis (5 OLS regression models)
+6. Runs Essay 3 governance response analysis (5 OLS regression models)
+7. Analyzes enrichment variables (prior breaches, severity, executive changes, regulatory enforcement)
+8. Trains ML models (Random Forest and Gradient Boosting for robustness validation)
+9. Generates robustness section templates (for Essay 2 and Essay 3 with ML comparisons)
+10. Generates all tables, figures, and robustness templates
 
-**Key Enhancement - ML Validation:**
-- Scripts 60-61 train RF and GB models to validate OLS findings
-- Generates ready-to-paste robustness sections showing ML feature importance vs OLS coefficients
-- Proves that FCC regulation and timing effects are robust across alternative methodologies
+**Key Enhancements:**
+
+*Alternative Explanations Testing (Script 99):*
+- Adds CPNI (Customer Proprietary Network Information) indicator for FCC-regulated telecom firms
+- Adds HHI (Herfindahl-Hirschman Index) market concentration by 3-digit SIC code and year
+- Tests robustness of FCC penalty to both controls (results: -1.15% to -2.44%, all significant)
+- Outputs: `outputs/tables/essay2/TABLE_APPENDIX_alternative_explanations.txt`
+
+*ML Validation (Scripts 60-61):*
+- Train RF and GB models to validate OLS findings
+- Generate ready-to-paste robustness sections showing ML feature importance vs OLS coefficients
+- Prove that FCC regulation and timing effects are robust across alternative methodologies
 - Outputs found in `outputs/ml_models/` for easy integration into dissertation
 
 **Expected Output:**
@@ -510,15 +526,17 @@ dissertation-analysis/
 │   ├── app.py                         (Main dashboard entry point)
 │   ├── utils.py                       (Shared utilities with smart data loading)
 │   │   └── load_main_dataset()        (Auto loads from local or Google Drive)
+│   ├── DASHBOARD_UPDATE_SUMMARY.md    (Documentation of recent dashboard updates)
 │   └── pages/
 │       ├── 0_Research_Story.py        (Introduction & research questions)
 │       ├── 1_Natural_Experiment.py    (FCC regulation as natural experiment)
 │       ├── 2_Sample_Validation.py     (Sample composition analysis)
 │       ├── 3_Data_Landscape.py        (Breach timeline & distribution)
-│       ├── 4_Essay2_MarketReactions.py (Event study results)
-│       ├── 5_Essay3_Volatility.py     (Information asymmetry analysis)
-│       ├── 6_Key_Finding.py           (Main results summary)
-│       ├── 7_Conclusion.py            (Implications & future research)
+│       ├── 4_Essay1_MarketReactions.py (Essay 1: Market reactions to breach disclosure)
+│       ├── 5_Essay2_InformationAsymmetry.py (Essay 2: Information asymmetry & volatility)
+│       ├── 6_Essay3_GovernanceResponse.py (Essay 3: Governance response & executive turnover)
+│       ├── 7_Key_Findings.py          (Main results summary & disclosure paradox)
+│       ├── 8_Conclusion.py            (Cross-essay synthesis & implications)
 │       ├── 9_Raw_Data_Explorer.py     (Interactive data exploration)
 │       └── 10_Data_Dictionary.py      (Variable documentation)
 │
@@ -652,6 +670,8 @@ After running `python run_all.py`, you'll have:
 ### Regulatory Classification
 - `fcc_reportable`: = 1 if FCC-regulated (telecom, cable, satellite, VoIP)
 - `fcc_category`: Specific FCC sector (if applicable)
+- `cpni_breach`: = 1 if FCC-regulated firm (CPNI = Customer Proprietary Network Information)
+- `hhi_market_concentration`: Herfindahl-Hirschman Index by 3-digit SIC code and year (Range: 729-10,000, Mean: 3,723)
 
 ### Enrichment Variables
 
@@ -1592,11 +1612,19 @@ OUTPUT FILES FOR COMMITTEE:
 
 ---
 
-**Last Updated:** January 23, 2026
-**Version:** 1.2.0
-**Status:** Complete with ML Robustness Validation & Enhanced Documentation
+**Last Updated:** February 17, 2026
+**Version:** 1.3.0
+**Status:** Complete with Essay 1 Alternative Explanations, Dashboard Refactor & ML Robustness Validation
 
 ### Version History
+- **1.3.0** (Feb 17, 2026): Essay 1 Alternative Explanations & Dashboard Refactor
+  - Added Script 99: CPNI and HHI variables for Essay 1 robustness testing
+  - Comprehensive dashboard restructuring (corrected essay names and hypothesis nomenclature)
+  - Fixed hypothesis naming: H1-H4 for Essay 1, H2-Extended for Essay 2, H5-H6 for Essay 3
+  - Updated all dashboard pages (4_Essay1_MarketReactions, 5_Essay2_InformationAsymmetry, 6_Essay3_GovernanceResponse)
+  - Corrected coefficients to match pipeline outputs exactly
+  - Updated README with new script organization and key variables
+  - All 10/10 pipeline scripts passing with verified outputs
 - **1.2.0** (Jan 23, 2026): Enhanced documentation
   - Added natural experiment design explanation (FCC Rule 37.3)
   - Detailed enrichment pipeline documentation (H3-H6)
