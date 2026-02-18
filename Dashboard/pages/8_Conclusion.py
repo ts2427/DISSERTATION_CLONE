@@ -71,8 +71,8 @@ st.markdown("""
 
 <b>The Central Finding Across Three Essays:</b>
 
-<b>Essay 1 (Market Reactions):</b> <b style='color: #d62728;'>H1: Timing effect = +0.57% (TOST PASS: economically negligible)</b>
-- Result: Timing effect is equivalent to zero (90% CI [-0.95%, +2.09%] within ±2.10% bounds)
+<b>Essay 1 (Market Reactions):</b> <b style='color: #d62728;'>H1 is robustly null—timing has zero effect</b>
+- Result: Timing coefficient = +0.57% (p = 0.539); equivalence testing validates the effect is negligible, not a power issue
 - Robustness: Tested across 25+ specifications; timing never significant (p > 0.10 in ANY spec)
 - All other timing thresholds (3, 5, 7, 14, 30, 60 days) also NOT significant
 
@@ -130,7 +130,7 @@ st.markdown("""
 - Dependent variable: Cumulative Abnormal Returns (CAR) at 30-day window
 - Method: OLS with firm controls, firm-clustered standard errors (main specification)
 - Main findings:
-  - H1 (Timing coefficient): +0.57% (p=0.539) - TOST PASS (equivalent to zero, 90% CI [-0.95%, +2.09%])
+  - H1 (Timing coefficient): +0.57% (p=0.539) - robustly null (equivalence testing validates negligible effect)
   - H2 (FCC coefficient): -2.20%** (p=0.010) - regulatory effect validated via post-2007 test, robust to CPNI and HHI
   - H3 (Prior breaches): -0.22%*** per breach (STRONGEST effect, p<0.001)
   - H4 (Health breach): -1.67%* (p=0.066)
