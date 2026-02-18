@@ -1,0 +1,48 @@
+====================================================================================================
+H1 ROBUSTNESS: TWO ONE-SIDED TESTS (TOST) EQUIVALENCE TEST
+Tests whether H1 (timing) effect is statistically equivalent to zero
+====================================================================================================
+
+COEFFICIENT ESTIMATES:
+----------------------------------------------------------------------------------------------------
+H1 Coefficient (Immediate Disclosure):      0.5676%
+Standard Error (clustered):                 0.9244%
+t-statistic:                               0.6140
+p-value (two-tailed):                      0.5392
+Degrees of freedom:                           893
+
+EQUIVALENCE TEST SETUP:
+----------------------------------------------------------------------------------------------------
+Equivalence Bound (delta):               ±2.10 percentage points
+Interpretation: Effects between -2.10% and +2.10% are economically negligible
+Confidence Level:                        90% (standard for TOST)
+
+EQUIVALENCE TEST RESULTS:
+----------------------------------------------------------------------------------------------------
+90% Confidence Interval:                 [-0.9545%,  2.0896%]
+Lower Bound Test (CI > -2.10%):     True (PASS)
+Upper Bound Test (CI < +2.10%):     True (PASS)
+EQUIVALENCE CONCLUSION:                  YES
+
+INTERPRETATION:
+----------------------------------------------------------------------------------------------------
+The 90% confidence interval for the H1 timing effect falls entirely within the
+equivalence bounds of ±2.10%. This means the true effect of immediate disclosure
+on market returns is statistically equivalent to zero for practical purposes.
+
+The evidence supports THREE conclusions simultaneously:
+1. Disclosure timing is NOT statistically significant (p=0.539)
+2. Timing effects are NOT economically meaningful (within ±2.10% bound)
+3. This null finding is ROBUST and not due to lack of statistical power
+
+This represents strong evidence that disclosure timing does not affect market reactions,
+contrary to the assumptions underlying current disclosure regulations.
+
+====================================================================================================
+TOST METHODOLOGY NOTE:
+====================================================================================================
+Traditional significance testing (t-test) can fail to reject null when power is low.
+TOST equivalence testing goes further: it actively tests whether the observed effect
+is small enough to be considered equivalent to zero. Passing TOST means the null
+finding is robust and not merely a power issue.
+====================================================================================================

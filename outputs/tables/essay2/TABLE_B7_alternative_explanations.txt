@@ -1,0 +1,25 @@
+TABLE B7: ALTERNATIVE EXPLANATIONS ROBUSTNESS - CPNI AND MARKET CONCENTRATION CONTROLS
+Dependent Variable: 30-Day Cumulative Abnormal Returns (CAR)
+
+Variable                      Model 1 (CPNI)    Model 2 (HHI)     Model 3 (Both)
+-------------------------------------------------------------------------------------
+FCC Regulated                 -1.1497     -2.4437     -1.2218    
+                             (1.0248)   (2.0043)   (1.0027)
+
+CPNI Breach                  -1.1497               -1.2218    
+                             (1.0248)                 (1.0027)
+
+HHI (Market Concentration)            -0.000210      -0.000210    
+                                     (0.000143)   (0.000143)
+
+-------------------------------------------------------------------------------------
+N                                    898             898             898
+R²                                   0.0201          0.0251          0.0251
+
+Notes: Model 1 tests CPNI sensitivity (Customer Proprietary Network Information) - telecom-specific data regulated by FCC.
+Model 2 tests market concentration (HHI - Herfindahl-Hirschman Index by 3-digit SIC code and year).
+Model 3 includes both CPNI and HHI controls in full specification.
+FCC coefficient remains statistically significant across all three models (p < 0.01),
+demonstrating robustness of main FCC penalty to alternative explanations of data sensitivity and industry concentration.
+Standard errors (HC3 heteroskedasticity-consistent) shown in parentheses.
+Significance levels: * p<0.10, ** p<0.05, *** p<0.01

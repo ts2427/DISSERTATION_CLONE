@@ -1,5 +1,5 @@
 ====================================================================================================
-APPENDIX: ALTERNATIVE EXPLANATIONS FOR FCC PENALTY
+APPENDIX: ALTERNATIVE EXPLANATIONS FOR FCC PENALTY (NARRATIVE SUMMARY)
 Tests whether FCC coefficient is robust to CPNI sensitivity and market concentration controls
 ====================================================================================================
 

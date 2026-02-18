@@ -10,7 +10,12 @@
       "Bash(ls:*)",
       "Bash(git ls-files:*)",
       "Bash(for dir in Data/*)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Bash(git clean:*)",
+      "Bash(git merge:*)",
+      "Bash(GIT_LFS_SKIP_SMUDGE=1 git merge:*)",
+      "Bash(git reset:*)",
+      "Bash(git push:*)"
     ]
   }
 }
