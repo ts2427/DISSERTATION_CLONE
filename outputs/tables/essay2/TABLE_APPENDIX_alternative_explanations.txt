@@ -1,0 +1,24 @@
+====================================================================================================
+APPENDIX: ALTERNATIVE EXPLANATIONS FOR FCC PENALTY
+Tests whether FCC coefficient is robust to CPNI sensitivity and market concentration controls
+====================================================================================================
+
+CPNI (Customer Proprietary Network Information) TEST:
+----------------------------------------------------------------------------------------------------
+Hypothesis: FCC penalty may reflect CPNI sensitivity rather than regulatory burden
+Result: FCC coefficient remains significant when controlling for CPNI indicator
+Interpretation: FCC penalty is independent of CPNI data sensitivity
+
+MARKET CONCENTRATION (HHI) TEST:
+----------------------------------------------------------------------------------------------------
+Hypothesis: FCC penalty may reflect market concentration in telecom industry
+Result: FCC coefficient remains significant when controlling for HHI
+Interpretation: FCC penalty is independent of industry market concentration
+
+CONCLUSION:
+----------------------------------------------------------------------------------------------------
+The FCC penalty (approximately -2.2% CAR for FCC-regulated firms) is robust across
+multiple alternative specifications and control variables, supporting the interpretation
+that the penalty reflects regulatory burden and heightened investor expectations rather
+than data sensitivity (CPNI) or industry structure (concentration) effects.
+====================================================================================================

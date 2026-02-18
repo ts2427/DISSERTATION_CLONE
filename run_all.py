@@ -148,10 +148,16 @@ Log file: {log_path}
         # Define pipeline
         pipeline = [
             {
+                'category': 'DATA ENRICHMENT',
+                'scripts': [
+                    ('scripts/99_add_cpni_hhi_variables.py', 'Add CPNI & HHI Variables (Essay 1 Alternative Explanations)'),
+                ]
+            },
+            {
                 'category': 'MAIN ANALYSIS',
                 'scripts': [
                     ('scripts/70_summary_statistics.py', 'Summary Statistics (Table 1)'),
-                    ('scripts/80_essay2_regressions.py', 'Essay 2 Regressions (Tables 2-4)'),
+                    ('scripts/80_essay2_regressions.py', 'Essay 2 Regressions (Tables 2-4) + Alternative Explanations'),
                     ('scripts/90_essay3_regressions.py', 'Essay 3 Regressions (Tables 2-3)'),
                 ]
             },
@@ -248,6 +254,7 @@ Essay 2 Regression Tables:
   outputs/tables/essay2/TABLE3_fcc_regulation.txt
   outputs/tables/essay2/TABLE4_prior_breaches.txt
   outputs/tables/essay2/TABLE5_breach_severity.txt
+  outputs/tables/essay2/TABLE_APPENDIX_alternative_explanations.txt (CPNI & HHI robustness)
 
 Essay 3 Regression Tables:
   outputs/tables/essay3/TABLE2_volatility_changes.txt
@@ -275,7 +282,12 @@ Robustness Figures:
 KEY FINDINGS
 {'=' * 80}
 
-Essay 2 - Market Reactions:
+Essay 1 - Market Reactions (Alternative Explanations):
+  [+] CPNI sensitivity test: FCC coefficient robust to CPNI control (-1.15%, p=0.010)
+  [+] Market concentration test: FCC coefficient robust to HHI control (-2.44%, p=0.006)
+  [+] Both controls: FCC coefficient remains significant (-1.22%, p=0.006)
+
+Essay 2 - Market Reactions (Main):
   [+] Prior breaches significant (H3 supported)
   [+] Health breaches significant (H4 supported)
   [-] Immediate disclosure NOT significant (H1 not supported)
@@ -293,11 +305,12 @@ Robustness:
 NEXT STEPS
 {'=' * 80}
 
-1. Review regression tables in outputs/tables/
-2. Copy tables into dissertation document
-3. Review robustness check results
-4. Include ML validation (optional) in appendix
-5. Begin writing Results sections for Essays 2 & 3
+1. Review Essay 1 alternative explanations in outputs/tables/essay2/TABLE_APPENDIX_alternative_explanations.txt
+2. Review regression tables in outputs/tables/
+3. Copy tables into dissertation document
+4. Review robustness check results
+5. Include ML validation (optional) in appendix
+6. Begin writing Results sections for Essays 2 & 3
 
 Complete log saved to: {log_path}
 
@@ -305,14 +318,14 @@ Complete log saved to: {log_path}
 """
         print_to_both(outputs, log_file)
         
-        # Final status
-        critical_success = (
+        # Final status - check with updated description names
+        critical_scripts_succeeded = (
             results.get('Summary Statistics (Table 1)', False) and
-            results.get('Essay 2 Regressions (Tables 2-4)', False) and
+            results.get('Essay 2 Regressions (Tables 2-4) + Alternative Explanations', False) and
             results.get('Essay 3 Regressions (Tables 2-3)', False)
         )
-        
-        if critical_success:
+
+        if critical_scripts_succeeded:
             final = f"\n[***] [SUCCESS] Core dissertation analysis complete!\n{'=' * 80}\n"
             print_to_both(final, log_file)
 
@@ -350,7 +363,7 @@ To stop the dashboard, press Ctrl+C in the terminal.
 
             return True
         else:
-            final = f"\n⚠ [WARNING] Some critical analyses failed - review log\n{'=' * 80}\n"
+            final = f"\n⚠ [WARNING] Some critical analyses failed or script descriptions don't match - review log\n{'=' * 80}\n"
             print_to_both(final, log_file)
             return False
 

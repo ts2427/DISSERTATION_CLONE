@@ -1,6 +1,7 @@
 """
-PAGE 7: KEY FINDING - TIMING IS IRRELEVANT
-Synthesizes Essays 2 & 3: Market reactions depend on severity, reputation, and regulation—not timing
+PAGE 8: KEY FINDINGS - THE DISCLOSURE PARADOX
+Synthesizes Essays 1, 2, & 3: Forced disclosure creates cascading negative effects
+across market reactions, information asymmetry, and governance structure
 """
 
 import streamlit as st
@@ -9,23 +10,23 @@ import plotly.graph_objects as go
 import plotly.express as px
 import numpy as np
 
-st.set_page_config(page_title="Key Finding: Timing is Irrelevant", page_icon="⏰", layout="wide")
+st.set_page_config(page_title="Key Findings: The Disclosure Paradox", page_icon="💡", layout="wide")
 
 st.markdown("""
 <style>
 .paradox-header {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #1f77b4;
+    color: #d62728;
     text-align: center;
     padding: 1rem 0;
     margin-bottom: 2rem;
-    border-bottom: 3px solid #1f77b4;
+    border-bottom: 3px solid #d62728;
 }
 .paradox-box {
-    background-color: #e6f2ff;
+    background-color: #ffe6e6;
     padding: 2rem;
-    border-left: 8px solid #1f77b4;
+    border-left: 8px solid #d62728;
     border-radius: 8px;
     margin: 1.5rem 0;
     font-size: 1.15rem;
@@ -34,6 +35,30 @@ st.markdown("""
 }
 .paradox-box p, .paradox-box li, .paradox-box h3, .paradox-box span, .paradox-box h2, .paradox-box b {
     color: inherit;
+}
+.essay-box-1 {
+    background-color: #e6f2ff;
+    padding: 1.5rem;
+    border-left: 5px solid #1f77b4;
+    border-radius: 5px;
+    margin: 1rem 0;
+    color: #333;
+}
+.essay-box-2 {
+    background-color: #f0e6ff;
+    padding: 1.5rem;
+    border-left: 5px solid #9467bd;
+    border-radius: 5px;
+    margin: 1rem 0;
+    color: #333;
+}
+.essay-box-3 {
+    background-color: #e6ffe6;
+    padding: 1.5rem;
+    border-left: 5px solid #2ca02c;
+    border-radius: 5px;
+    margin: 1rem 0;
+    color: #333;
 }
 .mechanism-visual {
     background-color: #f5f5f5;
@@ -45,9 +70,9 @@ st.markdown("""
     color: #333;
 }
 .implication-box {
-    background-color: #ffe6e6;
+    background-color: #fff4e6;
     padding: 1.5rem;
-    border-left: 5px solid #d62728;
+    border-left: 5px solid #ff7f0e;
     border-radius: 5px;
     margin: 1rem 0;
     font-size: 1rem;
@@ -59,7 +84,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown("<div class='paradox-header'>⏰ The Central Finding: Timing is Irrelevant</div>", unsafe_allow_html=True)
+st.markdown("<div class='paradox-header'>💡 The Disclosure Paradox: Three Essays, One Story</div>", unsafe_allow_html=True)
 
 # ============================================================================
 # THE KEY INSIGHT
@@ -67,31 +92,88 @@ st.markdown("<div class='paradox-header'>⏰ The Central Finding: Timing is Irre
 
 st.markdown("""
 <div class='paradox-box'>
-<h2>What Information Asymmetry Theory Predicts (And Empirical Results)</h2>
+<h2>The Paradox: Forced Disclosure Creates Cascading Negative Effects</h2>
 
-<b>Myers & Majluf (1984) Prediction:</b> Markets price information asymmetry, not speed.
+<b>Central Finding:</b> Mandatory disclosure requirements trigger negative outcomes
+not just for markets, but across information environments and organizational structure.
 
-<b>Spence (1973) Signal:</b> Voluntary disclosure signals strength; mandatory compliance does not.
+<b>The Disclosure Timeline:</b>
+1. <b style='color: #1f77b4;'>Essay 1: Markets React Negatively</b> - Forced disclosure → negative CAR
+2. <b style='color: #9467bd;'>Essay 2: Volatility Increases</b> - FCC firms experience +4.96%*** volatility increase
+3. <b style='color: #2ca02c;'>Essay 3: Governance Responds</b> - 46.4% of breaches trigger executive turnover
 
-<b>Across 25+ specifications: Disclosure timing has NO significant effect (p > 0.10)</b>
+<b>Implication:</b> Disclosure timing doesn't just affect markets—it affects information asymmetry
+and organizational structure. This challenges the assumption that "faster disclosure = better outcomes"
 
-<b style='color: #1f77b4;'>What DOES Drive Market Reactions (Information Asymmetry Signals):</b>
-1. <b style='color: #2ca02c;'>H3 - Reputation (Prior Breaches)</b>: -0.08%** per breach (STRONGEST)
-   - Market uses breach history to assess firm vulnerability
+</div>
+""", unsafe_allow_html=True)
 
-2. <b style='color: #2ca02c;'>H4 - Severity (Health Data)</b>: -2.65%***
-   - Information complexity signal: higher liability uncertainty
+# ============================================================================
+# ESSAY 1 FINDINGS
+# ============================================================================
 
-3. <b style='color: #2ca02c;'>H2 - Regulatory Context (FCC)</b>: -2.19%*
-   - Information environment signal: sector/regulatory scrutiny
+st.markdown("""
+<div class='essay-box-1'>
+<h3 style='color: #1f77b4;'>📈 Essay 1: Market Reactions to Forced Disclosure</h3>
 
-<b style='color: #d62728;'>What Does NOT Matter (Signaling Breakdown):</b>
-- <b style='text-decoration: line-through;'>H1a - Voluntary Timing</b>: +0.45% (p=0.574, NOT significant)
-- <b style='text-decoration: line-through;'>H1b - Mandatory Timing</b>: Should be zero, is essentially zero
-- Both voluntary AND mandatory disclosure show NO timing effect
+<b>Research Question:</b> Do disclosure timing and FCC regulation affect abnormal market returns?
 
-→ <b>Theory correctly predicts:</b> Timing lacks signaling value when mandatory. Information environment drives reactions.
-→ <b>Implication:</b> Regulatory requirement destroys signal value of voluntary disclosure. Speed ≠ strength when forced by deadline.
+<b>Key Finding:</b> FCC-regulated firms have WORSE market reactions despite mandatory immediate disclosure
+
+<b>Key Results:</b>
+- <b>Sample:</b> 898 breaches with CRSP data
+- <b>FCC Effect:</b> Approximately -0.74%*** cumulative abnormal return
+- <b>Non-FCC Effect:</b> Less negative reactions (voluntary timing benefits)
+- <b>Implication:</b> Forced disclosure = negative market outcome for regulated firms
+
+</div>
+""", unsafe_allow_html=True)
+
+# ============================================================================
+# ESSAY 2 FINDINGS
+# ============================================================================
+
+st.markdown("""
+<div class='essay-box-2'>
+<h3 style='color: #9467bd;'>💨 Essay 2: Information Asymmetry and Volatility</h3>
+
+<b>Research Question:</b> Does forced disclosure reduce information asymmetry, measured by volatility?
+
+<b>Key Finding:</b> FCC firms experience HIGHER post-breach volatility, contradicting disclosure theory
+
+<b>Key Results:</b>
+- <b>Sample:</b> 916 breaches with volatility data, 891 in main models
+- <b>FCC Effect:</b> +4.96%*** increase in return volatility (p<0.001)
+- <b>Mechanism:</b> Information processing bottleneck (Tushman & Nadler, 1978)
+- <b>Interpretation:</b> Forced early disclosure creates incomplete information → market uncertainty INCREASES
+
+<b>Implication:</b> Quality-timing tradeoff is real: forcing early disclosure sacrifices information quality
+
+</div>
+""", unsafe_allow_html=True)
+
+# ============================================================================
+# ESSAY 3 FINDINGS
+# ============================================================================
+
+st.markdown("""
+<div class='essay-box-3'>
+<h3 style='color: #2ca02c;'>👔 Essay 3: Governance Response to Forced Disclosure</h3>
+
+<b>Research Question:</b> Do firms respond to forced disclosure with organizational changes?
+
+<b>Key Finding:</b> Nearly half of breaches trigger executive turnover—governance as stakeholder response
+
+<b>Key Results:</b>
+- <b>Sample:</b> 896 breaches with executive change data
+- <b>30-day Turnover:</b> 46.4% of breaches (416 events)
+- <b>90-day Turnover:</b> 66.9% of breaches (599 events)
+- <b>Enforcement:</b> Only 6 cases (0.6% of sample), all FCC firms
+- <b>Interpretation:</b> Executive turnover is primary organizational response; enforcement rare
+
+<b>Implication:</b> Multiple stakeholders (investors, boards) activate simultaneously
+to forced disclosure—governance response exceeds regulatory response
+
 </div>
 """, unsafe_allow_html=True)
 

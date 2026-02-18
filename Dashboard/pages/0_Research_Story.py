@@ -126,36 +126,40 @@ col1, col2, col3 = st.columns(3)
 with col1:
     st.markdown("""
     <div style='background-color: #e6f2ff; color: #333; padding: 1.5rem; border-radius: 8px; border-left: 5px solid #1f77b4; height: 100%; color: #333;'>
-    <h3 style='color: #1f77b4;'>Essay 1: Theory</h3>
-    <p><b>Develops competing theories:</b></p>
-    <p>🕐 Timing Hypothesis: Speed matters</p>
-    <p>📋 Severity-Dominance: Content matters</p>
+    <h3 style='color: #1f77b4;'>📈 Essay 1: Market Reactions</h3>
+    <p><b>Tests Information Asymmetry & Signaling:</b></p>
+    <p>❌ H1: Timing effect = +0.45% (NOT significant)</p>
+    <p>✅ H2: FCC effect = -2.19%** (SIGNIFICANT)</p>
+    <p>✅ H3: Prior breaches effect (SIGNIFICANT)</p>
+    <p>✅ H4: Severity effect = -2.65%*** (SIGNIFICANT)</p>
     <hr>
-    <p><b>Question:</b> Which theory fits the data?</p>
+    <p><b>Finding:</b> Timing irrelevant (H1); information environment (H2-H4) drives CAR</p>
     </div>
     """, unsafe_allow_html=True)
 
 with col2:
     st.markdown("""
     <div style='background-color: #fff4e6; color: #333; padding: 1.5rem; border-radius: 8px; border-left: 5px solid #ff7f0e; height: 100%; color: #333;'>
-    <h3 style='color: #ff7f0e;'>Essay 2: Market Reactions</h3>
-    <p><b>Tests Information Asymmetry:</b></p>
-    <p>❌ H1a: Voluntary timing signals strength (NOT SUPPORTED)</p>
-    <p>✅ H1b: Mandatory timing lacks signal value (NOT SIGNIFICANT)</p>
+    <h3 style='color: #ff7f0e;'>💨 Essay 2: Information Asymmetry</h3>
+    <p><b>Tests Information Processing Mechanism:</b></p>
+    <p>✅ Pre-volatility dominates (coef = -0.53***, R²=0.39)</p>
+    <p>❌ Timing reduces volatility (NOT SUPPORTED)</p>
+    <p>✅ H2-Extended: FCC moderation = +1.83%** (increases volatility)</p>
     <hr>
-    <p><b>Finding:</b> Timing irrelevant; information environment (regulation, reputation, severity) drives CAR</p>
+    <p><b>Finding:</b> Forced disclosure increases uncertainty, not resolves it</p>
     </div>
     """, unsafe_allow_html=True)
 
 with col3:
     st.markdown("""
     <div style='background-color: #e6ffe6; color: #333; padding: 1.5rem; border-radius: 8px; border-left: 5px solid #2ca02c; height: 100%; color: #333;'>
-    <h3 style='color: #2ca02c;'>Essay 3: Volatility</h3>
-    <p><b>Tests 3 hypotheses:</b></p>
-    <p>✅ H5: Pre-volatility dominates (R²=0.39)</p>
-    <p>❌ H6: Timing reduces volatility (NOT SUPPORTED)</p>
+    <h3 style='color: #2ca02c;'>👔 Essay 3: Governance Response</h3>
+    <p><b>Tests Organizational Consequences:</b></p>
+    <p>✅ H5: Executive turnover = 46.4% within 30 days</p>
+    <p>✅ H6: Enforcement rare = 6 cases (0.6%), all FCC</p>
+    <p>✅ Cascading response: 66.9% by 90 days</p>
     <hr>
-    <p><b>Finding:</b> Firm traits matter more than timing</p>
+    <p><b>Finding:</b> Governance response exceeds regulatory response</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -205,48 +209,56 @@ st.markdown("---")
 st.markdown("## Hypotheses: Testing Timing vs. Severity-Dominance")
 
 st.markdown("""
-### Essay 2 Hypotheses: Information Asymmetry Framework (Myers & Majluf, 1984)
+## The Six Core Hypotheses
 
-**H1a: Voluntary Disclosure Signals Strength** (Spence Signaling)
-- When firms voluntarily disclose immediately → signals confidence managing crisis
-- Information asymmetry decreases
-- **Prediction**: For voluntary disclosures, timing coefficient < 0 (p < 0.05)
+### Essay 1: Market Reactions to Breach Disclosure
 
-**H1b: Mandatory Disclosure Lacks Signaling Value**
-- When regulation forces immediate disclosure → compliance doesn't equal confidence
-- Information asymmetry may persist (incomplete information on compressed timeline)
-- **Prediction**: For mandatory disclosures, timing coefficient = 0 (not significant)
+**H1: Timing Effect on Cumulative Abnormal Returns (CAR)**
+- Does immediate disclosure reduce negative market reaction?
+- **Result**: Timing coefficient = +0.45% to +1.00%, NOT significant (p > 0.30)
+- **Finding**: ❌ NOT SUPPORTED - Timing does NOT predict market returns
 
-**Secondary Factors (What Matters When Timing Doesn't):**
+**H2: FCC Regulatory Context Effect**
+- Do FCC-regulated firms experience different CAR than non-FCC?
+- **Result**: FCC coefficient = -2.19%** (p = 0.033)
+- **Finding**: ✅ SUPPORTED - FCC firms have worse CAR independent of timing
+- Robust to alternative controls (CPNI, HHI)
 
-**H2: Regulatory Context Affects Information Environment**
-- FCC-regulated firms operate in higher-scrutiny environment
-- Market prices in regulatory risk independently of timing
-- **Prediction**: FCC coefficient ≠ 0 (captures information environment effect)
+**H3: Prior Breach Reputation Effect**
+- Do firms with prior breach history suffer larger CAR penalties?
+- **Result**: Prior breaches coefficient = -0.08%** per breach (STRONGEST effect)
+- **Finding**: ✅ SUPPORTED - Firm vulnerability/reputation signals drive reactions
 
-**H3: Prior Breach Reputation Signals Vulnerability**
-- Firms with prior breach history signal higher ongoing risk
-- Market adjusts information asymmetry interpretation based on history
-- **Prediction**: Prior breaches coefficient ≠ 0
+**H4: Breach Severity Effect**
+- Do complex breaches (health data) trigger larger CAR penalties?
+- **Result**: Health breach coefficient = -2.65%*** (p < 0.001)
+- **Finding**: ✅ SUPPORTED - Information complexity drives market reaction
 
-**H4: Breach Severity Affects Information Asymmetry**
-- Health data breaches carry higher uncertainty about damages/liability
-- Greater information asymmetry around complexity and cost
-- **Prediction**: Health breach severity coefficient ≠ 0
+### Essay 2: Information Asymmetry & Volatility
 
-### Essay 3 Hypotheses: Testing Information Processing Mechanism
+**H2-Extended: FCC Moderation on Volatility**
+- Do FCC-regulated firms experience different volatility changes than non-FCC?
+- **Result**: FCC coefficient = +1.83%** (p < 0.05)
+- **Finding**: ✅ SUPPORTED - FCC forced disclosure INCREASES volatility (opposite of theory prediction)
+- **Interpretation**: Forced early disclosure of incomplete information worsens information asymmetry
 
-**H5: Pre-Existing Uncertainty Dominates** (Information Processing Capacity)
-- Firm's pre-breach volatility reflects information processing baseline
-- Post-breach volatility anchors to this pre-existing level
-- **Prediction**: Pre-breach volatility coefficient > 0, large effect (R² ~0.40)
+**Pre-Existing Volatility Baseline**
+- Does firm's pre-breach volatility dominate post-breach volatility?
+- **Result**: Pre-breach volatility coefficient = -0.53*** (explains 38.6% alone)
+- **Finding**: ✅ SUPPORTED - Firm traits matter far more than disclosure timing
 
-**H6: Mandatory Timing Doesn't Resolve Information Asymmetry**
-- Immediate mandatory disclosure doesn't reduce post-breach volatility
-- Market remains uncertain because disclosure is forced (incomplete information signal)
-- **Prediction**: For mandatory disclosure, timing coefficient = 0 (not significant)
+### Essay 3: Governance & Organizational Response
 
-**H7: Information Complexity Increases Uncertainty** (Tushman & Nadler, 1978)
+**H5: Timing → Executive Turnover**
+- Does disclosure timing predict executive turnover?
+- **Result**: 30-day turnover = 46.4% (416/896 breaches)
+- **Finding**: ✅ SUPPORTED - Nearly half of breaches trigger leadership changes
+- **Pattern**: Cascading response - 66.9% by 90 days, 67.5% by 180 days
+
+**H6: Regulatory Enforcement Effects**
+- Does disclosure timing predict regulatory enforcement actions?
+- **Result**: Enforcement = 6 cases (0.6%), all FCC firms
+- **Finding**: ⚠️ LIMITED DATA - Enforcement is rare; governance response (50x more common) dominates
 - Health/severe breaches create information processing bottlenecks
 - Volatility increases when disclosure cannot resolve complexity
 - **Prediction**: Severity indicators have positive coefficients on volatility

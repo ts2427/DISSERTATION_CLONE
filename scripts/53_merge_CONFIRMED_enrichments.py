@@ -339,6 +339,66 @@ else:
     print(f"  ⚠ File not found (optional)")
 
 # ============================================================================
+# INSTITUTIONAL OWNERSHIP (CONTROL VARIABLE)
+# ============================================================================
+
+print("\n[Step 7/9] Institutional Ownership...")
+filepath = 'Data/enrichment/institutional_ownership.csv'
+
+if os.path.exists(filepath):
+    try:
+        enrich_df = pd.read_csv(filepath)
+        print(f"  [OK] Loaded: {len(enrich_df)} records")
+
+        if len(enrich_df) > 0:
+            # Try to merge by CIK and date
+            if 'cik' in enrich_df.columns and 'breach_date' in enrich_df.columns:
+                enrich_df['cik'] = enrich_df['cik'].astype(int)
+                enrich_df['breach_date'] = pd.to_datetime(enrich_df['breach_date'])
+
+                base_cols = set(merged_df.columns)
+                new_cols = [col for col in enrich_df.columns
+                           if col not in ['cik', 'breach_date']
+                           and col not in base_cols]
+
+                if len(new_cols) > 0:
+                    merged_df = merged_df.merge(
+                        enrich_df[['cik', 'breach_date'] + new_cols],
+                        on=['cik', 'breach_date'],
+                        how='left'
+                    )
+
+                    print(f"  [OK] Merged {len(new_cols)} variables")
+                    print(f"  [OK] Rows: {len(merged_df)} (no change)")
+
+                    merge_summary.append({
+                        'Enrichment': 'Institutional Ownership',
+                        'Hypothesis': 'Control',
+                        'Status': 'SUCCESS',
+                        'Variables': len(new_cols),
+                        'Key_Vars': 'institutional_ownership_pct, num_institutions'
+                    })
+
+    except Exception as e:
+        print(f"  [WARNING] Skipping (error: {str(e)[:50]})")
+        merge_summary.append({
+            'Enrichment': 'Institutional Ownership',
+            'Hypothesis': 'Control',
+            'Status': 'SKIPPED',
+            'Variables': 0,
+            'Key_Vars': 'N/A'
+        })
+else:
+    print(f"  [WARNING] File not found (optional)")
+    merge_summary.append({
+        'Enrichment': 'Institutional Ownership',
+        'Hypothesis': 'Control',
+        'Status': 'NOT_FOUND',
+        'Variables': 0,
+        'Key_Vars': 'N/A'
+    })
+
+# ============================================================================
 # VERIFY & SAVE
 # ============================================================================
 
@@ -370,6 +430,23 @@ print("=" * 80)
 
 # Remove temporary keys
 final_df = merged_df.drop(['row_id'], axis=1, errors='ignore')
+
+# ============================================================================
+# CREATE COMPUTED VARIABLES (Per Phase 2 variable specification)
+# ============================================================================
+
+print("\n" + "=" * 80)
+print("CREATING COMPUTED VARIABLES")
+print("=" * 80)
+
+# total_affected_log: Log-transform records affected
+if 'records_affected_numeric' in final_df.columns:
+    final_df['total_affected_log'] = np.log(final_df['records_affected_numeric'] + 1)
+    print(f"\n✓ Created total_affected_log")
+    print(f"  Range: {final_df['total_affected_log'].min():.2f} to {final_df['total_affected_log'].max():.2f}")
+    print(f"  N non-null: {final_df['total_affected_log'].notna().sum():,}")
+else:
+    print(f"\n⚠ Warning: records_affected_numeric not found - skipping total_affected_log")
 
 output_file = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.xlsx'
 csv_file = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'

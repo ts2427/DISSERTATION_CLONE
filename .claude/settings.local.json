@@ -9,7 +9,8 @@
       "Bash(head:*)",
       "Bash(ls:*)",
       "Bash(git ls-files:*)",
-      "Bash(for dir in Data/*)"
+      "Bash(for dir in Data/*)",
+      "Bash(python3:*)"
     ]
   }
 }

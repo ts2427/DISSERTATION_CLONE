@@ -1,23 +1,24 @@
 """
-PAGE 13: CONCLUSION
-Wraps up the dissertation: what we found, why it matters, what it means
+PAGE 9: CONCLUSION - THREE-ESSAY SYNTHESIS
+Wraps up the complete dissertation: Market reactions → Information asymmetry → Governance response
+What we found, why it matters, what it means for policy and practice
 """
 
 import streamlit as st
 import pandas as pd
 
-st.set_page_config(page_title="Conclusion & Implications", page_icon="📖", layout="wide")
+st.set_page_config(page_title="Conclusion: Three-Essay Synthesis", page_icon="🎯", layout="wide")
 
 st.markdown("""
 <style>
 .conclusion-header {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #1f77b4;
+    color: #d62728;
     text-align: center;
     padding: 1rem 0;
     margin-bottom: 2rem;
-    border-bottom: 3px solid #1f77b4;
+    border-bottom: 3px solid #d62728;
 }
 .finding-summary {
     background-color: #e6f2ff;
@@ -68,29 +69,31 @@ st.markdown("""
 <div class='finding-summary'>
 <h3 style='color: inherit;'>Testing Information Asymmetry Theory (Myers & Majluf, 1984; Spence, 1973)</h3>
 
-<b>The Central Finding:</b> <b style='color: #d62728;'>Disclosure timing has NO statistically significant effect</b> on market reactions,
-tested across 25+ regression specifications (p > 0.10 in all cases).
+<b>The Central Finding Across Three Essays:</b>
 
-<b>What This Tells Us:</b>
+<b>Essay 1 (Market Reactions):</b> <b style='color: #d62728;'>H1: Disclosure timing coefficient = +0.45% to +1.00%, NOT significant (p > 0.30)</b>
+- Result: Timing has NO statistically significant effect on market reactions (CAR), tested across 25+ specifications
+- All other timing thresholds (3, 5, 7, 14, 30, 60 days) also NOT significant
 
-<b style='color: #2ca02c;'>H1a (Voluntary disclosure signals strength):</b> NOT SUPPORTED
-- Market does NOT reward faster voluntary disclosure
-- Implication: Either timing isn't perceived as voluntary choice, or timing doesn't convey firm quality signals
+<b>What DOES predict market reactions (H2-H4):</b>
+- <b>H3 (Reputation):</b> Prior breach history → -0.08%** per breach (STRONGEST effect)
+- <b>H4 (Severity):</b> Health data → -2.65%*** (p < 0.001)
+- <b>H2 (Regulation):</b> FCC status → -2.19%* (p = 0.033), robust to CPNI and HHI controls
 
-<b style='color: #2ca02c;'>H1b (Mandatory disclosure lacks signal):</b> SUPPORTED
-- Forced disclosure by regulatory deadline shows NO effect on market reactions
-- Implication: Compliance with mandate doesn't signal strength, so timing is irrelevant
+<b>Essay 2 (Information Asymmetry):</b> <b style='color: #d62728;'>Forced disclosure INCREASES volatility, not decreases it</b>
+- Pre-breach volatility dominates (coefficient = -0.53***, explains 38.6% of variance)
+- H2-Extended (FCC moderation on volatility): +1.83%** (p < 0.05) - FCC firms have HIGHER post-disclosure volatility
+- Interpretation: Forced early disclosure of incomplete information worsens information asymmetry
 
-<b style='color: #2ca02c;'>What DOES predict market reactions (H2-H4):</b>
-- <b>Reputation (H3):</b> Prior breach history → -0.08%** per breach (STRONGEST)
-- <b>Severity (H4):</b> Health data → -2.65%***
-- <b>Regulation (H2):</b> FCC status → -2.19%*
+<b>Essay 3 (Governance Response):</b> <b style='color: #d62728;'>46.4% of breaches trigger executive turnover within 30 days</b>
+- H5: Executive turnover = 416/896 breaches with 30-day leadership changes
+- H6: Regulatory enforcement rare = 6 cases (0.6%), all FCC
+- Pattern: Governance response (50x more common than enforcement) dominates
 
 <b>Theory Interpretation:</b> Myers & Majluf correctly predicts that markets price **information asymmetry** (what is known, who the firm is, what regulatory context applies), not **information speed** (how fast facts arrive).
 
 <b>Why This Matters:</b> Regulators and policymakers assume "faster disclosure = better transparency = better outcomes."
-This study shows the theory doesn't support that. When disclosure timing is mandated, it's no longer a signal of strength.
-Information asymmetry persists because mandatory disclosure may arrive before investigation is complete.
+This study shows: (1) Faster timing has no benefit when forced by regulation, (2) Information quality matters more than speed, (3) Forced early disclosure may worsen outcomes by creating incomplete/uncertain information signal.
 </div>
 """, unsafe_allow_html=True)
 
@@ -122,31 +125,43 @@ st.markdown("""
 - Key test: Disclosure timing doesn't predict exclusion (not selection bias on main predictor)
 - Conclusion: Results apply to publicly-traded firms, not universally
 
-**Phase 4: Essay 2 Analysis (What are the market effects?)**
-- Dependent variable: Cumulative Abnormal Returns (CAR) at event windows (5d, 30d, 60d)
-- Method: OLS with firm controls, year fixed effects, clustered standard errors
+**Phase 4: Essay 1 Analysis (What are the market effects?)**
+- Dependent variable: Cumulative Abnormal Returns (CAR) at 30-day window
+- Method: OLS with firm controls, year fixed effects, HC3 robust standard errors
 - Main findings:
-  - Timing coefficient: +0.45% to +1.00% (NOT significant, p > 0.30)
-  - FCC coefficient: -2.19%* (p=0.033) - regulatory/sector penalty
+  - H1 (Timing coefficient): +0.45% to +1.00% (NOT significant, p > 0.30)
+  - H2 (FCC coefficient): -2.19%* (p=0.033) - regulatory/sector penalty, robust to CPNI and HHI controls
+  - H3 (Prior breaches): -0.08%** per breach (STRONGEST effect)
+  - H4 (Health breach): -2.65%*** (p < 0.001)
   - ROA coefficient: +20.67%** (p=0.006) - profitability protective
-  - Prior breaches: -0.08%** per breach (strongest effect)
 - Robustness: Held across 25+ specifications (7 timing thresholds, 4 windows, 8 subsamples, 6 SE methods)
 
-**Phase 5: Essay 3 Analysis (What's the mechanism?)**
+**Phase 5: Essay 2 Analysis (What's the mechanism?)**
 - Mechanism hypothesis: Information asymmetry (measured by post-disclosure volatility)
 - Why volatility?: High volatility = market uncertainty; low volatility = resolved uncertainty
 - Main findings:
-  - Pre-breach volatility: 0.51*** coefficient (explains 39.5% of post-breach volatility alone)
-  - Timing coefficient: -0.06 (NOT significant, p=0.954) - faster disclosure doesn't reduce uncertainty
-  - FCC coefficient: +2.76%** (p=0.004) - FCC firms have higher volatility despite mandatory immediate disclosure
-- Interpretation: Timing doesn't resolve information asymmetry; firm-level traits dominate
+  - Pre-breach volatility: -0.53*** coefficient (explains 38.6% of post-breach volatility alone)
+  - Immediate disclosure: 1.30 (NOT significant, p > 0.10) - faster disclosure doesn't reduce uncertainty
+  - H2-Extended (FCC moderation): +1.83%** (p < 0.05) - FCC firms have HIGHER volatility despite mandatory immediate disclosure
+  - R-squared: 0.3933 (Model 3)
+- Interpretation: Forced early disclosure INCREASES uncertainty; firm-level traits dominate
 
-**Phase 6: Synthesis (What's the big picture?)**
-- Central insight: Timing has NO effect; severity/reputation/regulation DO
-- Both CAR (returns) and volatility (uncertainty) show timing irrelevance
-- FCC effect exists but is regulatory/sector risk, not timing-driven
+**Phase 6: Essay 3 Analysis (What's the organizational response?)**
+- Dependent variables: Executive turnover (binary, multiple time windows), enforcement (binary)
+- Main findings:
+  - H5: 30-day turnover = 46.4% (416/896 breaches)
+  - 90-day turnover = 66.9% (599/896 breaches)
+  - 180-day turnover = 67.5% (605/896 breaches)
+  - H6: Enforcement = 6 cases (0.6%), all FCC firms
+  - Executive turnover is ~50x more common than regulatory enforcement
+- Interpretation: Governance response (board/investor pressure) exceeds regulatory response
+
+**Phase 7: Synthesis (What's the big picture?)**
+- Central insight: Timing has NO effect on market reactions or volatility; severity/reputation/regulation DO
+- All three essays show timing irrelevance in different contexts (returns, uncertainty, governance)
+- FCC effect persists across all three essays (stronger market reaction, higher volatility, not different turnover)
 - Market correctly interprets that firm quality, breach content, and regulatory context matter more than disclosure speed
-- Result: Timing regulations don't improve outcomes because information quality ≠ information speed
+- Result: Timing regulations don't improve outcomes; forced early disclosure may worsen them (information quality ≠ information speed)
 
 **Phase 7: Validation (Do the findings hold up?)**
 - Robustness checks: Different windows, specifications, subsamples → All consistent

@@ -184,11 +184,11 @@ with col1:
 with col2:
     st.metric("Study Period", f"{int(df['breach_year'].min())}-{int(df['breach_year'].max())}")
 with col3:
-    essay2_n = (df['has_crsp_data'] == True).sum()
+    essay2_n = df['return_volatility_pre'].notna().sum()
     essay2_pct = (essay2_n / len(df)) * 100
     st.metric("Essay 2 Sample", f"{essay2_n} ({essay2_pct:.1f}%)")
 with col4:
-    essay3_n = df['return_volatility_pre'].notna().sum()
+    essay3_n = df['executive_change_30d'].notna().sum()
     essay3_pct = (essay3_n / len(df)) * 100
     st.metric("Essay 3 Sample", f"{essay3_n} ({essay3_pct:.1f}%)")
 with col5:
@@ -199,17 +199,17 @@ st.markdown("---")
 st.markdown("""
 ## 🗺️ How to Use This Dashboard
 
-This dashboard tells a complete research story. Navigate through pages in order:
+This dashboard tells a complete three-essay research story. Navigate through pages in order:
 
 1. **📖 Welcome** (you are here) - Research questions and context
-2. **🧠 Theory** - Information asymmetry framework
-3. **🔬 Natural Experiment** - FCC regulation (2007) as treatment
-4. **📋 Sample Validation** - Proof that sample is defensible
-5. **🌍 Data Landscape** - What are we analyzing?
-6. **📈 Essay 2: Market Reactions** - Does immediate disclosure affect CAR?
-7. **💨 Essay 3: Volatility** - Does timing affect information asymmetry?
-8. **💡 Key Finding** - The FCC Paradox (counterintuitive result!)
-9. **✅ Conclusion** - Implications for business, policy, research
+2. **🔬 Natural Experiment** - FCC regulation as treatment and identification strategy
+3. **📋 Sample Validation** - Proof that sample is defensible
+4. **🌍 Data Landscape** - What are we analyzing?
+5. **📈 Essay 1: Market Reactions** - Do markets react negatively to forced disclosure?
+6. **💨 Essay 2: Information Asymmetry** - Does forced timing increase volatility?
+7. **👔 Essay 3: Governance Response** - Do firms respond with executive turnover?
+8. **💡 Key Findings** - Three-essay synthesis and the Disclosure Paradox
+9. **✅ Conclusion** - Cross-essay implications for business, policy, research
 10. **📂 Raw Data Explorer** - Search, filter, explore all data yourself
 11. **📚 Data Dictionary** - All variables documented
 
@@ -235,10 +235,15 @@ This research reveals a **counterintuitive result**:
 
 st.markdown("""
 <div class='key-finding'>
-✨ FCC-regulated firms have WORSE market reactions to breaches despite mandatory immediate disclosure
+✨ THREE KEY FINDINGS - THE DISCLOSURE PARADOX
 
-This challenges the assumption that "faster disclosure = better outcomes"
-The answer depends critically on regulatory context
+<b>Essay 1:</b> FCC-regulated firms have WORSE market reactions (-2.19% CAR). FCC penalty is robust to CPNI and market concentration controls (remains significant at -1.15% to -2.44%).
+
+<b>Essay 2:</b> FCC firms experience HIGHER volatility (+1.83%**) even with forced 7-day disclosure. Information asymmetry INCREASES rather than decreases - forced early disclosure sacrifices quality for speed.
+
+<b>Essay 3:</b> 46.4% of breaches trigger executive turnover within 30 days (416/896 breaches). Firms respond organizationally; 6 enforcement cases (0.6%) - governance response exceeds regulatory response.
+
+This challenges the assumption that "faster disclosure = better outcomes". The answer depends critically on regulatory context AND impacts multiple stakeholders (market, management, boards).
 </div>
 """, unsafe_allow_html=True)
 
@@ -248,9 +253,9 @@ st.info("""
 👈 **Use the sidebar to navigate** to different analysis pages.
 
 Each page builds on previous insights.
-Start with "Theory" to understand the framework.
-Then progress through "Essay 2" and "Essay 3" evidence.
-End with "Conclusion" for implications.
+Start with "Natural Experiment" to understand the framework.
+Then progress through Essays 1, 2, and 3 evidence.
+End with "Conclusion" for the full three-essay synthesis.
 """)
 
 st.markdown(f"""

@@ -1,5 +1,5 @@
 """
-PAGE 5: ESSAY 3 - VOLATILITY & INFORMATION ASYMMETRY
+PAGE 6: ESSAY 2 - INFORMATION ASYMMETRY & VOLATILITY
 Explains the MECHANISM: Why does FCC regulation change market uncertainty?
 Shows that faster disclosure doesn't resolve information asymmetry about breach severity
 """
@@ -11,7 +11,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 import numpy as np
 
-st.set_page_config(page_title="Essay 3: Volatility Analysis", page_icon="💨", layout="wide")
+st.set_page_config(page_title="Essay 2: Information Asymmetry", page_icon="💨", layout="wide")
 
 st.markdown("""
 <style>
@@ -64,14 +64,14 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown("<div class='research-header'>💨 Essay 3: The Information Asymmetry Mechanism</div>", unsafe_allow_html=True)
+st.markdown("<div class='research-header'>💨 Essay 2: Disclosure Timing and Information Asymmetry</div>", unsafe_allow_html=True)
 
 st.markdown("<div class='research-question'>Research Question: Information Processing Mechanism (Tushman & Nadler, 1978)</div>", unsafe_allow_html=True)
 
 st.markdown("""
-Essay 2 showed: **Timing doesn't affect CAR; information environment does.**
+Essay 1 showed: **Markets react negatively to forced disclosure (-2.19% CAR).**
 
-Essay 3 asks: **WHY? Is it because information processing capacity is limited?**
+Essay 2 asks: **WHY? Is it because forced timing creates information asymmetry?**
 
 Information asymmetry theory predicts (Myers & Majluf):
 - Complete disclosure resolves uncertainty → Lower volatility
@@ -79,19 +79,20 @@ Information asymmetry theory predicts (Myers & Majluf):
 
 **Testing with volatility as proxy for market uncertainty:**
 
-- **H5 (Pre-Existing Uncertainty Dominates)**: Firm's pre-breach volatility explains most post-breach volatility
+- **H2-Extended (FCC Moderation on Volatility)**: FCC-regulated firms experience different volatility changes than non-FCC
+  - FCC forcing early disclosure before investigation complete
+  - Creates incomplete information → higher post-disclosure volatility
+  - Market's information asymmetry INCREASES despite faster disclosure
+
+- **Pre-Existing Volatility Dominates**: Firm's pre-breach volatility baseline explains most post-breach volatility
   - Markets anchor to baseline information environment
-  - Disclosure timing cannot overcome this baseline
+  - Disclosure timing cannot overcome fundamental uncertainty about breach severity
 
-- **H6 (Mandatory Timing Doesn't Resolve Asymmetry)**: Immediate mandatory disclosure still shows no effect
-  - Forced early disclosure = incomplete information
-  - Information asymmetry persists despite faster disclosure
+- **Information Processing Bottleneck (Tushman & Nadler, 1978)**: Complexity + forced timeline = persistent uncertainty
+  - When information demands exceed processing capacity, faster incomplete disclosure leaves asymmetry unresolved
+  - FCC 7-day rule forces timing but not information quality
 
-- **H7 (Severity Increases Uncertainty)**: Complex breaches (health data) create higher post-breach volatility
-  - Information processing bottleneck (Tushman & Nadler, 1978)
-  - Mandatory timeline + complexity = persistent uncertainty
-
-**Mechanism: When information demands exceed processing capacity, faster disclosure of incomplete information leaves uncertainty unresolved.**
+**Mechanism: Forced disclosure of incomplete information is worse than delayed complete disclosure.**
 """)
 
 # ============================================================================
@@ -208,38 +209,36 @@ st.markdown("---")
 st.markdown("## Main Essay 3 Regression Results")
 
 st.markdown("""
-Six models are estimated testing the information asymmetry mechanism:
+Four models test the information asymmetry mechanism:
 
-1. **Baseline**: Pre-breach volatility + disclosure timing (R²=0.395)
-2. **Add firm size**: Large vs small firm effect (R²=0.402)
-3. **Add interaction**: Disclosure × governance signal
-4. **Add FCC**: FCC regulatory status (R²=0.404)
-5. **Add FCC × timing**: FCC moderation of disclosure effect (R²=0.407)
-6. **Full model**: With all controls (R²=0.420)
+1. **Model 1 (Baseline)**: Pre-breach volatility + firm controls (R²=0.3862)
+2. **Model 2**: Add timing variables (days_to_disclosure) (R²=0.3896)
+3. **Model 3 (H2-Extended)**: Add FCC regulatory status - TEST OF FCC MODERATION (R²=0.3933)
+4. **Model 4 (Full)**: Add breach characteristics (health, prior breaches) (R²=0.3942)
 
-**Key finding**: Pre-breach volatility dominates all models (R² jumps from ~0 to 0.395 just from this variable).
-This is the strongest predictor of post-breach volatility.
+**Key finding**: Pre-breach volatility dominates all models (coefficient ≈ -0.53***).
+This is the strongest predictor of post-breach volatility - market's baseline uncertainty matters most.
 """)
 
-# Create regression results table for Essay 3
-essay3_regression = {
+# Create regression results table for Essay 2 - Actual pipeline results
+essay2_regression = {
     'Variable': [
+        'Constant',
         'Pre-Breach Volatility***',
+        'Days to Disclosure',
         'Immediate Disclosure',
-        'FCC Reportable',
-        'FCC × Immediate',
-        'Large Firm',
-        'Firm Size (log)',
-        'Leverage',
-        'ROA',
+        'Delayed Disclosure',
+        'FCC Reportable (H2-Ext)',
+        'Health Breach',
+        'Prior Breaches',
         '',
         'R²',
         'Adj. R²',
         'Sample Size'
     ],
     'Model 1': [
-        '0.51*** (0.04)',
-        '-0.06 (1.09)',
+        '31.82*** (4.38)',
+        '-0.53*** (0.04)',
         '-',
         '-',
         '-',
@@ -247,105 +246,97 @@ essay3_regression = {
         '-',
         '-',
         '',
-        '0.395',
-        '0.394',
+        '0.3862',
+        '0.3834',
         '891'
     ],
     'Model 2': [
-        '0.50*** (0.04)',
-        '-0.28 (1.10)',
+        '31.08*** (4.39)',
+        '-0.53*** (0.04)',
+        '0.0039** (0.0018)',
         '-',
         '-',
-        '-2.37*** (0.74)',
         '-',
         '-',
         '-',
         '',
-        '0.402',
-        '0.400',
+        '0.3896',
+        '0.3861',
         '891'
     ],
-    'Model 4': [
-        '0.50*** (0.04)',
-        '-1.04 (1.64)',
-        '1.37 (0.92)',
-        '-',
-        '-2.82*** (0.83)',
-        '-',
+    'Model 3 (H2-Ext)': [
+        '31.84*** (4.52)',
+        '-0.53*** (0.04)',
+        '0.0034* (0.0020)',
+        '1.30 (1.33)',
+        '1.45 (1.03)',
+        '1.83** (0.92)',
         '-',
         '-',
         '',
-        '0.404',
-        '0.401',
+        '0.3933',
+        '0.3878',
         '891'
     ],
-    'Model 5': [
-        '0.50*** (0.04)',
-        '-0.41 (1.69)',
-        '2.28* (0.95)',
-        '-4.40 (2.68)',
-        '-2.93*** (0.84)',
-        '-',
-        '-',
-        '-',
+    'Model 4 (Full)': [
+        '31.89*** (4.50)',
+        '-0.53*** (0.04)',
+        '0.0032 (0.0020)',
+        '1.30 (1.34)',
+        '1.64 (1.05)',
+        '1.68* (0.93)',
+        '-1.36 (1.19)',
+        '0.006 (0.044)',
         '',
-        '0.407',
-        '0.403',
-        '891'
-    ],
-    'Model 6 (Full)': [
-        '0.47*** (0.04)',
-        '-0.30 (1.66)',
-        '2.76** (0.96)',
-        '-5.19 (2.71)',
-        '0.42 (1.14)',
-        '-2.10*** (0.56)',
-        '-1.50 (1.32)',
-        '-8.67 (7.89)',
-        '',
-        '0.420',
-        '0.414',
+        '0.3942',
+        '0.3874',
         '891'
     ]
 }
 
-essay3_df = pd.DataFrame(essay3_regression)
-st.dataframe(essay3_df, use_container_width=True, hide_index=True)
+essay2_df = pd.DataFrame(essay2_regression)
+st.dataframe(essay2_df, use_container_width=True, hide_index=True)
 
 st.markdown("""
 ### Key Coefficient Interpretations:
 
 **Pre-Breach Volatility (THE DOMINANT VARIABLE):**
-- Model 1: **0.51*** (p<0.001) → Explains 39.5% of post-breach volatility alone!
-- Model 6: **0.47*** (p<0.001) → Still explains most variance with all controls
+- Model 1: **-0.53*** (p<0.001) → Baseline uncertainty explains 38.6% of post-breach volatility!
+- Model 4: **-0.53*** (p<0.001) → Persists with all controls
 - **Interpretation:** Market's prior uncertainty is the strongest predictor of post-breach uncertainty
 - This is a FIRM-LEVEL TRAIT that dominates disclosure timing effects
+- Negative coefficient means: firms with high pre-breach volatility have similar high post-breach volatility
+
+**Days to Disclosure:**
+- Model 2: **0.0039** (p<0.05)* - Very small positive effect (0.39% per 100 days)
+- Model 3-4: **0.0034 to 0.0032** (p<0.10, weakly significant)
+- **Interpretation:** Delaying disclosure slightly INCREASES volatility (not the direction we'd expect)
+- Effect is very small (requires 100+ day delay to matter)
 
 **Immediate Disclosure (NOT SIGNIFICANT):**
-- Model 1: **-0.06** (p=0.954) - No effect alone
-- Model 6: **-0.30** (p=0.855) - Still not significant with all controls
+- Model 3: **1.30** (p>0.10) - Not significant
+- Model 4: **1.30** (p>0.10) - Still not significant with controls
 - **Interpretation:** Immediate disclosure does NOT reduce post-breach volatility
 - Faster disclosure doesn't resolve information asymmetry about breach severity
+- This contradicts the "faster is better" assumption
 
-**FCC Reportable:**
-- Model 4: **1.37** (p=0.134) - Weakly positive
-- Model 5: **2.28** (p=0.016)* - Significant positive effect!
-- Model 6: **2.76** (p=0.004)** - Strongest effect in full model
-- **Interpretation:** FCC-regulated breaches have HIGHER post-breach volatility
-- Even with immediate disclosure requirement, market remains MORE uncertain about FCC breaches
+**FCC Reportable (H2-Extended - KEY FINDING):**
+- Model 3: **+1.83** (p<0.05)** - FCC firms have HIGHER post-breach volatility!
+- Model 4: **+1.68** (p<0.10)* - Robust to adding breach characteristics
+- **Interpretation:** FCC-regulated breaches have INCREASED market uncertainty
+- Even with mandatory immediate disclosure (7-day rule), FCC firms show HIGHER post-disclosure volatility
+- Forced early disclosure doesn't resolve uncertainty - it may worsen it (information overload)
+- This is the OPPOSITE of what information asymmetry theory predicts
 
-**FCC × Immediate Interaction:**
-- Model 5-6: **-4.40 to -5.19** (p>0.05, not significant)
-- Suggests FCC immediate disclosure doesn't resolve the uncertainty premium
-- Market doesn't reward FCC firms extra for mandatory compliance
+**Health Data Breach:**
+- Model 4: **-1.36** (p>0.10) - Weakly negative (not what we'd expect)
+- **Interpretation:** Complex breaches don't increase volatility as expected
+- Firm size and prior uncertainty dominate over breach characteristics
 
-**Large Firm Effect:**
-- Model 2: **-2.37*** (p=0.001) - Large firms have lower post-breach volatility
-- Model 5-6: **-2.93*** to -2.82*** - Persists with FCC controls
-- **Interpretation:** Firm size signals stability and information quality
-
-**Conclusion:** Market's pre-existing uncertainty matters more than disclosure timing.
-FCC mandatory disclosure increases volatility rather than resolving it.
+**Conclusion:**
+- Market's pre-existing uncertainty matters **far more** than disclosure timing
+- FCC mandatory disclosure actually **increases volatility** rather than resolving it
+- This suggests a quality-timing tradeoff: forced early disclosure sacrifices information quality
 """)
 
 # ============================================================================

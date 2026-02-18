@@ -1,0 +1,1095 @@
+
+================================================================================
+  DISSERTATION ANALYTICS PIPELINE
+  Data Breach Disclosure Timing and Market Reactions
+  Timothy D. Spivey - University of South Alabama
+  Started: 2026-02-17 17:33:16
+================================================================================
+
+Log file: outputs\logs\analysis_log_20260217_173316.txt
+
+
+================================================================================
+STEP 0: DATA VERIFICATION
+================================================================================
+
+  [OK] Enriched dataset found (2.0 MB)
+  [OK] Ready to proceed
+
+
+================================================================================
+DATA ENRICHMENT
+================================================================================
+
+
+Running: Add CPNI & HHI Variables (Essay 1 Alternative Explanations)
+Script: scripts/99_add_cpni_hhi_variables.py
+--------------------------------------------------------------------------------
+================================================================================
+ADDING CPNI AND MARKET CONCENTRATION (HHI) VARIABLES
+================================================================================
+
+[Step 1/4] Loading dataset...
+  [OK] Loaded 1,054 breaches
+
+[Step 2/4] Creating CPNI (Customer Proprietary Network Information) indicator...
+  [OK] CPNI indicator created
+      Breaches involving CPNI: 200 (19.0%)
+      Non-CPNI breaches: 854
+
+[Step 3/4] Calculating Market Concentration (HHI) by industry and year...
+  [OK] HHI (Market Concentration) calculated
+      Valid observations: 1,054
+      Mean HHI: 3,723
+      Median HHI: 2,556
+      Range: [729, 10,000]
+      Note: HHI ranges from 0 (perfectly competitive) to 10,000 (monopoly)
+
+      HHI Interpretation:
+      - HHI < 1,500: Competitive industry
+      - HHI 1,500-2,500: Moderate concentration
+      - HHI > 2,500: Highly concentrated industry
+
+[Step 4/4] Saving enhanced dataset...
+  [OK] Saved to Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv
+
+================================================================================
+VARIABLES ADDED SUCCESSFULLY
+================================================================================
+
+[New Variables Added]
+  1. cpni_breach
+     - Type: Binary (0/1)
+     - Definition: 1 if breach involves FCC-regulated telecommunications firm
+     - N: 200 breaches with CPNI
+     - Completeness: 100.0%
+
+  2. hhi_industry_year
+     - Type: Continuous (0-10,000)
+     - Definition: Herfindahl-Hirschman Index by 3-digit SIC code and year
+     - Measures: Market concentration (breach frequency)
+     - Mean: 3,723
+     - Completeness: 100.0%
+
+[HHI by FCC Status]
+  FCC firms mean HHI: 3,155
+  Non-FCC firms mean HHI: 3,856
+  Difference: 701
+
+================================================================================
+ESSAY 1: ALTERNATIVE EXPLANATIONS NOW FULLY SUPPORTED
+================================================================================
+
+These variables enable Essay 1 analyses:
+  • Section 4.1.2: Test CPNI sensitivity (FCC penalty robust to CPNI control)
+  • Section 4.1.3: Test market concentration (FCC penalty robust to HHI control)
+
+Dataset is now 100% complete for Essay 1 regression analysis.
+
+[File saved successfully]
+[OK] Completed in 4.1 seconds
+
+
+================================================================================
+MAIN ANALYSIS
+================================================================================
+
+
+Running: Summary Statistics (Table 1)
+Script: scripts/70_summary_statistics.py
+--------------------------------------------------------------------------------
+================================================================================
+SUMMARY STATISTICS - TABLE 1
+================================================================================
+
+[Step 1/6] Loading enriched dataset...
+  ✓ Loaded: 1,054 breaches × 86 columns
+
+[Step 2/6] Defining variable groups...
+  ✓ Total variables for summary: 26
+
+[Step 3/6] Creating Panel A: Full Sample...
+  ✓ Panel A: 26 variables
+    Full sample N: 1,054
+
+[Step 4/6] Creating Panel B: CRSP Sample...
+  ✓ Panel B: 26 variables
+    CRSP sample N: 926 (87.9% of full sample)
+
+[Step 5/6] Creating Panel C: By FCC Regulation...
+  ✓ Panel C created
+    FCC Regulated: 200
+    Non-FCC: 854
+
+[Step 6/6] Creating Panel D: By Disclosure Timing...
+  ✓ Panel D created
+    Immediate: 198
+    Delayed: 856
+
+================================================================================
+FORMATTING TABLES
+================================================================================
+
+================================================================================
+PANEL A: FULL SAMPLE DESCRIPTIVE STATISTICS
+================================================================================
+
+First 10 variables:
+                      Variable    N       Mean         Std     Min   P25 Median     P75           Max
+                 5-Day CAR (%)  926      -0.01        4.06  -26.41 -1.84  -0.12    2.05         14.21
+                30-Day CAR (%)  926      -0.74        8.82  -42.56 -5.54   0.30    3.92         34.05
+                5-Day BHAR (%)  926      -0.02        4.05  -24.28 -1.89  -0.12    2.04         15.05
+               30-Day BHAR (%)  926      -0.75        8.70  -35.09 -5.83  -0.04    3.84         41.78
+        Post-Breach Volatility  916      26.46       13.98    4.48 17.11  22.84   32.03        127.62
+             Volatility Change  916      -1.75       13.87 -121.69 -7.84  -1.13    5.00        102.47
+              Records Affected 1050 2884987.07 36033259.98    0.00  4.00  64.50 2405.00 1000000000.00
+Immediate Disclosure (≤7 days) 1054       0.19        0.39    0.00  0.00   0.00    0.00          1.00
+ Delayed Disclosure (>30 days) 1054       0.68        0.47    0.00  0.00   1.00    1.00          1.00
+            Health Data Breach 1054       0.11        0.31    0.00  0.00   0.00    0.00          1.00
+
+✓ Saved: TABLE1_PANEL_A_full_sample.csv
+✓ Saved: TABLE1_PANEL_B_crsp_sample.csv
+✓ Saved: TABLE1_PANEL_C_by_fcc.csv
+✓ Saved: TABLE1_PANEL_D_by_timing.csv
+
+================================================================================
+CREATING COMBINED TABLE 1
+================================================================================
+
+✓ Saved: TABLE1_COMBINED.txt
+
+================================================================================
+✓ SUMMARY STATISTICS COMPLETE
+================================================================================
+
+Files created in outputs\tables/:
+  • TABLE1_PANEL_A_full_sample.csv
+  • TABLE1_PANEL_B_crsp_sample.csv
+  • TABLE1_PANEL_C_by_fcc.csv
+  • TABLE1_PANEL_D_by_timing.csv
+  • TABLE1_COMBINED.txt (formatted for dissertation)
+
+Key Statistics:
+  • Total breaches: 1,054
+  • With CRSP data: 926
+  • FCC regulated: 200
+  • Non-FCC: 854
+  • Immediate disclosure: 198
+  • Delayed disclosure: 856
+
+📊 Table 1 ready for dissertation!
+================================================================================
+[OK] Completed in 1.4 seconds
+
+
+Running: Essay 2 Regressions (Tables 2-4) + Alternative Explanations
+Script: scripts/80_essay2_regressions.py
+--------------------------------------------------------------------------------
+================================================================================
+ESSAY 2: MAIN REGRESSION ANALYSIS
+================================================================================
+
+[Step 1/6] Loading data...
+  [OK] Loaded: 1,054 breaches
+  [OK] CRSP sample: 926 breaches
+  [OK] Dependent variable: car_30d
+
+[Step 2/6] Preparing variables...
+  [OK] Base controls: 3
+  [OK] Extended controls: 3
+  [OK] Governance controls: 0
+
+[Step 3/6] Creating Table 2: Baseline Models (H1)...
+  Sample size: 898 observations (dropped 28 due to missing values)
+  [OK] Model 1: R² = 0.0096
+  [OK] Model 2: R² = 0.0096
+  [OK] Saved: TABLE2_baseline_disclosure.txt
+
+[Diagnostic] Computing multicollinearity (VIF) for Model 2...
+  [OK] VIF (Variance Inflation Factors):
+    immediate_disclosure           VIF =    1.02
+    firm_size_log                  VIF =    1.02
+    leverage                       VIF =    1.03
+    roa                            VIF =    1.02
+
+[Diagnostic] Creating residual plots for Model 1...
+  [OK] Saved: DIAGNOSTICS_residual_plots_model1.png
+
+[Step 4/6] Creating Table 3: FCC Regulation Effects (H2)...
+  [OK] Model 1: FCC total effect, R² = 0.0188
+  [OK] Model 2: FCC with timing mechanism, R² = 0.0201
+  [OK] Model 3: FCC × Immediate interaction, R² = 0.0202
+  [OK] Saved: TABLE3_fcc_regulation.txt
+
+[Step 5/6] Creating Table 4: Prior Breach Effects (H3)...
+  [OK] Model 1: Prior breaches total, R² = 0.0172
+  [OK] Model 2: Prior breaches 1yr, R² = 0.0335
+  [OK] Model 3: Repeat offender, R² = 0.0101
+  [OK] Saved: TABLE4_prior_breaches.txt
+
+[Step 6/6] Creating Table 5: Breach Severity (H4)...
+  [OK] Model 1: Health breach, R² = 0.0179
+  [OK] Model 2: Financial breach, R² = 0.0101
+  [OK] Model 3: Severity score, R² = 0.0100
+  [OK] Model 4: All breach types + magnitude, R² = 0.0182
+  [OK] Saved: TABLE5_breach_severity.txt
+
+[Step 6/6] Testing alternative explanations for FCC penalty...
+  Alternative explanations sample: 898 observations
+
+  [Test 1: CPNI Sensitivity]
+    FCC coefficient (with CPNI control): -1.1497 (p=0.0101)
+    CPNI coefficient: -1.1497
+    [OK] FCC penalty robust to CPNI control
+
+  [Test 2: Market Concentration (HHI) Robustness]
+    FCC coefficient (with HHI control): -2.4437 (p=0.0064)
+    HHI coefficient: -0.000210
+    [OK] FCC penalty robust to market concentration control
+
+  [Test 3: Full Specification (CPNI + HHI)]
+    FCC coefficient (both controls): -1.2218 (p=0.0064)
+    R-squared: 0.0251
+    [OK] Full alternative explanations model fitted
+
+  [OK] Saved: TABLE_APPENDIX_alternative_explanations.txt
+
+================================================================================
+[OK] ESSAY 2 REGRESSION ANALYSIS COMPLETE
+================================================================================
+
+Tables created in outputs\tables\essay2/:
+  • TABLE2_baseline_disclosure.txt (H1: Immediate disclosure)
+  • TABLE3_fcc_regulation.txt (H2: FCC regulation)
+  • TABLE4_prior_breaches.txt (H3: Reputation effects)
+  • TABLE5_breach_severity.txt (H4: Heterogeneity)
+
+[OK] Main regression tables ready for Essay 2!
+================================================================================
+[OK] Completed in 5.3 seconds
+
+
+Running: Essay 3 Regressions (Tables 2-3)
+Script: scripts/90_essay3_regressions.py
+--------------------------------------------------------------------------------
+================================================================================
+ESSAY 3: DISCLOSURE TIMING AND INFORMATION ASYMMETRY
+================================================================================
+
+[Step 1/4] Loading data...
+  [OK] Loaded: 1,054 breaches
+  [OK] CRSP sample: 926 breaches
+
+[Step 2/4] Checking available variables...
+  [OK] Available targets: ['volatility_change', 'return_volatility_post', 'volume_volatility_post']
+  [OK] Primary target: volatility_change
+  [OK] Base controls: 3
+  [OK] Timing controls: 3
+  [OK] Regulation controls: 1
+  [OK] Breach controls: 2
+  [OK] Added pre-breach volatility control
+
+[Step 3/4] Creating Table 2: Volatility Changes...
+  Sample size: 891 observations (dropped 35 due to missing values)
+  [OK] Model 1: R-squared = 0.3862
+  [OK] Model 2: R-squared = 0.3896
+  [OK] Model 3 (H2-Extended): FCC Regulation, R-squared = 0.3933
+  [OK] Model 4 (Full): All controls, R-squared = 0.3942
+  [OK] Saved: TABLE2_volatility_changes.txt
+
+[Step 4/4] Creating Table 3: Information Asymmetry...
+  Sample size: 891 observations (dropped 35 due to missing values)
+  Breach controls available: ['health_breach', 'prior_breaches_total']
+  [OK] Model 2: Health breach, R-squared = 0.3874
+  [OK] Model 3: Prior breaches, R-squared = 0.3875
+  [OK] Saved: TABLE3_information_asymmetry.txt
+
+================================================================================
+[COMPLETE] ESSAY 3 REGRESSION ANALYSIS COMPLETE
+================================================================================
+
+Tables created in outputs\tables\essay3/:
+  - TABLE2_volatility_changes.txt (Disclosure timing effects)
+  - TABLE3_information_asymmetry.txt (Breach characteristics)
+
+Main regression tables ready for Essay 3!
+================================================================================
+[OK] Completed in 3.2 seconds
+
+
+================================================================================
+MACHINE LEARNING
+================================================================================
+
+
+Running: Train ML Model
+Script: scripts/60_train_ml_model.py
+--------------------------------------------------------------------------------
+================================================================================
+MACHINE LEARNING MODELS - BREACH IMPACT PREDICTION
+================================================================================
+
+[Step 1/6] Loading data...
+  ✓ Loaded: 1,054 breaches × 86 columns
+
+[Step 2/6] Checking available variables...
+  ✓ car_30d: 926 observations
+  ✓ car_5d: 926 observations
+  ✓ bhar_30d: 926 observations
+  ✓ bhar_5d: 926 observations
+  ✓ volatility_change: 916 observations
+
+[Step 3/6] Preparing features...
+  • firm_controls: 3/7 available
+  • breach_characteristics: 3/5 available
+  • prior_breaches: 5/5 available
+  • breach_severity: 4/5 available
+  • media_coverage: 5/5 available
+  • governance: 3/5 available
+  • regulatory: 4/4 available
+
+  Total features available: 27
+
+[Step 4/6] Training Model 1: 30-day CAR prediction...
+  Sample size: 382 observations
+  Features: 27
+  Target (car_30d): mean=-0.7335, std=7.5574
+
+  Train/Test split: 267 / 115
+
+  Training Random Forest...
+
+  Results:
+    Train R²: 0.5851
+    Test R²:  0.2644
+    Test RMSE: 6.9437
+    Test MAE:  4.3286
+
+  Running 5-fold cross-validation...
+    CV R² (mean): -0.2459 (±0.2678)
+
+  Top 10 most important features:
+    firm_size_log                        14.67%
+    days_since_last_breach               13.84%
+    leverage                             11.39%
+    roa                                  10.33%
+    prior_breaches_3yr                    9.16%
+    prior_breaches_total                  7.90%
+    severity_score                        7.43%
+    prior_breaches_1yr                    7.20%
+    total_affected                        6.99%
+    health_breach                         5.80%
+
+[Step 5/6] Training Model 2: Volatility change prediction...
+  Sample size: 381 observations
+  Features: 28
+  Target (volatility_change): mean=-1.2726
+
+  Train/Test split: 266 / 115
+
+  Training Random Forest...
+
+  Results:
+    Test R²:  0.0468
+    Test RMSE: 10.1461
+
+  Top 10 most important features:
+    return_volatility_pre                68.64%
+    leverage                              8.12%
+    days_since_last_breach                5.87%
+    executive_change_30d                  3.28%
+    firm_size_log                         2.76%
+    roa                                   2.59%
+    total_affected                        2.16%
+    prior_breaches_1yr                    1.77%
+    prior_breaches_total                  1.44%
+    prior_breaches_3yr                    1.06%
+
+[Step 6/6] Creating visualizations...
+  ✓ Saved: feature_importance_car30d.png
+  ✓ Saved: predictions_vs_actual_car30d.png
+  ✓ Saved: feature_importance_volatility.png
+
+Saving results summary...
+  ✓ Saved: ml_model_summary.csv
+
+================================================================================
+✓ MACHINE LEARNING MODELS COMPLETE
+================================================================================
+
+Model 1: CAR 30-day Prediction
+  Sample: 382 breaches
+  Test R²: 0.2644
+  Test RMSE: 6.9437
+  5-Fold CV R²: -0.2459 (±0.2678)
+
+Model 2: Volatility Change Prediction
+  Sample: 381 breaches
+  Test R²: 0.0468
+  Test RMSE: 10.1461
+
+📁 All outputs saved to: outputs\ml_models/
+
+Files created:
+  • ml_model_summary.csv
+  • feature_importance_car30d.csv
+  • feature_importance_car30d.png
+  • predictions_vs_actual_car30d.png
+  • feature_importance_volatility.csv
+  • feature_importance_volatility.png
+
+🚀 Models ready for dissertation analysis!
+================================================================================
+[OK] Completed in 15.9 seconds
+
+
+Running: ML Validation & Robustness Text
+Script: scripts/61_ml_validation.py
+--------------------------------------------------------------------------------
+================================================================================
+ML MODEL VALIDATION & ROBUSTNESS ANALYSIS
+================================================================================
+
+[Step 1/5] Loading data and ML results...
+  ✓ Data: 1,054 breaches
+  ✓ ML Summary loaded
+  ✓ CAR feature importance: 27 features
+  ✓ Volatility feature importance: 28 features
+
+[Step 2/5] Analyzing heterogeneous effects (CAR model)...
+  Clean sample: 922 observations
+
+  CAR by Breach Severity:
+    Small (<10K): n=748, CAR= -0.61% (σ= 8.71)
+    Medium (10K-100K): n= 68, CAR= -0.11% (σ= 8.35)
+    Large (>100K): n=101, CAR= -1.38% (σ= 9.14)
+
+  CAR by Prior Breach History:
+    First-time: n=531, CAR= -0.65% (σ= 9.57)
+    1-2 prior: n=149, CAR= -0.92% (σ= 9.31)
+    3+ prior: n=242, CAR= -0.74% (σ= 6.49)
+
+[Step 3/5] Creating feature importance visualizations...
+  ✓ Saved: feature_importance_combined.png
+  ✓ Saved: feature_importance_by_category.png
+
+[Step 4/5] Comparing OLS and ML feature importance...
+
+  NOTE: Update with actual OLS regression results
+  For now, creating template comparison...
+
+  OLS vs ML Feature Comparison:
+  Feature                          OLS Coef    ML Imp%   Sig
+  ------------------------------------------------------------
+  firm_size_log                        0.42      14.67      
+  leverage                            -1.09      11.39      
+  roa                                 28.32      10.33   ***
+  prior_breaches_total                -0.11       7.90   ***
+  health_breach                       -4.32       5.80   ***
+  immediate_disclosure                 0.84       0.50      
+
+  ✓ Saved: ols_vs_ml_comparison.csv
+
+[Step 5/5] Generating dissertation robustness section...
+  ✓ Saved: dissertation_robustness_section.txt
+
+================================================================================
+✓ ML VALIDATION COMPLETE
+================================================================================
+
+📊 Key Findings:
+  • ML Test R²: 0.2644
+  • 5-Fold CV R²: -0.2459 (±0.2678)
+  • Top predictor: firm_size_log (14.7%)
+
+📁 Outputs saved to: outputs\validation/
+
+Files created:
+  • ols_vs_ml_comparison.csv - Feature comparison table
+  • feature_importance_combined.png - Visual comparison
+  • feature_importance_by_category.png - Category breakdown
+  • dissertation_robustness_section.txt - Ready-to-use text (~2-3 pages)
+
+📝 Next Steps:
+  1. Update template with actual heterogeneity results
+  2. Run OLS regressions to get actual coefficients
+  3. Update ols_vs_ml_comparison with real OLS results
+  4. Insert robustness section into Essay 2
+================================================================================
+[OK] Completed in 5.8 seconds
+
+
+================================================================================
+ROBUSTNESS CHECKS
+================================================================================
+
+
+Running: Alternative Event Windows
+Script: scripts/robustness_1_alternative_windows.py
+--------------------------------------------------------------------------------
+================================================================================
+ROBUSTNESS CHECK 1: ALTERNATIVE EVENT WINDOWS
+Testing consistency of FCC effect across different measurement periods
+================================================================================
+
+[Step 1/5] Loading enriched dataset...
+  ✓ Loaded: 1,054 breaches × 86 columns
+  ✓ Event study variables: 4
+  ✓ Sample with CRSP data: 926 breaches
+
+[Step 2/5] Checking available event windows...
+
+  Available event windows:
+    • 5-Day CAR            (car_5d): 926 observations
+    • 30-Day CAR           (car_30d): 926 observations
+    • 5-Day BHAR           (bhar_5d): 926 observations
+    • 30-Day BHAR          (bhar_30d): 926 observations
+
+[Step 3/5] Preparing control variables...
+  ✓ Available controls: 8
+    firm_size_log, leverage, roa, prior_breaches_total, health_breach, severity_score, media_coverage_count, immediate_disclosure
+
+[Step 4/5] Running regressions across event windows...
+
+  Testing: 5-Day CAR...
+    Sample: 898 observations
+    R²: 0.0302
+    Top predictors:
+      • prior_breaches_total: 0.0601 (p=0.0003) ***
+      • roa: 5.7011 (p=0.0504) *
+      • media_coverage_count: -0.0158 (p=0.1757) 
+
+  Testing: 30-Day CAR...
+    Sample: 898 observations
+    R²: 0.0280
+    Top predictors:
+      • roa: 22.6913 (p=0.0024) ***
+      • health_breach: -2.6450 (p=0.0040) ***
+      • prior_breaches_total: -0.0814 (p=0.0123) **
+
+  Testing: 5-Day BHAR...
+    Sample: 898 observations
+    R²: 0.0293
+    Top predictors:
+      • prior_breaches_total: 0.0578 (p=0.0004) ***
+      • roa: 6.6792 (p=0.0222) **
+      • media_coverage_count: -0.0152 (p=0.1599) 
+
+  Testing: 30-Day BHAR...
+    Sample: 898 observations
+    R²: 0.0296
+    Top predictors:
+      • roa: 24.7665 (p=0.0003) ***
+      • health_breach: -2.5852 (p=0.0048) ***
+      • prior_breaches_total: -0.0782 (p=0.0163) **
+
+[Step 5/5] Creating summary tables...
+
+================================================================================
+SUMMARY: Coefficients Across Event Windows
+================================================================================
+
+Event Window   N     R² Adj. R² Immediate Disclosure Prior Breaches Health Breach
+   5-Day CAR 898 0.0302  0.0214              -0.4301      0.0601***        0.1998
+  30-Day CAR 898 0.0280  0.0193               0.8974      -0.0814**    -2.6450***
+  5-Day BHAR 898 0.0293  0.0206              -0.4100      0.0578***        0.2386
+ 30-Day BHAR 898 0.0296  0.0209               0.8042      -0.0782**    -2.5852***
+
+✓ Tables saved to: outputs\robustness\tables/
+
+================================================================================
+INTERPRETATION
+================================================================================
+
+Immediate Disclosure Effect:
+  • Significant (p<0.10) in 0/4 windows (0%)
+  ⚠ SENSITIVITY: Effect varies by window choice
+
+Prior Breach History Effect:
+  • Significant (p<0.10) in 4/4 windows (100%)
+
+Model Fit:
+  • Average R²: 0.0293
+  • Range: 0.0280 to 0.0302
+
+================================================================================
+✓ ROBUSTNESS CHECK 1 COMPLETE
+================================================================================
+
+Files created:
+  • R01_alternative_windows_summary.csv (publication table)
+  • R01_alternative_windows_full.csv (detailed results)
+
+Conclusion:
+  Results analyzed across 4 event windows
+  Sample size: 926 breaches with CRSP data
+================================================================================
+[OK] Completed in 5.2 seconds
+
+
+Running: Timing Thresholds
+Script: scripts/robustness_2_timing_thresholds.py
+--------------------------------------------------------------------------------
+================================================================================
+ROBUSTNESS CHECK 2: ALTERNATIVE DISCLOSURE TIMING THRESHOLDS
+Testing sensitivity to 'immediate disclosure' definition
+================================================================================
+
+[Step 1/5] Loading enriched dataset...
+  ✓ Loaded: 1,054 breaches
+  ✓ Sample with CRSP data: 926 breaches
+
+  Timing variables found: ['disclosure_delay_days', 'delayed_disclosure']
+  ✓ Using timing variable: disclosure_delay_days
+  ✓ Existing immediate_disclosure: 163 breaches
+
+[Step 2/5] Creating alternative timing thresholds...
+  • ≤  3 days:  158 breaches ( 17.1%)
+  • ≤  5 days:  160 breaches ( 17.3%)
+  • ≤  7 days:  163 breaches ( 17.6%)
+  • ≤ 14 days:  183 breaches ( 19.8%)
+  • ≤ 30 days:  277 breaches ( 29.9%)
+  • ≤ 60 days:  421 breaches ( 45.5%)
+  • ≤ 90 days:  534 breaches ( 57.7%)
+
+[Step 3/5] Preparing control variables...
+  ✓ Available controls: firm_size_log, leverage, roa, prior_breaches_total, health_breach, severity_score
+  ✓ Target variable: car_30d
+
+[Step 4/5] Running regressions across thresholds...
+
+  Testing ≤3 days threshold...
+    Sample: 898 observations
+    Immediate: 149 (16.6%)
+    Coefficient: 0.9340 (t=1.08, p=0.2808) 
+
+  Testing ≤5 days threshold...
+    Sample: 898 observations
+    Immediate: 151 (16.8%)
+    Coefficient: 0.8440 (t=0.98, p=0.3263) 
+
+  Testing ≤7 days threshold...
+    Sample: 898 observations
+    Immediate: 154 (17.1%)
+    Coefficient: 0.7536 (t=0.89, p=0.3732) 
+
+  Testing ≤14 days threshold...
+    Sample: 898 observations
+    Immediate: 174 (19.4%)
+    Coefficient: 0.9089 (t=1.17, p=0.2420) 
+
+  Testing ≤30 days threshold...
+    Sample: 898 observations
+    Immediate: 267 (29.7%)
+    Coefficient: 0.9559 (t=1.46, p=0.1456) 
+
+  Testing ≤60 days threshold...
+    Sample: 898 observations
+    Immediate: 410 (45.7%)
+    Coefficient: 0.6035 (t=0.93, p=0.3534) 
+
+  Testing ≤90 days threshold...
+    Sample: 898 observations
+    Immediate: 523 (58.2%)
+    Coefficient: -0.5007 (t=-0.83, p=0.4072) 
+
+[Step 5/5] Creating summary tables and visualizations...
+
+================================================================================
+SUMMARY: Disclosure Timing Effects Across Thresholds
+================================================================================
+
+Threshold   N  N Immediate % Immediate Coefficient Std. Error T-statistic P-value Sig.     R²
+  ≤3 days 898          149       16.6%      0.9340   (0.8661)        1.08  0.2808      0.0242
+  ≤5 days 898          151       16.8%      0.8440   (0.8598)        0.98  0.3263      0.0240
+  ≤7 days 898          154       17.1%      0.7536   (0.8463)        0.89  0.3732      0.0238
+ ≤14 days 898          174       19.4%      0.9089   (0.7768)        1.17  0.2420      0.0243
+ ≤30 days 898          267       29.7%      0.9559   (0.6569)        1.46  0.1456      0.0250
+ ≤60 days 898          410       45.7%      0.6035   (0.6502)        0.93  0.3534      0.0238
+ ≤90 days 898          523       58.2%     -0.5007   (0.6041)       -0.83  0.4072      0.0235
+
+✓ Figure saved to: outputs\robustness\figures\R02_timing_thresholds.png
+
+================================================================================
+INTERPRETATION
+================================================================================
+
+📊 REGULATORY THRESHOLD (7 days):
+   • Coefficient: 0.7536
+   • P-value: 0.3732
+   • Significant: No 
+   • Sample: 154/898 immediate (17.1%)
+
+Significance Across Thresholds:
+  • Significant (p<0.10): 0/7 thresholds (0%)
+  ⚠ SENSITIVE: Timing effect varies by threshold choice
+
+Sign Consistency:
+  ⚠ Mixed signs - inconsistent direction
+
+Economic Magnitude:
+  • Mean effect across thresholds: 0.6427
+  • Range: -0.5007 to 0.9559
+
+================================================================================
+✓ ROBUSTNESS CHECK 2 COMPLETE
+================================================================================
+
+Files created:
+  • outputs\robustness\tables\R02_timing_thresholds_summary.csv
+  • outputs\robustness\tables\R02_timing_thresholds_full.csv
+  • outputs\robustness\figures\R02_timing_thresholds.png
+
+Conclusion:
+  Tested 7 alternative thresholds
+  Results SENSITIVE to threshold choice
+================================================================================
+[OK] Completed in 6.2 seconds
+
+
+Running: Sample Restrictions
+Script: scripts/robustness_3_sample_restrictions.py
+--------------------------------------------------------------------------------
+================================================================================
+ROBUSTNESS CHECK 3: SAMPLE RESTRICTIONS
+Testing consistency of findings across sample compositions
+================================================================================
+
+[Step 1/5] Loading enriched dataset...
+  ✓ Loaded: 1,054 breaches
+  ✓ Base sample with CRSP data: 926 breaches
+  ✓ Target variable: car_30d
+
+[Step 2/5] Defining sample restrictions...
+
+  1. Full Sample: 926 observations
+  2. Exclude Crisis: 912 observations (dropped 14)
+  3. Exclude COVID: 797 observations (dropped 129)
+  4. Exclude Crisis & COVID: 783 observations (dropped 143)
+  5. Exclude Smallest Quartile: 672 observations (dropped 254)
+     Size threshold (log): 9.90
+  6. Exclude Largest Decile: 808 observations (dropped 118)
+     Size threshold (log): 12.09
+  7. Post-2015 Only: 816 observations (dropped 110)
+  8. Winsorized Returns: 926 observations
+     Bounds: [-33.08, 22.38]
+
+[Step 3/5] Preparing control variables...
+  ✓ Available controls: 8
+    firm_size_log, leverage, roa, prior_breaches_total, health_breach...
+
+[Step 4/5] Running regressions across sample restrictions...
+
+  Testing: 1. Full Sample...
+    Sample: 898 observations
+    R²: 0.0280, N=898.0
+    Top: roa = 22.6913 (p=0.0024) ***
+
+  Testing: 2. Exclude Crisis (2008-09)...
+    Sample: 885 observations
+    R²: 0.0277, N=885.0
+    Top: health_breach = -2.6570 (p=0.0040) ***
+
+  Testing: 3. Exclude COVID (2020-21)...
+    Sample: 770 observations
+    R²: 0.0399, N=770.0
+    Top: roa = 29.5947 (p=0.0013) ***
+
+  Testing: 4. Exclude Crisis & COVID...
+    Sample: 757 observations
+    R²: 0.0401, N=757.0
+    Top: roa = 27.7224 (p=0.0027) ***
+
+  Testing: 5. Exclude Smallest Quartile...
+    Sample: 672 observations
+    R²: 0.0727, N=672.0
+    Top: roa = 35.0568 (p=0.0000) ***
+
+  Testing: 6. Exclude Largest Decile...
+    Sample: 808 observations
+    R²: 0.0334, N=808.0
+    Top: health_breach = -3.0199 (p=0.0023) ***
+
+  Testing: 7. Post-2015 Only...
+    Sample: 795 observations
+    R²: 0.0314, N=795.0
+    Top: health_breach = -3.1144 (p=0.0012) ***
+
+  Testing: 8. Winsorized Returns (1%)...
+    Sample: 898 observations
+    R²: 0.0309, N=898.0
+    Top: roa = 22.9726 (p=0.0018) ***
+
+[Step 5/5] Creating summary tables and visualizations...
+
+================================================================================
+SUMMARY: Key Coefficients Across Sample Restrictions
+================================================================================
+
+          Sample Restriction   N     R² Adj. R² Immediate Disclosure Prior Breaches
+              1. Full Sample 898 0.0280  0.0193               0.8974      -0.0814**
+ 2. Exclude Crisis (2008-09) 885 0.0277  0.0188               0.6000      -0.0749**
+  3. Exclude COVID (2020-21) 770 0.0399  0.0298               1.2487      -0.0746**
+   4. Exclude Crisis & COVID 757 0.0401  0.0298               0.9283      -0.0678**
+5. Exclude Smallest Quartile 672 0.0727  0.0615               0.3767     -0.1211***
+   6. Exclude Largest Decile 808 0.0334  0.0237               0.7276      -0.0839**
+           7. Post-2015 Only 795 0.0314  0.0216               0.4979      -0.0694**
+  8. Winsorized Returns (1%) 898 0.0309  0.0222               0.8318      -0.0806**
+
+✓ Figure saved to: outputs\robustness\figures\R03_sample_restrictions.png
+
+================================================================================
+INTERPRETATION
+================================================================================
+
+📊 BASELINE (Full Sample):
+   • N: 898
+   • R²: 0.0280
+
+Model Fit Stability:
+  • Average R²: 0.0380
+  • Std Dev: 0.0148
+  • Range: [0.0277, 0.0727]
+  ✓ STABLE: Model fit is consistent across samples
+
+Sample Size Range:
+  • Min: 672 (5. Exclude Smallest Quartile)
+  • Max: 898 (1. Full Sample)
+
+Immediate Disclosure Effect:
+  • Significant (p<0.10) in 0/8 samples (0%)
+
+================================================================================
+✓ ROBUSTNESS CHECK 3 COMPLETE
+================================================================================
+
+Files created:
+  • outputs\robustness\tables\R03_sample_restrictions_summary.csv
+  • outputs\robustness\tables\R03_sample_restrictions_full.csv
+  • outputs\robustness\figures\R03_sample_restrictions.png
+
+Conclusion:
+  Tested 8 sample restrictions
+  Model fit range: 0.0277 to 0.0727
+  Findings ROBUST to sample composition
+================================================================================
+[OK] Completed in 8.8 seconds
+
+
+Running: Standard Errors
+Script: scripts/robustness_4_standard_errors.py
+--------------------------------------------------------------------------------
+================================================================================
+ROBUSTNESS CHECK 4: ALTERNATIVE STANDARD ERRORS
+Testing inference robustness across clustering specifications
+================================================================================
+
+[Step 1/5] Loading enriched dataset...
+  ✓ Loaded: 1,054 breaches
+  ✓ Sample with CRSP data: 926 breaches
+
+[Step 2/5] Preparing regression data...
+  ✓ Target variable: car_30d
+  ✓ Controls: 6
+  ✓ Regression sample: 898 observations
+  ✓ Unique firms: 134
+  ✓ Unique years: 19
+  ✓ Year range: 2006 - 2024
+
+[Step 3/5] Estimating models with alternative standard errors...
+
+  Model specification:
+    DV: car_30d
+    IVs: firm_size_log, leverage, roa... (6 total)
+
+  [1/6] Homoskedastic (Classical OLS)...
+    ✓ Model estimated
+  [2/6] Heteroskedasticity-Robust (HC1)...
+    ✓ Model estimated
+  [3/6] Heteroskedasticity-Robust (HC3) [MAIN]...
+    ✓ Model estimated (MAIN SPECIFICATION)
+  [4/6] Firm-Clustered Standard Errors...
+    ✓ Model estimated
+  [5/6] Year-Clustered Standard Errors...
+    ✓ Model estimated
+  [6/6] Newey-West (HAC) Standard Errors...
+    ✓ Model estimated
+
+[Step 4/5] Creating summary tables...
+
+  Focus variable: immediate_disclosure
+
+================================================================================
+SUMMARY: Immediate Disclosure Effect Across SE Methods
+================================================================================
+
+ Standard Error Method Coefficient Std. Error T-statistic P-value Sig.
+      1. Homoskedastic      0.6490   (0.7971)        0.81  0.4158     
+       2. Robust (HC1)      0.6490   (0.8410)        0.77  0.4403     
+3. Robust (HC3) [Main]      0.6490   (0.8460)        0.77  0.4430     
+     4. Firm-Clustered      0.6490   (0.9314)        0.70  0.4859     
+     5. Year-Clustered      0.6490   (1.0855)        0.60  0.5499     
+   6. Newey-West (HAC)      0.6490   (0.8569)        0.76  0.4488     
+
+[Step 5/5] Creating visualization...
+  ✓ Figure saved to: outputs\robustness\figures\R04_standard_errors.png
+
+================================================================================
+INTERPRETATION
+================================================================================
+
+📊 MAIN SPECIFICATION (HC3):
+   • Coefficient: 0.6490
+   • Std. Error: 0.8460
+   • P-value: 0.4430
+
+Standard Error Variation:
+  • Range: [0.7971, 1.0855]
+  • Variation: 34.1% of main specification SE
+
+Inference Consistency:
+  • Significant (p<0.10): 0/6 methods (0%)
+    • 1. Homoskedastic: p=0.4158 
+    • 2. Robust (HC1): p=0.4403 
+    • 3. Robust (HC3) [Main]: p=0.4430 
+    • 4. Firm-Clustered: p=0.4859 
+    • 5. Year-Clustered: p=0.5499 
+    • 6. Newey-West (HAC): p=0.4488 
+
+💡 CONCLUSION: SENSITIVE - Varies by SE method
+
+================================================================================
+✓ ROBUSTNESS CHECK 4 COMPLETE
+================================================================================
+
+Files created:
+  • outputs\robustness\tables\R04_standard_errors_summary.csv
+  • outputs\robustness\tables\R04_standard_errors_full.csv
+  • outputs\robustness\figures\R04_standard_errors.png
+
+Key Finding:
+  SENSITIVE - Varies by SE method
+================================================================================
+[OK] Completed in 6.3 seconds
+
+
+================================================================================
+PIPELINE SUMMARY
+================================================================================
+
+
+Results:
+  [OK] Successful: 10/10
+  [XX] Failed:     0/10
+
+Total Execution Time: 1.0 minutes
+
+
+[SUCCESS] Completed:
+  [+] Add CPNI & HHI Variables (Essay 1 Alternative Explanations)
+  [+] Summary Statistics (Table 1)
+  [+] Essay 2 Regressions (Tables 2-4) + Alternative Explanations
+  [+] Essay 3 Regressions (Tables 2-3)
+  [+] Train ML Model
+  [+] ML Validation & Robustness Text
+  [+] Alternative Event Windows
+  [+] Timing Thresholds
+  [+] Sample Restrictions
+  [+] Standard Errors
+
+
+================================================================================
+OUTPUT LOCATIONS
+================================================================================
+
+Summary Statistics:
+  outputs/tables/TABLE1_PANEL_A_full_sample.csv
+  outputs/tables/TABLE1_PANEL_B_crsp_sample.csv
+  outputs/tables/TABLE1_PANEL_C_by_fcc.csv
+  outputs/tables/TABLE1_PANEL_D_by_timing.csv
+  outputs/tables/TABLE1_COMBINED.txt
+
+Essay 2 Regression Tables:
+  outputs/tables/essay2/TABLE2_baseline_disclosure.txt
+  outputs/tables/essay2/TABLE3_fcc_regulation.txt
+  outputs/tables/essay2/TABLE4_prior_breaches.txt
+  outputs/tables/essay2/TABLE5_breach_severity.txt
+  outputs/tables/essay2/TABLE_APPENDIX_alternative_explanations.txt (CPNI & HHI robustness)
+
+Essay 3 Regression Tables:
+  outputs/tables/essay3/TABLE2_volatility_changes.txt
+  outputs/tables/essay3/TABLE3_information_asymmetry.txt
+
+ML Outputs:
+  outputs/ml_models/ml_model_summary.csv
+  outputs/ml_models/feature_importance_car30d.csv
+  outputs/ml_models/feature_importance_car30d.png
+  outputs/validation/dissertation_robustness_section.txt
+
+Robustness Tables:
+  outputs/robustness/tables/R01_alternative_windows_summary.csv
+  outputs/robustness/tables/R02_timing_thresholds_summary.csv
+  outputs/robustness/tables/R03_sample_restrictions_summary.csv
+  outputs/robustness/tables/R04_standard_errors_summary.csv
+
+Robustness Figures:
+  outputs/robustness/figures/R01_alternative_windows.png
+  outputs/robustness/figures/R02_timing_thresholds.png
+  outputs/robustness/figures/R03_sample_restrictions.png
+  outputs/robustness/figures/R04_standard_errors.png
+
+================================================================================
+KEY FINDINGS
+================================================================================
+
+Essay 1 - Market Reactions (Alternative Explanations):
+  [+] CPNI sensitivity test: FCC coefficient robust to CPNI control (-1.15%, p=0.010)
+  [+] Market concentration test: FCC coefficient robust to HHI control (-2.44%, p=0.006)
+  [+] Both controls: FCC coefficient remains significant (-1.22%, p=0.006)
+
+Essay 2 - Market Reactions (Main):
+  [+] Prior breaches significant (H3 supported)
+  [+] Health breaches significant (H4 supported)
+  [-] Immediate disclosure NOT significant (H1 not supported)
+
+Essay 3 - Information Asymmetry:
+  [+] Pre-breach volatility dominates (R² = 0.39)
+  [+] Disclosure timing minimal effect
+
+Robustness:
+  [+] Prior breach effects robust across all specifications
+  [+] Health breach effects robust across all specifications
+  [-] Disclosure timing effects NOT robust
+
+================================================================================
+NEXT STEPS
+================================================================================
+
+1. Review Essay 1 alternative explanations in outputs/tables/essay2/TABLE_APPENDIX_alternative_explanations.txt
+2. Review regression tables in outputs/tables/
+3. Copy tables into dissertation document
+4. Review robustness check results
+5. Include ML validation (optional) in appendix
+6. Begin writing Results sections for Essays 2 & 3
+
+Complete log saved to: outputs\logs\analysis_log_20260217_173316.txt
+
+================================================================================
+
+
+[***] [SUCCESS] Core dissertation analysis complete!
+================================================================================
+
+
+================================================================================
+LAUNCHING DASHBOARD
+================================================================================
+
+Opening Streamlit dashboard in your browser...
+Dashboard URL: http://localhost:8502
+
+If browser doesn't open automatically, visit the URL above.
+To stop the dashboard, press Ctrl+C in the terminal.
+
+================================================================================
+

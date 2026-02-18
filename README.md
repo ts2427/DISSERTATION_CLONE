@@ -34,6 +34,62 @@ This dissertation analyzes the market reactions to data breach disclosures among
 - **Financial Data Breaches:** 257 (24.4%)
 - **Executive Turnover:** 443 breaches (42.0%) with executive departure within 30 days
 
+---
+
+## 📊 Variable Specification
+
+### Dependent Variables (DVs)
+
+| Essay | Variable | Definition | N | Range | Mean |
+|-------|----------|-----------|---|-------|------|
+| **E1** | `car_30d` | 30-day cumulative abnormal return (%) | 926 | -42.56 to 34.05 | -0.74% |
+| **E2** | `volatility_change` | Change in return volatility (percentage points) | 916 | -121.69 to 102.47 | -1.75pp |
+| **E3** | `executive_change_30d` | Binary: Executive departure ≤30 days | 896 | 0, 1 | 46.4% |
+
+### Independent Variables - Timing & Regulation
+
+| Variable | Definition | Type | N | Expected Effect (E1) |
+|----------|-----------|------|---|-------------------|
+| `immediate_disclosure` | Binary: ≤7 days to disclosure | Binary | 1,054 | +0.57% (NS) |
+| `days_to_disclosure` | Days from breach to public disclosure | Continuous | 1,054 | -0.05% per day |
+| `fcc_reportable` | FCC-regulated: SIC 4813, 4899, 4841 | Binary | 1,054 | **-2.20%*** |
+
+### Independent Variables - Breach Characteristics
+
+| Variable | Definition | Type | N | Expected Effect (E1) |
+|----------|-----------|------|---|-------------------|
+| **`total_affected_log`** | **log(records_affected + 1)** | **Continuous** | **922** | **Positive** |
+| `health_breach` | HIPAA-covered health/medical data | Binary | 1,054 | **-2.51%*** |
+| `financial_breach` | GLBA-covered financial data | Binary | 1,054 | -1.0% |
+| `prior_breaches_total` | All-time breach count | Continuous | 1,054 | **-0.10%*** per breach |
+| `prior_breaches_1yr` | 1-year breach count | Continuous | 1,054 | -0.23%*** per breach |
+
+### Control Variables - Firm Fundamentals
+
+| Variable | Definition | Type | N | Range |
+|----------|-----------|------|---|-------|
+| `firm_size_log` | log(total assets) | Continuous | 973 | 5.01-14.74 |
+| `leverage` | total_debt / total_assets | Continuous | 976 | 0.12-2.52 |
+| `roa` | net_income / total_assets (%) | Continuous | 976 | -0.33 to 0.21 |
+
+### Control Variables - Volatility (Essay 2)
+
+| Variable | Definition | Type | N |
+|----------|-----------|------|---|
+| `return_volatility_pre` | std(daily returns) 20 trading days pre-breach | Continuous | 916 |
+
+### Governance Variables (Essay 3)
+
+| Variable | Definition | Type | N | Coverage |
+|----------|-----------|------|---|----------|
+| `executive_change_30d` | Binary: Executive departure ≤30d | Binary | 896 | 46.4% |
+| `executive_change_90d` | Binary: Executive departure ≤90d | Binary | 896 | 66.9% |
+| `regulatory_enforcement` | Binary: FTC/FCC/AG enforcement action | Binary | 1,054 | 0.6% |
+
+**Note:** For detailed variable definitions and data sources, see `Data/processed/DATA_DICTIONARY_ENRICHED.csv`
+
+---
+
 ## 📊 Conceptual Model
 
 ### Research Question
