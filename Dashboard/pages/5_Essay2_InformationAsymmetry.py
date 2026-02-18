@@ -69,7 +69,7 @@ st.markdown("<div class='research-header'>💨 Essay 2: Disclosure Timing and In
 st.markdown("<div class='research-question'>Research Question: Information Processing Mechanism (Tushman & Nadler, 1978)</div>", unsafe_allow_html=True)
 
 st.markdown("""
-Essay 1 showed: **Markets react negatively to forced disclosure (-2.19% CAR).**
+Essay 1 showed: **Markets react negatively to FCC regulation (-2.20% CAR).**
 
 Essay 2 asks: **WHY? Is it because forced timing creates information asymmetry?**
 

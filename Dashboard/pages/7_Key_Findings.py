@@ -92,18 +92,22 @@ st.markdown("<div class='paradox-header'>💡 The Disclosure Paradox: Three Essa
 
 st.markdown("""
 <div class='paradox-box'>
-<h2>The Paradox: Forced Disclosure Creates Cascading Negative Effects</h2>
+<h2>The Key Insight: Timing Affects HOW Market Learns, Not WHAT It Concludes</h2>
 
-<b>Central Finding:</b> Mandatory disclosure requirements trigger negative outcomes
-not just for markets, but across information environments and organizational structure.
+<b>Central Finding:</b> Disclosure timing creates a paradox: it doesn't change market valuations
+but DOES change how information flows through markets and organizations.
 
-<b>The Disclosure Timeline:</b>
-1. <b style='color: #1f77b4;'>Essay 1: Markets React Negatively</b> - Forced disclosure → negative CAR
-2. <b style='color: #9467bd;'>Essay 2: Volatility Increases</b> - FCC firms experience +4.96%*** volatility increase
-3. <b style='color: #2ca02c;'>Essay 3: Governance Responds</b> - 46.4% of breaches trigger executive turnover
+<b>The Cascading Effects Across Three Essays:</b>
+1. <b style='color: #1f77b4;'>Essay 1: Market Reaction (Valuation)</b> - CAR unchanged by timing (-0.74% regardless)
+2. <b style='color: #9467bd;'>Essay 2: Market Uncertainty (Volatility)</b> - FCC forced disclosure INCREASES volatility (+4.96%***)
+3. <b style='color: #2ca02c;'>Essay 3: Organizational Response (Governance)</b> - 46.4% trigger executive turnover within 30 days
 
-<b>Implication:</b> Disclosure timing doesn't just affect markets—it affects information asymmetry
-and organizational structure. This challenges the assumption that "faster disclosure = better outcomes"
+<b>The Paradox Resolved:</b> Timing affects <i>process</i> (information diffusion, uncertainty, governance response)
+but not <i>outcome</i> (firm valuation). This explains why mandatory fast disclosure rules fail to prevent information asymmetry—
+they may actually increase it by forcing incomplete information disclosure.
+
+<b>Policy Implication:</b> Stock market discipline does not operate through disclosure timing, which explains why
+voluntary rapid disclosure remains rare despite regulatory pressure.
 
 </div>
 """, unsafe_allow_html=True)
@@ -114,17 +118,20 @@ and organizational structure. This challenges the assumption that "faster disclo
 
 st.markdown("""
 <div class='essay-box-1'>
-<h3 style='color: #1f77b4;'>📈 Essay 1: Market Reactions to Forced Disclosure</h3>
+<h3 style='color: #1f77b4;'>📈 Essay 1: Market Reactions — Timing Doesn't Matter</h3>
 
 <b>Research Question:</b> Do disclosure timing and FCC regulation affect abnormal market returns?
 
-<b>Key Finding:</b> FCC-regulated firms have WORSE market reactions despite mandatory immediate disclosure
+<b>Key Findings:</b>
+- <b>H1 (Timing):</b> +0.57% (p=0.539, TOST PASS) — Economically negligible; timing irrelevant
+- <b>H2 (FCC):</b> -2.20%** (p=0.010) — Regulatory effect, not industry trait (validated via post-2007 test)
+- <b>H3 (Prior Breaches):</b> -0.22%*** per breach — Strongest effect; market prices in history
+- <b>H4 (Severity):</b> -1.67%* for health data — Information complexity drives reactions
 
-<b>Key Results:</b>
-- <b>Sample:</b> 898 breaches with CRSP data
-- <b>FCC Effect:</b> Approximately -0.74%*** cumulative abnormal return
-- <b>Non-FCC Effect:</b> Less negative reactions (voluntary timing benefits)
-- <b>Implication:</b> Forced disclosure = negative market outcome for regulated firms
+<b>Sample:</b> 898 breaches with CRSP data (887.5% of full sample matched)
+<b>Main Specification:</b> Firm-clustered standard errors (accounts for repeated breaches per firm)
+
+<b>Bottom Line:</b> The market punishes WHO YOU ARE (regulated, health data, repeat offender), not WHEN YOU DISCLOSE.
 
 </div>
 """, unsafe_allow_html=True)
@@ -135,19 +142,22 @@ st.markdown("""
 
 st.markdown("""
 <div class='essay-box-2'>
-<h3 style='color: #9467bd;'>💨 Essay 2: Information Asymmetry and Volatility</h3>
+<h3 style='color: #9467bd;'>💨 Essay 2: Information Asymmetry — Forced Disclosure Increases Uncertainty</h3>
 
-<b>Research Question:</b> Does forced disclosure reduce information asymmetry, measured by volatility?
+<b>Research Question:</b> Does timing affect how markets process information (volatility change)?
 
-<b>Key Finding:</b> FCC firms experience HIGHER post-breach volatility, contradicting disclosure theory
+<b>Key Finding:</b> Forced disclosure INCREASES market uncertainty, contradicting regulatory theory
 
 <b>Key Results:</b>
-- <b>Sample:</b> 916 breaches with volatility data, 891 in main models
+- <b>Sample:</b> 916 breaches with volatility data (87% of full sample)
 - <b>FCC Effect:</b> +4.96%*** increase in return volatility (p<0.001)
-- <b>Mechanism:</b> Information processing bottleneck (Tushman & Nadler, 1978)
-- <b>Interpretation:</b> Forced early disclosure creates incomplete information → market uncertainty INCREASES
+- <b>Mechanism:</b> Information processing bottleneck — forced early disclosure = incomplete information
+- <b>Interpretation:</b> Market uncertainty INCREASES when disclosure forced, not resolved
 
-<b>Implication:</b> Quality-timing tradeoff is real: forcing early disclosure sacrifices information quality
+<b>The Paradox (vs. Essay 1):</b> While timing doesn't affect firm valuation (Essay 1), it DOES affect market uncertainty (Essay 2).
+Timing affects HOW market learns, not WHAT it concludes.
+
+<b>Implication:</b> Quality-timing tradeoff is real: forcing early disclosure worsens information asymmetry by requiring incomplete information disclosure
 
 </div>
 """, unsafe_allow_html=True)

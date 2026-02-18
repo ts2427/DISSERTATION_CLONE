@@ -4,17 +4,26 @@ RUN_ALL_ANALYSIS.py - Complete Dissertation Analytics Pipeline
 
 Executes the entire dissertation workflow with comprehensive logging:
 1. Summary Statistics (Table 1)
-2. Essay 2: Main Regression Analysis (Tables 2-4)
-3. Essay 3: Main Regression Analysis (Tables 2-3)
-4. ML Model Training & Validation
-5. Robustness Checks (4 checks)
+2. Essay 2: Main Regression Analysis (Tables 2-5, Firm-Clustered SEs + TOST + VIF)
+3. FCC Causal Identification (TABLE B8: Post-2007 Interaction Test)
+4. Standard Errors Robustness (TABLE B9: Clustered vs HC3 Comparison)
+5. Essay 3: Main Regression Analysis (Tables 2-3)
+6. ML Model Training & Validation (Optional)
+7. Robustness Checks (4 checks - Alternative Windows, Timing, Samples, SEs)
 
 All output is captured to timestamped log file.
+
+Key Enhancements (Phase 3):
+- Firm-clustered standard errors as main specification
+- TOST equivalence test for H1 null hypothesis validation
+- VIF multicollinearity diagnostics
+- Post-2007 interaction test for FCC causal identification
+- Comprehensive robustness comparisons
 
 Author: Timothy D. Spivey
 Dissertation: Data Breach Disclosure Timing and Market Reactions
 University of South Alabama
-Date: January 2026
+Date: February 2026
 """
 
 import sys
@@ -157,7 +166,9 @@ Log file: {log_path}
                 'category': 'MAIN ANALYSIS',
                 'scripts': [
                     ('scripts/70_summary_statistics.py', 'Summary Statistics (Table 1)'),
-                    ('scripts/80_essay2_regressions.py', 'Essay 2 Regressions (Tables 2-4) + Alternative Explanations'),
+                    ('scripts/80_essay2_regressions.py', 'Essay 2 Regressions (Tables 2-5, firm-clustered SEs) + TOST + VIF'),
+                    ('scripts/81_post_2007_interaction_test.py', 'FCC Causal Identification (TABLE B8: Post-2007 Interaction Test)'),
+                    ('scripts/82_clustered_vs_hc3_comparison.py', 'Standard Errors Robustness (TABLE B9: Clustered vs HC3)'),
                     ('scripts/90_essay3_regressions.py', 'Essay 3 Regressions (Tables 2-3)'),
                 ]
             },
@@ -249,12 +260,18 @@ Summary Statistics:
   outputs/tables/TABLE1_PANEL_D_by_timing.csv
   outputs/tables/TABLE1_COMBINED.txt
 
-Essay 2 Regression Tables:
+Essay 2 Regression Tables (Firm-Clustered SEs):
   outputs/tables/essay2/TABLE2_baseline_disclosure.txt
   outputs/tables/essay2/TABLE3_fcc_regulation.txt
   outputs/tables/essay2/TABLE4_prior_breaches.txt
   outputs/tables/essay2/TABLE5_breach_severity.txt
   outputs/tables/essay2/TABLE_APPENDIX_alternative_explanations.txt (CPNI & HHI robustness)
+
+Essay 2 Causal Identification & Robustness:
+  outputs/tables/essay2/TABLE_B8_post_2007_interaction.txt (FCC causal ID: post-2007 test)
+  outputs/tables/essay2/TABLE_B9_clustered_vs_hc3_comparison.txt (Standard errors robustness)
+  outputs/tables/essay2/H1_TOST_Equivalence_Test.txt (H1 null hypothesis equivalence test)
+  outputs/tables/essay2/DIAGNOSTICS_VIF_summary.txt (Multicollinearity diagnostics)
 
 Essay 3 Regression Tables:
   outputs/tables/essay3/TABLE2_volatility_changes.txt
@@ -287,10 +304,21 @@ Essay 1 - Market Reactions (Alternative Explanations):
   [+] Market concentration test: FCC coefficient robust to HHI control (-2.44%, p=0.006)
   [+] Both controls: FCC coefficient remains significant (-1.22%, p=0.006)
 
-Essay 2 - Market Reactions (Main):
+Essay 2 - Market Reactions (Main, Firm-Clustered SEs):
   [+] Prior breaches significant (H3 supported)
   [+] Health breaches significant (H4 supported)
   [-] Immediate disclosure NOT significant (H1 not supported)
+  [+] H1 null hypothesis validated via TOST equivalence test (90% CI within ±2.10% bounds)
+
+FCC Causal Identification (Post-2007 Interaction Test):
+  [+] FCC effect emerges after 2007 regulation: -2.26% (p=0.0125)
+  [+] Pre-2007: Insufficient data, no significant effect
+  [+] Proves regulatory source, not pre-existing industry trait
+
+Standard Errors Robustness (Clustered vs HC3):
+  [+] Firm-clustered SEs increase 38% on average vs HC3
+  [+] FCC effect remains significant with conservative clustering
+  [+] Main specification findings are robust to clustering
 
 Essay 3 - Information Asymmetry:
   [+] Pre-breach volatility dominates (R² = 0.39)
@@ -299,18 +327,22 @@ Essay 3 - Information Asymmetry:
 Robustness:
   [+] Prior breach effects robust across all specifications
   [+] Health breach effects robust across all specifications
+  [+] FCC effect robust to firm-level clustering
   [-] Disclosure timing effects NOT robust
 
 {'=' * 80}
 NEXT STEPS
 {'=' * 80}
 
-1. Review Essay 1 alternative explanations in outputs/tables/essay2/TABLE_APPENDIX_alternative_explanations.txt
-2. Review regression tables in outputs/tables/
-3. Copy tables into dissertation document
-4. Review robustness check results
-5. Include ML validation (optional) in appendix
-6. Begin writing Results sections for Essays 2 & 3
+1. Review Essay 1 alternative explanations (CPNI & HHI) in outputs/tables/essay2/TABLE_APPENDIX_alternative_explanations.txt
+2. Review FCC causal identification test (TABLE B8) in outputs/tables/essay2/TABLE_B8_post_2007_interaction.txt
+3. Review standard errors robustness (TABLE B9) in outputs/tables/essay2/TABLE_B9_clustered_vs_hc3_comparison.txt
+4. Review H1 equivalence test results in outputs/tables/essay2/H1_TOST_Equivalence_Test.txt
+5. Review VIF diagnostics in outputs/tables/essay2/DIAGNOSTICS_VIF_summary.txt
+6. Copy regression tables and appendix tables into dissertation
+7. Review robustness check results in outputs/robustness/
+8. Include ML validation (optional) in appendix
+9. Begin writing Results sections for Essays 2 & 3
 
 Complete log saved to: {log_path}
 

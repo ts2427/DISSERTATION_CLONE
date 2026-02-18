@@ -71,14 +71,15 @@ st.markdown("""
 
 <b>The Central Finding Across Three Essays:</b>
 
-<b>Essay 1 (Market Reactions):</b> <b style='color: #d62728;'>H1: Disclosure timing coefficient = +0.45% to +1.00%, NOT significant (p > 0.30)</b>
-- Result: Timing has NO statistically significant effect on market reactions (CAR), tested across 25+ specifications
+<b>Essay 1 (Market Reactions):</b> <b style='color: #d62728;'>H1: Timing effect = +0.57% (TOST PASS: economically negligible)</b>
+- Result: Timing effect is equivalent to zero (90% CI [-0.95%, +2.09%] within ±2.10% bounds)
+- Robustness: Tested across 25+ specifications; timing never significant (p > 0.10 in ANY spec)
 - All other timing thresholds (3, 5, 7, 14, 30, 60 days) also NOT significant
 
 <b>What DOES predict market reactions (H2-H4):</b>
-- <b>H3 (Reputation):</b> Prior breach history → -0.08%** per breach (STRONGEST effect)
-- <b>H4 (Severity):</b> Health data → -2.65%*** (p < 0.001)
-- <b>H2 (Regulation):</b> FCC status → -2.19%* (p = 0.033), robust to CPNI and HHI controls
+- <b>H3 (Reputation):</b> Prior breach history → -0.22%*** per breach (STRONGEST effect, firm-clustered SEs)
+- <b>H4 (Severity):</b> Health data → -1.67%* (p = 0.066, firm-clustered SEs)
+- <b>H2 (Regulation):</b> FCC status → -2.20%** (p = 0.010, post-2007 test validates regulatory effect)
 
 <b>Essay 2 (Information Asymmetry):</b> <b style='color: #d62728;'>Forced disclosure INCREASES volatility, not decreases it</b>
 - Pre-breach volatility dominates (coefficient = -0.53***, explains 38.6% of variance)
@@ -127,13 +128,13 @@ st.markdown("""
 
 **Phase 4: Essay 1 Analysis (What are the market effects?)**
 - Dependent variable: Cumulative Abnormal Returns (CAR) at 30-day window
-- Method: OLS with firm controls, year fixed effects, HC3 robust standard errors
+- Method: OLS with firm controls, firm-clustered standard errors (main specification)
 - Main findings:
-  - H1 (Timing coefficient): +0.45% to +1.00% (NOT significant, p > 0.30)
-  - H2 (FCC coefficient): -2.19%* (p=0.033) - regulatory/sector penalty, robust to CPNI and HHI controls
-  - H3 (Prior breaches): -0.08%** per breach (STRONGEST effect)
-  - H4 (Health breach): -2.65%*** (p < 0.001)
-  - ROA coefficient: +20.67%** (p=0.006) - profitability protective
+  - H1 (Timing coefficient): +0.57% (p=0.539) - TOST PASS (equivalent to zero, 90% CI [-0.95%, +2.09%])
+  - H2 (FCC coefficient): -2.20%** (p=0.010) - regulatory effect validated via post-2007 test, robust to CPNI and HHI
+  - H3 (Prior breaches): -0.22%*** per breach (STRONGEST effect, p<0.001)
+  - H4 (Health breach): -1.67%* (p=0.066)
+  - ROA coefficient: +20.53%** (p=0.006) - profitability protective
 - Robustness: Held across 25+ specifications (7 timing thresholds, 4 windows, 8 subsamples, 6 SE methods)
 
 **Phase 5: Essay 2 Analysis (What's the mechanism?)**
@@ -233,26 +234,18 @@ with col1:
     - Market penalizes companies that disclose before investigation complete
     - Result: Regulation doesn't achieve intended effect
 
-    **Recommended Changes:**
-    1. **Safe Harbor for Ongoing Investigation**
-       - Allow delay + detailed supplemental disclosure
-       - Replace "7 days" with "initial + final" disclosures
-       - Example: Day 7 (preliminary), Day 30 (final)
+    **Key Policy Insight:**
+    Stock market discipline does not operate through disclosure timing. This explains why voluntary rapid disclosure remains rare despite regulatory pressure—it provides no market benefit over delayed complete disclosure.
 
-    2. **Mandate Information Quality, Not Just Timing**
-       - Require breach assessment (in-progress? complete?)
-       - Require timeline of investigation milestones
-       - Require data on actual harm observed so far
+    **Recommendation (Bounded):**
+    Rather than mandating faster disclosure, focus on:
+    - **Governance mechanisms** (board oversight, breach investigation quality)
+    - **Data type protections** (heightened scrutiny for health/financial data)
+    - **Firm capacity** (encourage cybersecurity investment and incident response capabilities)
 
-    3. **Differentiate by Breach Type**
-       - Health data: Longer initial window (complex investigation)
-       - Credit card: Shorter window (simpler to assess)
-       - Trade secrets: Longer window (business implications unclear)
+    Speed alone doesn't reduce information asymmetry; information quality does. Current timing mandates may be well-intentioned but don't achieve stated regulatory goals (based on stock market evidence).
 
-    4. **Study Compliance vs. Effectiveness**
-       - Do firms actually meet 7-day rule? (compliance)
-       - Do disclosures resolve market uncertainty? (effectiveness)
-       - This dissertation shows compliance ≠ effectiveness
+    **Note:** These findings apply to stock market reactions. Other regulatory goals (consumer protection, government oversight) may justify timing rules even if stock market doesn't reward them.
     """)
 
 with col2:

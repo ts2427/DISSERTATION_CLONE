@@ -69,8 +69,8 @@ st.markdown("<div class='research-header'>👔 Essay 3: Disclosure Timing and Go
 st.markdown("<div class='research-question'>Research Question: Stakeholder and Organizational Response</div>", unsafe_allow_html=True)
 
 st.markdown("""
-Essay 1 showed: **Markets react negatively to forced disclosure (-2.19% CAR).**
-Essay 2 showed: **Volatility increases (+1.83% for FCC firms) - information asymmetry persists.**
+Essay 1 showed: **Markets react negatively to FCC regulation (-2.20% CAR).**
+Essay 2 showed: **FCC volatility increases (+4.96%***) - forced disclosure raises uncertainty, not resolves it.**
 
 Essay 3 asks: **HOW DO FIRMS RESPOND? Do they change governance structures and leadership?**
 
