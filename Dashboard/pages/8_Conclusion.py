@@ -223,7 +223,7 @@ with col1:
     ### For Regulators (FCC, SEC, State Attorneys General)
 
     **Key Insight:**
-    You can mandate WHEN firms disclose, but not HOW MUCH they know.
+    Disclosure timing can be mandated, but information completeness cannot.
 
     **Current Approach:**
     - Focus on speed: 7-day, 30-day, 60-day rules

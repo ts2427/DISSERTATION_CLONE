@@ -61,7 +61,7 @@ This creates a **strategic dilemma** at the intersection of:
 - Regulatory requirements (SEC, FCC, state laws mandate specific timelines)
 - Firm reputation (how investors evaluate breach management)
 
-**Answer:** Timing itself doesn't matter. What matters is WHAT you disclose, WHO you are, and WHAT regulatory framework you operate under.
+**Answer:** Timing itself doesn't matter. What matters is WHAT gets disclosed, WHO the firm is, and WHAT regulatory framework applies.
 """)
 
 # ============================================================================
@@ -316,8 +316,8 @@ If **immediate disclosure** is supposedly "good" (signals transparency, reduces 
 **Because the market already expected it.**
 
 When disclosure is **mandatory** (FCC rule):
-- Credibility premium disappears (you HAVE to disclose, so it's not a signal)
-- Sector risk penalty remains (you're FCC-regulated = higher risk sector)
+- Credibility premium disappears (firms MUST disclose, so disclosure isn't a signal)
+- Sector risk penalty remains (FCC-regulated = higher risk sector)
 - Net effect: Negative market reaction
 
 When disclosure is **voluntary** (non-FCC):
@@ -334,7 +334,7 @@ st.info("""
 
 1. **Continue to "Natural Experiment"** page to understand the FCC regulation setup
 2. **Then "Sample Validation"** to see if the sample is defensible
-3. **Then "Data Landscape"** to see what we're analyzing
+3. **Then "Data Landscape"** to explore the dataset
 4. **Then "Essay 2" and "Essay 3"** to see the actual evidence
-5. **Finally "Key Findings"** to see the FCC Paradox explained
+5. **Finally "Key Findings"** to see the disclosure paradox explained
 """)

@@ -298,8 +298,8 @@ st.markdown("""
 <div class='finding-box'>
 <h3>Finding: FCC Regulatory Status Creates a -2.19% Penalty That Is INDEPENDENT of Timing</h3>
 
-This reveals a critical insight: The market reaction depends on WHO the firm is and WHAT regulatory framework applies,
-not WHEN they disclose. Timing itself has no effect (H1 not supported). But regulatory context does (H2 strongly supported).
+This reveals a critical insight: Market reactions depend on WHO the firm is and WHAT regulatory framework applies,
+not WHEN disclosure occurs. Timing itself has no effect (H1 not supported). But regulatory context does (H2 strongly supported).
 </div>
 """, unsafe_allow_html=True)
 
@@ -371,8 +371,8 @@ Timing doesn't affect outcomes because the market already prices in the regulato
 
 #### 2. **Expectations Penalty vs. Credibility Premium**
 - **For FCC firms**: Market expects immediate disclosure (it's mandated)
-  - When they comply immediately → "Just following the rule" (no bonus)
-  - The credibility premium from transparency only exists for VOLUNTARY disclosure
+  - Immediate compliance → "Just following the rule" (no bonus)
+  - Credibility premium from transparency only exists for VOLUNTARY disclosure
   - **No signal value when compliance is mandatory**
 
 - **For Non-FCC firms**: Immediate disclosure is VOLUNTARY
@@ -380,8 +380,8 @@ Timing doesn't affect outcomes because the market already prices in the regulato
   - Market rewards transparency with smaller penalties
   - **Signal value when compliance is voluntary**
 
-- **The result**: FCC requirement for speed doesn't help because it destroys the signaling value
-- **Evidence**: Mandatory disclosure coefficient NOT significantly different from voluntary, and both are non-significant
+- **The result**: FCC requirement for speed doesn't help because it destroys signaling value
+- **Evidence**: Mandatory disclosure coefficient NOT significantly different from voluntary disclosure, and both are non-significant
 
 #### 3. **Regulatory Oversight Penalty**
 - FCC breach report triggers regulatory investigation

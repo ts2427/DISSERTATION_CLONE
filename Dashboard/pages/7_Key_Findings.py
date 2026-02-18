@@ -103,8 +103,8 @@ but DOES change how information flows through markets and organizations.
 3. <b style='color: #2ca02c;'>Essay 3: Organizational Response (Governance)</b> - 46.4% trigger executive turnover within 30 days
 
 <b>The Paradox Resolved:</b> Timing affects <i>process</i> (information diffusion, uncertainty, governance response)
-but not <i>outcome</i> (firm valuation). This explains why mandatory fast disclosure rules fail to prevent information asymmetry—
-they may actually increase it by forcing incomplete information disclosure.
+but not <i>outcome</i> (firm valuation). Mandatory fast disclosure rules fail to prevent information asymmetry—
+and may actually increase it by forcing incomplete information disclosure.
 
 <b>Policy Implication:</b> Stock market discipline does not operate through disclosure timing, which explains why
 voluntary rapid disclosure remains rare despite regulatory pressure.
@@ -131,7 +131,7 @@ st.markdown("""
 <b>Sample:</b> 898 breaches with CRSP data (887.5% of full sample matched)
 <b>Main Specification:</b> Firm-clustered standard errors (accounts for repeated breaches per firm)
 
-<b>Bottom Line:</b> The market punishes WHO YOU ARE (regulated, health data, repeat offender), not WHEN YOU DISCLOSE.
+<b>Bottom Line:</b> Markets punish firm characteristics (regulated status, health data breaches, repeat offenders), not disclosure timing.
 
 </div>
 """, unsafe_allow_html=True)
@@ -357,13 +357,13 @@ with col2:
 
     **FCC firms' situation:**
     - Market EXPECTS 7-day disclosure (it's required)
-    - When they disclose on day 7 → "Just following the rule"
+    - Disclosure on day 7 → "Just following the rule"
     - No credibility bonus for compliance
-    - If they disclose day 8 → Market penalizes non-compliance
+    - Disclosure on day 8 → Market penalizes non-compliance
 
     **Non-FCC firms' situation:**
     - Market has NO requirement expectation
-    - If they disclose day 3 → "Wow, transparent!"
+    - Disclosure on day 3 → "Wow, transparent!"
     - Credibility bonus for exceeding implicit expectations
     - Immediate disclosure signals strength
 
@@ -419,7 +419,7 @@ st.markdown("""
 ### The Practical Lesson:
 **"There is no substitute for good information"**
 
-You can mandate when firms speak, but you cannot mandate what they know.
+Disclosure timing can be mandated, but information completeness cannot.
 """)
 
 # ============================================================================
