@@ -10,7 +10,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 import numpy as np
 
-st.set_page_config(page_title="Robustness Checks", page_icon="🔬", layout="wide")
+st.set_page_config(page_title="Robustness Checks: Validation Framework", page_icon="🔬", layout="wide")
 
 st.markdown("""
 <style>

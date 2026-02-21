@@ -123,7 +123,7 @@ st.markdown("""
 <b>Research Question:</b> Do disclosure timing and FCC regulation affect abnormal market returns?
 
 <b>Key Findings:</b>
-- <b>H1 (Timing):</b> +0.57% (p=0.539) — Timing is irrelevant; firm characteristics drive market reactions
+- <b>H1 (Timing):</b> +0.57% (p=0.539) — **Timing is irrelevant** (robust across 25+ specifications). Contribution: Markets reward firm characteristics (regulated status, breach type, history), not disclosure speed
 - <b>H2 (FCC):</b> -2.20%** (p=0.010) — Regulatory effect, not industry trait (validated via post-2007 test)
 - <b>H3 (Prior Breaches):</b> -0.22%*** per breach — Strongest effect; market prices in history
 - <b>H4 (Severity):</b> -1.67%* for health data — Information complexity drives reactions
