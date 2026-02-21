@@ -1,0 +1,32 @@
+================================================================================
+FIX 3: SIZE SENSITIVITY ANALYSIS - DOES FCC EFFECT VARY BY FIRM SIZE?
+================================================================================
+
+Tests whether FCC regulatory penalty is driven by firm size or is robust
+across the firm size distribution. FCC-regulated firms are significantly larger
+(2.02x mean assets, p<0.0001), so we test whether the FCC effect persists
+when comparing across size quartiles.
+
+SAMPLE SIZE COMPARISON:
+--------------------------------------------------------------------------------
+FCC-regulated firms:     Mean log(assets) = 11.070 (approx $0.0B)
+Non-FCC firms:           Mean log(assets) = 10.390 (approx $0.0B)
+Size ratio (FCC/Non-FCC): 1.97x
+
+FCC EFFECT BY FIRM SIZE QUARTILE:
+--------------------------------------------------------------------------------
+Quartile                  N     FCC Coef         SE    P-Value   Sig
+--------------------------------------------------------------------------------
+Q1 (Smallest)           226      -6.2248     3.2225     0.0534     *
+Q2                      232      -4.0644     1.5151     0.0073   ***
+Q3                      215       0.6638     1.7380     0.7025      
+Q4 (Largest)            225       0.4271     1.0781     0.6920      
+--------------------------------------------------------------------------------
+
+INTERPRETATION:
+  Significant FCC effect in 2 of 4 size quartiles (p<0.10)
+
+  CONCLUSION: FCC effect shows MODERATE variation by firm size.
+  Effect is strongest in certain size ranges, suggesting size-regulation interaction.
+
+================================================================================

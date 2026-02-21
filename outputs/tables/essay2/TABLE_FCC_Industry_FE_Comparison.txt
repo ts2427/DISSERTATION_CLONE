@@ -1,0 +1,27 @@
+================================================================================
+FIX 1: INDUSTRY FIXED EFFECTS - ISOLATING REGULATORY EFFECT
+================================================================================
+
+Tests whether FCC effect persists after controlling for industry-specific confounds.
+If FCC effect reflects industry characteristics rather than regulation, coefficient
+should shrink substantially with industry FE. If regulation-driven, effect should persist.
+
+RESULTS:
+--------------------------------------------------------------------------------
+Model                                        FCC Coef         SE    P-Value        N       R2
+--------------------------------------------------------------------------------
+1. Baseline (no FE)                           -2.1991     0.8792     0.0124      898   0.0188
+2. Industry FE (2-digit SIC)                  -5.3704     1.5875     0.0007      840   0.0943
+--------------------------------------------------------------------------------
+
+INTERPRETATION:
+  FCC coefficient change: -2.1991 -> -5.3704 (144.2%)
+  Statistical significance: Remains significant in both specifications
+  Industry controls: 13 industries with n>=10 observations
+
+  CONCLUSION: FCC effect ROBUST to industry controls.
+  The FCC penalty persists even after controlling for industry-specific factors,
+  supporting interpretation that the effect reflects regulatory burden,
+  not inherent industry characteristics.
+
+================================================================================

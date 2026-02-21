@@ -169,6 +169,7 @@ Log file: {log_path}
                     ('scripts/80_essay2_regressions.py', 'Essay 2 Regressions (Tables 2-5, firm-clustered SEs) + TOST + VIF'),
                     ('scripts/81_post_2007_interaction_test.py', 'FCC Causal Identification (TABLE B8: Post-2007 Interaction Test)'),
                     ('scripts/82_clustered_vs_hc3_comparison.py', 'Standard Errors Robustness (TABLE B9: Clustered vs HC3)'),
+                    ('scripts/83_fcc_causal_identification.py', 'FCC Causal Identification (Industry FE, Size Sensitivity, Summary)'),
                     ('scripts/90_essay3_regressions.py', 'Essay 3 Regressions (Tables 2-3)'),
                 ]
             },
@@ -269,6 +270,9 @@ Essay 2 Regression Tables (Firm-Clustered SEs):
 
 Essay 2 Causal Identification & Robustness:
   outputs/tables/essay2/TABLE_B8_post_2007_interaction.txt (FCC causal ID: post-2007 test)
+  outputs/tables/essay2/TABLE_FCC_Industry_FE_Comparison.txt (FCC causal ID: industry fixed effects)
+  outputs/tables/essay2/TABLE_FCC_Size_Sensitivity.txt (FCC causal ID: size sensitivity analysis)
+  outputs/tables/essay2/FCC_Causal_ID_Summary.txt (FCC causal ID: comprehensive summary)
   outputs/tables/essay2/TABLE_B9_clustered_vs_hc3_comparison.txt (Standard errors robustness)
   outputs/tables/essay2/H1_TOST_Equivalence_Test.txt (H1 null hypothesis equivalence test)
   outputs/tables/essay2/DIAGNOSTICS_VIF_summary.txt (Multicollinearity diagnostics)
