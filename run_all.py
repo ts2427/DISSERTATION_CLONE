@@ -357,7 +357,7 @@ Complete log saved to: {log_path}
         # Final status - check with updated description names
         critical_scripts_succeeded = (
             results.get('Summary Statistics (Table 1)', False) and
-            results.get('Essay 2 Regressions (Tables 2-4) + Alternative Explanations', False) and
+            results.get('Essay 2 Regressions (Tables 2-5, firm-clustered SEs) + TOST + VIF', False) and
             results.get('Essay 3 Regressions (Tables 2-3)', False)
         )
 
