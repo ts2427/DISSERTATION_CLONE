@@ -187,6 +187,7 @@ Log file: {log_path}
                     ('scripts/robustness_2_timing_thresholds.py', 'Timing Thresholds'),
                     ('scripts/robustness_3_sample_restrictions.py', 'Sample Restrictions'),
                     ('scripts/robustness_4_standard_errors.py', 'Standard Errors'),
+                    ('scripts/robustness_5_fixed_effects.py', 'Fixed Effects Models'),
                 ]
             }
         ]
@@ -292,12 +293,13 @@ Robustness Tables:
   outputs/robustness/tables/R02_timing_thresholds_summary.csv
   outputs/robustness/tables/R03_sample_restrictions_summary.csv
   outputs/robustness/tables/R04_standard_errors_summary.csv
+  outputs/robustness/tables/R05_fixed_effects_summary.csv
 
 Robustness Figures:
-  outputs/robustness/figures/R01_alternative_windows.png
   outputs/robustness/figures/R02_timing_thresholds.png
   outputs/robustness/figures/R03_sample_restrictions.png
   outputs/robustness/figures/R04_standard_errors.png
+  outputs/robustness/figures/R05_fixed_effects.png
 
 {'=' * 80}
 KEY FINDINGS
