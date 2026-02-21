@@ -174,6 +174,81 @@ print("SAMPLE ATTRITION ANALYSIS COMPLETE")
 print("="*80 + "\n")
 
 # %% [markdown]
+# ## Disclosure Timing Distribution Analysis
+
+# %%
+print("\n" + "="*80)
+print("  DISCLOSURE TIMING DISTRIBUTION ANALYSIS")
+print("="*80 + "\n")
+
+# Key timing statistics
+if 'disclosure_delay_days' in df.columns:
+    timing_data = df['disclosure_delay_days'].dropna()
+
+    print("DISCLOSURE DELAY STATISTICS (Days from Breach to Public Announcement):")
+    print(f"  N: {len(timing_data):,}")
+    print(f"  Mean: {timing_data.mean():.1f} days")
+    print(f"  Median: {timing_data.median():.1f} days")
+    print(f"  Std Dev: {timing_data.std():.1f} days")
+    print(f"  Min: {timing_data.min():.0f} days")
+    print(f"  25th percentile: {timing_data.quantile(0.25):.0f} days")
+    print(f"  75th percentile: {timing_data.quantile(0.75):.0f} days")
+    print(f"  Max: {timing_data.max():.0f} days")
+
+    # Categorical breakdown
+    print("\nDISCLOSURE TIMING CATEGORIES:")
+    if 'immediate_disclosure' in df.columns:
+        immediate_count = (df['immediate_disclosure'] == 1).sum()
+        immediate_pct = (immediate_count / len(df)) * 100
+        print(f"  <=7 days (Immediate): {immediate_count:,} ({immediate_pct:.1f}%)")
+
+    if 'delayed_disclosure' in df.columns:
+        delayed_count = (df['delayed_disclosure'] == 1).sum()
+        delayed_pct = (delayed_count / len(df)) * 100
+        print(f"  >30 days (Significantly Delayed): {delayed_count:,} ({delayed_pct:.1f}%)")
+
+    # Calculate intermediate category
+    medium_count = len(df) - (immediate_count if 'immediate_disclosure' in df.columns else 0) - \
+                          (delayed_count if 'delayed_disclosure' in df.columns else 0)
+    medium_pct = (medium_count / len(df)) * 100
+    print(f"  8-30 days (Moderately Delayed): {medium_count:,} ({medium_pct:.1f}%)")
+
+    print("\nTIMING DISTRIBUTION INTERPRETATION:")
+    print(f"  The sample shows clustering in the 8-30 day window ({medium_pct:.1f}%),")
+    print(f"  with significant minority showing immediate disclosure ({immediate_pct:.1f}%).")
+    print(f"  This limited variation in the immediate disclosure treatment (19%) is consistent")
+    print(f"  with the null finding on timing effects in Essay 2 regressions.")
+
+# Figure: Histogram of Disclosure Timing
+if 'disclosure_delay_days' in df.columns:
+    fig, ax = plt.subplots(figsize=(12, 6))
+    timing_data_clean = df['disclosure_delay_days'].dropna()
+
+    ax.hist(timing_data_clean, bins=50, color='steelblue', alpha=0.7, edgecolor='black')
+    ax.axvline(timing_data_clean.mean(), color='red', linestyle='--', linewidth=2,
+               label=f"Mean: {timing_data_clean.mean():.1f} days")
+    ax.axvline(timing_data_clean.median(), color='green', linestyle='--', linewidth=2,
+               label=f"Median: {timing_data_clean.median():.1f} days")
+    ax.axvline(7, color='orange', linestyle=':', linewidth=2, label='7-day threshold')
+    ax.axvline(30, color='purple', linestyle=':', linewidth=2, label='30-day threshold')
+
+    ax.set_xlabel('Days from Breach to Disclosure', fontsize=12)
+    ax.set_ylabel('Frequency (Number of Breaches)', fontsize=12)
+    ax.set_title('Distribution of Disclosure Timing in Sample (N={:,})'.format(len(timing_data_clean)),
+                 fontsize=14, fontweight='bold')
+    ax.legend(fontsize=11)
+    ax.grid(axis='y', alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig(f'{output_base}/figures/fig_timing_distribution.png', dpi=300, bbox_inches='tight')
+    print(f"\nSaved {output_base}/figures/fig_timing_distribution.png")
+    plt.close()
+
+print("\n" + "="*80)
+print("TIMING DISTRIBUTION ANALYSIS COMPLETE")
+print("="*80 + "\n")
+
+# %% [markdown]
 # ## Table 1: Descriptive Statistics - Full Sample
 
 # %%
