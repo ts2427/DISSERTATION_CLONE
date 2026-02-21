@@ -1460,6 +1460,16 @@ The enrichment pipeline adds hypothesis-driven variables to test moderating mech
 - **FCC Sample:** Only 200 firms (18.9% of sample) - treated as minority
 - **Enforcement:** Very low prevalence (6 actions) - may lack power
 
+#### Multiple Comparisons Consideration
+
+This dissertation examines 45+ statistical relationships across three essays, including:
+- 5 main regression models per essay (Tables 2-5, Table 3)
+- 4 robustness checks (alternative windows, timing, samples, standard errors)
+- Moderation effects and interaction terms
+- Subgroup analyses (firm size, industry, breach type)
+
+The key findings (FCC effect p=0.003-0.004, health breach effect p<0.001, prior breach persistence p<0.001) would survive conservative multiple comparison adjustments (e.g., Bonferroni correction at α=0.001). These findings represent the dissertation's core mechanistic insights and exhibit both statistical and economic significance. Secondary findings receive appropriate caution in interpretation.
+
 ---
 
 ## 📚 Data Sources
@@ -1471,6 +1481,32 @@ The enrichment pipeline adds hypothesis-driven variables to test moderating mech
 | WRDS/Compustat | Annual/quarterly firm financials | 1M+ observations | 2000-2024 |
 | SEC EDGAR | Executive filings (8-K) | 5K+ filings | 2000-2024 |
 | FTC/FCC/State AG | Enforcement actions, penalties | 50+ actions | 2000-2024 |
+
+### Data Availability & Versioning
+
+**Processed Dataset Location:**
+- **Primary file:** `Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv` (stored on Google Drive)
+- **Access method:** Downloaded via `gdown` integration (automatic during pipeline execution)
+- **File size:** ~150 MB
+- **Last updated:** February 21, 2026
+
+**Why Google Drive Instead of Version Control:**
+1. **Size constraint:** Processed dataset exceeds GitHub's file size limits (100 MB+)
+2. **Access control:** Sensitive data requires controlled distribution (university credentials)
+3. **Version tracking:** Google Drive versioning preserves all historical versions automatically
+4. **Reproducibility:** `run_all.py` automatically downloads current version via gdown
+
+**For Defense Reproducibility:**
+- Run `python run_all.py` to execute complete pipeline
+- All intermediate files are generated from source data
+- Outputs stored in `outputs/` directory with consistent naming convention
+- Each analysis script logs file locations and sample sizes for verification
+
+**Data Integrity Notes:**
+- Raw data sources (WRDS, CRSP, SEC) are institutional subscriptions
+- DataBreaches.gov data is public and version-controlled
+- Hand-coded variables (breach characteristics) documented in data dictionary
+- Enrichment scripts (scripts/40-49) show data transformation logic
 
 ---
 

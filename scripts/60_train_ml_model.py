@@ -12,7 +12,7 @@ Uses complete enriched dataset with all 85 variables.
 import pandas as pd
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.model_selection import train_test_split, cross_val_score, TimeSeriesSplit
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -35,7 +35,7 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 print(f"\n[Step 1/6] Loading data...")
 df = pd.read_csv(DATA_FILE)
-print(f"  ✓ Loaded: {len(df):,} breaches × {len(df.columns)} columns")
+print(f"  [OK] Loaded: {len(df):,} breaches x {len(df.columns)} columns")
 
 # Check for required variables
 print(f"\n[Step 2/6] Checking available variables...")
@@ -57,10 +57,10 @@ for target, flag in targets.items():
         else:
             count = df[target].notna().sum()
         available_targets[target] = count
-        print(f"  ✓ {target}: {count:,} observations")
+        print(f"  [OK] {target}: {count:,} observations")
 
 if len(available_targets) == 0:
-    print("  ✗ No target variables found!")
+    print("  [ERROR] No target variables found!")
     exit()
 
 # ============================================================================
@@ -135,15 +135,35 @@ if 'car_30d' in available_targets:
     print(f"  Features: {len(all_features)}")
     print(f"  Target (car_30d): mean={model1_clean['car_30d'].mean():.4f}, std={model1_clean['car_30d'].std():.4f}")
     
-    # Split data
-    X = model1_clean[all_features]
-    y = model1_clean['car_30d']
-    
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.3, random_state=42
-    )
-    
-    print(f"\n  Train/Test split: {len(X_train):,} / {len(X_test):,}")
+    # Split data using temporal ordering (breach_date)
+    X = model1_clean[all_features].copy()
+    y = model1_clean['car_30d'].copy()
+
+    # Add breach_date for temporal sorting
+    dates = df.loc[model1_clean.index, 'breach_date'].copy()
+    X['breach_date'] = pd.to_datetime(dates, errors='coerce')
+
+    # Sort by breach date
+    sort_idx = X['breach_date'].argsort()
+    X = X.iloc[sort_idx].reset_index(drop=True)
+    y = y.iloc[sort_idx].reset_index(drop=True)
+
+    # Split 70-30 by temporal order (not random)
+    split_point = int(len(X) * 0.7)
+    X_train = X.iloc[:split_point][all_features]
+    X_test = X.iloc[split_point:][all_features]
+    y_train = y.iloc[:split_point]
+    y_test = y.iloc[split_point:]
+
+    # Get date range for reporting
+    train_start = X.iloc[0]['breach_date']
+    train_end = X.iloc[split_point-1]['breach_date']
+    test_start = X.iloc[split_point]['breach_date']
+    test_end = X.iloc[-1]['breach_date']
+
+    print(f"\n  Temporal Train/Test split (by breach_date):")
+    print(f"    Train: {len(X_train):,} breaches ({train_start.strftime('%Y-%m-%d')} to {train_end.strftime('%Y-%m-%d')})")
+    print(f"    Test:  {len(X_test):,} breaches ({test_start.strftime('%Y-%m-%d')} to {test_end.strftime('%Y-%m-%d')})")
     
     # Train Random Forest
     print(f"\n  Training Random Forest...")
@@ -177,9 +197,10 @@ if 'car_30d' in available_targets:
     print(f"    Test RMSE: {metrics_m1['test_rmse']:.4f}")
     print(f"    Test MAE:  {metrics_m1['test_mae']:.4f}")
     
-    # Cross-validation
+    # Cross-validation (use only features, not breach_date)
     print(f"\n  Running 5-fold cross-validation...")
-    cv_scores = cross_val_score(rf_model1, X, y, cv=5, scoring='r2', n_jobs=-1)
+    X_cv = X[all_features]  # Use only features, exclude breach_date
+    cv_scores = cross_val_score(rf_model1, X_cv, y, cv=5, scoring='r2', n_jobs=-1)
     print(f"    CV R² (mean): {cv_scores.mean():.4f} (±{cv_scores.std():.4f})")
     
     # Feature importance
@@ -231,15 +252,35 @@ if 'volatility_change' in available_targets:
     print(f"  Features: {len(model2_features)}")
     print(f"  Target (volatility_change): mean={model2_clean['volatility_change'].mean():.4f}")
     
-    # Split data
-    X2 = model2_clean[model2_features]
-    y2 = model2_clean['volatility_change']
-    
-    X2_train, X2_test, y2_train, y2_test = train_test_split(
-        X2, y2, test_size=0.3, random_state=42
-    )
-    
-    print(f"\n  Train/Test split: {len(X2_train):,} / {len(X2_test):,}")
+    # Split data using temporal ordering (breach_date)
+    X2 = model2_clean[model2_features].copy()
+    y2 = model2_clean['volatility_change'].copy()
+
+    # Add breach_date for temporal sorting
+    dates2 = df.loc[model2_clean.index, 'breach_date'].copy()
+    X2['breach_date'] = pd.to_datetime(dates2, errors='coerce')
+
+    # Sort by breach date
+    sort_idx2 = X2['breach_date'].argsort()
+    X2 = X2.iloc[sort_idx2].reset_index(drop=True)
+    y2 = y2.iloc[sort_idx2].reset_index(drop=True)
+
+    # Split 70-30 by temporal order (not random)
+    split_point2 = int(len(X2) * 0.7)
+    X2_train = X2.iloc[:split_point2][model2_features]
+    X2_test = X2.iloc[split_point2:][model2_features]
+    y2_train = y2.iloc[:split_point2]
+    y2_test = y2.iloc[split_point2:]
+
+    # Get date range for reporting
+    train_start2 = X2.iloc[0]['breach_date']
+    train_end2 = X2.iloc[split_point2-1]['breach_date']
+    test_start2 = X2.iloc[split_point2]['breach_date']
+    test_end2 = X2.iloc[-1]['breach_date']
+
+    print(f"\n  Temporal Train/Test split (by breach_date):")
+    print(f"    Train: {len(X2_train):,} breaches ({train_start2.strftime('%Y-%m-%d')} to {train_end2.strftime('%Y-%m-%d')})")
+    print(f"    Test:  {len(X2_test):,} breaches ({test_start2.strftime('%Y-%m-%d')} to {test_end2.strftime('%Y-%m-%d')})")
     
     # Train Random Forest
     print(f"\n  Training Random Forest...")
@@ -308,7 +349,7 @@ if rf_model1 is not None:
     plt.tight_layout()
     plt.savefig(OUTPUT_DIR / 'feature_importance_car30d.png', dpi=300, bbox_inches='tight')
     plt.close()
-    print(f"  ✓ Saved: feature_importance_car30d.png")
+    print(f"  [OK] Saved: feature_importance_car30d.png")
     
     # Plot 2: Predictions vs Actual (CAR)
     fig, ax = plt.subplots(figsize=(8, 8))
@@ -327,7 +368,7 @@ if rf_model1 is not None:
     plt.tight_layout()
     plt.savefig(OUTPUT_DIR / 'predictions_vs_actual_car30d.png', dpi=300, bbox_inches='tight')
     plt.close()
-    print(f"  ✓ Saved: predictions_vs_actual_car30d.png")
+    print(f"  [OK] Saved: predictions_vs_actual_car30d.png")
 
 if rf_model2 is not None:
     # Plot 3: Feature Importance (Volatility)
@@ -342,7 +383,7 @@ if rf_model2 is not None:
     plt.tight_layout()
     plt.savefig(OUTPUT_DIR / 'feature_importance_volatility.png', dpi=300, bbox_inches='tight')
     plt.close()
-    print(f"  ✓ Saved: feature_importance_volatility.png")
+    print(f"  [OK] Saved: feature_importance_volatility.png")
 
 # ============================================================================
 # SAVE SUMMARY
@@ -381,14 +422,14 @@ if metrics_m2:
 summary_df = pd.DataFrame(summary)
 summary_df.to_csv(OUTPUT_DIR / 'ml_model_summary.csv', index=False)
 
-print(f"  ✓ Saved: ml_model_summary.csv")
+print(f"  [OK] Saved: ml_model_summary.csv")
 
 # ============================================================================
 # FINAL SUMMARY
 # ============================================================================
 
 print(f"\n" + "=" * 80)
-print("✓ MACHINE LEARNING MODELS COMPLETE")
+print("[OK] MACHINE LEARNING MODELS COMPLETE")
 print("=" * 80)
 
 if metrics_m1:
@@ -404,7 +445,7 @@ if metrics_m2:
     print(f"  Test R²: {metrics_m2['test_r2']:.4f}")
     print(f"  Test RMSE: {metrics_m2['test_rmse']:.4f}")
 
-print(f"\n📁 All outputs saved to: {OUTPUT_DIR}/")
+print(f"\n[DONE] All outputs saved to: {OUTPUT_DIR}/")
 print(f"\nFiles created:")
 print(f"  • ml_model_summary.csv")
 print(f"  • feature_importance_car30d.csv")
