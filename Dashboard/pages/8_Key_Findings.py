@@ -541,9 +541,10 @@ st.info("""
 
 **Essay 1 (Market Reactions):**
 
-❌ **H1 (Timing Effect)**: Immediate disclosure reduces CAR penalty
-- Result: NOT SUPPORTED (coefficient = +0.45% to +1.00%, p > 0.30 across 25+ specs)
-- Finding: Timing does NOT predict market returns
+✅ **H1 (Timing Effect)**: Timing is IRRELEVANT to market reactions
+- Result: Coefficient +0.45% to +1.00%, p > 0.30 across 25+ specs (robust null finding)
+- Contribution: Markets reward firm characteristics (regulated status, breach type, history), NOT disclosure speed
+- Finding: Timing does NOT predict market returns (neither helps nor hurts)
 
 ✅ **H2 (FCC Regulatory Effect)**: FCC status affects CAR → -2.19%** (p=0.033)
 - Finding: SUPPORTED - Regulatory context matters independent of timing

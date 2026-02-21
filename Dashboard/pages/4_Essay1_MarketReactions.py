@@ -538,10 +538,10 @@ st.info("""
 
 **H1: Does Disclosure Timing Predict Market Reactions?**
 
-❌ **Result: NOT SUPPORTED**
+✅ **Result: Timing is IRRELEVANT** (robust across 25+ specifications)
 - Timing coefficient: +0.45% to +1.00% (p > 0.30, NOT significant)
-- Across 25+ specifications: NEVER significant (p > 0.10)
-- Finding: Whether timing is voluntary or mandatory choice, timing is irrelevant to CAR
+- Contribution: Markets reward firm characteristics (regulated status, breach type, history), NOT disclosure speed
+- Finding: Whether timing is voluntary or mandatory choice, timing does NOT predict CAR
 
 **H2-H4: Information Environment Factors (WHAT ACTUALLY MATTERS)**
 When timing doesn't matter, market reactions depend on information environment:
