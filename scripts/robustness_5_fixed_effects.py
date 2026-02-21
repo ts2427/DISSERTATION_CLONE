@@ -198,4 +198,43 @@ The findings cannot be explained by:
 This strengthens confidence that the FCC effect is causal, not driven by confounding.
 """)
 
+# ============================================================================
+# CREATE VISUALIZATION
+# ============================================================================
+
+print(f"\n[Step 6/6] Creating visualization...")
+
+# Create figure with coefficient comparison
+fig, ax = plt.subplots(figsize=(10, 6))
+
+models = ['Baseline\n(OLS)', 'Year FE\n(Macro controls)', 'Industry FE\n(Industry controls)']
+coefficients = [m1_fcc, m2_fcc if not np.isnan(m2_fcc) else m1_fcc,
+                m3_fcc if not np.isnan(m3_fcc) else m1_fcc]
+colors = ['#1f77b4', '#ff7f0e', '#2ca02c']
+pvals = [m1_pval, m2_pval if not np.isnan(m2_pval) else 1.0,
+         m3_pval if not np.isnan(m3_pval) else 1.0]
+
+# Create bars
+bars = ax.bar(models, coefficients, color=colors, alpha=0.7, edgecolor='black', linewidth=1.5)
+
+# Add significance stars
+for i, (coef, pval) in enumerate(zip(coefficients, pvals)):
+    sig = '***' if pval < 0.01 else '**' if pval < 0.05 else '*' if pval < 0.10 else 'ns'
+    ax.text(i, coef + (0.3 if coef > 0 else -0.3), sig, ha='center', fontsize=12, fontweight='bold')
+    ax.text(i, coef/2, f'{coef:.2f}%', ha='center', va='center', fontsize=11, fontweight='bold', color='white')
+
+# Add reference line at zero
+ax.axhline(y=0, color='black', linestyle='-', linewidth=0.8)
+
+# Labels and formatting
+ax.set_ylabel('FCC Effect (% CAR 30-day)', fontsize=12, fontweight='bold')
+ax.set_title('Robustness Check 5: FCC Effect Across Fixed Effects Models', fontsize=13, fontweight='bold')
+ax.grid(axis='y', alpha=0.3, linestyle='--')
+ax.set_ylim(min(coefficients) - 1, max(coefficients) + 1)
+
+plt.tight_layout()
+plt.savefig(OUTPUT_DIR / 'figures' / 'R05_fixed_effects.png', dpi=300, bbox_inches='tight')
+print(f"  [OK] Saved: outputs/robustness/figures/R05_fixed_effects.png")
+plt.close()
+
 print("\n[COMPLETE] Robustness check 5 finished!")

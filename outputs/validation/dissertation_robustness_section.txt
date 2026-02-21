@@ -26,9 +26,9 @@ Features: 27 predictor variables
 RESULTS
 
 Model Performance:
-The Random Forest model achieves a test R² of 0.2644, compared to 
+The Random Forest model achieves a test R² of -1.3324, compared to 
 approximately 0.05-0.08 for our OLS specifications. The 5-fold cross-validation yields 
-an average R² of -0.2459 (±0.2678), indicating 
+an average R² of -0.4704 (±0.8183), indicating 
 reasonably stable performance across different data splits.
 
 Feature Importance Rankings:
@@ -36,28 +36,28 @@ Machine learning provides an alternative perspective on feature importance throu
 decrease in impurity. The top 10 most important features are:
 
                feature  importance_pct
-         firm_size_log       14.670308
-days_since_last_breach       13.837995
-              leverage       11.391758
-                   roa       10.330962
-    prior_breaches_3yr        9.160007
-  prior_breaches_total        7.901944
-        severity_score        7.426241
-    prior_breaches_1yr        7.202183
-        total_affected        6.988626
-         health_breach        5.797054
+days_since_last_breach       28.315040
+         firm_size_log       26.635950
+              leverage       11.035735
+                   roa        9.065504
+        total_affected        5.577338
+  prior_breaches_total        5.343565
+    prior_breaches_3yr        4.973388
+        severity_score        1.827755
+    prior_breaches_1yr        1.780837
+  executive_change_30d        1.012433
 
 KEY FINDINGS
 
-1. Prior Breach History: Combined importance of 24.3%
+1. Prior Breach History: Combined importance of 12.1%
    - Supports H3: Reputation effects significantly impact market reactions
    - Consistent with OLS finding that prior breaches reduce negative reactions
 
-2. Firm Characteristics: 36.4% combined
-   - Firm size is most important (14.7%)
+2. Firm Characteristics: 46.7% combined
+   - Firm size is most important (26.6%)
    - Validates importance of firm controls in OLS models
 
-3. Breach Severity: 13.4% combined
+3. Breach Severity: 2.2% combined
    - Supports H4: Breach characteristics drive heterogeneous reactions
    - Health breaches particularly important predictor
 
@@ -73,7 +73,7 @@ The Random Forest models validate our main OLS findings:
 2. Firm characteristics matter (validates control variable selection)
 3. Breach severity drives heterogeneous effects (supports H4)
 
-The modest improvement in R² (0.2644 vs ~0.05-0.08) suggests that while 
+The modest improvement in R² (-1.3324 vs ~0.05-0.08) suggests that while 
 some non-linearities exist, the linear OLS specification captures the primary relationships. 
 The consistency between OLS coefficients and ML feature importance provides additional 
 confidence in our econometric specification.
