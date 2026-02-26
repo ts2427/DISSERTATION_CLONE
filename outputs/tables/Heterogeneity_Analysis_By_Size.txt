@@ -1,0 +1,32 @@
+
+HETEROGENEITY ANALYSIS - TIMING EFFECTS BY FIRM SIZE
+
+ESSAY 1: CAR (Cumulative Abnormal Returns)
+Group               N      Coefficient    P-Value
+───────────────────────────────────────────────────────
+Size Q1_Small          205        1.1580      0.6021
+Size Q2                227       -0.6736      0.5602
+Size Q3                239        0.7787      0.6882
+Size Q4_Large          227        0.0504      0.9663
+
+ESSAY 2: Volatility Change
+Group               N      Coefficient    P-Value
+───────────────────────────────────────────────────────
+Size Q1_Small          200        0.8543      0.7644
+Size Q2                227        1.2666      0.5004
+Size Q3                238        0.1137      0.9676
+Size Q4_Large          226       -2.0572      0.4136
+
+ESSAY 3: Executive Turnover (30-day)
+Group               N      Coefficient    P-Value
+───────────────────────────────────────────────────────
+Size Q1_Small          227       -0.6789      0.0808
+Size Q2                243       -1.1319      0.0263
+Size Q3                242       -1.6505      0.0059
+Size Q4_Large          243        0.3709      0.2655
+
+INTERPRETATION:
+If timing coefficients are consistent across size groups -> Effect is uniform
+If timing coefficients vary by size -> Effect is heterogeneous (may indicate omitted variable)
+If timing is zero everywhere -> H1 null is universal and robust
+If timing is significant in some groups -> Null is qualified (context-dependent)

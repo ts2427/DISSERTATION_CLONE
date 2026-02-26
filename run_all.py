@@ -9,7 +9,8 @@ Executes the entire dissertation workflow with comprehensive logging:
 4. Standard Errors Robustness (TABLE B9: Clustered vs HC3 Comparison)
 5. Essay 3: Main Regression Analysis (Tables 2-3)
 6. ML Model Training & Validation (Optional)
-7. Robustness Checks (4 checks - Alternative Windows, Timing, Samples, SEs)
+7. Recommendation Scripts (Scripts 91-95: Mediation, Heterogeneity, Window Sensitivity, Falsification, Low R²)
+8. Robustness Checks (9 checks including alternative windows, timing, samples, SEs, fixed effects)
 
 All output is captured to timestamped log file.
 
@@ -185,6 +186,11 @@ Log file: {log_path}
             {
                 'category': 'ROBUSTNESS CHECKS',
                 'scripts': [
+                    ('scripts/91_essay3_mediation_analysis.py', 'Mediation Analysis (Essay 3): Does volatility mediate timing->turnover?'),
+                    ('scripts/92_heterogeneity_analysis.py', 'Heterogeneity Analysis: Do effects vary by firm size?'),
+                    ('scripts/93_market_model_sensitivity.py', 'Event Window Sensitivity: Robustness across 5d and 30d CAR'),
+                    ('scripts/94_falsification_tests.py', 'Falsification Tests: Are effects breach-specific?'),
+                    ('scripts/95_low_r2_sensitivity.py', 'Low R² Sensitivity: Is specification adequate?'),
                     ('scripts/robustness_1_alternative_windows.py', 'Alternative Event Windows'),
                     ('scripts/robustness_2_timing_thresholds.py', 'Timing Thresholds'),
                     ('scripts/robustness_3_sample_restrictions.py', 'Sample Restrictions'),
