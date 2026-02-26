@@ -171,6 +171,8 @@ Log file: {log_path}
                     ('scripts/82_clustered_vs_hc3_comparison.py', 'Standard Errors Robustness (TABLE B9: Clustered vs HC3)'),
                     ('scripts/83_fcc_causal_identification.py', 'FCC Causal Identification (Industry FE, Size Sensitivity, Summary)'),
                     ('scripts/90_essay3_regressions.py', 'Essay 3 Regressions (Tables 2-3)'),
+                    ('scripts/84_essay3_post_2007_interaction_test.py', 'Essay 3 FCC Causal ID (TABLE B8: Post-2007 Test - Volatility)'),
+                    ('scripts/86_essay3_fcc_causal_identification.py', 'Essay 3 FCC Causal ID (Industry FE, Size Sensitivity - Volatility)'),
                 ]
             },
             {
@@ -281,6 +283,10 @@ Essay 2 Causal Identification & Robustness:
 Essay 3 Regression Tables:
   outputs/tables/essay3/TABLE2_volatility_changes.txt
   outputs/tables/essay3/TABLE3_information_asymmetry.txt
+  outputs/tables/essay3/TABLE_B8_post_2007_interaction_volatility.txt (FCC causal ID: post-2007 test)
+  outputs/tables/essay3/TABLE_FCC_Industry_FE_Comparison_Volatility.txt (FCC causal ID: industry fixed effects)
+  outputs/tables/essay3/TABLE_FCC_Size_Sensitivity_Volatility.txt (FCC causal ID: size sensitivity analysis)
+  outputs/tables/essay3/FCC_Causal_ID_Summary_Volatility.txt (FCC causal ID: comprehensive summary)
 
 ML Outputs:
   outputs/ml_models/ml_model_summary.csv

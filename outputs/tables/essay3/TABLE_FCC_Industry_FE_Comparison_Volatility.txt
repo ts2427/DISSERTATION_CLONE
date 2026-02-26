@@ -1,0 +1,26 @@
+================================================================================
+CAUSAL ID FIX 1: INDUSTRY FIXED EFFECTS - ISOLATING REGULATORY EFFECT
+================================================================================
+
+Dependent Variable: Volatility Change (%)
+
+Tests whether FCC effect persists after controlling for industry-specific confounds.
+If FCC effect reflects industry characteristics rather than regulation, coefficient
+should shrink substantially with industry FE. If regulation-driven, effect should persist.
+
+RESULTS:
+--------------------------------------------------------------------------------
+Model                                        FCC Coef         SE    P-Value        N       R2
+--------------------------------------------------------------------------------
+1. Baseline (no FE)                            1.7433     0.8953     0.0515      891   0.3888
+2. Industry FE (2-digit SIC)                   5.0181     2.2488     0.0257      833   0.4410
+--------------------------------------------------------------------------------
+
+INTERPRETATION:
+[+] FCC effect STRENGTHENS with industry controls (5.0181 vs 1.7433)
+    This suggests FCC effect is NOT driven by industry selection
+    Effect is more likely regulatory in nature
+
+Control Variables: firm_size_log, leverage, roa, return_volatility_pre
+Standard errors (HC3 heteroskedasticity-consistent) in parentheses.
+Significance levels: * p<0.10, ** p<0.05, *** p<0.01

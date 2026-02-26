@@ -1,0 +1,29 @@
+================================================================================
+CAUSAL ID FIX 2: SIZE SENSITIVITY ANALYSIS
+================================================================================
+
+Dependent Variable: Volatility Change (%)
+
+Tests whether FCC effect is driven by firm size differences.
+FCC-regulated firms are larger on average. If size differences drive the effect,
+FCC coefficient should be large in Q4 (Large) and small in Q1 (Small).
+If regulatory constraint, effect should be consistent or stronger in smaller firms.
+
+RESULTS:
+----------------------------------------------------------------------------------------------------
+Size Quartile               N    FCC Coefficient    Std Error    P-Value    Sig       R²
+----------------------------------------------------------------------------------------------------
+Q1 (Small)                229             7.3085       2.4757     0.0032    ***   0.3647
+Q2                        224             3.6402       1.4790     0.0138     **   0.3733
+Q3                        215            -0.5361       1.8573     0.7729          0.1927
+Q4 (Large)                223            -3.3886       1.3924     0.0149     **   0.6345
+----------------------------------------------------------------------------------------------------
+
+INTERPRETATION:
+[+] FCC effect STRONGER in Q1 (Small) than Q4 (Large) (7.3085 vs -3.3886)
+    This suggests effect is NOT driven by firm size differences
+    Small FCC firms show stronger volatility increase
+
+Control Variables: leverage, roa, return_volatility_pre
+Standard errors (HC3 heteroskedasticity-consistent).
+Significance levels: * p<0.10, ** p<0.05, *** p<0.01

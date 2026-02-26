@@ -1,0 +1,23 @@
+TABLE B8: POST-2007 INTERACTION TEST - VOLATILITY OUTCOMES
+Dependent Variable: Volatility Change (Post-Breach Volatility - Pre-Breach Volatility)
+Tests whether FCC effect emerges after 2007 regulation (supporting causal effect) or existed before (industry effect)
+
+Model                                  N    FCC Coefficient    Std Error    P-Value    R²     Sig
+----------------------------------------------------------------------------------------------------
+Model 1: Full Sample (2004-2025)       891       1.7930             0.9097     0.0487   0.3889   **
+Model 3: Post-2007 (2007+)            887       1.6630             0.9073     0.0668   0.3902   *
+
+Model 4: Interaction Specification - FCC × Post-2007
+----------------------------------------------------------------------------------------------------
+FCC Main Effect (Pre-2007):               13.3785            38.1237     0.7256                
+FCC × Post-2007 Interaction:             -11.7026            38.1437     0.7590                
+Implied Post-2007 FCC Effect:              1.6758   (Main + Interaction)
+R²:                                    0.3930
+
+Notes: FCC regulation (47 CFR § 64.2011) became effective in 2007. If the FCC effect on volatility reflects
+regulatory burden, the coefficient should be non-significant pre-2007 and significant post-2007. If it reflects
+industry characteristics, the coefficient should be similar across both periods.
+
+Control Variables: immediate_disclosure, firm_size_log, leverage, roa, return_volatility_pre
+Standard errors (HC3 heteroskedasticity-consistent).
+Significance levels: * p<0.10, ** p<0.05, *** p<0.01

@@ -438,14 +438,15 @@ python run_all.py
 3. Generates descriptive statistics (Table 1-2)
 4. Runs Essay 1 market reactions analysis (5 OLS regression models with firm-clustered SEs + alternative explanations)
 5. Runs Essay 2 information asymmetry analysis (5 OLS regression models with firm-clustered SEs)
-6. Runs Essay 3 governance response analysis (5 OLS regression models)
-7. **[NEW] Runs post-2007 interaction test** (FCC causal identification: TABLE B8)
-8. **[NEW] Runs clustered vs HC3 SE comparison** (Standard errors robustness: TABLE B9)
-9. Analyzes enrichment variables (prior breaches, severity, executive changes, regulatory enforcement)
-10. Generates TOST equivalence test and VIF diagnostics
-11. Trains ML models (Random Forest and Gradient Boosting for robustness validation)
-12. Generates robustness section templates (for Essay 2 and Essay 3 with ML comparisons)
-13. Generates all tables, figures, and robustness templates
+6. **Essay 2 Causal Identification:** Post-2007 test, industry FE, and size sensitivity (TABLE B8, causal ID summary)
+7. Runs Essay 3 governance response analysis (5 OLS regression models)
+8. **Essay 3 Causal Identification:** Post-2007 test, industry FE, and size sensitivity for volatility outcomes (TABLE B8 volatility, causal ID summary volatility)
+9. Runs standard errors robustness comparison (TABLE B9: Clustered vs HC3)
+10. Analyzes enrichment variables (prior breaches, severity, executive changes, regulatory enforcement)
+11. Generates TOST equivalence test and VIF diagnostics
+12. Trains ML models (Random Forest and Gradient Boosting for robustness validation)
+13. Generates robustness section templates (for Essay 2 and Essay 3 with ML comparisons)
+14. Generates all tables, figures, and robustness templates
 
 **Key Enhancements:**
 
@@ -631,8 +632,12 @@ dissertation-analysis/
 │   ├── 61_ml_validation.py            (Compare ML to OLS, generate robustness sections)
 │   ├── 70_summary_statistics.py       (Generate descriptive statistics)
 │   ├── 80_essay2_regressions.py       (Main event study with firm-clustered SEs + TOST + VIF)
-│   ├── 81_post_2007_interaction_test.py (FCC causal identification: TABLE B8)
+│   ├── 81_post_2007_interaction_test.py (FCC causal identification: TABLE B8 for CAR outcomes)
 │   ├── 82_clustered_vs_hc3_comparison.py (Standard errors robustness: TABLE B9)
+│   ├── 83_fcc_causal_identification.py (FCC causal identification: Industry FE & size sensitivity)
+│   ├── 84_essay3_post_2007_interaction_test.py (FCC causal identification: TABLE B8 for volatility)
+│   ├── 86_essay3_fcc_causal_identification.py (FCC causal identification: Industry FE & size for volatility)
+│   ├── 90_essay3_regressions.py       (Main governance response regressions)
 │   ├── 99_add_cpni_hhi_variables.py   (CPNI and HHI alternative explanations)
 │   ├── robustness_1_alternative_windows.py (Different event windows: 5d, 60d, BHAR)
 │   ├── robustness_2_timing_thresholds.py (Different disclosure thresholds: 3, 5, 7, 14, 30, 60 days)
@@ -656,8 +661,8 @@ dissertation-analysis/
 │       ├── 2_Sample_Validation.py     (Sample composition analysis)
 │       ├── 3_Data_Landscape.py        (Breach timeline & distribution)
 │       ├── 4_Essay1_MarketReactions.py (Essay 1: Market reactions to breach disclosure)
-│       ├── 5_Essay2_InformationAsymmetry.py (Essay 2: Information asymmetry & volatility)
-│       ├── 6_Essay3_GovernanceResponse.py (Essay 3: Governance response & executive turnover)
+│       ├── 5_Essay2_InformationAsymmetry.py (Essay 2: Information asymmetry & volatility + causal ID tests)
+│       ├── 6_Essay3_GovernanceResponse_UPDATED.py (Essay 3: Governance response & executive turnover + causal ID tests)
 │       ├── 7_Key_Findings.py          (Main results summary & disclosure paradox)
 │       ├── 8_Conclusion.py            (Cross-essay synthesis & implications)
 │       ├── 9_Raw_Data_Explorer.py     (Interactive data exploration)
@@ -708,10 +713,17 @@ After running `python run_all.py`, you'll have:
 | `table1_descriptive_stats.csv` | Summary statistics for 1,054 breaches | 9 variables × statistics |
 | `table2_univariate_comparison.csv` | Univariate analysis by key variables | 10 variables × metrics |
 | `table3_essay2_regressions.tex` | Essay 2 regression models (5 specifications, firm-clustered SEs) | 5 columns × coefficients |
-| `table4_essay3_regressions.tex` | Essay 3 volatility models (5 specifications) | 5 columns × coefficients |
+| `table4_essay3_regressions.tex` | Essay 3 governance models (5 specifications) | 5 columns × coefficients |
 | `sample_attrition.csv` | Sample selection analysis | 9 variables × t-tests |
-| `TABLE_B8_post_2007_interaction.txt` | FCC causal identification: Pre/post-2007 interaction test | 4 models showing regulation effect |
+| `TABLE_B8_post_2007_interaction.txt` | FCC causal identification (CAR): Pre/post-2007 interaction test | 4 models showing regulation effect |
+| `TABLE_B8_post_2007_interaction_volatility.txt` | FCC causal identification (Volatility): Pre/post-2007 interaction test | 4 models showing regulation effect |
+| `TABLE_FCC_Industry_FE_Comparison.txt` | FCC causal identification (CAR): Industry fixed effects robustness | 3 model specifications |
+| `TABLE_FCC_Industry_FE_Comparison_Volatility.txt` | FCC causal identification (Volatility): Industry fixed effects robustness | 3 model specifications |
+| `TABLE_FCC_Size_Sensitivity.txt` | FCC causal identification (CAR): Firm size quartile analysis | 4 quartiles × effects |
+| `TABLE_FCC_Size_Sensitivity_Volatility.txt` | FCC causal identification (Volatility): Firm size quartile analysis | 4 quartiles × effects |
 | `TABLE_B9_clustered_vs_hc3_comparison.txt` | Robustness check: Firm-clustered vs HC3 standard errors (38% larger with clustering) | 2 models side-by-side |
+| `FCC_Causal_ID_Summary.txt` | FCC causal identification summary (CAR outcomes) | 3 tests × interpretation |
+| `FCC_Causal_ID_Summary_Volatility.txt` | FCC causal identification summary (Volatility outcomes) | 3 tests × interpretation |
 
 ### Robustness & Diagnostics
 
@@ -775,6 +787,11 @@ After running `python run_all.py`, you'll have:
 - Firm size confound acknowledged in limitations
 - Policy implications rewritten with specific, evidence-based recommendations
 - Methodology enhanced with firm-clustered SEs (main specification)
+
+**Streamlit Dashboard Updates (Phase 3):**
+- **Essay 2 Dashboard:** Added three causal identification tests (temporal validation, industry FE, size sensitivity) with volatility outcome results
+- **Essay 3 Dashboard:** Added comprehensive causal identification section with three tests (temporal validation, industry FE, size sensitivity) for governance outcomes
+- **Causal ID Tests:** All tests show robust effects across specifications, strengthening causal interpretation of FCC regulation effects
 
 ---
 
