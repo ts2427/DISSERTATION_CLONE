@@ -16,7 +16,10 @@
       "Bash(GIT_LFS_SKIP_SMUDGE=1 git merge:*)",
       "Bash(git reset:*)",
       "Bash(git push:*)",
-      "Bash(/tmp/dashboard_issues.txt:*)"
+      "Bash(/tmp/dashboard_issues.txt:*)",
+      "Bash(cat:*)",
+      "Bash(cd:*)",
+      "Bash(done)"
     ]
   }
 }
