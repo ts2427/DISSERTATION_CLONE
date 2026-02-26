@@ -12,6 +12,19 @@
 
 This dissertation analyzes the market reactions to data breach disclosures among publicly-traded companies. Using a dataset of 1,054 breaches from 2000-2024, the project investigates how disclosure timing, regulatory status, and breach characteristics influence cumulative abnormal returns (CAR) and information asymmetry (measured by volatility).
 
+---
+
+## 💡 Executive Summary: The Core Finding
+
+> **Disclosure requirements work through multiple mechanisms—they don't change what markets conclude about breaches, but they DO increase market uncertainty (forcing speed prevents thorough investigation) and DO accelerate governance response (stakeholder pressure). These mechanisms operate independently.**
+
+This finding unifies three seemingly contradictory results:
+- **Essay 1:** Timing does NOT affect market valuations (-0.74% CAR regardless of disclosure speed)
+- **Essay 2:** Timing DOES increase market uncertainty (+1.68-5.02% volatility from regulatory constraints)
+- **Essay 3:** Timing DOES accelerate executive turnover (50.6% vs 45.3% with immediate disclosure)
+
+---
+
 ### Research Questions
 
 - **Essay 1 (Market Reactions):** Do disclosure timing and regulatory status affect stock market returns (CAR)?

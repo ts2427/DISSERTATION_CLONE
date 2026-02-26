@@ -59,6 +59,31 @@ st.markdown("""
 st.markdown("<div class='conclusion-header'>⏰ Conclusion: Timing is Irrelevant; Severity, Reputation, and Regulation Matter</div>", unsafe_allow_html=True)
 
 # ============================================================================
+# CORE FINDING - THESIS STATEMENT
+# ============================================================================
+
+st.markdown("---")
+
+st.markdown("""
+<div class='research-contribution'>
+<h2 style='color: inherit; margin-top: 0;'>🎯 The Core Finding</h2>
+
+<p style='font-size: 1.1rem; line-height: 1.8;'>
+<b>Disclosure requirements work through multiple mechanisms—they don't change what markets conclude about breaches, but they DO increase market uncertainty (forcing speed prevents thorough investigation) and DO accelerate governance response (stakeholder pressure). These mechanisms operate independently.</b>
+</p>
+
+<b>What This Means:</b>
+<ul>
+<li><b>Essay 1 (Market Valuations):</b> Timing does NOT affect what markets conclude about breach severity (CAR = -0.74% regardless of disclosure speed)</li>
+<li><b>Essay 2 (Market Learning):</b> Timing DOES increase market uncertainty (+1.68-5.02% volatility from regulatory timing constraints forcing incomplete disclosure)</li>
+<li><b>Essay 3 (Organizational Response):</b> Timing DOES accelerate executive turnover (50.6% vs 45.3% with immediate disclosure) through stakeholder pressure</li>
+</ul>
+
+<b>The Insight:</b> These mechanisms operate through different channels—regulatory constraints affecting information quality, stakeholder pressure driving governance response—and they operate independently of market conclusions about breach severity. Disclosure policy is more complex than simple information resolution models predict.
+</div>
+""", unsafe_allow_html=True)
+
+# ============================================================================
 # SECTION 1: EXECUTIVE SUMMARY
 # ============================================================================
 
