@@ -132,7 +132,7 @@ if len(recovered_data) > 0:
                 'return_30d_pct': round(float(ret_30d), 2),
                 'has_stock_data': True
             }
-        except:
+        except Exception as e:
             return None
     
     # Update dataframe with recovered data

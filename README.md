@@ -28,7 +28,7 @@ This finding unifies three seemingly contradictory results:
 ### Research Questions
 
 - **Essay 1 (Market Reactions):** Do disclosure timing and regulatory status affect stock market returns (CAR)?
-- **Essay 2 (Information Asymmetry):** Does disclosure timing affect market uncertainty (volatility)?
+- **Essay 2 (Information Asymmetry):** Does disclosure timing affect market uncertainty, measured by return volatility (information asymmetry)?
 - **Essay 3 (Governance Response):** Does disclosure timing trigger executive turnover and governance changes?
 
 #### The Timing Paradox: Learning Speed vs. Valuation Level
@@ -51,7 +51,7 @@ This reveals that disclosure requirements work through multiple mechanisms simul
 ### Sample Overview
 
 **Total Breaches Analyzed:** 1,054 publicly-traded companies (2006-2025, 19 years)
-- **Essay 1 (Market Reactions):** 926 breaches with CRSP stock price data (87.9%)
+- **Essay 1 (Market Reactions):** 926 breaches with CRSP stock price data (87.9% of total sample)
 - **Essay 2 (Information Asymmetry):** 916 breaches with volatility data (86.9%)
 - **Essay 3 (Governance Response):** 896 breaches with executive change data (85.0%)
 - **Data Matching Success:** 92.1% of raw breach records matched to public companies
@@ -71,11 +71,11 @@ This reveals that disclosure requirements work through multiple mechanisms simul
 
 ### Dependent Variables (DVs)
 
-| Essay | Focus | Variable | Definition | N | Range | Mean |
-|-------|-------|----------|-----------|---|-------|------|
-| **Essay 1** | Market Returns | `car_30d` | 30-day cumulative abnormal return (%) | 926 | -42.56 to 34.05 | -0.74% |
-| **Essay 2** | Market Uncertainty | `volatility_change` | Change in return volatility (percentage points) | 916 | -121.69 to 102.47 | -1.75pp |
-| **Essay 3** | Governance Response | `executive_change_30d` | Binary: Executive departure ≤30 days post-breach | 896 | 0, 1 | 46.4% |
+| Essay | Focus | DV | Variable | Definition | N | Range | Mean |
+|-------|-------|-----|----------|-----------|---|-------|------|
+| **Essay 1** | Market Returns | CAR | `car_30d` | 30-day cumulative abnormal return (%) | 926 | -42.56 to 34.05 | -0.74% |
+| **Essay 2** | Information Asymmetry | Volatility | `volatility_change` | Change in return volatility post-breach (percentage points) | 916 | -121.69 to 102.47 | -1.75pp |
+| **Essay 3** | Governance Response | Turnover | `executive_change_30d` | Binary: Executive departure ≤30 days post-breach | 896 | 0, 1 | 46.4% |
 
 ### Independent Variables - Timing & Regulation
 
@@ -661,12 +661,23 @@ cd dissertation-analysis
 python -m venv venv
 source venv/bin/activate  # macOS/Linux: venv\Scripts\activate on Windows
 
-# 4. Install dependencies
+# 4. Install dependencies - CHOOSE ONE:
+
+# Option A: For EXACT reproducibility (recommended for long-term reproducibility)
+pip install -r requirements-lock.txt
+
+# Option B: For flexibility with compatible versions
 pip install -r requirements.txt
 
 # 5. Run the complete pipeline
 python run_all.py
 ```
+
+**Note on Dependency Files:**
+- `requirements.txt` - Uses minimum version constraints (e.g., `pandas>=2.1`), allowing newer compatible versions
+- `requirements-lock.txt` - Uses exact versions (e.g., `pandas==2.3.3`), ensuring bit-for-bit reproducibility across environments and time
+
+For defending your dissertation or archival, use `requirements-lock.txt`. For development, either is fine.
 
 ---
 

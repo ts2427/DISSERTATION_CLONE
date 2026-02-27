@@ -93,7 +93,7 @@ try:
             ccm_link = db.raw_sql(query)
             if not ccm_link.empty:
                 break
-        except:
+        except Exception as e:
             continue
     
     if not ccm_link.empty:

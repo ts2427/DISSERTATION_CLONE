@@ -15,12 +15,15 @@ Tables:
 import pandas as pd
 import numpy as np
 import statsmodels.api as sm
-from statsmodels.iolib.summary2 import summary_col
+from statsmodels.iolib.summary2 import summary_col  # Note: May need updating in statsmodels 0.15+
 from statsmodels.stats.outliers_influence import variance_inflation_factor
+from statsmodels.regression.linear_model import RegressionResults
 from pathlib import Path
+from typing import List, Dict, Tuple, Optional
 import warnings
 import matplotlib.pyplot as plt
 from scipy import stats
+
 warnings.filterwarnings('ignore')
 
 print("=" * 80)
@@ -28,8 +31,8 @@ print("ESSAY 3: DISCLOSURE TIMING AND INFORMATION ASYMMETRY")
 print("=" * 80)
 
 # Configuration
-DATA_FILE = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'
-OUTPUT_DIR = Path('outputs/tables/essay3')
+DATA_FILE: str = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'
+OUTPUT_DIR: Path = Path('outputs/tables/essay3')
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # ============================================================================
@@ -37,7 +40,7 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 # ============================================================================
 
 print(f"\n[Step 1/4] Loading data...")
-df = pd.read_csv(DATA_FILE)
+df: pd.DataFrame = pd.read_csv(DATA_FILE)
 print(f"  [OK] Loaded: {len(df):,} breaches")
 
 # Analysis sample

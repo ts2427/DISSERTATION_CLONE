@@ -116,9 +116,9 @@ def verify_data(log_file):
     """Verify required data files exist"""
     print_section("STEP 0: DATA VERIFICATION")
     log_file.write("\n" + "=" * 80 + "\nSTEP 0: DATA VERIFICATION\n" + "=" * 80 + "\n\n")
-    
+
     data_file = Path('Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv')
-    
+
     if data_file.exists():
         file_size = data_file.stat().st_size / (1024 * 1024)
         msg = f"  [OK] Enriched dataset found ({file_size:.1f} MB)\n  [OK] Ready to proceed\n"
@@ -128,6 +128,55 @@ def verify_data(log_file):
         msg = f"  [ERROR] Required data file missing: {data_file}\n"
         print_to_both(msg, log_file)
         return False
+
+def verify_outputs(log_file):
+    """Verify critical output files exist after analysis"""
+    print_section("OUTPUT VERIFICATION")
+    log_file.write("\n" + "=" * 80 + "\nOUTPUT VERIFICATION\n" + "=" * 80 + "\n\n")
+
+    # Define critical output files
+    critical_files = [
+        Path('outputs/tables/TABLE1_COMBINED.txt'),
+        Path('outputs/tables/essay2/TABLE2_baseline_disclosure.txt'),
+        Path('outputs/tables/essay2/TABLE3_fcc_regulation.txt'),
+        Path('outputs/tables/essay2/TABLE4_prior_breaches.txt'),
+        Path('outputs/tables/essay2/TABLE5_breach_severity.txt'),
+        Path('outputs/tables/essay2/TABLE_B8_post_2007_interaction.txt'),
+        Path('outputs/tables/essay2/TABLE_B9_clustered_vs_hc3_comparison.txt'),
+        Path('outputs/tables/essay2/H1_TOST_Equivalence_Test.txt'),
+        Path('outputs/tables/essay2/DIAGNOSTICS_VIF_summary.txt'),
+        Path('outputs/tables/essay3/TABLE2_volatility_changes.txt'),
+        Path('outputs/tables/essay3/TABLE3_information_asymmetry.txt'),
+    ]
+
+    present_files = []
+    missing_files = []
+
+    for filepath in critical_files:
+        if filepath.exists():
+            present_files.append(str(filepath))
+        else:
+            missing_files.append(str(filepath))
+
+    # Report results
+    msg = f"\nCritical Output Files:\n"
+    msg += f"  Present: {len(present_files)}/{len(critical_files)}\n"
+    msg += f"  Missing: {len(missing_files)}/{len(critical_files)}\n"
+
+    if present_files:
+        msg += f"\n[OK] Files found:\n"
+        for f in sorted(present_files):
+            msg += f"  [+] {f}\n"
+
+    if missing_files:
+        msg += f"\n[!] Files missing:\n"
+        for f in sorted(missing_files):
+            msg += f"  [-] {f}\n"
+        msg += f"\nNote: Some expected files may not be present if certain scripts were skipped.\n"
+
+    print_to_both(msg, log_file)
+
+    return len(missing_files) == 0
 
 def run_all():
     """Execute complete dissertation analytics pipeline"""
@@ -168,12 +217,12 @@ Log file: {log_path}
                 'scripts': [
                     ('scripts/70_summary_statistics.py', 'Summary Statistics (Table 1)'),
                     ('scripts/80_essay2_regressions.py', 'Essay 2 Regressions (Tables 2-5, firm-clustered SEs) + TOST + VIF'),
-                    ('scripts/81_post_2007_interaction_test.py', 'FCC Causal Identification (TABLE B8: Post-2007 Interaction Test)'),
-                    ('scripts/82_clustered_vs_hc3_comparison.py', 'Standard Errors Robustness (TABLE B9: Clustered vs HC3)'),
-                    ('scripts/83_fcc_causal_identification.py', 'FCC Causal Identification (Industry FE, Size Sensitivity, Summary)'),
+                    ('scripts/81_post_2007_interaction_test.py', 'FCC Causal Identification (TABLE B8: Post-2007 Interaction Test - Market Returns)'),
+                    ('scripts/82_clustered_vs_hc3_comparison.py', 'Standard Errors Robustness (TABLE B9: Clustered vs HC3 Comparison)'),
+                    ('scripts/83_fcc_causal_identification.py', 'FCC Causal ID Summary (Industry Fixed Effects, Size Sensitivity Analysis)'),
                     ('scripts/90_essay3_regressions.py', 'Essay 3 Regressions (Tables 2-3)'),
-                    ('scripts/84_essay3_post_2007_interaction_test.py', 'Essay 3 FCC Causal ID (TABLE B8: Post-2007 Test - Volatility)'),
-                    ('scripts/86_essay3_fcc_causal_identification.py', 'Essay 3 FCC Causal ID (Industry FE, Size Sensitivity - Volatility)'),
+                    ('scripts/84_essay3_post_2007_interaction_test.py', 'Essay 3 FCC Causal ID (TABLE B8: Post-2007 Test - Executive Turnover)'),
+                    ('scripts/86_essay3_fcc_causal_identification.py', 'Essay 3 FCC Causal ID (Industry FE, Size Sensitivity - Executive Turnover)'),
                 ]
             },
             {
@@ -186,16 +235,16 @@ Log file: {log_path}
             {
                 'category': 'ROBUSTNESS CHECKS',
                 'scripts': [
-                    ('scripts/91_essay3_mediation_analysis.py', 'Mediation Analysis (Essay 3): Does volatility mediate timing->turnover?'),
-                    ('scripts/92_heterogeneity_analysis.py', 'Heterogeneity Analysis: Do effects vary by firm size?'),
-                    ('scripts/93_market_model_sensitivity.py', 'Event Window Sensitivity: Robustness across 5d and 30d CAR'),
-                    ('scripts/94_falsification_tests.py', 'Falsification Tests: Are effects breach-specific?'),
-                    ('scripts/95_low_r2_sensitivity.py', 'Low R² Sensitivity: Is specification adequate?'),
-                    ('scripts/robustness_1_alternative_windows.py', 'Alternative Event Windows'),
-                    ('scripts/robustness_2_timing_thresholds.py', 'Timing Thresholds'),
-                    ('scripts/robustness_3_sample_restrictions.py', 'Sample Restrictions'),
-                    ('scripts/robustness_4_standard_errors.py', 'Standard Errors'),
-                    ('scripts/robustness_5_fixed_effects.py', 'Fixed Effects Models'),
+                    ('scripts/91_essay3_mediation_analysis.py', 'Mediation Analysis (Essay 3): Does volatility mediate timing→turnover relationship?'),
+                    ('scripts/92_heterogeneity_analysis.py', 'Heterogeneity Analysis: CAR/volatility effects vary by firm size quartiles?'),
+                    ('scripts/93_market_model_sensitivity.py', 'Event Window Sensitivity: Robustness across 5d, 10d, 30d, 60d, 90d CARs'),
+                    ('scripts/94_falsification_tests.py', 'Falsification Tests: Pre-breach validation & breach-specificity confirmation'),
+                    ('scripts/95_low_r2_sensitivity.py', 'Low R² Sensitivity: Model adequacy with alternative specifications'),
+                    ('scripts/robustness_1_alternative_windows.py', 'Alternative Event Windows: CAR across multiple breach-to-event intervals'),
+                    ('scripts/robustness_2_timing_thresholds.py', 'Timing Thresholds: Disclosure timing effects (1d, 3d, 7d, 14d, 30d)'),
+                    ('scripts/robustness_3_sample_restrictions.py', 'Sample Restrictions: Results stratified by FCC, data type, firm size'),
+                    ('scripts/robustness_4_standard_errors.py', 'Standard Errors: HC3, Clustered, Bootstrap comparison'),
+                    ('scripts/robustness_5_fixed_effects.py', 'Fixed Effects: Industry 2-digit, 4-digit SIC, Year, and Firm FE'),
                 ]
             }
         ]
@@ -379,6 +428,9 @@ Complete log saved to: {log_path}
             final = f"\n[***] [SUCCESS] Core dissertation analysis complete!\n{'=' * 80}\n"
             print_to_both(final, log_file)
 
+            # Verify critical outputs exist
+            outputs_verified = verify_outputs(log_file)
+
             # Launch Streamlit dashboard
             dashboard_msg = f"""
 {'=' * 80}
@@ -397,7 +449,7 @@ To stop the dashboard, press Ctrl+C in the terminal.
 
             # Launch dashboard in a new process
             try:
-                dashboard_path = Path('Dashboard/app.py')
+                dashboard_path = Path(__file__).parent / 'Dashboard' / 'app.py'
                 if dashboard_path.exists():
                     # Use subprocess to launch Streamlit
                     subprocess.Popen(

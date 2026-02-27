@@ -92,7 +92,7 @@ if has_sox:
         # Convert CIK to integer for matching
         try:
             breach_cik = int(breach_cik)
-        except:
+        except Exception as e:
             breach['has_sox_data'] = False
             breach['ic_is_effective'] = None
             breach['count_weak'] = None
@@ -168,7 +168,7 @@ if has_restate:
         
         try:
             breach_cik = int(breach_cik)
-        except:
+        except Exception as e:
             breach_df.loc[idx, 'has_prior_restatement'] = False
             breach_df.loc[idx, 'restatement_count'] = 0
             breach_df.loc[idx, 'restatement_fraud'] = False

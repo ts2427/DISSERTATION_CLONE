@@ -110,7 +110,7 @@ def calculate_event_returns(ticker, event_date, crsp_data):
             'bhar_30d': round(bhar_30d * 100, 4),
             'has_crsp_data': True
         }
-    except:
+    except Exception as e:
         return None
 
 event_returns = []
@@ -260,7 +260,7 @@ def calculate_volatility(ticker, breach_date, crsp_data, window=30):
             'volume_volatility_post': round(vol_vol_post, 2) if pd.notna(vol_vol_post) else None,
             'volatility_change': round(ret_vol_post - ret_vol_pre, 4) if pd.notna(ret_vol_pre) and pd.notna(ret_vol_post) else None
         }
-    except:
+    except Exception as e:
         return None
 
 volatility_metrics = []

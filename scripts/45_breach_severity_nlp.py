@@ -152,7 +152,7 @@ for idx, row in df.iterrows():
             records_affected = 0
         else:
             records_affected = float(records_affected)
-    except:
+    except Exception as e:
         records_affected = 0
     
     if records_affected > 0:

@@ -15,11 +15,14 @@ Tables:
 import pandas as pd
 import numpy as np
 import statsmodels.api as sm
-from statsmodels.iolib.summary2 import summary_col
+from statsmodels.iolib.summary2 import summary_col  # Note: May need updating in statsmodels 0.15+
 from statsmodels.stats.outliers_influence import variance_inflation_factor
+from statsmodels.regression.linear_model import RegressionResults
 from pathlib import Path
+from typing import List, Dict, Tuple, Optional
 import warnings
 import matplotlib.pyplot as plt
+
 warnings.filterwarnings('ignore')
 
 print("=" * 80)
@@ -27,8 +30,8 @@ print("ESSAY 2: MAIN REGRESSION ANALYSIS")
 print("=" * 80)
 
 # Configuration
-DATA_FILE = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'
-OUTPUT_DIR = Path('outputs/tables/essay2')
+DATA_FILE: str = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'
+OUTPUT_DIR: Path = Path('outputs/tables/essay2')
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # ============================================================================
@@ -36,11 +39,11 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 # ============================================================================
 
 print(f"\n[Step 1/6] Loading data...")
-df = pd.read_csv(DATA_FILE)
+df: pd.DataFrame = pd.read_csv(DATA_FILE)
 print(f"  [OK] Loaded: {len(df):,} breaches")
 
 # Analysis sample (with CRSP data)
-analysis_df = df[df['has_crsp_data'] == True].copy()
+analysis_df: pd.DataFrame = df[df['has_crsp_data'] == True].copy()
 print(f"  [OK] CRSP sample: {len(analysis_df):,} breaches")
 
 # Create column aliases for consistency (Phase 2 variable standardization)
@@ -52,7 +55,7 @@ if 'has_enforcement' in analysis_df.columns and 'regulatory_enforcement' not in 
     analysis_df['regulatory_enforcement'] = analysis_df['has_enforcement']
 
 # Target variable
-target = 'car_30d'
+target: str = 'car_30d'
 print(f"  [OK] Dependent variable: {target}")
 
 # ============================================================================
@@ -62,18 +65,18 @@ print(f"  [OK] Dependent variable: {target}")
 print(f"\n[Step 2/6] Preparing variables...")
 
 # Core controls
-controls_base = ['firm_size_log', 'leverage', 'roa']
+controls_base: List[str] = ['firm_size_log', 'leverage', 'roa']
 
 # Extended controls
-controls_extended = controls_base + ['market_to_book', 'total_affected_log']
+controls_extended: List[str] = controls_base + ['market_to_book', 'total_affected_log']
 
 # Governance
-controls_governance = ['sox_404_effective', 'material_weakness']
+controls_governance: List[str] = ['sox_404_effective', 'material_weakness']
 
 # Check what's available
-available_controls_base = [v for v in controls_base if v in analysis_df.columns]
-available_controls_extended = [v for v in controls_extended if v in analysis_df.columns]
-available_controls_gov = [v for v in controls_governance if v in analysis_df.columns]
+available_controls_base: List[str] = [v for v in controls_base if v in analysis_df.columns]
+available_controls_extended: List[str] = [v for v in controls_extended if v in analysis_df.columns]
+available_controls_gov: List[str] = [v for v in controls_governance if v in analysis_df.columns]
 
 print(f"  [OK] Base controls: {len(available_controls_base)}")
 print(f"  [OK] Extended controls: {len(available_controls_extended)}")
@@ -85,20 +88,20 @@ print(f"  [OK] Governance controls: {len(available_controls_gov)}")
 
 print(f"\n[Step 3/6] Creating Table 2: Baseline Models (H1)...")
 
-table2_models = []
+table2_models: List[RegressionResults] = []
 
 # Prepare regression data (include CIK for clustering)
-reg_cols = [target, 'immediate_disclosure'] + available_controls_extended + available_controls_gov + ['cik']
-initial_n = len(analysis_df)
-reg_df = analysis_df[reg_cols].dropna()
+reg_cols: List[str] = [target, 'immediate_disclosure'] + available_controls_extended + available_controls_gov + ['cik']
+initial_n: int = len(analysis_df)
+reg_df: pd.DataFrame = analysis_df[reg_cols].dropna()
 
 # Convert to numeric
 for col in reg_df.columns:
     reg_df[col] = pd.to_numeric(reg_df[col], errors='coerce')
 
 reg_df = reg_df.dropna()
-final_n = len(reg_df)
-dropped = initial_n - final_n
+final_n: int = len(reg_df)
+dropped: int = initial_n - final_n
 
 print(f"  Sample size: {final_n:,} observations (dropped {dropped:,} due to missing values)")
 

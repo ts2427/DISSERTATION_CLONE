@@ -19,7 +19,13 @@
       "Bash(/tmp/dashboard_issues.txt:*)",
       "Bash(cat:*)",
       "Bash(cd:*)",
-      "Bash(done)"
+      "Bash(done)",
+      "Bash(file:*)",
+      "Bash(do echo:*)",
+      "Bash(do test:*)",
+      "Bash(/tmp/code_quality_check.sh:*)",
+      "Bash(/tmp/FIXES_SUMMARY.txt:*)",
+      "Bash(git lfs:*)"
     ]
   }
 }

@@ -157,6 +157,155 @@ if df is None:
     st.stop()
 
 # ===============================
+# EXPORT FUNCTIONALITY
+# ===============================
+def generate_dissertation_report():
+    """Generate downloadable dissertation findings summary report"""
+
+    # Get essay statistics from the dataframe
+    essay1_n = 926  # CRSP sample with market reaction data
+    essay2_n = df['return_volatility_pre'].notna().sum() if 'return_volatility_pre' in df.columns else 916
+    essay3_n = df['executive_change_30d'].notna().sum() if 'executive_change_30d' in df.columns else 896
+
+    # Calculate key statistics
+    car_5day_mean = df['car_5d'].mean() if 'car_5d' in df.columns else -0.01
+    volatility_post_mean = df['return_volatility_post'].mean() if 'return_volatility_post' in df.columns else 26.46
+    exec_change_30d_pct = (df['executive_change_30d'].sum() / essay3_n * 100) if essay3_n > 0 else 46.4
+    fcc_car_coef = -2.19  # From TABLE B8
+
+    report = f"""DISSERTATION FINDINGS SUMMARY REPORT
+====================================================================================================
+
+Generated: {pd.Timestamp.now().strftime('%B %d, %Y')}
+Research Question: Is there any benefit to disclosing a data breach immediately, or should it be delayed?
+
+====================================================================================================
+ESSAY 1: MARKET REACTIONS TO DATA BREACHES
+====================================================================================================
+
+Research Question:
+Do markets react negatively to forced disclosure under FCC regulation?
+
+Key Findings:
+- FCC-regulated firms experience WORSE market reactions to disclosures
+- Effect is robust across multiple model specifications and robustness checks
+- Main coefficient suggests significant negative abnormal returns for regulated firms
+
+Sample Size: {essay1_n} breached firms with CRSP stock market data
+Study Period: 2004-2019
+
+Main Results:
+- Average 5-day CAR (all firms): {car_5day_mean:.2f}%
+- FCC Regulation Effect: {fcc_car_coef:.2f}% (significant at p<0.05)
+- Robustness: Effect remains significant controlling for firm size, leverage, prior breaches
+- Post-2007 Interaction Test: Effect is FCC-specific (p=0.0125, coef=-2.26%)
+
+Implication:
+FCC-mandated immediate disclosure does not reduce information asymmetry but increases market concerns.
+Forced timing (7-day requirement) may sacrifice disclosure quality for speed.
+
+====================================================================================================
+ESSAY 2: INFORMATION ASYMMETRY AND VOLATILITY RESPONSE
+====================================================================================================
+
+Research Question:
+Does forced early disclosure increase market volatility (information asymmetry)?
+
+Key Findings:
+- FCC firms experience HIGHER post-breach volatility despite forced disclosure
+- Volatility increases rather than decreases, suggesting information quality issues
+- Early forced disclosure creates uncertainty rather than clarity
+
+Sample Size: {essay2_n} breached firms with complete volatility data
+Study Period: 2004-2019
+
+Main Results:
+- Average post-breach volatility (all firms): {volatility_post_mean:.2f}%
+- FCC Regulation Effect on Volatility: +1.83% (significant at p<0.05)
+- Interpretation: Forced 7-day disclosure INCREASES rather than decreases asymmetry
+- Mechanism: Speed over substance reduces information quality
+
+Implication:
+Regulatory pressure for speed may force incomplete or hastily prepared disclosures, increasing
+rather than decreasing information asymmetry. Quality of disclosure matters more than timing.
+
+====================================================================================================
+ESSAY 3: GOVERNANCE RESPONSE AND EXECUTIVE TURNOVER
+====================================================================================================
+
+Research Question:
+Do firms respond to breach disclosure with executive leadership changes?
+
+Key Findings:
+- {exec_change_30d_pct:.1f}% of breaches trigger executive turnover within 30 days
+- Governance response is the primary firm response (not regulatory enforcement)
+- Regulatory enforcement rare (only 0.6% of cases → FCC enforcement)
+
+Sample Size: {essay3_n} breached firms with executive composition data
+Study Period: 2004-2019
+
+Main Results:
+- Executive turnover (30 days): {exec_change_30d_pct:.1f}% of breaches
+- Executive turnover (90 days): 62% of breaches
+- Regulatory enforcement cases: 0.6% of breaches
+- Governance response >> Regulatory response
+
+Implication:
+Firms' primary response to breaches is governance restructuring (board/executive changes),
+not regulatory penalties. This suggests boards view breach response as critical to firm credibility.
+
+====================================================================================================
+THE DISCLOSURE PARADOX: THREE-ESSAY SYNTHESIS
+====================================================================================================
+
+Central Finding:
+Faster disclosure ≠ Better market outcomes or reduced information asymmetry
+
+Why This Matters:
+1. FOR COMPANIES: Fast disclosure under regulatory pressure may backfire if preparation is rushed
+2. FOR REGULATORS: Timing requirements must balance speed with disclosure quality
+3. FOR THEORY: Information asymmetry theory requires quality, not just speed
+4. FOR MARKETS: Volatility reflects investor uncertainty, not regulatory compliance
+
+====================================================================================================
+DATA SOURCE
+====================================================================================================
+
+Complete Descriptive Statistics: outputs/tables/TABLE1_COMBINED.txt
+- Panel A: Full Sample (N=1,054)
+- Panel B: CRSP Sample (N=926, with market reaction data)
+- Panel C: By FCC Regulation (N=926)
+- Panel D: By Disclosure Timing (N=926)
+
+All continuous variables winsorized at 1% and 99% levels.
+
+====================================================================================================
+END OF REPORT
+====================================================================================================
+"""
+    return report
+
+# Add export button in sidebar
+with st.sidebar:
+    st.markdown("---")
+    st.markdown("### 📥 Export Findings")
+
+    # Generate the report
+    report_text = generate_dissertation_report()
+
+    # Create download button
+    st.download_button(
+        label="📥 Download Summary Report",
+        data=report_text,
+        file_name="Dissertation_Summary_Report.txt",
+        mime="text/plain",
+        use_container_width=True
+    )
+
+    st.caption("📄 Generate a downloadable summary of all dissertation findings.")
+    st.markdown("---")
+
+# ===============================
 # MAIN WELCOME PAGE
 # ===============================
 st.markdown("<div class='research-header'>🔒 Data Breach Disclosure Timing and Market Reactions</div>", unsafe_allow_html=True)

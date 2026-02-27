@@ -1,5 +1,9 @@
 """
 Create TABLE B7 in Word format for easy integration into Essay 1
+
+WARNING: This script has hardcoded values for some table elements.
+It should be regenerated from actual script 99 output and not used as-is.
+Verify all values match your actual analysis results before using in final dissertation.
 """
 
 from docx import Document

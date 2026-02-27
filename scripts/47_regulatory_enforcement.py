@@ -64,8 +64,8 @@ for idx, row in df.iterrows():
                     enforcement_type = 'FCC'
                     # Estimate penalty based on breach size
                     penalty_amount = min(affected * 0.001, 10000000)  # $0.001 per record, max $10M
-        
-        except:
+
+        except Exception as e:
             pass
     
     results.append({
