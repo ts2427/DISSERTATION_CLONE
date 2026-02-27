@@ -147,6 +147,8 @@ def verify_outputs(log_file):
         Path('outputs/tables/essay2/DIAGNOSTICS_VIF_summary.txt'),
         Path('outputs/tables/essay3/TABLE2_volatility_changes.txt'),
         Path('outputs/tables/essay3/TABLE3_information_asymmetry.txt'),
+        Path('outputs/economic_significance/economic_impact_summary.csv'),
+        Path('outputs/economic_significance/economic_significance_report.txt'),
     ]
 
     present_files = []
@@ -230,6 +232,13 @@ Log file: {log_path}
                 'scripts': [
                     ('scripts/60_train_ml_model.py', 'Train ML Model'),
                     ('scripts/61_ml_validation.py', 'ML Validation & Robustness Text'),
+                ]
+            },
+            {
+                'category': 'ECONOMIC SIGNIFICANCE & HETEROGENEOUS ANALYSIS',
+                'scripts': [
+                    ('scripts/96_economic_significance.py', 'Economic Significance Analysis: FCC costs, volatility impact, governance disruption in dollar terms'),
+                    ('scripts/97_heterogeneous_mechanisms.py', 'Heterogeneous Mechanisms: Effects vary by firm size, breach type, prior history'),
                 ]
             },
             {
