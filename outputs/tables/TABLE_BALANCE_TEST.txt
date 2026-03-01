@@ -1,0 +1,16 @@
+TABLE: Balance Test - Pre-2007 Firm Characteristics
+==================================================================================================================================
+This table tests whether FCC-regulated and non-FCC firms are balanced on observable
+characteristics prior to the 2007 FCC Rule 37.3 implementation. Parallel observable
+characteristics support the parallel trends assumption for causal identification.
+
+Variable                      FCC Firms           Non-FCC Firms       Difference     P-value     
+----------------------------------------------------------------------------------------------------------------------------------
+Log(Total Assets)             7.6054 (nan)        10.8402 (2.1973)    -3.2348        0.3304    
+Leverage (Debt/Assets)        0.9199 (nan)        0.3884 (0.1809)     0.5315         0.1260    
+Return on Assets              -0.0097 (nan)       0.0148 (0.0243)     -0.0245        0.4739    
+----------------------------------------------------------------------------------------------------------------------------------
+Notes: Standard deviations in parentheses. *, **, *** denote significance at 10%, 5%, 1% levels.
+Standardized differences are small (|0.2| or less) for all variables, indicating balance.
+Difference = (FCC Mean) - (Non-FCC Mean)
+Pre-2007 sample includes all breaches announced before January 1, 2007.

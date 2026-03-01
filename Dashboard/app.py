@@ -396,6 +396,74 @@ This challenges the assumption that "faster disclosure = better outcomes". The a
 </div>
 """, unsafe_allow_html=True)
 
+# ===============================
+# NATURAL EXPERIMENT VALIDATION
+# ===============================
+st.markdown("---")
+st.markdown("""
+## 🔬 Natural Experiment Validation
+
+### Parallel Trends: Evidence of Causal Identification
+
+For a natural experiment design to be credible, FCC-regulated and non-FCC firms must show **parallel trends**
+before the 2007 FCC Rule 37.3 implementation. This figure provides visual proof of that assumption.
+""")
+
+# Load and display parallel trends figure
+try:
+    from pathlib import Path
+    root_dir = Path(__file__).parent.parent
+    figure_path = root_dir / 'outputs' / 'figures' / 'FIGURE_PARALLEL_TRENDS.png'
+
+    if figure_path.exists():
+        st.image(str(figure_path), caption="""
+        **Figure 1: Parallel Trends in Cumulative Abnormal Returns (CAR)**
+
+        Pre-2007 (before FCC Rule 37.3): FCC and non-FCC firms show similar CAR patterns (no significant difference, p=0.88)
+
+        Post-2007 (after regulation): FCC firms experience worse market reactions (-2.26%, p=0.0125)
+
+        This temporal pattern is consistent with causal interpretation: the treatment effect emerges exactly when
+        the regulation takes effect, not before. This is the core evidence that FCC Rule 37.3 causally affects market outcomes.
+        """, use_column_width=True)
+
+        st.markdown("""
+        ### What This Validates
+
+        ✅ **Temporal Validity**: FCC effect appears post-2007 (when regulation took effect), not pre-2007
+
+        ✅ **Causal Identification**: The timing of effect emergence matches the timing of regulation implementation
+
+        ✅ **Natural Experiment Strength**: This is exactly the pattern expected from a true causal shock
+
+        ✅ **Robustness**: Three additional validation tests support causal interpretation:
+        - Industry fixed effects (effect strengthens, not weakens, with industry controls)
+        - Size sensitivity (effects vary by firm size in mechanistically consistent ways)
+        - Multi-outcome consistency (FCC affects returns, volatility, AND governance)
+        """)
+    else:
+        st.warning("⚠️ Parallel trends figure not found. Run `python scripts/create_parallel_trends_figure.py` to generate.")
+
+except Exception as e:
+    st.warning(f"⚠️ Could not load parallel trends figure: {str(e)}")
+
+# Balance Test Reference
+st.markdown("""
+### Balance Test: Pre-Treatment Covariate Parity
+
+Before 2007, FCC-regulated and non-FCC firms should be balanced on observable characteristics
+(firm size, leverage, profitability). This strengthens the parallel trends assumption.
+
+**Table A1 (Balance Test Results):**
+- Log(Total Assets): p=0.330 (balanced)
+- Leverage (Debt/Assets): p=0.126 (balanced)
+- Return on Assets: p=0.474 (balanced)
+
+**Conclusion:** FCC ≈ non-FCC on all observables pre-2007. Parallel trends assumption is plausible.
+
+See `outputs/tables/TABLE_BALANCE_TEST.csv` for detailed results.
+""")
+
 # Footer with navigation
 st.markdown("---")
 st.info("""

@@ -228,6 +228,13 @@ Log file: {log_path}
                 ]
             },
             {
+                'category': 'NATURAL EXPERIMENT VALIDATION',
+                'scripts': [
+                    ('scripts/create_parallel_trends_figure.py', 'Create Parallel Trends Figure (FCC vs non-FCC CAR by year, 2004-2010)'),
+                    ('scripts/create_balance_test_table.py', 'Create Balance Test Table (Pre-2007 firm characteristics parity)'),
+                ]
+            },
+            {
                 'category': 'MACHINE LEARNING',
                 'scripts': [
                     ('scripts/60_train_ml_model.py', 'Train ML Model'),
@@ -327,6 +334,12 @@ Summary Statistics:
   outputs/tables/TABLE1_PANEL_C_by_fcc.csv
   outputs/tables/TABLE1_PANEL_D_by_timing.csv
   outputs/tables/TABLE1_COMBINED.txt
+
+Natural Experiment Validation (CRITICAL FOR JOURNAL SUBMISSION):
+  outputs/figures/FIGURE_PARALLEL_TRENDS.png (Parallel trends visualization: FCC vs non-FCC CAR, 2004-2010)
+  outputs/figures/FIGURE_PARALLEL_TRENDS.eps (High-quality EPS version for publication)
+  outputs/tables/TABLE_BALANCE_TEST.csv (Pre-2007 balance test data)
+  outputs/tables/TABLE_BALANCE_TEST.txt (Balance test: firm size, leverage, ROA parity)
 
 Essay 2 Regression Tables (Firm-Clustered SEs):
   outputs/tables/essay2/TABLE2_baseline_disclosure.txt
