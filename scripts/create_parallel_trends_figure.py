@@ -96,8 +96,6 @@ output_path_eps = output_path.with_suffix('.eps')
 plt.savefig(output_path_eps, format='eps', bbox_inches='tight')
 print(f"[OK] High-quality EPS version saved: {output_path_eps}")
 
-plt.show()
-
 # Statistical verification: Test parallel trends formally
 print("\n=== PARALLEL TRENDS TEST (Pre-2007) ===")
 df_pre2007 = df[df['year'] < 2007].copy()
