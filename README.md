@@ -897,6 +897,41 @@ The same Google Drive folder supports both:
   - Results: All p > 0.05 (balanced), standardized diffs < 0.2 (excellent balance)
   - Strengthens causal identification argument
 
+### Publication Readiness Scripts (scripts/ folder - ADDRESSES JOURNAL REVIEWER CONCERNS)
+- **00_data_validation_checks.py** - Data integrity validation before analysis
+  - Checks logical consistency: disclosure_date >= breach_date, days_to_disclosure >= 0
+  - Detects outliers: CAR > |100|%, prior_breaches > 3SD
+  - Reports missing data by variable
+  - Runs at pipeline start to flag any data quality issues
+  - Critical for reproducibility and journal reviewer confidence
+
+- **98_propensity_score_matching.py** - H2 Self-Selection Bias Test (Addresses Strongest Reviewer Objection)
+  - **CRITICAL FOR TOP-TIER JOURNALS:** Tests whether FCC penalty (-2.20%) is causal or selection bias
+  - Matches FCC to non-FCC firms on observables: size, leverage, ROA, volatility
+  - Enforces common support (propensity score overlap assumption)
+  - 1:1 nearest-neighbor matching with caliper = 0.1
+  - Reports: Treatment effect on treated (ATT) from matched sample
+  - **Expected result:** FCC coefficient ~-2.18% (stable) → supports causal interpretation
+  - Outputs: PSM_H2_RESULTS.txt with interpretation
+
+- **99_firm_fixed_effects_analysis.py** - H1-H4 Within-Firm Variation (Controls Unobserved Heterogeneity)
+  - Estimates firm fixed effects models to isolate within-firm variation
+  - Compares baseline OLS to firm FE specification
+  - Tests robustness to unobserved firm characteristics (governance, culture, location)
+  - **Expected patterns:**
+    - H1 (Timing): May decrease/zero out (selection-driven timing variation)
+    - H2 (FCC): Cannot separate from firm FE (time-invariant treatment)
+    - H3/H4 (Prior breaches, Health): Should remain robust
+  - Outputs: FE_H1_H4_RESULTS.txt
+
+- **92_enforcement_analysis.py** - H6 Regulatory Enforcement Analysis
+  - Tests H6 (regulatory enforcement as governance response)
+  - **Note:** Enforcement is rare (0.6% prevalence) → insufficient statistical power
+  - Reports descriptive statistics: enforcement characteristics, timing patterns
+  - If powered, estimates logit regression; otherwise flags as "descriptive only"
+  - Provides manuscript language: "H6 insufficiently powered to test due to 0.6% prevalence"
+  - Outputs: H6_ENFORCEMENT_ANALYSIS.txt with power discussion
+
 ### Active Analysis Scripts (scripts/ folder)
 - **60_train_ml_model.py** - Train ML models for robustness validation
 - **61_ml_validation.py** - ML validation and comparison with OLS

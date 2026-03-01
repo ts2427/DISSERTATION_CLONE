@@ -235,6 +235,15 @@ Log file: {log_path}
                 ]
             },
             {
+                'category': 'PUBLICATION READINESS: DATA INTEGRITY & CAUSAL ROBUSTNESS',
+                'scripts': [
+                    ('scripts/00_data_validation_checks.py', 'Data Validation Checks (logical consistency, duplicates, outliers, missing data)'),
+                    ('scripts/98_propensity_score_matching.py', 'Propensity Score Matching (H2 self-selection bias test - addresses reviewer concern)'),
+                    ('scripts/99_firm_fixed_effects_analysis.py', 'Firm Fixed Effects (H1-H4 within-firm variation, controls unobserved heterogeneity)'),
+                    ('scripts/92_enforcement_analysis.py', 'H6 Enforcement Analysis (regulatory enforcement prevalence and predictors)'),
+                ]
+            },
+            {
                 'category': 'MACHINE LEARNING',
                 'scripts': [
                     ('scripts/60_train_ml_model.py', 'Train ML Model'),

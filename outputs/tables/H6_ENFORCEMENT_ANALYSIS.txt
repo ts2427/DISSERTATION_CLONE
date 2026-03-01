@@ -1,0 +1,34 @@
+H6 ANALYSIS: REGULATORY ENFORCEMENT AND DISCLOSURE TIMING
+================================================================================
+
+DESCRIPTIVE STATISTICS
+--------------------------------------------------------------------------------
+Total observations: 1054
+Enforcement cases: 6
+Prevalence: 0.57%
+
+Characteristics of Enforcement Cases:
+  Mean prior breaches: 7.17
+  FCC-regulated: 6 / 6
+  Health breaches: 0 / 6
+  Immediate disclosure: 3 / 6
+
+STATISTICAL POWER NOTE
+--------------------------------------------------------------------------------
+Outcome prevalence: 0.57%
+Recommended minimum for regression: 5-10%
+Current prevalence is BELOW minimum - insufficient power for causal inference.
+
+CONCLUSION
+--------------------------------------------------------------------------------
+H6 (Regulatory Enforcement) is insufficiently powered to test.
+Only 6 enforcement cases in 1054 observations (0.57%) limits analysis.
+Recommend reporting H6 as a descriptive finding, not a causal test.
+
+MANUSCRIPT LANGUAGE FOR H6:
+"H6 (regulatory enforcement) suffers from insufficient statistical power.
+Enforcement actions occur in only 0.6% of cases (N=6), below the minimum
+prevalence for valid regression inference. Characteristics of enforcement
+cases are reported descriptively: enforcement is concentrated among repeat
+offenders (mean 7.17 prior breaches) rather than disclosure timing. We do not
+report statistical tests for H6."

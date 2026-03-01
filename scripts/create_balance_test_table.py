@@ -9,8 +9,10 @@ import numpy as np
 from pathlib import Path
 from scipy import stats
 
-# Load data
-data_path = Path(r'C:\Users\mcobp\BA798_TIM\data\processed\FINAL_DISSERTATION_DATASET_ENRICHED.csv')
+# Load data - use relative paths for cross-platform compatibility
+SCRIPT_DIR = Path(__file__).parent
+PROJECT_ROOT = SCRIPT_DIR.parent
+data_path = PROJECT_ROOT / 'Data' / 'processed' / 'FINAL_DISSERTATION_DATASET_ENRICHED.csv'
 df = pd.read_csv(data_path)
 
 # Ensure date columns are datetime
@@ -95,13 +97,13 @@ for idx, row in balance_df.iterrows():
     )
 
 # Save to CSV
-output_csv = Path(r'C:\Users\mcobp\BA798_TIM\outputs\tables\TABLE_BALANCE_TEST.csv')
+output_csv = PROJECT_ROOT / 'outputs' / 'tables' / 'TABLE_BALANCE_TEST.csv'
 output_csv.parent.mkdir(parents=True, exist_ok=True)
 balance_df.to_csv(output_csv, index=False)
 print(f"\n[OK] Balance test table saved: {output_csv}")
 
 # Create formatted table for publication
-output_txt = Path(r'C:\Users\mcobp\BA798_TIM\outputs\tables\TABLE_BALANCE_TEST.txt')
+output_txt = PROJECT_ROOT / 'outputs' / 'tables' / 'TABLE_BALANCE_TEST.txt'
 
 with open(output_txt, 'w') as f:
     f.write("TABLE: Balance Test - Pre-2007 Firm Characteristics\n")

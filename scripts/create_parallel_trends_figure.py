@@ -9,8 +9,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from pathlib import Path
 
-# Load data
-data_path = Path(r'C:\Users\mcobp\BA798_TIM\data\processed\FINAL_DISSERTATION_DATASET_ENRICHED.csv')
+# Load data - use relative paths for cross-platform compatibility
+SCRIPT_DIR = Path(__file__).parent
+PROJECT_ROOT = SCRIPT_DIR.parent
+data_path = PROJECT_ROOT / 'Data' / 'processed' / 'FINAL_DISSERTATION_DATASET_ENRICHED.csv'
 df = pd.read_csv(data_path)
 
 # Ensure date columns are datetime
@@ -84,7 +86,7 @@ for idx, row in non_fcc_trends.iterrows():
 plt.tight_layout()
 
 # Save figure
-output_path = Path(r'C:\Users\mcobp\BA798_TIM\outputs\figures\FIGURE_PARALLEL_TRENDS.png')
+output_path = PROJECT_ROOT / 'outputs' / 'figures' / 'FIGURE_PARALLEL_TRENDS.png'
 output_path.parent.mkdir(parents=True, exist_ok=True)
 plt.savefig(output_path, dpi=300, bbox_inches='tight')
 print(f"\n[OK] Parallel trends figure saved: {output_path}")
