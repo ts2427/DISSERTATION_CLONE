@@ -26,11 +26,9 @@ st.markdown("""
 # Load data using centralized utilities
 impact_df = load_economic_impact_data()
 report_text = None
-report_error = None
 try:
     report_text = load_economic_report()
-except Exception as e:
-    report_error = str(e)
+except Exception:
     report_text = None
 
 # ============================================================================
@@ -180,31 +178,6 @@ st.markdown("""
 - **Next Steps:** Quantify whether outcomes improve (regulatory effectiveness) or just costs shift (regulatory burden transfer)
 """)
 
-# ============================================================================
-# DEBUG BOX
-# ============================================================================
-
-with st.expander("🐛 Debug Information", expanded=False):
-    st.write("**Data Loading Status:**")
-    col1, col2 = st.columns(2)
-    with col1:
-        st.metric("Impact Data", "✓ Loaded" if impact_df is not None else "✗ Failed")
-    with col2:
-        st.metric("Report Text", "✓ Loaded" if report_text is not None else "✗ Failed")
-
-    if report_error:
-        st.error(f"Report Error: {report_error}")
-
-    st.write("**File Information:**")
-    st.code(f"""
-import os
-from pathlib import Path
-
-CWD: {os.getcwd()}
-Script Location: {Path(__file__).absolute()}
-Dashboard Parent: {Path(__file__).parent.parent.absolute()}
-Expected Report Path: {Path(__file__).parent.parent.absolute() / 'outputs' / 'economic_significance' / 'economic_significance_report.txt'}
-    """, language="python")
 
 # ============================================================================
 # FOOTER
