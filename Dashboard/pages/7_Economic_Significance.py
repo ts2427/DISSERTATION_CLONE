@@ -29,7 +29,9 @@ def load_economic_data():
         possible_paths = [
             'outputs/economic_significance/economic_impact_summary.csv',
             '../outputs/economic_significance/economic_impact_summary.csv',
-            'C:\\Users\\mcobp\\BA798_TIM\\outputs\\economic_significance\\economic_impact_summary.csv'
+            '../../outputs/economic_significance/economic_impact_summary.csv',
+            'C:\\Users\\mcobp\\BA798_TIM\\outputs\\economic_significance\\economic_impact_summary.csv',
+            '/mount/src/dissertation_clone/outputs/economic_significance/economic_impact_summary.csv'
         ]
 
         for path in possible_paths:
@@ -39,8 +41,8 @@ def load_economic_data():
             except:
                 continue
 
-        # If still not found, try with Path
-        base_dir = Path(__file__).parent.parent
+        # If still not found, try with Path - go up to Dashboard parent (which is repo root)
+        base_dir = Path(__file__).parent.parent.parent
         data_path = base_dir / 'outputs' / 'economic_significance' / 'economic_impact_summary.csv'
         impact_df = pd.read_csv(data_path)
         return impact_df
@@ -55,7 +57,9 @@ def load_report():
         possible_paths = [
             'outputs/economic_significance/economic_significance_report.txt',
             '../outputs/economic_significance/economic_significance_report.txt',
-            'C:\\Users\\mcobp\\BA798_TIM\\outputs\\economic_significance\\economic_significance_report.txt'
+            '../../outputs/economic_significance/economic_significance_report.txt',
+            'C:\\Users\\mcobp\\BA798_TIM\\outputs\\economic_significance\\economic_significance_report.txt',
+            '/mount/src/dissertation_clone/outputs/economic_significance/economic_significance_report.txt'
         ]
 
         for path in possible_paths:
@@ -65,8 +69,8 @@ def load_report():
             except:
                 continue
 
-        # If still not found, try with Path
-        base_dir = Path(__file__).parent.parent
+        # If still not found, try with Path - go up to Dashboard parent (which is repo root)
+        base_dir = Path(__file__).parent.parent.parent
         report_path = base_dir / 'outputs' / 'economic_significance' / 'economic_significance_report.txt'
         with open(report_path, 'r') as f:
             return f.read()
@@ -135,7 +139,9 @@ def load_image(filename):
     possible_paths = [
         f'outputs/economic_significance/{filename}',
         f'../outputs/economic_significance/{filename}',
-        f'C:\\Users\\mcobp\\BA798_TIM\\outputs\\economic_significance\\{filename}'
+        f'../../outputs/economic_significance/{filename}',
+        f'C:\\Users\\mcobp\\BA798_TIM\\outputs\\economic_significance\\{filename}',
+        f'/mount/src/dissertation_clone/outputs/economic_significance/{filename}'
     ]
 
     for path in possible_paths:
@@ -145,9 +151,9 @@ def load_image(filename):
         except:
             continue
 
-    # Try with Path object
+    # Try with Path object - go up to repo root
     try:
-        base_dir = Path(__file__).parent.parent
+        base_dir = Path(__file__).parent.parent.parent
         img_path = base_dir / 'outputs' / 'economic_significance' / filename
         img = Image.open(img_path)
         return img
