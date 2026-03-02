@@ -25,17 +25,53 @@ st.markdown("""
 @st.cache_data
 def load_economic_data():
     try:
-        impact_df = pd.read_csv('outputs/economic_significance/economic_impact_summary.csv')
+        # Try multiple possible paths
+        possible_paths = [
+            'outputs/economic_significance/economic_impact_summary.csv',
+            '../outputs/economic_significance/economic_impact_summary.csv',
+            'C:\\Users\\mcobp\\BA798_TIM\\outputs\\economic_significance\\economic_impact_summary.csv'
+        ]
+
+        for path in possible_paths:
+            try:
+                impact_df = pd.read_csv(path)
+                return impact_df
+            except:
+                continue
+
+        # If still not found, try with Path
+        base_dir = Path(__file__).parent.parent
+        data_path = base_dir / 'outputs' / 'economic_significance' / 'economic_impact_summary.csv'
+        impact_df = pd.read_csv(data_path)
         return impact_df
-    except:
+    except Exception as e:
+        st.error(f"Error loading data: {str(e)}")
         return None
 
 @st.cache_data
 def load_report():
     try:
-        with open('outputs/economic_significance/economic_significance_report.txt', 'r') as f:
+        # Try multiple possible paths
+        possible_paths = [
+            'outputs/economic_significance/economic_significance_report.txt',
+            '../outputs/economic_significance/economic_significance_report.txt',
+            'C:\\Users\\mcobp\\BA798_TIM\\outputs\\economic_significance\\economic_significance_report.txt'
+        ]
+
+        for path in possible_paths:
+            try:
+                with open(path, 'r') as f:
+                    return f.read()
+            except:
+                continue
+
+        # If still not found, try with Path
+        base_dir = Path(__file__).parent.parent
+        report_path = base_dir / 'outputs' / 'economic_significance' / 'economic_significance_report.txt'
+        with open(report_path, 'r') as f:
             return f.read()
-    except:
+    except Exception as e:
+        st.error(f"Error loading report: {str(e)}")
         return None
 
 impact_df = load_economic_data()
@@ -93,58 +129,92 @@ with col3:
 st.markdown("---")
 st.markdown("## 📈 Visualizations")
 
+@st.cache_data
+def load_image(filename):
+    """Load image from economic_significance directory with multiple path attempts"""
+    possible_paths = [
+        f'outputs/economic_significance/{filename}',
+        f'../outputs/economic_significance/{filename}',
+        f'C:\\Users\\mcobp\\BA798_TIM\\outputs\\economic_significance\\{filename}'
+    ]
+
+    for path in possible_paths:
+        try:
+            img = Image.open(path)
+            return img
+        except:
+            continue
+
+    # Try with Path object
+    try:
+        base_dir = Path(__file__).parent.parent
+        img_path = base_dir / 'outputs' / 'economic_significance' / filename
+        img = Image.open(img_path)
+        return img
+    except:
+        return None
+
 tab1, tab2, tab3 = st.tabs(["FCC Cost by Size", "Impact Breakdown", "Governance Costs"])
 
 # Tab 1: FCC Cost
 with tab1:
     st.markdown("### FCC Regulatory Cost by Firm Size")
     try:
-        img = Image.open('outputs/economic_significance/FCC_Cost_by_Firm_Size.png')
-        st.image(img, use_column_width=True)
-        st.markdown("""
-        **Interpretation:**
-        - Smaller firms experience larger absolute costs ($0.2M to $0.9M)
-        - Large firms experience larger costs in absolute terms ($4.1M to $10.4M)
-        - Effect scales with firm size: regulatory burden increases with market capitalization
-        - Regulatory compliance creates measurable shareholder value destruction
-        """)
-    except:
-        st.warning("Visualization not found. Run script 96_economic_significance.py first.")
+        img = load_image('FCC_Cost_by_Firm_Size.png')
+        if img:
+            st.image(img, use_column_width=True)
+            st.markdown("""
+            **Interpretation:**
+            - Smaller firms experience larger absolute costs ($0.2M to $0.9M)
+            - Large firms experience larger costs in absolute terms ($4.1M to $10.4M)
+            - Effect scales with firm size: regulatory burden increases with market capitalization
+            - Regulatory compliance creates measurable shareholder value destruction
+            """)
+        else:
+            st.warning("Visualization not found. Run script 96_economic_significance.py first.")
+    except Exception as e:
+        st.warning(f"Error loading image: {str(e)}")
 
 # Tab 2: Breakdown
 with tab2:
     st.markdown("### Total Economic Impact Breakdown")
     try:
-        img = Image.open('outputs/economic_significance/Economic_Impact_Breakdown.png')
-        st.image(img, use_column_width=True)
-        st.markdown("""
-        **Three Economic Mechanisms:**
-        1. **Market Valuation** (Blue): Direct shareholder value loss from FCC regulation
-        2. **Cost of Capital** (Orange): Annual cost increase from information asymmetry
-        3. **Governance Disruption** (Green): Executive turnover and organizational costs
+        img = load_image('Economic_Impact_Breakdown.png')
+        if img:
+            st.image(img, use_column_width=True)
+            st.markdown("""
+            **Three Economic Mechanisms:**
+            1. **Market Valuation** (Blue): Direct shareholder value loss from FCC regulation
+            2. **Cost of Capital** (Orange): Annual cost increase from information asymmetry
+            3. **Governance Disruption** (Green): Executive turnover and organizational costs
 
-        Effects compound across all three channels, creating substantial total economic burden.
-        """)
-    except:
-        st.warning("Visualization not found. Run script 96_economic_significance.py first.")
+            Effects compound across all three channels, creating substantial total economic burden.
+            """)
+        else:
+            st.warning("Visualization not found. Run script 96_economic_significance.py first.")
+    except Exception as e:
+        st.warning(f"Error loading image: {str(e)}")
 
 # Tab 3: Governance
 with tab3:
     st.markdown("### Executive Turnover Cost Components")
     try:
-        img = Image.open('outputs/economic_significance/Governance_Cost_Components.png')
-        st.image(img, use_column_width=True)
-        st.markdown("""
-        **Turnover Cost Breakdown:**
-        - **Direct Costs** ($2-5M): Severance packages, recruitment, legal fees
-        - **Indirect Costs** ($10-20M): Disruption, lost relationships, learning curve
-        - **Total Impact** ($12-25M): Full economic burden per executive departure
+        img = load_image('Governance_Cost_Components.png')
+        if img:
+            st.image(img, use_column_width=True)
+            st.markdown("""
+            **Turnover Cost Breakdown:**
+            - **Direct Costs** ($2-5M): Severance packages, recruitment, legal fees
+            - **Indirect Costs** ($10-20M): Disruption, lost relationships, learning curve
+            - **Total Impact** ($12-25M): Full economic burden per executive departure
 
-        Timing-driven changes in executive turnover (5.3 percentage point increase)
-        translate to $1M per breach in expected governance costs.
-        """)
-    except:
-        st.warning("Visualization not found. Run script 96_economic_significance.py first.")
+            Timing-driven changes in executive turnover (5.3 percentage point increase)
+            translate to $1M per breach in expected governance costs.
+            """)
+        else:
+            st.warning("Visualization not found. Run script 96_economic_significance.py first.")
+    except Exception as e:
+        st.warning(f"Error loading image: {str(e)}")
 
 # ============================================================================
 # SECTION 4: DETAILED ANALYSIS
