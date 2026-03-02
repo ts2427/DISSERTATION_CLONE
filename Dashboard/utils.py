@@ -172,7 +172,6 @@ def load_economic_report():
 
     return None
 
-@st.cache_data(ttl=3600)
 def load_economic_image(filename):
     """Load economic significance visualization images - works from both local and Streamlit Cloud"""
     from PIL import Image
@@ -185,17 +184,24 @@ def load_economic_image(filename):
     # Try with resolved absolute path
     if img_path.exists():
         try:
-            return Image.open(str(img_path))
-        except Exception:
-            pass
+            img = Image.open(str(img_path))
+            return img
+        except Exception as e:
+            print(f"Error reading image {img_path}: {e}")
 
     # Fallback: try from current working directory
     cwd_path = Path(os.getcwd()) / 'outputs' / 'economic_significance' / filename
     if cwd_path.exists():
         try:
-            return Image.open(str(cwd_path))
-        except Exception:
-            pass
+            img = Image.open(str(cwd_path))
+            return img
+        except Exception as e:
+            print(f"Error reading image {cwd_path}: {e}")
+
+    # Debug: show what we checked
+    print(f"DEBUG: Could not find image {filename}")
+    print(f"  Checked (resolved): {img_path} - exists: {img_path.exists()}")
+    print(f"  Checked (cwd): {cwd_path} - exists: {cwd_path.exists()}")
 
     return None
 
