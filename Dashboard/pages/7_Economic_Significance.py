@@ -37,27 +37,7 @@ st.markdown("## 📊 Economic Impact Summary (Per Breach)")
 if impact_df is not None:
     st.dataframe(impact_df, use_container_width=True)
 else:
-    import os
-    from pathlib import Path
-    st.warning("Economic impact data not found.")
-    with st.expander("Debug: Check file paths"):
-        cwd = os.getcwd()
-        st.write(f"Current working directory: {cwd}")
-
-        dashboard_dir = Path(__file__).parent.parent
-        root_from_page = dashboard_dir.parent
-        st.write(f"Dashboard dir: {dashboard_dir}")
-        st.write(f"Root from page: {root_from_page}")
-
-        # Check various possible paths
-        paths_to_check = [
-            root_from_page / 'outputs' / 'economic_significance' / 'economic_impact_summary.csv',
-            Path(cwd) / 'outputs' / 'economic_significance' / 'economic_impact_summary.csv',
-            Path('/mount/src/dissertation_clone/outputs/economic_significance/economic_impact_summary.csv'),
-        ]
-
-        for p in paths_to_check:
-            st.write(f"✓ {p}" if p.exists() else f"✗ {p}")
+    st.warning("Economic impact data not found. Run script 96_economic_significance.py first.")
 
 # ============================================================================
 # SECTION 2: KEY FINDINGS
