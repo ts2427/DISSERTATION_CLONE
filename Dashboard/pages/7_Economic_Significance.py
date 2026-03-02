@@ -37,7 +37,31 @@ st.markdown("## 📊 Economic Impact Summary (Per Breach)")
 if impact_df is not None:
     st.dataframe(impact_df, use_container_width=True)
 else:
-    st.warning("Economic impact data not found. Run script 96_economic_significance.py first.")
+    import os
+    from pathlib import Path
+    st.error("Economic impact data not found.")
+
+    # Show debug info
+    with st.expander("🔍 Debug Information"):
+        cwd = os.getcwd()
+        st.write(f"**Current Working Directory:** `{cwd}`")
+
+        # Check paths
+        root_from_utils = Path(__file__).parent.parent.resolve()
+        st.write(f"**Root from page:** `{root_from_utils}`")
+
+        paths_to_check = {
+            "From utils.py resolve": root_from_utils / 'outputs' / 'economic_significance' / 'economic_impact_summary.csv',
+            "From CWD": Path(cwd) / 'outputs' / 'economic_significance' / 'economic_impact_summary.csv',
+            "Streamlit Cloud path": Path('/mount/src/dissertation_clone/outputs/economic_significance/economic_impact_summary.csv'),
+        }
+
+        st.write("**File Existence Checks:**")
+        for name, path in paths_to_check.items():
+            exists = path.exists()
+            status = "✅ EXISTS" if exists else "❌ NOT FOUND"
+            st.write(f"{status} - {name}")
+            st.code(str(path))
 
 # ============================================================================
 # SECTION 2: KEY FINDINGS
