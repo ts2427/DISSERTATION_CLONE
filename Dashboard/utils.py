@@ -104,7 +104,6 @@ def load_feature_importance(essay='essay2'):
     except FileNotFoundError:
         return None
 
-@st.cache_data(ttl=3600)
 def load_economic_impact_data():
     """Load economic impact summary data - works from both local and Streamlit Cloud"""
     import os
@@ -116,21 +115,29 @@ def load_economic_impact_data():
     # Try with resolved absolute path
     if data_path.exists():
         try:
-            return pd.read_csv(str(data_path))
-        except Exception:
-            pass
+            df = pd.read_csv(str(data_path))
+            return df
+        except Exception as e:
+            print(f"Error reading {data_path}: {e}")
 
     # Fallback: try from current working directory
     cwd_path = Path(os.getcwd()) / 'outputs' / 'economic_significance' / 'economic_impact_summary.csv'
     if cwd_path.exists():
         try:
-            return pd.read_csv(str(cwd_path))
-        except Exception:
-            pass
+            df = pd.read_csv(str(cwd_path))
+            return df
+        except Exception as e:
+            print(f"Error reading {cwd_path}: {e}")
+
+    # Debug: show what we checked
+    print(f"DEBUG: Could not find economic_impact_summary.csv")
+    print(f"  Checked (resolved): {data_path} - exists: {data_path.exists()}")
+    print(f"  Checked (cwd): {cwd_path} - exists: {cwd_path.exists()}")
+    print(f"  CWD: {os.getcwd()}")
+    print(f"  __file__: {__file__}")
 
     return None
 
-@st.cache_data(ttl=3600)
 def load_economic_report():
     """Load economic significance detailed report - works from both local and Streamlit Cloud"""
     import os
@@ -143,18 +150,25 @@ def load_economic_report():
     if report_path.exists():
         try:
             with open(str(report_path), 'r') as f:
-                return f.read()
-        except Exception:
-            pass
+                text = f.read()
+            return text
+        except Exception as e:
+            print(f"Error reading {report_path}: {e}")
 
     # Fallback: try from current working directory
     cwd_path = Path(os.getcwd()) / 'outputs' / 'economic_significance' / 'economic_significance_report.txt'
     if cwd_path.exists():
         try:
             with open(str(cwd_path), 'r') as f:
-                return f.read()
-        except Exception:
-            pass
+                text = f.read()
+            return text
+        except Exception as e:
+            print(f"Error reading {cwd_path}: {e}")
+
+    # Debug: show what we checked
+    print(f"DEBUG: Could not find economic_significance_report.txt")
+    print(f"  Checked (resolved): {report_path} - exists: {report_path.exists()}")
+    print(f"  Checked (cwd): {cwd_path} - exists: {cwd_path.exists()}")
 
     return None
 
