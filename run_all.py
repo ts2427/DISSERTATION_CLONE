@@ -149,6 +149,12 @@ def verify_outputs(log_file):
         Path('outputs/tables/essay3/TABLE3_information_asymmetry.txt'),
         Path('outputs/economic_significance/economic_impact_summary.csv'),
         Path('outputs/economic_significance/economic_significance_report.txt'),
+        Path('outputs/tables/TABLE_GOVERNANCE_HETEROGENEITY_RESULTS.csv'),
+        Path('outputs/tables/TABLE_CVSS_COMPLEXITY_HETEROGENEITY_RESULTS.csv'),
+        Path('outputs/tables/TABLE_RANSOMWARE_HETEROGENEITY_RESULTS.csv'),
+        Path('outputs/tables/TABLE_MEDIA_COVERAGE_HETEROGENEITY_RESULTS.csv'),
+        Path('outputs/tables/TABLE_EXTENDED_GOVERNANCE_WINDOWS_RESULTS.csv'),
+        Path('outputs/tables/TABLE_DIVERSITY_HETEROGENEITY_RESULTS.csv'),
     ]
 
     present_files = []
@@ -251,10 +257,17 @@ Log file: {log_path}
                 ]
             },
             {
-                'category': 'ECONOMIC SIGNIFICANCE & HETEROGENEOUS ANALYSIS',
+                'category': 'ECONOMIC SIGNIFICANCE & COMPREHENSIVE HETEROGENEITY ANALYSIS',
                 'scripts': [
                     ('scripts/96_economic_significance.py', 'Economic Significance Analysis: FCC costs, volatility impact, governance disruption in dollar terms'),
                     ('scripts/97_heterogeneous_mechanisms.py', 'Heterogeneous Mechanisms: Effects vary by firm size, breach type, prior history'),
+                    ('scripts/98_sox404_heterogeneity.py', 'HETEROGENEITY PHASE 1: Governance Quality (SOX 404 proxy) - FCC x Governance interaction'),
+                    ('scripts/99_cvss_complexity_heterogeneity.py', 'HETEROGENEITY PHASE 2: CVSS Technical Complexity - FCC x Complexity interaction (BREAKTHROUGH: +6.27%**)'),
+                    ('scripts/100_ransomware_heterogeneity.py', 'HETEROGENEITY ANALYSIS #3: Ransomware Attack Vector - FCC x Ransomware interaction'),
+                    ('scripts/101_media_coverage_heterogeneity.py', 'HETEROGENEITY ANALYSIS #4: Media Coverage Moderation - FCC x Media interaction (+7.08%**)'),
+                    ('scripts/102_extended_governance_windows.py', 'HETEROGENEITY ANALYSIS #5: Extended Governance Time Windows - 30d/90d/180d comparison'),
+                    ('scripts/103_breach_type_diversity.py', 'HETEROGENEITY ANALYSIS #6: Breach Type Diversity - Multi-type complexity'),
+                    ('scripts/104_restatement_summary.py', 'HETEROGENEITY ANALYSIS #7: Restatement Prediction - Data limitation documentation'),
                 ]
             },
             {
@@ -374,6 +387,18 @@ Essay 3 Regression Tables:
   outputs/tables/essay3/TABLE_FCC_Size_Sensitivity_Volatility.txt (FCC causal ID: size sensitivity analysis)
   outputs/tables/essay3/FCC_Causal_ID_Summary_Volatility.txt (FCC causal ID: comprehensive summary)
 
+Heterogeneity Analysis Results (Publication Appendix Tables B11-B15):
+  outputs/tables/TABLE_GOVERNANCE_HETEROGENEITY_RESULTS.csv (Phase 1: Governance quality, B11)
+  outputs/tables/TABLE_CVSS_COMPLEXITY_HETEROGENEITY_RESULTS.csv (Phase 2: CVSS complexity, B12) [BREAKTHROUGH: +6.27%**]
+  outputs/tables/TABLE_RANSOMWARE_HETEROGENEITY_RESULTS.csv (Analysis #3: Ransomware, B13)
+  outputs/tables/TABLE_MEDIA_COVERAGE_HETEROGENEITY_RESULTS.csv (Analysis #4: Media coverage, B14) [+7.08%**]
+  outputs/tables/TABLE_EXTENDED_GOVERNANCE_WINDOWS_RESULTS.csv (Analysis #5: Time windows, B15)
+  outputs/tables/TABLE_DIVERSITY_HETEROGENEITY_RESULTS.csv (Analysis #6: Type diversity)
+
+Enriched Datasets:
+  Data/processed/FINAL_DISSERTATION_DATASET_WITH_GOVERNANCE.csv (Phase 1)
+  Data/processed/FINAL_DISSERTATION_DATASET_WITH_CVSS.csv (Phase 2, used by Analyses #3-7)
+
 ML Outputs:
   outputs/ml_models/ml_model_summary.csv
   outputs/ml_models/feature_importance_car30d.csv
@@ -427,6 +452,25 @@ Robustness:
   [+] Health breach effects robust across all specifications
   [+] FCC effect robust to firm-level clustering
   [-] Disclosure timing effects NOT robust
+
+Heterogeneity Analysis (Phase 1-2 + Analyses #3-7):
+  [+] PHASE 1 (Governance Quality): Governance weakness independent of FCC (+0.55%, NS)
+  [+] PHASE 2 (CVSS Complexity) - BREAKTHROUGH: Simple breaches penalized 6x more by FCC
+      - Low-complexity FCC effect: -6.46%***
+      - High-complexity FCC effect: -0.19%
+      - Interaction: +6.27%** (p=0.007)
+  [+] ANALYSIS #3 (Ransomware): Ransomware protected from FCC penalty (-8.34%, p=0.069)
+  [+] ANALYSIS #4 (Media Coverage): Media shields FCC penalty (+7.08%**, p=0.006)
+      - Low-media breaches: -3.33%*** FCC effect
+      - High-media breaches: +3.75% FCC effect
+  [+] ANALYSIS #5 (Governance Windows): FCC effect immediate but transient (decays over time)
+  [+] ANALYSIS #6 (Type Diversity): Type diversity NOT moderator (-0.315%, NS)
+  [-] ANALYSIS #7 (Restatement): Data limitation - Compustat covers only 2.6% of breach firms
+
+Central Finding: FCC penalty operates through EXPECTATION MISMATCH
+  - Markets expect simple breaches to resolve quickly → FCC deadline violates expectations
+  - Markets expect complex breaches will take time → FCC deadline adds no penalty
+  - Media coverage signals information already available → FCC adds no marginal value
 
 {'=' * 80}
 NEXT STEPS
