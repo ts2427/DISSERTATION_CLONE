@@ -104,37 +104,29 @@ def load_feature_importance(essay='essay2'):
     except FileNotFoundError:
         return None
 
+@st.cache_data(ttl=3600)
 def load_economic_impact_data():
     """Load economic impact summary data - works from both local and Streamlit Cloud"""
     import os
 
-    # Get absolute path by resolving from this file's location
-    root_dir = Path(__file__).parent.parent.resolve()
-    data_path = root_dir / 'outputs' / 'economic_significance' / 'economic_impact_summary.csv'
-
-    # Try with resolved absolute path
-    if data_path.exists():
-        try:
-            df = pd.read_csv(str(data_path))
-            return df
-        except Exception as e:
-            print(f"Error reading {data_path}: {e}")
-
-    # Fallback: try from current working directory
+    # Try from current working directory first (this works on Streamlit Cloud)
     cwd_path = Path(os.getcwd()) / 'outputs' / 'economic_significance' / 'economic_impact_summary.csv'
     if cwd_path.exists():
         try:
             df = pd.read_csv(str(cwd_path))
             return df
         except Exception as e:
-            print(f"Error reading {cwd_path}: {e}")
+            pass
 
-    # Debug: show what we checked
-    print(f"DEBUG: Could not find economic_impact_summary.csv")
-    print(f"  Checked (resolved): {data_path} - exists: {data_path.exists()}")
-    print(f"  Checked (cwd): {cwd_path} - exists: {cwd_path.exists()}")
-    print(f"  CWD: {os.getcwd()}")
-    print(f"  __file__: {__file__}")
+    # Fallback: try resolved path
+    root_dir = Path(__file__).parent.parent.resolve()
+    data_path = root_dir / 'outputs' / 'economic_significance' / 'economic_impact_summary.csv'
+    if data_path.exists():
+        try:
+            df = pd.read_csv(str(data_path))
+            return df
+        except Exception as e:
+            pass
 
     return None
 
@@ -142,66 +134,62 @@ def load_economic_report():
     """Load economic significance detailed report - works from both local and Streamlit Cloud"""
     import os
 
-    # Get absolute path by resolving from this file's location
+    # Try from current working directory first (this works on Streamlit Cloud)
+    cwd_path = Path(os.getcwd()) / 'outputs' / 'economic_significance' / 'economic_significance_report.txt'
+    if cwd_path.exists():
+        try:
+            # Try UTF-8 first
+            with open(str(cwd_path), 'r', encoding='utf-8') as f:
+                text = f.read()
+            return text
+        except UnicodeDecodeError:
+            # Fallback to latin-1 if UTF-8 fails
+            try:
+                with open(str(cwd_path), 'r', encoding='latin-1') as f:
+                    text = f.read()
+                return text
+            except Exception as e:
+                print(f"Error reading {cwd_path}: {e}")
+        except Exception as e:
+            print(f"Error reading {cwd_path}: {e}")
+
+    # Fallback: try resolved path
     root_dir = Path(__file__).parent.parent.resolve()
     report_path = root_dir / 'outputs' / 'economic_significance' / 'economic_significance_report.txt'
-
-    # Try with resolved absolute path
     if report_path.exists():
         try:
-            with open(str(report_path), 'r') as f:
+            with open(str(report_path), 'r', encoding='latin-1') as f:
                 text = f.read()
             return text
         except Exception as e:
             print(f"Error reading {report_path}: {e}")
 
-    # Fallback: try from current working directory
-    cwd_path = Path(os.getcwd()) / 'outputs' / 'economic_significance' / 'economic_significance_report.txt'
-    if cwd_path.exists():
-        try:
-            with open(str(cwd_path), 'r') as f:
-                text = f.read()
-            return text
-        except Exception as e:
-            print(f"Error reading {cwd_path}: {e}")
-
-    # Debug: show what we checked
-    print(f"DEBUG: Could not find economic_significance_report.txt")
-    print(f"  Checked (resolved): {report_path} - exists: {report_path.exists()}")
-    print(f"  Checked (cwd): {cwd_path} - exists: {cwd_path.exists()}")
-
     return None
 
+@st.cache_data(ttl=3600)
 def load_economic_image(filename):
     """Load economic significance visualization images - works from both local and Streamlit Cloud"""
     from PIL import Image
     import os
 
-    # Get absolute path by resolving from this file's location
-    root_dir = Path(__file__).parent.parent.resolve()
-    img_path = root_dir / 'outputs' / 'economic_significance' / filename
-
-    # Try with resolved absolute path
-    if img_path.exists():
-        try:
-            img = Image.open(str(img_path))
-            return img
-        except Exception as e:
-            print(f"Error reading image {img_path}: {e}")
-
-    # Fallback: try from current working directory
+    # Try from current working directory first (this works on Streamlit Cloud)
     cwd_path = Path(os.getcwd()) / 'outputs' / 'economic_significance' / filename
     if cwd_path.exists():
         try:
             img = Image.open(str(cwd_path))
             return img
         except Exception as e:
-            print(f"Error reading image {cwd_path}: {e}")
+            pass
 
-    # Debug: show what we checked
-    print(f"DEBUG: Could not find image {filename}")
-    print(f"  Checked (resolved): {img_path} - exists: {img_path.exists()}")
-    print(f"  Checked (cwd): {cwd_path} - exists: {cwd_path.exists()}")
+    # Fallback: try resolved path
+    root_dir = Path(__file__).parent.parent.resolve()
+    img_path = root_dir / 'outputs' / 'economic_significance' / filename
+    if img_path.exists():
+        try:
+            img = Image.open(str(img_path))
+            return img
+        except Exception as e:
+            pass
 
     return None
 
