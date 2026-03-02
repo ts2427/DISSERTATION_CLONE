@@ -6,6 +6,11 @@ Uses centralized utility functions for data loading
 """
 
 import streamlit as st
+import sys
+from pathlib import Path
+
+# Add parent directory to path for utils import
+sys.path.insert(0, str(Path(__file__).parent.parent))
 from utils import load_economic_impact_data, load_economic_report, load_economic_image
 
 st.set_page_config(page_title="Economic Significance", page_icon="💰", layout="wide")
