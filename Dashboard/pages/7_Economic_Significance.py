@@ -2,14 +2,11 @@
 Economic Significance Analysis Page
 
 Shows the real-world dollar impact of dissertation findings
+Uses centralized utility functions for data loading
 """
 
 import streamlit as st
-import pandas as pd
-import numpy as np
-from pathlib import Path
-import matplotlib.pyplot as plt
-from PIL import Image
+from utils import load_economic_impact_data, load_economic_report, load_economic_image
 
 st.set_page_config(page_title="Economic Significance", page_icon="💰", layout="wide")
 
@@ -21,63 +18,9 @@ st.markdown("""
 *Translating statistical findings into economic costs and implications*
 """)
 
-# Load data
-@st.cache_data(ttl=3600)
-def load_economic_data():
-    try:
-        # Try multiple possible paths in order of likelihood
-        possible_paths = [
-            '/mount/src/dissertation_clone/outputs/economic_significance/economic_impact_summary.csv',
-            'outputs/economic_significance/economic_impact_summary.csv',
-            '../outputs/economic_significance/economic_impact_summary.csv',
-            '../../outputs/economic_significance/economic_impact_summary.csv',
-        ]
-
-        for path in possible_paths:
-            try:
-                impact_df = pd.read_csv(path)
-                return impact_df
-            except:
-                continue
-
-        # If still not found, try with Path - go up to Dashboard parent (which is repo root)
-        base_dir = Path(__file__).parent.parent.parent
-        data_path = base_dir / 'outputs' / 'economic_significance' / 'economic_impact_summary.csv'
-        impact_df = pd.read_csv(str(data_path))
-        return impact_df
-    except Exception as e:
-        st.error(f"Error loading economic impact data: {str(e)}")
-        return None
-
-@st.cache_data(ttl=3600)
-def load_report():
-    try:
-        # Try multiple possible paths in order of likelihood
-        possible_paths = [
-            '/mount/src/dissertation_clone/outputs/economic_significance/economic_significance_report.txt',
-            'outputs/economic_significance/economic_significance_report.txt',
-            '../outputs/economic_significance/economic_significance_report.txt',
-            '../../outputs/economic_significance/economic_significance_report.txt',
-        ]
-
-        for path in possible_paths:
-            try:
-                with open(path, 'r') as f:
-                    return f.read()
-            except:
-                continue
-
-        # If still not found, try with Path - go up to Dashboard parent (which is repo root)
-        base_dir = Path(__file__).parent.parent.parent
-        report_path = base_dir / 'outputs' / 'economic_significance' / 'economic_significance_report.txt'
-        with open(str(report_path), 'r') as f:
-            return f.read()
-    except Exception as e:
-        st.error(f"Error loading economic report: {str(e)}")
-        return None
-
-impact_df = load_economic_data()
-report_text = load_report()
+# Load data using centralized utilities
+impact_df = load_economic_impact_data()
+report_text = load_economic_report()
 
 # ============================================================================
 # SECTION 1: ECONOMIC IMPACT SUMMARY TABLE
@@ -89,7 +32,7 @@ st.markdown("## 📊 Economic Impact Summary (Per Breach)")
 if impact_df is not None:
     st.dataframe(impact_df, use_container_width=True)
 else:
-    st.warning("Economic impact data not found. Run script 96_economic_significance.py first.")
+    st.warning("Economic impact data not found. Ensure outputs/economic_significance/economic_impact_summary.csv exists.")
 
 # ============================================================================
 # SECTION 2: KEY FINDINGS
@@ -131,93 +74,58 @@ with col3:
 st.markdown("---")
 st.markdown("## 📈 Visualizations")
 
-@st.cache_data(ttl=3600)
-def load_image(filename):
-    """Load image from economic_significance directory with multiple path attempts"""
-    possible_paths = [
-        f'/mount/src/dissertation_clone/outputs/economic_significance/{filename}',
-        f'outputs/economic_significance/{filename}',
-        f'../outputs/economic_significance/{filename}',
-        f'../../outputs/economic_significance/{filename}',
-    ]
-
-    for path in possible_paths:
-        try:
-            img = Image.open(path)
-            return img
-        except:
-            continue
-
-    # Try with Path object - go up to repo root
-    try:
-        base_dir = Path(__file__).parent.parent.parent
-        img_path = base_dir / 'outputs' / 'economic_significance' / filename
-        img = Image.open(str(img_path))
-        return img
-    except:
-        return None
-
 tab1, tab2, tab3 = st.tabs(["FCC Cost by Size", "Impact Breakdown", "Governance Costs"])
 
 # Tab 1: FCC Cost
 with tab1:
     st.markdown("### FCC Regulatory Cost by Firm Size")
-    try:
-        img = load_image('FCC_Cost_by_Firm_Size.png')
-        if img:
-            st.image(img, use_column_width=True)
-            st.markdown("""
-            **Interpretation:**
-            - Smaller firms experience larger absolute costs ($0.2M to $0.9M)
-            - Large firms experience larger costs in absolute terms ($4.1M to $10.4M)
-            - Effect scales with firm size: regulatory burden increases with market capitalization
-            - Regulatory compliance creates measurable shareholder value destruction
-            """)
-        else:
-            st.warning("Visualization not found. Run script 96_economic_significance.py first.")
-    except Exception as e:
-        st.warning(f"Error loading image: {str(e)}")
+    img = load_economic_image('FCC_Cost_by_Firm_Size.png')
+    if img:
+        st.image(img, use_column_width=True)
+        st.markdown("""
+        **Interpretation:**
+        - Smaller firms experience larger absolute costs ($0.2M to $0.9M)
+        - Large firms experience larger costs in absolute terms ($4.1M to $10.4M)
+        - Effect scales with firm size: regulatory burden increases with market capitalization
+        - Regulatory compliance creates measurable shareholder value destruction
+        """)
+    else:
+        st.warning("Visualization not found. Ensure FCC_Cost_by_Firm_Size.png exists in outputs/economic_significance/")
 
 # Tab 2: Breakdown
 with tab2:
     st.markdown("### Total Economic Impact Breakdown")
-    try:
-        img = load_image('Economic_Impact_Breakdown.png')
-        if img:
-            st.image(img, use_column_width=True)
-            st.markdown("""
-            **Three Economic Mechanisms:**
-            1. **Market Valuation** (Blue): Direct shareholder value loss from FCC regulation
-            2. **Cost of Capital** (Orange): Annual cost increase from information asymmetry
-            3. **Governance Disruption** (Green): Executive turnover and organizational costs
+    img = load_economic_image('Economic_Impact_Breakdown.png')
+    if img:
+        st.image(img, use_column_width=True)
+        st.markdown("""
+        **Three Economic Mechanisms:**
+        1. **Market Valuation** (Blue): Direct shareholder value loss from FCC regulation
+        2. **Cost of Capital** (Orange): Annual cost increase from information asymmetry
+        3. **Governance Disruption** (Green): Executive turnover and organizational costs
 
-            Effects compound across all three channels, creating substantial total economic burden.
-            """)
-        else:
-            st.warning("Visualization not found. Run script 96_economic_significance.py first.")
-    except Exception as e:
-        st.warning(f"Error loading image: {str(e)}")
+        Effects compound across all three channels, creating substantial total economic burden.
+        """)
+    else:
+        st.warning("Visualization not found. Ensure Economic_Impact_Breakdown.png exists in outputs/economic_significance/")
 
 # Tab 3: Governance
 with tab3:
     st.markdown("### Executive Turnover Cost Components")
-    try:
-        img = load_image('Governance_Cost_Components.png')
-        if img:
-            st.image(img, use_column_width=True)
-            st.markdown("""
-            **Turnover Cost Breakdown:**
-            - **Direct Costs** ($2-5M): Severance packages, recruitment, legal fees
-            - **Indirect Costs** ($10-20M): Disruption, lost relationships, learning curve
-            - **Total Impact** ($12-25M): Full economic burden per executive departure
+    img = load_economic_image('Governance_Cost_Components.png')
+    if img:
+        st.image(img, use_column_width=True)
+        st.markdown("""
+        **Turnover Cost Breakdown:**
+        - **Direct Costs** ($2-5M): Severance packages, recruitment, legal fees
+        - **Indirect Costs** ($10-20M): Disruption, lost relationships, learning curve
+        - **Total Impact** ($12-25M): Full economic burden per executive departure
 
-            Timing-driven changes in executive turnover (5.3 percentage point increase)
-            translate to $1M per breach in expected governance costs.
-            """)
-        else:
-            st.warning("Visualization not found. Run script 96_economic_significance.py first.")
-    except Exception as e:
-        st.warning(f"Error loading image: {str(e)}")
+        Timing-driven changes in executive turnover (5.3 percentage point increase)
+        translate to $1M per breach in expected governance costs.
+        """)
+    else:
+        st.warning("Visualization not found. Ensure Governance_Cost_Components.png exists in outputs/economic_significance/")
 
 # ============================================================================
 # SECTION 4: DETAILED ANALYSIS
@@ -230,7 +138,7 @@ if report_text:
     with st.expander("Full Economic Significance Report", expanded=False):
         st.text(report_text)
 else:
-    st.warning("Full report not available. Run script 96_economic_significance.py first.")
+    st.warning("Full report not available. Ensure economic_significance_report.txt exists in outputs/economic_significance/")
 
 # ============================================================================
 # SECTION 5: IMPLICATIONS
