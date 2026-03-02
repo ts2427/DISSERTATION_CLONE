@@ -37,31 +37,7 @@ st.markdown("## 📊 Economic Impact Summary (Per Breach)")
 if impact_df is not None:
     st.dataframe(impact_df, use_container_width=True)
 else:
-    import os
-    from pathlib import Path
-    st.error("Economic impact data not found.")
-
-    # Show debug info
-    with st.expander("🔍 Debug Information"):
-        cwd = os.getcwd()
-        st.write(f"**Current Working Directory:** `{cwd}`")
-
-        # Check paths
-        root_from_utils = Path(__file__).parent.parent.resolve()
-        st.write(f"**Root from page:** `{root_from_utils}`")
-
-        paths_to_check = {
-            "From utils.py resolve": root_from_utils / 'outputs' / 'economic_significance' / 'economic_impact_summary.csv',
-            "From CWD": Path(cwd) / 'outputs' / 'economic_significance' / 'economic_impact_summary.csv',
-            "Streamlit Cloud path": Path('/mount/src/dissertation_clone/outputs/economic_significance/economic_impact_summary.csv'),
-        }
-
-        st.write("**File Existence Checks:**")
-        for name, path in paths_to_check.items():
-            exists = path.exists()
-            status = "✅ EXISTS" if exists else "❌ NOT FOUND"
-            st.write(f"{status} - {name}")
-            st.code(str(path))
+    st.warning("Economic impact data not found. Run script 96_economic_significance.py first.")
 
 # ============================================================================
 # SECTION 2: KEY FINDINGS
@@ -167,32 +143,7 @@ if report_text:
     with st.expander("Full Economic Significance Report", expanded=False):
         st.text(report_text)
 else:
-    import os
-    from pathlib import Path
-    st.error("Full report not available.")
-
-    # Show debug info for report
-    with st.expander("🔍 Debug Report Loading"):
-        cwd = os.getcwd()
-        root_from_utils = Path(__file__).parent.parent.resolve()
-
-        report_paths = {
-            "From utils.py resolve": root_from_utils / 'outputs' / 'economic_significance' / 'economic_significance_report.txt',
-            "From CWD": Path(cwd) / 'outputs' / 'economic_significance' / 'economic_significance_report.txt',
-        }
-
-        for name, path in report_paths.items():
-            exists = path.exists()
-            status = "✅ EXISTS" if exists else "❌ NOT FOUND"
-            st.write(f"{status} - {name}")
-            st.code(str(path))
-            if exists:
-                try:
-                    with open(str(path), 'r') as f:
-                        content = f.read()
-                    st.write(f"File size: {len(content)} bytes")
-                except Exception as e:
-                    st.error(f"Error reading: {e}")
+    st.warning("Full report not available. Run script 96_economic_significance.py first.")
 
 # ============================================================================
 # SECTION 5: IMPLICATIONS
