@@ -25,7 +25,10 @@ st.markdown("""
 
 # Load data using centralized utilities
 impact_df = load_economic_impact_data()
-report_text = load_economic_report()
+try:
+    report_text = load_economic_report()
+except Exception as e:
+    report_text = None
 
 # ============================================================================
 # SECTION 1: ECONOMIC IMPACT SUMMARY TABLE
