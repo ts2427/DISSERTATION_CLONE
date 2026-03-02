@@ -106,35 +106,84 @@ def load_feature_importance(essay='essay2'):
 
 @st.cache_data(ttl=3600)
 def load_economic_impact_data():
-    """Load economic impact summary data"""
-    root_dir = Path(__file__).parent.parent
+    """Load economic impact summary data - works from both local and Streamlit Cloud"""
+    import os
+
+    # Get absolute path by resolving from this file's location
+    root_dir = Path(__file__).parent.parent.resolve()
     data_path = root_dir / 'outputs' / 'economic_significance' / 'economic_impact_summary.csv'
-    try:
-        return pd.read_csv(str(data_path))
-    except Exception as e:
-        return None
+
+    # Try with resolved absolute path
+    if data_path.exists():
+        try:
+            return pd.read_csv(str(data_path))
+        except Exception:
+            pass
+
+    # Fallback: try from current working directory
+    cwd_path = Path(os.getcwd()) / 'outputs' / 'economic_significance' / 'economic_impact_summary.csv'
+    if cwd_path.exists():
+        try:
+            return pd.read_csv(str(cwd_path))
+        except Exception:
+            pass
+
+    return None
 
 @st.cache_data(ttl=3600)
 def load_economic_report():
-    """Load economic significance detailed report"""
-    root_dir = Path(__file__).parent.parent
+    """Load economic significance detailed report - works from both local and Streamlit Cloud"""
+    import os
+
+    # Get absolute path by resolving from this file's location
+    root_dir = Path(__file__).parent.parent.resolve()
     report_path = root_dir / 'outputs' / 'economic_significance' / 'economic_significance_report.txt'
-    try:
-        with open(str(report_path), 'r') as f:
-            return f.read()
-    except Exception as e:
-        return None
+
+    # Try with resolved absolute path
+    if report_path.exists():
+        try:
+            with open(str(report_path), 'r') as f:
+                return f.read()
+        except Exception:
+            pass
+
+    # Fallback: try from current working directory
+    cwd_path = Path(os.getcwd()) / 'outputs' / 'economic_significance' / 'economic_significance_report.txt'
+    if cwd_path.exists():
+        try:
+            with open(str(cwd_path), 'r') as f:
+                return f.read()
+        except Exception:
+            pass
+
+    return None
 
 @st.cache_data(ttl=3600)
 def load_economic_image(filename):
-    """Load economic significance visualization images"""
+    """Load economic significance visualization images - works from both local and Streamlit Cloud"""
     from PIL import Image
-    root_dir = Path(__file__).parent.parent
+    import os
+
+    # Get absolute path by resolving from this file's location
+    root_dir = Path(__file__).parent.parent.resolve()
     img_path = root_dir / 'outputs' / 'economic_significance' / filename
-    try:
-        return Image.open(str(img_path))
-    except Exception as e:
-        return None
+
+    # Try with resolved absolute path
+    if img_path.exists():
+        try:
+            return Image.open(str(img_path))
+        except Exception:
+            pass
+
+    # Fallback: try from current working directory
+    cwd_path = Path(os.getcwd()) / 'outputs' / 'economic_significance' / filename
+    if cwd_path.exists():
+        try:
+            return Image.open(str(cwd_path))
+        except Exception:
+            pass
+
+    return None
 
 # ============================================================================
 # STATISTICAL CALCULATIONS
