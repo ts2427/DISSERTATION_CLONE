@@ -130,15 +130,15 @@ def load_economic_impact_data():
 
     return None
 
+@st.cache_data(ttl=3600)
 def load_economic_report():
     """Load economic significance detailed report - works from both local and Streamlit Cloud"""
     import os
 
-    # Try from current working directory first (this works on Streamlit Cloud)
+    # Strategy 1: Try from current working directory first (for Streamlit Cloud where cwd might be project root)
     cwd_path = Path(os.getcwd()) / 'outputs' / 'economic_significance' / 'economic_significance_report.txt'
     if cwd_path.exists():
         try:
-            # Try UTF-8 first
             with open(str(cwd_path), 'r', encoding='utf-8') as f:
                 text = f.read()
             return text
@@ -149,20 +149,26 @@ def load_economic_report():
                     text = f.read()
                 return text
             except Exception as e:
-                print(f"Error reading {cwd_path}: {e}")
-        except Exception as e:
-            print(f"Error reading {cwd_path}: {e}")
+                pass
 
-    # Fallback: try resolved path
-    root_dir = Path(__file__).parent.parent.resolve()
-    report_path = root_dir / 'outputs' / 'economic_significance' / 'economic_significance_report.txt'
+    # Strategy 2: Try from Dashboard parent directory (../outputs/)
+    # Get absolute path of the directory containing utils.py
+    utils_dir = os.path.dirname(os.path.abspath(__file__))
+    dashboard_parent = os.path.dirname(utils_dir)
+    report_path = Path(dashboard_parent) / 'outputs' / 'economic_significance' / 'economic_significance_report.txt'
     if report_path.exists():
         try:
-            with open(str(report_path), 'r', encoding='latin-1') as f:
+            with open(str(report_path), 'r', encoding='utf-8') as f:
                 text = f.read()
             return text
-        except Exception as e:
-            print(f"Error reading {report_path}: {e}")
+        except UnicodeDecodeError:
+            # Fallback to latin-1 if UTF-8 fails
+            try:
+                with open(str(report_path), 'r', encoding='latin-1') as f:
+                    text = f.read()
+                return text
+            except Exception as e:
+                pass
 
     return None
 
@@ -172,7 +178,7 @@ def load_economic_image(filename):
     from PIL import Image
     import os
 
-    # Try from current working directory first (this works on Streamlit Cloud)
+    # Strategy 1: Try from current working directory first (for Streamlit Cloud)
     cwd_path = Path(os.getcwd()) / 'outputs' / 'economic_significance' / filename
     if cwd_path.exists():
         try:
@@ -181,9 +187,11 @@ def load_economic_image(filename):
         except Exception as e:
             pass
 
-    # Fallback: try resolved path
-    root_dir = Path(__file__).parent.parent.resolve()
-    img_path = root_dir / 'outputs' / 'economic_significance' / filename
+    # Strategy 2: Try from Dashboard parent directory (../outputs/)
+    # Get absolute path of the directory containing utils.py
+    utils_dir = os.path.dirname(os.path.abspath(__file__))
+    dashboard_parent = os.path.dirname(utils_dir)
+    img_path = Path(dashboard_parent) / 'outputs' / 'economic_significance' / filename
     if img_path.exists():
         try:
             img = Image.open(str(img_path))
