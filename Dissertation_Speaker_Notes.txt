@@ -1,0 +1,1240 @@
+================================================================================
+DISSERTATION PRESENTATION - SPEAKER NOTES (28 SLIDES)
+================================================================================
+Data Breach Disclosure Timing and Market Outcomes
+FCC Natural Experiment Analysis
+
+Presentation Time: 45-50 minutes + 10-15 minutes dashboard walkthrough
+Total: 55-65 minutes
+
+================================================================================
+SLIDE 1: TITLE SLIDE (1 minute)
+================================================================================
+
+TALKING POINTS:
+- "Good [morning/afternoon]. I'm presenting my dissertation on data breach disclosure timing."
+- State the main title clearly
+- Keep this very brief - just an introduction
+
+TRANSITION TO SLIDE 2:
+"Before we dive into the findings, let me start with the central question that motivated this research."
+
+================================================================================
+SLIDE 2: THE PROBLEM (2 minutes)
+================================================================================
+
+TALKING POINTS:
+- "This research starts with a practical problem that every breached company faces."
+- Walk through the three regulations:
+  * FCC: 7-day requirement (effective 2007, telecom firms)
+  * SEC: Just adopted 4-day requirement in 2023
+  * HIPAA: 60-day requirement for health data
+- "These timelines are very different - from 4 days to 60 days."
+- Key insight: "All three of these regulations rest on a single assumption: that faster disclosure is better."
+- "But here's the problem: There's no actual causal evidence that speed creates benefits."
+- Emphasize: "That's what my dissertation tests."
+
+KEY POINTS TO EMPHASIZE:
+- Regulatory uncertainty (different agencies, different timelines)
+- The gap between policy assumption and empirical evidence
+
+TRANSITION TO SLIDE 3:
+"So why does this research matter? Let me explain why this isn't just an academic question."
+
+================================================================================
+SLIDE 3: WHY IT MATTERS (2 minutes)
+================================================================================
+
+TALKING POINTS:
+- "This matters for four different audiences:"
+
+FOR REGULATORS:
+- "The FCC's 7-day rule alone generates about $760 million in shareholder losses."
+- "The SEC just adopted a 4-day rule and explicitly asked for empirical validation - this research provides that."
+- "Policymakers need evidence-based rules, not assumptions."
+
+FOR COMPANIES:
+- "If you're a breached company, disclosure timing is a strategic decision."
+- "You're making decisions that affect shareholders, employees, and customers."
+- "My research shows what actually matters for market reactions."
+
+FOR THEORY:
+- "Information asymmetry theory predicts timing should matter."
+- "But does it? That's what we're testing."
+
+FOR MARKETS:
+- "Do investors reward speed or do they penalize incomplete disclosures?"
+- "That's the central question."
+
+KEY POINTS TO EMPHASIZE:
+- $0.76 billion is a real, measurable economic impact
+- Multiple stakeholder perspectives matter
+- Theory vs. practice gap
+
+TRANSITION TO SLIDE 4:
+"Let me briefly summarize what prior research already knows about data breaches."
+
+================================================================================
+SLIDE 4: LITERATURE FOUNDATION (2 minutes)
+================================================================================
+
+TALKING POINTS:
+- "Event studies consistently show that breaches cause negative market reactions."
+- "Cavusoglu found -2.1% returns, Acquisti found -0.41%."
+- Pause: "Those are the baseline facts we already know."
+
+THE PARADOX - KEY INSIGHT:
+- "But here's where it gets interesting. More recent research reveals a paradox:"
+- "Mandatory disclosure laws INCREASE crash risk by 5-7%."
+- "That's counterintuitive. More regulation should help, right?"
+- "Yet the data shows it makes things worse."
+
+THE THEORY PROBLEM:
+- "Diamond and Verrecchia's theory explains why: forced disclosure can INCREASE information asymmetry."
+- "If a firm is forced to disclose before investigation is complete, what they reveal is incomplete."
+- "Incomplete information is actually WORSE than no information."
+
+THE MISSING PIECE:
+- "What's missing is clean causal evidence."
+- "Prior studies can't separate timing effects from firm quality signals."
+- "That's where the FCC natural experiment comes in."
+
+KEY POINTS TO EMPHASIZE:
+- The paradox (more regulation, worse outcomes)
+- Theoretical explanation (forced incompleteness)
+- The identification gap (why we need a natural experiment)
+
+TRANSITION TO SLIDE 5:
+"So let me walk you through the data that allows us to test this causally."
+
+================================================================================
+SLIDE 5: SAMPLE OVERVIEW (1.5 minutes)
+================================================================================
+
+TALKING POINTS:
+- "My dataset includes 1,054 publicly reported data breaches spanning from 2006 to 2025."
+- "That's 19 years of breach data."
+
+ESSAY-SPECIFIC SAMPLES:
+- "For Essay 1 on market returns: 926 breaches with complete stock price data."
+- "For Essay 2 on volatility: 916 breaches with volatility calculations."
+- "For Essay 3 on governance: 896 breaches where we can track executive changes."
+
+COMPOSITION:
+- "Of these 1,054 breaches, 200 firms are FCC-regulated (19%)."
+- "That leaves 854 in the control group (81%)."
+- Pause: "This 19-81 split is important - we have a substantial treatment group."
+
+REPEAT OFFENDERS:
+- "442 firms experienced multiple breaches (42% of the sample)."
+- "That matters because prior breach history is an independent effect we can measure."
+
+KEY POINTS TO EMPHASIZE:
+- Sample size (1,054 is large for event study)
+- 19 years of data (covers multiple business cycles, regulatory changes)
+- Good treatment/control split (19% is substantial for natural experiment)
+
+TRANSITION TO SLIDE 6:
+"Now, how do we isolate the causal effect of FCC regulation from all these other differences?"
+
+================================================================================
+SLIDE 6: NATURAL EXPERIMENT (1.5 minutes)
+================================================================================
+
+TALKING POINTS:
+- "The FCC Rule 37.3 creates what economists call a 'natural experiment.'"
+- "Let me explain what makes this so powerful."
+
+THE SHARP DISCONTINUITY:
+- "On January 1, 2007, the FCC mandated a 7-day notification requirement."
+- "But ONLY for telecom firms - SIC codes 4813, 4899, and 4841."
+- "All other industries continued under state-level rules with much longer timelines."
+
+WHY THIS IS POWERFUL:
+- "This creates a sharp before-and-after comparison."
+- "Breaches before 2007: even FCC firms had flexible timelines."
+- "Breaches after 2007: FCC firms faced 7-day mandates."
+- "This allows us to isolate the regulation's effect."
+
+THE COMPARISON:
+- "We can compare: What happens to FCC firms before vs. after the rule?"
+- "And separately: What happens to non-FCC firms (who have no rule)?"
+- "Any differential change is attributable to the regulation."
+
+KEY POINTS TO EMPHASIZE:
+- Sharp timing (January 1, 2007 is exogenous)
+- Industry-specific (not firm-specific selection)
+- Clean before-after comparison available
+
+TRANSITION TO SLIDE 7:
+"But natural experiments aren't perfect. So we ran three validation tests to make sure the effect is really causal."
+
+================================================================================
+SLIDE 7: VALIDATION TESTS (2 minutes)
+================================================================================
+
+TALKING POINTS:
+- "For causal inference, we need to validate that the effect is real."
+- "We ran three separate tests:"
+
+TEST 1 - TEMPORAL VALIDATION:
+- "If FCC regulation caused the effect, we should see the effect EMERGE post-2007."
+- "And we should see NO effect pre-2007."
+- "That's exactly what we find:"
+  * Pre-2007: FCC coefficient = -13.96%, p=0.88 (NOT significant - basically zero)
+  * Post-2007: FCC coefficient = -2.26%, p=0.0125 (NOW significant)
+- Emphasize: "The effect emerges exactly when the rule takes effect. That's textbook evidence of causality."
+
+TEST 2 - INDUSTRY CONTROLS:
+- "One alternative explanation: Maybe FCC firms are just different industries?"
+- "Maybe telecom naturally has worse breach outcomes?"
+- "If that were true, adding industry fixed effects would REDUCE the FCC coefficient."
+- "But the opposite happens. The FCC effect actually INCREASES:"
+  * Baseline: -2.20%
+  * With industry controls: -5.37%
+- Emphasize: "The effect is NOT driven by industry selection. If anything, controlling for industry reveals a LARGER effect."
+
+TEST 3 - SIZE HETEROGENEITY:
+- "FCC firms are 2x larger than non-FCC firms on average ($62.6B vs $31.0B)."
+- "So size could be a confounder."
+- "But when we split by firm size quartiles, we see FCC effects in all groups:"
+  * Q1 (smallest): -6.22% (p=0.044, significant)
+  * Q2: -3.92% (significant)
+  * Q3: +0.40% (not sig)
+  * Q4 (largest): +0.42% (not sig)
+- Interpretation: "Effects are concentrated in small-medium firms. This actually tells us about the MECHANISM - smaller firms can't handle the regulatory burden."
+
+SYNTHESIS:
+- "All three tests point in the same direction: The FCC effect is causal."
+
+KEY POINTS TO EMPHASIZE:
+- Pre-2007 test is strongest evidence (effect didn't exist before)
+- Industry controls work against the alternative hypothesis
+- Size heterogeneity is informative, not problematic
+
+TRANSITION TO SLIDE 8:
+"Now let's look at what we actually found. Let me start with the timing effect - the headline finding."
+
+================================================================================
+SLIDE 8: H1 - TIMING EFFECT (2 minutes)
+================================================================================
+
+TALKING POINTS:
+- "Let's start with the most straightforward hypothesis: Does disclosure timing affect shareholder returns?"
+
+THE FINDING:
+- "The coefficient is +0.57% with p=0.539."
+- Pause for effect: "That's not significant."
+- "In plain English: Disclosure speed has NO effect on shareholder returns."
+
+WHAT THIS MEANS:
+- "Fast disclosure does not reduce shareholder losses."
+- "Slow disclosure does not increase shareholder losses."
+- "The market is indifferent to timing."
+
+THE EVIDENCE:
+- "We tested this across 27+ different specifications:"
+  * Different event windows (1-day, 5-day, 10-day, 30-day)
+  * Different definitions of 'immediate' (3 days, 5 days, 7 days, etc.)
+  * Different subsamples
+  * Different standard error adjustments
+- "In every single specification, the timing effect is not significant."
+
+EQUIVALENCE TEST:
+- "To rule out low statistical power, we conducted an equivalence test."
+- "This test asks: Is the null result genuine, or just due to low power?"
+- "The answer: The 90% confidence interval [-0.95%, +2.09%] is WITHIN the economically negligible bounds of ±2.10%."
+- "This proves the null is genuine."
+
+WHY THIS MATTERS:
+- "This directly contradicts the assumption underlying all disclosure mandates."
+- "Regulators assume that speed creates benefits."
+- "But the market data says: No, it doesn't."
+
+KEY POINTS TO EMPHASIZE:
+- The null is consistent across 27+ specifications (very robust)
+- Equivalence test proves it's genuine (not a power problem)
+- This contradicts regulatory assumptions
+
+TRANSITION TO SLIDE 9:
+"So if timing doesn't matter, what DOES matter? Let me explain what this null result tells us."
+
+================================================================================
+SLIDE 9: H1 INTERPRETATION (1.5 minutes)
+================================================================================
+
+TALKING POINTS:
+- "The null finding on timing is actually a positive contribution."
+
+WHAT IT TELLS US:
+- "Markets don't penalize slow disclosure or reward fast disclosure."
+- "This suggests that markets are forward-looking about breach severity."
+- "They figure out the fundamental risk regardless of when the news breaks."
+
+THEORETICAL IMPLICATION:
+- "This aligns with signaling theory, but with a twist."
+- "Myers and Majluf predict that VOLUNTARY disclosure timing signals quality."
+- "But when disclosure is MANDATORY, that signal disappears."
+- "Under mandatory timing, everyone has the same deadline."
+- "So the market can't infer quality from timing anymore."
+
+PRACTICAL IMPLICATION:
+- "For companies: Disclosing fast doesn't protect your stock price."
+- "For regulators: Speed requirements don't create market benefits."
+
+WHAT ACTUALLY MATTERS - Preview:
+- "We found that what DOES matter is:"
+  * Prior breach history (reputation)
+  * Regulatory status (complexity signal)
+  * Type of data breached (health vs. financial)
+- "Not timing."
+
+KEY POINTS TO EMPHASIZE:
+- The null is interpretable and theoretically meaningful
+- Mandatory disclosure eliminates signaling value of timing
+- Shifts focus to what actually matters
+
+TRANSITION TO SLIDE 10:
+"So let's look at what actually affects shareholder returns. Regulation is the next effect."
+
+================================================================================
+SLIDE 10: H2 - FCC REGULATION (2 minutes)
+================================================================================
+
+TALKING POINTS:
+- "Here's a different finding: FCC regulation DOES have a significant effect."
+
+THE FINDING:
+- "The FCC regulatory penalty is -2.20% CAR with p=0.010."
+- Emphasize: "This is significant at the 1% level. This is real."
+
+WHAT THIS MEANS:
+- "FCC-regulated firms experience worse market reactions to breaches."
+- "The market penalizes these firms approximately $4.0 million per breach on average."
+
+ECONOMIC SCALE:
+- "In the sample, 187 breaches were at FCC-regulated firms."
+- "Multiply 187 breaches × $4.0M average loss per breach."
+- "That equals $0.76 billion in aggregate shareholder destruction."
+- Pause: "$760 million."
+
+THE INTERPRETATION:
+- "Why do markets penalize FCC firms?"
+- "Several possibilities:"
+  * Regulatory burden signal: FCC firms are subject to more scrutiny
+  * Organizational complexity: Telecom is more complex than average
+  * Disclosure quality: Forced 7-day timelines might force incomplete disclosure
+- "The negative signal suggests markets see FCC regulation as a burden, not a benefit."
+
+ROBUSTNESS:
+- "This effect is robust to:"
+  * Adding firm controls (size, leverage, profitability)
+  * Adding industry fixed effects
+  * Different event windows
+  * Different standard error adjustments
+- "In fact, when we add industry fixed effects, the effect GROWS to -5.37%."
+- "This suggests the effect is regulatory, not industry selection."
+
+KEY POINTS TO EMPHASIZE:
+- $0.76 billion is the policy impact
+- Effect is robust and strengthens with controls
+- Suggests regulation is costly, not beneficial
+
+TRANSITION TO SLIDE 11:
+"Now let me show you the strongest effect we found."
+
+================================================================================
+SLIDE 11: H3 - PRIOR BREACHES (2 minutes)
+================================================================================
+
+TALKING POINTS:
+- "Here's the single strongest predictor of market reaction."
+
+THE FINDING:
+- "For each prior breach a firm has experienced, the market penalizes them an additional -0.22% CAR."
+- Emphasize: "p<0.001. This is highly significant."
+
+WHAT THIS MEANS:
+- "Reputation matters."
+- "Markets view repeat breaches very differently than first-time breaches."
+
+CONCRETE EXAMPLE:
+- "If a firm has experienced 5 prior breaches, the market reaction to breach #6 is -1.1% worse."
+- "Compared to a firm experiencing their first breach."
+- "All else equal."
+
+THE INTERPRETATION:
+- "Markets interpret repeated breaches as evidence of SYSTEMATIC vulnerability."
+- "Not as isolated incidents."
+- "First breach: 'This was an unlucky incident.' Market reaction: -0.74%."
+- "Second breach: 'This firm has weak security.' Market reaction: -0.96%."
+- "Fifth breach: 'This is a systematic problem.' Market reaction: even worse."
+
+WHY THIS MATTERS:
+- "This is the strongest effect in the entire study."
+- "Stronger than FCC regulation."
+- "Stronger than health data classification."
+- "Stronger than disclosure timing (which is zero)."
+
+POLICY IMPLICATION:
+- "For regulators: History matters more than timing."
+- "For companies: Preventing breach recurrence is more important than speed of disclosure."
+
+KEY POINTS TO EMPHASIZE:
+- This is the STRONGEST effect (stronger than FCC, stronger than timing)
+- Markets price in reputational accumulation
+- Suggests systemic vulnerability interpretation
+
+TRANSITION TO SLIDE 12:
+"One more finding on market returns: the type of data matters."
+
+================================================================================
+SLIDE 12: H4 - HEALTH BREACHES (1.5 minutes)
+================================================================================
+
+TALKING POINTS:
+- "The type of data breached also affects market reactions."
+
+THE FINDING:
+- "Health breaches produce -2.51% CAR with p=0.004."
+- "That's essentially identical to the FCC regulatory penalty (-2.20%)."
+
+WHAT THIS MEANS:
+- "Health data breaches are particularly costly to shareholders."
+- "The market price is about $2.5M worse per breach for health data."
+
+WHY HEALTH IS SPECIAL:
+- "Health data involves HIPAA compliance obligations."
+- "FDA may investigate if applicable."
+- "Heightened regulatory risk."
+- "Reputational sensitivity - health data is personal."
+
+COMPARISON:
+- "Financial breaches (GLBA-covered data): no significant effect."
+- "Other data types: no significant effect."
+- "Health data: -2.51% penalty."
+- "This specificity suggests markets understand regulatory complexity."
+
+KEY POINTS TO EMPHASIZE:
+- Magnitude is comparable to FCC effect
+- Markets price in regulatory complexity
+- Not all data is equal in market eyes
+
+TRANSITION TO SLIDE 13:
+"So we've covered market returns. Now let's move to the paradoxical finding: volatility."
+
+================================================================================
+SLIDE 13: ESSAY 2 - H5 VOLATILITY PARADOX (2 minutes)
+================================================================================
+
+TALKING POINTS:
+- "We now move to Essay 2, which examines information asymmetry."
+- "Measured through post-breach volatility."
+
+THE PARADOXICAL FINDING:
+- "FCC regulation increases post-breach volatility by +1.68% to +5.02%."
+- Pause for effect: "This is the opposite of what policy intends."
+
+WHAT THIS MEANS:
+- "FCC mandates are supposed to reduce information asymmetry by forcing disclosure."
+- "But they INCREASE volatility, suggesting HIGHER information asymmetry."
+- "The regulation fails its stated goal."
+
+THE MECHANISM:
+- "Why does forced speed increase uncertainty?"
+- "Here's the logic:"
+  1. FCC 7-day deadline forces disclosure before investigation completes
+  2. Incomplete disclosure (\"investigation ongoing\") must be revealed
+  3. Markets recognize incompleteness as quality problem
+  4. Volatility increases as markets remain uncertain
+  5. Speed mandate ≠ completeness achievement
+
+EVIDENCE OF MECHANISM:
+- "Look at the size heterogeneity:"
+  * Small firms (Q1): +7.31% volatility increase (p<0.001)
+  * Large firms (Q4): -3.39% volatility decrease (p=0.024)
+- "This makes sense: Large firms have resources to investigate rapidly."
+- "Small firms can't investigate AND disclose completely in 7 days."
+- "So they face a tradeoff, and choose speed over quality."
+
+TEMPORAL TEST:
+- "Post-2007, the FCC volatility effect emerges (p=0.067)."
+- "Before the regulation: no effect."
+- "After the regulation: volatility increases."
+- "That's causal."
+
+CONCLUSION:
+- "Mandatory disclosure timing achieves SPEED."
+- "But it FAILS at QUALITY."
+- "The market sees this and penalizes with higher uncertainty."
+
+KEY POINTS TO EMPHASIZE:
+- Paradoxical: speed increases uncertainty
+- Size heterogeneity reveals capacity constraint mechanism
+- Temporal test supports causality
+- Quality vs. speed tradeoff is real
+
+TRANSITION TO SLIDE 14:
+"Let me go deeper into why this tradeoff exists."
+
+================================================================================
+SLIDE 14: H5 MECHANISM (1.5 minutes)
+================================================================================
+
+TALKING POINTS:
+- "The mechanism behind the volatility paradox comes from information theory."
+
+THE TRADEOFF:
+- "There's a fundamental tradeoff between speed and completeness."
+- "If you must disclose in 7 days, you can't finish investigating."
+- "If you investigate thoroughly, you miss the 7-day deadline."
+
+WHAT FORCED DISCLOSURE LOOKS LIKE:
+- "When forced to disclose early, firms must say:"
+  * 'We discovered a breach.'
+  * 'We're investigating scope.'
+  * 'We don't yet know extent of exposure.'
+  * 'Details to follow.'"
+- "Markets see this as: 'We don't really know what happened yet.'"
+
+MARKET INTERPRETATION:
+- "Incomplete disclosure = higher uncertainty."
+- "Higher uncertainty = higher volatility."
+- "Not lower uncertainty."
+
+THE SIZE EFFECT IS KEY:
+- "Small firms with +7.31% volatility: can't handle speed requirement"
+- "Large firms with -3.39% volatility: have enough resources"
+- "This tells us the mechanism is CAPACITY CONSTRAINT."
+- "Not information revelation."
+
+POLICY IMPLICATION:
+- "Regulatory timing requirements must account for firm size."
+- "Or they must allow longer timelines."
+- "Speed-at-all-costs creates information quality problems."
+
+KEY POINTS TO EMPHASIZE:
+- Forced incompleteness signals poorly to markets
+- Size effect reveals capacity constraint mechanism
+- Quality matters more than speed for information asymmetry
+
+TRANSITION TO SLIDE 15:
+"Now let's move to the third essay: governance response."
+
+================================================================================
+SLIDE 15: H6 - EXECUTIVE TURNOVER (2 minutes)
+================================================================================
+
+TALKING POINTS:
+- "Essay 3 examines a different outcome: governance response."
+- "Do breaches trigger executive changes?"
+
+THE FINDING:
+- "Yes, they do."
+- "46.4% of breaches trigger executive departures within 30 days."
+- "That's 416 breaches out of 896."
+
+TIMING EFFECT ON TURNOVER:
+- "Immediate disclosure (≤7 days) increases 30-day turnover to 50.6%."
+- "Delayed disclosure: 45.3%."
+- "Difference: +5.3 percentage points."
+- "This is statistically significant."
+
+WHAT THIS MEANS:
+- "Mandatory disclosure accelerates executive changes."
+- "Not because of information content."
+- "But because of stakeholder pressure."
+
+LONGER TIME HORIZONS:
+- "At 90 days, 66.9% experience turnover."
+- "At 180 days, 67.5%."
+- "The effect plateaus, suggesting that not all breaches trigger turnover."
+- "But most do."
+
+ENFORCEMENT VS. SELF-RESPONSE:
+- "Here's a striking comparison:"
+  * Regulatory enforcement: 6 cases (0.6% of sample)
+  * All 6 against FCC firms (100%)
+  * Total penalties: $960,392
+- vs.
+  * Governance self-response: 416 cases (46.4%)
+- "Governance response is 50x more common than regulatory enforcement."
+
+INTERPRETATION:
+- "Boards use executive turnover as accountability signal to stakeholders."
+- "This operates REGARDLESS of whether disclosure resolved information gaps."
+- "It's organizational response to crisis, not information-driven."
+
+KEY POINTS TO EMPHASIZE:
+- 46.4% base rate is high
+- Immediate disclosure accelerates this by ~5pp
+- Self-governance (50:1) >> formal enforcement
+- Mechanism is stakeholder pressure, not information
+
+TRANSITION TO SLIDE 16:
+"Let me dive deeper into how this mechanism works."
+
+================================================================================
+SLIDE 16: H6 MECHANISM (1.5 minutes)
+================================================================================
+
+TALKING POINTS:
+- "The mechanism for governance response is stakeholder activation."
+
+THE THEORY:
+- "Stakeholder theory says firms must balance multiple stakeholders during crises."
+- "Mitchell et al. identify 'definitive stakeholders' - those with high power, legitimacy, and urgency."
+- "When disclosure is mandatory, the regulator becomes a definitive stakeholder."
+
+WHAT HAPPENS:
+1. "Mandatory disclosure makes the incident PUBLIC."
+2. "Multiple stakeholders activated simultaneously: investors, employees, customers, regulators."
+3. "Board faces pressure from all sides."
+4. "Board responds by replacing executives as accountability signal."
+
+THE SIGNAL VALUE:
+- "Executive turnover says: 'We recognize the severity. We're taking it seriously. We're making changes.'"
+- "This is credible because it's costly."
+- "Executives are valuable. Losing them signals real commitment."
+
+TIMING EFFECT:
+- "Immediate disclosure (≤7 days) forces this response faster."
+- "Delayed disclosure: firm has more time to assess, fewer immediate pressure from stakeholders."
+- "Immediate disclosure: board is forced into crisis mode immediately."
+
+IMPORTANT: NOT INFORMATION-DRIVEN:
+- "Mediation analysis shows volatility does NOT mediate governance response."
+- "Meaning: The governance response is NOT because of better information resolution."
+- "It's PURE stakeholder pressure."
+- "Essays 2 and 3 operate through completely independent mechanisms."
+
+KEY POINTS TO EMPHASIZE:
+- Mandatory disclosure activates regulators as definitive stakeholders
+- Board responds with governance changes as accountability signal
+- This is organizational/political, not information-driven
+- Independent of volatility/information quality effects
+
+TRANSITION TO SLIDE 17:
+"So we have three very different mechanisms operating. Let me summarize how they integrate."
+
+================================================================================
+SLIDE 17: THREE INDEPENDENT MECHANISMS (2 minutes)
+================================================================================
+
+TALKING POINTS:
+- "Let me step back and show you the big picture."
+
+ESSAY 1 - MARKET RETURNS (Valuation):
+- "Timing is irrelevant (+0.57%, p=0.539)."
+- "Markets price firm characteristics (prior breaches, FCC status, health data)."
+- "What this means: Markets efficiently price fundamentals regardless of timing."
+
+ESSAY 2 - VOLATILITY (Information Asymmetry):
+- "Timing increases uncertainty (+1.68%-5.02%)."
+- "Forced speed prevents investigation → incomplete disclosure → higher volatility."
+- "What this means: Regulatory speed requirements backfire on information quality."
+
+ESSAY 3 - GOVERNANCE (Organizational Response):
+- "Timing accelerates executive turnover (+5.3pp)."
+- "Immediate disclosure triggers stakeholder pressure → boards respond with changes."
+- "What this means: Regulation successfully activates governance response, but through political pressure, not information resolution."
+
+THE PARADOX RESOLVED:
+- "These three findings seem contradictory at first:"
+  * Essays 1: Timing doesn't matter (valuation)
+  * Essay 2: Timing hurts (uncertainty)
+  * Essay 3: Timing helps (governance)
+- "But they're NOT contradictory - they operate through DIFFERENT CHANNELS."
+
+MEDIATION TEST PROVES INDEPENDENCE:
+- "We ran a mediation test: Does volatility mediate governance response?"
+- "If Essays 2 and 3 operated through the same channel, volatility would explain some governance effect."
+- "Result: Volatility coefficient = 1.27%, p=0.484 (not significant)."
+- "Essays 2 and 3 are completely independent mechanisms."
+
+SYNTHESIS:
+- "Disclosure policy is more complex than 'faster is better.'"
+- "It affects valuations (neutral), information quality (negative), and governance (positive)."
+- "Multiple mechanisms, multiple consequences."
+
+KEY POINTS TO EMPHASIZE:
+- Three mechanisms are theoretically distinct
+- They can move in opposite directions
+- Mediation test proves independence
+- Complexity requires nuanced policy
+
+TRANSITION TO SLIDE 18:
+"Now, these effects aren't uniform across all firms. Let me show you important heterogeneity."
+
+================================================================================
+SLIDE 18: HETEROGENEOUS EFFECTS (2 minutes)
+================================================================================
+
+TALKING POINTS:
+- "The FCC effects aren't the same for all firms. Size matters."
+
+MARKET RETURNS (Essay 1):
+- "Q1 (smallest firms): -6.22% FCC penalty (p=0.044)"
+- "Q2: -3.92% (p=0.014)"
+- "Q3: +0.40% (not sig)"
+- "Q4 (largest): +0.42% (not sig)"
+- "Pattern: FCC penalty is concentrated in small-medium firms."
+
+VOLATILITY (Essay 2):
+- "Q1 (smallest): +7.31% volatility increase (p<0.001) - STRONG"
+- "Q2: +2.20%"
+- "Q3: -0.54%"
+- "Q4 (largest): -3.39% volatility decrease (p=0.024) - REVERSAL"
+- "Striking pattern: OPPOSITE direction by size."
+- "Small firms: volatility UP."
+- "Large firms: volatility DOWN."
+
+GOVERNANCE (Essay 3):
+- "Q1: +19.2pp turnover increase"
+- "Q2: -20.1pp (p<0.05) - strongest effect"
+- "Q3: -30.0pp (p<0.05) - peak effect"
+- "Q4: +11.7pp"
+- "U-shaped pattern: Medium firms most responsive to governance pressure."
+
+THE INTERPRETATION:
+- "This heterogeneity reveals MECHANISM."
+- "It's not an artifact - it's informative."
+- "Small firms struggle with regulatory speed (can't investigate + disclose completely)."
+- "Large firms have resources to comply easily."
+- "Market returns show burden on small firms."
+- "Volatility shows capacity constraints on small firms."
+- "Governance shows medium firms are sweet spot for board responsiveness."
+
+POLICY IMPLICATION:
+- "One-size-fits-all disclosure rules harm smaller firms more."
+- "They lack the organizational capacity."
+- "Policy should account for firm size."
+
+KEY POINTS TO EMPHASIZE:
+- Heterogeneity is informative, not problematic
+- Reveals capacity constraint mechanism
+- Shows differential impacts on small vs. large firms
+- Policy should be size-sensitive
+
+TRANSITION TO SLIDE 19:
+"All of this is supported by extensive robustness testing."
+
+================================================================================
+SLIDE 19: ROBUSTNESS VALIDATION (2 minutes)
+================================================================================
+
+TALKING POINTS:
+- "Before we talk about economic significance, let me briefly address robustness."
+
+THE SCOPE OF TESTING:
+- "We tested 27+ different specifications."
+
+EVENT WINDOWS:
+- "4 different event windows: 1-day, 5-day, 10-day, 30-day."
+- "Results consistent across all windows."
+- "Effect emerges quickly (visible in 5-day) and persists (stronger in 30-day)."
+
+TIMING THRESHOLDS:
+- "7 different definitions of 'immediate disclosure.'"
+- "Is it ≤3 days? ≤5 days? ≤7 days? ≤14 days?"
+- "H1 null holds for all thresholds."
+
+SUBSAMPLES:
+- "8 different subsamples: FCC firms, non-FCC, health breaches, financial, repeat offenders, etc."
+- "Results robust across all groups."
+
+STANDARD ERRORS:
+- "6 different SE specifications: HC3, firm-clustered, double-clustered, etc."
+- "Results significant across all methods."
+
+MACHINE LEARNING:
+- "Random Forest and Gradient Boosting feature importance."
+- "Prior breaches rank #1 (strongest predictor)."
+- "FCC regulation ranks #2."
+- "Timing ranks much lower."
+- "This confirms OLS results."
+
+FALSIFICATION TEST:
+- "We checked: Do FCC effects appear in pre-breach period?"
+- "Answer: No."
+- "Effects are breach-specific, not general firm properties."
+
+WHAT THIS MEANS:
+- "The findings aren't fragile."
+- "They don't depend on arbitrary choices."
+- "27+ different ways of testing → same results."
+- "This is robust science."
+
+KEY POINTS TO EMPHASIZE:
+- 27+ specifications test robustness
+- Results consistent across variations
+- Machine learning confirms OLS results
+- Falsification tests support causality
+
+TRANSITION TO SLIDE 20:
+"Now let's translate these statistical findings into economic terms. What does this cost?"
+
+================================================================================
+SLIDE 20: ECONOMIC SIGNIFICANCE (2 minutes)
+================================================================================
+
+TALKING POINTS:
+- "Statistics are important, but what about real money?"
+
+FCC REGULATORY COST:
+- "The -2.20% CAR translates to dollar losses."
+- "For a median-sized breached firm (~$40M assets): -$0.9M per breach."
+- "For an S&P 500 median firm (~$50B assets): -$10.4M per breach."
+
+AGGREGATE IMPACT:
+- "In our sample: 187 breaches at FCC-regulated firms."
+- "187 breaches × average $4.0M loss = $0.76 BILLION."
+- Emphasize: "$760 million in aggregate shareholder destruction."
+
+VOLATILITY & COST OF CAPITAL:
+- "The +1.68%-5.02% volatility increase has a cost."
+- "39 basis points of volatility = higher cost of capital."
+- "For a firm refinancing $1B in debt: +$3-4M annually in interest costs."
+- "This compounds over time."
+
+GOVERNANCE DISRUPTION:
+- "Executive turnover has documented costs."
+- "Governance literature estimates: $2-5M direct (severance, recruiting)."
+- "Plus $10-20M indirect (disruption, learning curve)."
+- "Total: $12-25M per executive departure."
+
+AGGREGATE GOVERNANCE COSTS:
+- "416 breaches in sample experienced 30-day turnover."
+- "Mean executives changed: 3.2 per breach."
+- "Even conservative estimates suggest $0.39-0.98B aggregate."
+
+TOTAL ECONOMIC COST:
+- "Valuation loss: $0.76B"
+- "Cost of capital: $0.1-0.2B (annualized)"
+- "Governance disruption: $0.39-0.98B"
+- "TOTAL: $1.25-1.94 BILLION"
+
+BOTTOM LINE:
+- "The FCC disclosure mandate, while well-intentioned, imposes substantial economic costs."
+- "These costs appear to exceed the information quality benefits."
+
+KEY POINTS TO EMPHASIZE:
+- $0.76B is measurable, real impact
+- Multiple mechanisms, multiple costs
+- Total cost likely $1.25-1.94B
+- Costs exceed benefits
+
+TRANSITION TO SLIDE 21:
+"So what should policymakers do? Let me address FCC first."
+
+================================================================================
+SLIDE 21: FCC POLICY RECOMMENDATION (2 minutes)
+================================================================================
+
+TALKING POINTS:
+- "My research has a clear message for FCC policymaking."
+
+WHAT THE RULE ACHIEVES:
+- "The FCC rule DOES achieve its speed goal."
+- "Disclosure does happen faster."
+- "That's not in question."
+
+WHAT THE RULE FAILS AT:
+- "But it fails at its quality goal."
+- "Speed prevents investigation completion."
+- "Firms disclose incomplete information."
+- "Markets recognize this and penalize with higher uncertainty."
+
+THE COST-BENEFIT:
+- "Cost: $0.76B in shareholder losses."
+- "Benefit: Faster disclosure of incomplete information."
+- "That's not a good tradeoff."
+
+ALTERNATIVE APPROACHES:
+- "Option 1: Extend deadline to 14-21 days."
+  * Allows basic investigation completion
+  * Maintains speed priority
+  * Preserves disclosure completeness
+
+- "Option 2: Conditional disclosure framework."
+  * 'Preliminary findings pending investigation'
+  * Allows disclosure + investigation signal
+  * Gives firms time to investigate thoroughly
+
+- "Option 3: Size-sensitive requirements."
+  * 7 days for large firms (have resources)
+  * 14 days for medium firms
+  * 21 days for small firms
+  * Accounts for capacity constraints
+
+RECOMMENDED APPROACH:
+- "I recommend Option 1: 14-21 day timeline."
+- "This balances FCC's speed priority with investigation quality."
+- "Should reduce the $0.76B cost significantly."
+
+KEY POINTS TO EMPHASIZE:
+- Current rule achieves speed, fails quality
+- $0.76B cost is significant
+- Alternative timelines are feasible
+- Recommend 14-21 days
+
+TRANSITION TO SLIDE 22:
+"Now, the SEC just adopted a 4-day rule. What does my research suggest?"
+
+================================================================================
+SLIDE 22: SEC 4-DAY RULE (2 minutes)
+================================================================================
+
+TALKING POINTS:
+- "The SEC adopted their cybersecurity disclosure rule in 2023."
+- "It requires 4-day disclosure for material breaches."
+- "And the SEC explicitly asked for empirical validation."
+
+THE PARALLEL:
+- "4 days is even TIGHTER than FCC's 7 days."
+- "My research on FCC's 7-day rule shows the problems with forced speed."
+- "SEC's 4-day rule faces identical - or worse - challenges."
+
+EVIDENCE:
+- "If 7 days forces incomplete disclosure..."
+- "4 days will force EVEN MORE incomplete disclosure."
+- "Same paradox, stronger effect."
+- "We'd expect volatility increases even larger."
+- "Uncertainty even higher."
+
+RECOMMENDATION:
+- "The SEC should monitor implementation carefully."
+- "Plan an 18-24 month evaluation."
+- "Collect evidence on whether 4-day rule improves or harms information quality."
+- "Be prepared to extend the timeline if market data shows problems."
+
+SPECIFIC STEPS:
+- "Budget IT systems enabling rapid investigation."
+- "Train breach response teams."
+- "Test 4-day feasibility in non-binding pilots first."
+- "Collect metrics on disclosure completeness."
+
+BOTTOM LINE:
+- "The SEC asked for empirical validation."
+- "My dissertation provides it."
+- "The answer: This rule will likely create costs similar to FCC's rule."
+
+KEY POINTS TO EMPHASIZE:
+- 4 days is tighter, more problematic than 7 days
+- Same quality-vs-speed tradeoff
+- SEC should plan for evaluation
+- May need to extend timeline
+
+TRANSITION TO SLIDE 23:
+"Looking across regulations, there's a pattern. Let me present the concept of optimal disclosure timing."
+
+================================================================================
+SLIDE 23: OPTIMAL TIMELINE CONCEPT (1.5 minutes)
+================================================================================
+
+TALKING POINTS:
+- "There's a concept in policy that I want to introduce: optimal disclosure timing."
+
+THE TRADEOFFS:
+- "Zero regulation: Allows information asymmetry advantage."
+  * Firms can delay indefinitely
+  * Insiders benefit at expense of shareholders
+  * That's bad
+
+- "Extremely tight rules (7 days, 4 days): Force incomplete disclosure."
+  * Speed achieved, quality lost
+  * Markets penalize with uncertainty
+  * That's also bad
+
+- "Middle ground (45-60 days): Allows investigation + communication."
+  * Investigation completion: 3-6 weeks typical
+  * Stakeholder communication: time to plan messaging
+  * Market confidence: disclosure is reliable
+
+THE EVIDENCE:
+- "HIPAA uses 60-day timeline."
+- "Not coincidentally, that's roughly the time needed for investigation."
+- "Xu et al. (2024) surveyed stakeholders: prefer completeness over speed."
+- "My data shows firm size heterogeneity: 14-21 days works for most firms."
+
+COMPARISON:
+- "FCC: 7 days (TOO FAST) → creates uncertainty"
+- "SEC: 4 days (EVEN FASTER) → will create more uncertainty"
+- "HIPAA: 60 days (REASONABLE) → allows investigation"
+- "Optimal: 45-60 days (EVIDENCE-BASED)"
+
+THE PRINCIPLE:
+- "Disclosure timing should allow investigation completion without sacrificing speed."
+- "Different firms need different timelines based on size."
+- "One-size-fits-all doesn't work."
+
+KEY POINTS TO EMPHASIZE:
+- Optimal timeline exists (45-60 days)
+- HIPAA's timeline aligns with evidence
+- Quality > speed
+- Size-sensitive approach needed
+
+TRANSITION TO SLIDE 24:
+"What about companies? What should they do with these findings?"
+
+================================================================================
+SLIDE 24: BUSINESS IMPLICATIONS (1.5 minutes)
+================================================================================
+
+TALKING POINTS:
+- "Let me translate this to business strategy."
+
+DISCLOSURE TIMING DOESN'T PROTECT STOCK PRICE:
+- "H1 null: Timing has no effect on returns."
+- "So companies shouldn't view early disclosure as a defensive tactic."
+- "It won't reduce shareholder losses."
+- "That's important to know."
+
+BUT TIMING DOES TRIGGER GOVERNANCE RESPONSE:
+- "H6 finding: Early disclosure accelerates turnover (+5.3pp)."
+- "Boards respond faster to public crisis."
+- "This is GOOD from accountability perspective."
+- "Company should disclose early for governance credibility."
+
+THE DISTINCTION:
+- "Timing is a governance signal, not a market signal."
+- "Markets care about: fundamentals, reputation, data type."
+- "Boards/stakeholders care about: accountability, crisis response speed."
+
+STRATEGIC APPROACH:
+- "Companies SHOULD disclose early:"
+  * Signals accountability to stakeholders
+  * Activates board governance response
+  * Prevents information leakage
+  * Builds credibility
+
+- "But companies SHOULDN'T expect:"
+  * Stock price protection (won't happen)
+  * Reduced regulatory penalties (won't happen)
+  * Market reward for speed (won't happen)
+
+INSTEAD, COMPANIES SHOULD FOCUS ON:
+- "Completeness of disclosure."
+- "Accuracy of information."
+- "Quality of investigation."
+- "Transparent remediation plans."
+
+BOTTOM LINE:
+- "Speed is less important than thoroughness."
+- "Disclose early if ready, disclose late if needed for investigation."
+- "Markets will penalize based on fundamentals, not timing."
+
+KEY POINTS TO EMPHASIZE:
+- Timing doesn't protect stock price
+- Timing does activate governance response
+- Focus on completeness, not speed
+- Thorough disclosure > fast disclosure
+
+TRANSITION TO SLIDE 25:
+"Now, let me be honest about what this research does NOT cover."
+
+================================================================================
+SLIDE 25: LIMITATIONS & SCOPE (1.5 minutes)
+================================================================================
+
+TALKING POINTS:
+- "It's important to be transparent about limitations."
+
+SHAREHOLDER RETURNS ONLY:
+- "This research measures shareholder market reactions."
+- "I do NOT measure consumer protection outcomes."
+- "I do NOT measure employee morale effects."
+- "I do NOT measure regulatory compliance quality."
+- "Those are important, but beyond this study's scope."
+
+SAMPLE COMPOSITION:
+- "FCC firms are 2x larger than control firms."
+- "Size controls address this, but not perfectly."
+- "Parallel trends assumption is untestable."
+- "Could an unmeasured confounder be driving results? Unlikely but possible."
+
+EXECUTIVE TURNOVER WINDOWS:
+- "I measure 30/90/180-day windows."
+- "Longer-run effects (6-24 months) may differ."
+- "May capture some secular trends."
+- "30-day window minimizes this concern."
+
+GENERALIZABILITY:
+- "Results apply to publicly-traded firms."
+- "Private firm dynamics differ substantially."
+- "Private firms have different governance, financing constraints, stakeholder structures."
+- "Can't generalize to private companies."
+
+CAUSAL MECHANISM:
+- "The causal chain is: regulation → disclosure timing → market outcomes."
+- "I've validated the first arrow (regulation causes timing)."
+- "I've documented the second arrow (timing affects outcomes)."
+- "But the ultimate mechanism (why markets respond) may involve unmeasured factors."
+
+WHAT REMAINS ROBUST:
+- "Despite these limitations:"
+  * 27+ robustness specs support findings
+  * Temporal validation provides strong identification
+  * Mediation tests clarify mechanisms
+  * Multi-outcome consistency strengthens inference
+- "The core findings are solid."
+
+KEY POINTS TO EMPHASIZE:
+- Honest about what we don't measure
+- Acknowledge sample limitations
+- But emphasize robustness of findings
+- Clear about generalizability bounds
+
+TRANSITION TO SLIDE 26:
+"Let me wrap this up with the key takeaways."
+
+================================================================================
+SLIDE 26: KEY TAKEAWAYS (2 minutes)
+================================================================================
+
+TALKING POINTS:
+- "Let me summarize the five main findings:"
+
+FINDING 1 - TIMING IS IRRELEVANT:
+- "Disclosure timing does NOT affect shareholder returns."
+- "This contradicts regulatory assumptions."
+- "Markets price fundamentals, not announcement speed."
+
+FINDING 2 - SPEED CREATES UNCERTAINTY:
+- "Mandatory disclosure timing increases market uncertainty."
+- "Forced speed prevents investigation → incomplete disclosure → higher volatility."
+- "Quality-vs-speed tradeoff is real and measurable."
+
+FINDING 3 - REGULATION IS COSTLY:
+- "FCC regulation imposes $0.76B in shareholder losses."
+- "Not through better information, but through burden signal."
+- "Markets penalize regulatory complexity."
+
+FINDING 4 - REPUTATION DOMINATES:
+- "Prior breach history is the strongest market driver."
+- "Markets price reputational accumulation."
+- "-0.22% per prior breach (p<0.001)."
+- "Reputation matters more than timing."
+
+FINDING 5 - GOVERNANCE RESPONDS:
+- "Mandatory disclosure triggers executive turnover."
+- "Not because of information quality, but stakeholder pressure."
+- "46.4% of breaches see 30-day turnover."
+- "Governance self-response >> regulatory enforcement (50:1)."
+
+THE BIG PICTURE:
+- "Disclosure policy affects three things: valuations (neutral), uncertainty (negative), governance (positive)."
+- "These operate through different mechanisms."
+- "No single answer about whether 'fast is better.'"
+- "Answer: It depends what you're optimizing for."
+- "If optimizing for governance response: faster is better."
+- "If optimizing for information quality: slower is better."
+- "If optimizing for shareholder returns: timing doesn't matter."
+
+POLICY LESSON:
+- "Policymakers should focus on COMPLETENESS, not SPEED."
+- "Allow longer timelines (45-60 days)."
+- "Account for firm size differences."
+- "Evaluate actual market outcomes."
+- "Be willing to adjust if costs exceed benefits."
+
+KEY POINTS TO EMPHASIZE:
+- Five distinct findings, not one
+- Different mechanisms, different implications
+- Completeness > speed
+- Evidence-based policy needed
+
+TRANSITION TO SLIDE 27:
+"Now let's explore these findings in interactive detail through the dashboard."
+
+================================================================================
+SLIDE 27: INTERACTIVE DASHBOARD (1 minute)
+================================================================================
+
+TALKING POINTS:
+- "I've created a 15-page interactive Streamlit dashboard with all the evidence."
+- "This shows all the detailed results, tables, and validation tests."
+
+WHAT YOU CAN DO:
+- "Filter by:"
+  * FCC status (regulated vs. non-regulated)
+  * Firm size (quartiles)
+  * Breach type (health, financial, other)
+  * Disclosure timing
+
+- "See regression results with confidence intervals."
+- "Explore validation tests: pre/post-2007, industry controls, size sensitivity."
+- "Calculate economic significance for different firm sizes."
+- "Download raw data for your own analysis."
+
+PAGES IN DASHBOARD:
+- "Pages 1-3: Research context and natural experiment."
+- "Pages 4-6: Essay 1-3 results with detailed analysis."
+- "Pages 7-8: Economic significance and robustness checks."
+- "Pages 9-11: Key findings, conclusions, data explorer, dictionary."
+
+HOW TO USE:
+- "Use the sidebar to navigate."
+- "Start with 'Natural Experiment' to understand causal strategy."
+- "Progress through Essays 1-6."
+- "End with conclusions for full synthesis."
+
+KEY POINT:
+- "Everything is interactive and filtered in real-time."
+- "You can explore any question that interests you."
+
+================================================================================
+SLIDE 28: QUESTIONS (FINAL SLIDE)
+================================================================================
+
+TALKING POINTS:
+- "That concludes my presentation."
+- "I'm happy to answer any questions."
+
+BEFORE DASHBOARD:
+- Offer time for clarifying questions about the presentation itself.
+- Likely questions:
+  * "Why do you think markets penalize FCC firms?"
+  * "How do you know the effect is causal?"
+  * "What about [alternative explanation]?"
+  * "How robust is the null finding on timing?"
+
+DURING DASHBOARD:
+- Walk through pages interactively.
+- Respond to specific questions.
+- Show filtering capabilities.
+- Dig into any results that generate interest.
+
+AFTER DASHBOARD:
+- Synthesize discussion.
+- Return to policy implications.
+- Discuss next steps (publication, follow-up research).
+
+KEY TALKING POINTS FOR Q&A:
+- Emphasize robustness (27+ specs support findings)
+- Clarify mechanisms (three independent channels)
+- Acknowledge limitations (public firms only, shareholder returns only)
+- Relate back to policy (alternative timelines, size-sensitivity)
+- Ground in theory (information asymmetry, signaling, stakeholder theory)
+
+================================================================================
+END OF SPEAKER NOTES
+================================================================================
+
+GENERAL PRESENTATION TIPS:
+1. Pacing: 45-50 minutes for all 28 slides = ~1.5-2 minutes per slide average
+2. Emphasis: Let numbers/findings breathe - don't rush through key results
+3. Storytelling: Each essay is a chapter with mechanism explanation
+4. Transitions: Use "so let me show you..." language to bridge sections
+5. Eye contact: Read notes, but maintain eye contact with audience
+6. Emphasis: Pause after key findings (let them land)
+7. Callbacks: Refer back to earlier findings when appropriate
+8. Dashboard: Use as evidence exploration tool, not just supplementary material
+
+CONTINGENCY NOTES:
+- If short on time, abbreviate limitations section and go deeper on dashboard
+- If committee wants detail, expand on validation tests section
+- If committee wants policy focus, emphasize FCC/SEC/business sections
+- If questions go deep, use dashboard to show specific evidence
+
+Good luck with your presentation!

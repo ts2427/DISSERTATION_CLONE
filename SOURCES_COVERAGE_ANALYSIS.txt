@@ -1,0 +1,224 @@
+================================================================================
+DISSERTATION PROPOSAL - SOURCES COVERAGE ANALYSIS
+================================================================================
+
+TOTAL SOURCES IN MASTER FILE: 69
+CITED IN PROPOSAL: 10
+MISSING FROM PROPOSAL: 59
+COVERAGE: 14%
+
+================================================================================
+SOURCES CITED IN PROPOSAL (10 sources):
+================================================================================
+
+Akerlof (1970)
+Akerlof, G. A. (1970). The market for "lemons": Quality uncertainty and the market mechanism. The Quarterly Journal of Economics, 84(3), 488-500.
+
+Freeman (1984)
+Freeman, R. E. (1984). Strategic management: A stakeholder approach. Pitman.
+
+Myers (1984)
+Myers, S. C., & Majluf, N. S. (1984). Corporate financing and investment decisions when firms have information the investors do not have. Journal of Financial Economics, 13(2), 187-221.
+
+Diamond (1991)
+Diamond, D. W., & Verrecchia, R. E. (1991). Disclosure, liquidity, and the cost of capital. The Journal of Finance, 46(4), 1325-1359.
+
+Mitchell (1997)
+Mitchell, R. K., Agle, B. R., & Wood, D. J. (1997). Toward a theory of stakeholder identification and salience: Defining the principle of who and what really counts. Academy of Management Review, 22(4), 853-886.
+
+Acquisti (2006)
+Acquisti, A., Friedman, A., & Telang, R. (2006). Is there a cost to privacy breaches? An event study. Proceedings of the Twenty Seventh International Conference on Information Systems, Milwaukee, WI, 1–23.
+
+Gordon (2024)
+Gordon, L. A., Loeb, M. P., Zhou, L., & Wilford, A. L. (2024). Empirical evidence on disclosing cyber breaches in an 8-K report: Initial exploratory evidence. Journal of Accounting and Public Policy, 46, 107226.
+
+Obaydin (2024)
+Obaydin, I., Xu, L., & Zurbruegg, R. (2024). The unintended cost of data breach notification laws: Evidence from managerial bad news hoarding. Journal of Business Finance & Accounting, 51(9-10), 2709-2736.
+
+Liu (2024)
+Liu, C., & Babar, M. A. (2024). Corporate cybersecurity risk and data breaches: A systematic review of empirical research. Australian Journal of Management, 1-31.
+
+Muktadir-Al-Mukit (2025)
+Muktadir-Al-Mukit, D., Ali, M.H. The Dynamics of Stock Market Responses Following the Cyber-Attacks News: Evidence from Event Study. Inf Syst Front (2025). https://doi.org/10.1007/s10796-025-10639-6 
+
+================================================================================
+SOURCES NOT CITED IN PROPOSAL (59 sources):
+================================================================================
+
+Spence (1973)
+Spence, M. (1973). Job market signaling. The Quarterly Journal of Economics, 87(3), 355-374.
+
+Fama (1976)
+Fama (1976): Distributional properties of security returns
+
+Dimson (1979)
+Dimson (1979): Aggregated coefficients method
+
+Verrecchia (1983)
+Verrecchia (1983) → Organizations disclose above threshold to distinguish from worse firms
+
+Myers-Majluf (1984)
+Myers-Majluf (1984) → Organizations withhold information to avoid adverse selection Verrecchia (1983) → Organizations disclose above threshold to distinguish from worse firms Skinner (1994) → Organizations preempt large negative surprises to minimize legal/reputational costs Your Contribution → Organizations face information processing constraints that prevent Skinner preemption for complex breaches, creating paradoxical deadline-timing relationship
+
+Myers-Majluf (1984)
+Myers-Majluf (1984) → Organizations withhold information to avoid adverse selection
+
+Brown (1985)
+Brown, S. J., & Warner, J. B. (1985). USING DAILY STOCK RETURNS: The Case of Event Studies. Journal of Financial Economics, 14(1), 3–31. https://doi-org.libproxy.usouthal.edu/10.1016/0304-405X(85)90042-X
+
+Fama (1993)
+Fama, E. F., & French, K. R. (1993). Common risk factors in the returns on stocks and bonds. Journal of Financial Economics, 33(1), 3. 
+
+Skinner (1994)
+Skinner, D. J. (1994). Why Firms Voluntarily Disclose Bad News. Journal of Accounting Research, 32(1), 38–60. https://doi-org.libproxy.usouthal.edu/10.2307/2491386
+
+Skinner (1994)
+Skinner (1994) provides foundational framework for understanding why organizations disclose cybersecurity breaches before regulatory deadlines, directly complementing your deadline-complexity interaction findings.
+
+Skinner (1994)
+Skinner (1994) → Organizations preempt large negative surprises to minimize legal costs
+
+Donaldson (1995)
+Donaldson, T., & Preston, L. E. (1995). The stakeholder theory of the corporation: Concepts, evidence, and implications. Academy of Management Review, 20(1), 65-91.
+
+Welker (1995)
+Welker (1995), Coller & Yohn (1997), Leuz & Verrecchia (2000), Heflin et al. (2005): Negative association between disclosure and bid-ask spreads
+
+Teece (1997)
+Teece, D. J., Pisano, G., & Shuen, A. (1997). Dynamic capabilities and strategic management. Strategic Management Journal, 18(7), 509-533.
+
+Botosan (1997)
+Botosan (1997), Botosan & Plumlee (2002): Negative relation between disclosure and cost of capital
+
+Hong (1999)
+Hong, H., & Stein, J. C. (1999). A unified theory of underreaction, momentum trading, and overreaction in asset markets. Journal of Finance, 54(6), 2143-2184.
+
+Smith (2003)
+Smith, D. B., & Tonidandel, S. (2003). Taking account of time: The application of event history analysis to leadership research. The Leadership Quarterly, 14(2), 241-256.
+
+Coombs (2007)
+Coombs, W. T. (2007). Protecting organization reputations during a crisis: The development and application of Situational Crisis Communication Theory. Corporate Reputation Review, 10(3), 163-176.
+
+Kumar (2009)
+Kumar, A. (2009). Hard-to-value stocks, behavioral biases, and informed trading. Journal of Financial and Quantitative Analysis, 44(6), 1375-1401.
+
+Kothari (2009)
+Kothari, S. P., Shu, S., & Wysocki, P. D. (2009). Do Managers Withhold Bad News? Journal of Accounting Research, 47(1), 241–276. https://doi-org.libproxy.usouthal.edu/10.1111/j.1475-679X.2008.00318.x
+
+Claeys (2012)
+Claeys, A.-S., & Cauberghe, V. (2012). Crisis response and crisis timing strategies, two sides of the same coin. Public Relations Review, 38(1), 83-88.
+
+Edwards (2016)
+Edwards, B., Hofmeyr, S., & Forrest, S. (2016). Hype and heavy tails: A closer look at data breaches. Journal of Cybersecurity, 2(1), 3-14.
+
+Edwards (2016)
+Edwards, B., Hofmeyr, S., & Forrest, S. (2016). Hype and heavy tails: A closer look at data breaches. Journal of Cybersecurity, 2(1), 3-14.
+
+Acquisti (2016)
+Acquisti, A., Taylor, C., & Wagman, L. (2016). The economics of privacy. Journal of Economic Literature, 54(2), 442–492. https://doi.org/10.1257/jel.54.2.442
+
+Chu (2017)
+Chu (2017), Yang (2017): Use shareholder-lender mergers as shock to shareholder-creditor conflicts
+
+Pre-GDPR (2018)
+Pre-GDPR, pre-modern breach landscape. Published in 2016, this article predates the EU General Data Protection Regulation (2018), the California Consumer Privacy Act (2020), and the massive escalation in breach frequency and severity post-2017. Your dataset covers 2004–2025, so you will need to supplement this with more recent empirical work addressing regulatory developments that postdate this survey. The authors acknowledge this limitation implicitly—the evolving nature of privacy technology and regulation is a recurring theme.
+
+Resourcing (2018)
+Resourcing (2018):
+
+Fabrizio (2019)
+Fabrizio, K. R., & Kim, E.-H. (2019). Reluctant Disclosure and Transparency : Evidence from Environmental Disclosures. Organization Science, 30(6), 1207–1231. 
+
+Michel (2020)
+Michel, A., Oded, J., & Shaked, I. (2020). Do security breaches matter? The shareholder puzzle. European Financial Management, 26(2), 288-315.
+
+Gu (2020)
+Gu, S., Kelly, B., & Xiu, D. (2020). Empirical asset pricing via machine learning. The Review of Financial Studies, 33(5), 2223–2273. https://doi.org/10.1093/rfs/hhaa009
+
+Peyravan (2020)
+Peyravan (2020): Financial reporting quality influences propensity of institutional investors to simultaneously hold debt and equity
+
+Turkson (2021)
+Turkson, A. J., Ayiah-Mensah, F., & Nimoh, V. (2021). Handling censoring and censored data in survival analysis: A standalone systematic literature review. International Journal of Mathematics and Mathematical Sciences, 2021, Article ID 9307475.
+
+Tosun (2021)
+Tosun (2021): -2.04%
+
+Tosun (2021)
+Tosun (2021): -2.04% CAAR ✓
+
+Tsang (2023)
+Tsang, R. C. W., Baldwin, A. A., Hair Jr., J. F., Affuso, E., & Lahtinen, K. D. (2023). The informativeness of sentiment types in risk factor disclosures: Evidence from firms with cybersecurity breaches. Journal of Information Systems, 37(3), 157-190.
+
+Iqbal (2024)
+Iqbal, F., Pfarrer, M. D., & Bundy, J. (2024). How crisis management strategies address stakeholders' sociocognitive concerns and organizations' social evaluations. Academy of Management Review, 49(2), 299-321.
+
+Cao (2024)
+Cao, H., Phan, H. V., & Silveri, S. (2024). Data breach disclosures and stock price crash risk: Evidence from data breach notification laws. International Review of Financial Analysis, 93, 103164.
+
+Woo (2024)
+Woo, H.-S., Kim, J., & Cannella Jr., A. A. (2024). Time dependence in the Cox proportional hazard model as a theory development opportunity: A step-by-step guide. Organizational Research Methods, 27(3), 516-538.
+
+Agarwal (2024)
+Agarwal, S., Ghosh, P., Ruan, T., & Zhang, Y. (2024). Transient customer response to data breaches of their information. Management Science, 70(6), 4105-4114.
+
+Jiang (2024)
+Jiang (2024): Easier-to-read disclosures → higher future breach probability
+
+Akyildirim (2024)
+Akyildirim, E., Conlon, T., Corbet, S., & Hou, Y. (Greg). (2024). HACKED: Understanding the stock market response to cyberattacks. Journal of International Financial Markets, Institutions & Money, 97. https://doi-org.libproxy.usouthal.edu/10.1016/j.intfin.2024.102082
+
+Abukari (2024)
+Abukari, K., Dutta, S., Li, C., Tang, S., & Zhu, P. (2024). Corporate communication and likelihood of data breaches. International Review of Economics and Finance, 94. https://doi-org.libproxy.usouthal.edu/10.1016/j.iref.2024.103433
+
+Zhang (2024)
+Zhang, Y., Pinkse, J., & McMeekin, A. (2024). Hybrid governance of digital platforms: Exploring complementarities and tensions in the governance of peer relationships. Strategic Organization, 1. https://doi-org.libproxy.usouthal.edu/10.1177/14761270241246603
+
+Costabile (2024)
+Costabile, C. (2024). Digital platform ecosystem governance of private companies: Building blocks and a research agenda based on a multidisciplinary, systematic literature review. Data and Information Management, 8(1). https://doi-org.libproxy.usouthal.edu/10.1016/j.dim.2023.100053
+
+Xu (2024)
+Xu, M., Jug, Z., & Tamo-Larrieux, A. (2024). A cross-cultural analysis of transparency: the interplay of law, privacy policies, and user perceptions. International Data Privacy Law, 14(3), 197–222. https://doi-org.libproxy.usouthal.edu/10.1093/idpl/ipae011
+
+Amani (2025)
+Amani, F., Magnan, M., & Moldovan, R. (2025). Cybersecurity Risks and Incidents Disclosure: A Literature Review*. Accounting Perspectives, 24(3), 605–667. https://doi-org.libproxy.usouthal.edu/10.1111/1911-3838.12411
+
+Sanner (2025)
+Sanner, T. A., Kempton, A. M., Russpatrick, S., & Sæbø, J. I. (2025). Governing digital platform ecosystems for social options. Information Systems Journal, 35(2), 422–449. https://doi-org.libproxy.usouthal.edu/10.1111/isj.12546
+
+Degen (2025)
+Degen, K., & Gleiss, A. (2025). Time to break up? The case for tailor-made digital platform regulation based on platform-governance standard types. Electronic Markets, 35(1), 1–23. https://doi-org.libproxy.usouthal.edu/10.1007/s12525-024-00747-7
+
+Hunt (2025)
+Hunt, R. A., Townsend, D. M., Simpson, J. J., Nugent, R., Stallkamp, M., & Bozdag, E. (2025). Digital Battlegrounds: The Power Dynamics and Governance of Contemporary Platforms. Academy of Management Annals, 19(1), 265–297. https://doi-org.libproxy.usouthal.edu/10.5465/annals.2022.0188
+
+Chebbi (2025)
+Chebbi, K. (2025). The impact of cyber threats on environmental, social, and governance performance. Journal of Environmental Management, 389. https://doi-org.libproxy.usouthal.edu/10.1016/j.jenvman.2025.126184
+
+Atoum (2025)
+Atoum, M. S., Alarood, A. A., Alsolami, E., Abubakar, A., Hwaitat, A. K. A., & Alsmadi, I. (2025). Cybersecurity Intelligence Through Textual Data Analysis: A Framework Using Machine Learning and Terrorism Datasets. Future Internet, 17(4), 182. https://doi-org.libproxy.usouthal.edu/10.3390/fi17040182
+
+Chebbi (2025)
+Chebbi (2025): Fixed effects regression analyzes cybersecurity risk→ESG relationship
+
+Chebbi (2025)
+Chebbi (2025) - Cyber Threats and ESG Performance:
+
+Griffin (2025)
+Griffin (2025) - Stakeholder Power Dynamics in Digital Services Act:
+
+Chebbi (2025)
+Chebbi (2025) - Cyber Threats and ESG Performance:
+
+Griffin (2025)
+Griffin (2025) - Stakeholder Power Dynamics in DSA:
+
+Griffin (2025)
+Griffin (2025) - DSA Multi-Stakeholder Governance:
+
+Chebbi (2025)
+Chebbi (2025) - ESG Performance Impact:
+
+Martins (2025)
+Martins, A. M., Moutinho, N., & Cró, S. (2025). Stock market effects of major cyber-attacks: evidence for breached and cybersecurity listed firms. Journal of Banking Regulation, 1–10. https://doi-org.libproxy.usouthal.edu/10.1057/s41261-025-00293-y
+
