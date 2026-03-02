@@ -22,16 +22,15 @@ st.markdown("""
 """)
 
 # Load data
-@st.cache_data
+@st.cache_data(ttl=3600)
 def load_economic_data():
     try:
-        # Try multiple possible paths
+        # Try multiple possible paths in order of likelihood
         possible_paths = [
+            '/mount/src/dissertation_clone/outputs/economic_significance/economic_impact_summary.csv',
             'outputs/economic_significance/economic_impact_summary.csv',
             '../outputs/economic_significance/economic_impact_summary.csv',
             '../../outputs/economic_significance/economic_impact_summary.csv',
-            'C:\\Users\\mcobp\\BA798_TIM\\outputs\\economic_significance\\economic_impact_summary.csv',
-            '/mount/src/dissertation_clone/outputs/economic_significance/economic_impact_summary.csv'
         ]
 
         for path in possible_paths:
@@ -44,22 +43,21 @@ def load_economic_data():
         # If still not found, try with Path - go up to Dashboard parent (which is repo root)
         base_dir = Path(__file__).parent.parent.parent
         data_path = base_dir / 'outputs' / 'economic_significance' / 'economic_impact_summary.csv'
-        impact_df = pd.read_csv(data_path)
+        impact_df = pd.read_csv(str(data_path))
         return impact_df
     except Exception as e:
-        st.error(f"Error loading data: {str(e)}")
+        st.error(f"Error loading economic impact data: {str(e)}")
         return None
 
-@st.cache_data
+@st.cache_data(ttl=3600)
 def load_report():
     try:
-        # Try multiple possible paths
+        # Try multiple possible paths in order of likelihood
         possible_paths = [
+            '/mount/src/dissertation_clone/outputs/economic_significance/economic_significance_report.txt',
             'outputs/economic_significance/economic_significance_report.txt',
             '../outputs/economic_significance/economic_significance_report.txt',
             '../../outputs/economic_significance/economic_significance_report.txt',
-            'C:\\Users\\mcobp\\BA798_TIM\\outputs\\economic_significance\\economic_significance_report.txt',
-            '/mount/src/dissertation_clone/outputs/economic_significance/economic_significance_report.txt'
         ]
 
         for path in possible_paths:
@@ -72,10 +70,10 @@ def load_report():
         # If still not found, try with Path - go up to Dashboard parent (which is repo root)
         base_dir = Path(__file__).parent.parent.parent
         report_path = base_dir / 'outputs' / 'economic_significance' / 'economic_significance_report.txt'
-        with open(report_path, 'r') as f:
+        with open(str(report_path), 'r') as f:
             return f.read()
     except Exception as e:
-        st.error(f"Error loading report: {str(e)}")
+        st.error(f"Error loading economic report: {str(e)}")
         return None
 
 impact_df = load_economic_data()
@@ -133,15 +131,14 @@ with col3:
 st.markdown("---")
 st.markdown("## 📈 Visualizations")
 
-@st.cache_data
+@st.cache_data(ttl=3600)
 def load_image(filename):
     """Load image from economic_significance directory with multiple path attempts"""
     possible_paths = [
+        f'/mount/src/dissertation_clone/outputs/economic_significance/{filename}',
         f'outputs/economic_significance/{filename}',
         f'../outputs/economic_significance/{filename}',
         f'../../outputs/economic_significance/{filename}',
-        f'C:\\Users\\mcobp\\BA798_TIM\\outputs\\economic_significance\\{filename}',
-        f'/mount/src/dissertation_clone/outputs/economic_significance/{filename}'
     ]
 
     for path in possible_paths:
@@ -155,7 +152,7 @@ def load_image(filename):
     try:
         base_dir = Path(__file__).parent.parent.parent
         img_path = base_dir / 'outputs' / 'economic_significance' / filename
-        img = Image.open(img_path)
+        img = Image.open(str(img_path))
         return img
     except:
         return None
