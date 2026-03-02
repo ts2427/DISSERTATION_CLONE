@@ -167,7 +167,32 @@ if report_text:
     with st.expander("Full Economic Significance Report", expanded=False):
         st.text(report_text)
 else:
-    st.warning("Full report not available. Ensure economic_significance_report.txt exists in outputs/economic_significance/")
+    import os
+    from pathlib import Path
+    st.error("Full report not available.")
+
+    # Show debug info for report
+    with st.expander("🔍 Debug Report Loading"):
+        cwd = os.getcwd()
+        root_from_utils = Path(__file__).parent.parent.resolve()
+
+        report_paths = {
+            "From utils.py resolve": root_from_utils / 'outputs' / 'economic_significance' / 'economic_significance_report.txt',
+            "From CWD": Path(cwd) / 'outputs' / 'economic_significance' / 'economic_significance_report.txt',
+        }
+
+        for name, path in report_paths.items():
+            exists = path.exists()
+            status = "✅ EXISTS" if exists else "❌ NOT FOUND"
+            st.write(f"{status} - {name}")
+            st.code(str(path))
+            if exists:
+                try:
+                    with open(str(path), 'r') as f:
+                        content = f.read()
+                    st.write(f"File size: {len(content)} bytes")
+                except Exception as e:
+                    st.error(f"Error reading: {e}")
 
 # ============================================================================
 # SECTION 5: IMPLICATIONS
