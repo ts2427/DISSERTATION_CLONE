@@ -62,3 +62,20 @@ Data/cache/
 .env.local
 *.key
 wrds_config.ini
+
+# ==============================================================================
+# PRESENTATION & DOCUMENT FILES (LOCAL ONLY - NOT IN GITHUB)
+# ==============================================================================
+# These are personal working documents used for presentations and writing
+# They should be kept locally but NOT committed to GitHub
+*.docx
+*.pptx
+*.xlsx
+
+# Markdown files (except README.md which is the main documentation)
+*.md
+!README.md
+
+# Other working documents
+*.txt
+!requirements.txt
