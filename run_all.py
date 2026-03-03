@@ -268,6 +268,8 @@ Log file: {log_path}
                     ('scripts/102_extended_governance_windows.py', 'HETEROGENEITY ANALYSIS #5: Extended Governance Time Windows - 30d/90d/180d comparison'),
                     ('scripts/103_breach_type_diversity.py', 'HETEROGENEITY ANALYSIS #6: Breach Type Diversity - Multi-type complexity'),
                     ('scripts/104_restatement_summary.py', 'HETEROGENEITY ANALYSIS #7: Restatement Prediction - Data limitation documentation'),
+                    ('scripts/105_complexity_index_heterogeneity.py', 'HETEROGENEITY ANALYSIS #8: Complexity Index - Unified severity/CVE/type complexity mechanism'),
+                    ('scripts/106_information_environment_composite.py', 'HETEROGENEITY ANALYSIS #9: Information Environment Composite - Media attention & reputation interaction (Spec A/B/C)'),
                 ]
             },
             {
@@ -387,13 +389,15 @@ Essay 3 Regression Tables:
   outputs/tables/essay3/TABLE_FCC_Size_Sensitivity_Volatility.txt (FCC causal ID: size sensitivity analysis)
   outputs/tables/essay3/FCC_Causal_ID_Summary_Volatility.txt (FCC causal ID: comprehensive summary)
 
-Heterogeneity Analysis Results (Publication Appendix Tables B11-B15):
+Heterogeneity Analysis Results (Publication Appendix Tables B11-B17):
   outputs/tables/TABLE_GOVERNANCE_HETEROGENEITY_RESULTS.csv (Phase 1: Governance quality, B11)
   outputs/tables/TABLE_CVSS_COMPLEXITY_HETEROGENEITY_RESULTS.csv (Phase 2: CVSS complexity, B12) [BREAKTHROUGH: +6.27%**]
   outputs/tables/TABLE_RANSOMWARE_HETEROGENEITY_RESULTS.csv (Analysis #3: Ransomware, B13)
   outputs/tables/TABLE_MEDIA_COVERAGE_HETEROGENEITY_RESULTS.csv (Analysis #4: Media coverage, B14) [+7.08%**]
   outputs/tables/TABLE_EXTENDED_GOVERNANCE_WINDOWS_RESULTS.csv (Analysis #5: Time windows, B15)
   outputs/tables/TABLE_DIVERSITY_HETEROGENEITY_RESULTS.csv (Analysis #6: Type diversity)
+  outputs/tables/TABLE_COMPLEXITY_INDEX_VOLATILITY_RESULTS.csv (Analysis #8: Complexity index, Essay 2 mechanism)
+  outputs/tables/TABLE_INFO_ENVIRONMENT_COMPOSITE_RESULTS.csv (Analysis #9: Information environment, Essay 2 mechanism - Spec A/B/C)
 
 Enriched Datasets:
   Data/processed/FINAL_DISSERTATION_DATASET_WITH_GOVERNANCE.csv (Phase 1)
@@ -467,10 +471,21 @@ Heterogeneity Analysis (Phase 1-2 + Analyses #3-7):
   [+] ANALYSIS #6 (Type Diversity): Type diversity NOT moderator (-0.315%, NS)
   [-] ANALYSIS #7 (Restatement): Data limitation - Compustat covers only 2.6% of breach firms
 
+Essay 2 Mechanism Analysis (Scripts 105-106):
+  [+] ANALYSIS #8 (Complexity Index): Complexity does NOT amplify FCC volatility effect
+      - FCC × Complexity interaction: -0.0784pp (p=0.9700, NS)
+      - Finds: FCC impact independent of unified severity/CVE/type complexity
+  [+] ANALYSIS #9 (Information Environment Composite):
+      - Spec A (Media Attention): +0.5585pp (p=0.80, NS)
+      - Spec B (Reputation Weakness): -4.5897pp (p=0.03)*
+      - Spec C (Composite, KEY): -2.6142pp (p=0.27, NS)
+      - Finding: Information environment does not significantly amplify FCC volatility effect
+
 Central Finding: FCC penalty operates through EXPECTATION MISMATCH
   - Markets expect simple breaches to resolve quickly → FCC deadline violates expectations
   - Markets expect complex breaches will take time → FCC deadline adds no penalty
   - Media coverage signals information already available → FCC adds no marginal value
+  - Firm size is the dominant moderator: smallest firms most constrained by FCC deadline
 
 {'=' * 80}
 NEXT STEPS

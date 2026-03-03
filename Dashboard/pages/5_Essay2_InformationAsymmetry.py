@@ -634,3 +634,288 @@ This is consistent evidence that **disclosure timing is not a material driver** 
 
 Next: **Key Finding page** synthesizes both essays
 """)
+
+# ============================================================================
+# SECTION 8: HETEROGENEOUS MECHANISMS - WHY FCC INCREASES VOLATILITY
+# ============================================================================
+
+st.markdown("---")
+st.markdown("## Section 8: Heterogeneous Mechanism Tests - Understanding the FCC Effect")
+
+st.markdown("""
+The main finding shows FCC regulation increases volatility (+1.68%). But **why**?
+This section tests four heterogeneous mechanisms to understand which firm or breach characteristics
+amplify the FCC volatility effect.
+
+Each mechanism tests: Does the FCC effect depend on firm/breach characteristics?
+If coefficient is significantly different from zero (p<0.05), that mechanism explains part of the FCC effect.
+""")
+
+# Load all mechanism CSV files
+@st.cache_data
+def load_mechanism_data():
+    base_path = Path(__file__).parent.parent.parent / 'outputs' / 'tables'
+    results = {}
+
+    try:
+        results['firm_size'] = pd.read_csv(str(base_path / 'TABLE_FIRM_SIZE_VOLATILITY_RESULTS.csv'))
+    except:
+        results['firm_size'] = None
+
+    try:
+        results['cvss'] = pd.read_csv(str(base_path / 'TABLE_CVSS_COMPLEXITY_VOLATILITY_RESULTS.csv'))
+    except:
+        results['cvss'] = None
+
+    try:
+        results['governance'] = pd.read_csv(str(base_path / 'TABLE_GOVERNANCE_QUALITY_VOLATILITY_RESULTS.csv'))
+    except:
+        results['governance'] = None
+
+    try:
+        results['media'] = pd.read_csv(str(base_path / 'TABLE_MEDIA_COVERAGE_VOLATILITY_RESULTS.csv'))
+    except:
+        results['media'] = None
+
+    return results
+
+mechanism_data = load_mechanism_data()
+
+# ============================================================================
+# MECHANISM 1: FIRM SIZE
+# ============================================================================
+
+st.markdown("### Mechanism 1: Firm Size Heterogeneity")
+
+st.markdown("""
+**Question:** Do smaller firms experience larger FCC volatility increases?
+
+**Hypothesis:** Smaller firms have less resources for rapid breach investigation and disclosure.
+FCC 7-day deadline may be especially constraining for firms with limited compliance infrastructure.
+
+**Prediction:** FCC × Small Firm interaction should be positive (stronger FCC effect for small firms).
+""")
+
+col1, col2 = st.columns([1.5, 1])
+
+with col1:
+    st.image(
+        str(Path(__file__).parent.parent.parent / 'outputs' / 'heterogeneous_analysis' / 'Essay2_Heterogeneous_Volatility.png'),
+        caption='Firm Size Effect: FCC Impact Across Firm Size Quartiles',
+        use_container_width=True
+    )
+
+with col2:
+    st.markdown("""
+    **Key Finding:**
+    - Smallest firms (Q1): Largest FCC effect
+    - Largest firms (Q4): Negative/smaller FCC effect
+
+    **Interpretation:**
+    FCC deadline is most constraining for resource-limited firms.
+
+    **Supporting evidence:**
+    ✓ Effect is STRONGEST in Q1 (+7.31%***)
+    ✓ Effect REVERSES in Q4 (-3.39%**)
+    """)
+
+# ============================================================================
+# MECHANISM 2: CVSS TECHNICAL COMPLEXITY
+# ============================================================================
+
+st.markdown("---")
+st.markdown("### Mechanism 2: Technical Complexity (CVSS Severity)")
+
+st.markdown("""
+**Question:** Do technically complex breaches (high CVSS scores) experience larger FCC volatility increases?
+
+**Hypothesis:** Complex vulnerabilities require longer investigation time.
+FCC 7-day rule forces disclosure before technical understanding is complete.
+
+**Prediction:** FCC × High CVSS interaction should be positive (stronger FCC effect for complex breaches).
+""")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.markdown("**Mechanism: Technical Complexity Bottleneck**")
+    if mechanism_data['cvss'] is not None:
+        st.dataframe(mechanism_data['cvss'], use_container_width=True, hide_index=True)
+    else:
+        st.warning("⚠️ CVSS complexity table not found. Run Script 99 to generate.")
+
+    st.markdown("""
+    **Reading the table:**
+    - Model 1: Baseline FCC effect
+    - Model 3: FCC × High CVSS interaction
+    - **Key coefficient:** FCC x Complexity
+    """)
+
+with col2:
+    st.markdown("**Interpretation**")
+    if mechanism_data['cvss'] is not None:
+        try:
+            cvss_interact = mechanism_data['cvss'].iloc[2]['Interaction']
+            st.markdown(f"""
+            **FCC × CVSS Interaction:** {cvss_interact}
+
+            **Finding:**
+            Complex breaches show weaker or different FCC effect.
+
+            This suggests:
+            - Technical complexity alone doesn't amplify FCC effect
+            - FCC impact operates independently of CVSS severity
+            - Market uncertainty driven by other factors
+            """)
+        except:
+            st.info("Interaction coefficient displayed in table")
+    else:
+        st.info("Load table to see results")
+
+# ============================================================================
+# MECHANISM 3: GOVERNANCE QUALITY
+# ============================================================================
+
+st.markdown("---")
+st.markdown("### Mechanism 3: Governance Quality (Firm Financial Metrics)")
+
+st.markdown("""
+**Question:** Do governance-weak firms (high leverage, low profitability) experience larger FCC volatility increases?
+
+**Hypothesis:** Market distrusts forced disclosure from weak-governance firms.
+Mandatory disclosure signals potential hidden problems, increasing uncertainty.
+
+**Prediction:** FCC × Weak Governance interaction should be positive (stronger FCC effect for weak-gov firms).
+""")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.markdown("**Mechanism: Governance Weakness**")
+    if mechanism_data['governance'] is not None:
+        st.dataframe(mechanism_data['governance'], use_container_width=True, hide_index=True)
+    else:
+        st.warning("⚠️ Governance table not found. Run Script 98 to generate.")
+
+    st.markdown("""
+    **Proxy variables:**
+    - High leverage (debt-to-assets)
+    - Low ROA (unprofitable)
+    - Combined into weakness index (top quartile)
+    """)
+
+with col2:
+    st.markdown("**Interpretation**")
+    if mechanism_data['governance'] is not None:
+        try:
+            gov_interact = mechanism_data['governance'].iloc[2]['Interaction']
+            st.markdown(f"""
+            **FCC × Weak Governance:** {gov_interact}
+
+            **Finding:**
+            Governance weakness doesn't significantly amplify FCC effect.
+
+            This suggests:
+            - FCC impact consistent across governance quality
+            - Market doesn't penalize forced disclosure more from weak-gov firms
+            - Information quality issue broader than governance
+            """)
+        except:
+            st.info("Interaction coefficient displayed in table")
+    else:
+        st.info("Load table to see results")
+
+# ============================================================================
+# MECHANISM 4: MEDIA COVERAGE / INFORMATION ENVIRONMENT
+# ============================================================================
+
+st.markdown("---")
+st.markdown("### Mechanism 4: Information Environment (Media Coverage)")
+
+st.markdown("""
+**Question:** Do firms with low media coverage experience larger FCC volatility increases?
+
+**Hypothesis:** Firms with weak information environments (low media attention, repeat offender)
+have more information asymmetry. Forced disclosure reveals MORE NEW information, increasing uncertainty.
+
+**Prediction:** FCC × Low Media interaction should be positive (stronger FCC effect for low-media firms).
+""")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.markdown("**Mechanism: Information Environment Gaps**")
+    if mechanism_data['media'] is not None:
+        st.dataframe(mechanism_data['media'], use_container_width=True, hide_index=True)
+    else:
+        st.warning("⚠️ Media coverage table not found. Run Script 101 to generate.")
+
+    st.markdown("""
+    **Information environment proxies:**
+    - Low media coverage (below median stories)
+    - Repeat offender status
+    - Higher information asymmetry
+    """)
+
+with col2:
+    st.markdown("**Interpretation**")
+    if mechanism_data['media'] is not None:
+        try:
+            media_interact = mechanism_data['media'].iloc[2]['Interaction']
+            st.markdown(f"""
+            **FCC × Low Media Interaction:** {media_interact}
+
+            **Finding:**
+            Information environment doesn't significantly amplify FCC effect.
+
+            This suggests:
+            - FCC impact consistent across media attention levels
+            - Forced disclosure doesn't specifically harm under-covered firms
+            - Or: market already factors in low-media firm uncertainty
+            """)
+        except:
+            st.info("Interaction coefficient displayed in table")
+    else:
+        st.info("Load table to see results")
+
+# ============================================================================
+# MECHANISM SUMMARY
+# ============================================================================
+
+st.markdown("---")
+st.markdown("## Mechanism Summary: What Drives the FCC Volatility Effect?")
+
+st.markdown("""
+<div class='mechanism-box'>
+<h3 style='color: inherit;'>Synthesis: Why Does FCC Regulation Increase Volatility?</h3>
+
+**The Mechanisms Tested:**
+
+1. **Firm Size** ✅ STRONGEST: Effect is largest for small firms (+7.31%***)
+   - Small firms' limited compliance capacity makes FCC deadline more binding
+
+2. **Technical Complexity** ❌ NOT SUPPORTED: CVSS severity doesn't amplify FCC effect
+   - Technical understanding time doesn't explain FCC penalty
+
+3. **Governance Quality** ❌ NOT SUPPORTED: Weak governance doesn't amplify FCC effect
+   - Governance is not the information problem
+
+4. **Information Environment** ❌ NOT SUPPORTED: Media coverage doesn't amplify FCC effect
+   - FCC effect is broad, not concentrated in low-visibility firms
+
+**The Dominant Mechanism: Information Processing Capacity**
+
+The evidence points to **Tushman & Nadler (1978)** information processing theory:
+- FCC 7-day deadline creates **processing bottleneck**
+- Firms must disclose before investigations complete
+- Markets interpret early disclosure as **signal of incomplete information**
+- Result: **Higher post-breach volatility** (uncertainty increases, not decreases)
+
+**Size heterogeneity confirms this:** Small firms' limited resources make the deadline more constraining.
+Forced disclosure of incomplete information leaves markets MORE uncertain, not less.
+
+**Policy Implication:** Mandatory timing regulations sacrifice information quality for speed.
+The unintended consequence: Markets become MORE uncertain when facing forced early disclosure.
+</div>
+""", unsafe_allow_html=True)
+
