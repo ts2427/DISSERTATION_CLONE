@@ -127,7 +127,7 @@ with col1:
     <div style='background-color: #e6f2ff; color: #333; padding: 1.5rem; border-radius: 8px; border-left: 5px solid #1f77b4; height: 100%; color: #333;'>
     <h3 style='color: #1f77b4;'>📈 Essay 1: Market Reactions</h3>
     <p><b>Tests Information Asymmetry & Signaling:</b></p>
-    <p>✅ H1: Timing effect = +0.57% (timing is irrelevant to market reactions)</p>
+    <p>✅ H1: Timing effect = +0.649% (timing is irrelevant to market reactions)</p>
     <p>✅ H2: FCC effect = -2.20%** (SIGNIFICANT)</p>
     <p>✅ H3: Prior breaches effect = -0.22%*** per breach (SIGNIFICANT)</p>
     <p>✅ H4: Severity effect = -1.67%* (SIGNIFICANT)</p>
@@ -178,7 +178,7 @@ factors_data = {
         'FCC Regulatory Context (H2)'
     ],
     'Coefficient': [
-        '+0.57% (robustly null)',
+        '+0.649% (robustly null)',
         '-0.22%*** per breach (STRONGEST)',
         '-1.67%*',
         '-2.20%**'
@@ -214,7 +214,7 @@ st.markdown("""
 
 **H1: Timing Effect on Cumulative Abnormal Returns (CAR)**
 - Does immediate disclosure reduce negative market reaction?
-- **Result**: Timing coefficient = +0.57%, p = 0.539 (not significant)
+- **Result**: Timing coefficient = +0.649%, p = 0.443 (not significant)
 - **Contribution**: Timing is irrelevant. Markets care about firm characteristics (regulated status, health data, repeat breaches), not disclosure speed.
 - **Policy Implication**: Stock market discipline does not operate through disclosure timing—explaining why voluntary rapid disclosure remains rare.
 

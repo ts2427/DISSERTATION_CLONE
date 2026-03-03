@@ -148,7 +148,7 @@ st.markdown("""
 Contribution: Markets care about firm characteristics (regulated status, health data, repeat breaches), not disclosure speed. This explains why voluntary rapid disclosure remains rare despite regulatory pressure—the market doesn't reward it.
 
 **Main Specification (Firm-Clustered SEs):**
-- Immediate disclosure coefficient = +0.57% (p = 0.539)
+- Immediate disclosure coefficient = +0.649% (p = 0.443)
 - Standard error = 0.92%
 - **Interpretation**: Effect is economically negligible and statistically insignificant across all 25+ specifications tested
 
