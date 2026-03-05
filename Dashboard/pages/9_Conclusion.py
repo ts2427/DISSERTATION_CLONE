@@ -97,13 +97,13 @@ st.markdown("""
 <b>The Central Finding Across Three Essays:</b>
 
 <b>Essay 1 (Market Reactions):</b> <b style='color: #d62728;'>Timing is irrelevant to market reactions</b>
-- Result: Timing coefficient = +0.649% (p = 0.443); markets care about firm characteristics, not disclosure speed
+- Result: Timing coefficient = +0.57% (p = 0.539); markets care about firm characteristics, not disclosure speed
 - Robustness: Tested across 25+ specifications; timing never significant (p > 0.10 in ANY spec)
 - All other timing thresholds (3, 5, 7, 14, 30, 60 days) also NOT significant
 
 <b>What DOES predict market reactions (H2-H4):</b>
 - <b>H3 (Reputation):</b> Prior breach history → -0.22%*** per breach (STRONGEST effect, firm-clustered SEs)
-- <b>H4 (Severity):</b> Health data → -1.67%* (p = 0.066, firm-clustered SEs)
+- <b>H4 (Severity):</b> Health data → -2.51%*** (p = 0.004, firm-clustered SEs)
 - <b>H2 (Regulation):</b> FCC status → -2.20%** (p = 0.010, post-2007 test validates regulatory effect)
 
 <b>Essay 2 (Information Asymmetry):</b> <b style='color: #d62728;'>Forced disclosure INCREASES volatility, not decreases it</b>
@@ -155,10 +155,10 @@ st.markdown("""
 - Dependent variable: Cumulative Abnormal Returns (CAR) at 30-day window
 - Method: OLS with firm controls, firm-clustered standard errors (main specification)
 - Main findings:
-  - H1 (Timing coefficient): +0.57% (p=0.443) - timing is irrelevant; markets reward firm characteristics, not speed
+  - H1 (Timing coefficient): +0.57% (p=0.539) - timing is irrelevant; markets reward firm characteristics, not speed
   - H2 (FCC coefficient): -2.20%** (p=0.010) - regulatory effect validated via post-2007 test, robust to CPNI and HHI
   - H3 (Prior breaches): -0.22%*** per breach (STRONGEST effect, p<0.001)
-  - H4 (Health breach): -1.67%* (p=0.066)
+  - H4 (Health breach): -2.51%*** (p=0.004)
   - ROA coefficient: +20.53%** (p=0.006) - profitability protective
 - Robustness: Held across 25+ specifications (7 timing thresholds, 4 windows, 8 subsamples, 6 SE methods)
 

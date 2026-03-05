@@ -99,7 +99,7 @@ but DOES change how information flows through markets and organizations.
 
 <b>The Cascading Effects Across Three Essays:</b>
 1. <b style='color: #1f77b4;'>Essay 1: Market Reaction (Valuation)</b> - CAR unchanged by timing (-0.74% regardless)
-2. <b style='color: #9467bd;'>Essay 2: Market Uncertainty (Volatility)</b> - FCC forced disclosure INCREASES volatility (+4.96%***)
+2. <b style='color: #9467bd;'>Essay 2: Market Uncertainty (Volatility)</b> - FCC forced disclosure INCREASES volatility (+1.83%**)
 3. <b style='color: #2ca02c;'>Essay 3: Organizational Response (Governance)</b> - 46.4% trigger executive turnover within 30 days
 
 <b>The Paradox Resolved:</b> Timing affects <i>process</i> (information diffusion, uncertainty, governance response)
@@ -123,10 +123,10 @@ st.markdown("""
 <b>Research Question:</b> Do disclosure timing and FCC regulation affect abnormal market returns?
 
 <b>Key Findings:</b>
-- <b>H1 (Timing):</b> +0.57% (p=0.443) — **Timing is irrelevant** (robust across 25+ specifications). Contribution: Markets reward firm characteristics (regulated status, breach type, history), not disclosure speed
+- <b>H1 (Timing):</b> +0.57% (p=0.539) — **Timing is irrelevant** (robust across 25+ specifications). Contribution: Markets reward firm characteristics (regulated status, breach type, history), not disclosure speed
 - <b>H2 (FCC):</b> -2.20%** (p=0.010) — Regulatory effect, not industry trait (validated via post-2007 test)
 - <b>H3 (Prior Breaches):</b> -0.22%*** per breach — Strongest effect; market prices in history
-- <b>H4 (Severity):</b> -1.67%* for health data — Information complexity drives reactions
+- <b>H4 (Severity):</b> -2.51%*** for health data — Information complexity drives reactions
 
 <b>Sample:</b> 898 breaches with CRSP data (887.5% of full sample matched)
 <b>Main Specification:</b> Firm-clustered standard errors (accounts for repeated breaches per firm)
@@ -150,7 +150,7 @@ st.markdown("""
 
 <b>Key Results:</b>
 - <b>Sample:</b> 916 breaches with volatility data (87% of full sample)
-- <b>FCC Effect:</b> +4.96%*** increase in return volatility (p<0.001)
+- <b>FCC Effect:</b> +1.83%** increase in return volatility (p=0.047)
 - <b>Mechanism:</b> Information processing bottleneck — forced early disclosure = incomplete information
 - <b>Interpretation:</b> Market uncertainty INCREASES when disclosure forced, not resolved
 
