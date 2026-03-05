@@ -95,7 +95,7 @@ The same FCC regulation creates **6x larger penalties for simple breaches** than
 | **Low (CVSS ≤5.0)** | **-6.46%***  | Simple breaches should resolve quickly → FCC deadline violates expectations → strong penalty |
 | **High (CVSS >5.0)** | **-0.19%**  | Complex breaches will take time anyway → FCC deadline met low expectations → minimal penalty |
 
-**FCC × Complexity Interaction: +6.27%** (p=0.007)**
+**FCC × Complexity Interaction: +6.27%* (p=0.007)**
 
 ### Why Markets Use Expectation-Based Pricing
 
@@ -184,7 +184,7 @@ st.markdown("""
 
 **Finding:** ✅ **YES - MEDIA SHIELDS FROM FCC PENALTY**
 
-**FCC × Media Interaction: +7.08%** (p=0.006)**
+**FCC × Media Interaction: +7.08%* (p=0.006)**
 
 ### High-Media Breaches Escape FCC Penalty
 
@@ -297,7 +297,7 @@ Type diversity and technical complexity are **completely independent**:
 **Complexity is driven by technical factors, not data-category diversity.**
 
 What matters:
-- ✅ CVSS technical severity (Phase 2) — +6.27%** interaction
+- ✅ CVSS technical severity (Phase 2) — +6.27%* interaction
 - ❌ Number of data types — No effect
 
 This suggests markets assess breach severity based on technical vulnerability features,
@@ -374,9 +374,9 @@ summary_data = {
     ],
     'Interaction': [
         '+0.55%',
-        '+6.27%**',
+        '+6.27%*',
         '-8.34%~',
-        '+7.08%**',
+        '+7.08%*',
         'Decaying',
         '-0.315%',
         'N/A'
