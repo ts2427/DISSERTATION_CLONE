@@ -1,2 +1,2 @@
-# Removed LFS tracking for CSV and JSON files to resolve GitHub LFS bandwidth limits
-# These files now tracked as regular Git files to allow Streamlit Cloud deployment
+Data/JSON[[:space:]]Files/*.json filter=lfs diff=lfs merge=lfs -text
+*.csv filter=lfs diff=lfs merge=lfs -text
