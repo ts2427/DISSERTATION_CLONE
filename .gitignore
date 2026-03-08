@@ -19,6 +19,7 @@ Thumbs.db
 # See README.md for download instructions
 
 # Processed data (main enriched dataset)
+# Large CSVs are downloaded from Google Drive by run_all.py, not committed
 Data/processed/*.csv
 Data/processed/*.xlsx
 Data/processed/*.parquet

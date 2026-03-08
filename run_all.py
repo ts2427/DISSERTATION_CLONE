@@ -44,6 +44,78 @@ if sys.stdout.encoding.lower() != 'utf-8':
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
 
+# ============================================================================
+# GOOGLE DRIVE INTEGRATION
+# ============================================================================
+
+def download_from_google_drive(file_id, output_path, log_file=None):
+    """
+    Download file from Google Drive using gdown.
+    Returns True if successful or file already exists locally.
+    """
+    try:
+        output_path = Path(output_path)
+
+        # If file already exists, skip download
+        if output_path.exists():
+            if log_file:
+                log_file.write(f"[OK] File already exists locally: {output_path}\n")
+            return True
+
+        import gdown
+
+        msg = f"[*] Downloading from Google Drive to {output_path}...\n"
+        if log_file:
+            log_file.write(msg)
+        print(msg, end='')
+
+        # Download with progress
+        gdown.download(
+            f'https://drive.google.com/uc?id={file_id}',
+            str(output_path),
+            quiet=False,
+            use_cookies=False
+        )
+
+        if output_path.exists():
+            file_size = output_path.stat().st_size / (1024 * 1024)
+            msg = f"[OK] Downloaded successfully ({file_size:.1f} MB)\n"
+            if log_file:
+                log_file.write(msg)
+            print(msg)
+            return True
+        else:
+            msg = "[!] Download completed but file not found\n"
+            if log_file:
+                log_file.write(msg)
+            print(msg)
+            return False
+
+    except Exception as e:
+        msg = f"[!] Google Drive download failed: {str(e)}\n    Will use local file if available.\n"
+        if log_file:
+            log_file.write(msg)
+        print(msg)
+        return False
+
+def sync_outputs_note(log_file=None):
+    """
+    Log note that outputs are ready (local files can be manually uploaded to Google Drive if needed).
+    For Streamlit Cloud, files are read directly from Google Drive source.
+    """
+    msg = """
+[*] Analysis complete. Generated files are available locally:
+    - Data/processed/FINAL_DISSERTATION_DATASET_WITH_CVSS.csv
+    - Data/processed/FINAL_DISSERTATION_DATASET_WITH_GOVERNANCE.csv
+
+    These files are NOT committed to Git (in .gitignore).
+    Streamlit Cloud reads data from Google Drive, so no manual upload needed.
+    For local sharing, you can manually upload files to Google Drive if needed.
+"""
+    if log_file:
+        log_file.write(msg)
+    print(msg)
+
 def print_section(title):
     """Print formatted section header"""
     separator = "\n" + "=" * 80
@@ -297,7 +369,21 @@ Log file: {log_path}
             msg = "\n[FATAL] Cannot proceed without data file\n"
             print_to_both(msg, log_file)
             return False
-        
+
+        # Step 0.5: Attempt to sync enriched dataset from Google Drive (for Streamlit Cloud)
+        print_section("STEP 0.5: GOOGLE DRIVE SYNC")
+        msg = """  [*] Attempting to sync enriched dataset from Google Drive...
+  [*] This enables Streamlit Cloud deployment without Git LFS
+  [*] If local file exists, it takes priority (no download needed)
+"""
+        print_to_both(msg, log_file)
+
+        # Google Drive file ID for enriched dataset
+        enriched_csv_file_id = "1v0nKdwjihWGdbJLwTttFL0UkE2Jo2OIc"
+        enriched_csv_path = Path('Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv')
+
+        download_from_google_drive(enriched_csv_file_id, enriched_csv_path, log_file)
+
         # Run all scripts
         for section in pipeline:
             category = section['category']
@@ -520,6 +606,9 @@ Complete log saved to: {log_path}
 
             # Verify critical outputs exist
             outputs_verified = verify_outputs(log_file)
+
+            # Note about generated outputs
+            sync_outputs_note(log_file)
 
             # Launch Streamlit dashboard
             dashboard_msg = f"""
