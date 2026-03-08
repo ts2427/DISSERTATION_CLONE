@@ -1,2 +1,7 @@
-*.csv filter=lfs diff=lfs merge=lfs -text
+# Only track the largest dissertation data files in LFS
+Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv filter=lfs diff=lfs merge=lfs -text
+Data/processed/FINAL_DISSERTATION_DATASET_WITH_CVSS.csv filter=lfs diff=lfs merge=lfs -text
+Data/processed/FINAL_DISSERTATION_DATASET_WITH_GOVERNANCE.csv filter=lfs diff=lfs merge=lfs -text
+
+# NVD vulnerability data - large JSON files
 Data/JSON[[:space:]]Files/*.json filter=lfs diff=lfs merge=lfs -text
