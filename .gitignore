@@ -18,11 +18,13 @@ Thumbs.db
 # Per committee feedback: Data files should be downloaded from shared cloud folder
 # See README.md for download instructions
 
-# Processed data (main enriched dataset)
-# Large CSVs are downloaded from Google Drive by run_all.py, not committed
-Data/processed/*.csv
+# Processed data (main enriched dataset is committed)
 Data/processed/*.xlsx
 Data/processed/*.parquet
+
+# JSON files (large NVD vulnerability data, not needed for dashboard)
+Data/JSON\ Files/*.json
+!Data/JSON\ Files/.gitkeep
 
 # Raw data
 Data/raw/*.csv
