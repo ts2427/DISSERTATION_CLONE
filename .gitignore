@@ -29,6 +29,10 @@ Data/raw/*.xlsx
 Data/raw/*.dta
 Data/raw/*.sas7bdat
 
+# JSON data files (NVD vulnerability data - too large for GitHub)
+Data/JSON\ Files/*.json
+!Data/JSON\ Files/.gitkeep
+
 # Temporary data files
 Data/temp/
 Data/cache/
