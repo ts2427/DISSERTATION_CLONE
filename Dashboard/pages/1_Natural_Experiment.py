@@ -108,7 +108,7 @@ with col1:
     <ul>
     <li><b>N = 184 breaches</b> (20.5% of sample)</li>
     <li>Companies: Telecom, cable, VoIP, satellite</li>
-    <li><b>Requirement:</b> Disclose within 7 days (FCC Rule 37.3)</li>
+    <li><b>Requirement:</b> Disclose within 7 days (FCC 7-Day Rule)</li>
     <li><b>Enforcement:</b> FCC can levy fines for non-compliance</li>
     <li><b>Post-2007 Effect:</b> Binding constraint on disclosure timing</li>
     </ul>

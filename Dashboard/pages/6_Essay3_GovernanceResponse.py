@@ -269,7 +269,7 @@ if df is not None:
         st.markdown("""
         ### Test 1: Temporal Validation (Pre-2007 vs. Post-2007)
 
-        **The FCC Rule 37.3 was enacted September 28, 2007.**
+        **The FCC 7-Day Rule was enacted September 28, 2007.**
 
         If the FCC effect is causal, it should:
         - Be ABSENT before 2007 (no regulation yet)

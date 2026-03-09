@@ -470,7 +470,7 @@ with col1:
     st.markdown("""
     ### Strategy 1: Post-2007 Temporal Test
 
-    **The FCC Rule 37.3 was enacted September 28, 2007.**
+    **The FCC 7-Day Rule was enacted September 28, 2007.**
 
     If the FCC volatility effect is causal, it should:
     - Be ABSENT before 2007 (no regulation yet)

@@ -406,7 +406,7 @@ st.markdown("""
 ### Parallel Trends: Evidence of Causal Identification
 
 For a natural experiment design to be credible, FCC-regulated and non-FCC firms must show **parallel trends**
-before the 2007 FCC Rule 37.3 implementation. This figure provides visual proof of that assumption.
+before the 2007 FCC 7-Day Rule implementation. This figure provides visual proof of that assumption.
 """)
 
 # Load and display parallel trends figure
@@ -419,12 +419,12 @@ try:
         st.image(str(figure_path), caption="""
         **Figure 1: Parallel Trends in Cumulative Abnormal Returns (CAR)**
 
-        Pre-2007 (before FCC Rule 37.3): FCC and non-FCC firms show similar CAR patterns (no significant difference, p=0.88)
+        Pre-2007 (before FCC 7-Day Rule): FCC and non-FCC firms show similar CAR patterns (no significant difference, p=0.88)
 
         Post-2007 (after regulation): FCC firms experience worse market reactions (-2.26%, p=0.0125)
 
         This temporal pattern is consistent with causal interpretation: the treatment effect emerges exactly when
-        the regulation takes effect, not before. This is the core evidence that FCC Rule 37.3 causally affects market outcomes.
+        the regulation takes effect, not before. This is the core evidence that FCC 7-Day Rule causally affects market outcomes.
         """, use_column_width=True)
 
         st.markdown("""
