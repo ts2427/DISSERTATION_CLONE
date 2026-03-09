@@ -1,3 +1,7 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1e91c7fd3d471d2f1c4909fe2eb58923c9984e4f64cd153f4cc03085af9002c8
-size 505
+Specification,Model,FCC Coefficient,Dimension Coefficient,Interaction,R-squared
+Spec A: Media Attention,Baseline,1.8547,-5.4166*,N/A,0.0103
+Spec A: Media Attention,FCC x Dimension,2.6774**,-5.4166*,0.5585,0.0337
+Spec B: Reputation Weakness,Baseline,1.8547,-0.0360,N/A,0.0103
+Spec B: Reputation Weakness,FCC x Dimension,4.8548***,-0.0360,-4.5897*,0.0156
+Spec C: Composite Info Env,Baseline,1.8547,-2.6925*,N/A,0.0103
+Spec C: Composite Info Env,FCC x Dimension (KEY),4.4344**,-2.6925*,-2.6142,0.0218

@@ -1,3 +1,4 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:85a679dbd9e1a68fe852cad49c30cfa377d3066a3cbb8b42aad220417de1e027
-size 218
+Model,FCC Coefficient,Governance Coefficient,Interaction,R-squared
+Model 1: FCC Only,-2.6307***,N/A,N/A,0.0360
+Model 2: FCC + Gov,-3.2376***,-2.9696*,N/A,0.0461
+Model 3: FCC x Gov,-3.2874***,-3.0047*,0.5480,0.0462

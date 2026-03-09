@@ -1,3 +1,4 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3fad98e4e50fef3e905922d6c5a0a720507e507b57aa9a8728c932b1a2cad3b8
-size 217
+Model,FCC Coefficient,Media Coefficient,Interaction,R-squared
+Model 1: FCC Only,-2.7550***,N/A,N/A,0.0289
+Model 2: FCC + Media,-2.6081***,-1.2551,N/A,0.0300
+Model 3: FCC x Media,-3.3286***,-5.1556*,7.0823*,0.0389

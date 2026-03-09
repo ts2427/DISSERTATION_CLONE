@@ -1,3 +1,4 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ca8a7f54159e0ef685671c9dc207cedb245cdcc2ec447b91dcd5b3102f8b97cb
-size 226
+Model,FCC Coefficient,Ransomware Coefficient,Interaction,R-squared
+Model 1: FCC Only,-2.7550***,N/A,N/A,0.0289
+Model 2: FCC + Ransomware,-2.8578***,4.0109,N/A,0.0346
+Model 3: FCC x Ransomware,5.2276,5.6676*,-8.3396,0.0385

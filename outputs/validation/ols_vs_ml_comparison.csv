@@ -1,3 +1,7 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:622c7fa410602008aa89ca8157e2ff4bf4ee08994d4f676101bcbd1ca90cf5bf
-size 350
+feature,coefficient,pvalue,significant,importance_pct
+firm_size_log,0.1853,0.401,False,26.635950127319592
+leverage,0.9682,0.354,False,11.03573457707417
+roa,22.2049,0.006,True,9.06550357330632
+prior_breaches_1yr,-0.2305,0.001,True,1.78083662646873
+immediate_disclosure,0.5676,0.539,False,0.6859535689192684
+health_breach,-2.5082,0.066,True,0.0

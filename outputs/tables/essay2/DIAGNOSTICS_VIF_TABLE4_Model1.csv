@@ -1,3 +1,6 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:76eccaf1719674d68b34c2a8a4bf8c01672d77b6d3249c056744541cd145b717
-size 163
+Variable,VIF
+const,92.00192820855483
+prior_breaches_total,1.018699354714321
+firm_size_log,1.0375320163872
+leverage,1.0060333218409518
+roa,1.0218322361389647

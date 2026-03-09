@@ -1,3 +1,4 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e5c626d69a4dfecdf50e1393ba47f5ee81772a93e162bf5a60d49b05c22bf426
-size 180
+Window,N,Baseline_Rate,FCC_Log_Odds,Approx_PP_Effect,P_Value
+30d,1036,42.8%,0.1483,3.7079pp,0.3912
+90d,1036,62.0%,0.0925,2.3133pp,0.6096
+180d,1036,62.5%,0.0475,1.1881pp,0.7932

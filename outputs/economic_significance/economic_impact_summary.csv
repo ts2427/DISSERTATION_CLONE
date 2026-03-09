@@ -1,3 +1,5 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:407c58a8a5c2d2b0760081d13d137634652d629e7a0e0aea75b3db838bdd1844
-size 311
+Impact Category,Small Firm (Q1),Median Firm,Large Firm (Q3),S&P 500 Median (~$50B)
+Market Valuation (FCC),$-0.2M,$-0.9M,$-4.1M,$-10.4M
+Cost of Capital (Volatility),$0.0M/yr,$0.0M/yr,$0.0M/yr,$0.0M/yr
+Executive Turnover (Governance),$1.0M,$1.0M,$1.0M,$1.0M
+TOTAL IMPACT PER BREACH,$0.8M,$0.1M,$-3.1M,$-9.3M

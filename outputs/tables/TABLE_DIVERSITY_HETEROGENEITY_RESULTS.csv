@@ -1,3 +1,4 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:38227d85b3a24b187e68ef2a9610b03868ddd810efe1faf636664b8004e1f398
-size 227
+Model,FCC Coefficient,Diversity Coefficient,Interaction,R-squared
+Model 1: FCC Only,-2.7550***,N/A,N/A,0.0289
+Model 2: FCC + Diversity,-2.7361***,-1.0973,N/A,0.0292
+Model 3: FCC x Diversity,-2.6447**,-0.9945,-0.3152,0.0292

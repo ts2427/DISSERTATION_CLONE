@@ -1,3 +1,5 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:abd3c9ed330c327371159817f27e6f187abbc53de44745bee0a527a2213715e0
-size 305
+Event Window,N,R²,Adj. R²,Immediate Disclosure,Prior Breaches,Health Breach
+5-Day CAR,898,0.0302,0.0214,-0.4301,0.0601***,0.1998
+30-Day CAR,898,0.0280,0.0193,0.8974,-0.0814**,-2.6450***
+5-Day BHAR,898,0.0293,0.0206,-0.4100,0.0578***,0.2386
+30-Day BHAR,898,0.0296,0.0209,0.8042,-0.0782**,-2.5852***
