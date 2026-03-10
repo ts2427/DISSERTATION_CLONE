@@ -304,14 +304,14 @@ This temporal decay is not a statistical artifact. It is the empirical signature
 
 **Firm-Size Heterogeneity in H6:**
 
-The governance response is heterogeneous by firm size:
+The governance response is heterogeneous by firm size. These coefficients represent FCC × Timing interaction effects in a heterogeneous regression model — showing how the combined impact of regulatory status and mandatory timing varies across firm-size quartiles:
 
-- Q1 (Smallest, N=225): Combined effect plus 19.227pp (p = 0.0336, significant)
-- Q2 (N=231): Combined effect negative 20.080pp (p = 0.0200, significant)
-- Q3 (N=215): Combined effect negative 29.964pp (p = 0.0081, highly significant)
-- Q4 (Largest, N=225): Combined effect plus 11.723pp (p = 0.0792, marginally significant)
+- Q1 (Smallest, N=225): FCC × Timing interaction: plus 19.227pp (p = 0.0336, significant)
+- Q2 (N=231): FCC × Timing interaction: negative 20.080pp (p = 0.0200, significant)
+- Q3 (N=215): FCC × Timing interaction: negative 29.964pp (p = 0.0081, highly significant)
+- Q4 (Largest, N=225): FCC × Timing interaction: plus 11.723pp (p = 0.0792, marginally significant)
 
-**Interpretation:** Small and large firms respond with turnover (governance intervention). Mid-sized firms actually reduce turnover under FCC regulation (governance stability or entrenchment, depending on interpretation). This suggests that regulatory pressure creates different governance responses depending on firm size — a finding that challenges the assumption that governance response is uniform.
+**Interpretation:** The non-monotonic pattern reveals a striking insight: smallest and largest firms show positive turnover effects when subject to both FCC regulation and mandatory timing, while mid-sized firms actually reduce turnover — suggesting either governance entrenchment or stabilization. This heterogeneous pattern indicates that firm size is a critical moderator of governance response to mandatory disclosure regulation. One-size-fits-all regulatory timelines do not produce uniform governance effects across firm types. The negative effects for mid-sized firms — the largest in magnitude (negative 29.96pp for Q3) — suggest regulatory pressure may suppress rather than accelerate governance disruption in the firms positioned between small and large.
 
 **Mediation Analysis (Volatility's Role in Timing→Turnover):**
 
