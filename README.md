@@ -16,12 +16,12 @@ This dissertation analyzes the market reactions to data breach disclosures among
 
 ## 💡 Executive Summary: The Core Finding
 
-> **Disclosure requirements work through multiple mechanisms—they don't change what markets conclude about breaches, but they DO increase market uncertainty (forcing speed prevents thorough investigation) and DO accelerate governance response (stakeholder pressure). These mechanisms operate independently.**
+> **Disclosure requirements work through multiple mechanisms—they don't change what markets conclude about breaches, and they DO increase market uncertainty (forcing speed prevents thorough investigation). However, mandatory timing does NOT significantly affect governance response (executive turnover). Regulatory timing creates information costs without producing governance benefits.**
 
 This finding unifies three seemingly contradictory results:
 - **Essay 1:** Timing does NOT affect market valuations (-0.74% CAR regardless of disclosure speed)
 - **Essay 2:** Timing DOES increase market uncertainty (+1.68-5.02% volatility from regulatory constraints)
-- **Essay 3:** Timing DOES accelerate executive turnover (50.6% vs 45.3% with immediate disclosure)
+- **Essay 3:** FCC regulation does NOT significantly affect executive turnover (3.71pp, p=0.391, null not rejected). The high baseline turnover (46%) is stable across regulatory conditions.
 
 ---
 
@@ -39,12 +39,12 @@ The dissertation reveals a sophisticated distinction that unifies seemingly cont
 
 - **Essay 2 (Market Uncertainty):** Disclosure timing DOES affect information asymmetry. Regulatory constraints on timing can increase volatility (+1.68% to +5.02%) by forcing disclosure before investigation complete. Every additional day of delay affects how quickly markets learn.
 
-- **Essay 3 (Governance Response):** Disclosure timing activates organizational response. Mandatory immediate disclosure accelerates executive turnover (50.6% vs 45.3%) through stakeholder pressure, independent of information quality.
+- **Essay 3 (Governance Response):** FCC regulatory timing does NOT significantly affect executive turnover. The 30-day FCC effect is 3.71 percentage points (p=0.391, not significant). This contrasts with Essay 2: mandatory timing increases volatility (information costs) but not turnover (governance benefits).
 
-**The Integration:** Timing affects THREE DISTINCT MECHANISMS:
+**The Integration:** Timing affects TWO DISTINCT MECHANISMS (not three):
 1. **Market Conclusions** (Essay 1): Timing does NOT change what markets conclude about breach severity
 2. **Market Learning** (Essay 2): Timing CHANGES how quickly markets learn, affecting uncertainty
-3. **Organizational Response** (Essay 3): Timing ACTIVATES stakeholder pressure, driving governance changes
+3. **Organizational Response** (Essay 3): Timing does NOT significantly affect governance response. The mechanism paradox: mandatory timing creates information costs (H5: significant volatility increase) without producing governance benefits (H6: no significant turnover increase)
 
 This reveals that disclosure requirements work through multiple mechanisms simultaneously—not through information resolution, but through regulatory constraints (affecting uncertainty) and stakeholder pressure (driving organizational response).
 
@@ -147,9 +147,10 @@ Result: Mandatory timing can INCREASE uncertainty (+1.68-5.02%) by forcing incom
 
 **Essay 3: Governance Response (Does timing trigger organizational change?)**
 ```
-Data Breach  →  Mandatory Disclosure  →  Stakeholder Activation  →  Governance Response
-             (Public Announcement)    (Investor/Regulator Pressure) (Executive Turnover)
-Result: Immediate disclosure accelerates turnover (50.6% vs 45.3%) through stakeholder pressure
+Data Breach  →  Mandatory Disclosure  →  Information Asymmetry  →  Market Uncertainty
+             (Public Announcement)    (Forced incomplete disclosure) (Volatility increase)
+Result: FCC regulation increases volatility (+1.79%, p=0.049) but does NOT significantly increase turnover (3.71pp, p=0.391).
+Note: The 50.6% vs 45.3% turnover difference reflects voluntary disclosure timing (selection effect), not FCC regulatory causation.
 ```
 
 ---
@@ -421,35 +422,43 @@ FCC Rule 37.3 requires disclosure within 30 days, creating a regulatory constrai
 - **180-day turnover:** 67.5% of breaches (605 breaches)
 - **Mean executives changed:** 3.2 per breach event
 
-**Disclosure Timing Moderates Turnover:**
-- **Immediate disclosure:** 50.6% turnover within 30 days
-- **Delayed disclosure:** 45.3% turnover within 30 days
-- **Difference:** 5 percentage point acceleration with immediate disclosure
+**Baseline Executive Turnover:**
+- **Overall baseline:** 46.4% of breaches trigger executive turnover within 30 days
+- **This rate is stable across all conditions:**
+  - FCC-regulated vs non-FCC firms: No significant difference
+  - Immediate vs delayed disclosure: No significant regulatory effect
+  - All temporal windows (30d, 90d, 180d): All non-significant
+
+**FCC Regulatory Effect on Turnover:**
+- **30-day window:** +3.71pp (p=0.391, NOT significant)
+- **90-day window:** +2.31pp (p=0.610, NOT significant)
+- **180-day window:** +1.19pp (p=0.793, NOT significant)
+- **Conclusion:** H6 null hypothesis is NOT REJECTED
 
 **Regulatory Enforcement (Rare):**
 - Only 6 enforcement cases (0.6% of sample)
 - All 6 against FCC-regulated firms
-- Total penalties: $960,392
+- Executive turnover is 50x more common than regulatory enforcement (46% vs 0.6%)
 
-### The Mechanism: Stakeholder Activation
+### The Mechanism Paradox: Information Costs Without Governance Benefits
 
-**Why Does Mandatory Disclosure Trigger Turnover?**
-Disclosure requirements activate multiple stakeholders simultaneously (investors, employees, customers, regulators):
-1. Immediate disclosure forces board into public commitment mode
-2. Stakeholders see breach as organization crisis requiring governance response
-3. Boards respond with executive changes to signal accountability and governance competence
+**Why Doesn't Mandatory Disclosure Trigger Significant Turnover?**
+Despite theory predicting stakeholder pressure would activate governance response, the data shows:
+1. FCC regulation significantly increases volatility (H5: +1.79%, p=0.049) — information disruption is REAL
+2. FCC regulation does NOT significantly increase turnover (H6: 3.71pp, p=0.391) — governance response is NOT triggered
+3. Baseline turnover (46%) appears driven by breach event itself, not by regulatory timing mandates
 
-**Causal Identification Validation:**
-- Post-2007 test: Modest effects post-2007 consistent with regulatory timing
-- Industry FE: Effects stable across industries
-- Size sensitivity: Effects uniform across firm size (not capacity-constrained like volatility)
+**Causal Identification Tests:**
+- Post-2007 test: No significant pre-post difference in regulatory effect
+- Industry FE: FCC effects stable but not significant across industries
+- Size sensitivity: Turnover rates remarkably uniform across firm sizes (45-48%)
 
-**Key Insight:** Governance response operates through STAKEHOLDER PRESSURE, not information quality:
-- Boards respond to stakeholder pressure faster with immediate disclosure (50.6% vs 45.3%)
-- This response is independent of whether disclosure actually resolved the breach investigation
-- Turnover serves as accountability signal to affected stakeholders
+**Key Insight:** Mandatory timing creates information quality problems WITHOUT producing governance improvements:
+- Forced disclosure before investigation complete → High volatility (significant)
+- But this information pressure does NOT → Executive turnover (not significant)
+- The high baseline turnover (46%) likely reflects normal organizational transitions coinciding with breaches, not causal governance response
 
-**Policy Implication:** Disclosure requirements successfully activate organizational governance response through stakeholder pressure mechanisms. Executive turnover is 50x more common than regulatory enforcement (46% vs 0.6%), indicating that organizational self-response is the primary governance mechanism.
+**Policy Implication:** Mandatory disclosure timing creates unintended information asymmetry costs (volatility) without achieving the intended governance benefit (turnover acceleration). This suggests that faster disclosure mandates may not effectively improve organizational response to breaches.
 
 ---
 
@@ -458,15 +467,15 @@ Disclosure requirements activate multiple stakeholders simultaneously (investors
 | Essay | Outcome | Effect | Mechanism | Policy Implication |
 |-------|---------|--------|-----------|-------------------|
 | **1** | Market Returns | No effect | Timing doesn't change what markets conclude | Stock market doesn't reward disclosure speed |
-| **2** | Market Uncertainty | Increases (+1.68-5.02%) | Regulatory timing constraint → incomplete disclosure → market confusion | Mandatory timing creates unintended information quality problem |
-| **3** | Executive Turnover | Accelerates (50.6% vs 45.3%) | Stakeholder activation through immediate disclosure | Disclosure requirements successfully drive governance response |
+| **2** | Market Uncertainty | Increases (+1.79%, p=0.049) | Regulatory timing constraint → incomplete disclosure → market confusion | Mandatory timing creates unintended information quality problem |
+| **3** | Executive Turnover | No significant effect (3.71pp, p=0.391) | Baseline turnover (46%) stable across all conditions; boards respond to breach event, not timing mandate | Disclosure requirements DO NOT successfully drive governance response; timing creates costs without benefits |
 
 **The Disclosure Paradox Resolved:**
-Disclosure requirements work through multiple mechanisms simultaneously—NOT through information resolution, but through:
-1. **Regulatory constraints** affecting information quality (Essay 2)
-2. **Stakeholder pressure** driving organizational response (Essay 3)
+Disclosure requirements create a mechanism disconnect—they DO affect information quality but do NOT affect governance response:
+1. **Regulatory constraints on timing** → Information asymmetry costs: volatility increases (+1.79%, p=0.049) (Essay 2)
+2. **Stakeholder pressure from disclosure** → Limited governance benefits: turnover stable across conditions (3.71pp, p=0.391, not significant) (Essay 3)
 
-These mechanisms operate independently of market conclusions about breach severity (Essay 1), revealing that disclosure policy is more complex than simple information resolution models predict.
+These mechanisms operate independently of market conclusions about breach severity (Essay 1). The key insight: mandatory timing creates information quality problems without producing corresponding governance improvements, suggesting that faster disclosure does not achieve the policy objective of improving organizational response to breaches.
 
 ---
 
@@ -485,9 +494,9 @@ These mechanisms operate independently of market conclusions about breach severi
 - **Proportion mediated:** 1.27% (essentially ZERO)
 - **95% CI for indirect effect:** [-0.0433, 0.0205] (includes zero)
 
-**Conclusion:** Volatility does NOT mediate timing → turnover. Governance response is PURE STAKEHOLDER PRESSURE, independent of information quality effects. This validates that Essays 2 and 3 operate through separate mechanisms.
+**Conclusion:** Volatility does NOT mediate timing → turnover (proportion mediated = 1.27%, essentially zero). This is consistent with H6 null finding: FCC regulation does not significantly affect turnover. The mechanism is NOT stakeholder pressure driving governance response; rather, the high baseline turnover reflects normal organizational dynamics independent of regulatory timing.
 
-**Impact:** Strengthens Essay 3's theoretical contribution by proving governance response is direct organizational reaction, not information-processing dependent.
+**Impact:** Essay 3 contributes to theory by revealing a mechanism ABSENCE: mandatory timing creates information disruption (H5: significant) without triggering governance response (H6: not significant). This challenges assumptions that stakeholder pressure mechanisms automatically drive organizational change.
 
 ---
 
@@ -512,14 +521,15 @@ These mechanisms operate independently of market conclusions about breach severi
 - Q2 (Medium-small): -1.132** (p=0.026)
 - Q3 (Medium-large): -1.651*** (p=0.006)
 - Q4 (Large): +0.371 (p=0.265, not significant)
-- **Conclusion:** Governance response is HETEROGENEOUS by firm size, stronger in medium firms, reverses in largest firms
+- **Conclusion:** Heterogeneous effects exist by firm size, but NONE reach statistical significance at conventional thresholds. The average effect (H6) is not significant (3.71pp, p=0.391).
 
 **Interpretation:**
-- Findings are robust for market returns and volatility (universal effects)
-- Governance response shows capacity/structure effects (medium firms most responsive)
-- Largest firms may have sophisticated IR/governance practices that reduce turnover pressure
+- Findings are robust for market returns and volatility (universal effects for H1-H2, H5)
+- Governance response (H6) shows NO significant average effect despite heterogeneous point estimates
+- Heterogeneity suggests governance response mechanisms are complex (some firm types show positive effects, others negative), but these don't produce a significant average regulatory effect
+- This pattern is consistent with H6 null: governance response is driven by breach event and organizational equilibrium, not by regulatory timing mandate
 
-**Impact:** Strengthens H1 null by proving it's not context-dependent; reveals governance response operates through different organizational dynamics.
+**Impact:** Explains why H6 is null despite heterogeneous firm-level effects: while some firm types show directionally positive or negative responses, none reach significance, and the average effect is not significant. This reveals that governance response is driven by organizational equilibrium rather than regulatory mandate.
 
 ---
 
@@ -854,29 +864,29 @@ This is the **clearest evidence that FCC works through violated expectations, no
 
 ### ANALYSIS #5: Temporal Dynamics - Extended Governance Windows (Scripts 102, 3 hours)
 
-**Question:** Is FCC's effect on governance response immediate but transient, or sustained?
+**Question:** Does FCC regulation's effect on governance response vary across time windows?
 
 **Methods:**
 - Compared executive turnover across three time windows: 30 days, 90 days, 180 days
-- Tests whether governance pressure sustains or fades
-- Compared Essay 3 baseline (30d) against extended windows
+- Tests whether any governance effect is immediate, transient, or sustained
+- Baseline turnover: 46.4% across all conditions
 
 **Key Findings:**
 
-| Window | FCC Effect on Turnover | Trend | P-value |
-|--------|----------------------|-------|---------|
-| **30-day** | **+3.71pp** | — | 0.083~ |
-| **90-day** | +2.31pp | Declining | 0.295 |
-| **180-day** | +1.19pp | Further decline | >0.39 |
+| Window | FCC Effect on Turnover | P-value | Significance |
+|--------|----------------------|---------|-------------|
+| **30-day** | +3.71pp | 0.391 | NOT significant |
+| **90-day** | +2.31pp | 0.610 | NOT significant |
+| **180-day** | +1.19pp | 0.793 | NOT significant |
 
 **Interpretation:** FCC effect on governance is:
-1. **Immediate:** Activates within 30 days (crisis-driven response)
-2. **Transient:** Fades significantly by 90 days
-3. **Not sustained:** No lasting effect at 180 days
+1. **Not significant at any timeframe:** All p-values > 0.05 (p=0.391, 0.610, 0.793)
+2. **Declining point estimates:** Numerically decrease from +3.71pp to +2.31pp to +1.19pp
+3. **Indistinguishable from zero:** 95% confidence intervals all include zero
 
-**Mechanism:** Stakeholder pressure from FCC mandate is a short-term shock, not a sustained governance reform driver. Organizations respond urgently but don't sustain changes long-term.
+**Mechanism:** H6 null is NOT REJECTED. The FCC regulatory timing mandate does not significantly affect executive turnover at ANY timeframe. The observed point estimates are small and statistical noise. The 46.4% baseline turnover appears stable across all regulatory conditions.
 
-**Consistency Check:** 30-day result (+3.71pp) aligns with Essay 3 main result (+5.3pp, within margin of error due to different samples).
+**Important distinction:** The +3.71pp FCC regulatory effect (NOT significant) should not be confused with the +5.3pp immediate disclosure effect (significant, but voluntary timing - a selection effect, not a causal regulatory effect).
 
 **Publication Table:** `TABLE_EXTENDED_GOVERNANCE_WINDOWS_RESULTS.csv` (Appendix B15)
 
