@@ -279,14 +279,15 @@ if df is not None:
 
         **Finding:**
         - **Pre-2007:** Only 1 FCC breach (insufficient for comparison)
-        - **Post-2007:** FCC effect = +1.66% turnover increase (p=0.067)
-        - **Implication:** Limited pre-2007 data constrains temporal validation, but post-2007 effect is consistent
+        - **Post-2007:** FCC effect = +3.71% turnover increase (p=0.391, NOT significant)
+        - **Implication:** FCC regulatory mandate does NOT significantly affect executive turnover. The high baseline turnover (46.4%) dominates across all conditions.
+        - **Contrast:** FCC effects on VOLATILITY (H5) are significant; effects on TURNOVER (H6) are not.
 
-        **Volatility Causal ID Note:** Related FCC effects on volatility (a mechanism through which governance may operate) show stronger post-2007 emergence (p<0.05).
+        **Key Insight:** Mandatory disclosure creates information costs (volatility) without producing measurable governance disruption (executive turnover). This suggests that stakeholder pressure operates through information channels, not governance response channels.
         """)
     with col2:
         st.metric("Pre-2007 FCC", "N=1", delta="Insufficient")
-        st.metric("Post-2007 Effect", "+1.66%", delta="Modest")
+        st.metric("Post-2007 Effect", "+3.71pp", delta="p=0.39 (ns)")
 
     st.markdown("---")
 
@@ -302,16 +303,16 @@ if df is not None:
         **Test:** Add 2-digit SIC industry fixed effects to turnover models
 
         **Finding:**
-        - **Without controls:** FCC effect stable across disclosure groups
-        - **With industry FE:** Effect remains stable (1-5 percentage-point range)
-        - **Interpretation:** Industry characteristics do NOT explain FCC differences
-        - **Conclusion:** FCC effect is NOT driven by industry selection bias
+        - **Without controls:** FCC coefficient ≈ 3.7pp
+        - **With industry FE:** FCC coefficient ≈ 3.7pp (minimal change)
+        - **Interpretation:** FCC effect does not vary substantially with industry controls
+        - **Conclusion:** FCC effect is NOT SIGNIFICANT regardless of specification (p=0.39). The coefficient is stable, but below conventional significance thresholds.
 
         Industry is NOT a major confounder of the governance response.
         """)
     with col2:
         st.metric("Industry Confounder", "NOT SIGNIFICANT", delta="Ruled out")
-        st.metric("FCC Effect Range", "1.0-5.3pp", delta="Stable")
+        st.metric("FCC Effect on Turnover", "3.7pp", delta="Not Significant (p=0.39)")
 
     st.markdown("---")
 
@@ -349,25 +350,65 @@ if df is not None:
     <div class='causal-box'>
     <h3 style='color: inherit;'>Causal Identification Conclusion</h3>
 
-    <b>Evidence for Causal Effect:</b>
-    - FCC effect stable with industry controls (not selection bias)
-    - Turnover uniform across firm sizes (not size-driven)
-    - Post-2007 FCC effect consistent with regulatory timing
+    <b>Evidence from Causal ID Tests:</b>
+    - FCC coefficient stable across specifications (3.7pp with/without industry controls)
+    - Turnover uniform across firm sizes (46-48% range)
+    - Post-2007 trend consistent with regulatory timing
 
-    <b>Evidence Suggesting Limited Independent FCC Effect:</b>
-    - Modest FCC moderation of turnover (1-5 percentage-point differences)
-    - Baseline turnover of 46.4% dominates across all conditions
-    - Suggests disclosure timing and stakeholder activation matter more than regulatory status
+    <b>Key Finding: FCC Regulation Does NOT Significantly Affect Executive Turnover</b>
+    - FCC effect on turnover: +3.71pp (p=0.391) - NOT SIGNIFICANT
+    - FCC effect on volatility: +1.79pp (p=0.049) - SIGNIFICANT
+    - <b>This contrast is important:</b> FCC regulation creates INFORMATION costs (volatility)
+      without producing GOVERNANCE changes (turnover)
 
-    <b>Bottom Line:</b> FCC regulation affects governance response through mandatory disclosure requirements,
-    but has modest independent effects beyond baseline stakeholder activation. The primary driver of executive
-    turnover is the breach disclosure event itself and resulting stakeholder pressure, not regulatory status per se.
+    <b>Bottom Line:</b> Mandatory disclosure timing requirements (H5) significantly increase
+    market uncertainty (volatility), but they do NOT significantly accelerate executive turnover
+    (governance disruption). Executive turnover remains high (~46% baseline) across all conditions,
+    suggesting that boards respond to the BREACH EVENT itself, not to regulatory TIMING mandates.
+    H6 null hypothesis (timing has no governance effect) is NOT REJECTED.
     </div>
     """, unsafe_allow_html=True)
 
     # ============================================================================
     # GOVERNANCE RESPONSE MECHANISM
     # ============================================================================
+
+    st.markdown("---")
+    st.markdown("## Theoretical Implications: The Mechanism Paradox")
+
+    st.markdown("""
+    <div class='governance-box'>
+
+    Our findings reveal an interesting disconnect in the causal chain predicted by Stakeholder Theory:
+
+    **Expected Mechanism:** Mandatory timing → faster disclosure → stakeholder pressure → governance response
+
+    **Actual Results:**
+
+    1. **H5 Confirmed**: Mandatory timing DOES increase volatility
+       - FCC regulation: +1.79% volatility increase (p=0.049, SIGNIFICANT)
+       - This supports theory: forced timing creates information asymmetry
+       - Stakeholder pressure IS activated through information channels ✓
+
+    2. **H6 Not Confirmed**: Mandatory timing does NOT increase turnover
+       - FCC regulation: +3.71% turnover increase (p=0.391, NOT SIGNIFICANT)
+       - This rejects theory prediction: information pressure doesn't translate to governance response
+       - The high baseline turnover (46%) reflects natural organizational transitions, not regulatory response ✗
+
+    **Interpretation:**
+    - Stakeholder pressure IS activated (we see it in volatility increases)
+    - But boards do NOT respond with governance changes (turnover doesn't increase)
+    - The observed turnover likely reflects coincidence of breach events with normal executive transitions
+
+    **For Policy:**
+    This suggests that mandatory disclosure timing requirements:
+    - ✓ DO create information asymmetry costs (volatility increases)
+    - ✗ Do NOT trigger governance improvements (turnover doesn't increase)
+
+    **Important implication:** The benefits of faster disclosure (reducing information costs) may not justify the compliance costs, especially since forced disclosure doesn't produce the governance benefits that regulatory theory predicts.
+
+    </div>
+    """, unsafe_allow_html=True)
 
     st.markdown("---")
     st.markdown("### Governance Response Mechanism")
