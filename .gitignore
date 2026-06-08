@@ -78,6 +78,7 @@ wrds_config.ini
 # Markdown files (except README.md which is the main documentation)
 *.md
 !README.md
+!article_monitors/*.md
 
 # Other working documents
 *.txt
