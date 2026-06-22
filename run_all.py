@@ -253,6 +253,14 @@ Log file: {log_path}
                 ]
             },
             {
+                'category': 'ESSAY 1 SYNTHETIC CONTROL MATCHING (CAUSAL INFERENCE)',
+                'scripts': [
+                    ('scripts/scm_data_preparation.py', 'SCM Data Preparation: Match breach-exposed to non-exposed control firms (1:1 exact match on year, data type, size)'),
+                    ('scripts/run_causal_identification_pipeline.py', 'SCM Causal Identification Pipeline: Full SCM analysis with statistical inference'),
+                    ('scripts/firm_by_firm_scm_analysis.py', 'SCM Firm-by-Firm Analysis: Individual firm treatment effects, heterogeneity, and aggregate inference'),
+                ]
+            },
+            {
                 'category': 'MACHINE LEARNING',
                 'scripts': [
                     ('scripts/60_train_ml_model.py', 'Train ML Model'),
