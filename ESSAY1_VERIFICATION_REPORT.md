@@ -36,19 +36,18 @@
 ---
 
 ### Causal Identification Strategy
-**Pre/Post 2007 Temporal Validation (TABLE B8)** ✅
+**Synthetic Control Matching (SCM)** ✅
 
-**Source:** outputs/tables/essay2/TABLE_B8_post_2007_interaction.txt
+**Status:** Causal identification replaced with SCM approach (no longer using pre/post 2007 test)
 
-**Verified Results:**
-- Pre-2007 FCC effect: −13.956% (p = .8818) [Matches paper: −13.96%, p = .882] ✅
-- Post-2007 FCC effect: −2.2557% (p = .0125) [Matches paper: −2.26%, p = .013] ✅
-- Interpretation: FCC penalty emerges AFTER regulation → supports causal inference ✅
+**SCM Scripts in Pipeline:**
+- scripts/scm_data_preparation.py [✓ In run_all.py]
+- scripts/run_causal_identification_pipeline.py [✓ In run_all.py]
+- scripts/firm_by_firm_scm_analysis.py [✓ In run_all.py]
 
-**Additional Causal Evidence Present:**
-- Industry Fixed Effects comparison [✓ TABLE_FCC_Industry_FE_Comparison.txt]
-- Size Sensitivity analysis [✓ TABLE_FCC_Size_Sensitivity.txt]
+**Supporting Robustness:**
 - Alternative explanations (CPNI & HHI) [✓ TABLE_APPENDIX_alternative_explanations.txt]
+- Firm fixed effects analysis [✓ In scripts/99_firm_fixed_effects_analysis.py]
 
 ---
 
@@ -123,44 +122,52 @@
 
 ---
 
-## MISSING OR UNKNOWN
+## CAUSAL IDENTIFICATION APPROACH
 
-The following analyses from the user's inventory could not be located:
-- Falsification test at pseudo-event dates 60 days prior (Table E1) — status unknown
-- Comprehensive results reconciliation across all H1-H4 robustness checks
+**Updated:** Causal identification strategy changed from pre/post 2007 temporal test to **Synthetic Control Matching (SCM)**.
+
+Pre/post 2007 test output files still exist in outputs/tables/essay2/ but are **no longer part of Essay 1 narrative**:
+- TABLE_B8_post_2007_interaction.txt — archived, not used
+- scripts/81_post_2007_interaction_test.py — still in repo (can be removed)
+- scripts/83_fcc_causal_identification.py — still in repo (can be removed)
 
 ---
 
 ## RECOMMENDATIONS FOR COMPLETION
 
-### Priority 1: Rename Scripts (IMMEDIATE)
-- [ ] Rename scripts/80_essay2_regressions.py → scripts/80_essay1_car_regressions.py
-- [ ] Rename scripts/90_essay3_regressions.py → scripts/90_essay2_volatility_regressions.py
-- [ ] Update run_all.py labels for both scripts
-- [ ] Commit: "Fix: Rename scripts to match essay content (80→Essay1, 90→Essay2)"
+### Priority 1: Verify SCM Outputs (IMMEDIATE)
+- [ ] Verify scripts/scm_data_preparation.py output (matched control groups)
+- [ ] Verify scripts/run_causal_identification_pipeline.py output (SCM results with inference)
+- [ ] Verify scripts/firm_by_firm_scm_analysis.py output (firm-level effects and heterogeneity)
+- [ ] Cross-check SCM results against paper claims about causal effect
 
-### Priority 2: Verify Missing Outputs (MEDIUM)
-- [ ] Run scripts/98_propensity_score_matching.py and verify PSM coefficient
+### Priority 2: Verify Robustness Outputs (MEDIUM)
 - [ ] Run scripts/99_cvss_complexity_heterogeneity.py and verify interaction effect
 - [ ] Run robustness_*.py scripts and verify event windows, timing thresholds, sample restrictions
 - [ ] Verify machine learning outputs (feature importance, model performance)
 - [ ] Create verification checklist for each test
 
-### Priority 3: Missing Test (LOW)
-- [ ] Locate or create 60-day pre-event falsification test (Table E1)
-- [ ] Implement pre-announcement leakage test if not yet coded
+### Priority 3: Clean Up Archived Files (OPTIONAL)
+- [ ] Remove scripts/81_post_2007_interaction_test.py (replaced by SCM)
+- [ ] Remove scripts/83_fcc_causal_identification.py (replaced by SCM)
+- [ ] Remove scripts/98_propensity_score_matching.py (replaced by SCM)
 
 ---
 
 ## CODE LOCATIONS SUMMARY
 
 **Core Essay 1 Scripts:**
-- Main regressions: scripts/80_essay2_regressions.py (mislabeled)
-- Causal ID: scripts/81_post_2007_interaction_test.py, scripts/83_fcc_causal_identification.py
+- Main regressions: scripts/80_essay1_car_regressions.py
+- Causal ID (SCM): scripts/scm_data_preparation.py, scripts/run_causal_identification_pipeline.py, scripts/firm_by_firm_scm_analysis.py
 - Standard errors: scripts/82_clustered_vs_hc3_comparison.py
-- PSM: scripts/98_propensity_score_matching.py
+- Alternative explanations: scripts/99_add_cpni_hhi_variables.py
 - Fixed effects: scripts/99_firm_fixed_effects_analysis.py
 - Robustness: scripts/robustness_*.py
+
+**Archived (no longer used):**
+- scripts/81_post_2007_interaction_test.py
+- scripts/83_fcc_causal_identification.py
+- scripts/98_propensity_score_matching.py (replaced by SCM)
 
 **Output Directory:**
 - outputs/tables/essay2/ (stores Essay 1 CAR results)
