@@ -1,0 +1,4 @@
+window,n,sysdef_main_ame_pp,sysdef_main_p,fcc_ame_sysdef1_pp,fcc_ame_sysdef0_pp,interaction_coef,interaction_p,n_sysdef1,n_sysdef0,n_fcc_and_sysdef1,n_fcc_and_sysdef0
+30d,896,-20.18,0.001,9.58,2.28,0.4128,0.4666,90,806,24,160
+90d,896,-33.63,0.0,12.29,-0.32,0.5714,0.2877,90,806,24,160
+180d,896,-34.32,0.0,12.18,-1.55,0.6289,0.2414,90,806,24,160

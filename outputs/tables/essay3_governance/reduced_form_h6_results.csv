@@ -1,0 +1,4 @@
+window,model,n,variable,logit_coef,logit_se,logit_p,ame_pp,ame_se_pp,mde_80_pp,mde_85_pp,mde_90_pp,observed_below_mde_80,pseudo_r2
+30d,reduced_form,896,fcc_reportable,0.1027,0.1769,0.5615,2.34,4.031,11.293,12.078,13.066,True,0.0628
+90d,reduced_form,896,fcc_reportable,-0.0087,0.182,0.9618,-0.18,3.819,10.699,11.443,12.379,True,0.0474
+180d,reduced_form,896,fcc_reportable,-0.0633,0.182,0.7279,-1.32,3.779,10.587,11.323,12.249,True,0.0481

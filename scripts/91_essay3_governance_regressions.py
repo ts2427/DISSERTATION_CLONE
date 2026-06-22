@@ -221,6 +221,25 @@ if len(turnover_models) > 0:
         for coef_df in coef_summary_list:
             print(coef_df.to_string(index=False))
 
+        # Save detailed coefficient results to CSV (with-mediator model, for mediation decomposition)
+        detailed_coefs = []
+        for window in ['30d', '90d', '180d']:
+            if window in turnover_models:
+                res = turnover_models[window]
+                for var_name in ['immediate_disclosure', 'fcc_reportable']:
+                    detailed_coefs.append({
+                        'window': window,
+                        'variable': var_name,
+                        'logit_coef': round(res.params[var_name], 4),
+                        'logit_se': round(res.bse[var_name], 4),
+                        'logit_z': round(res.tvalues[var_name], 3),
+                        'logit_p': round(res.pvalues[var_name], 4),
+                    })
+
+        detailed_coef_df = pd.DataFrame(detailed_coefs)
+        detailed_coef_df.to_csv(OUTPUT_DIR / 'with_mediator_model_coefficients.csv', index=False)
+        print(f"  [OK] Saved detailed coefficients: with_mediator_model_coefficients.csv")
+
 # ============================================================================
 # TABLE 3: REGULATORY ENFORCEMENT (DESCRIPTIVE)
 # ============================================================================
