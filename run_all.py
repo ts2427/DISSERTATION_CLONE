@@ -224,6 +224,7 @@ Log file: {log_path}
                 'category': 'MAIN ANALYSIS',
                 'scripts': [
                     ('scripts/70_summary_statistics.py', 'Summary Statistics (Table 1)'),
+                    ('essay2_canonical_pipeline.py', 'Essay 2 Canonical Pipeline (All regressions, diagnostics, GARCH, Breusch-Pagan)'),
                     ('scripts/80_essay2_regressions.py', 'Essay 2 Regressions (Tables 2-5, firm-clustered SEs) + TOST + VIF'),
                     ('scripts/81_post_2007_interaction_test.py', 'FCC Causal Identification (TABLE B8: Post-2007 Interaction Test - Market Returns)'),
                     ('scripts/82_clustered_vs_hc3_comparison.py', 'Standard Errors Robustness (TABLE B9: Clustered vs HC3 Comparison)'),
