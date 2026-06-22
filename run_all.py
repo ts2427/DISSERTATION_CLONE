@@ -224,15 +224,15 @@ Log file: {log_path}
                 'category': 'MAIN ANALYSIS',
                 'scripts': [
                     ('scripts/70_summary_statistics.py', 'Summary Statistics (Table 1)'),
+                    ('scripts/80_essay1_car_regressions.py', 'Essay 1 Main Regressions (H1-H4: CAR on disclosure/FCC/reputation/severity)'),
                     ('essay2_canonical_pipeline.py', 'Essay 2 Canonical Pipeline (All regressions, diagnostics, GARCH, Breusch-Pagan)'),
-                    ('scripts/80_essay2_regressions.py', 'Essay 2 Regressions (Tables 2-5, firm-clustered SEs) + TOST + VIF'),
                     ('scripts/81_post_2007_interaction_test.py', 'FCC Causal Identification (TABLE B8: Post-2007 Interaction Test - Market Returns)'),
                     ('scripts/82_clustered_vs_hc3_comparison.py', 'Standard Errors Robustness (TABLE B9: Clustered vs HC3 Comparison)'),
                     ('scripts/83_fcc_causal_identification.py', 'FCC Causal ID Summary (Industry Fixed Effects, Size Sensitivity Analysis)'),
                     ('scripts/91_essay3_governance_regressions.py', 'Essay 3 Main Regressions (Executive Turnover - Logistic Regression by Window)'),
                     ('scripts/91b_essay3_reduced_form_mediation.py', 'Essay 3 Reduced-Form H6 Test (Correct Specification - No Post-Treatment Variables) + Mediation Decomposition'),
                     ('scripts/91c_essay3_mediation_bootstrap.py', 'Essay 3 Bootstrap Indirect Effect (Nonlinear Mediation on Probability Scale with 95% CI)'),
-                    ('scripts/90_essay3_regressions.py', 'Essay 3 Volatility Analysis (Tables 2-3)'),
+                    ('scripts/90_essay2_volatility_regressions.py', 'Essay 2 Volatility Analysis (FCC effect on post-breach volatility, Tables 2-3)'),
                     ('scripts/84_essay3_post_2007_interaction_test.py', 'Essay 3 Volatility Causal ID (TABLE B8: Post-2007 Test)'),
                     ('scripts/86_essay3_fcc_causal_identification.py', 'Essay 3 Volatility Causal ID (Industry FE, Size Sensitivity)'),
                 ]
