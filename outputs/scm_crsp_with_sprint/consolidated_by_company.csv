@@ -1,0 +1,10 @@
+Company,Total_Breaches,Mean_Effect,Ticker,Has_Sprint_Proxy
+Charter Communications,10,1.2763142659964724,CHTR,False
+CenturyLink,1,0.615354504913812,LUMN,False
+Verizon Communications,14,-0.541196590898727,VZ,False
+Frontier Communications,6,-0.6550071395249811,FYBR,False
+AT&T,26,-1.0116405045486345,T,False
+Comcast,10,-2.532153090018257,CMCSA,False
+T-Mobile / Sprint,57,-3.032504644896386,TMUS,True
+Altice USA,3,-18.693472822181924,ATUS,False
+DISH Network,5,-26.45496166921397,DISH,False

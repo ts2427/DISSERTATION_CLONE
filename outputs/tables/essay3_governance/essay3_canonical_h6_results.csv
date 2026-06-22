@@ -1,0 +1,7 @@
+window,variable,n,events,event_pct,pseudo_r2,logit_coef,logit_se,logit_z,logit_p,logit_sig
+30d,immediate_disclosure,896,416,46.4,0.0518,-0.8583,0.2003,-4.284,0.0000,***
+30d,fcc_reportable,896,416,46.4,0.0518,0.0448,0.1774,0.253,0.8006,
+90d,immediate_disclosure,896,599,66.9,0.0534,-1.2609,0.1886,-6.686,0.0000,***
+90d,fcc_reportable,896,599,66.9,0.0534,0.0071,0.1871,0.038,0.9697,
+180d,immediate_disclosure,896,605,67.5,0.0488,-1.1964,0.1877,-6.374,0.0000,***
+180d,fcc_reportable,896,605,67.5,0.0488,-0.0603,0.1863,-0.324,0.7462,
