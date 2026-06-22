@@ -82,4 +82,6 @@ wrds_config.ini
 
 # Other working documents
 *.txt
-!requirements.txt
+!requirements.txtCODE_TO_PAPER_VERIFICATION_SUMMARY.md
+ESSAY1_VERIFICATION_REPORT.md
+ESSAY2_VERIFICATION_REPORT.md
