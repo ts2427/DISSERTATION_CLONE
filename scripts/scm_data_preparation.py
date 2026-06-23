@@ -139,15 +139,21 @@ def check_sample_composition(df):
 def main():
     """Main data preparation workflow"""
     parser = argparse.ArgumentParser(description='Prepare data for firm-by-firm SCM')
-    parser.add_argument('--input', type=str, help='Input CSV file path')
-    parser.add_argument('--output', type=str, default='data_prepared_for_scm.csv',
+    parser.add_argument('--input', type=str, default='Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv',
+                       help='Input CSV file path')
+    parser.add_argument('--output', type=str, default='Data/processed/data_prepared_for_scm.csv',
                        help='Output CSV file path')
 
     args = parser.parse_args()
 
-    if not args.input:
-        print("Usage: python scm_data_preparation.py --input your_data.csv [--output output.csv]")
-        return 1
+    # Use default input if file doesn't exist
+    if not Path(args.input).exists():
+        default_input = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'
+        if Path(default_input).exists():
+            args.input = default_input
+        else:
+            print(f"Error: No input file found. Checked: {args.input}, {default_input}")
+            return 1
 
     print("\n" + "="*70)
     print("DATA PREPARATION FOR FIRM-BY-FIRM SCM")
