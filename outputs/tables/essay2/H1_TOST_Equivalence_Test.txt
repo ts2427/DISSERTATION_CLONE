@@ -5,11 +5,11 @@ Tests whether H1 (timing) effect is statistically equivalent to zero
 
 COEFFICIENT ESTIMATES:
 ----------------------------------------------------------------------------------------------------
-H1 Coefficient (Immediate Disclosure):      0.5676%
-Standard Error (clustered):                 0.9244%
-t-statistic:                               0.6140
-p-value (two-tailed):                      0.5392
-Degrees of freedom:                           893
+H1 Coefficient (Immediate Disclosure):      0.5955%
+Standard Error (clustered):                 0.9069%
+t-statistic:                               0.6566
+p-value (two-tailed):                      0.5114
+Degrees of freedom:                           648
 
 EQUIVALENCE TEST SETUP:
 ----------------------------------------------------------------------------------------------------
@@ -19,7 +19,7 @@ Confidence Level:                        90% (standard for TOST)
 
 EQUIVALENCE TEST RESULTS:
 ----------------------------------------------------------------------------------------------------
-90% Confidence Interval:                 [-0.9545%,  2.0896%]
+90% Confidence Interval:                 [-0.8984%,  2.0893%]
 Lower Bound Test (CI > -2.10%):     True (PASS)
 Upper Bound Test (CI < +2.10%):     True (PASS)
 EQUIVALENCE CONCLUSION:                  YES

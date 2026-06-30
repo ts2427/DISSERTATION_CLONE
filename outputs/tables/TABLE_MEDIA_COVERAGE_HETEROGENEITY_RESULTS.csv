@@ -1,4 +1,4 @@
 Model,FCC Coefficient,Media Coefficient,Interaction,R-squared
-Model 1: FCC Only,-2.7550***,N/A,N/A,0.0289
-Model 2: FCC + Media,-2.6081***,-1.2551,N/A,0.0300
-Model 3: FCC x Media,-3.3286***,-5.1556*,7.0823*,0.0389
+Model 1: FCC Only,-2.2276**,N/A,N/A,0.0136
+Model 2: FCC + Media,-1.9809,-2.0350,N/A,0.0169
+Model 3: FCC x Media,-2.8432**,-5.6267*,7.0489*,0.0274

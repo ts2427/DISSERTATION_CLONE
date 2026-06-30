@@ -12,7 +12,7 @@ announcement. Pre-breach returns should show NO relationship to FCC regulation
 or disclosure timing.
 
 Data: Pre-breach volatility metrics
-Sample: 916 breaches with pre-event data
+Sample: 670 breaches with pre-event data
 
 Result: Available (see detailed analysis)
 
@@ -30,13 +30,13 @@ Non-FCC breaches should show no FCC-related price impact.
 
 Data: FCC reportable vs non-reportable breaches
 
-Sample: FCC breaches n=200, Non-FCC n=854
+Sample: FCC breaches n=151, Non-FCC n=633
 
 FCC Breach Effect:
-  FCC CAR mean:          -2.7122% (n=200)
-  Non-FCC CAR mean:      -0.2361% (n=854)
-  Difference (FCC):      -2.4762%
-  Std Error:              0.7709%
+  FCC CAR mean:          -2.3995% (n=151)
+  Non-FCC CAR mean:       0.0810% (n=633)
+  Difference (FCC):      -2.4805%
+  Std Error:              0.8670%
 
 Interpretation:
 - The differential effect between FCC and non-FCC breaches confirms regulation
@@ -52,8 +52,8 @@ Logic: If timing-governance effect is real, timing's impact should be consistent
 and not reverse for different breach types.
 
 Timing Effect Summary:
-  Immediate disclosure:    -0.8483% (n=163)
-  Delayed disclosure:      -0.7121% (n=763)
+  Immediate disclosure:    -0.5338% (n=157)
+  Delayed disclosure:      -0.3964% (n=520)
 
 Interpretation:
 - Timing effect should appear consistently if real
@@ -69,7 +69,7 @@ see correlation between timing and volatility. If not correlated, challenges
 mechanism explanation.
 
 Correlation Analysis:
-  Timing -> Volatility:     -0.0394
+  Timing -> Volatility:     -0.0356
 
 Expected Pattern:
 - Immediate disclosure should associate with HIGHER volatility

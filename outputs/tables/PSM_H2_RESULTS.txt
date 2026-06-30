@@ -14,9 +14,9 @@ METHOD:
 4. Control for propensity score in regression
 
 RESULTS:
-FCC Coefficient Without PS Control: -2.1991%
-FCC Coefficient With PS Control:    -2.2389%
-Change:                             -0.0398%
+FCC Coefficient Without PS Control: -2.0788%
+FCC Coefficient With PS Control:    -1.9584%
+Change:                             0.1205%
 
 CONCLUSION:
 The FCC effect is ROBUST to control for selection on observables.

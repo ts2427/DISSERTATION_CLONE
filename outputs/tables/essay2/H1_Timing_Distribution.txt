@@ -2,22 +2,22 @@
 H1 CONTEXT: DISCLOSURE TIMING DISTRIBUTION IN SAMPLE
 ================================================================================
 
-Total breaches (Essay 2): 926
+Total breaches (Essay 2): 677
 
 TIMING CATEGORIES:
 --------------------------------------------------------------------------------
-≤7 days (Immediate Disclosure):           163 ( 17.6%)
-8-30 days (Moderately Delayed):           114 ( 12.3%)
->30 days (Significantly Delayed):         649 ( 70.1%)
+≤7 days (Immediate Disclosure):           157 ( 23.2%)
+8-30 days (Moderately Delayed):            98 ( 14.5%)
+>30 days (Significantly Delayed):         422 ( 62.3%)
 --------------------------------------------------------------------------------
 
 DESCRIPTIVE STATISTICS:
-  Mean: 127.4 days
-  Median: 71.0 days
-  Std Dev: 207.3 days
+  Mean: 126.5 days
+  Median: 57.0 days
+  Std Dev: 229.2 days
   Min: -4 days
-  25th percentile: 21 days
-  75th percentile: 149 days
+  25th percentile: 14 days
+  75th percentile: 150 days
   Max: 2153 days
 
 INTERPRETATION:
@@ -31,7 +31,7 @@ disclosure relative to the mandated window.
 The null finding on timing (H1: p=0.539) must be interpreted in this context:
 - Limited treatment variation (19% vs 81%)
 - Bunching at regulatory thresholds (most firms in 8-30 day range)
-- High noise in market reactions (residual std = 8.67%)
+- High noise in market reactions (residual std = 8.74%)
 
 TOST Equivalence Test (see separate output) confirms that estimated effects
 fall within economically negligible bounds (±2.10% CAR).

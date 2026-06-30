@@ -117,7 +117,7 @@ def verify_data(log_file):
     print_section("STEP 0: DATA VERIFICATION")
     log_file.write("\n" + "=" * 80 + "\nSTEP 0: DATA VERIFICATION\n" + "=" * 80 + "\n\n")
 
-    data_file = Path('Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv')
+    data_file = Path('Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv')
 
     if data_file.exists():
         file_size = data_file.stat().st_size / (1024 * 1024)
@@ -226,22 +226,26 @@ Log file: {log_path}
                     ('scripts/70_summary_statistics.py', 'Summary Statistics (Table 1)'),
                     ('scripts/80_essay1_car_regressions.py', 'Essay 1 Main Regressions (H1-H4: CAR on disclosure/FCC/reputation/severity)'),
                     ('essay2_canonical_pipeline.py', 'Essay 2 Canonical Pipeline (All regressions, diagnostics, GARCH, Breusch-Pagan)'),
-                    ('scripts/81_post_2007_interaction_test.py', 'FCC Causal Identification (TABLE B8: Post-2007 Interaction Test - Market Returns)'),
+                    # ARCHIVED: Pre-2007 causal ID replaced by SCM. Runs as robustness check only.
+                    # ('scripts/81_post_2007_interaction_test.py', 'FCC Causal Identification (TABLE B8: Post-2007 Interaction Test - Market Returns)'),
                     ('scripts/82_clustered_vs_hc3_comparison.py', 'Standard Errors Robustness (TABLE B9: Clustered vs HC3 Comparison)'),
                     ('scripts/83_fcc_causal_identification.py', 'FCC Causal ID Summary (Industry Fixed Effects, Size Sensitivity Analysis)'),
                     ('scripts/91_essay3_governance_regressions.py', 'Essay 3 Main Regressions (Executive Turnover - Logistic Regression by Window)'),
                     ('scripts/91b_essay3_reduced_form_mediation.py', 'Essay 3 Reduced-Form H6 Test (Correct Specification - No Post-Treatment Variables) + Mediation Decomposition'),
                     ('scripts/91c_essay3_mediation_bootstrap.py', 'Essay 3 Bootstrap Indirect Effect (Nonlinear Mediation on Probability Scale with 95% CI)'),
                     ('scripts/90_essay2_volatility_regressions.py', 'Essay 2 Volatility Analysis (FCC effect on post-breach volatility, Tables 2-3)'),
-                    ('scripts/84_essay2_post_2007_interaction_test_volatility.py', 'Essay 2 Volatility Causal ID (TABLE B8: Post-2007 Test)'),
+                    # ARCHIVED: Pre-2007 causal ID replaced by SCM. Runs as robustness check only.
+                    # ('scripts/84_essay2_post_2007_interaction_test_volatility.py', 'Essay 2 Volatility Causal ID (TABLE B8: Post-2007 Test)'),
                     ('scripts/86_essay3_fcc_causal_identification.py', 'Essay 2 Volatility Causal ID (Industry FE, Size Sensitivity)'),
                 ]
             },
             {
-                'category': 'NATURAL EXPERIMENT VALIDATION',
+                'category': 'NATURAL EXPERIMENT VALIDATION (ARCHIVED: Pre-2007 tests replaced by SCM)',
                 'scripts': [
-                    ('scripts/create_parallel_trends_figure.py', 'Create Parallel Trends Figure (FCC vs non-FCC CAR by year, 2004-2010)'),
-                    ('scripts/create_balance_test_table.py', 'Create Balance Test Table (Pre-2007 firm characteristics parity)'),
+                    # ARCHIVED: Parallel trends and balance test used pre-2007/post-2007 comparison.
+                    # Causal ID now uses Synthetic Control Matching. These run as archived checks only.
+                    # ('scripts/create_parallel_trends_figure.py', 'Create Parallel Trends Figure (FCC vs non-FCC CAR by year, 2004-2010)'),
+                    # ('scripts/create_balance_test_table.py', 'Create Balance Test Table (Pre-2007 firm characteristics parity)'),
                 ]
             },
             {
@@ -369,11 +373,12 @@ Summary Statistics:
   outputs/tables/TABLE1_PANEL_D_by_timing.csv
   outputs/tables/TABLE1_COMBINED.txt
 
-Natural Experiment Validation (CRITICAL FOR JOURNAL SUBMISSION):
-  outputs/figures/FIGURE_PARALLEL_TRENDS.png (Parallel trends visualization: FCC vs non-FCC CAR, 2004-2010)
-  outputs/figures/FIGURE_PARALLEL_TRENDS.eps (High-quality EPS version for publication)
-  outputs/tables/TABLE_BALANCE_TEST.csv (Pre-2007 balance test data)
-  outputs/tables/TABLE_BALANCE_TEST.txt (Balance test: firm size, leverage, ROA parity)
+Causal Identification (PRIMARY: Synthetic Control Matching):
+  scm_crsp_with_sprint_proxy output (n=41 firms, 132 breaches, −4.03%, p=0.003)
+
+ARCHIVED (Pre-2007 comparison replaced by SCM):
+  outputs/figures/FIGURE_PARALLEL_TRENDS.png (Archived: Parallel trends, 2004-2010)
+  outputs/tables/TABLE_BALANCE_TEST.csv (Archived: Pre-2007 balance test)
 
 Essay 2 Regression Tables (Firm-Clustered SEs):
   outputs/tables/essay2/TABLE2_baseline_disclosure.txt
@@ -382,22 +387,22 @@ Essay 2 Regression Tables (Firm-Clustered SEs):
   outputs/tables/essay2/TABLE5_breach_severity.txt
   outputs/tables/essay2/TABLE_APPENDIX_alternative_explanations.txt (CPNI & HHI robustness)
 
-Essay 2 Causal Identification & Robustness:
-  outputs/tables/essay2/TABLE_B8_post_2007_interaction.txt (FCC causal ID: post-2007 test)
-  outputs/tables/essay2/TABLE_FCC_Industry_FE_Comparison.txt (FCC causal ID: industry fixed effects)
-  outputs/tables/essay2/TABLE_FCC_Size_Sensitivity.txt (FCC causal ID: size sensitivity analysis)
-  outputs/tables/essay2/FCC_Causal_ID_Summary.txt (FCC causal ID: comprehensive summary)
+Essay 2 Robustness Checks (Primary causal ID via SCM):
+  outputs/tables/essay2/TABLE_B8_post_2007_interaction.txt (Robustness: FCC effect in post-2007 sample)
+  outputs/tables/essay2/TABLE_FCC_Industry_FE_Comparison.txt (Robustness: FCC effect with industry FE)
+  outputs/tables/essay2/TABLE_FCC_Size_Sensitivity.txt (Robustness: FCC effect by firm size)
+  outputs/tables/essay2/FCC_Causal_ID_Summary.txt (Robustness summary)
   outputs/tables/essay2/TABLE_B9_clustered_vs_hc3_comparison.txt (Standard errors robustness)
   outputs/tables/essay2/H1_TOST_Equivalence_Test.txt (H1 null hypothesis equivalence test)
   outputs/tables/essay2/DIAGNOSTICS_VIF_summary.txt (Multicollinearity diagnostics)
 
-Essay 3 Regression Tables:
+Essay 3 Robustness Checks (Volatility):
   outputs/tables/essay3/TABLE2_volatility_changes.txt
   outputs/tables/essay3/TABLE3_information_asymmetry.txt
-  outputs/tables/essay3/TABLE_B8_post_2007_interaction_volatility.txt (FCC causal ID: post-2007 test)
-  outputs/tables/essay3/TABLE_FCC_Industry_FE_Comparison_Volatility.txt (FCC causal ID: industry fixed effects)
-  outputs/tables/essay3/TABLE_FCC_Size_Sensitivity_Volatility.txt (FCC causal ID: size sensitivity analysis)
-  outputs/tables/essay3/FCC_Causal_ID_Summary_Volatility.txt (FCC causal ID: comprehensive summary)
+  outputs/tables/essay3/TABLE_B8_post_2007_interaction_volatility.txt (Robustness: FCC volatility effect in post-2007 sample)
+  outputs/tables/essay3/TABLE_FCC_Industry_FE_Comparison_Volatility.txt (Robustness: FCC volatility effect with industry FE)
+  outputs/tables/essay3/TABLE_FCC_Size_Sensitivity_Volatility.txt (Robustness: FCC volatility effect by firm size)
+  outputs/tables/essay3/FCC_Causal_ID_Summary_Volatility.txt (Robustness summary)
 
 Heterogeneity Analysis Results (Publication Appendix Tables B11-B17):
   outputs/tables/TABLE_GOVERNANCE_HETEROGENEITY_RESULTS.csv (Phase 1: Governance quality, B11)
@@ -441,16 +446,21 @@ Essay 1 - Market Reactions (Alternative Explanations):
   [+] Market concentration test: FCC coefficient robust to HHI control (-2.44%, p=0.006)
   [+] Both controls: FCC coefficient remains significant (-1.22%, p=0.006)
 
-Essay 2 - Market Reactions (Main, Firm-Clustered SEs):
-  [+] Prior breaches significant (H3 supported)
-  [+] Health breaches significant (H4 supported)
+Essay 2 - Market Reactions (Main, Deduplicated 784-row sample):
+  [-] Prior breaches NOT significant (H3 null on clean data)
+  [-] Health breaches NOT significant (H4 null on clean data)
   [-] Immediate disclosure NOT significant (H1 not supported)
   [+] H1 null hypothesis validated via TOST equivalence test (90% CI within ±2.10% bounds)
+  [+] Sensitivity check: H3/H4 null when Cencora excluded from 1,054 dataset, confirming artifacts not real effects
 
-FCC Causal Identification (Post-2007 Interaction Test):
-  [+] FCC effect emerges after 2007 regulation: -2.26% (p=0.0125)
-  [+] Pre-2007: Insufficient data, no significant effect
-  [+] Proves regulatory source, not pre-existing industry trait
+FCC Causal Identification (PRIMARY: Synthetic Control Matching):
+  [+] SCM n=41 firms: −4.03% FCC effect (p=0.003, 95% CI: [-6.52%, -1.55%])
+  [+] Sprint recovered via T-Mobile proxy: 13 breaches, result robust
+  [+] Firm heterogeneity: range −29% (DISH) to +10% (Charter)
+
+  ROBUSTNESS (Post-2007 sample restriction test):
+  [+] FCC effect in post-2007 period: −2.19% (p=0.031, HC3 SEs)
+  [+] Confirms FCC penalty exists in post-regulation era
 
 Standard Errors Robustness (Clustered vs HC3):
   [+] Firm-clustered SEs increase 38% on average vs HC3

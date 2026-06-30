@@ -1,0 +1,5 @@
+Metric,Original,Deduplicated,Change,Pct Change
+FCC reportable breaches,200,151,-49,-24.5%
+Health breaches (h_breach=1),117,48,-69,-59.0%
+Immediate disclosure (<=7 days),198,192,-6,-3.0%
+CRSP matched sample (has CAR),926,677,-249,-26.9%

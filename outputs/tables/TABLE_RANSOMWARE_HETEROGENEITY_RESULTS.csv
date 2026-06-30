@@ -1,4 +1,4 @@
 Model,FCC Coefficient,Ransomware Coefficient,Interaction,R-squared
-Model 1: FCC Only,-2.7550***,N/A,N/A,0.0289
-Model 2: FCC + Ransomware,-2.8578***,4.0109,N/A,0.0346
-Model 3: FCC x Ransomware,5.2276,5.6676*,-8.3396,0.0385
+Model 1: FCC Only,-2.2276**,N/A,N/A,0.0136
+Model 2: FCC + Ransomware,-2.4045**,4.1423,N/A,0.0212
+Model 3: FCC x Ransomware,4.5086,5.3518,-7.1617,0.0245

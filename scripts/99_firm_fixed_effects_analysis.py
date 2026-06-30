@@ -1,4 +1,4 @@
-"""
+﻿"""
 Firm Fixed Effects Analysis: H1-H4 Causal Tests
 Controls for all unobserved firm heterogeneity
 Isolates within-firm variation to reduce selection bias concerns
@@ -10,7 +10,7 @@ import statsmodels.api as sm
 from pathlib import Path
 
 # Load data
-data_path = Path('Data/processed/FINAL_DISSERTATION_DATASET_WITH_CVSS.csv')
+data_path = Path('Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv')
 df = pd.read_csv(data_path)
 
 # Prepare analysis dataset
@@ -199,3 +199,4 @@ with open(output_file, 'w') as f:
 print(f"\n[OK] Firm FE results saved to {output_file}")
 
 print("\n" + "="*80)
+

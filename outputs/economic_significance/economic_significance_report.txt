@@ -22,15 +22,15 @@ A. FCC REGULATORY COST (Market Valuation Impact)
 The FCC regulatory effect on cumulative abnormal returns is -2.20%,
 representing shareholder value destruction per data breach:
 
-• For median firm ($40M assets): $-0.9M loss
-• For large firm ($185M assets): $-4.1M loss
-• For S&P 500 median ($472M assets): $-10.4M loss
+• For median firm ($32M assets): $-0.7M loss
+• For large firm ($163M assets): $-3.6M loss
+• For S&P 500 median ($422M assets): $-9.3M loss
 
 Aggregate Impact:
 • FCC-regulated firms in sample: 12
-• Total FCC-related breaches: 187
-• Total shareholder value loss: $-0.76B
-• Average loss per breach: $-4.0M
+• Total FCC-related breaches: 139
+• Total shareholder value loss: $-0.57B
+• Average loss per breach: $-4.1M
 
 Interpretation: FCC regulatory requirements impose measurable compliance costs
 that are reflected in breach-driven stock price declines. This effect is economically
@@ -68,30 +68,30 @@ Expected cost per breach (from governance literature):
 Expected turnover cost per breach: $1.0M
 
 Interpretation: For repeat offenders (experiencing multiple breaches),
-governance disruption costs compound significantly. With 393
+governance disruption costs compound significantly. With 291
 breaches among repeat offender firms, aggregate governance cost reaches
-$0.39B.
+$0.29B.
 
 COMBINED ECONOMIC IMPACT
 --------------------------------------------------------------------------------
 
 Per Breach Impact (Median Firm):
-• Valuation loss (FCC): $-0.9M
+• Valuation loss (FCC): $-0.7M
 • Annual cost of capital increase: $0.0M
 • Governance disruption: $1.0M
-• TOTAL: $0.1M
+• TOTAL: $0.3M
 
 Per Breach Impact (S&P 500 Median, $50B firm):
-• Valuation loss (FCC): $-10.4M
+• Valuation loss (FCC): $-9.3M
 • Annual cost of capital increase: $0.0M
 • Governance disruption: $1.0M
-• TOTAL: $-9.3M
+• TOTAL: $-8.3M
 
 IMPLICATIONS
 --------------------------------------------------------------------------------
 
 1. Regulatory Impact: FCC regulation imposes economically significant costs on
-   regulated firms, averaging $-4.0M per breach incident.
+   regulated firms, averaging $-4.1M per breach incident.
 
 2. Information Asymmetry: Voluntary disclosure acceleration could reduce cost
    of capital increases, suggesting value for investors in faster disclosure.
@@ -111,4 +111,4 @@ METHODOLOGICAL NOTES
 • Market cap proxy: Used book assets; results conservative relative to market cap
 
 Generated: 2026-02-27
-Data: 1,054 breaches, 926 with CRSP pricing
+Data: 784 breaches, 677 with CRSP pricing

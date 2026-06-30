@@ -16,14 +16,14 @@ three identification strategies:
 2. INDUSTRY CONTROLS (TABLE above)
 --------------------------------------------------------------------------------
    Strategy: Add 2-digit SIC industry fixed effects
-   Result: FCC coefficient -2.1991 -> -5.3704
+   Result: FCC coefficient -2.0788 -> -4.2142
    Interpretation: Effect CHANGES with industry controls
 
 3. SIZE SENSITIVITY (TABLE above)
 --------------------------------------------------------------------------------
    Strategy: Test if FCC effect robust across firm size quartiles
    Sample: FCC firms 2.02x larger than non-FCC (p<0.0001)
-   Result: FCC effect present in 2 of 4 size quartiles
+   Result: FCC effect present in 1 of 4 size quartiles
    Interpretation: Effect partially driven by size difference
 
 OVERALL CONCLUSION:

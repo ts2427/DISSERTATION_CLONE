@@ -10,14 +10,14 @@ RESULTS:
 --------------------------------------------------------------------------------
 Model                                        FCC Coef         SE    P-Value        N       R2
 --------------------------------------------------------------------------------
-1. Baseline (no FE)                           -2.1991     0.8792     0.0124      898   0.0188
-2. Industry FE (2-digit SIC)                  -5.3704     1.5875     0.0007      840   0.0943
+1. Baseline (no FE)                           -2.0788     0.9957     0.0368      653   0.0198
+2. Industry FE (2-digit SIC)                  -4.2142     1.6678     0.0115      601   0.0650
 --------------------------------------------------------------------------------
 
 INTERPRETATION:
-  FCC coefficient change: -2.1991 -> -5.3704 (144.2%)
+  FCC coefficient change: -2.0788 -> -4.2142 (102.7%)
   Statistical significance: Remains significant in both specifications
-  Industry controls: 13 industries with n>=10 observations
+  Industry controls: 12 industries with n>=10 observations
 
   CONCLUSION: FCC effect ROBUST to industry controls.
   The FCC penalty persists even after controlling for industry-specific factors,

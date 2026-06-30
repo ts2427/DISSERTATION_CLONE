@@ -1,4 +1,4 @@
-"""
+﻿"""
 RESTATEMENT ANALYSIS SUMMARY
 Analysis #7: Data Linkage and Future Research Opportunity
 
@@ -29,7 +29,7 @@ print("=" * 90)
 
 print("\n[1/5] Understanding the restatement data...")
 
-df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_WITH_CVSS.csv')
+df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv')
 restate = pd.read_csv('data/audit_analytics/restatements.csv')
 comp = pd.read_csv('data/wrds/compustat_annual.csv')
 
@@ -161,3 +161,4 @@ print("=" * 90)
 
 print("\n[OK] Analysis complete - limitation documented")
 print("     This is valuable information for your research agenda")
+

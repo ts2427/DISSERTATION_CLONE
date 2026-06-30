@@ -4,15 +4,15 @@ Tests whether FCC penalty emerges after 2007 regulation (supporting causal effec
 
 Model                                  N    FCC Coefficient    Std Error    P-Value    R²     Sig
 ----------------------------------------------------------------------------------------------------
-Model 1: Full Sample (2004-2025)       898      -2.2994             0.8935     0.0101   0.0201   **
-Model 3: Post-2007 (2007+)            894      -2.2557             0.9034     0.0125   0.0204   **
+Model 1: Full Sample (2004-2025)       653      -2.1948             1.0196     0.0313   0.0214   **
+Model 3: Post-2007 (2007+)            649      -2.1372             1.0344     0.0388   0.0223   **
 
 Model 4: Interaction Specification - FCC × Post-2007
 ----------------------------------------------------------------------------------------------------
-FCC Main Effect (Pre-2007):              -13.9560            93.8566     0.8818                
-FCC × Post-2007 Interaction:              11.7266            93.8669     0.9006                
-Implied Post-2007 FCC Effect:             -2.2294   (Main + Interaction)
-R²:                                    0.0226
+FCC Main Effect (Pre-2007):              -14.7147            12.0044     0.2203                
+FCC × Post-2007 Interaction:              12.6191            12.1083     0.2973                
+Implied Post-2007 FCC Effect:             -2.0956   (Main + Interaction)
+R²:                                    0.0249
 
 Notes: FCC regulation (47 CFR § 64.2011) became effective in 2007. If the FCC penalty reflects regulatory burden,
 the coefficient should be non-significant pre-2007 and significant post-2007. If the penalty reflects industry

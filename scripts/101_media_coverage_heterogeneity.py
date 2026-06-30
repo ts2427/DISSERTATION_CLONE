@@ -1,4 +1,4 @@
-"""
+﻿"""
 MEDIA COVERAGE HETEROGENEITY ANALYSIS
 Analysis #4: Information Environment & Stakeholder Pressure
 
@@ -8,10 +8,10 @@ environment channel (attention, pressure, reputation risk).
 Hypothesis: High media coverage amplifies FCC pressure because:
 1. Public visibility increases stakeholder scrutiny
 2. Media coverage increases reputational risk
-3. Combined with forced disclosure timing → larger penalties
+3. Combined with forced disclosure timing â†’ larger penalties
 
 Alternative: Media coverage signals awareness/attention, reducing information
-asymmetry → FCC effect diminished for high-media breaches (market already informed)
+asymmetry â†’ FCC effect diminished for high-media breaches (market already informed)
 """
 
 import pandas as pd
@@ -30,7 +30,7 @@ print("=" * 90)
 
 print("\n[1/5] Loading data...")
 
-df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_WITH_CVSS.csv')
+df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv')
 print(f"  [OK] {len(df):,} breach observations")
 
 # ============================================================================
@@ -199,3 +199,4 @@ print(f"  [OK] Saved: TABLE_MEDIA_COVERAGE_HETEROGENEITY_RESULTS.csv")
 print("\n" + "=" * 90)
 print("ANALYSIS #4 COMPLETE")
 print("=" * 90)
+

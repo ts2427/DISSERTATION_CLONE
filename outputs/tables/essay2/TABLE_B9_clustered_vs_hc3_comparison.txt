@@ -2,21 +2,21 @@ TABLE B9: STANDARD ERROR SPECIFICATION COMPARISON - HC3 VS FIRM-CLUSTERED
 Dependent Variable: 30-Day Cumulative Abnormal Returns (CAR)
 Compares heteroskedasticity-consistent (HC3) vs firm-level clustered standard errors
 
-N = 898 observations | Unique firms = 374
+N = 653 observations | Unique firms = 374
 
 Variable                    Model A (HC3)                Model B (Firm-Clustered)           Sig Change?
                             Coef      SE       P-value    Coef      SE       P-value
 --------------------------------------------------------------------------------------------------------------
-immediate_disclosure          1.1059   0.8428    0.1895ns     1.1059   0.9430    0.2409ns    NO
-fcc_reportable               -2.7568   0.9051    0.0023***   -2.7568   1.5693    0.0790*     YES
-prior_breaches_1yr           -0.2156   0.0399    0.0000***   -0.2156   0.0681    0.0015***   NO
-health_breach                -1.6693   0.8103    0.0394**    -1.6693   0.9080    0.0660*     YES
-firm_size_log                 0.4198   0.2891    0.1465ns     0.4198   0.4731    0.3749ns    NO
-leverage                      1.7788   1.0371    0.0863*      1.7788   1.3095    0.1743ns    YES
-roa                          19.5074   7.2224    0.0069***   19.5074   7.9940    0.0147**    YES
+immediate_disclosure          0.8005   0.8852    0.3659ns     0.8005   1.0023    0.4245ns    NO
+fcc_reportable               -2.2255   1.0268    0.0302**    -2.2255   1.1572    0.0545*     YES
+prior_breaches_1yr            0.0120   0.0664    0.8572ns     0.0120   0.0581    0.8370ns    NO
+health_breach                -0.6696   1.6111    0.6777ns    -0.6696   1.6096    0.6774ns    NO
+firm_size_log                 0.3152   0.3180    0.3217ns     0.3152   0.3529    0.3718ns    NO
+leverage                      1.9153   1.3683    0.1616ns     1.9153   1.3287    0.1494ns    NO
+roa                          21.4506   8.8187    0.0150**    21.4506   8.3587    0.0103**    NO
 --------------------------------------------------------------------------------------------------------------
-R-squared (HC3):              0.0501
-R-squared (Clustered):        0.0501
+R-squared (HC3):              0.0218
+R-squared (Clustered):        0.0218
 
 Notes: Model A uses HC3 heteroskedasticity-consistent standard errors (default).
 Model B uses firm-level clustering to account for multiple breaches per firm.

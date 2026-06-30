@@ -1,11 +1,11 @@
-"""
+﻿"""
 RESTATEMENT PREDICTION ANALYSIS
 Analysis #7: Forward-Looking Consequences of Data Breaches
 
 Tests whether data breaches PREDICT FUTURE FINANCIAL RESTATEMENTS.
 
 Hypothesis: Data breaches reveal weak internal controls and IT infrastructure.
-These weak controls → higher restatement risk in subsequent periods.
+These weak controls â†’ higher restatement risk in subsequent periods.
 Mechanism: Breaches are a signal/symptom of broader organizational control weaknesses.
 
 This is a NOVEL finding: Breaches affect not just stock prices but accounting quality.
@@ -35,7 +35,7 @@ print("=" * 90)
 print("\n[1/6] Loading data...")
 
 # Load main breach dataset
-df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_WITH_CVSS.csv')
+df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv')
 print(f"  [OK] Breaches: {len(df):,} observations")
 
 # Load restatement data
@@ -297,3 +297,4 @@ print("\nPublication Value:")
 print("  - Novel dependent variable (forward-looking)")
 print("  - Extends breach consequences beyond market reactions")
 print("  - Shows breaches affect accounting quality, not just prices")
+

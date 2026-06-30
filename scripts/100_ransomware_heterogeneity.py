@@ -1,4 +1,4 @@
-"""
+﻿"""
 RANSOMWARE ATTACK VECTOR HETEROGENEITY ANALYSIS
 Analysis #3: Breach Type & Attack Vector Effects
 
@@ -28,8 +28,8 @@ print("=" * 90)
 
 print("\n[1/5] Loading data...")
 
-# Load latest enriched dataset (with CVSS data from Phase 2)
-df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_WITH_CVSS.csv')
+# Load deduplicated dataset (with CVSS data from Phase 2)
+df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv')
 print(f"  [OK] {len(df):,} breach observations")
 
 # ============================================================================
@@ -211,3 +211,4 @@ print(f"  [OK] Saved: TABLE_RANSOMWARE_HETEROGENEITY_RESULTS.csv")
 print("\n" + "=" * 90)
 print("ANALYSIS #3 COMPLETE")
 print("=" * 90)
+

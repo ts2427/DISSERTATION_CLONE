@@ -1,7 +1,7 @@
 Standard Error Method,Coefficient,Std. Error,T-statistic,P-value,Sig.
-1. Homoskedastic,0.6490,(0.7971),0.81,0.4158,
-2. Robust (HC1),0.6490,(0.8410),0.77,0.4403,
-3. Robust (HC3) [Main],0.6490,(0.8460),0.77,0.4430,
-4. Firm-Clustered,0.6490,(0.9314),0.70,0.4859,
-5. Year-Clustered,0.6490,(1.0855),0.60,0.5499,
-6. Newey-West (HAC),0.6490,(0.8569),0.76,0.4488,
+1. Homoskedastic,0.3285,(0.8564),0.38,0.7014,
+2. Robust (HC1),0.3285,(0.8545),0.38,0.7006,
+3. Robust (HC3) [Main],0.3285,(0.8608),0.38,0.7027,
+4. Firm-Clustered,0.3285,(0.9307),0.35,0.7241,
+5. Year-Clustered,0.3285,(1.3063),0.25,0.8014,
+6. Newey-West (HAC),0.3285,(0.8809),0.37,0.7092,

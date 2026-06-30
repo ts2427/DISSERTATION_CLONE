@@ -1,4 +1,4 @@
-"""
+﻿"""
 EXTENDED GOVERNANCE WINDOWS ANALYSIS
 Analysis #5: Long-Horizon Executive Turnover Response
 
@@ -32,7 +32,7 @@ print("=" * 90)
 
 print("\n[1/6] Loading data...")
 
-df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_WITH_CVSS.csv')
+df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv')
 print(f"  [OK] {len(df):,} breach observations")
 
 # ============================================================================
@@ -110,7 +110,7 @@ for window_label, col_name in exec_windows.items():
     pval_fcc = model.pvalues['fcc[T.1]'] if 'fcc[T.1]' in model.params.index else model.pvalues['fcc']
 
     # Convert log-odds to probability percentage points
-    # For binary FCC (0→1), effect is approximately: exp(coef) - 1 in log-odds
+    # For binary FCC (0â†’1), effect is approximately: exp(coef) - 1 in log-odds
     # Approximate percentage point effect: coef * 25 (rule of thumb for logit)
     pp_effect = coef_fcc * 25
 
@@ -144,7 +144,7 @@ coef_90 = results_by_window['90d']['coef']
 coef_180 = results_by_window['180d']['coef']
 
 if coef_30 < coef_90 < coef_180 and coef_180 < 0:
-    print("    STRENGTHENING PATTERN: |FCC effect| increases from 30d → 90d → 180d")
+    print("    STRENGTHENING PATTERN: |FCC effect| increases from 30d â†’ 90d â†’ 180d")
     print("    Interpretation: Governance response is SUSTAINED and CUMULATIVE")
 elif coef_30 < 0 and coef_90 < coef_30 and coef_180 < coef_90:
     print("    SUSTAINED PATTERN: FCC effect present and consistent across windows")
@@ -184,3 +184,4 @@ print(f"    Status: {'CONSISTENT' if abs(results_by_window['30d']['pp_effect'] -
 print("\n" + "=" * 90)
 print("ANALYSIS #5 COMPLETE")
 print("=" * 90)
+
