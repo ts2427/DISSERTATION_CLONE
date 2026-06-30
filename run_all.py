@@ -256,9 +256,7 @@ Log file: {log_path}
             {
                 'category': 'ESSAY 1 SYNTHETIC CONTROL MATCHING (CAUSAL INFERENCE)',
                 'scripts': [
-                    ('scripts/scm_data_preparation.py', 'SCM Data Preparation: Match breach-exposed to non-exposed control firms (1:1 exact match on year, data type, size)'),
-                    ('scripts/run_causal_identification_pipeline.py', 'SCM Causal Identification Pipeline: Full SCM analysis with statistical inference'),
-                    ('scripts/firm_by_firm_scm_analysis.py', 'SCM Firm-by-Firm Analysis: Individual firm treatment effects, heterogeneity, and aggregate inference'),
+                    ('scm_crsp_with_sprint_proxy.py', 'SCM Firm-by-Firm Analysis (n=41 CRSP firms with Sprint→TMUS proxy): Causal treatment effects with 132 total breaches'),
                 ]
             },
             {
