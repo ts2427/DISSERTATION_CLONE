@@ -1,0 +1,12 @@
+Metric,Value
+Number of FCC firms,12
+Mean Treatment Effect (%),7.4416
+Std Dev Effect (%),2.8047
+Median Effect (%),6.6320
+Min Effect (%),6.6320
+Max Effect (%),16.3478
+95% CI Lower (%),-4.1256
+95% CI Upper (%),4.1256
+Permutation p-value,0.0005
+t-test p-value,0.0000
+Avg RMSE (pre-treatment fit),12.1970
