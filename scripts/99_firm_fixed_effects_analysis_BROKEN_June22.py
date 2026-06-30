@@ -10,7 +10,7 @@ import statsmodels.api as sm
 from pathlib import Path
 
 # Load data
-data_path = Path('Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv')
+data_path = Path('Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv')
 if not data_path.exists():
     print(f"Error: Data file not found at {data_path}")
     exit(1)

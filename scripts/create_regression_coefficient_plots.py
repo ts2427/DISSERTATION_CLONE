@@ -13,7 +13,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # Load data
-df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv')
+df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv')
 
 # Drop rows with missing DV or key IVs
 df_essay1 = df[['car_30d', 'immediate_disclosure', 'fcc_reportable', 'health_breach',

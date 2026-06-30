@@ -139,7 +139,7 @@ def check_sample_composition(df):
 def main():
     """Main data preparation workflow"""
     parser = argparse.ArgumentParser(description='Prepare data for firm-by-firm SCM')
-    parser.add_argument('--input', type=str, default='Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv',
+    parser.add_argument('--input', type=str, default='Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv',
                        help='Input CSV file path')
     parser.add_argument('--output', type=str, default='Data/processed/data_prepared_for_scm.csv',
                        help='Output CSV file path')
@@ -148,7 +148,7 @@ def main():
 
     # Use default input if file doesn't exist
     if not Path(args.input).exists():
-        default_input = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'
+        default_input = 'Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv'
         if Path(default_input).exists():
             args.input = default_input
         else:

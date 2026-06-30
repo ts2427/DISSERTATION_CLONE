@@ -4,7 +4,7 @@ ROBUSTNESS CHECK 2: Alternative Disclosure Timing Thresholds
 Tests whether market reaction to disclosure timing is sensitive to the choice
 of "immediate" disclosure threshold (3, 5, 7, 14, 30, 60 days).
 
-Uses: FINAL_DISSERTATION_DATASET_ENRICHED.csv (1,054 breaches, 85 variables)
+Uses: FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv (1,054 breaches, 85 variables)
 """
 
 import pandas as pd
@@ -23,7 +23,7 @@ print("Testing sensitivity to 'immediate disclosure' definition")
 print("=" * 80)
 
 # Configuration
-DATA_FILE = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'
+DATA_FILE = 'Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv'
 OUTPUT_DIR = Path('outputs/robustness')
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 (OUTPUT_DIR / 'tables').mkdir(exist_ok=True)

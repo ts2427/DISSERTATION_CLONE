@@ -40,7 +40,7 @@ print("\n[1/6] Loading datasets...")
 
 # Load main dissertation dataset
 print("  Loading main dissertation dataset...")
-main_df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv')
+main_df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv')
 print(f"    [OK] {len(main_df):,} breach observations")
 
 # Load governance data from Phase 1
@@ -382,7 +382,7 @@ if coef_interact != 0:
 print("\n[6/6] Saving results and generating publication tables...")
 
 # Save enhanced dataset
-output_file = 'Data/processed/FINAL_DISSERTATION_DATASET_WITH_CVSS.csv'
+output_file = 'Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv'
 df.to_csv(output_file, index=False)
 print(f"  [OK] Saved enriched dataset: {output_file}")
 

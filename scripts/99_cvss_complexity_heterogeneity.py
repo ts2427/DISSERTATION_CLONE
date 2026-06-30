@@ -1,4 +1,4 @@
-"""
+﻿"""
 CVSS TECHNICAL COMPLEXITY HETEROGENEITY ANALYSIS
 Phase 2 of Publication Enhancement: Option B
 
@@ -40,7 +40,7 @@ print("\n[1/6] Loading datasets...")
 
 # Load main dissertation dataset WITH pre-computed complexity measures
 print("  Loading main dissertation dataset with CVSS complexity...")
-main_df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_WITH_CVSS.csv')
+main_df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv')
 print(f"    [OK] {len(main_df):,} breach observations")
 
 # ============================================================================
@@ -363,7 +363,7 @@ if coef_interact != 0:
 print("\n[6/6] Saving results and generating publication tables...")
 
 # Save enhanced dataset
-output_file = 'Data/processed/FINAL_DISSERTATION_DATASET_WITH_CVSS.csv'
+output_file = 'Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv'
 df.to_csv(output_file, index=False)
 print(f"  [OK] Saved enriched dataset: {output_file}")
 
@@ -426,3 +426,4 @@ print("\nNext Steps:")
 print("  - Review Phase 2 findings")
 print("  - Integrate Phase 1 + 2 into enhanced dissertation")
 print("  - Prepare for A/A* journal submission")
+

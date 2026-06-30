@@ -10,7 +10,7 @@ import statsmodels.api as sm
 from pathlib import Path
 
 # Load data
-data_path = Path('Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv')
+data_path = Path('Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv')
 df = pd.read_csv(data_path)
 
 # Prepare analysis

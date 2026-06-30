@@ -65,7 +65,7 @@ def run_pipeline():
 
         data_prep_result = subprocess.run(
             [sys.executable, "scripts/scm_data_preparation.py",
-             "--input", "Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv",
+             "--input", "Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv",
              "--output", "data_scm_ready.csv"],
             capture_output=True,
             text=True

@@ -32,7 +32,7 @@ print("=" * 80)
 # ============================================================================
 
 print(f"\n[Step 1/6] Loading data...")
-df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv')
+df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv')
 df_crsp = df[df['has_crsp_data'] == True].copy()
 print(f"  [OK] Loaded: {len(df_crsp):,} breaches with CRSP data")
 

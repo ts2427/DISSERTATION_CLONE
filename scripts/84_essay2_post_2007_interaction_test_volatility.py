@@ -21,7 +21,7 @@ print("ESSAY 2: POST-2007 INTERACTION TEST - FCC EFFECT ON VOLATILITY (CAUSAL ID
 print("=" * 80)
 
 # Load data
-DATA_FILE = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'
+DATA_FILE = 'Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv'
 df = pd.read_csv(DATA_FILE)
 
 # Filter to breaches with CRSP data

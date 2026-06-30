@@ -40,7 +40,7 @@ print("\n[1/6] Loading datasets...")
 
 # Load main dissertation dataset
 print("  Loading main dissertation dataset...")
-main_df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv')
+main_df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv')
 print(f"    [OK] {len(main_df):,} breach observations")
 
 print(f"    Available information environment metrics:")

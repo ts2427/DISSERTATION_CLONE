@@ -28,7 +28,7 @@ print("=" * 80)
 
 # Load data
 print("\n[Loading Data]")
-DATA_FILE = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'
+DATA_FILE = 'Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv'
 df = pd.read_csv(DATA_FILE)
 analysis_df = df[df['has_crsp_data'] == True].copy()
 print(f"  [OK] Analysis sample: {len(analysis_df):,} breaches")

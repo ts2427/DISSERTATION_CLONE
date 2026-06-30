@@ -30,7 +30,7 @@ print("ESSAY 2: MAIN REGRESSION ANALYSIS")
 print("=" * 80)
 
 # Configuration
-DATA_FILE: str = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'
+DATA_FILE: str = 'Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv'
 OUTPUT_DIR: Path = Path('outputs/tables/essay2')
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 

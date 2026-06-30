@@ -10,7 +10,7 @@ from pathlib import Path
 
 def load_data():
     """Load main dataset"""
-    data_path = Path('Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv')
+    data_path = Path('Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv')
     df = pd.read_csv(data_path)
     return df
 

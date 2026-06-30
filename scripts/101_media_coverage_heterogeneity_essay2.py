@@ -30,7 +30,7 @@ print("=" * 90)
 
 print("\n[1/5] Loading data...")
 
-df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv')
+df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv')
 print(f"  [OK] {len(df):,} breach observations")
 
 # ============================================================================

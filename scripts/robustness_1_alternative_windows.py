@@ -4,7 +4,7 @@ ROBUSTNESS CHECK 1: Alternative Event Windows
 Tests FCC regulation effect across multiple CAR/BHAR windows to ensure
 results are not sensitive to event window specification.
 
-Uses: FINAL_DISSERTATION_DATASET_ENRICHED.csv (1,054 breaches, 85 variables)
+Uses: FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv (1,054 breaches, 85 variables)
 """
 
 import pandas as pd
@@ -21,7 +21,7 @@ print("Testing consistency of FCC effect across different measurement periods")
 print("=" * 80)
 
 # Configuration
-DATA_FILE = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'
+DATA_FILE = 'Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv'
 OUTPUT_DIR = Path('outputs/robustness')
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 (OUTPUT_DIR / 'tables').mkdir(exist_ok=True)

@@ -21,7 +21,7 @@ print("ESSAY 3: BOOTSTRAP INDIRECT EFFECT (NONLINEAR MEDIATION)")
 print("=" * 90)
 
 # Load data
-DATA_PATH = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'
+DATA_PATH = 'Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv'
 df = pd.read_csv(DATA_PATH)
 
 # Filter to CRSP sample (match script 91/91b exactly)

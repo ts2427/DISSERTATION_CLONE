@@ -24,7 +24,7 @@ print("LOW R² SENSITIVITY ANALYSIS")
 print("=" * 80)
 
 # Configuration
-DATA_FILE = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'
+DATA_FILE = 'Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv'
 OUTPUT_DIR = Path('outputs/tables/robustness')
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 

@@ -24,7 +24,7 @@ print("ESSAY 3: REDUCED-FORM H6 TEST + MEDIATION DECOMPOSITION")
 print("=" * 90)
 
 # Load data
-DATA_PATH = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'
+DATA_PATH = 'Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv'
 df = pd.read_csv(DATA_PATH)
 
 # Filter to CRSP sample with turnover data (match script 91 exactly)

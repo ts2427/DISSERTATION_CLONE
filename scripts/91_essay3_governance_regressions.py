@@ -31,7 +31,7 @@ print("ESSAY 3: DISCLOSURE TIMING AND GOVERNANCE RESPONSE")
 print("=" * 80)
 
 # Configuration
-DATA_FILE = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'
+DATA_FILE = 'Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv'
 EXEC_CHANGES_FILE = 'Data/enrichment/executive_changes.csv'
 ENFORCEMENT_FILE = 'Data/enrichment/regulatory_enforcement.csv'
 OUTPUT_DIR = Path('outputs/tables/essay3_governance')

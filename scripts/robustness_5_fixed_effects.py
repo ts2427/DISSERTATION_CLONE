@@ -6,7 +6,7 @@ Addresses key limitations:
 2. Industry Fixed Effects - Controls for industry-specific regulatory/market trends
 3. Industry-Restricted Sample - Compares FCC firms only to similar industries
 
-Uses: FINAL_DISSERTATION_DATASET_ENRICHED.csv (1,054 breaches, 85 variables)
+Uses: FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv (1,054 breaches, 85 variables)
 """
 
 import pandas as pd
@@ -26,7 +26,7 @@ print("Testing whether FCC effect is robust to macro and industry controls")
 print("=" * 80)
 
 # Configuration
-DATA_FILE = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'
+DATA_FILE = 'Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv'
 OUTPUT_DIR = Path('outputs/robustness')
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 (OUTPUT_DIR / 'tables').mkdir(exist_ok=True)

@@ -449,7 +449,7 @@ else:
     print(f"\n⚠ Warning: records_affected_numeric not found - skipping total_affected_log")
 
 output_file = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.xlsx'
-csv_file = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'
+csv_file = 'Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv'
 
 print(f"\nSaving final enriched dataset...")
 

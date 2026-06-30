@@ -14,7 +14,7 @@ print("HETEROGENEITY ANALYSIS - DO EFFECTS VARY BY FIRM CHARACTERISTICS?")
 print("=" * 80)
 
 # Load data
-df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv')
+df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv')
 print(f"\nLoaded: {len(df):,} breaches")
 
 # Prepare for heterogeneity analysis

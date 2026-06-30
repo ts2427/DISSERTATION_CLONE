@@ -29,7 +29,7 @@ print("=" * 100)
 print("H1 COMPREHENSIVE POWER ANALYSIS: DISCLOSURE TIMING EFFECT")
 print("=" * 100)
 
-DATA_FILE = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'
+DATA_FILE = 'Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv'
 OUTPUT_DIR = Path('outputs/essay2_final/tables')
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 

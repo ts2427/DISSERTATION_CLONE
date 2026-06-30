@@ -26,7 +26,7 @@ print("ESSAY 3: MEDIATION ANALYSIS - VOLATILITY MEDIATION OF TIMING -> TURNOVER"
 print("=" * 80)
 
 # Configuration
-DATA_FILE = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'
+DATA_FILE = 'Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv'
 OUTPUT_DIR = Path('outputs/tables/essay3')
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 

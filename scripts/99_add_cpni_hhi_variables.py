@@ -20,7 +20,7 @@ print("ADDING CPNI AND MARKET CONCENTRATION (HHI) VARIABLES")
 print("=" * 80)
 
 # Load enriched dataset
-input_file = 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'
+input_file = 'Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv'
 print(f"\n[Step 1/4] Loading dataset...")
 df = pd.read_csv(input_file)
 print(f"  [OK] Loaded {len(df):,} breaches")

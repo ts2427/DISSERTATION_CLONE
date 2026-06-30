@@ -12,7 +12,7 @@ from pathlib import Path
 # Load data - use relative paths for cross-platform compatibility
 SCRIPT_DIR = Path(__file__).parent
 PROJECT_ROOT = SCRIPT_DIR.parent
-data_path = PROJECT_ROOT / 'Data' / 'processed' / 'FINAL_DISSERTATION_DATASET_ENRICHED.csv'
+data_path = PROJECT_ROOT / 'Data' / 'processed' / 'FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv'
 df = pd.read_csv(data_path)
 
 # Ensure date columns are datetime
