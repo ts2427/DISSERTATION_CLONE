@@ -1,3 +1,4 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:00cfff751929b4b2aaf5531799d6b77167b840e9ad002ca20aae0e1d7bedda25
-size 230
+Model,FCC Coefficient,Complexity Coefficient,Interaction,R-squared
+Model 1: FCC Only,-2.7550***,N/A,N/A,0.0289
+Model 2: FCC + Complexity,-2.7527***,0.0326,N/A,0.0289
+Model 3: FCC x Complexity,-1.7677,0.4425,-1.9045,0.0308

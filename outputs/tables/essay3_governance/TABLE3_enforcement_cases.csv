@@ -1,3 +1,7 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ab6d1be0eefb5fd92f574f4f44f3d2e167d590fe3c39bb409c4cd8ecb26d6ff1
-size 365
+Case,Company,Breach Date,Immediate,FCC,Penalty USD,Enforcement Type
+1,"Charter Communications, Inc.",2023-01-01,1,1,550.0,FCC
+2,T-Mobile,2021-01-18,0,1,118.29,FCC
+3,"T-Mobile US, Inc.",2021-01-18,0,1,118.29,FCC
+4,T-Mobile USA Inc.,2015-10-01,1,1,287.115,FCC
+5,"T-Mobile USA, Inc.",2021-08-13,1,1,213.487,FCC
+6,"T-Mobile USA, Inc.",2021-03-01,0,1,76600.0,FCC

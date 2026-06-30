@@ -1,3 +1,7 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b76c99c3c8e4437b9f4fc7bb6ade7bbe250fccb0fc0bd14c949490ee658f3fd2
-size 363
+Standard Error Method,Coefficient,Std. Error,T-statistic,P-value,Sig.
+1. Homoskedastic,0.6490,(0.7971),0.81,0.4158,
+2. Robust (HC1),0.6490,(0.8410),0.77,0.4403,
+3. Robust (HC3) [Main],0.6490,(0.8460),0.77,0.4430,
+4. Firm-Clustered,0.6490,(0.9314),0.70,0.4859,
+5. Year-Clustered,0.6490,(1.0855),0.60,0.5499,
+6. Newey-West (HAC),0.6490,(0.8569),0.76,0.4488,

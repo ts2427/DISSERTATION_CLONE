@@ -1,3 +1,4 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b58528aad5151141591359471f9ad09e82a26aeb390bfd519d27a85b75ff3dd1
-size 121
+,N Observations,Events,Event %,Pseudo R2
+30d,896,416,46.4%,0.0518
+90d,896,599,66.9%,0.0534
+180d,896,605,67.5%,0.0488

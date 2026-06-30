@@ -1,3 +1,4 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3cd1ffaa23769d215b1551c9d8edc905cf322133901151ad50e2c2ff77343162
-size 177
+Model,N,FCC Coef,P-value,R²
+1. Baseline (OLS),898,-2.3653,0.0094,0.0233
+2. Year Fixed Effects,898,-2.8683,0.0031,0.0810
+3. Industry Fixed Effects,840,-5.7740,0.0002,0.1002

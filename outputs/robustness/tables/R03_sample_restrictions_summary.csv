@@ -1,3 +1,9 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f8555aa189fb3be44037cfc96c383e2ca38f7880002898b3fc73e2635d194ec2
-size 556
+Sample Restriction,N,R²,Adj. R²,Immediate Disclosure,Prior Breaches
+1. Full Sample,898,0.0280,0.0193,0.8974,-0.0814**
+2. Exclude Crisis (2008-09),885,0.0277,0.0188,0.6000,-0.0749**
+3. Exclude COVID (2020-21),770,0.0399,0.0298,1.2487,-0.0746**
+4. Exclude Crisis & COVID,757,0.0401,0.0298,0.9283,-0.0678**
+5. Exclude Smallest Quartile,672,0.0727,0.0615,0.3767,-0.1211***
+6. Exclude Largest Decile,808,0.0334,0.0237,0.7276,-0.0839**
+7. Post-2015 Only,795,0.0314,0.0216,0.4979,-0.0694**
+8. Winsorized Returns (1%),898,0.0309,0.0222,0.8318,-0.0806**
