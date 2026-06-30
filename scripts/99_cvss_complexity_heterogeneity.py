@@ -44,24 +44,141 @@ main_df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_WITH_CVSS.csv')
 print(f"    [OK] {len(main_df):,} breach observations")
 
 # ============================================================================
-# SECTION 2: USE PRE-COMPUTED CVSS COMPLEXITY INDICATORS
+# SECTION 2: EXTRACT CVSS SCORES FROM NVD JSON FILES
 # ============================================================================
 
-print("\n[2/6] Using pre-computed CVSS complexity indicators...")
-print("  Dataset already includes vendor CVSS profiles and complexity measures")
+print("\n[2/6] Extracting CVSS scores from NVD JSON files...")
+print("  Processing 2007-2024 NVD CVE database...")
 
-# Verify complexity columns exist
-complexity_cols = ['vendor_mean_cvss', 'vendor_max_cvss', 'vendor_high_severity_pct', 'has_high_complexity', 'complexity_category']
-available_cols = [col for col in complexity_cols if col in main_df.columns]
-print(f"  Available complexity measures: {available_cols}")
+# Build dictionary: vendor -> list of CVSS scores
+vendor_cvss_map = {}
+years_processed = 0
 
-# Create high complexity indicator (top quartile or vendor_max_cvss >= 7.0)
-if 'vendor_max_cvss' in main_df.columns:
-    main_df['has_high_complexity'] = (main_df['vendor_max_cvss'] >= 7.0).astype(int)
-    high_complexity_count = main_df['has_high_complexity'].sum()
-    print(f"  High complexity breaches (CVSS >= 7.0): {high_complexity_count:,}")
+# Process each year's NVD data
+nvd_dir = Path('Data/JSON Files')
+json_files = sorted(nvd_dir.glob('nvdcve-2.0-*.json')) if nvd_dir.exists() else []
+
+print(f"  Found {len(json_files)} NVD files to process")
+
+if json_files:
+    for json_file in json_files:
+        year = json_file.stem.split('-')[-1]
+
+        try:
+            with open(json_file, 'r', encoding='utf-8') as f:
+                # Check if this is an actual JSON file or git-lfs pointer
+                first_line = f.readline()
+                f.seek(0)
+
+                if 'git-lfs' in first_line:
+                    print(f"  [WARN] {json_file.name} is a git-lfs pointer, not actual JSON")
+                    continue
+
+                data = json.load(f)
+                vulnerabilities = data.get('vulnerabilities', [])
+
+                for vuln in vulnerabilities:
+                    cve_data = vuln.get('cve', {})
+                    cve_id = cve_data.get('id', '')
+
+                    # Extract CVSS scores (prefer v3.1, fall back to v3.0, then v2.0)
+                    metrics = cve_data.get('metrics', {})
+                    cvss_score = None
+                    severity = None
+
+                    if 'cvssMetricV31' in metrics:
+                        cvss_data = metrics['cvssMetricV31'][0].get('cvssData', {})
+                        cvss_score = cvss_data.get('baseScore')
+                        severity = cvss_data.get('baseSeverity', '')
+                    elif 'cvssMetricV3' in metrics:
+                        cvss_data = metrics['cvssMetricV3'][0].get('cvssData', {})
+                        cvss_score = cvss_data.get('baseScore')
+                        severity = cvss_data.get('baseSeverity', '')
+                    elif 'cvssMetricV2' in metrics:
+                        cvss_data = metrics['cvssMetricV2'][0].get('cvssData', {})
+                        cvss_score = cvss_data.get('baseScore')
+                        if cvss_score:
+                            if cvss_score < 4.0:
+                                severity = 'LOW'
+                            elif cvss_score < 7.0:
+                                severity = 'MEDIUM'
+                            elif cvss_score < 9.0:
+                                severity = 'HIGH'
+                            else:
+                                severity = 'CRITICAL'
+
+                    # Extract affected vendors from configurations
+                    configurations = cve_data.get('configurations', [])
+                    for config in configurations:
+                        nodes = config.get('nodes', [])
+                        for node in nodes:
+                            cpe_matches = node.get('cpeMatch', [])
+                            for cpe in cpe_matches:
+                                criteria = cpe.get('criteria', '')
+                                # Extract vendor from CPE: cpe:2.3:TYPE:VENDOR:PRODUCT:...
+                                parts = criteria.split(':')
+                                if len(parts) >= 4:
+                                    vendor = parts[3].lower()
+
+                                    if vendor and vendor != '*':
+                                        if vendor not in vendor_cvss_map:
+                                            vendor_cvss_map[vendor] = []
+
+                                        if cvss_score is not None:
+                                            vendor_cvss_map[vendor].append({
+                                                'cvss_score': cvss_score,
+                                                'severity': severity,
+                                                'cve_id': cve_id,
+                                                'year': int(year)
+                                            })
+
+                years_processed += 1
+                if years_processed % 5 == 0:
+                    print(f"    Processed {years_processed} years, {len(vendor_cvss_map):,} vendors found")
+
+        except json.JSONDecodeError:
+            print(f"    [WARN] {json_file.name} is not valid JSON (likely git-lfs pointer)")
+        except Exception as e:
+            print(f"    [WARN] Error processing {json_file}: {str(e)[:50]}")
+
+    print(f"\n  Extracted CVSS data for {len(vendor_cvss_map):,} vendors")
 else:
-    print("  [WARNING] vendor_max_cvss not found, using existing has_high_complexity column")
+    print("  [NOTE] NVD JSON files not found - will use severity_score fallback")
+
+# ============================================================================
+# SECTION 2B: MAP CVSS SCORES TO DATASET
+# ============================================================================
+
+print("\n[2B/6] Mapping CVSS scores to breaches...")
+
+# Extract organization names from dataset for vendor matching
+main_df['vendor_max_cvss'] = np.nan
+main_df['vendor_mean_cvss'] = np.nan
+main_df['vendor_high_severity_pct'] = np.nan
+
+if vendor_cvss_map:
+    matched = 0
+    for idx, row in main_df.iterrows():
+        org_name = str(row['org_name']).lower()
+        # Try to find vendor in CVSS map
+        for vendor, cvss_list in vendor_cvss_map.items():
+            if vendor in org_name or org_name in vendor:
+                cvss_scores = [c['cvss_score'] for c in cvss_list if c['cvss_score'] is not None]
+                if cvss_scores:
+                    main_df.loc[idx, 'vendor_max_cvss'] = max(cvss_scores)
+                    main_df.loc[idx, 'vendor_mean_cvss'] = np.mean(cvss_scores)
+                    high_severity_count = sum(1 for c in cvss_list if c['severity'] in ['HIGH', 'CRITICAL'])
+                    main_df.loc[idx, 'vendor_high_severity_pct'] = (high_severity_count / len(cvss_list)) * 100 if cvss_list else 0
+                    matched += 1
+                break
+
+    print(f"  Matched {matched:,} breaches to CVSS data")
+    print(f"  CVSS coverage: {main_df['vendor_max_cvss'].notna().sum():,} / {len(main_df):,}")
+
+# Create high complexity indicator
+main_df['has_high_complexity'] = (main_df['vendor_max_cvss'] >= 7.0).astype(int)
+high_complexity_count = main_df['has_high_complexity'].sum()
+print(f"  High complexity breaches (CVSS >= 7.0): {high_complexity_count:,}")
 
 # ============================================================================
 # SECTION 3: CREATE CVSS COMPLEXITY INDICATORS
@@ -132,26 +249,45 @@ except ImportError:
     import statsmodels.api as sm
     from statsmodels.formula.api import ols
 
-# Use severity_score for complexity (has complete data for all 1054 breaches)
-# Create high complexity indicator using median split on severity_score
-severity_median = df['severity_score'].median()
+# Use real CVSS data for complexity (vendor_max_cvss >= 7.0 = high complexity)
+# If CVSS data unavailable, fall back to severity_score
 
-# Prepare regression data
-reg_data = df[
-    (df['has_crsp_data'] == 1) &
-    (df['car_30d'].notna()) &
-    (df['severity_score'].notna())
-].copy()
+if df['vendor_max_cvss'].notna().sum() > 300:
+    # Enough CVSS data - use it
+    reg_data = df[
+        (df['has_crsp_data'] == 1) &
+        (df['car_30d'].notna()) &
+        (df['vendor_max_cvss'].notna())
+    ].copy()
 
-reg_data['car_outcome'] = reg_data['car_30d']
-reg_data['fcc'] = reg_data['fcc_reportable'].astype(int)
-reg_data['high_complexity'] = (reg_data['severity_score'] >= severity_median).astype(int)
-reg_data['health'] = reg_data['health_breach'].astype(int)
-reg_data['financial'] = reg_data['financial_breach'].astype(int)
-reg_data['prior_breaches'] = reg_data['prior_breaches_total'].fillna(0)
+    reg_data['car_outcome'] = reg_data['car_30d']
+    reg_data['fcc'] = reg_data['fcc_reportable'].astype(int)
+    reg_data['high_complexity'] = (reg_data['vendor_max_cvss'] >= 7.0).astype(int)
+    reg_data['health'] = reg_data['health_breach'].astype(int)
+    reg_data['financial'] = reg_data['financial_breach'].astype(int)
+    reg_data['prior_breaches'] = reg_data['prior_breaches_total'].fillna(0)
 
-print(f"\n  Analysis sample: {len(reg_data):,} breaches with severity score complexity data")
-print(f"  (Using severity_score median split: {severity_median:.2f})")
+    print(f"\n  Analysis sample: {len(reg_data):,} breaches with REAL CVSS complexity data")
+    print(f"  (Using vendor_max_cvss >= 7.0 threshold)")
+else:
+    # Fall back to severity_score if insufficient CVSS data
+    severity_median = df['severity_score'].median()
+
+    reg_data = df[
+        (df['has_crsp_data'] == 1) &
+        (df['car_30d'].notna()) &
+        (df['severity_score'].notna())
+    ].copy()
+
+    reg_data['car_outcome'] = reg_data['car_30d']
+    reg_data['fcc'] = reg_data['fcc_reportable'].astype(int)
+    reg_data['high_complexity'] = (reg_data['severity_score'] >= severity_median).astype(int)
+    reg_data['health'] = reg_data['health_breach'].astype(int)
+    reg_data['financial'] = reg_data['financial_breach'].astype(int)
+    reg_data['prior_breaches'] = reg_data['prior_breaches_total'].fillna(0)
+
+    print(f"\n  Analysis sample: {len(reg_data):,} breaches with severity_score complexity data (CVSS insufficient)")
+    print(f"  (Using severity_score median split: {severity_median:.2f})")
 
 # Model 1: Baseline FCC effect
 print("\n  MODEL 1: Baseline FCC Effect (Reproduce Essay 1)")
