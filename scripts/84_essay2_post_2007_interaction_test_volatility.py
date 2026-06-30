@@ -1,5 +1,5 @@
 """
-ESSAY 3: POST-2007 INTERACTION TEST - VOLATILITY OUTCOMES
+ESSAY 2: POST-2007 INTERACTION TEST - VOLATILITY CAUSAL IDENTIFICATION
 Tests whether FCC effect on volatility is driven by 2007 regulation or pre-existing industry effect.
 
 If FCC penalty comes from regulation (not industry), then:
@@ -17,7 +17,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 print("=" * 80)
-print("ESSAY 3: POST-2007 INTERACTION TEST - FCC EFFECT ON VOLATILITY")
+print("ESSAY 2: POST-2007 INTERACTION TEST - FCC EFFECT ON VOLATILITY (CAUSAL ID)")
 print("=" * 80)
 
 # Load data

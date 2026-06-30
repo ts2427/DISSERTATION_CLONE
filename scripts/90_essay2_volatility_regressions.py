@@ -1,15 +1,14 @@
 """
-ESSAY 3: DISCLOSURE TIMING AND INFORMATION ASYMMETRY
+ESSAY 2: DISCLOSURE TIMING AND INFORMATION ASYMMETRY (VOLATILITY ANALYSIS)
 
-Creates main regression tables for Essay 3:
-- Information asymmetry changes post-breach
-- Disclosure timing effects
-- Volatility analysis
+Creates main regression tables for Essay 2:
+- Information asymmetry changes post-breach (measured via volatility)
+- FCC regulation effects on volatility
+- Firm-size heterogeneity in volatility response
 
 Tables:
-- Table 2: Volatility changes
-- Table 3: Information asymmetry measures
-- Table 4: Disclosure timing effects
+- Table 2: Volatility changes (main FCC effect)
+- Table 3: Information asymmetry heterogeneity
 """
 
 import pandas as pd
@@ -27,7 +26,7 @@ from scipy import stats
 warnings.filterwarnings('ignore')
 
 print("=" * 80)
-print("ESSAY 3: DISCLOSURE TIMING AND INFORMATION ASYMMETRY")
+print("ESSAY 2: VOLATILITY ANALYSIS - INFORMATION ASYMMETRY")
 print("=" * 80)
 
 # Configuration
