@@ -1,0 +1,4 @@
+Test,fcc_reportable_coef,fcc_reportable_se,z_t_stat,p_value,Significant_at_05,Interpretation
+Multiple Executive Changes (180d),-0.0248,0.1978,-0.1256,0.9001,No,Null - FCC does not predict multiple changes
+Weak Governance Indicator,181.0159,479.1373,0.3778,0.7056,No,Null - FCC does not predict weak governance
+Governance Weakness Score (continuous),-0.0,0.0,-1.9447,0.0518,No,Null - FCC does not predict governance weakness

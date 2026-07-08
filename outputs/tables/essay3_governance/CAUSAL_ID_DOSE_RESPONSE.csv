@@ -1,0 +1,5 @@
+Test,fcc_main_effect,fcc_main_p_value,severity_main_effect,severity_main_p_value,interaction_coef,interaction_p_value,Significant_interaction_at_10,Interpretation
+FCC × Financial Breach,0.0203,0.9296,-0.4777,0.0244,0.5314,0.2341,No,Null - FCC effect uniform across financial vs non-financial
+FCC × Health Breach,0.1528,0.4507,0.464,0.1714,22.8102,0.9982,No,Null - FCC effect uniform across health vs non-health
+FCC × High Severity,-0.0715,0.9617,-0.6739,0.1704,0.2469,0.8695,No,Null - FCC effect uniform across severity levels
+FCC × Ransomware,0.7887,0.5217,-0.8519,0.0541,-0.625,0.6166,No,Null - FCC effect uniform for ransomware vs other
