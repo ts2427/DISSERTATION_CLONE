@@ -255,6 +255,8 @@ Log file: {log_path}
                     ('scripts/98_propensity_score_matching.py', 'Propensity Score Matching (H2 self-selection bias test - addresses reviewer concern)'),
                     ('scripts/99_firm_fixed_effects_analysis.py', 'Firm Fixed Effects (H1-H4 within-firm variation, controls unobserved heterogeneity)'),
                     ('scripts/92_enforcement_analysis.py', 'H6 Enforcement Analysis (regulatory enforcement prevalence and predictors)'),
+                    ('run_causal_id_parallel_trends_and_balance.py', 'Essay 3 Causal ID: Parallel Trends & Covariate Balance Tests'),
+                    ('run_causal_id_strengthening.py', 'Essay 3 Causal ID: Placebo Tests & Dose-Response Analysis'),
                 ]
             },
             {
