@@ -1,0 +1,27 @@
+Table_Name,Table_Description,Source_Script,Essay,Output_File,Notes
+TABLE1_PANEL_A,Summary statistics (full sample),70_summary_statistics.py,All,outputs/tables/TABLE1_PANEL_A_full_sample.csv,Main sample n=898
+TABLE1_PANEL_B,Summary statistics (CRSP matched sample),70_summary_statistics.py,All,outputs/tables/TABLE1_PANEL_B_crsp_sample.csv,CRSP matched firms n=326
+TABLE1_PANEL_C,Summary statistics (by FCC),70_summary_statistics.py,All,outputs/tables/TABLE1_PANEL_C_by_fcc.csv,Split by FCC status
+TABLE1_PANEL_D,Summary statistics (by timing),70_summary_statistics.py,All,outputs/tables/TABLE1_PANEL_D_by_timing.csv,Split by disclosure timing
+TABLE2,Essay 1 baseline CAR models (H1-H4),80_essay1_car_regressions.py,Essay 1,outputs/tables/essay2/TABLE2_baseline_disclosure.txt,H1: timing effect
+TABLE3,Essay 1 FCC regulation effect,80_essay1_car_regressions.py,Essay 1,outputs/tables/essay2/TABLE3_fcc_regulation.txt,H2: FCC causal effect
+TABLE4,Essay 1 prior breaches (H3),80_essay1_car_regressions.py,Essay 1,outputs/tables/essay2/TABLE4_prior_breaches.txt,H3: reputation penalty
+TABLE5,Essay 1 breach severity (H4),80_essay1_car_regressions.py,Essay 1,outputs/tables/essay2/TABLE5_breach_severity.txt,H4: health breach penalty
+TABLE_B8_CAR,Essay 1 post-2007 causal ID test,81_post_2007_interaction_test.py,Essay 1,outputs/tables/essay2/TABLE_B8_post_2007_interaction.txt,Pre/post-2007 FCC effect
+TABLE_B9,Standard errors robustness (HC3 vs clustered),82_clustered_vs_hc3_comparison.py,Essay 1,outputs/tables/essay2/TABLE_B9_clustered_vs_hc3_comparison.txt,HC3 vs firm-cluster comparison
+TABLE2_VOL,Essay 2 baseline volatility models (H5),90_essay2_volatility_regressions.py,Essay 2,outputs/tables/essay3/TABLE2_volatility_changes.txt,H5: FCC effect on volatility
+TABLE3_VOL,Essay 2 volatility heterogeneity,90_essay2_volatility_regressions.py,Essay 2,outputs/tables/essay3/TABLE3_information_asymmetry.txt,Firm-size quartile breakdown
+TABLE_B8_VOL,Essay 2 post-2007 causal ID (volatility),84_essay2_post_2007_interaction_test_volatility.py,Essay 2,outputs/tables/essay3/TABLE_B8_post_2007_interaction_volatility.txt,Pre/post-2007 FCC effect on volatility
+H5_QUARTILES,Essay 2 H5 by firm-size quartile,90_essay2_volatility_regressions.py,Essay 2,outputs/tables/essay3/TABLE_H5_QUARTILES.txt,Q1: +7.31% / Q2: +3.64% / Q3: -0.54% / Q4: -3.39%
+TABLE2_TURNOVER,Essay 3 governance (30/90/180-day windows),91_essay3_governance_regressions.py,Essay 3,outputs/tables/essay3_governance/TABLE2_turnover_summary.csv,H6: FCC effect on executive turnover
+TABLE3_ENFORCEMENT,Essay 3 enforcement analysis,92_enforcement_analysis.py,Essay 3,outputs/tables/essay3_governance/TABLE3_enforcement_cases.csv,Regulatory enforcement prevalence
+H6_REDUCED_FORM,Essay 3 H6 reduced-form test (immediate_disclosure),91b_essay3_reduced_form_mediation.py,Essay 3,outputs/tables/essay3_governance/TABLE_H6_REDUCED_FORM.txt,True mechanism: timing not FCC
+H6_MEDIATION,Essay 3 H6 mediation bootstrap,91c_essay3_mediation_bootstrap.py,Essay 3,outputs/tables/essay3_governance/mediation_bootstrap_indirect_effects.csv,Indirect effect via volatility
+TABLE_CVSS_COMPLEXITY,Heterogeneity: CVSS complexity (Essay 1),99_cvss_complexity_heterogeneity.py,Essay 1,outputs/tables/TABLE_CVSS_COMPLEXITY_HETEROGENEITY_RESULTS.csv,Phase 2: FCC x Complexity
+TABLE_MEDIA_COVERAGE,Heterogeneity: Media coverage (Essay 1),101_media_coverage_heterogeneity_essay2.py,Essay 1,outputs/tables/TABLE_MEDIA_COVERAGE_HETEROGENEITY_RESULTS.csv,FCC x Media interaction
+TABLE_GOVERNANCE_HETEROGENEITY,Heterogeneity: Governance quality (Essay 1),98_sox404_heterogeneity.py,Essay 1,outputs/tables/TABLE_GOVERNANCE_HETEROGENEITY_RESULTS.csv,Phase 1: FCC x Governance
+TABLE_BALANCE_TEST,Pre-2007 balance test,70_summary_statistics.py + 80_essay1_car_regressions.py,Essay 1,outputs/tables/TABLE_BALANCE_TEST.csv,Firm characteristics parity
+FIGURE_PARALLEL_TRENDS,Parallel trends (FCC vs non-FCC CAR),80_essay1_car_regressions.py,Essay 1,outputs/figures/FIGURE_PARALLEL_TRENDS.png,2004-2010 visual test
+SCM_N41,Firm-by-firm SCM with Sprint proxy,scm_crsp_with_sprint_proxy.py,All,outputs/scm_crsp_with_sprint/scm_crsp_sprint_proxy_results.csv,n=41 CRSP firms; mean effect = -4.03%; p=0.003
+DIAGNOSTICS_BREUSCH_PAGAN,Breusch-Pagan heteroskedasticity test,essay2_canonical_pipeline.py,Essay 2,essay2_canonical_results.csv,χ²(1) = 15.584; p = 0.0487
+DIAGNOSTICS_VIF,Variance Inflation Factors,essay2_canonical_pipeline.py,Essay 2,essay2_canonical_results.csv,Multicollinearity check (all VIF < 5)
