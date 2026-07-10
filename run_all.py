@@ -147,6 +147,8 @@ def verify_outputs(log_file):
         Path('outputs/tables/essay2/DIAGNOSTICS_VIF_summary.txt'),
         Path('outputs/tables/essay3_governance/h6_tost_equivalence_results.csv'),
         Path('outputs/tables/essay3_governance/H6_TOST_Equivalence_Test.txt'),
+        Path('outputs/tables/essay3_governance/h6_firm_size_heterogeneity_full.csv'),
+        Path('outputs/tables/essay3_governance/h6_reduced_form_all_coefficients.csv'),
         Path('outputs/tables/essay3/TABLE2_volatility_changes.txt'),
         Path('outputs/tables/essay3/TABLE3_information_asymmetry.txt'),
         Path('outputs/economic_significance/economic_impact_summary.csv'),
@@ -236,6 +238,8 @@ Log file: {log_path}
                     ('scripts/91b_essay3_reduced_form_mediation.py', 'Essay 3 Reduced-Form H6 Test (Correct Specification - No Post-Treatment Variables) + Mediation Decomposition'),
                     ('scripts/91c_essay3_mediation_bootstrap.py', 'Essay 3 Bootstrap Indirect Effect (Nonlinear Mediation on Probability Scale with 95% CI)'),
                     ('scripts/91e_essay3_h6_tost_equivalence.py', 'Essay 3 H6 TOST Equivalence Test (N=651, confirms FCC effect is economically negligible)'),
+                    ('scripts/91f_essay3_h6_firm_size_heterogeneity.py', 'Essay 3 H6 Firm Size Heterogeneity (30d/90d/180d quartile analysis - addresses temporal persistence)'),
+                    ('scripts/91g_extract_reduced_form_controls.py', 'Essay 3 H6 Control Variable Significance (which breach/firm characteristics predict turnover)'),
                     ('scripts/90_essay2_volatility_regressions.py', 'Essay 2 Volatility Analysis (FCC effect on post-breach volatility, Tables 2-3)'),
                     # ARCHIVED: Pre-2007 causal ID replaced by SCM. Runs as robustness check only.
                     # ('scripts/84_essay2_post_2007_interaction_test_volatility.py', 'Essay 2 Volatility Causal ID (TABLE B8: Post-2007 Test)'),
@@ -401,10 +405,13 @@ Essay 2 Robustness Checks (Primary causal ID via SCM):
 
 Essay 3 Governance Response (Executive Turnover - Main Results):
   outputs/tables/essay3_governance/reduced_form_h6_results.csv (Reduced form: FCC effect on turnover, N=651)
+  outputs/tables/essay3_governance/mediator_first_stage_results.csv (First stage: FCC → immediate_disclosure, 14.52pp)
   outputs/tables/essay3_governance/with_mediator_model_coefficients.csv (Mediation model: FCC + immediate_disclosure)
   outputs/tables/essay3_governance/mediation_bootstrap_indirect_effects.csv (Bootstrap indirect effects, 1,000 iterations)
   outputs/tables/essay3_governance/h6_tost_equivalence_results.csv (TOST equivalence test, N=651, ±10pp bounds)
   outputs/tables/essay3_governance/H6_TOST_Equivalence_Test.txt (TOST interpretation and results)
+  outputs/tables/essay3_governance/h6_reduced_form_all_coefficients.csv (Control variable significance: which predictors reach p<.10)
+  outputs/tables/essay3_governance/h6_firm_size_heterogeneity_full.csv (Heterogeneity by firm size: 30d/90d/180d quartile analysis)
   outputs/tables/essay3_governance/CAUSAL_ID_COVARIATE_BALANCE.csv (Balance test: FCC vs non-FCC firms)
   outputs/tables/essay3_governance/CAUSAL_ID_PLACEBO_TESTS.csv (Placebo tests: alternative governance outcomes)
   outputs/tables/essay3_governance/CAUSAL_ID_DOSE_RESPONSE.csv (Dose-response: FCC effect by severity)
@@ -492,7 +499,17 @@ Essay 3 - Governance Response (Executive Turnover - H6):
       - 180d: INCONCLUSIVE (CI: [-10.84pp, +8.00pp], lower bound exceeds by 0.84pp)
   [+] Mediation analysis: FCC → immediate_disclosure (14.52pp, p<.001) but disclosure → turnover NOT significant
   [+] Causal ID validation: Balance test ✓, Placebo tests ✓, Dose-response ✓, Temporal ✓
-  [+] Interpretation: FCC regulation does not trigger executive turnover; high baseline turnover (46%) is breach-driven, not regulation-driven
+  [+] Control variable significance (N=651):
+      - Leverage predicts turnover at 30d (p=.007***)
+      - Prior breaches predict turnover at 90d/180d (p=.019**, .023**)
+      - Health breach predicts turnover at 90d/180d (p=.056*, .035**)
+      - Firm size does NOT predict turnover (all p>.21)
+  [+] Firm-size heterogeneity (30d/90d/180d quartile analysis):
+      - Q2 produces singular matrix at 90d/180d (outcome lacks variation)
+      - Q3 shows consistent negative FCC pattern (-17.5pp at 30d, -11.5pp at 90d, -17.6pp at 180d, marginal significance)
+      - Q1/Q4 show null FCC effects across all windows
+      - Interpretation: Heterogeneity is exploratory; appendix-only due to singular matrix in Q2 and marginal p-values in Q3
+  [+] Interpretation: FCC regulation does not trigger executive turnover in aggregate; baseline turnover (46%) is breach-driven, moderated by prior history and breach type
 
 Robustness:
   [+] Prior breach effects robust across all specifications
