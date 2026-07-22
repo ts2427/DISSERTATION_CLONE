@@ -30,13 +30,13 @@ Non-FCC breaches should show no FCC-related price impact.
 
 Data: FCC reportable vs non-reportable breaches
 
-Sample: FCC breaches n=151, Non-FCC n=633
+Sample: FCC breaches n=141, Non-FCC n=643
 
 FCC Breach Effect:
-  FCC CAR mean:          -2.3995% (n=151)
-  Non-FCC CAR mean:       0.0810% (n=633)
-  Difference (FCC):      -2.4805%
-  Std Error:              0.8670%
+  FCC CAR mean:          -2.3878% (n=141)
+  Non-FCC CAR mean:       0.0374% (n=643)
+  Difference (FCC):      -2.4252%
+  Std Error:              0.9129%
 
 Interpretation:
 - The differential effect between FCC and non-FCC breaches confirms regulation

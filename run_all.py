@@ -232,10 +232,16 @@ Log file: {log_path}
                 ]
             },
             {
+                'category': 'DATA PREPARATION',
+                'scripts': [
+                    ('scripts/53_merge_CONFIRMED_enrichments.py', 'Merge All Enrichments (Prior breaches, breach severity, media coverage, executive turnover, enforcement) → FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv'),
+                ]
+            },
+            {
                 'category': 'MAIN ANALYSIS',
                 'scripts': [
                     ('scripts/70_summary_statistics.py', 'Summary Statistics (Table 1)'),
-                    ('scripts/80_essay1_car_regressions.py', 'Essay 1 Main Regressions (H1-H4: CAR on disclosure/FCC/reputation/severity)'),
+                    ('scripts/80_essay1_car_regressions.py', 'Essay 1 Main Regressions (H1-H4: CAR on disclosure/FCC/reputation/severity) - HC3 robust SEs as primary'),
                     # ARCHIVED: Pre-2007 causal ID replaced by SCM. Runs as robustness check only.
                     # ('scripts/81_post_2007_interaction_test.py', 'FCC Causal Identification (TABLE B8: Post-2007 Interaction Test - Market Returns)'),
                     ('scripts/82_clustered_vs_hc3_comparison.py', 'Standard Errors Robustness (TABLE B9: Clustered vs HC3 Comparison)'),

@@ -1,7 +1,7 @@
 window,variable,logit_coef,logit_se,logit_z,logit_p
-30d,immediate_disclosure,-0.6502,0.2117,-3.071,0.0021
-30d,fcc_reportable,0.1704,0.2093,0.814,0.4156
-90d,immediate_disclosure,-1.0085,0.1976,-5.102,0.0
-90d,fcc_reportable,0.1164,0.2103,0.553,0.5799
-180d,immediate_disclosure,-0.944,0.1965,-4.804,0.0
-180d,fcc_reportable,0.0352,0.2094,0.168,0.8664
+30d,immediate_disclosure,-0.6572,0.2128,-3.088,0.002
+30d,fcc_reportable,0.1854,0.2152,0.862,0.3889
+90d,immediate_disclosure,-1.0109,0.1986,-5.09,0.0
+90d,fcc_reportable,0.113,0.2158,0.524,0.6006
+180d,immediate_disclosure,-0.9441,0.1974,-4.782,0.0
+180d,fcc_reportable,0.03,0.2148,0.14,0.8889

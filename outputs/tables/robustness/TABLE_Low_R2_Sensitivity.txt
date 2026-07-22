@@ -13,59 +13,59 @@ MODEL COMPARISON
 Model 1: MAIN SPECIFICATION (Current)
   Formula: CAR ~ Timing + FCC + Size + Leverage + ROA + Prior Breaches
   Sample size: 647
-  R-squared: 0.0243
-  Adj. R-squared: 0.0151
-  AIC: 4642.63
-  Residual variance: 75.715853
+  R-squared: 0.0230
+  Adj. R-squared: 0.0139
+  AIC: 4643.46
+  Residual variance: 75.813165
 
-Interpretation: R² = 2.4% means model explains 2.4% of
-variance in event returns. Remaining 97.6% is unexplained.
+Interpretation: R² = 2.3% means model explains 2.3% of
+variance in event returns. Remaining 97.7% is unexplained.
 
 Model 2: ADD INTERACTION TERMS
   Formula: Model 1 + Timing*FCC interaction
   Sample size: 647
-  R-squared: 0.0243
-  Adj. R-squared: 0.0136
-  AIC: 4644.62
-  Residual variance: 75.833793
+  R-squared: 0.0230
+  Adj. R-squared: 0.0123
+  AIC: 4645.46
+  Residual variance: 75.931490
 
 R² improvement: 0.0000
-F-test (interaction): F=0.00, p=0.9457
+F-test (interaction): F=0.00, p=0.9587
 Conclusion: Interaction not statistically significant
 
 Model 3: ADD NONLINEAR TERMS
   Formula: Model 1 + Size² + Leverage²
   Sample size: 647
-  R-squared: 0.0257
-  Adj. R-squared: 0.0134
-  AIC: 4645.72
-  Residual variance: 75.846769
+  R-squared: 0.0245
+  Adj. R-squared: 0.0122
+  AIC: 4646.51
+  Residual variance: 75.939463
 
 R² improvement: 0.0014
-F-test (nonlinear): F=0.90, p=0.4090
+F-test (nonlinear): F=0.94, p=0.3929
 Conclusion: Nonlinear terms not statistically significant
 
 Model 4: ADD VOLATILITY CONTROL
   Formula: Model 1 + Post-event Volatility
   Sample size: 647
-  R-squared: 0.0259
-  Adj. R-squared: 0.0152
-  AIC: 4643.57
-  Residual variance: 75.710709
+  R-squared: 0.0247
+  Adj. R-squared: 0.0140
+  AIC: 4644.35
+  Residual variance: 75.801252
 
-R² improvement: 0.0016
-F-test (volatility): F=1.04, p=0.3074
+R² improvement: 0.0017
+F-test (volatility): F=1.10, p=0.2945
 Conclusion: Volatility control not statistically significant
 
 Model 5: SIMPLE SPECIFICATION
   Formula: CAR ~ Timing + FCC
   Sample size: 647
-  R-squared: 0.0089
-  Adj. R-squared: 0.0059
-  AIC: 4644.73
-  Residual variance: 76.429695
+  R-squared: 0.0080
+  Adj. R-squared: 0.0049
+  AIC: 4645.37
+  Residual variance: 76.504583
 
-R² loss vs Model 1: -0.0154
+R² loss vs Model 1: -0.0151
 Conclusion: Controls explain 1.5% of variance
 
 ==========================================================================================
@@ -75,14 +75,14 @@ INTERPRETATION: IS LOW R² A PROBLEM?
 Key Findings:
 
 1. Model Specification Adequacy:
-   - Interaction terms do NOT improve fit (p=0.9457, not significant)
-   - Nonlinear terms do NOT improve fit (p=0.4090, not significant)
+   - Interaction terms do NOT improve fit (p=0.9587, not significant)
+   - Nonlinear terms do NOT improve fit (p=0.3929, not significant)
    - Volatility control has limited impact
    - Conclusion: No evidence of omitted variables causing misspecification
 
 2. Variance Decomposition:
-   - Model explains 2.4% of CAR variance
-   - Unexplained 97.6% is residual variance
+   - Model explains 2.3% of CAR variance
+   - Unexplained 97.7% is residual variance
    - This is NOT unusual for event study data:
      * Market returns are inherently noisy
      * Individual firm effects are firm-specific
@@ -102,7 +102,7 @@ Typical R² values in finance research:
   - Event studies: R² = 0.02-0.10 (returns are noisy)
   - Cross-sectional regressions: R² = 0.10-0.30
   - Time series with firm FE: R² = 0.30-0.60
-  - Current models: R² = 0.0243 = 2.4%
+  - Current models: R² = 0.0230 = 2.3%
 
 Assessment: Model R² is REASONABLE for cross-sectional event study of
 individual firm returns. Low R² does NOT indicate specification problems.

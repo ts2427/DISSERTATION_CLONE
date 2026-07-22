@@ -1,4 +1,4 @@
 window,model,n,variable,logit_coef,logit_se,logit_p,ame_pp,pseudo_r2
-30d,mediator_first_stage,651,fcc_on_timing,0.8313,0.2352,0.0004,14.52,0.0887
-90d,mediator_first_stage,651,fcc_on_timing,0.8313,0.2352,0.0004,14.52,0.0887
-180d,mediator_first_stage,651,fcc_on_timing,0.8313,0.2352,0.0004,14.52,0.0887
+30d,mediator_first_stage,651,fcc_on_timing,0.9972,0.2366,0.0,17.74,0.0961
+90d,mediator_first_stage,651,fcc_on_timing,0.9972,0.2366,0.0,17.74,0.0961
+180d,mediator_first_stage,651,fcc_on_timing,0.9972,0.2366,0.0,17.74,0.0961

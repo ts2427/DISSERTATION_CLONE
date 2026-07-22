@@ -55,8 +55,9 @@ def run_python_scm():
     print("="*70)
 
     try:
+        scm_script = Path(__file__).parent / 'firm_by_firm_scm_simple_working.py'
         result = subprocess.run(
-            [sys.executable, 'firm_by_firm_scm_simple_working.py'],
+            [sys.executable, str(scm_script)],
             capture_output=True,
             text=True,
             timeout=3600

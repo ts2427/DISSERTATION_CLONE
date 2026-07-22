@@ -1,4 +1,4 @@
 Model,FCC Coefficient,Diversity Coefficient,Interaction,R-squared
-Model 1: FCC Only,-2.2276**,N/A,N/A,0.0136
-Model 2: FCC + Diversity,-2.2353**,0.4401,N/A,0.0136
-Model 3: FCC x Diversity,-2.3211**,0.3435,0.3078,0.0136
+Model 1: FCC Only,-2.1187**,N/A,N/A,0.0123
+Model 2: FCC + Diversity,-2.1189**,-0.0600,N/A,0.0123
+Model 3: FCC x Diversity,-2.2615,-0.1415,0.5568,0.0124

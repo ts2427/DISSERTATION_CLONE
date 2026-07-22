@@ -12,17 +12,18 @@ TABLE2_Model2:
 Variable                                        VIF Status              
 ----------------------------------------------------------------------------------------------------
 immediate_disclosure                           1.01 [OK]                
-firm_size_log                                  1.02 [OK]                
+firm_size_log                                  1.03 [OK]                
 leverage                                       1.02 [OK]                
 roa                                            1.02 [OK]                
+total_affected_log                             1.02 [OK]                
 
 
 TABLE3_Model1:
 ----------------------------------------------------------------------------------------------------
 Variable                                        VIF Status              
 ----------------------------------------------------------------------------------------------------
-fcc_reportable                                 1.08 [OK]                
-firm_size_log                                  1.09 [OK]                
+fcc_reportable                                 1.07 [OK]                
+firm_size_log                                  1.08 [OK]                
 leverage                                       1.01 [OK]                
 roa                                            1.02 [OK]                
 
@@ -50,10 +51,10 @@ roa                                            1.02 [OK]
 SUMMARY STATISTICS
 ====================================================================================================
 
-Total variables examined: 16
+Total variables examined: 17
 Variables with VIF > 10 (problematic): 0
 Variables with VIF > 5 (concerning): 0
-Maximum VIF: 1.09 (from TABLE3_Model1::firm_size_log)
+Maximum VIF: 1.08 (from TABLE3_Model1::firm_size_log)
 Mean VIF: 1.03
 
 CONCLUSION: [OK] No problematic multicollinearity detected

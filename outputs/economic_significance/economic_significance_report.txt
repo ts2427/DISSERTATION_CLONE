@@ -27,10 +27,10 @@ representing shareholder value destruction per data breach:
 • For S&P 500 median ($422M assets): $-9.3M loss
 
 Aggregate Impact:
-• FCC-regulated firms in sample: 12
-• Total FCC-related breaches: 139
-• Total shareholder value loss: $-0.57B
-• Average loss per breach: $-4.1M
+• FCC-regulated firms in sample: 10
+• Total FCC-related breaches: 130
+• Total shareholder value loss: $-0.54B
+• Average loss per breach: $-4.2M
 
 Interpretation: FCC regulatory requirements impose measurable compliance costs
 that are reflected in breach-driven stock price declines. This effect is economically
@@ -91,7 +91,7 @@ IMPLICATIONS
 --------------------------------------------------------------------------------
 
 1. Regulatory Impact: FCC regulation imposes economically significant costs on
-   regulated firms, averaging $-4.1M per breach incident.
+   regulated firms, averaging $-4.2M per breach incident.
 
 2. Information Asymmetry: Voluntary disclosure acceleration could reduce cost
    of capital increases, suggesting value for investors in faster disclosure.

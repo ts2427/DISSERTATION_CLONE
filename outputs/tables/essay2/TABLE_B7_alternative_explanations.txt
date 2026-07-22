@@ -3,18 +3,18 @@ Dependent Variable: 30-Day Cumulative Abnormal Returns (CAR)
 
 Variable                      Model 1 (CPNI)    Model 2 (HHI)     Model 3 (Both)
 -------------------------------------------------------------------------------------
-FCC Regulated                 -1.0974     -2.2083     -1.1042    
-                             (0.8227)   (1.6322)   (0.8167)
+FCC Regulated                 -0.2152     -2.1114     -0.2393    
+                             (1.8868)   (1.6930)   (1.8957)
 
-CPNI Breach                  -1.0974               -1.1042    
-                             (0.8227)                 (0.8167)
+CPNI Breach                  -2.0034               -1.9958    
+                             (1.7828)                 (1.7979)
 
-HHI (Market Concentration)            -0.000028      -0.000028    
+HHI (Market Concentration)            -0.000031      -0.000029    
                                      (0.000119)   (0.000119)
 
 -------------------------------------------------------------------------------------
 N                                    653             653             653
-R²                                   0.0214          0.0215          0.0215
+R²                                   0.0215          0.0202          0.0215
 
 Notes: Model 1 tests CPNI sensitivity (Customer Proprietary Network Information) - telecom-specific data regulated by FCC.
 Model 2 tests market concentration (HHI - Herfindahl-Hirschman Index by 3-digit SIC code and year).

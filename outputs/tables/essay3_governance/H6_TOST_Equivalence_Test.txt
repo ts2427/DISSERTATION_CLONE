@@ -28,12 +28,12 @@ EQUIVALENCE TEST RESULTS:
 ----------------------------------------------------------------------------------------------------
 
 30D WINDOW:
-  Point estimate:                      +2.55pp
-  Standard error:                      4.769pp
-  90% Confidence Interval:             [-5.30pp, +10.40pp]
-  MDE (80% power):                     13.36pp
+  Point estimate:                      +2.38pp
+  Standard error:                      4.875pp
+  90% Confidence Interval:             [-5.64pp, +10.40pp]
+  MDE (80% power):                     13.66pp
 
-  Lower bound test (CI > -10.00pp):    True (-5.30 > -10.00?)
+  Lower bound test (CI > -10.00pp):    True (-5.64 > -10.00?)
   Upper bound test (CI < +10.00pp):    False (+10.40 < +10.00?)
   EQUIVALENCE CONCLUSION:              NO
 
@@ -42,30 +42,31 @@ EQUIVALENCE TEST RESULTS:
          Conclusion: inconclusive (precision insufficient for equivalence claim).
 
 90D WINDOW:
-  Point estimate:                      +0.11pp
-  Standard error:                      4.843pp
-  90% Confidence Interval:             [-7.86pp, +8.08pp]
-  MDE (80% power):                     13.57pp
+  Point estimate:                      -0.76pp
+  Standard error:                      4.936pp
+  90% Confidence Interval:             [-8.88pp, +7.36pp]
+  MDE (80% power):                     13.83pp
 
-  Lower bound test (CI > -10.00pp):    True (-7.86 > -10.00?)
-  Upper bound test (CI < +10.00pp):    True (+8.08 < +10.00?)
+  Lower bound test (CI > -10.00pp):    True (-8.88 > -10.00?)
+  Upper bound test (CI < +10.00pp):    True (+7.36 < +10.00?)
   EQUIVALENCE CONCLUSION:              YES
 
   [PASS] The FCC effect on 90D executive turnover is statistically
          equivalent to zero within the ±10pp governance threshold.
 
 180D WINDOW:
-  Point estimate:                      -1.42pp
-  Standard error:                      4.804pp
-  90% Confidence Interval:             [-9.32pp, +6.48pp]
-  MDE (80% power):                     13.46pp
+  Point estimate:                      -2.27pp
+  Standard error:                      4.895pp
+  90% Confidence Interval:             [-10.32pp, +5.78pp]
+  MDE (80% power):                     13.71pp
 
-  Lower bound test (CI > -10.00pp):    True (-9.32 > -10.00?)
-  Upper bound test (CI < +10.00pp):    True (+6.48 < +10.00?)
-  EQUIVALENCE CONCLUSION:              YES
+  Lower bound test (CI > -10.00pp):    False (-10.32 > -10.00?)
+  Upper bound test (CI < +10.00pp):    True (+5.78 < +10.00?)
+  EQUIVALENCE CONCLUSION:              NO
 
-  [PASS] The FCC effect on 180D executive turnover is statistically
-         equivalent to zero within the ±10pp governance threshold.
+  [FAIL] The confidence interval extends beyond ±10pp bounds.
+         Lower tail underpowered: CI includes values below -10pp.
+         Conclusion: inconclusive (precision insufficient for equivalence claim).
 
 ====================================================================================================
 SUMMARY AND INTERPRETATION:
@@ -74,7 +75,7 @@ SUMMARY AND INTERPRETATION:
 Equivalence Results Across Windows:
   30d:  FAIL
   90d:  PASS
-  180d: PASS
+  180d: FAIL
 
 Interpretation:
 

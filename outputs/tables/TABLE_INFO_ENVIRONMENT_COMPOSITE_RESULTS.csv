@@ -1,7 +1,7 @@
 Specification,Model,FCC Coefficient,Dimension Coefficient,Interaction,R-squared
-Spec A: Media Attention,Baseline,0.3586,-4.8218*,N/A,0.0036
-Spec A: Media Attention,FCC x Dimension,0.7914,-4.8218*,0.8233,0.0184
-Spec B: Reputation Weakness,Baseline,0.3586,-0.9112,N/A,0.0036
-Spec B: Reputation Weakness,FCC x Dimension,1.7118,-0.9112,-1.6991,0.0053
-Spec C: Composite Info Env,Baseline,0.3586,-2.4902,N/A,0.0036
-Spec C: Composite Info Env,FCC x Dimension (KEY),1.0073,-2.4902,-0.0322,0.0088
+Spec A: Media Attention,Baseline,-0.0737,-4.8497*,N/A,0.0035
+Spec A: Media Attention,FCC x Dimension,0.3367,-4.8497*,1.1099,0.0180
+Spec B: Reputation Weakness,Baseline,-0.0737,-1.0390,N/A,0.0035
+Spec B: Reputation Weakness,FCC x Dimension,0.7896,-1.0390,-0.8188,0.0047
+Spec C: Composite Info Env,Baseline,-0.0737,-2.5310,N/A,0.0035
+Spec C: Composite Info Env,FCC x Dimension (KEY),0.2616,-2.5310,0.5474,0.0084

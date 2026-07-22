@@ -108,7 +108,7 @@ print(f"  Sample size: {final_n:,} observations (dropped {dropped:,} due to miss
 # Model 1: Immediate disclosure only + base controls
 y = reg_df[target]
 X1 = sm.add_constant(reg_df[['immediate_disclosure'] + available_controls_base])
-model1 = sm.OLS(y, X1).fit(cov_type='cluster', cov_kwds={'groups': reg_df['cik']})
+model1 = sm.OLS(y, X1).fit(cov_type='HC3')
 
 # Validate output
 assert not np.any(np.isnan(model1.params)), "NaN coefficients in Model 1"
@@ -120,7 +120,7 @@ print(f"  [OK] Model 1: R² = {model1.rsquared:.4f}")
 
 # Model 2: Add extended controls
 X2 = sm.add_constant(reg_df[['immediate_disclosure'] + available_controls_extended])
-model2 = sm.OLS(y, X2).fit(cov_type='cluster', cov_kwds={'groups': reg_df['cik']})
+model2 = sm.OLS(y, X2).fit(cov_type='HC3')
 
 # Validate output
 assert not np.any(np.isnan(model2.params)), "NaN coefficients in Model 2"
@@ -133,7 +133,7 @@ print(f"  [OK] Model 2: R² = {model2.rsquared:.4f}")
 # Model 3: Add governance
 if len(available_controls_gov) > 0:
     X3 = sm.add_constant(reg_df[['immediate_disclosure'] + available_controls_extended + available_controls_gov])
-    model3 = sm.OLS(y, X3).fit(cov_type='cluster', cov_kwds={'groups': reg_df['cik']})
+    model3 = sm.OLS(y, X3).fit(cov_type='HC3')
 
     # Validate output
     assert not np.any(np.isnan(model3.params)), "NaN coefficients in Model 3"
@@ -408,7 +408,7 @@ if 'fcc_reportable' in analysis_df.columns:
     # Model 1: FCC + base controls (total effect of FCC regulation)
     X3_1_data = reg_df_t3[['fcc_reportable'] + available_controls_base].values.astype(np.float64)
     X3_1 = sm.add_constant(X3_1_data)
-    model3_1 = sm.OLS(y3, X3_1).fit(cov_type='cluster', cov_kwds={'groups': reg_df['cik']})
+    model3_1 = sm.OLS(y3, X3_1).fit(cov_type='HC3')
 
     # Validate output
     assert not np.any(np.isnan(model3_1.params)), "NaN coefficients in Table 3 Model 1"
@@ -420,7 +420,7 @@ if 'fcc_reportable' in analysis_df.columns:
     # Model 2: FCC + immediate disclosure (mechanism: voluntary timing choice within FCC regime)
     X3_2_data = reg_df_t3[['fcc_reportable', 'immediate_disclosure'] + available_controls_base].values.astype(np.float64)
     X3_2 = sm.add_constant(X3_2_data)
-    model3_2 = sm.OLS(y3, X3_2).fit(cov_type='cluster', cov_kwds={'groups': reg_df['cik']})
+    model3_2 = sm.OLS(y3, X3_2).fit(cov_type='HC3')
 
     # Validate output
     assert not np.any(np.isnan(model3_2.params)), "NaN coefficients in Table 3 Model 2"
@@ -441,7 +441,7 @@ if 'fcc_reportable' in analysis_df.columns:
         reg_df_t3[available_controls_base].values.astype(np.float64)
     ])
     X3_3 = sm.add_constant(X3_3_data)
-    model3_3 = sm.OLS(y3, X3_3).fit(cov_type='cluster', cov_kwds={'groups': reg_df['cik']})
+    model3_3 = sm.OLS(y3, X3_3).fit(cov_type='HC3')
 
     # Validate output
     assert not np.any(np.isnan(model3_3.params)), "NaN coefficients in Table 3 Model 3"
@@ -506,21 +506,21 @@ if 'prior_breaches_total' in analysis_df.columns:
     
     # Model 1: Total prior breaches
     X4_1 = sm.add_constant(reg_df_t4[['immediate_disclosure', 'prior_breaches_total'] + available_controls_base])
-    model4_1 = sm.OLS(y4, X4_1).fit(cov_type='cluster', cov_kwds={'groups': reg_df['cik']})
+    model4_1 = sm.OLS(y4, X4_1).fit(cov_type='HC3')
     table4_models.append(model4_1)
     print(f"  [OK] Model 1: Prior breaches total, R² = {model4_1.rsquared:.4f}")
     
     # Model 2: 1-year prior breaches
     if 'prior_breaches_1yr' in reg_df_t4.columns:
         X4_2 = sm.add_constant(reg_df_t4[['immediate_disclosure', 'prior_breaches_1yr'] + available_controls_base])
-        model4_2 = sm.OLS(y4, X4_2).fit(cov_type='cluster', cov_kwds={'groups': reg_df['cik']})
+        model4_2 = sm.OLS(y4, X4_2).fit(cov_type='HC3')
         table4_models.append(model4_2)
         print(f"  [OK] Model 2: Prior breaches 1yr, R² = {model4_2.rsquared:.4f}")
     
     # Model 3: Repeat offender flag
     if 'is_repeat_offender' in reg_df_t4.columns:
         X4_3 = sm.add_constant(reg_df_t4[['immediate_disclosure', 'is_repeat_offender'] + available_controls_base])
-        model4_3 = sm.OLS(y4, X4_3).fit(cov_type='cluster', cov_kwds={'groups': reg_df['cik']})
+        model4_3 = sm.OLS(y4, X4_3).fit(cov_type='HC3')
         table4_models.append(model4_3)
         print(f"  [OK] Model 3: Repeat offender, R² = {model4_3.rsquared:.4f}")
     
@@ -581,21 +581,21 @@ if 'health_breach' in analysis_df.columns:
     
     # Model 1: Health breach
     X5_1 = sm.add_constant(reg_df_t5[['immediate_disclosure', 'health_breach'] + available_controls_base])
-    model5_1 = sm.OLS(y5, X5_1).fit(cov_type='cluster', cov_kwds={'groups': reg_df['cik']})
+    model5_1 = sm.OLS(y5, X5_1).fit(cov_type='HC3')
     table5_models.append(model5_1)
     print(f"  [OK] Model 1: Health breach, R² = {model5_1.rsquared:.4f}")
     
     # Model 2: Financial breach
     if 'financial_breach' in reg_df_t5.columns:
         X5_2 = sm.add_constant(reg_df_t5[['immediate_disclosure', 'financial_breach'] + available_controls_base])
-        model5_2 = sm.OLS(y5, X5_2).fit(cov_type='cluster', cov_kwds={'groups': reg_df['cik']})
+        model5_2 = sm.OLS(y5, X5_2).fit(cov_type='HC3')
         table5_models.append(model5_2)
         print(f"  [OK] Model 2: Financial breach, R² = {model5_2.rsquared:.4f}")
     
     # Model 3: Severity score
     if 'severity_score' in reg_df_t5.columns:
         X5_3 = sm.add_constant(reg_df_t5[['immediate_disclosure', 'severity_score'] + available_controls_base])
-        model5_3 = sm.OLS(y5, X5_3).fit(cov_type='cluster', cov_kwds={'groups': reg_df['cik']})
+        model5_3 = sm.OLS(y5, X5_3).fit(cov_type='HC3')
         table5_models.append(model5_3)
         print(f"  [OK] Model 3: Severity score, R² = {model5_3.rsquared:.4f}")
     
@@ -606,7 +606,7 @@ if 'health_breach' in analysis_df.columns:
         if 'total_affected_log' in reg_df_t5.columns:
             breach_vars.append('total_affected_log')
         X5_4 = sm.add_constant(reg_df_t5[breach_vars + available_controls_base])
-        model5_4 = sm.OLS(y5, X5_4).fit(cov_type='cluster', cov_kwds={'groups': reg_df['cik']})
+        model5_4 = sm.OLS(y5, X5_4).fit(cov_type='HC3')
         table5_models.append(model5_4)
         print(f"  [OK] Model 4: All breach types + magnitude, R² = {model5_4.rsquared:.4f}")
     
