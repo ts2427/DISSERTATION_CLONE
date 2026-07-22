@@ -10,9 +10,9 @@
 
 This dissertation analyzes how data breach disclosure timing and regulatory requirements affect stock market reactions, information asymmetry, and governance response using a natural experiment design.
 
-**Core Finding:** Markets penalize *who you are* (regulatory status, breach history) and *what was breached* (data sensitivity), not *when you disclose*. Disclosure timing requirements create information asymmetry costs without corresponding governance benefits.
+**Core Finding:** Markets penalize *who you are* (regulatory status), not *when you disclose*. FCC regulation imposes both information asymmetry costs (volatility) and governance disruption (executive turnover), with heterogeneous effects by firm size.
 
-**Sample:** 1,054 breaches from 2006-2025 | 926 with market data | FCC natural experiment (regulation effective Sept 28, 2007)
+**Sample:** 784 breaches (Cencora-deduplicated, 2006-2025) | 677 with CRSP market data | 141 FCC-regulated firms | Natural experiment: FCC Rule 37.3 (Sept 28, 2007)
 
 ---
 
@@ -64,14 +64,16 @@ python Notebooks/03_essay3_governance_response.py
 
 ## Key Findings
 
-| Essay | Outcome | Result | Mechanism |
-|-------|---------|--------|-----------|
-| **1** | Market Returns (CAR) | Timing: +0.65% (NS) | Markets price firm characteristics, not disclosure speed |
-| **1** | Market Returns (CAR) | FCC Regulation: -2.20%** | Regulatory burden signal |
-| **2** | Information Asymmetry (Volatility) | FCC Effect: +1.79%* | Timing requirements force incomplete disclosure → uncertainty |
-| **3** | Executive Turnover | FCC Effect: +3.71pp (NS) | No significant governance response to regulatory timing |
+| Essay | Hypothesis | Result | Interpretation |
+|-------|-----------|--------|-----------------|
+| **1** | H1: Timing Effect | +0.8394% (p=0.3504, NS) | Disclosure speed does NOT matter for stock returns |
+| **1** | H2: FCC Regulation | -2.1179% (p=0.0494**) | FCC firms suffer 2.1% abnormal return penalty |
+| **2** | H5: Volatility (FCC) | +1.793% (p=0.0487*) | Small firms: +7.31% (p=0.003); Large firms: -3.39% (p=0.015) |
+| **3** | H6: Executive Turnover | Odds ratio 0.518 (p=0.007***) | Immediate disclosure REDUCES 30-day turnover risk by 48% |
 
-**The Paradox:** FCC regulation increases market uncertainty (H5) without triggering governance response (H6).
+**Integration:** Markets penalize FCC regulation directly (-2.1% returns) AND indirectly (through volatility shock). Governance responds via executive displacement, not mediated by volatility.
+
+Sample: N=653 regression observations | HC3 robust standard errors (primary)
 
 ---
 
@@ -108,44 +110,50 @@ dissertation-analysis/
 
 **After running the pipeline:**
 
-### Main Results Tables
-- `outputs/tables/TABLE1_COMBINED.txt` — Descriptive statistics
-- `outputs/tables/essay2/TABLE2_baseline_disclosure.txt` — Market returns models (5 specs)
-- `outputs/tables/essay2/TABLE3_fcc_regulation.txt` — FCC regulation effect
-- `outputs/tables/essay3/TABLE2_executive_turnover.txt` — Governance response models (3 specs)
+### 📊 CANONICAL RESULTS (START HERE)
+- **`outputs/CANONICAL_RESULTS_SUMMARY_20260722.txt`** — Complete Essay 1-3 verified results, heterogeneity analysis, defense positioning
 
-### Causal Identification Tests
-- `outputs/tables/essay2/TABLE_B8_post_2007_interaction.txt` — Pre-2007 vs post-2007
+### Main Results Tables
+- `outputs/tables/TABLE1_COMBINED.txt` — Descriptive statistics (n=784)
+- `outputs/tables/essay2/TABLE2_baseline_disclosure.txt` — H1: Disclosure timing effect (HC3 robust SEs)
+- `outputs/tables/essay2/TABLE3_fcc_regulation.txt` — H2: FCC regulation effect (HC3 robust SEs)
+- `outputs/tables/essay2/TABLE_B9_clustered_vs_hc3_comparison.txt` — **PRIMARY: All H1-H4 full specification with HC3 vs clustered comparison**
+- `outputs/tables/essay3_governance/TABLE2_turnover_summary.csv` — H6: Executive turnover (30/90/180-day windows)
+
+### Causal Identification & Robustness
 - `outputs/tables/essay2/TABLE_FCC_Industry_FE_Comparison.txt` — Industry FE robustness
 - `outputs/tables/essay2/TABLE_FCC_Size_Sensitivity.txt` — Firm size heterogeneity
+- `outputs/tables/essay2/H1_TOST_Equivalence_Test.txt` — Equivalence testing confirms H1 null
+- `outputs/tables/essay2/DIAGNOSTICS_VIF_summary.txt` — Multicollinearity verification
 
-### Robustness & Diagnostics
-- `outputs/tables/essay2/TABLE_B9_clustered_vs_hc3_comparison.txt` — Standard errors
-- `outputs/tables/essay2/H1_TOST_Equivalence_Test.txt` — Equivalence testing for H1
-- `outputs/tables/essay2/DIAGNOSTICS_VIF_summary.txt` — Multicollinearity check
-
-### Heterogeneity Analysis (Essays 1-3)
-- `outputs/tables/essay3_governance/CAUSAL_ID_PLACEBO_TESTS.csv` — Placebo tests
-- `outputs/tables/essay3_governance/CAUSAL_ID_DOSE_RESPONSE.csv` — Dose-response analysis
-- `outputs/tables/essay3_governance/CAUSAL_ID_COVARIATE_BALANCE.csv` — Covariate balance
+### Heterogeneity Analysis
+- `outputs/tables/essay3/TABLE2_volatility_changes.txt` — H5: Volatility by firm size quartiles
+- `outputs/tables/essay3_governance/mediation_bootstrap_indirect_effects.csv` — Mediation analysis (volatility does NOT mediate timing→turnover)
 
 ---
 
 ## Methodologies
 
 **Essays 1-3 use:**
-- Event study framework (MacKinlay 1997)
-- Logistic regression (binary outcomes: turnover)
-- OLS with firm-clustered standard errors
-- TOST equivalence testing (H1 null hypothesis)
-- Robustness: Industry FE, size stratification, alternative windows, bootstrap SEs
+- Event study framework (MacKinlay 1997) for abnormal returns
+- OLS regression with HC3 heteroskedasticity-consistent robust standard errors (primary)
+- Alternative: Firm-level clustered SEs (for robustness comparison in TABLE B9)
+- Logistic regression for binary outcomes (executive turnover)
+- TOST equivalence testing (H1: demonstrates timing effect is null AND economically negligible)
+- Full specification testing: All four hypothesis predictors included simultaneously to isolate each effect
+
+**Robustness Checks:**
+- Industry fixed effects (12 SIC groups)
+- Firm size stratification (quartiles)
+- Alternative event windows (5-day, 30-day, 60-day CAR)
+- Bootstrap mediation analysis (does volatility mediate timing→turnover? No)
+- Placebo tests (pre-FCC era)
 
 **Causal Identification:**
-- Natural experiment (FCC Rule 37.3, Sept 28 2007)
-- Temporal validation (pre-post 2007 comparison)
-- Covariate balance testing
-- Parallel trends visualization
-- Multiple robustness specifications
+- Natural experiment: FCC Rule 37.3 (Sept 28, 2007) mandates 30-day breach notification
+- Temporal validation: Pre-2007 effects zero (parallel trends confirmed)
+- FCC classification: SIC-code based (4813=Telephone, 4841=Cable, 4899=VoIP) — NOT name-string matching
+- Covariate balance: FCC and non-FCC firms comparable pre-2007
 
 ---
 
@@ -157,10 +165,10 @@ dissertation-analysis/
 - `executive_change_30d` — Binary: CEO departure within 30 days (Essay 3)
 
 **Key Independent Variables:**
-- `immediate_disclosure` — Binary: ≤7 days to disclosure
-- `fcc_reportable` — Binary: FCC-regulated firm
-- `prior_breaches_total` — Firm's all-time breach count
-- `health_breach` — Binary: HIPAA-covered data
+- `immediate_disclosure` — Binary: ≤7 days to disclosure (24.5% of sample)
+- `fcc_reportable` — Binary: FCC-regulated telecom/cable firm (SIC 4813/4841/4899, 18% of sample)
+- `prior_breaches_1yr` — Count: Firm's breaches in prior year
+- `health_breach` — Binary: HIPAA-covered (PHI) data (6.1% of sample)
 
 **Controls:**
 - `firm_size_log` — log(market cap at breach)
@@ -193,15 +201,16 @@ Navigate through:
 
 | Group | N | % |
 |-------|---|---|
-| **Total Breaches** | 1,054 | 100% |
-| With CRSP price data | 926 | 87.9% |
-| With volatility data | 916 | 86.9% |
-| With turnover data | 896 | 85.0% |
-| **FCC-Regulated** | 200 | 19.0% |
-| **Non-FCC** | 854 | 81.0% |
-| With prior breaches | 442 | 41.9% |
-| Health data breaches | 117 | 11.1% |
-| Financial data breaches | 257 | 24.4% |
+| **Total Breaches (Cencora-deduplicated)** | 784 | 100% |
+| With CRSP price data | 677 | 86.4% |
+| Regression sample (complete data) | 653 | 83.3% |
+| **FCC-Regulated** (SIC 4813/4841/4899) | 141 | 18.0% |
+| **Non-FCC** | 643 | 82.0% |
+| Immediate Disclosure (≤7 days) | 192 | 24.5% |
+| Delayed Disclosure (>30 days) | 470 | 60.0% |
+| With prior breaches | 331 | 42.2% |
+| Health data breaches | 48 | 6.1% |
+| Financial data breaches | 202 | 25.8% |
 
 ---
 
