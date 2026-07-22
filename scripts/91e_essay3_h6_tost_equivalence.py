@@ -9,7 +9,7 @@ Equivalence Bound: ±10 percentage points (governance-meaningful threshold)
   - Discipline: bound sits at/above MDE (~11pp) so test is feasible
 
 Methodology mirrors H1 equivalence test exactly:
-  - 95% CI for effect (standard for logit models)
+  - 90% CI for effect (Lakens et al. 2018 TOST standard)
   - Two one-sided tests: CI > -delta AND CI < +delta
   - Per-window honest reporting: pass where precision supports, flag where it doesn't
 """
@@ -29,14 +29,14 @@ results_df = pd.read_csv('outputs/tables/essay3_governance/reduced_form_h6_resul
 
 # Pre-specified equivalence bound (set before checking results)
 EQUIV_BOUND = 10.0  # percentage points
-CONFIDENCE_LEVEL = 0.95
-Z_CRITICAL = 1.96  # for 95% CI
+CONFIDENCE_LEVEL = 0.90
+Z_CRITICAL = 1.645  # for 90% CI (Lakens et al. 2018 TOST standard)
 
 print(f"\nEQUIVALENCE TEST SETUP:")
 print(f"-" * 90)
 print(f"Equivalence Bound (delta):               ±{EQUIV_BOUND:.2f} percentage points")
 print(f"Interpretation: Effects between -{EQUIV_BOUND:.2f}pp and +{EQUIV_BOUND:.2f}pp are governance-negligible")
-print(f"Confidence Level:                        95% (standard for logit)")
+print(f"Confidence Level:                        90% (Lakens et al. 2018 TOST standard)")
 print(f"\nGovernance Reasoning:")
 print(f"  Base turnover rate at 30d: 46.4%")
 print(f"  ±{EQUIV_BOUND:.0f}pp shift moves to: 36.4%-56.4% (15-21% proportional change)")
@@ -73,7 +73,7 @@ for idx, row in results_df.iterrows():
     print(f"\n[{window.upper()} WINDOW]")
     print(f"  Point estimate (AME):                  {ame_pp:+.2f}pp")
     print(f"  Standard error:                        {ame_se_pp:.3f}pp")
-    print(f"  95% Confidence Interval:               [{ci_lower:+.2f}pp, {ci_upper:+.2f}pp]")
+    print(f"  90% Confidence Interval:               [{ci_lower:+.2f}pp, {ci_upper:+.2f}pp]")
     print(f"  Equivalence bounds:                    [{-EQUIV_BOUND:.2f}pp, {EQUIV_BOUND:.2f}pp]")
     print(f"")
     print(f"  Lower bound test (CI > -{EQUIV_BOUND:.0f}pp):     {lower_bound_test} ({ci_lower:+.2f} > {-EQUIV_BOUND:.2f}?)")
@@ -93,8 +93,8 @@ for idx, row in results_df.iterrows():
         'window': window,
         'ame_pp': round(ame_pp, 2),
         'ame_se_pp': round(ame_se_pp, 3),
-        'ci_lower_95_pp': round(ci_lower, 2),
-        'ci_upper_95_pp': round(ci_upper, 2),
+        'ci_lower_90_pp': round(ci_lower, 2),
+        'ci_upper_90_pp': round(ci_upper, 2),
         'equivalence_bound': EQUIV_BOUND,
         'lower_bound_test': lower_bound_test,
         'upper_bound_test': upper_bound_test,
@@ -132,7 +132,7 @@ Precision Discipline:
   Bound of +/- 10pp sits just below MDE, ensuring test is feasible and not circular
   If a window's CI exceeds +/- 10pp, that window is underpowered for equivalence
 
-Confidence Level:                        95% (standard for logit regression)
+Confidence Level:                        90% (Lakens et al. 2018 TOST standard)
 
 ====================================================================================================
 EQUIVALENCE TEST RESULTS:
@@ -143,8 +143,8 @@ for idx, row in tost_df.iterrows():
     window = row['window'].upper()
     ame = row['ame_pp']
     se = row['ame_se_pp']
-    ci_l = row['ci_lower_95_pp']
-    ci_u = row['ci_upper_95_pp']
+    ci_l = row['ci_lower_90_pp']
+    ci_u = row['ci_upper_90_pp']
     passes = row['equivalence_passes']
     lower_pass = row['lower_bound_test']
     upper_pass = row['upper_bound_test']
@@ -153,7 +153,7 @@ for idx, row in tost_df.iterrows():
     interpretation += f"\n{window} WINDOW:"
     interpretation += f"\n  Point estimate:                      {ame:+.2f}pp"
     interpretation += f"\n  Standard error:                      {se:.3f}pp"
-    interpretation += f"\n  95% Confidence Interval:             [{ci_l:+.2f}pp, {ci_u:+.2f}pp]"
+    interpretation += f"\n  90% Confidence Interval:             [{ci_l:+.2f}pp, {ci_u:+.2f}pp]"
     interpretation += f"\n  MDE (80% power):                     {mde:.2f}pp"
     interpretation += f"\n"
     interpretation += f"\n  Lower bound test (CI > -10.00pp):    {lower_pass} ({ci_l:+.2f} > -10.00?)"

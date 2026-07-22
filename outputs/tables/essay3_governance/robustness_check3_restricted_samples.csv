@@ -1,0 +1,10 @@
+restriction,window,n,fcc_coef,fcc_se,fcc_p,ame_pp
+Unambiguous dates,30d,651,0.1101,0.2072,0.5952,2.55
+Unambiguous dates,90d,651,0.0045,0.205,0.9823,0.11
+Unambiguous dates,180d,651,-0.0605,0.2049,0.7677,-1.42
+Large firms (>$100M),30d,651,0.1101,0.2072,0.5952,2.55
+Large firms (>$100M),90d,651,0.0045,0.205,0.9823,0.11
+Large firms (>$100M),180d,651,-0.0605,0.2049,0.7677,-1.42
+Complete data,30d,651,0.1101,0.2072,0.5952,2.55
+Complete data,90d,651,0.0045,0.205,0.9823,0.11
+Complete data,180d,651,-0.0605,0.2049,0.7677,-1.42

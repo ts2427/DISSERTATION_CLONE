@@ -21,20 +21,20 @@ Precision Discipline:
   Bound of +/- 10pp sits just below MDE, ensuring test is feasible and not circular
   If a window's CI exceeds +/- 10pp, that window is underpowered for equivalence
 
-Confidence Level:                        95% (standard for logit regression)
+Confidence Level:                        90% (Lakens et al. 2018 TOST standard)
 
 ====================================================================================================
 EQUIVALENCE TEST RESULTS:
 ----------------------------------------------------------------------------------------------------
 
 30D WINDOW:
-  Point estimate:                      +2.34pp
-  Standard error:                      4.031pp
-  95% Confidence Interval:             [-5.56pp, +10.24pp]
-  MDE (80% power):                     11.29pp
+  Point estimate:                      +2.55pp
+  Standard error:                      4.769pp
+  90% Confidence Interval:             [-5.30pp, +10.40pp]
+  MDE (80% power):                     13.36pp
 
-  Lower bound test (CI > -10.00pp):    True (-5.56 > -10.00?)
-  Upper bound test (CI < +10.00pp):    False (+10.24 < +10.00?)
+  Lower bound test (CI > -10.00pp):    True (-5.30 > -10.00?)
+  Upper bound test (CI < +10.00pp):    False (+10.40 < +10.00?)
   EQUIVALENCE CONCLUSION:              NO
 
   [FAIL] The confidence interval extends beyond ±10pp bounds.
@@ -42,26 +42,26 @@ EQUIVALENCE TEST RESULTS:
          Conclusion: inconclusive (precision insufficient for equivalence claim).
 
 90D WINDOW:
-  Point estimate:                      -0.18pp
-  Standard error:                      3.819pp
-  95% Confidence Interval:             [-7.67pp, +7.31pp]
-  MDE (80% power):                     10.70pp
+  Point estimate:                      +0.11pp
+  Standard error:                      4.843pp
+  90% Confidence Interval:             [-7.86pp, +8.08pp]
+  MDE (80% power):                     13.57pp
 
-  Lower bound test (CI > -10.00pp):    True (-7.67 > -10.00?)
-  Upper bound test (CI < +10.00pp):    True (+7.31 < +10.00?)
+  Lower bound test (CI > -10.00pp):    True (-7.86 > -10.00?)
+  Upper bound test (CI < +10.00pp):    True (+8.08 < +10.00?)
   EQUIVALENCE CONCLUSION:              YES
 
   [PASS] The FCC effect on 90D executive turnover is statistically
          equivalent to zero within the ±10pp governance threshold.
 
 180D WINDOW:
-  Point estimate:                      -1.32pp
-  Standard error:                      3.779pp
-  95% Confidence Interval:             [-8.73pp, +6.09pp]
-  MDE (80% power):                     10.59pp
+  Point estimate:                      -1.42pp
+  Standard error:                      4.804pp
+  90% Confidence Interval:             [-9.32pp, +6.48pp]
+  MDE (80% power):                     13.46pp
 
-  Lower bound test (CI > -10.00pp):    True (-8.73 > -10.00?)
-  Upper bound test (CI < +10.00pp):    True (+6.09 < +10.00?)
+  Lower bound test (CI > -10.00pp):    True (-9.32 > -10.00?)
+  Upper bound test (CI < +10.00pp):    True (+6.48 < +10.00?)
   EQUIVALENCE CONCLUSION:              YES
 
   [PASS] The FCC effect on 180D executive turnover is statistically

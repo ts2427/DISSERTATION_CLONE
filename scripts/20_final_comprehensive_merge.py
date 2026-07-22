@@ -33,30 +33,48 @@ print(f"  Compustat annual: {len(compustat_a):,} observations")
 market = pd.read_csv('Data/wrds/market_indices.csv', parse_dates=['date'])
 print(f"  Market indices: {len(market):,} observations")
 
-# FCC classification (already in breach_df if you ran previous script)
-if 'fcc_reportable' not in breach_df.columns:
-    print("\nAdding FCC classification...")
-    
-    fcc_keywords = {
-        'telecom': ['at&t', 'att', 'verizon', 'sprint', 't-mobile', 'tmobile', 'centurylink', 
-                    'lumen', 'frontier', 'telephone', 'wireless', 'cellular', 'mobile'],
-        'cable': ['comcast', 'charter', 'cox', 'altice', 'cable one', 'mediacom', 
-                  'suddenlink', 'optimum', 'spectrum', 'xfinity', 'cablevision'],
-        'satellite': ['dish', 'directv', 'echostar', 'hughesnet'],
-        'voip': ['vonage', 'ringcentral', 'zoom', 'bandwidth']
-    }
-    
-    def classify_fcc(company_name):
-        if pd.isna(company_name):
+# FCC classification (recalculate always to ensure consistency with SIC-based methodology)
+# METHODOLOGY: Classify by SIC codes [4813, 4841, 4899] per FCC regulatory jurisdiction
+# - SIC 4813: Telephone Communications
+# - SIC 4841: Cable and Other Pay Television Services
+# - SIC 4899: Communication Services (misc., includes VoIP)
+
+print("\nAdding FCC classification (SIC-based)...")
+
+if 'sic' not in breach_df.columns:
+    print("  WARNING: SIC column not found in dataset")
+    breach_df['fcc_category'] = 'Non-FCC'
+    breach_df['fcc_reportable'] = False
+else:
+    # Define FCC SIC codes
+    fcc_sic_codes = [4813, 4841, 4899]
+
+    # Map SICs to FCC categories
+    def categorize_fcc(sic_code):
+        if pd.isna(sic_code):
             return 'Non-FCC', False
-        name_lower = company_name.lower()
-        for category, keywords in fcc_keywords.items():
-            if any(keyword in name_lower for keyword in keywords):
-                return category.title(), True
-        return 'Non-FCC', False
-    
-    breach_df['fcc_category'], breach_df['fcc_reportable'] = zip(*breach_df['org_name'].apply(classify_fcc))
-    print("  Added FCC classification")
+
+        sic = int(sic_code)
+        if sic == 4813:
+            return 'Telecom', True
+        elif sic == 4841:
+            return 'Cable', True
+        elif sic == 4899:
+            return 'VoIP', True
+        else:
+            return 'Non-FCC', False
+
+    # Apply classification
+    breach_df['fcc_category'], breach_df['fcc_reportable'] = zip(*breach_df['sic'].apply(categorize_fcc))
+
+    # Summary statistics
+    fcc_count = breach_df['fcc_reportable'].sum()
+    non_fcc_count = (~breach_df['fcc_reportable']).sum()
+    fcc_firms = breach_df[breach_df['fcc_reportable']]['org_name'].nunique()
+
+    print(f"  Added FCC classification (SIC-based)")
+    print(f"    FCC-reportable: {fcc_count} observations, {fcc_firms} unique firms")
+    print(f"    Non-FCC: {non_fcc_count} observations")
 
 # Calculate CRSP-based abnormal returns
 print("\n[2/6] Calculating CRSP-based abnormal returns...")

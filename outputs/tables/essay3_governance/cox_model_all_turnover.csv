@@ -1,0 +1,2 @@
+model,n_obs,n_events,fcc_coefficient,fcc_se,fcc_p_value,fcc_hazard_ratio,fcc_hr_ci_lower,fcc_hr_ci_upper,ph_assumption_p,concordance_index
+All Turnover,651,385,0.1197,0.3127,0.7018,1.1272,0.6107,2.0804,0.05,0.6998

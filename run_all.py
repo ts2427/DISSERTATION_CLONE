@@ -149,6 +149,13 @@ def verify_outputs(log_file):
         Path('outputs/tables/essay3_governance/H6_TOST_Equivalence_Test.txt'),
         Path('outputs/tables/essay3_governance/h6_firm_size_heterogeneity_full.csv'),
         Path('outputs/tables/essay3_governance/h6_reduced_form_all_coefficients.csv'),
+        Path('outputs/tables/essay3_governance/cox_model_all_turnover.csv'),
+        Path('outputs/tables/essay3_governance/H6_Cox_Model_Results.txt'),
+        Path('outputs/tables/essay3_governance/ols_lpm_h6_results.csv'),
+        Path('outputs/tables/essay3_governance/negative_binomial_h6_results.csv'),
+        Path('outputs/tables/essay3_governance/robustness_check1_turnover_definitions.csv'),
+        Path('outputs/tables/essay3_governance/robustness_check2_disclosure_thresholds.csv'),
+        Path('outputs/tables/essay3_governance/robustness_check3_restricted_samples.csv'),
         Path('outputs/tables/essay3/TABLE2_volatility_changes.txt'),
         Path('outputs/tables/essay3/TABLE3_information_asymmetry.txt'),
         Path('outputs/economic_significance/economic_impact_summary.csv'),
@@ -229,7 +236,6 @@ Log file: {log_path}
                 'scripts': [
                     ('scripts/70_summary_statistics.py', 'Summary Statistics (Table 1)'),
                     ('scripts/80_essay1_car_regressions.py', 'Essay 1 Main Regressions (H1-H4: CAR on disclosure/FCC/reputation/severity)'),
-                    ('essay2_canonical_pipeline.py', 'Essay 2 Canonical Pipeline (All regressions, diagnostics, GARCH, Breusch-Pagan)'),
                     # ARCHIVED: Pre-2007 causal ID replaced by SCM. Runs as robustness check only.
                     # ('scripts/81_post_2007_interaction_test.py', 'FCC Causal Identification (TABLE B8: Post-2007 Interaction Test - Market Returns)'),
                     ('scripts/82_clustered_vs_hc3_comparison.py', 'Standard Errors Robustness (TABLE B9: Clustered vs HC3 Comparison)'),
@@ -240,6 +246,9 @@ Log file: {log_path}
                     ('scripts/91e_essay3_h6_tost_equivalence.py', 'Essay 3 H6 TOST Equivalence Test (N=651, confirms FCC effect is economically negligible)'),
                     ('scripts/91f_essay3_h6_firm_size_heterogeneity.py', 'Essay 3 H6 Firm Size Heterogeneity (30d/90d/180d quartile analysis - addresses temporal persistence)'),
                     ('scripts/91g_extract_reduced_form_controls.py', 'Essay 3 H6 Control Variable Significance (which breach/firm characteristics predict turnover)'),
+                    ('scripts/91h_essay3_cox_hazards.py', 'Essay 3 H6 Cox Proportional Hazards (Alternative functional form robustness; continuous time-to-turnover)'),
+                    ('scripts/91j_essay3_ols_lpm_and_negbin.py', 'Essay 3 H6 OLS Linear Probability Model & Negative Binomial (Alternative specifications robustness)'),
+                    ('scripts/91k_essay3_robustness_checks.py', 'Essay 3 H6 Robustness: Alternative Thresholds & Restricted Samples (5/10/14-day disclosure windows, data quality checks)'),
                     ('scripts/90_essay2_volatility_regressions.py', 'Essay 2 Volatility Analysis (FCC effect on post-breach volatility, Tables 2-3)'),
                     # ARCHIVED: Pre-2007 causal ID replaced by SCM. Runs as robustness check only.
                     # ('scripts/84_essay2_post_2007_interaction_test_volatility.py', 'Essay 2 Volatility Causal ID (TABLE B8: Post-2007 Test)'),
@@ -262,12 +271,6 @@ Log file: {log_path}
                     ('scripts/98_propensity_score_matching.py', 'Propensity Score Matching (H2 self-selection bias test - addresses reviewer concern)'),
                     ('scripts/99_firm_fixed_effects_analysis.py', 'Firm Fixed Effects (H1-H4 within-firm variation, controls unobserved heterogeneity)'),
                     ('scripts/92_enforcement_analysis.py', 'H6 Enforcement Analysis (regulatory enforcement prevalence and predictors)'),
-                ]
-            },
-            {
-                'category': 'ESSAY 1 SYNTHETIC CONTROL MATCHING (CAUSAL INFERENCE)',
-                'scripts': [
-                    ('scm_crsp_with_sprint_proxy.py', 'SCM Firm-by-Firm Analysis (n=41 CRSP firms with Sprint→TMUS proxy): Causal treatment effects with 132 total breaches'),
                 ]
             },
             {
@@ -380,10 +383,7 @@ Summary Statistics:
   outputs/tables/TABLE1_PANEL_D_by_timing.csv
   outputs/tables/TABLE1_COMBINED.txt
 
-Causal Identification (PRIMARY: Synthetic Control Matching):
-  scm_crsp_with_sprint_proxy output (n=41 firms, 132 breaches, −4.03%, p=0.003)
-
-ARCHIVED (Pre-2007 comparison replaced by SCM):
+ARCHIVED (Pre-2007 comparison):
   outputs/figures/FIGURE_PARALLEL_TRENDS.png (Archived: Parallel trends, 2004-2010)
   outputs/tables/TABLE_BALANCE_TEST.csv (Archived: Pre-2007 balance test)
 
@@ -394,7 +394,12 @@ Essay 2 Regression Tables (Firm-Clustered SEs):
   outputs/tables/essay2/TABLE5_breach_severity.txt
   outputs/tables/essay2/TABLE_APPENDIX_alternative_explanations.txt (CPNI & HHI robustness)
 
-Essay 2 Robustness Checks (Primary causal ID via SCM):
+Essay 1 - Synthetic Control Matching (PRIMARY CAUSAL ID for H2):
+  outputs/scm_crsp_with_sprint/scm_crsp_sprint_proxy_results.csv (SCM results: n=41 FCC firms, -4.03% effect, p=0.003)
+  outputs/scm_crsp_with_sprint/consolidated_by_company.csv (Aggregate by company)
+  outputs/ESSAY1_SCM_CAUSAL_ID_SUMMARY.txt (Complete summary of SCM methodology and results)
+
+Essay 2 Robustness Checks (Post-2007 sample restriction test):
   outputs/tables/essay2/TABLE_B8_post_2007_interaction.txt (Robustness: FCC effect in post-2007 sample)
   outputs/tables/essay2/TABLE_FCC_Industry_FE_Comparison.txt (Robustness: FCC effect with industry FE)
   outputs/tables/essay2/TABLE_FCC_Size_Sensitivity.txt (Robustness: FCC effect by firm size)
@@ -415,6 +420,12 @@ Essay 3 Governance Response (Executive Turnover - Main Results):
   outputs/tables/essay3_governance/CAUSAL_ID_COVARIATE_BALANCE.csv (Balance test: FCC vs non-FCC firms)
   outputs/tables/essay3_governance/CAUSAL_ID_PLACEBO_TESTS.csv (Placebo tests: alternative governance outcomes)
   outputs/tables/essay3_governance/CAUSAL_ID_DOSE_RESPONSE.csv (Dose-response: FCC effect by severity)
+  outputs/tables/essay3_governance/cox_model_all_turnover.csv (Cox PH: FCC HR=1.127, p=.702; Schoenfeld p=.020 for FCC)
+  outputs/tables/essay3_governance/H6_Cox_Model_Results.txt (Cox interpretation: PH violation noted, logistic regression is primary spec)
+  outputs/tables/essay3_governance/ols_lpm_h6_results.csv (OLS LPM: FCC effects 0.024pp, 0.0015pp, -0.0138pp; all p>.63)
+  outputs/tables/essay3_governance/negative_binomial_h6_results.csv (Neg Binomial: FCC IRR=1.220, p=.069; marginally NS)
+  outputs/tables/essay3_governance/robustness_check2_disclosure_thresholds.csv (Alternative thresholds 5/10/14-day: FCC all null p>.35)
+  outputs/tables/essay3_governance/robustness_check3_restricted_samples.csv (Restricted samples: unambiguous dates, large firms, complete data all N=651, identical results)
 
 Essay 3 Robustness Checks (Volatility):
   outputs/tables/essay3/TABLE2_volatility_changes.txt

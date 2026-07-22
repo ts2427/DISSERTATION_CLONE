@@ -1,0 +1,4 @@
+window,fcc_coefficient_logit,fcc_se,fcc_z_stat,fcc_p_value,ame_pp,ame_se_pp,sample_size,significant
+30d,0.1101,0.2072,0.5313,0.5952,2.55,4.769,651,No
+90d,0.0045,0.205,0.0222,0.9823,0.11,4.843,651,No
+180d,-0.0605,0.2049,-0.2954,0.7677,-1.42,4.804,651,No

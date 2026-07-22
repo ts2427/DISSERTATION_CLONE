@@ -82,7 +82,12 @@
       "PowerShell(Head *)",
       "PowerShell(Get-Content *)",
       "PowerShell(grep *)",
-      "PowerShell(@\\(\"essay2_canonical_pipeline.py\", \"scripts/80_essay1_car_regressions.py\", \"scripts/70_summary_statistics.py\"\\) | ForEach-Object { Write-Host \"=== $_ ===\"; Select-String \"FINAL_DISSERTATION_DATASET\" \"C:\\\\Users\\\\mcobp\\\\DISSERTATION_CLONE\\\\$_\" -ErrorAction SilentlyContinue | Select-Object -First 2 })"
+      "PowerShell(@\\(\"essay2_canonical_pipeline.py\", \"scripts/80_essay1_car_regressions.py\", \"scripts/70_summary_statistics.py\"\\) | ForEach-Object { Write-Host \"=== $_ ===\"; Select-String \"FINAL_DISSERTATION_DATASET\" \"C:\\\\Users\\\\mcobp\\\\DISSERTATION_CLONE\\\\$_\" -ErrorAction SilentlyContinue | Select-Object -First 2 })",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\mcobp\\\\DISSERTATION_CLONE\" -File | Where-Object {$_.Extension -match \"\\\\.\\(txt|csv|md|py|docx\\)$\"} | Sort-Object Name)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\mcobp\\\\DISSERTATION_CLONE\\\\outputs\" -Directory | ForEach-Object { Write-Host \"=== $\\($_.Name\\) ===\" ; Get-ChildItem -Path $_.FullName -File | Measure-Object | Select-Object -ExpandProperty Count ; Write-Host \"Files in $_`n\" })",
+      "Bash(dir ESSAY3_H6_APPENDIX.docx)",
+      "PowerShell(tail *)",
+      "PowerShell(cd \"C:\\\\Users\\\\mcobp\\\\DISSERTATION_CLONE\"; $env:PYTHONIOENCODING=\"utf-8\"; python scripts/53_merge_CONFIRMED_enrichments.py 2>&1 | Select-Object -Last 80)"
     ]
   }
 }
