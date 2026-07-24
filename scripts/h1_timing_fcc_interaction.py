@@ -34,20 +34,20 @@ print("\n" + "=" * 90)
 print("TEST 1: SUBSAMPLE ANALYSIS (H1 effect by FCC status)")
 print("=" * 90)
 
-# FCC only
+# FCC only (CANONICAL SPECIFICATION)
 fcc_df = df[df['fcc_reportable'] == True].copy()
 if len(fcc_df) > 0:
-    model_fcc = smf.ols('car_30d ~ immediate_disclosure + firm_size_log + leverage + roa', data=fcc_df).fit(cov_type='HC3')
+    model_fcc = smf.ols('car_30d ~ immediate_disclosure + prior_breaches_1yr + health_breach + firm_size_log + leverage + roa', data=fcc_df).fit(cov_type='HC3')
     print(f"\n[FCC Firms Only] N={len(fcc_df)}")
     print(f"  immediate_disclosure coef: {model_fcc.params['immediate_disclosure']:.4f}")
     print(f"  SE: {model_fcc.bse['immediate_disclosure']:.4f}")
     print(f"  p-value: {model_fcc.pvalues['immediate_disclosure']:.4f}")
     print(f"  Interpretation: Timing effect for mandated disclosure (should be ~0)")
 
-# Non-FCC only
+# Non-FCC only (CANONICAL SPECIFICATION)
 nonfcc_df = df[df['fcc_reportable'] == False].copy()
 if len(nonfcc_df) > 0:
-    model_nonfcc = smf.ols('car_30d ~ immediate_disclosure + firm_size_log + leverage + roa', data=nonfcc_df).fit(cov_type='HC3')
+    model_nonfcc = smf.ols('car_30d ~ immediate_disclosure + prior_breaches_1yr + health_breach + firm_size_log + leverage + roa', data=nonfcc_df).fit(cov_type='HC3')
     print(f"\n[Non-FCC Firms Only] N={len(nonfcc_df)}")
     print(f"  immediate_disclosure coef: {model_nonfcc.params['immediate_disclosure']:.4f}")
     print(f"  SE: {model_nonfcc.bse['immediate_disclosure']:.4f}")
@@ -65,9 +65,9 @@ print("=" * 90)
 df['non_fcc'] = (~df['fcc_reportable']).astype(int)
 df['timing_choice_effect'] = df['immediate_disclosure'] * df['non_fcc']
 
-# Model 1: Main effects + interaction
+# Model 1: Main effects + interaction (CANONICAL SPECIFICATION MATCHING H2)
 model_interaction = smf.ols(
-    'car_30d ~ immediate_disclosure + fcc_reportable + timing_choice_effect + firm_size_log + leverage + roa',
+    'car_30d ~ immediate_disclosure + fcc_reportable + timing_choice_effect + prior_breaches_1yr + health_breach + firm_size_log + leverage + roa',
     data=df
 ).fit(cov_type='HC3')
 
@@ -128,7 +128,7 @@ df['size_quartile'] = pd.qcut(df['firm_size_log'], q=4, labels=['Q1', 'Q2', 'Q3'
 for q in ['Q1', 'Q2', 'Q3', 'Q4']:
     q_df = df[df['size_quartile'] == q].copy()
     if len(q_df) > 0:
-        model_q = smf.ols('car_30d ~ immediate_disclosure + leverage + roa', data=q_df).fit(cov_type='HC3')
+        model_q = smf.ols('car_30d ~ immediate_disclosure + prior_breaches_1yr + health_breach + leverage + roa', data=q_df).fit(cov_type='HC3')
         coef = model_q.params['immediate_disclosure']
         se = model_q.bse['immediate_disclosure']
         pval = model_q.pvalues['immediate_disclosure']

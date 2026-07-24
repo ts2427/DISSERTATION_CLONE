@@ -1,5 +1,5 @@
 Test,Coefficient,SE,p-value
-FCC-only,0.4048,1.5316,0.7915
-Non-FCC-only,0.8580,1.0186,0.3996
-Difference (NonFCC - FCC),0.4532,1.8394,0.8055
-Interaction p-value,0.8055,-,0.9349
+FCC-only,-0.4007,1.5837,0.8002
+Non-FCC-only,0.8198,1.0741,0.4453
+Difference (NonFCC - FCC),1.2205,1.9135,0.5238
+Interaction p-value,0.5238,-,0.9168
