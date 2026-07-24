@@ -347,6 +347,22 @@ Log file: {log_path}
                 ]
             },
             {
+                'category': 'LONG-HORIZON ANALYSIS & MITCHELL-STAFFORD ROBUSTNESS',
+                'scripts': [
+                    ('scripts/overlap_audit_fcc_clustering.py', 'Overlap Audit: Quantify event clustering in FCC sample (72.7% overlap at 90d) - diagnose Mitchell-Stafford problem severity'),
+                    ('scripts/corrected_longrun_car_clustering.py', 'Corrected Long-Horizon CAR: Compute CAR at 60d/90d (not BHAR), test with calendar-month clustering and non-overlapping sample'),
+                    ('scripts/calendar_month_clustering_60_90.py', 'Calendar-Month Clustering Test: Check whether 60d/90d results survive clustering correction for overlapping events'),
+                ]
+            },
+            {
+                'category': 'FACTOR MODEL & PERSISTENCE TESTING',
+                'scripts': [
+                    ('scripts/download_fama_french_factors.py', 'Download Fama-French Factors (if not already available): Mom, FF5 factors from Ken French data library'),
+                    ('scripts/factor_model_carhart_ff5.py', 'Factor Model Robustness: Test H1-H4 under market model, Carhart 4-factor, FF5 (detect momentum artifact in BHAR p=0.048)'),
+                    ('scripts/extended_bhar_60d_90d.py', 'Extended BHAR Windows: Compute 60-day and 90-day BHAR from daily returns, test persistence vs mean reversion (H2 coefficient trajectory)'),
+                ]
+            },
+            {
                 'category': 'DEFENSE PREPARATION',
                 'scripts': [
                     ('scripts/defense_prep_all_tasks.py', 'Pre-Defense Preparation: Five critical tasks - FCC economic significance, deduplication summary, H2 stability, power analysis, SCM vs OLS comparison'),
