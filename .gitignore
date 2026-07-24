@@ -82,6 +82,13 @@ wrds_config.ini
 
 # Other working documents
 *.txt
-!requirements.txtCODE_TO_PAPER_VERIFICATION_SUMMARY.md
+!requirements.txt
+
+# Temporary pipeline/test files
+pipeline_run*.log
+run_causal_id_*.py
+
+# Local reports
+CODE_TO_PAPER_VERIFICATION_SUMMARY.md
 ESSAY1_VERIFICATION_REPORT.md
 ESSAY2_VERIFICATION_REPORT.md

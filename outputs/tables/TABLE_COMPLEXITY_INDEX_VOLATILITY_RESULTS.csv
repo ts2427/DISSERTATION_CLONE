@@ -1,4 +1,4 @@
 Model,FCC Coefficient,Complexity Coefficient,Interaction,R-squared
-Model 1: FCC Only,-0.0737,N/A,N/A,0.0035
-Model 2: FCC + Complexity,-0.0738,0.4594,N/A,0.0035
-Model 3: FCC x Complexity,-0.4615,0.2068,1.3704,0.0038
+Model 1: FCC Only,-0.0721,N/A,N/A,0.0036
+Model 2: FCC + Complexity,-0.0723,0.4083,N/A,0.0037
+Model 3: FCC x Complexity,-0.5077,0.1279,1.5216,0.0040

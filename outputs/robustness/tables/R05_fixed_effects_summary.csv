@@ -1,4 +1,4 @@
 Model,N,FCC Coef,P-value,R²
-1. Baseline (OLS),653,-2.4835,0.0216,0.0295
-2. Year Fixed Effects,653,-3.3307,0.0046,0.0893
-3. Industry Fixed Effects,601,-2.0545,0.2360,0.0673
+1. Baseline (OLS),648,-2.4446,0.0247,0.0298
+2. Year Fixed Effects,648,-3.2625,0.0058,0.0905
+3. Industry Fixed Effects,596,-2.0301,0.2413,0.0684

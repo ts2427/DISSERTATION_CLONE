@@ -25,6 +25,27 @@ Author: Timothy D. Spivey
 Dissertation: Data Breach Disclosure Timing and Market Reactions
 University of South Alabama
 Date: February 2026
+
+CRITICAL: DATA PIPELINE ROOT
+============================
+The source of truth for this pipeline is:
+  → Data/processed/FINAL_DISSERTATION_DATASET.xlsx
+
+Do NOT manually edit the CSV file:
+  ✗ Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv
+
+Why: Script 53 (merge_CONFIRMED_enrichments.py) reads from the Excel file and regenerates
+the CSV. Any corrections made directly to the CSV will be overwritten when script 53 runs.
+
+If you need to correct data:
+  1. Apply corrections to FINAL_DISSERTATION_DATASET.xlsx (the Excel source)
+  2. Delete or move the old CSV (to force regeneration)
+  3. Run this pipeline from start to finish
+  4. All downstream results will use the corrected data
+
+This pipeline must run sequentially in full order. Individual script runs may produce
+stale outputs or intermediate inconsistencies. Always run the complete pipeline for
+final analysis numbers.
 """
 
 import sys
@@ -262,6 +283,12 @@ Log file: {log_path}
                 ]
             },
             {
+                'category': 'CAUSAL IDENTIFICATION: SYNTHETIC CONTROL METHOD',
+                'scripts': [
+                    ('scripts/scm_mahalanobis_distance.py', 'Essay 1 H2 Causal Identification: Mahalanobis Distance Weighted SCM (Abadie et al. 2010) - breach-event level matching with 500 permutations'),
+                ]
+            },
+            {
                 'category': 'NATURAL EXPERIMENT VALIDATION (ARCHIVED: Pre-2007 tests replaced by SCM)',
                 'scripts': [
                     # ARCHIVED: Parallel trends and balance test used pre-2007/post-2007 comparison.
@@ -274,7 +301,6 @@ Log file: {log_path}
                 'category': 'PUBLICATION READINESS: DATA INTEGRITY & CAUSAL ROBUSTNESS',
                 'scripts': [
                     ('scripts/00_data_validation_checks.py', 'Data Validation Checks (logical consistency, duplicates, outliers, missing data)'),
-                    ('scripts/98_propensity_score_matching.py', 'Propensity Score Matching (H2 self-selection bias test - addresses reviewer concern)'),
                     ('scripts/99_firm_fixed_effects_analysis.py', 'Firm Fixed Effects (H1-H4 within-firm variation, controls unobserved heterogeneity)'),
                     ('scripts/92_enforcement_analysis.py', 'H6 Enforcement Analysis (regulatory enforcement prevalence and predictors)'),
                 ]
@@ -315,6 +341,13 @@ Log file: {log_path}
                     ('scripts/robustness_3_sample_restrictions.py', 'Sample Restrictions: Results stratified by FCC, data type, firm size'),
                     ('scripts/robustness_4_standard_errors.py', 'Standard Errors: HC3, Clustered, Bootstrap comparison'),
                     ('scripts/robustness_5_fixed_effects.py', 'Fixed Effects: Industry 2-digit, 4-digit SIC, Year, and Firm FE'),
+                    ('scripts/power_analysis_h3_h4.py', 'Power Sensitivity Analysis: H3/H4 null hypothesis assessment (MDE at 80% power)'),
+                ]
+            },
+            {
+                'category': 'DEFENSE PREPARATION',
+                'scripts': [
+                    ('scripts/defense_prep_all_tasks.py', 'Pre-Defense Preparation: Five critical tasks - FCC economic significance, deduplication summary, H2 stability, power analysis, SCM vs OLS comparison'),
                 ]
             }
         ]

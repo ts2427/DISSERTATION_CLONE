@@ -10,12 +10,12 @@ RESULTS:
 --------------------------------------------------------------------------------
 Model                                        FCC Coef         SE    P-Value        N       R2
 --------------------------------------------------------------------------------
-1. Baseline (no FE)                           -1.9392     1.0343     0.0608      653   0.0184
-2. Industry FE (2-digit SIC)                  -1.9413     1.6906     0.2509      601   0.0600
+1. Baseline (no FE)                           -1.8780     1.0424     0.0716      648   0.0179
+2. Industry FE (2-digit SIC)                  -1.8986     1.6899     0.2612      596   0.0606
 --------------------------------------------------------------------------------
 
 INTERPRETATION:
-  FCC coefficient change: -1.9392 -> -1.9413 (0.1%)
+  FCC coefficient change: -1.8780 -> -1.8986 (1.1%)
   Statistical significance: Remains significant in both specifications
   Industry controls: 12 industries with n>=10 observations
 

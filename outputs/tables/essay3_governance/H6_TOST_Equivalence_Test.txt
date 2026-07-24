@@ -28,40 +28,39 @@ EQUIVALENCE TEST RESULTS:
 ----------------------------------------------------------------------------------------------------
 
 30D WINDOW:
-  Point estimate:                      +2.38pp
-  Standard error:                      4.875pp
-  90% Confidence Interval:             [-5.64pp, +10.40pp]
-  MDE (80% power):                     13.66pp
+  Point estimate:                      +1.50pp
+  Standard error:                      4.915pp
+  90% Confidence Interval:             [-6.59pp, +9.59pp]
+  MDE (80% power):                     13.77pp
 
-  Lower bound test (CI > -10.00pp):    True (-5.64 > -10.00?)
-  Upper bound test (CI < +10.00pp):    False (+10.40 < +10.00?)
-  EQUIVALENCE CONCLUSION:              NO
+  Lower bound test (CI > -10.00pp):    True (-6.59 > -10.00?)
+  Upper bound test (CI < +10.00pp):    True (+9.59 < +10.00?)
+  EQUIVALENCE CONCLUSION:              YES
 
-  [FAIL] The confidence interval extends beyond ±10pp bounds.
-         Upper tail underpowered: CI includes values above +10pp.
-         Conclusion: inconclusive (precision insufficient for equivalence claim).
+  [PASS] The FCC effect on 30D executive turnover is statistically
+         equivalent to zero within the ±10pp governance threshold.
 
 90D WINDOW:
-  Point estimate:                      -0.76pp
-  Standard error:                      4.936pp
-  90% Confidence Interval:             [-8.88pp, +7.36pp]
-  MDE (80% power):                     13.83pp
+  Point estimate:                      -1.32pp
+  Standard error:                      4.960pp
+  90% Confidence Interval:             [-9.48pp, +6.84pp]
+  MDE (80% power):                     13.89pp
 
-  Lower bound test (CI > -10.00pp):    True (-8.88 > -10.00?)
-  Upper bound test (CI < +10.00pp):    True (+7.36 < +10.00?)
+  Lower bound test (CI > -10.00pp):    True (-9.48 > -10.00?)
+  Upper bound test (CI < +10.00pp):    True (+6.84 < +10.00?)
   EQUIVALENCE CONCLUSION:              YES
 
   [PASS] The FCC effect on 90D executive turnover is statistically
          equivalent to zero within the ±10pp governance threshold.
 
 180D WINDOW:
-  Point estimate:                      -2.27pp
-  Standard error:                      4.895pp
-  90% Confidence Interval:             [-10.32pp, +5.78pp]
-  MDE (80% power):                     13.71pp
+  Point estimate:                      -2.84pp
+  Standard error:                      4.918pp
+  90% Confidence Interval:             [-10.93pp, +5.25pp]
+  MDE (80% power):                     13.78pp
 
-  Lower bound test (CI > -10.00pp):    False (-10.32 > -10.00?)
-  Upper bound test (CI < +10.00pp):    True (+5.78 < +10.00?)
+  Lower bound test (CI > -10.00pp):    False (-10.93 > -10.00?)
+  Upper bound test (CI < +10.00pp):    True (+5.25 < +10.00?)
   EQUIVALENCE CONCLUSION:              NO
 
   [FAIL] The confidence interval extends beyond ±10pp bounds.
@@ -73,7 +72,7 @@ SUMMARY AND INTERPRETATION:
 ----------------------------------------------------------------------------------------------------
 
 Equivalence Results Across Windows:
-  30d:  FAIL
+  30d:  PASS
   90d:  PASS
   180d: FAIL
 

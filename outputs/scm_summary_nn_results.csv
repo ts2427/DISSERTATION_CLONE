@@ -1,0 +1,10 @@
+Metric,Value
+N FCC Breaches,127.0
+N Non-FCC Donor Pool,526.0
+N Unique Non-FCC Firms,129.0
+Mean Treatment Effect (%),-1.28267716535433
+Standard Error (%),1.0157231907833941
+T-Statistic,-1.262821580715355
+Permutation P-Value (500 perms),0.29
+95% CI Lower (%),-3.2734946192897825
+95% CI Upper (%),0.7081402885811223

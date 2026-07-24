@@ -6,24 +6,24 @@ Group               N      Coefficient    P-Value
 ───────────────────────────────────────────────────────
 Size Q1_Small          153        2.5349      0.2773
 Size Q2                158       -0.6460      0.6670
-Size Q3                175       -0.1233      0.9393
-Size Q4_Large          167        0.8940      0.4377
+Size Q3                172       -0.1355      0.9345
+Size Q4_Large          165        0.9969      0.3919
 
 ESSAY 2: Volatility Change
 Group               N      Coefficient    P-Value
 ───────────────────────────────────────────────────────
 Size Q1_Small          151        0.2554      0.9381
 Size Q2                158       -0.3966      0.8710
-Size Q3                174        0.9551      0.6929
-Size Q4_Large          166       -1.1336      0.6866
+Size Q3                171        0.5164      0.8333
+Size Q4_Large          164       -1.1706      0.6818
 
 ESSAY 3: Executive Turnover (30-day)
 Group               N      Coefficient    P-Value
 ───────────────────────────────────────────────────────
 Size Q1_Small          171       -0.5421      0.1911
 Size Q2                174       -1.1817      0.0639
-Size Q3                178       -1.6510      0.0005
-Size Q4_Large          180        0.5832      0.1067
+Size Q3                175       -1.6367      0.0005
+Size Q4_Large          178        0.5583      0.1264
 
 INTERPRETATION:
 If timing coefficients are consistent across size groups -> Effect is uniform

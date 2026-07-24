@@ -1,55 +1,55 @@
 Variable,N,Mean,Std,Min,P25,Median,P75,Max,Group
-5-Day CAR (%),130,-0.99,4.60,-16.59,-2.77,-0.79,1.23,9.85,FCC Regulated
-30-Day CAR (%),130,-2.39,10.07,-40.60,-6.42,-1.01,2.87,21.88,FCC Regulated
-5-Day BHAR (%),130,-0.99,4.60,-15.93,-2.80,-0.88,1.27,10.01,FCC Regulated
-30-Day BHAR (%),130,-2.32,9.45,-35.09,-6.39,-1.35,2.67,23.57,FCC Regulated
-Post-Breach Volatility,129,25.92,14.58,4.48,16.18,21.28,30.23,89.81,FCC Regulated
-Volatility Change,129,-2.41,15.43,-79.76,-7.47,0.01,4.39,38.93,FCC Regulated
-Records Affected,141,2601866.70,13674218.64,0.00,2.00,12.00,621.00,109000000.00,FCC Regulated
-Records Affected (log),141,4.44,4.63,0.00,1.10,2.56,6.43,18.51,FCC Regulated
-Immediate Disclosure (≤7 days),141,0.40,0.49,0.00,0.00,0.00,1.00,1.00,FCC Regulated
-Delayed Disclosure (>30 days),141,0.49,0.50,0.00,0.00,0.00,1.00,1.00,FCC Regulated
-Health Data Breach,141,0.01,0.08,0.00,0.00,0.00,0.00,1.00,FCC Regulated
-Financial Data Breach,141,0.24,0.43,0.00,0.00,0.00,0.00,1.00,FCC Regulated
-PII Breach,141,0.99,0.12,0.00,1.00,1.00,1.00,1.00,FCC Regulated
-Breach Severity Score,141,7.12,1.93,0.00,6.00,6.00,9.00,11.00,FCC Regulated
-Total Prior Breaches,141,3.38,4.07,0.00,0.00,2.00,5.00,17.00,FCC Regulated
-Prior Breaches (1 year),141,1.24,2.31,0.00,0.00,0.00,1.00,12.00,FCC Regulated
-Prior Breaches (3 years),141,1.88,2.61,0.00,0.00,1.00,3.00,12.00,FCC Regulated
-Repeat Offender,141,0.67,0.47,0.00,0.00,1.00,1.00,1.00,FCC Regulated
-Days Since Last Breach,95,552.17,859.11,1.00,35.00,154.00,732.50,5245.00,FCC Regulated
-Firm Size (log assets),130,11.10,1.32,6.06,10.39,11.75,12.09,12.47,FCC Regulated
-Leverage,130,0.72,0.13,0.56,0.67,0.68,0.72,1.56,FCC Regulated
-ROA (%),130,0.01,0.01,-0.06,0.00,0.01,0.01,0.04,FCC Regulated
-Executive Change (30d),141,0.38,0.49,0.00,0.00,0.00,1.00,1.00,FCC Regulated
-Executive Change (90d),141,0.54,0.50,0.00,0.00,1.00,1.00,1.00,FCC Regulated
-Regulatory Enforcement,141,0.04,0.20,0.00,0.00,0.00,0.00,1.00,FCC Regulated
-Media Articles,141,10.74,37.94,0.00,0.00,0.00,3.00,393.00,FCC Regulated
-High Media Coverage,141,0.18,0.39,0.00,0.00,0.00,0.00,1.00,FCC Regulated
-5-Day CAR (%),547,0.14,4.06,-26.41,-1.73,0.10,2.08,14.21,Non-FCC
-30-Day CAR (%),547,0.04,8.56,-42.56,-4.76,0.33,4.58,34.05,Non-FCC
-5-Day BHAR (%),547,0.12,4.05,-24.28,-1.80,0.02,2.07,15.01,Non-FCC
-30-Day BHAR (%),547,-0.03,8.59,-29.86,-5.01,0.17,4.46,41.78,Non-FCC
-Post-Breach Volatility,541,27.49,14.56,6.47,17.65,24.04,33.24,127.62,Non-FCC
-Volatility Change,541,-1.92,14.82,-121.69,-7.83,-1.15,4.64,102.47,Non-FCC
-Records Affected,639,3494655.51,45326156.09,0.00,3.00,23.00,825.00,1000000000.00,Non-FCC
-Records Affected (log),643,4.52,3.92,0.00,1.39,3.14,6.65,20.72,Non-FCC
-Immediate Disclosure (≤7 days),643,0.21,0.41,0.00,0.00,0.00,0.00,1.00,Non-FCC
-Delayed Disclosure (>30 days),643,0.63,0.48,0.00,0.00,1.00,1.00,1.00,Non-FCC
-Health Data Breach,643,0.07,0.26,0.00,0.00,0.00,0.00,1.00,Non-FCC
-Financial Data Breach,643,0.26,0.44,0.00,0.00,0.00,1.00,1.00,Non-FCC
-PII Breach,643,0.97,0.17,0.00,1.00,1.00,1.00,1.00,Non-FCC
-Breach Severity Score,643,7.81,2.43,0.00,6.00,8.00,9.00,18.00,Non-FCC
-Total Prior Breaches,643,3.03,7.02,0.00,0.00,0.00,2.00,56.00,Non-FCC
-Prior Breaches (1 year),643,1.35,3.85,0.00,0.00,0.00,1.00,56.00,Non-FCC
-Prior Breaches (3 years),643,2.17,5.27,0.00,0.00,0.00,1.00,56.00,Non-FCC
-Repeat Offender,643,0.37,0.48,0.00,0.00,0.00,1.00,1.00,Non-FCC
-Days Since Last Breach,237,358.76,776.19,1.00,18.00,52.00,334.00,5698.00,Non-FCC
-Firm Size (log assets),588,10.34,1.22,5.01,9.61,10.32,10.92,14.74,Non-FCC
-Leverage,591,0.72,0.26,0.12,0.54,0.70,0.86,2.52,Non-FCC
-ROA (%),591,0.01,0.04,-0.33,0.00,0.01,0.02,0.21,Non-FCC
-Executive Change (30d),628,0.35,0.48,0.00,0.00,0.00,1.00,1.00,Non-FCC
-Executive Change (90d),628,0.54,0.50,0.00,0.00,1.00,1.00,1.00,Non-FCC
-Regulatory Enforcement,643,0.00,0.00,0.00,0.00,0.00,0.00,0.00,Non-FCC
-Media Articles,643,8.79,92.64,0.00,0.00,0.00,0.00,1870.00,Non-FCC
-High Media Coverage,643,0.05,0.22,0.00,0.00,0.00,0.00,1.00,Non-FCC
+5-Day CAR (%),128,-0.99,4.63,-16.59,-2.78,-0.79,1.34,9.85,FCC Regulated
+30-Day CAR (%),128,-2.31,10.13,-40.60,-5.94,-0.79,2.97,21.88,FCC Regulated
+5-Day BHAR (%),128,-0.99,4.63,-15.93,-2.81,-0.88,1.38,10.01,FCC Regulated
+30-Day BHAR (%),128,-2.25,9.51,-35.09,-6.37,-1.20,2.77,23.57,FCC Regulated
+Post-Breach Volatility,127,26.11,14.62,4.48,16.41,21.47,30.29,89.81,FCC Regulated
+Volatility Change,127,-2.43,15.55,-79.76,-7.48,0.03,4.39,38.93,FCC Regulated
+Records Affected,139,2639303.14,13769337.36,0.00,2.00,12.00,621.00,109000000.00,FCC Regulated
+Records Affected (log),139,4.47,4.65,0.00,1.10,2.56,6.43,18.51,FCC Regulated
+Immediate Disclosure (≤7 days),139,0.40,0.49,0.00,0.00,0.00,1.00,1.00,FCC Regulated
+Delayed Disclosure (>30 days),139,0.49,0.50,0.00,0.00,0.00,1.00,1.00,FCC Regulated
+Health Data Breach,139,0.01,0.08,0.00,0.00,0.00,0.00,1.00,FCC Regulated
+Financial Data Breach,139,0.24,0.43,0.00,0.00,0.00,0.00,1.00,FCC Regulated
+PII Breach,139,0.99,0.12,0.00,1.00,1.00,1.00,1.00,FCC Regulated
+Breach Severity Score,139,7.12,1.94,0.00,6.00,6.00,9.00,11.00,FCC Regulated
+Total Prior Breaches,139,3.29,3.95,0.00,0.00,2.00,5.00,17.00,FCC Regulated
+Prior Breaches (1 year),139,1.23,2.32,0.00,0.00,0.00,1.00,12.00,FCC Regulated
+Prior Breaches (3 years),139,1.86,2.63,0.00,0.00,1.00,2.50,12.00,FCC Regulated
+Repeat Offender,139,0.67,0.47,0.00,0.00,1.00,1.00,1.00,FCC Regulated
+Days Since Last Breach,93,563.99,864.53,1.00,39.00,160.00,756.00,5245.00,FCC Regulated
+Firm Size (log assets),128,11.09,1.32,6.06,10.38,11.72,12.07,12.47,FCC Regulated
+Leverage,128,0.72,0.13,0.56,0.67,0.68,0.72,1.56,FCC Regulated
+ROA (%),128,0.01,0.01,-0.06,0.00,0.01,0.01,0.04,FCC Regulated
+Executive Change (30d),139,0.37,0.48,0.00,0.00,0.00,1.00,1.00,FCC Regulated
+Executive Change (90d),139,0.53,0.50,0.00,0.00,1.00,1.00,1.00,FCC Regulated
+Regulatory Enforcement,139,0.04,0.20,0.00,0.00,0.00,0.00,1.00,FCC Regulated
+Media Articles,139,10.76,38.21,0.00,0.00,0.00,2.00,393.00,FCC Regulated
+High Media Coverage,139,0.18,0.39,0.00,0.00,0.00,0.00,1.00,FCC Regulated
+5-Day CAR (%),544,0.14,4.06,-26.41,-1.72,0.09,2.08,14.21,Non-FCC
+30-Day CAR (%),544,0.05,8.57,-42.56,-4.75,0.34,4.60,34.05,Non-FCC
+5-Day BHAR (%),544,0.12,4.05,-24.28,-1.80,0.02,2.07,15.01,Non-FCC
+30-Day BHAR (%),544,-0.01,8.60,-29.86,-5.00,0.17,4.46,41.78,Non-FCC
+Post-Breach Volatility,538,27.50,14.59,6.47,17.62,24.00,33.29,127.62,Non-FCC
+Volatility Change,538,-1.92,14.85,-121.69,-7.82,-1.15,4.60,102.47,Non-FCC
+Records Affected,636,3511137.94,45432461.75,0.00,3.00,23.00,823.00,1000000000.00,Non-FCC
+Records Affected (log),640,4.52,3.93,0.00,1.39,3.14,6.62,20.72,Non-FCC
+Immediate Disclosure (≤7 days),640,0.21,0.41,0.00,0.00,0.00,0.00,1.00,Non-FCC
+Delayed Disclosure (>30 days),640,0.63,0.48,0.00,0.00,1.00,1.00,1.00,Non-FCC
+Health Data Breach,640,0.07,0.26,0.00,0.00,0.00,0.00,1.00,Non-FCC
+Financial Data Breach,640,0.26,0.44,0.00,0.00,0.00,1.00,1.00,Non-FCC
+PII Breach,640,0.97,0.17,0.00,1.00,1.00,1.00,1.00,Non-FCC
+Breach Severity Score,640,7.81,2.43,0.00,6.00,8.00,9.00,18.00,Non-FCC
+Total Prior Breaches,640,2.97,6.93,0.00,0.00,0.00,2.00,56.00,Non-FCC
+Prior Breaches (1 year),640,1.32,3.81,0.00,0.00,0.00,1.00,56.00,Non-FCC
+Prior Breaches (3 years),640,2.12,5.18,0.00,0.00,0.00,1.00,56.00,Non-FCC
+Repeat Offender,640,0.37,0.48,0.00,0.00,0.00,1.00,1.00,Non-FCC
+Days Since Last Breach,235,361.64,778.87,1.00,18.50,58.00,334.50,5698.00,Non-FCC
+Firm Size (log assets),585,10.33,1.22,5.01,9.61,10.29,10.91,14.74,Non-FCC
+Leverage,588,0.72,0.26,0.12,0.54,0.70,0.86,2.52,Non-FCC
+ROA (%),588,0.01,0.04,-0.33,0.00,0.01,0.02,0.21,Non-FCC
+Executive Change (30d),625,0.35,0.48,0.00,0.00,0.00,1.00,1.00,Non-FCC
+Executive Change (90d),625,0.54,0.50,0.00,0.00,1.00,1.00,1.00,Non-FCC
+Regulatory Enforcement,640,0.00,0.00,0.00,0.00,0.00,0.00,0.00,Non-FCC
+Media Articles,640,8.83,92.86,0.00,0.00,0.00,0.00,1870.00,Non-FCC
+High Media Coverage,640,0.05,0.22,0.00,0.00,0.00,0.00,1.00,Non-FCC

@@ -39,12 +39,31 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 # ============================================================================
 
 print(f"\n[Step 1/6] Loading data...")
+print(f"  Reading from: {DATA_FILE}")
 df: pd.DataFrame = pd.read_csv(DATA_FILE)
 print(f"  [OK] Loaded: {len(df):,} breaches")
+
+# DIAGNOSTIC: Verify corrections applied
+print(f"\n[DIAGNOSTIC] Data file integrity check:")
+print(f"  File row count: {len(df)}")
+print(f"  Expected: 779 (after removing 5 duplicates from 784)")
+
+boost_mobile = df[df['org_name'] == 'Boost Mobile']
+if len(boost_mobile) > 0:
+    boost_cik = boost_mobile['cik'].iloc[0]
+    print(f"  Boost Mobile CIK: {boost_cik} (expected: 1283699 = Sprint)")
+else:
+    print(f"  Boost Mobile: NOT FOUND")
+
+fcc_count_full = (df['fcc_reportable'] == True).sum()
+print(f"  FCC observations in full file: {fcc_count_full} (expected: 139 after removing 2 FCC dups from 141)")
 
 # Analysis sample (with CRSP data)
 analysis_df: pd.DataFrame = df[df['has_crsp_data'] == True].copy()
 print(f"  [OK] CRSP sample: {len(analysis_df):,} breaches")
+
+fcc_count_crsp = (analysis_df['fcc_reportable'] == True).sum()
+print(f"  FCC observations in CRSP sample: {fcc_count_crsp} (expected: ~127)")
 
 # Create column aliases for consistency (Phase 2 variable standardization)
 if 'disclosure_delay_days' in analysis_df.columns and 'days_to_disclosure' not in analysis_df.columns:
@@ -104,6 +123,16 @@ final_n: int = len(reg_df)
 dropped: int = initial_n - final_n
 
 print(f"  Sample size: {final_n:,} observations (dropped {dropped:,} due to missing values)")
+
+# DIAGNOSTIC: Verify FCC composition in regression sample
+if 'fcc_reportable' in reg_df.columns:
+    fcc_in_regression = (reg_df['fcc_reportable'] == True).sum()
+    print(f"\n[DIAGNOSTIC] Regression sample FCC composition:")
+    print(f"  Total FCC obs in regression sample: {fcc_in_regression}")
+    print(f"  Expected: ~127 (from corrected 139 full-file FCC obs after CRSP/controls filter)")
+    print(f"  Regression n: {final_n:,} (expected: 653 if using corrected file)")
+else:
+    print(f"  [WARNING] fcc_reportable column not found in regression data")
 
 # Model 1: Immediate disclosure only + base controls
 y = reg_df[target]

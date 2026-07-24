@@ -1,2 +1,2 @@
 model,n_obs,fcc_coefficient,fcc_se,fcc_z,fcc_p,fcc_irr,significant
-Negative Binomial (Multiple Turnover Events 180d),651,0.1813,0.1117,1.6227,0.1047,1.1987,No
+Negative Binomial (Multiple Turnover Events 180d),646,0.1691,0.1124,1.5045,0.1325,1.1843,No

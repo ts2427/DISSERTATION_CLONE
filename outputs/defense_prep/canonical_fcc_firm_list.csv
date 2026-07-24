@@ -1,0 +1,10 @@
+cik,org_names,sic,n_breaches,mean_car,first_breach,last_breach
+1283699,"['T-Mobile USA, Inc.', 'T-Mobile US, Inc.', 'Sprint Business', 'T-Mobile USA', 'T-Mobile', 'Sprint Corporation', 'T-Mobile USA Inc', 'T-Mobile USA Inc.', 'T-Mobile, USA', 'Sprint']",4813,46,-1.5896347826086958,2013-11-01,2023-04-28
+732717,"['ATT-SecurityBreach', 'AT&T', 'AT&T Services', 'AT&T Services Inc.', 'Cricket Wireless LLC', 'AT&T Inc', 'AT&T Services, Inc.', 'ATT-SecurityBreach2', 'AT&T, Inc.', 'ATT-Breach Notification', 'AT&T Inc.']",4813,30,-1.1451600000000002,2008-05-23,2024-04-14
+1166691,"['Comcast Cable Communications, Inc.', 'NBC Sports Group', 'NBCUniversal', 'Comcast', 'Comcast Cable Communications LLC']",4841,14,-1.1641785714285713,2008-01-29,2024-10-04
+732712,"['Verizon Communications Inc.', 'Verizon Communications', 'Verizon Communications Inc', 'Verizon', 'Verizon Corporate Services Group Inc.']",4813,13,2.2022769230769232,2008-06-27,2024-02-09
+1091667,"['Charter Communication', 'Charter Communications', 'Charter Communications, Inc.']",4841,8,2.0051125,2008-07-14,2023-09-01
+1001082,"['DISH Network, LLC', 'Boost Mobile', 'DISH Network Corporation', 'DISH Network L.L.C.']",4841,6,-26.44588333333333,2019-03-14,2023-05-17
+20520,"['Frontier Communications Parent, Inc.', 'Frontier Communications']",4813,6,3.864383333333333,2022-02-24,2024-06-12
+18926,"['Centurylink Communications', 'CenturyLink Communications']",4813,2,-7.56035,2020-08-20,2022-03-15
+1632127,"['Cable One, Inc.']",4841,2,1.51295,2019-03-01,2019-08-08

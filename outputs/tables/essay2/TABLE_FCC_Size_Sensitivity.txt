@@ -9,22 +9,22 @@ when comparing across size quartiles.
 
 SAMPLE SIZE COMPARISON:
 --------------------------------------------------------------------------------
-FCC-regulated firms:     Mean log(assets) = 11.139 (approx $0.0B)
-Non-FCC firms:           Mean log(assets) = 10.384 (approx $0.0B)
-Size ratio (FCC/Non-FCC): 2.13x
+FCC-regulated firms:     Mean log(assets) = 11.124 (approx $0.0B)
+Non-FCC firms:           Mean log(assets) = 10.382 (approx $0.0B)
+Size ratio (FCC/Non-FCC): 2.10x
 
 FCC EFFECT BY FIRM SIZE QUARTILE:
 --------------------------------------------------------------------------------
 Quartile                  N     FCC Coef         SE    P-Value   Sig
 --------------------------------------------------------------------------------
-Q1 (Smallest)           165      -6.2191     4.0410     0.1238      
-Q2                      162      -1.9997     2.3129     0.3873      
-Q3                      164       0.9803     1.6405     0.5502      
-Q4 (Largest)            162       0.0148     1.1346     0.9896      
+Q1 (Smallest)           162      -7.6407     4.1471     0.0654     *
+Q2                      162      -0.1108     3.1257     0.9717      
+Q3                      162       0.8993     1.6489     0.5855      
+Q4 (Largest)            162       0.1026     1.1378     0.9282      
 --------------------------------------------------------------------------------
 
 INTERPRETATION:
-  Significant FCC effect in 0 of 4 size quartiles (p<0.10)
+  Significant FCC effect in 1 of 4 size quartiles (p<0.10)
 
   CONCLUSION: FCC effect may be SIZE-DEPENDENT.
   Effect concentrated in certain firm sizes. Further investigation needed.

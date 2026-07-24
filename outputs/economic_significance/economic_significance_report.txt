@@ -22,13 +22,13 @@ A. FCC REGULATORY COST (Market Valuation Impact)
 The FCC regulatory effect on cumulative abnormal returns is -2.20%,
 representing shareholder value destruction per data breach:
 
-• For median firm ($32M assets): $-0.7M loss
-• For large firm ($163M assets): $-3.6M loss
+• For median firm ($31M assets): $-0.7M loss
+• For large firm ($159M assets): $-3.5M loss
 • For S&P 500 median ($422M assets): $-9.3M loss
 
 Aggregate Impact:
 • FCC-regulated firms in sample: 10
-• Total FCC-related breaches: 130
+• Total FCC-related breaches: 128
 • Total shareholder value loss: $-0.54B
 • Average loss per breach: $-4.2M
 
@@ -68,9 +68,9 @@ Expected cost per breach (from governance literature):
 Expected turnover cost per breach: $1.0M
 
 Interpretation: For repeat offenders (experiencing multiple breaches),
-governance disruption costs compound significantly. With 291
+governance disruption costs compound significantly. With 287
 breaches among repeat offender firms, aggregate governance cost reaches
-$0.29B.
+$0.28B.
 
 COMBINED ECONOMIC IMPACT
 --------------------------------------------------------------------------------
@@ -111,4 +111,4 @@ METHODOLOGICAL NOTES
 • Market cap proxy: Used book assets; results conservative relative to market cap
 
 Generated: 2026-02-27
-Data: 784 breaches, 677 with CRSP pricing
+Data: 779 breaches, 672 with CRSP pricing

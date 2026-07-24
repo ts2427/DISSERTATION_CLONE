@@ -7,7 +7,7 @@ RESEARCH QUESTION:
 Does the effect of disclosure timing on executive turnover work through increased
 market volatility (information mechanism) or directly through stakeholder pressure?
 
-SAMPLE: 647 breaches with executive change and volatility data
+SAMPLE: 642 breaches with executive change and volatility data
 
 ==========================================================================================
 STEP 1: TOTAL EFFECT (c path) - Timing -> Turnover (no mediator)
@@ -16,12 +16,12 @@ STEP 1: TOTAL EFFECT (c path) - Timing -> Turnover (no mediator)
 Model: Logit(executive_change_30d) ~ immediate_disclosure + controls
 Controls: firm_size_log, leverage, roa, prior_breaches_total
 
-Coefficient (c):         -0.5885
-Std. Error:              0.2161
-Z-score:                -2.7230
-P-value:                 0.0065
+Coefficient (c):         -0.6029
+Std. Error:              0.2179
+Z-score:                -2.7663
+P-value:                 0.0057
 
-Interpretation: Immediate disclosure increases executive turnover by -58.85% when
+Interpretation: Immediate disclosure increases executive turnover by -60.29% when
 not controlling for volatility effects.
 
 ==========================================================================================
@@ -30,11 +30,11 @@ STEP 2: a PATH - Timing -> Volatility (mediator model)
 
 Model: OLS(volatility_change) ~ immediate_disclosure + controls
 
-Coefficient (a):         -0.2492
-Std. Error:              1.3961
-P-value:                 0.8584
+Coefficient (a):         -0.3686
+Std. Error:              1.4071
+P-value:                 0.7935
 
-Interpretation: Immediate disclosure DECREASES volatility by 0.25
+Interpretation: Immediate disclosure DECREASES volatility by 0.37
 percentage points. (This matches main Essay 2 finding!)
 
 ==========================================================================================
@@ -44,43 +44,43 @@ STEP 3: DIRECT EFFECT (c' path) - Timing -> Turnover (controlling for volatility
 Model: Logit(executive_change_30d) ~ immediate_disclosure + volatility_change + controls
 
 TIMING EFFECT (Direct):
-Coefficient (c'):        -0.5876
-Std. Error:              0.2164
-Z-score:                -2.7158
-P-value:                 0.0066
+Coefficient (c'):        -0.6013
+Std. Error:              0.2182
+Z-score:                -2.7553
+P-value:                 0.0059
 
 VOLATILITY EFFECT (b path):
-Coefficient (b):          0.0069
+Coefficient (b):          0.0073
 Std. Error:              0.0060
-Z-score (b/SE(b)):       1.1510
-P-value:                 0.2497
+Z-score (b/SE(b)):       1.2061
+P-value:                 0.2278
 
 Interpretation: When controlling for volatility, the direct timing effect changes from
--0.5885 to -0.5876. The reduction suggests volatility partially mediates
+-0.6029 to -0.6013. The reduction suggests volatility partially mediates
 the timing->turnover relationship.
 
 ==========================================================================================
 STEP 4: INDIRECT EFFECT (a × b) - Timing -> Volatility -> Turnover
 ==========================================================================================
 
-Indirect Effect (a×b):   -0.0017
-Standard Error:          0.0098
-95% Confidence Interval: [ -0.0209,   0.0175]
-Z-score:                -0.1764
-P-value:                 0.8600
+Indirect Effect (a×b):   -0.0027
+Standard Error:          0.0105
+95% Confidence Interval: [ -0.0233,   0.0179]
+Z-score:                -0.2560
+P-value:                 0.7980
 Significance:          (NS)
 
 ==========================================================================================
 MEDIATION SUMMARY
 ==========================================================================================
 
-Total Effect (c):        -0.5885  (Timing -> Turnover, total)
-Direct Effect (c'):      -0.5876  (Timing -> Turnover, direct)
-Indirect Effect (a×b):   -0.0017  (Timing -> Volatility -> Turnover)
+Total Effect (c):        -0.6029  (Timing -> Turnover, total)
+Direct Effect (c'):      -0.6013  (Timing -> Turnover, direct)
+Indirect Effect (a×b):   -0.0027  (Timing -> Volatility -> Turnover)
 ------------------------------------------------------------------------------------------
-Sum (c' + a×b):          -0.5893
+Sum (c' + a×b):          -0.6040
 
-Proportion Mediated:        0.3%  (of total effect explained by volatility)
+Proportion Mediated:        0.4%  (of total effect explained by volatility)
 
 Interpretation:
 The indirect effect represents the portion of the timing effect that operates THROUGH

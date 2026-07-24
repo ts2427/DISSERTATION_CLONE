@@ -10,9 +10,9 @@ TESTS CONDUCTED:
 
 1. INDUSTRY FIXED EFFECTS (Test 1)
 --------------------------------------------------------------------------------
-   Baseline FCC effect:        0.0117% (N=649)
-   With industry controls:    -1.8265% (N=597, 12 industries)
-   Status: NOT SIGNIFICANT (p=0.2146)
+   Baseline FCC effect:        0.0716% (N=644)
+   With industry controls:    -1.8026% (N=592, 12 industries)
+   Status: NOT SIGNIFICANT (p=0.2205)
 
 2. TEMPORAL VALIDATION (Pre-2007 vs Post-2007)
 --------------------------------------------------------------------------------
@@ -21,10 +21,10 @@ TESTS CONDUCTED:
 
 3. SIZE SENSITIVITY (Test 2)
 --------------------------------------------------------------------------------
-   Q1 (Small)           FCC effect =   4.4810% (p=0.2109)
-   Q2                   FCC effect =   4.5497% (p=0.0149)
-   Q3                   FCC effect =  -3.0089% (p=0.1169)
-   Q4 (Large)           FCC effect =  -3.6526% (p=0.0268)
+   Q1 (Small)           FCC effect =   3.4270% (p=0.3681)
+   Q2                   FCC effect =   7.5648% (p=0.0064)
+   Q3                   FCC effect =  -3.4961% (p=0.0759)
+   Q4 (Large)           FCC effect =  -3.5902% (p=0.0269)
 
 CAUSAL IDENTIFICATION CONCLUSION:
 --------------------------------------------------------------------------------
@@ -39,7 +39,7 @@ If effect is from SELECTION BIAS:
   [-] Effect would concentrate in Q4 (large) firms
 
 EVIDENCE ASSESSMENT:
-  [-] Industry FE test: Effect weakens with controls (p=0.2146)
+  [-] Industry FE test: Effect weakens with controls (p=0.2205)
 
 OVERALL: Results support interpretation of FCC effect as regulatory constraint
 on disclosure timing affecting market volatility through information processing

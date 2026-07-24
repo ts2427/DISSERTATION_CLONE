@@ -12,12 +12,12 @@ RESULTS:
 --------------------------------------------------------------------------------
 Model                                        FCC Coef         SE    P-Value        N       R2
 --------------------------------------------------------------------------------
-1. Baseline (no FE)                            0.0117     1.1163     0.9917      649   0.4214
-2. Industry FE (2-digit SIC)                  -1.8265     1.4718     0.2146      597   0.4575
+1. Baseline (no FE)                            0.0716     1.1238     0.9492      644   0.4212
+2. Industry FE (2-digit SIC)                  -1.8026     1.4713     0.2205      592   0.4574
 --------------------------------------------------------------------------------
 
 INTERPRETATION:
-[+] FCC effect STRENGTHENS with industry controls (-1.8265 vs 0.0117)
+[+] FCC effect STRENGTHENS with industry controls (-1.8026 vs 0.0716)
     This suggests FCC effect is NOT driven by industry selection
     Effect is more likely regulatory in nature
 

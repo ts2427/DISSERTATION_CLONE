@@ -1,4 +1,4 @@
 Model,FCC Coefficient,Governance Coefficient,Interaction,R-squared
-Model 1: FCC Only,-1.9615,N/A,N/A,0.0212
-Model 2: FCC + Gov,-2.2871**,-1.2787,N/A,0.0231
-Model 3: FCC x Gov,-2.8516**,-1.7067,5.1244,0.0275
+Model 1: FCC Only,-1.8969,N/A,N/A,0.0216
+Model 2: FCC + Gov,-2.1234,-1.0182,N/A,0.0228
+Model 3: FCC x Gov,-2.6699**,-1.4681,4.9723,0.0269

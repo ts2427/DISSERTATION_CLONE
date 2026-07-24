@@ -3,7 +3,7 @@ H6 ANALYSIS: REGULATORY ENFORCEMENT AND DISCLOSURE TIMING
 
 DESCRIPTIVE STATISTICS
 --------------------------------------------------------------------------------
-Total observations: 784
+Total observations: 779
 Enforcement cases: 6
 Prevalence: 0.77%
 
@@ -22,7 +22,7 @@ Current prevalence is BELOW minimum - insufficient power for causal inference.
 CONCLUSION
 --------------------------------------------------------------------------------
 H6 (Regulatory Enforcement) is insufficiently powered to test.
-Only 6 enforcement cases in 784 observations (0.77%) limits analysis.
+Only 6 enforcement cases in 779 observations (0.77%) limits analysis.
 Recommend reporting H6 as a descriptive finding, not a causal test.
 
 MANUSCRIPT LANGUAGE FOR H6:

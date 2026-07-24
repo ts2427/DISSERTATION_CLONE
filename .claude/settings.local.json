@@ -97,7 +97,24 @@
       "Bash(tee pipeline_run_full.log)",
       "Bash(Get-Process python *)",
       "Bash(Select-Object ProcessName, Id)",
-      "Bash(Write-Host)"
+      "Bash(Write-Host)",
+      "Bash(cat)",
+      "Bash(iconv -f utf-8 -t ascii//TRANSLIT)",
+      "Bash(pip search *)",
+      "Bash(pip index *)",
+      "Bash(where cl.exe)",
+      "Bash(venv\\\\Scripts\\\\python.exe -c \"import scpi; print\\('SUCCESS: scpi-pkg installed'\\); print\\('Version:', scpi.__version__ if hasattr\\(scpi, '__version__'\\) else 'check available'\\); print\\('Location:', scpi.__file__\\)\")",
+      "PowerShell(pip uninstall *)",
+      "Bash(pip uninstall *)",
+      "Bash(.\\\\venv\\\\Scripts\\\\python.exe -c \"from scpi_pkg.scdataMulti import scdataMulti; help\\(scdataMulti\\)\")",
+      "PowerShell(cd \"C:\\\\Users\\\\mcobp\\\\DISSERTATION_CLONE\"; & \".\\\\venv\\\\Scripts\\\\python.exe\" -c \"from scpi_pkg.scdataMulti import scdataMulti; import inspect; sig = inspect.signature\\(scdataMulti\\); print\\('scdataMulti parameters:'\\); print\\('\\\\n'.join\\([f'  {name}: {param.default if param.default != inspect.Parameter.empty else \\\\\"\\(required\\)\\\\\"}' for name, param in sig.parameters.items\\(\\)]\\)\\)\")",
+      "Bash(.\\\\venv\\\\Scripts\\\\python.exe)",
+      "Bash(pip show *)",
+      "PowerShell(Start-Sleep -Seconds 5; Get-Content -Path \"C:\\\\Users\\\\mcobp\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-mcobp-DISSERTATION-CLONE\\\\a1bdce89-dcb5-4813-8e9d-168e93c18750\\\\tasks\\\\bwh6zv0n7.output\" -Tail 50 2>/dev/null)",
+      "PowerShell(Get-ChildItem C:\\\\Users\\\\mcobp\\\\DISSERTATION_CLONE\\\\outputs/scm_breach_event_level_results.csv -ErrorAction SilentlyContinue | Select-Object Name, LastWriteTime, @{Name='SizeMB';Expression={[math]::Round\\($_.Length/1MB,2\\)}})",
+      "PowerShell(Get-Process *)",
+      "PowerShell(cd \"C:\\\\Users\\\\mcobp\\\\DISSERTATION_CLONE\"; $counter = 0; while \\($counter -lt 180\\) { if \\(Test-Path \"pipeline_run_corrected.log\"\\) { $content = Get-Content \"pipeline_run_corrected.log\"; if \\($content -match \"DISSERTATION ANALYSIS COMPLETE\"\\) { echo \"✓ Pipeline complete\"; exit 0 } } Start-Sleep -Seconds 5; $counter += 5; if \\($counter % 30 -eq 0\\) { echo \"Still running... \\($counter seconds\\)\" } } echo \"Pipeline still running after 3 minutes\")",
+      "PowerShell(Remove-Item *)"
     ]
   }
 }

@@ -1,0 +1,10 @@
+Metric,Value
+N FCC Breaches,125
+N Non-FCC Donor Pool,523
+Mean Treatment Effect (%),-1.6375302847341988
+Standard Error (%),0.8431949849775671
+T-Statistic,-1.9420541083718197
+Permutation P-Value (500 perms),0.754
+95% CI Lower (%),-3.29019245529023
+95% CI Upper (%),0.015131885821832558
+Matching Method,Mahalanobis distance weighted

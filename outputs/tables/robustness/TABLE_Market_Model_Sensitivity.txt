@@ -8,68 +8,68 @@ WINDOW 1: 5-DAY CAR
 ==========================================================================================
 
 Description: Cumulative Abnormal Returns measured over 5-day event window
-Sample: 677 breaches
+Sample: 672 breaches
 Window: 5 days post-announcement
 
 Overall Effect:
-Mean CAR-5d:         -0.0794%
-Std Error:            0.1609%
-t-statistic:         -0.4934
-p-value:              0.6219
+Mean CAR-5d:         -0.0799%
+Std Error:            0.1618%
+t-statistic:         -0.4940
+p-value:              0.6215
 Interpretation: Average 5-day CAR across all breaches (narrow window)
 
 FCC Breach Effect (5-day):
-FCC breaches:        -0.9876%
-Non-FCC breaches:     0.1364%
-Difference:          -1.1240%
-Std Error:            0.4392%
-t-statistic:         -2.5590
-p-value:              0.0107
+FCC breaches:        -0.9934%
+Non-FCC breaches:     0.1350%
+Difference:          -1.1284%
+Std Error:            0.4450%
+t-statistic:         -2.5358
+p-value:              0.0114
 
 ==========================================================================================
 WINDOW 2: 30-DAY CAR (MAIN SPECIFICATION)
 ==========================================================================================
 
 Description: Cumulative Abnormal Returns measured over 30-day event window
-Sample: 677 breaches
+Sample: 672 breaches
 Window: 30 days post-announcement
 
 Overall Effect:
-Mean CAR-30d:        -0.4283%
-Std Error:            0.3422%
-t-statistic:         -1.2514
-p-value:              0.2112
+Mean CAR-30d:        -0.3961%
+Std Error:            0.3443%
+t-statistic:         -1.1506
+p-value:              0.2503
 Interpretation: Average 30-day CAR across all breaches (main window)
 
 FCC Breach Effect (30-day):
-FCC breaches:        -2.3878%
-Non-FCC breaches:     0.0374%
-Difference:          -2.4252%
-Std Error:            0.9562%
-t-statistic:         -2.5363
-p-value:              0.0114
+FCC breaches:        -2.3116%
+Non-FCC breaches:     0.0546%
+Difference:          -2.3661%
+Std Error:            0.9682%
+t-statistic:         -2.4440
+p-value:              0.0148
 
 ==========================================================================================
 ROBUSTNESS COMPARISON ACROSS WINDOWS
 ==========================================================================================
 
 Overall Effect Comparison:
-  5-day CAR:         -0.0794%
-  30-day CAR:        -0.4283%
-  Difference:         0.3489%
+  5-day CAR:         -0.0799%
+  30-day CAR:        -0.3961%
+  Difference:         0.3162%
   -> Both windows show similar patterns = robust to window choice
 
 FCC Effect Comparison:
-  FCC diff (5d):     -1.1240%
-  FCC diff (30d):    -2.4252%
-  Difference:         1.3012%
+  FCC diff (5d):     -1.1284%
+  FCC diff (30d):    -2.3661%
+  Difference:         1.2378%
   -> FCC effect consistent across windows = robust finding
 
 Statistical Significance Across Windows:
-  5-day overall:  p = 0.6219
-  30-day overall: p = 0.2112
-  5-day FCC:      p = 0.0107
-  30-day FCC:     p = 0.0114
+  5-day overall:  p = 0.6215
+  30-day overall: p = 0.2503
+  5-day FCC:      p = 0.0114
+  30-day FCC:     p = 0.0148
 
 ==========================================================================================
 CONCLUSION: WINDOW ROBUSTNESS
