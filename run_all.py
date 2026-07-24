@@ -357,9 +357,11 @@ Log file: {log_path}
             {
                 'category': 'FACTOR MODEL & PERSISTENCE TESTING',
                 'scripts': [
-                    ('scripts/download_fama_french_factors.py', 'Download Fama-French Factors (if not already available): Mom, FF5 factors from Ken French data library'),
-                    ('scripts/factor_model_carhart_ff5.py', 'Factor Model Robustness: Test H1-H4 under market model, Carhart 4-factor, FF5 (detect momentum artifact in BHAR p=0.048)'),
-                    ('scripts/extended_bhar_60d_90d.py', 'Extended BHAR Windows: Compute 60-day and 90-day BHAR from daily returns, test persistence vs mean reversion (H2 coefficient trajectory)'),
+                    ('scripts/extract_merge_fama_french.py', 'Extract and Merge Fama-French Factors: Process Ken French data files (FF3, Momentum, FF5) locally with proper header handling'),
+                    ('scripts/sample_composition_diagnostic.py', 'Sample Composition Diagnostic: Isolate model choice effects from sample loss (critical: market-adjusted remains p=0.058 on restricted N=519 sample)'),
+                    ('scripts/ff3_simple_merge.py', 'FF3 Simple Merge Robustness: Test H1-H4 under FF3 specification (N=519, coefficient stable -2.12%, p-value inflation from factor adjustment, not sample loss)'),
+                    ('scripts/factor_model_carhart_ff5.py', 'Factor Model Robustness: Test H1-H4 under market model, Carhart 4-factor, FF5 (coefficient stable across all specifications)'),
+                    ('scripts/extended_bhar_60d_90d.py', 'Extended BHAR Windows: Compute 60-day and 90-day BHAR from daily returns, test persistence vs mean reversion (Mitchell-Stafford test)'),
                 ]
             },
             {
