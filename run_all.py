@@ -46,6 +46,30 @@ If you need to correct data:
 This pipeline must run sequentially in full order. Individual script runs may produce
 stale outputs or intermediate inconsistencies. Always run the complete pipeline for
 final analysis numbers.
+
+ESSAY 3 OUTCOME MEASUREMENT ISSUE (BLOCKING SCRIPTS 91 SERIES)
+==============================================================
+Script 46_executive_changes.py measures ANY 8-K filing in the window (line 65),
+not Item 5.02 specifically (director/officer changes). This produces:
+  - Implausibly high base rates (55-59% at 180d vs 14-16% annual CEO turnover)
+  - Saturation between 90-180 days (only 6 new events out of 651)
+  - Complete separation in Q2 (FCC firms in mid-size quartile perfectly separated)
+  - Identical 90d/180d results in Q1 (outcome already captured by 90 days)
+
+TO UNBLOCK ESSAY 3 GOVERNANCE ANALYSIS (Scripts 91-91k):
+1. Modify scripts/46_executive_changes.py to parse Item 5.02 from 8-K filings
+2. Or replace with SCS/Compustat 8-K item lookup if available
+3. Regenerate executive_changes.csv with Item 5.02-specific measure
+4. All Essay 3 scripts will then produce valid results
+
+ESSAY 1 STATUS: COMPLETE & DEFENSE-READY
+=========================================
+- Classification: FCC via SIC codes (4813/4841/4899), no false positives
+- Standard errors: HC3 robust (appropriate for 10 clusters, 543 unique event dates)
+- Primary specification: Market-adjusted returns (N=648, Brown & Warner 1985)
+- Robustness: FF3/Carhart/FF5 show stable coefficient (-2.06% to -2.20%)
+- Sample composition: Diagnostic confirms p-value drift is from model choice, not sample loss
+- All results verified and locked for defense
 """
 
 import sys
@@ -263,25 +287,25 @@ Log file: {log_path}
                 'category': 'MAIN ANALYSIS',
                 'scripts': [
                     ('scripts/70_summary_statistics.py', 'Summary Statistics (Table 1)'),
-                    ('scripts/80_essay1_car_regressions.py', 'Essay 1 Main Regressions (H1-H4: CAR on disclosure/FCC/reputation/severity) - HC3 robust SEs as primary'),
+                    ('scripts/80_essay1_car_regressions.py', 'Essay 1 Main Regressions (H1-H4: CAR on disclosure/FCC/reputation/severity) - HC3 robust SEs as primary [COMPLETE & DEFENSE-READY]'),
                     ('scripts/h1_timing_fcc_interaction.py', 'H1 Theoretical Test: Timing × FCC Interaction (formal test of differential effects by regulatory status, canonical specification)'),
                     # ARCHIVED: Pre-2007 causal ID replaced by SCM. Runs as robustness check only.
                     # ('scripts/81_post_2007_interaction_test.py', 'FCC Causal Identification (TABLE B8: Post-2007 Interaction Test - Market Returns)'),
                     ('scripts/82_clustered_vs_hc3_comparison.py', 'Standard Errors Robustness (TABLE B9: Clustered vs HC3 Comparison)'),
                     ('scripts/83_fcc_causal_identification.py', 'FCC Causal ID Summary (Industry Fixed Effects, Size Sensitivity Analysis)'),
-                    ('scripts/91_essay3_governance_regressions.py', 'Essay 3 Main Regressions (Executive Turnover - Logistic Regression by Window)'),
-                    ('scripts/91b_essay3_reduced_form_mediation.py', 'Essay 3 Reduced-Form H6 Test (Correct Specification - No Post-Treatment Variables) + Mediation Decomposition'),
-                    ('scripts/91c_essay3_mediation_bootstrap.py', 'Essay 3 Bootstrap Indirect Effect (Nonlinear Mediation on Probability Scale with 95% CI)'),
-                    ('scripts/91e_essay3_h6_tost_equivalence.py', 'Essay 3 H6 TOST Equivalence Test (N=651, confirms FCC effect is economically negligible)'),
-                    ('scripts/91f_essay3_h6_firm_size_heterogeneity.py', 'Essay 3 H6 Firm Size Heterogeneity (30d/90d/180d quartile analysis - addresses temporal persistence)'),
-                    ('scripts/91g_extract_reduced_form_controls.py', 'Essay 3 H6 Control Variable Significance (which breach/firm characteristics predict turnover)'),
-                    ('scripts/91h_essay3_cox_hazards.py', 'Essay 3 H6 Cox Proportional Hazards (Alternative functional form robustness; continuous time-to-turnover)'),
-                    ('scripts/91j_essay3_ols_lpm_and_negbin.py', 'Essay 3 H6 OLS Linear Probability Model & Negative Binomial (Alternative specifications robustness)'),
-                    ('scripts/91k_essay3_robustness_checks.py', 'Essay 3 H6 Robustness: Alternative Thresholds & Restricted Samples (5/10/14-day disclosure windows, data quality checks)'),
-                    ('scripts/90_essay2_volatility_regressions.py', 'Essay 2 Volatility Analysis (FCC effect on post-breach volatility, Tables 2-3)'),
+                    ('scripts/90_essay2_volatility_regressions.py', 'Essay 2 Volatility Analysis (FCC effect on post-breach volatility, Tables 2-3) [COMPLETE]'),
                     # ARCHIVED: Pre-2007 causal ID replaced by SCM. Runs as robustness check only.
                     # ('scripts/84_essay2_post_2007_interaction_test_volatility.py', 'Essay 2 Volatility Causal ID (TABLE B8: Post-2007 Test)'),
                     ('scripts/86_essay3_fcc_causal_identification.py', 'Essay 2 Volatility Causal ID (Industry FE, Size Sensitivity)'),
+                    ('scripts/91_essay3_governance_regressions.py', 'Essay 3 Main Regressions (Executive Turnover - Logistic Regression by Window) [BLOCKED: Scripts/46 measures ANY 8-K, not Item 5.02]'),
+                    ('scripts/91b_essay3_reduced_form_mediation.py', 'Essay 3 Reduced-Form H6 Test (Correct Specification - No Post-Treatment Variables) [BLOCKED: Outcome measurement issue]'),
+                    ('scripts/91c_essay3_mediation_bootstrap.py', 'Essay 3 Bootstrap Indirect Effect (Nonlinear Mediation on Probability Scale with 95% CI) [BLOCKED: Outcome measurement issue]'),
+                    ('scripts/91e_essay3_h6_tost_equivalence.py', 'Essay 3 H6 TOST Equivalence Test (N=651, confirms FCC effect is economically negligible) [BLOCKED: Outcome measurement issue]'),
+                    ('scripts/91f_essay3_h6_firm_size_heterogeneity.py', 'Essay 3 H6 Firm Size Heterogeneity (30d/90d/180d quartile analysis - addresses temporal persistence) [BLOCKED: Outcome measurement issue]'),
+                    ('scripts/91g_extract_reduced_form_controls.py', 'Essay 3 H6 Control Variable Significance (which breach/firm characteristics predict turnover) [BLOCKED: Outcome measurement issue]'),
+                    ('scripts/91h_essay3_cox_hazards.py', 'Essay 3 H6 Cox Proportional Hazards (Alternative functional form robustness; continuous time-to-turnover) [BLOCKED: Outcome measurement issue]'),
+                    ('scripts/91j_essay3_ols_lpm_and_negbin.py', 'Essay 3 H6 OLS Linear Probability Model & Negative Binomial (Alternative specifications robustness) [BLOCKED: Outcome measurement issue]'),
+                    ('scripts/91k_essay3_robustness_checks.py', 'Essay 3 H6 Robustness: Alternative Thresholds & Restricted Samples (5/10/14-day disclosure windows, data quality checks) [BLOCKED: Outcome measurement issue]'),
                 ]
             },
             {
