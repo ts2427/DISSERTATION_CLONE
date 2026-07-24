@@ -162,6 +162,7 @@ def verify_outputs(log_file):
         Path('outputs/tables/essay2/TABLE3_fcc_regulation.txt'),
         Path('outputs/tables/essay2/TABLE4_prior_breaches.txt'),
         Path('outputs/tables/essay2/TABLE5_breach_severity.txt'),
+        Path('outputs/H1_timing_fcc_interaction_results.csv'),
         Path('outputs/tables/essay2/TABLE_B8_post_2007_interaction.txt'),
         Path('outputs/tables/essay2/TABLE_B9_clustered_vs_hc3_comparison.txt'),
         Path('outputs/tables/essay2/H1_TOST_Equivalence_Test.txt'),
@@ -263,6 +264,7 @@ Log file: {log_path}
                 'scripts': [
                     ('scripts/70_summary_statistics.py', 'Summary Statistics (Table 1)'),
                     ('scripts/80_essay1_car_regressions.py', 'Essay 1 Main Regressions (H1-H4: CAR on disclosure/FCC/reputation/severity) - HC3 robust SEs as primary'),
+                    ('scripts/h1_timing_fcc_interaction.py', 'H1 Theoretical Test: Timing × FCC Interaction (formal test of differential effects by regulatory status, canonical specification)'),
                     # ARCHIVED: Pre-2007 causal ID replaced by SCM. Runs as robustness check only.
                     # ('scripts/81_post_2007_interaction_test.py', 'FCC Causal Identification (TABLE B8: Post-2007 Interaction Test - Market Returns)'),
                     ('scripts/82_clustered_vs_hc3_comparison.py', 'Standard Errors Robustness (TABLE B9: Clustered vs HC3 Comparison)'),
