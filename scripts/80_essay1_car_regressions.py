@@ -1,5 +1,5 @@
 """
-ESSAY 2: MAIN REGRESSION ANALYSIS
+ESSAY 1: MAIN REGRESSION ANALYSIS (MARKET VALUATION)
 
 Creates main regression tables for Essay 2:
 - Market reactions to data breach disclosures
@@ -26,7 +26,7 @@ import matplotlib.pyplot as plt
 warnings.filterwarnings('ignore')
 
 print("=" * 80)
-print("ESSAY 2: MAIN REGRESSION ANALYSIS")
+print("ESSAY 1: MAIN REGRESSION ANALYSIS (MARKET VALUATION)")
 print("=" * 80)
 
 # Configuration
@@ -51,7 +51,7 @@ print(f"  Expected: 779 (after removing 5 duplicates from 784)")
 boost_mobile = df[df['org_name'] == 'Boost Mobile']
 if len(boost_mobile) > 0:
     boost_cik = boost_mobile['cik'].iloc[0]
-    print(f"  Boost Mobile CIK: {boost_cik} (expected: 1283699 = Sprint)")
+    print(f"  Boost Mobile observations: {len(boost_mobile)}")
 else:
     print(f"  Boost Mobile: NOT FOUND")
 

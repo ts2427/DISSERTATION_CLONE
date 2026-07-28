@@ -3,12 +3,12 @@ MEDIATION ANALYSIS - DETAILED RESULTS TABLE
 
 Path    Description                    Coefficient    Std Error    P-Value    Significant
 -------------------------------------------------------------------------------------------
-c       Total Effect                       -0.6029       0.2179      0.0057    ***
+c       Total Effect                       -0.0372       0.2513      0.8823     NS
 a       Timing -> Volatility                -0.3686       1.4071      0.7935     NS
-b       Volatility -> Turnover               0.0073       0.0060      0.2278     NS
-c'      Direct Effect                      -0.6013       0.2182      0.0059    ***
+b       Volatility -> Turnover               0.0054       0.0072      0.4527     NS
+c'      Direct Effect                      -0.0346       0.2515      0.8905     NS
 -------------------------------------------------------------------------------------------
-a×b     Indirect Effect                    -0.0027       0.0105      0.7980     NS
+a×b     Indirect Effect                    -0.0020       0.0081      0.8047     NS
 ────────────────────────────────────────────────────────────────────────────────────────
 
 Interpretation of paths:
@@ -25,4 +25,4 @@ Mediation exists if:
 - If c' becomes non-significant: full mediation
 - If c' smaller but still significant: partial mediation
 
-Proportion Mediated: 0.4% (indirect effect as % of total effect)
+Proportion Mediated: 5.4% (indirect effect as % of total effect)

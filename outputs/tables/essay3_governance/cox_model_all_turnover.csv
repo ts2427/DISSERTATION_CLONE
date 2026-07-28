@@ -1,2 +1,2 @@
-model,n_obs,n_events,fcc_coefficient,fcc_se,fcc_p_value,fcc_hazard_ratio,fcc_hr_ci_lower,fcc_hr_ci_upper,ph_assumption_p,concordance_index
-All Turnover,651,385,0.1197,0.3127,0.7018,1.1272,0.6107,2.0804,0.05,0.6998
+model,treatment,duration_source,n_obs,n_events,fcc_coefficient,fcc_se,fcc_p_value,fcc_hazard_ratio,fcc_hr_ci_lower,fcc_hr_ci_upper,schoenfeld_p_fcc,concordance_index,penalizer,industry_fe
+All Turnover,fcc_form499,days_to_first_item_5_02,646,465,0.3254,0.1535,0.034,1.3846,1.0248,1.8708,0.3082,0.5919,0.1,SIC 2-digit (sparse pruned)

@@ -1,0 +1,4512 @@
+[
+  {
+    "org_name": "Intuit Inc.",
+    "record_count": 38,
+    "correct_cik": 896878,
+    "correct_ticker": "INTU",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Intuit Inc. Canonical form for all variants (INTU, Inc., Inc)",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Intuit",
+    "record_count": 23,
+    "correct_cik": 896878,
+    "correct_ticker": "INTU",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Intuit short form",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Intuit Inc",
+    "record_count": 18,
+    "correct_cik": 896878,
+    "correct_ticker": "INTU",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Intuit variant",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Intuit, Inc.",
+    "record_count": 16,
+    "correct_cik": 896878,
+    "correct_ticker": "INTU",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Intuit variant",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Fidelity National Information Services, Inc.",
+    "record_count": 14,
+    "correct_cik": 1136893,
+    "correct_ticker": "FIS",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "FIS (Fidelity National Information Services) CIK verified",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "T-Mobile",
+    "record_count": 12,
+    "correct_cik": 1283699,
+    "correct_ticker": "TMUS",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "T-Mobile US Inc. Parent company CIK verified",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "T-Mobile USA, Inc.",
+    "record_count": 12,
+    "correct_cik": 1283699,
+    "correct_ticker": "TMUS",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "T-Mobile US Inc. name variant",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Uber Technologies, Inc.",
+    "record_count": 12,
+    "correct_cik": 1543151,
+    "correct_ticker": "UBER",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Uber Technologies Inc. CIK verified",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "AT&T",
+    "record_count": 11,
+    "correct_cik": 732717,
+    "correct_ticker": "T",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "AT&T Inc. parent company",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Sirius XM Radio Inc.",
+    "record_count": 9,
+    "correct_cik": 908937,
+    "correct_ticker": "SIRI",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Sirius XM Holdings (Sirius XM Radio) CIK verified",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Apple Inc.",
+    "record_count": 7,
+    "correct_cik": 320193,
+    "correct_ticker": "AAPL",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Apple Inc. CIK verified",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "AT&T Services, Inc.",
+    "record_count": 7,
+    "correct_cik": 732717,
+    "correct_ticker": "T",
+    "company_type": "subsidiary",
+    "source": "SEC EDGAR",
+    "reasoning": "AT&T Services is operating subsidiary of AT&T Inc.",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Verizon",
+    "record_count": 7,
+    "correct_cik": 732712,
+    "correct_ticker": "VZ",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Verizon Communications Inc. parent",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Sprint",
+    "record_count": 6,
+    "correct_cik": 101830,
+    "correct_ticker": "S",
+    "company_type": "acquired",
+    "source": "SEC EDGAR",
+    "reasoning": "Sprint Corporation CIK 101830 (pre-2020). Dataset incorrectly assigned T-Mobile CIK 1283699",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Sprint Corporation",
+    "record_count": 6,
+    "correct_cik": 101830,
+    "correct_ticker": "S",
+    "company_type": "acquired",
+    "source": "SEC EDGAR",
+    "reasoning": "Sprint was independent (CIK 101830) before T-Mobile acquisition April 2020",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "T-Mobile USA",
+    "record_count": 6,
+    "correct_cik": 1283699,
+    "correct_ticker": "TMUS",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "T-Mobile US Inc. name variant",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Charter Communications, Inc.",
+    "record_count": 5,
+    "correct_cik": 1091667,
+    "correct_ticker": "CHTR",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Charter Communications Inc. CIK 1091667 verified",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Frontier Communications Parent, Inc.",
+    "record_count": 5,
+    "correct_cik": 20520,
+    "correct_ticker": "FTR",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Frontier Communications Parent Inc. CIK 20520 verified",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "AT&T Inc.",
+    "record_count": 4,
+    "correct_cik": 732717,
+    "correct_ticker": "T",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "AT&T Inc. canonical",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Comcast",
+    "record_count": 4,
+    "correct_cik": 1166691,
+    "correct_ticker": "CMCSA",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Comcast Corporation parent",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Comcast Cable Communications LLC",
+    "record_count": 4,
+    "correct_cik": 1166691,
+    "correct_ticker": "CMCSA",
+    "company_type": "subsidiary",
+    "source": "SEC EDGAR",
+    "reasoning": "Operating subsidiary of Comcast",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Hewlett-Packard Company",
+    "record_count": 4,
+    "correct_cik": 1645590,
+    "correct_ticker": "HPE",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Hewlett Packard Enterprise Co. CIK 1645590 verified",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Microsoft Corporation",
+    "record_count": 4,
+    "correct_cik": 789019,
+    "correct_ticker": "MSFT",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Microsoft Corporation CIK verified",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "TALX Corporation",
+    "record_count": 4,
+    "correct_cik": 917524,
+    "correct_ticker": "TAX",
+    "company_type": "acquired",
+    "source": "SEC EDGAR",
+    "reasoning": "TALX CIK 917524. Dataset incorrectly shows 101829. Acquired by Equifax May 2007",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Time Warner Inc.",
+    "record_count": 4,
+    "correct_cik": 1437107,
+    "correct_ticker": "WBD",
+    "company_type": "acquired",
+    "source": "SEC EDGAR",
+    "reasoning": "Merged with Discovery to form Warner Bros. Discovery (CIK 1437107)",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "T-Mobile USA Inc.",
+    "record_count": 4,
+    "correct_cik": 1283699,
+    "correct_ticker": "TMUS",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "T-Mobile US Inc. name variant",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Adobe Systems Incorporated",
+    "record_count": 3,
+    "correct_cik": 796343,
+    "correct_ticker": "ADBE",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Adobe Inc. (formerly Adobe Systems) CIK verified",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Block and Company, Inc.",
+    "record_count": 3,
+    "correct_cik": 1512673,
+    "correct_ticker": "SQ",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Block Inc. (formerly Square Inc.) CIK 1512673 verified. Name changed Dec 2021",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Cencora, Inc.",
+    "record_count": 3,
+    "correct_cik": 1140859,
+    "correct_ticker": "CEN",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Cencora Inc. (formerly AmerisourceBergen) CIK verified",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "CenturyLink",
+    "record_count": 3,
+    "correct_cik": 18926,
+    "correct_ticker": null,
+    "company_type": "acquired",
+    "source": "SEC EDGAR",
+    "reasoning": "Lumen Technologies (formerly CenturyLink) - check if name standardized",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "DISH Network, LLC",
+    "record_count": 3,
+    "correct_cik": 1001082,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Facebook",
+    "record_count": 3,
+    "correct_cik": 1326801,
+    "correct_ticker": "META",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Meta Platforms Inc. (formerly Facebook) CIK 1326801",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Google Inc.",
+    "record_count": 3,
+    "correct_cik": 1652044,
+    "correct_ticker": "GOOGL",
+    "company_type": "subsidiary",
+    "source": "SEC EDGAR",
+    "reasoning": "Google is subsidiary of Alphabet Inc. (CIK 1652044)",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Gray Television, Inc.",
+    "record_count": 3,
+    "correct_cik": 43196,
+    "correct_ticker": "GTN",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Gray Television Inc. CIK 43196 verified",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Home Box Office, Inc.",
+    "record_count": 3,
+    "correct_cik": 1437107,
+    "correct_ticker": null,
+    "company_type": "subsidiary",
+    "source": "SEC EDGAR",
+    "reasoning": "HBO is subsidiary of Warner Bros. Discovery",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Honeywell International Inc.",
+    "record_count": 3,
+    "correct_cik": 773840,
+    "correct_ticker": "HON",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Honeywell International Inc. CIK verified",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "NBC Sports Group",
+    "record_count": 3,
+    "correct_cik": 1166691,
+    "correct_ticker": "CMCSA",
+    "company_type": "subsidiary",
+    "source": "SEC EDGAR",
+    "reasoning": "NBC/Comcast subsidiary",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "NCH Corporation",
+    "record_count": 3,
+    "correct_cik": 1402057,
+    "correct_ticker": null,
+    "company_type": "private",
+    "source": "SEC EDGAR",
+    "reasoning": "NCH Corporation appears private from dataset listing",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Republic Services",
+    "record_count": 3,
+    "correct_cik": 1060391,
+    "correct_ticker": "RSG",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Republic Services Inc. CIK verified",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Republic Services, Inc.",
+    "record_count": 3,
+    "correct_cik": 1060391,
+    "correct_ticker": "RSG",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Republic Services variant",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Sinclair Broadcast Group, Inc.",
+    "record_count": 3,
+    "correct_cik": 912752,
+    "correct_ticker": "SBGI",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Sinclair Broadcast Group CIK verified from dataset",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Sirius XM Radio Inc",
+    "record_count": 3,
+    "correct_cik": 908937,
+    "correct_ticker": "SIRI",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Sirius XM variant",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Sirius XM Radio, Inc.",
+    "record_count": 3,
+    "correct_cik": 908937,
+    "correct_ticker": "SIRI",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Sirius XM variant",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "The Est\u00c3\u00a9e Lauder Companies Inc.",
+    "record_count": 3,
+    "correct_cik": 1001250,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Verizon Communications Inc.",
+    "record_count": 3,
+    "correct_cik": 732712,
+    "correct_ticker": "VZ",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Verizon canonical",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Warner Music Group",
+    "record_count": 3,
+    "correct_cik": 1437107,
+    "correct_ticker": null,
+    "company_type": "subsidiary",
+    "source": "SEC EDGAR",
+    "reasoning": "Part of Warner Bros. Discovery entertainment",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Activision Publishing, Inc.",
+    "record_count": 2,
+    "correct_cik": 718877,
+    "correct_ticker": "ATVI",
+    "company_type": "subsidiary",
+    "source": "SEC EDGAR",
+    "reasoning": "Activision subsidiary of Microsoft (post-acquisition)",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Altice USA",
+    "record_count": 2,
+    "correct_cik": 1702780,
+    "correct_ticker": "ATUS",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Altice USA Inc. CIK verified",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "American Electric Power",
+    "record_count": 2,
+    "correct_cik": 4904,
+    "correct_ticker": "AEP",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "American Electric Power Co. CIK verified",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Amgen Inc.",
+    "record_count": 2,
+    "correct_cik": 318154,
+    "correct_ticker": "AMGN",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Amgen Inc. CIK verified",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "ATT-Breach Notification",
+    "record_count": 2,
+    "correct_cik": 732717,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Brown Paindiris & Scott, LLP",
+    "record_count": 2,
+    "correct_cik": 79282,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Cable One, Inc.",
+    "record_count": 2,
+    "correct_cik": 1632127,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Capital Lumber Company",
+    "record_count": 2,
+    "correct_cik": 927628,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Carnival Corporation",
+    "record_count": 2,
+    "correct_cik": 815097,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Carnival Corporation & PLC",
+    "record_count": 2,
+    "correct_cik": 815097,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Charter Communications",
+    "record_count": 2,
+    "correct_cik": 1091667,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Cisco Systems, Inc.",
+    "record_count": 2,
+    "correct_cik": 858877,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Citrix Systems",
+    "record_count": 2,
+    "correct_cik": 877890,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Citrix Systems Inc.",
+    "record_count": 2,
+    "correct_cik": 877890,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Comcast Cable Communications, Inc.",
+    "record_count": 2,
+    "correct_cik": 1166691,
+    "correct_ticker": "CMCSA",
+    "company_type": "subsidiary",
+    "source": "SEC EDGAR",
+    "reasoning": "Comcast Cable Communications operating subsidiary",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Cricket Wireless LLC",
+    "record_count": 2,
+    "correct_cik": 732717,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Crown Castle",
+    "record_count": 2,
+    "correct_cik": 1051470,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "CSX Transportation",
+    "record_count": 2,
+    "correct_cik": 277948,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Delta Air Lines, Inc.",
+    "record_count": 2,
+    "correct_cik": 27904,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Duke Energy Corporation",
+    "record_count": 2,
+    "correct_cik": 1326160,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "EBSCO Industries, Inc.",
+    "record_count": 2,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Ensinger Industries, Inc.",
+    "record_count": 2,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Festo Corporation",
+    "record_count": 2,
+    "correct_cik": 874761,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Financial Business and Consumer Solutions, Inc.",
+    "record_count": 2,
+    "correct_cik": 713676,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Fiserv",
+    "record_count": 2,
+    "correct_cik": 798354,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Gallagher NAC",
+    "record_count": 2,
+    "correct_cik": 354190,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Gates Corporation",
+    "record_count": 2,
+    "correct_cik": 874761,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "GoDaddy.com",
+    "record_count": 2,
+    "correct_cik": 1609711,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "GoDaddy.com LLC",
+    "record_count": 2,
+    "correct_cik": 1609711,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "GoDaddy.com, LLC",
+    "record_count": 2,
+    "correct_cik": 1609711,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Google, Inc.",
+    "record_count": 2,
+    "correct_cik": 1652044,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Healthcare Fiscal Management, Inc.",
+    "record_count": 2,
+    "correct_cik": 1932393,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Hewlett Packard Enterprise Company",
+    "record_count": 2,
+    "correct_cik": 1645590,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "IBM",
+    "record_count": 2,
+    "correct_cik": 51143,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "iHeartMedia + Entertainment, Inc.",
+    "record_count": 2,
+    "correct_cik": 1437107,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "IMA Financial Group, Inc.",
+    "record_count": 2,
+    "correct_cik": 713676,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Impact Mobile Home Communities",
+    "record_count": 2,
+    "correct_cik": 1283699,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "J.B. Hunt Transport, Inc.",
+    "record_count": 2,
+    "correct_cik": 728535,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Merlin Information Services",
+    "record_count": 2,
+    "correct_cik": 1136893,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "MGM Resorts International",
+    "record_count": 2,
+    "correct_cik": 789570,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Motorola, Inc.",
+    "record_count": 2,
+    "correct_cik": 68505,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "MSX International Inc.",
+    "record_count": 2,
+    "correct_cik": 5272,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Newcourse Communications, Inc.",
+    "record_count": 2,
+    "correct_cik": 1034054,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Nokia Networks and Solutions US, LLC",
+    "record_count": 2,
+    "correct_cik": 924613,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Nuance Communications, Inc.",
+    "record_count": 2,
+    "correct_cik": 1034054,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Nucor Corporation",
+    "record_count": 2,
+    "correct_cik": 73309,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Okta, Inc.",
+    "record_count": 2,
+    "correct_cik": 1660134,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Oracle USA, Inc.",
+    "record_count": 2,
+    "correct_cik": 777676,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Roku, Inc.",
+    "record_count": 2,
+    "correct_cik": 1428439,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Seagate US LLC",
+    "record_count": 2,
+    "correct_cik": 1137789,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Sierra Pacific Industries",
+    "record_count": 2,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Snap-on Incorporated",
+    "record_count": 2,
+    "correct_cik": 91440,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Snowflake Inc.",
+    "record_count": 2,
+    "correct_cik": 1640147,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Sony Interactive Entertainment",
+    "record_count": 2,
+    "correct_cik": 313838,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Sony Online Entertainment",
+    "record_count": 2,
+    "correct_cik": 313838,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Sony Pictures Entertainment, Inc.",
+    "record_count": 2,
+    "correct_cik": 313838,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Southwest Airlines Co.",
+    "record_count": 2,
+    "correct_cik": 92380,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Sprint Nextel",
+    "record_count": 2,
+    "correct_cik": 1283699,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Synergy Healthcare Services",
+    "record_count": 2,
+    "correct_cik": 1932393,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "T. Rowe Price Retirement Plan Services, Inc.",
+    "record_count": 2,
+    "correct_cik": 1113169,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "T-Mobile US, Inc.",
+    "record_count": 2,
+    "correct_cik": 1283699,
+    "correct_ticker": "TMUS",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "T-Mobile canonical",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "T-Mobile USA Inc",
+    "record_count": 2,
+    "correct_cik": 1283699,
+    "correct_ticker": "TMUS",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "T-Mobile name variant",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Twilio",
+    "record_count": 2,
+    "correct_cik": 1447669,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Uber Technologies Inc",
+    "record_count": 2,
+    "correct_cik": 1543151,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Uber Technologies Inc.",
+    "record_count": 2,
+    "correct_cik": 1543151,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Worthen Industries, Inc.",
+    "record_count": 2,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Xerox State Healthcare, LLC",
+    "record_count": 2,
+    "correct_cik": 1932393,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Yahoo! Inc.",
+    "record_count": 2,
+    "correct_cik": 1011006,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "A&A Services",
+    "record_count": 1,
+    "correct_cik": 1136893,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "A.Y. McDonald Industries Inc.",
+    "record_count": 1,
+    "correct_cik": 63908,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "ABM Industries Incorporated",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "ADF International, Inc.",
+    "record_count": 1,
+    "correct_cik": 5272,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Advanced Mobile Notary, LLC",
+    "record_count": 1,
+    "correct_cik": 1283699,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Aero Charter, Inc.",
+    "record_count": 1,
+    "correct_cik": 1091667,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "AeroGrow International",
+    "record_count": 1,
+    "correct_cik": 5272,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "AeroGrow International, Inc.",
+    "record_count": 1,
+    "correct_cik": 5272,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "AGE Industries, Ltd.",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Aladdin Capital",
+    "record_count": 1,
+    "correct_cik": 927628,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Allied-Locke Industries, Inc.",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Alpha & Omega Semiconductor",
+    "record_count": 1,
+    "correct_cik": 1097864,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Altice USA, Inc.",
+    "record_count": 1,
+    "correct_cik": 1702780,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Altria Group, Inc.",
+    "record_count": 1,
+    "correct_cik": 764180,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Amadas Industries",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "American Alarm & Communications, Inc.",
+    "record_count": 1,
+    "correct_cik": 1034054,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Ametros Financial Corporation",
+    "record_count": 1,
+    "correct_cik": 713676,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Amphenol Canada Corporation",
+    "record_count": 1,
+    "correct_cik": 820313,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Aon Corporation",
+    "record_count": 1,
+    "correct_cik": 315293,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Aon Corporation PLC",
+    "record_count": 1,
+    "correct_cik": 315293,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Aon PLC",
+    "record_count": 1,
+    "correct_cik": 315293,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "API Financial Solutions, Inc.",
+    "record_count": 1,
+    "correct_cik": 713676,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Ariel Corporation",
+    "record_count": 1,
+    "correct_cik": 874761,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Arx Capital LLC",
+    "record_count": 1,
+    "correct_cik": 927628,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "ASAP Semiconductor LLC",
+    "record_count": 1,
+    "correct_cik": 1097864,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "ASIS International",
+    "record_count": 1,
+    "correct_cik": 5272,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "AT&T Inc",
+    "record_count": 1,
+    "correct_cik": 732717,
+    "correct_ticker": "T",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "AT&T Inc. variant",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "AT&T Services",
+    "record_count": 1,
+    "correct_cik": 732717,
+    "correct_ticker": "T",
+    "company_type": "subsidiary",
+    "source": "SEC EDGAR",
+    "reasoning": "AT&T Services operating subsidiary",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "AT&T Services Inc.",
+    "record_count": 1,
+    "correct_cik": 732717,
+    "correct_ticker": "T",
+    "company_type": "subsidiary",
+    "source": "SEC EDGAR",
+    "reasoning": "AT&T Services variant",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "AT&T, Inc.",
+    "record_count": 1,
+    "correct_cik": 732717,
+    "correct_ticker": "T",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "AT&T Inc. variant",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "ATT-SecurityBreach",
+    "record_count": 1,
+    "correct_cik": 732717,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "ATT-SecurityBreach2",
+    "record_count": 1,
+    "correct_cik": 732717,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Audacy, Inc",
+    "record_count": 1,
+    "correct_cik": 1662742,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Automatic Data Processing, Inc.",
+    "record_count": 1,
+    "correct_cik": 8670,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "B Capital Group",
+    "record_count": 1,
+    "correct_cik": 927628,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "BBB Industries LLC",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "BBC Industries, Inc.",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "BDP International, Inc.",
+    "record_count": 1,
+    "correct_cik": 5272,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Block Electric Company, Inc.",
+    "record_count": 1,
+    "correct_cik": 1512673,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Block Inc",
+    "record_count": 1,
+    "correct_cik": 1512673,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Block, Inc.",
+    "record_count": 1,
+    "correct_cik": 1512673,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Bonland Industries, Inc.",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Boost Mobile",
+    "record_count": 1,
+    "correct_cik": 1283699,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Bray International, Inc.",
+    "record_count": 1,
+    "correct_cik": 5272,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Brown Construction Services, Inc.",
+    "record_count": 1,
+    "correct_cik": 79282,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Brown Integrated Logistics, Inc.",
+    "record_count": 1,
+    "correct_cik": 79282,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Brown, Lisle/Cummings, Inc.",
+    "record_count": 1,
+    "correct_cik": 79282,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Brown-Forman Corporation",
+    "record_count": 1,
+    "correct_cik": 79282,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Burrelles Information Services, LLC",
+    "record_count": 1,
+    "correct_cik": 1136893,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Caesars Entertainment, Inc.",
+    "record_count": 1,
+    "correct_cik": 1590895,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Capital Asset Management Group, Inc.",
+    "record_count": 1,
+    "correct_cik": 927628,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Capital Brands Distribution, LLC",
+    "record_count": 1,
+    "correct_cik": 927628,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Capital Integration Systems LLC",
+    "record_count": 1,
+    "correct_cik": 927628,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Carnival Corporation & plc",
+    "record_count": 1,
+    "correct_cik": 815097,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "CBD Industries, LLC",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Centene Management Corporation",
+    "record_count": 1,
+    "correct_cik": 1071739,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Centerline Communications, LLC",
+    "record_count": 1,
+    "correct_cik": 1034054,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Centerstone Insurance and Financial Services",
+    "record_count": 1,
+    "correct_cik": 713676,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "CenturyLink Communications",
+    "record_count": 1,
+    "correct_cik": 18926,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Centurylink Communications",
+    "record_count": 1,
+    "correct_cik": 18926,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Change Healthcare Inc.",
+    "record_count": 1,
+    "correct_cik": 1932393,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Chart Industries, Inc.",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Charter Communication",
+    "record_count": 1,
+    "correct_cik": 1091667,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Charter Next Generation, Inc.",
+    "record_count": 1,
+    "correct_cik": 1091667,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Christensen O\u00e2\u20ac\u2122Connor Johnson Kindness PLLC",
+    "record_count": 1,
+    "correct_cik": 200406,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Cintas Corporation",
+    "record_count": 1,
+    "correct_cik": 723254,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Citrix",
+    "record_count": 1,
+    "correct_cik": 877890,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Citrix Systems, Inc.",
+    "record_count": 1,
+    "correct_cik": 877890,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "CLAS Information Services",
+    "record_count": 1,
+    "correct_cik": 1136893,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Cleo Communications US, LLC",
+    "record_count": 1,
+    "correct_cik": 1034054,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "CM Group Holdings, Inc. d/b/a Creative Memories",
+    "record_count": 1,
+    "correct_cik": 1973266,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Coca-Cola Bottling Company of Northern New England",
+    "record_count": 1,
+    "correct_cik": 21344,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Cognizant Technology Solutions Corporation",
+    "record_count": 1,
+    "correct_cik": 1058290,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Communications & Power Industries LLC",
+    "record_count": 1,
+    "correct_cik": 1034054,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Consolidated Edison Company of New York LLC",
+    "record_count": 1,
+    "correct_cik": 1390777,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Corebridge Financial, Inc.",
+    "record_count": 1,
+    "correct_cik": 713676,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Cornerstone Healthcare Group Management Services LLC",
+    "record_count": 1,
+    "correct_cik": 1932393,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Corteva Agriscience",
+    "record_count": 1,
+    "correct_cik": 1755672,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Costco Photo Center",
+    "record_count": 1,
+    "correct_cik": 909832,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "CrowdStrike Holdings Inc.",
+    "record_count": 1,
+    "correct_cik": 1535527,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "CrowdStrike Holdings, Inc.",
+    "record_count": 1,
+    "correct_cik": 1713683,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "CSI Financial Services, LLC",
+    "record_count": 1,
+    "correct_cik": 713676,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "CSX Transportation, Inc.",
+    "record_count": 1,
+    "correct_cik": 277948,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "CWGS Group",
+    "record_count": 1,
+    "correct_cik": 831001,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "CyrusOne, Inc.",
+    "record_count": 1,
+    "correct_cik": 1553023,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "DC Group",
+    "record_count": 1,
+    "correct_cik": 831001,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Defender Industries, Inc.",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Dell Inc.",
+    "record_count": 1,
+    "correct_cik": 1571996,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Delta Global Services",
+    "record_count": 1,
+    "correct_cik": 27904,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Deluxe Corporation",
+    "record_count": 1,
+    "correct_cik": 832101,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Derby Industries, LLC",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "DiGiovine, Hnilo, Jordan + Johnson Ltd",
+    "record_count": 1,
+    "correct_cik": 200406,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "DISH Network Corporation",
+    "record_count": 1,
+    "correct_cik": 1001082,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "DISH Network L.L.C.",
+    "record_count": 1,
+    "correct_cik": 1001082,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Disney Consumer Products and Interactive Media",
+    "record_count": 1,
+    "correct_cik": 1744489,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "DoorDash Inc.",
+    "record_count": 1,
+    "correct_cik": 1792789,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Doubletree Suites by Hilton Walt Disney World",
+    "record_count": 1,
+    "correct_cik": 1744489,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Duke Energy",
+    "record_count": 1,
+    "correct_cik": 1326160,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Dulany Industries, Inc.",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Dynapar Corporation",
+    "record_count": 1,
+    "correct_cik": 1841666,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "E.W. Wylie Corporation",
+    "record_count": 1,
+    "correct_cik": 1004980,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Eagle Capital Management, LLC",
+    "record_count": 1,
+    "correct_cik": 927628,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "EatStreet",
+    "record_count": 1,
+    "correct_cik": 93751,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "EMC Corporation",
+    "record_count": 1,
+    "correct_cik": 874761,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "EMJ Corporation",
+    "record_count": 1,
+    "correct_cik": 874761,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Ensinger Industries Inc.",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Entercom Communications Corp.",
+    "record_count": 1,
+    "correct_cik": 1034054,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Equifax, Inc.",
+    "record_count": 1,
+    "correct_cik": 33185,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Essex Property Trust, Inc.",
+    "record_count": 1,
+    "correct_cik": 920522,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Evening Post Industries",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Evening Telegram Company d/b/a Morgan Murphy Media",
+    "record_count": 1,
+    "correct_cik": 19617,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Facebook, Inc.",
+    "record_count": 1,
+    "correct_cik": 1326801,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "FedEx Ground Package System, Inc.",
+    "record_count": 1,
+    "correct_cik": 1048911,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "FGX International Inc.",
+    "record_count": 1,
+    "correct_cik": 5272,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Fidelity National Technology Imaging (FNTI)",
+    "record_count": 1,
+    "correct_cik": 1136893,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Financial Risk Mitigation, Inc.",
+    "record_count": 1,
+    "correct_cik": 713676,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "First American Financial Corporation",
+    "record_count": 1,
+    "correct_cik": 713676,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Fiserv, Inc.",
+    "record_count": 1,
+    "correct_cik": 798354,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Fluke Corporation",
+    "record_count": 1,
+    "correct_cik": 1065696,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Flutter International Inc.",
+    "record_count": 1,
+    "correct_cik": 5272,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Focus Medical Communications, LLC",
+    "record_count": 1,
+    "correct_cik": 1034054,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Forum Communications Company",
+    "record_count": 1,
+    "correct_cik": 1034054,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Fox Entertainment Group",
+    "record_count": 1,
+    "correct_cik": 1308161,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Fox Entertainment Group Inc.",
+    "record_count": 1,
+    "correct_cik": 1308161,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Fox Group",
+    "record_count": 1,
+    "correct_cik": 1308161,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Fox News LLC",
+    "record_count": 1,
+    "correct_cik": 1308161,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Franklin International",
+    "record_count": 1,
+    "correct_cik": 5272,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Freedom Financial Network, LLC",
+    "record_count": 1,
+    "correct_cik": 713676,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Freeport-McMoRan Inc.",
+    "record_count": 1,
+    "correct_cik": 831259,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Frontier Communications",
+    "record_count": 1,
+    "correct_cik": 20520,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "GC Services",
+    "record_count": 1,
+    "correct_cik": 1136893,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "General Dynamics Information Technology",
+    "record_count": 1,
+    "correct_cik": 40533,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "General Mills, Inc.",
+    "record_count": 1,
+    "correct_cik": 40704,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Georgetown Capital Group, Inc.",
+    "record_count": 1,
+    "correct_cik": 927628,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "GIGAFLIGHT Connectivity, Inc.",
+    "record_count": 1,
+    "correct_cik": 1385157,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Global Payments Inc.",
+    "record_count": 1,
+    "correct_cik": 1123360,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Global Payments, Inc.",
+    "record_count": 1,
+    "correct_cik": 1123360,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "GoDaddy",
+    "record_count": 1,
+    "correct_cik": 1609711,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Google",
+    "record_count": 1,
+    "correct_cik": 1652044,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Grand River Capital, LLC",
+    "record_count": 1,
+    "correct_cik": 927628,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Gray Television",
+    "record_count": 1,
+    "correct_cik": 879585,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Gray Television Inc",
+    "record_count": 1,
+    "correct_cik": 879585,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Gray, Inc.",
+    "record_count": 1,
+    "correct_cik": 879585,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Harrison, Mauro & Morgan, P.A.",
+    "record_count": 1,
+    "correct_cik": 19617,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "HBP, Inc.",
+    "record_count": 1,
+    "correct_cik": 47217,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Henry Schein, Inc.",
+    "record_count": 1,
+    "correct_cik": 1000228,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Herbalife International of America, Inc.",
+    "record_count": 1,
+    "correct_cik": 70858,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Hershey Entertainment & Resorts Company",
+    "record_count": 1,
+    "correct_cik": 47111,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Hewlett Packard Company",
+    "record_count": 1,
+    "correct_cik": 1645590,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Holden International",
+    "record_count": 1,
+    "correct_cik": 5272,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Home Box Office",
+    "record_count": 1,
+    "correct_cik": 1755336,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Honeywell International, Inc.",
+    "record_count": 1,
+    "correct_cik": 773840,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Horizon Healthcare RCM",
+    "record_count": 1,
+    "correct_cik": 1932393,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Hoya Optical Labs of America, Inc.",
+    "record_count": 1,
+    "correct_cik": 70858,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "HP Enterprise Services",
+    "record_count": 1,
+    "correct_cik": 1645590,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "HP Enterprise Services LLC",
+    "record_count": 1,
+    "correct_cik": 1645590,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "HP Enterprise Services, LLC",
+    "record_count": 1,
+    "correct_cik": 1645590,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "HTI Technology & Industries, Inc.",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Huntington Hospitality Financial Services Corp",
+    "record_count": 1,
+    "correct_cik": 713676,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Huntington Ingalls Industries, Inc.",
+    "record_count": 1,
+    "correct_cik": 1501585,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Huntwood Industries",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "IES Communications, LLC",
+    "record_count": 1,
+    "correct_cik": 1034054,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "iHeart Media Inc",
+    "record_count": 1,
+    "correct_cik": 1437107,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Indian Industries, Inc. d/b/a RAVE Sports",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "InterActive Financial Marketing Group",
+    "record_count": 1,
+    "correct_cik": 713676,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "International Paper Company",
+    "record_count": 1,
+    "correct_cik": 51434,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "J&M Brown Company Inc.",
+    "record_count": 1,
+    "correct_cik": 79282,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Jet Industries, Inc.",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Johnson Engineering",
+    "record_count": 1,
+    "correct_cik": 200406,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Johnson Matthey, Inc.",
+    "record_count": 1,
+    "correct_cik": 200406,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Johnson O\u00e2\u20ac\u2122Hare Company, Inc.",
+    "record_count": 1,
+    "correct_cik": 200406,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Johnson, Lauder & Savidge, LLP",
+    "record_count": 1,
+    "correct_cik": 200406,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "KeraLink International",
+    "record_count": 1,
+    "correct_cik": 5272,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "King Industries, Inc.",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Lavelle Industries Inc.",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Lawrence Semiconductor Research Laboratory",
+    "record_count": 1,
+    "correct_cik": 1097864,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "LC Industries, Inc.",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "LCS Financial Services",
+    "record_count": 1,
+    "correct_cik": 713676,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Leidos, Inc.",
+    "record_count": 1,
+    "correct_cik": 1336920,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Lennar Corporation",
+    "record_count": 1,
+    "correct_cik": 920760,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Livingston Street Capital, LLC",
+    "record_count": 1,
+    "correct_cik": 927628,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "LPL Financial LLC",
+    "record_count": 1,
+    "correct_cik": 713676,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "LX/JT Intermediate Holdings, Inc. d/b/a Bevolution Group",
+    "record_count": 1,
+    "correct_cik": 1973266,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Marathon Petroleum Company LP",
+    "record_count": 1,
+    "correct_cik": 1510295,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Mark Dunning Industries, Inc.",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Marking Services, Inc.",
+    "record_count": 1,
+    "correct_cik": 1136893,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Marriott International, Inc.",
+    "record_count": 1,
+    "correct_cik": 1048286,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Marsh & McLennan Companies, Inc.",
+    "record_count": 1,
+    "correct_cik": 62709,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Martin Showers Smith & McDonald LLP",
+    "record_count": 1,
+    "correct_cik": 63908,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "MD2 International",
+    "record_count": 1,
+    "correct_cik": 5272,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Mead Johnson & Company, LLC",
+    "record_count": 1,
+    "correct_cik": 200406,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Mediacom Communications Corporation",
+    "record_count": 1,
+    "correct_cik": 1034054,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Mediant Communications Inc.",
+    "record_count": 1,
+    "correct_cik": 1034054,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Medical Healthcare Solutions, Inc.",
+    "record_count": 1,
+    "correct_cik": 1932393,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "MNP Corporation",
+    "record_count": 1,
+    "correct_cik": 1841666,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Morgan Brown & Joy, LLP",
+    "record_count": 1,
+    "correct_cik": 19617,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Morgan Industrial, Inc.",
+    "record_count": 1,
+    "correct_cik": 19617,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Morgan Industrial, Inc. dba Omega Morgan",
+    "record_count": 1,
+    "correct_cik": 19617,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Morgan Truck Body, LLC",
+    "record_count": 1,
+    "correct_cik": 19617,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Motorola Mobility Inc.",
+    "record_count": 1,
+    "correct_cik": 68505,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Motorola Mobility, Inc.",
+    "record_count": 1,
+    "correct_cik": 68505,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "MW Industries, Inc.",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "National Presto Industries, Inc.",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "NBCUniversal",
+    "record_count": 1,
+    "correct_cik": 1166691,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "NCO Financial Systems, Inc.",
+    "record_count": 1,
+    "correct_cik": 713676,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "NextGen Healthcare, Inc.",
+    "record_count": 1,
+    "correct_cik": 1932393,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Nokia Inc.",
+    "record_count": 1,
+    "correct_cik": 924613,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Northrop Grumman Systems Corporation",
+    "record_count": 1,
+    "correct_cik": 1133421,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "NSi Industries LLC",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Nuance Communications Inc",
+    "record_count": 1,
+    "correct_cik": 1034054,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "NVR Settlement Services of Maryland, Inc.",
+    "record_count": 1,
+    "correct_cik": 906163,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Oceaneering International, Inc.",
+    "record_count": 1,
+    "correct_cik": 5272,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Okta Inc",
+    "record_count": 1,
+    "correct_cik": 1660134,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Okta, Inc",
+    "record_count": 1,
+    "correct_cik": 1660134,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "On Q Financial, LLC",
+    "record_count": 1,
+    "correct_cik": 713676,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "oneZero Financial Systems, LLC",
+    "record_count": 1,
+    "correct_cik": 713676,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Oracle Corporation",
+    "record_count": 1,
+    "correct_cik": 777676,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Orbus Visual Communications, LLC",
+    "record_count": 1,
+    "correct_cik": 1034054,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "PACCAR",
+    "record_count": 1,
+    "correct_cik": 75362,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Pallet Logistics of America",
+    "record_count": 1,
+    "correct_cik": 70858,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Paramount",
+    "record_count": 1,
+    "correct_cik": 2041610,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Paramount Global",
+    "record_count": 1,
+    "correct_cik": 813828,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Parker-Hannifin Corporation",
+    "record_count": 1,
+    "correct_cik": 76334,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Paycom Payroll, LLC",
+    "record_count": 1,
+    "correct_cik": 1590955,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "PayPal Inc.",
+    "record_count": 1,
+    "correct_cik": 1633917,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "PayPal, Inc.",
+    "record_count": 1,
+    "correct_cik": 1633917,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Paysafe Group Holdings Limited",
+    "record_count": 1,
+    "correct_cik": 1973266,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Pendrick Capital Partner Holdings, LLC",
+    "record_count": 1,
+    "correct_cik": 927628,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "PepsiCo, Inc.",
+    "record_count": 1,
+    "correct_cik": 77476,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Perry Johnson & Associates, Inc.",
+    "record_count": 1,
+    "correct_cik": 200406,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Perry Johnson, Inc.",
+    "record_count": 1,
+    "correct_cik": 200406,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Pfizer Inc",
+    "record_count": 1,
+    "correct_cik": 78003,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "PNC",
+    "record_count": 1,
+    "correct_cik": 713676,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Polaris Industries Inc.",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Prime Communications",
+    "record_count": 1,
+    "correct_cik": 1034054,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Professional Compounding Centers of America, Inc.",
+    "record_count": 1,
+    "correct_cik": 70858,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Professional Golfers' Association of America",
+    "record_count": 1,
+    "correct_cik": 70858,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "PULAU Corporation",
+    "record_count": 1,
+    "correct_cik": 1841666,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Regeneron Pharmaceuticals, Inc.",
+    "record_count": 1,
+    "correct_cik": 872589,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Republic Services, Inc",
+    "record_count": 1,
+    "correct_cik": 1060391,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Robinson Waters & O'Dorisio, P.C.",
+    "record_count": 1,
+    "correct_cik": 1043277,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Rochester Industries Placement, Inc.",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Roku Inc",
+    "record_count": 1,
+    "correct_cik": 1428439,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Roku Inc.",
+    "record_count": 1,
+    "correct_cik": 1428439,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "S&G Financial, LLC",
+    "record_count": 1,
+    "correct_cik": 713676,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "SAE International",
+    "record_count": 1,
+    "correct_cik": 5272,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "salesforce.com",
+    "record_count": 1,
+    "correct_cik": 1108524,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Salesforce.com",
+    "record_count": 1,
+    "correct_cik": 1108524,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "SCM Group",
+    "record_count": 1,
+    "correct_cik": 1156375,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Seagate Technology LLC",
+    "record_count": 1,
+    "correct_cik": 1137789,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Seim Johnson, LLP",
+    "record_count": 1,
+    "correct_cik": 200406,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "ServiceNow Inc.",
+    "record_count": 1,
+    "correct_cik": 1373715,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Shawmut Communications Group",
+    "record_count": 1,
+    "correct_cik": 1034054,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Sinclair Broadcast Group, Inc",
+    "record_count": 1,
+    "correct_cik": 912752,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Sirius XM Satellite Radio",
+    "record_count": 1,
+    "correct_cik": 908937,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Snap Inc.",
+    "record_count": 1,
+    "correct_cik": 1564408,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Snap-on, Inc.",
+    "record_count": 1,
+    "correct_cik": 91440,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Sony Card Marketing & Services Company",
+    "record_count": 1,
+    "correct_cik": 313838,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Sony Corporation of America",
+    "record_count": 1,
+    "correct_cik": 313838,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Sony Electronics Inc.",
+    "record_count": 1,
+    "correct_cik": 313838,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Sony Interactive Entertainment LLC",
+    "record_count": 1,
+    "correct_cik": 313838,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Sony Interactive Entertainment, LLC",
+    "record_count": 1,
+    "correct_cik": 313838,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Sony Network Entertainment America Inc.",
+    "record_count": 1,
+    "correct_cik": 313838,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Sony Online Entertainment LLC",
+    "record_count": 1,
+    "correct_cik": 313838,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Sony Pictures",
+    "record_count": 1,
+    "correct_cik": 313838,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Sony Pictures Entertainment Inc",
+    "record_count": 1,
+    "correct_cik": 313838,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Sony Pictures Entertainment Inc.",
+    "record_count": 1,
+    "correct_cik": 313838,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Sorenson Communications",
+    "record_count": 1,
+    "correct_cik": 1034054,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "SOS International",
+    "record_count": 1,
+    "correct_cik": 5272,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Southwest Binding & Laminating",
+    "record_count": 1,
+    "correct_cik": 92380,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "SP Industries, Inc.",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Spotify USA Inc.",
+    "record_count": 1,
+    "correct_cik": 1639920,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Sprint Business",
+    "record_count": 1,
+    "correct_cik": 1283699,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "SRI International",
+    "record_count": 1,
+    "correct_cik": 5272,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "STG International, Inc.",
+    "record_count": 1,
+    "correct_cik": 5272,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Student Transportation of America, Inc.",
+    "record_count": 1,
+    "correct_cik": 70858,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Suddenlink Communications",
+    "record_count": 1,
+    "correct_cik": 1034054,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Sumner Communications, Inc.",
+    "record_count": 1,
+    "correct_cik": 1034054,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Superior Communications, Inc.",
+    "record_count": 1,
+    "correct_cik": 1034054,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "SupraNet Communications, Inc.",
+    "record_count": 1,
+    "correct_cik": 1034054,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "SVAM International, Inc.",
+    "record_count": 1,
+    "correct_cik": 5272,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Sysco Corporation",
+    "record_count": 1,
+    "correct_cik": 96021,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "SysInformation Healthcare Services, LLC",
+    "record_count": 1,
+    "correct_cik": 1932393,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "T.R.A. Industries, Inc.",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "TDC Financial, Inc.",
+    "record_count": 1,
+    "correct_cik": 713676,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Tedder Industries, LLC",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "The Boeing Company",
+    "record_count": 1,
+    "correct_cik": 12927,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "The Delta Companies",
+    "record_count": 1,
+    "correct_cik": 27904,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "The Hershey Company",
+    "record_count": 1,
+    "correct_cik": 47111,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "The Home Depot",
+    "record_count": 1,
+    "correct_cik": 354950,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "The iRemedy Healthcare Companies, Inc.",
+    "record_count": 1,
+    "correct_cik": 1932393,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "The J.M. Smucker Company",
+    "record_count": 1,
+    "correct_cik": 91419,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "The Mosaic Tile Company of Virginia, Inc.",
+    "record_count": 1,
+    "correct_cik": 1285785,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "The Walt Disney Company",
+    "record_count": 1,
+    "correct_cik": 1744489,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "TimeWarner",
+    "record_count": 1,
+    "correct_cik": 1755336,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "T-Mobile, USA",
+    "record_count": 1,
+    "correct_cik": 1283699,
+    "correct_ticker": "TMUS",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "T-Mobile name variant",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Tri Delta",
+    "record_count": 1,
+    "correct_cik": 27904,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Truly Nolen of America, Inc.",
+    "record_count": 1,
+    "correct_cik": 70858,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Twitter, Inc.",
+    "record_count": 1,
+    "correct_cik": 1418091,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Tyler Technologies, Inc.",
+    "record_count": 1,
+    "correct_cik": 860731,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Uber",
+    "record_count": 1,
+    "correct_cik": 1543151,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Uber Technologies",
+    "record_count": 1,
+    "correct_cik": 1543151,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "United Airlines",
+    "record_count": 1,
+    "correct_cik": 100517,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "US Claims Capital, LLC",
+    "record_count": 1,
+    "correct_cik": 927628,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "USA Waste-Management Resources, LLC",
+    "record_count": 1,
+    "correct_cik": 823768,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Vance Street Capital",
+    "record_count": 1,
+    "correct_cik": 927628,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Verizon Communications",
+    "record_count": 1,
+    "correct_cik": 732712,
+    "correct_ticker": "VZ",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Verizon variant",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Verizon Communications Inc",
+    "record_count": 1,
+    "correct_cik": 732712,
+    "correct_ticker": "VZ",
+    "company_type": "parent",
+    "source": "SEC EDGAR",
+    "reasoning": "Verizon variant",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Verizon Corporate Services Group Inc.",
+    "record_count": 1,
+    "correct_cik": 732712,
+    "correct_ticker": "VZ",
+    "company_type": "subsidiary",
+    "source": "SEC EDGAR",
+    "reasoning": "Verizon operating subsidiary",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Verizon Media",
+    "record_count": 1,
+    "correct_cik": 732712,
+    "correct_ticker": "VZ",
+    "company_type": "subsidiary",
+    "source": "SEC EDGAR",
+    "reasoning": "Verizon Media (acquired Yahoo/AOL assets)",
+    "confidence": "HIGH"
+  },
+  {
+    "org_name": "Vmware Inc",
+    "record_count": 1,
+    "correct_cik": 1124610,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "VMware, Inc.",
+    "record_count": 1,
+    "correct_cik": 1124610,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Volkswagen Group of America, Inc.",
+    "record_count": 1,
+    "correct_cik": 70858,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Vulcan Industries",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "W.W. Grainger Inc.",
+    "record_count": 1,
+    "correct_cik": 277135,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "W.W. Grainger, Inc.",
+    "record_count": 1,
+    "correct_cik": 277135,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Wabtec Corporation",
+    "record_count": 1,
+    "correct_cik": 943452,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Warn Industries, Inc.",
+    "record_count": 1,
+    "correct_cik": 1324404,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Warner Bros. Distributing Inc.",
+    "record_count": 1,
+    "correct_cik": 1755336,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Warner Music Group Corp",
+    "record_count": 1,
+    "correct_cik": 1755336,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Warner Music, Inc.",
+    "record_count": 1,
+    "correct_cik": 1755336,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "WERCS d/b/a Wyoming Financial Group",
+    "record_count": 1,
+    "correct_cik": 713676,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Western Union Financial Services, Inc.",
+    "record_count": 1,
+    "correct_cik": 713676,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Wiedenbach Brown",
+    "record_count": 1,
+    "correct_cik": 79282,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "WillScot Mobile Mini Holdings Corp.",
+    "record_count": 1,
+    "correct_cik": 1283699,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Window to the World Communications, Inc.",
+    "record_count": 1,
+    "correct_cik": 1034054,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "WM Waste Management, Inc.",
+    "record_count": 1,
+    "correct_cik": 823768,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Woodward Communications, Inc.",
+    "record_count": 1,
+    "correct_cik": 1034054,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Workday Inc.",
+    "record_count": 1,
+    "correct_cik": 1327811,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Xerox Corporation",
+    "record_count": 1,
+    "correct_cik": 101829,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Yahoo",
+    "record_count": 1,
+    "correct_cik": 1011006,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Yahoo Inc.",
+    "record_count": 1,
+    "correct_cik": 1011006,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Yahoo! Voices",
+    "record_count": 1,
+    "correct_cik": 1011006,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Yahoo, Inc.",
+    "record_count": 1,
+    "correct_cik": 1011006,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Yum! Brands, Inc.",
+    "record_count": 1,
+    "correct_cik": 1041061,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Zscaler Inc.",
+    "record_count": 1,
+    "correct_cik": 1713683,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  },
+  {
+    "org_name": "Zscaler, Inc.",
+    "record_count": 1,
+    "correct_cik": 1713683,
+    "correct_ticker": null,
+    "company_type": "other",
+    "source": "Dataset Current Assignment",
+    "reasoning": "Requires individual research",
+    "confidence": "MEDIUM"
+  }
+]

@@ -1,7 +1,7 @@
 feature,coefficient,pvalue,significant,importance_pct
-firm_size_log,0.1853,0.401,False,20.32967221190224
-leverage,0.9682,0.354,False,17.931452473511577
-roa,22.2049,0.006,True,17.525277290588146
-prior_breaches_1yr,-0.2305,0.001,True,2.572121762425215
-immediate_disclosure,0.5676,0.539,False,1.0443356059148652
+firm_size_log,0.1853,0.401,False,20.315553933892257
+leverage,0.9682,0.354,False,17.435510172728684
+roa,22.2049,0.006,True,17.075269190559226
+prior_breaches_1yr,-0.2305,0.001,True,2.508195921029542
+immediate_disclosure,0.5676,0.539,False,1.1025587438452662
 health_breach,-2.5082,0.066,True,0.0

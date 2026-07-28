@@ -1,3 +1,6 @@
+import sys
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 import pandas as pd
 import numpy as np
 import os
@@ -176,52 +179,58 @@ filepath = 'Data/enrichment/executive_changes.csv'
 if os.path.exists(filepath):
     try:
         enrich_df = pd.read_csv(filepath)
-        
-        # Check if breach_id exists
-        if 'breach_id' in enrich_df.columns:
-            enrich_df['row_id'] = enrich_df['breach_id']
-            
-            base_cols = set(merged_df.columns)
-            new_cols = [col for col in enrich_df.columns 
-                       if col not in ['breach_id', 'row_id', 'cik', 'org_name', 'breach_date'] 
-                       and col not in base_cols]
-            
-            if len(new_cols) > 0:
+
+        # Item 5.02 file is keyed on (cik, breach_date), not breach_id
+        if 'cik' in enrich_df.columns and 'breach_date' in enrich_df.columns:
+            turnover_cols = [col for col in enrich_df.columns
+                            if col not in ['cik', 'breach_date', 'org_name']]
+
+            # Guard: refuse to merge an empty/failed extraction over real data
+            if enrich_df['executive_change_180d'].sum() == 0:
+                print(f"  ✗ Extraction appears empty (0 changes at 180d) - refusing to merge")
+                print(f"    Re-run scripts/46_executive_changes_item5_02_with_cache.py to completion")
+                merge_summary.append({'Enrichment': 'Executive Turnover', 'Status': 'ERROR - empty extraction'})
+            else:
+                # Drop stale versions of these columns so Item 5.02 values REPLACE them
+                stale = [c for c in turnover_cols if c in merged_df.columns]
+                if stale:
+                    merged_df = merged_df.drop(columns=stale)
+                    print(f"  ✓ Replacing {len(stale)} stale turnover columns with Item 5.02 measure")
+
+                enrich_dedup = enrich_df.drop_duplicates(subset=['cik', 'breach_date']).copy()
+                # Normalize merge keys: base breach_date is datetime (from Excel),
+                # enrichment breach_date is string
+                enrich_dedup['breach_date'] = pd.to_datetime(enrich_dedup['breach_date'])
+                enrich_dedup['cik'] = enrich_dedup['cik'].astype('Int64')
+                merged_df['breach_date'] = pd.to_datetime(merged_df['breach_date'])
+                merged_df['cik'] = merged_df['cik'].astype('Int64')
                 before = len(merged_df)
                 merged_df = merged_df.merge(
-                    enrich_df[['row_id'] + new_cols],
-                    on='row_id',
-                    how='left',
-                    validate='1:1'
+                    enrich_dedup[['cik', 'breach_date'] + turnover_cols],
+                    on=['cik', 'breach_date'],
+                    how='left'
                 )
-                
+
                 if len(merged_df) == before:
-                    print(f"  ✓ Merged {len(new_cols)} variables: {', '.join(new_cols[:3])}...")
-                    print(f"  ✓ Rows: {len(merged_df)} (no change)")
-                    
-                    # Show turnover rate
-                    if 'executive_change_30d' in merged_df.columns:
-                        rate_30d = merged_df['executive_change_30d'].mean() * 100
-                        print(f"  📊 30-day turnover rate: {rate_30d:.1f}%")
-                    
+                    rate_30d = merged_df['executive_change_30d'].mean() * 100
+                    rate_180d = merged_df['executive_change_180d'].mean() * 100
+                    print(f"  ✓ Merged {len(turnover_cols)} variables on (cik, breach_date)")
+                    print(f"  📊 Item 5.02 turnover rates: 30d={rate_30d:.1f}%, 180d={rate_180d:.1f}%")
                     merge_summary.append({
                         'Enrichment': 'Executive Turnover',
-                        'Hypothesis': 'H5',
+                        'Hypothesis': 'H6',
                         'Status': 'SUCCESS',
-                        'Variables': len(new_cols),
-                        'Key_Vars': 'executive_change_30d, executive_change_90d'
+                        'Variables': len(turnover_cols),
+                        'Key_Vars': 'executive_change_30d/90d/180d (Item 5.02)'
                     })
                 else:
                     print(f"  ✗ Merge created duplicates ({before} → {len(merged_df)})")
                     merged_df = merged_df.iloc[:before]
                     merge_summary.append({'Enrichment': 'Executive Turnover', 'Status': 'ERROR - duplicates'})
-            else:
-                print(f"  ⚠ No new variables to merge")
-                merge_summary.append({'Enrichment': 'Executive Turnover', 'Status': 'NO NEW VARS'})
         else:
-            print(f"  ✗ No breach_id column found")
-            merge_summary.append({'Enrichment': 'Executive Turnover', 'Status': 'ERROR - no breach_id'})
-        
+            print(f"  ✗ No (cik, breach_date) merge keys found")
+            merge_summary.append({'Enrichment': 'Executive Turnover', 'Status': 'ERROR - no merge keys'})
+
     except Exception as e:
         print(f"  ✗ Error: {e}")
         merge_summary.append({'Enrichment': 'Executive Turnover', 'Status': f'ERROR: {str(e)[:50]}'})

@@ -1,4 +1,4 @@
 window,indirect_effect_pp,ci_lower,ci_upper,significant,n_bootstrap_iterations
-30d,1.43,-8.49,11.79,No,1000
-90d,-1.21,-11.6,8.74,No,1000
-180d,-2.98,-13.57,7.36,No,1000
+30d,1.12,-6.61,9.48,No,1000
+90d,3.69,-6.1,13.64,No,1000
+180d,6.05,-2.32,14.88,No,1000

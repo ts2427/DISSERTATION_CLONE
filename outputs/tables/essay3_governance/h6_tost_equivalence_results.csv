@@ -1,4 +1,4 @@
 window,ame_pp,ame_se_pp,ci_lower_90_pp,ci_upper_90_pp,equivalence_bound,lower_bound_test,upper_bound_test,equivalence_passes,sample_size,mde_80_pp
-30d,1.5,4.915,-6.59,9.59,10.0,True,True,True,646,13.77
-90d,-1.32,4.96,-9.48,6.84,10.0,True,True,True,646,13.89
-180d,-2.84,4.918,-10.93,5.25,10.0,False,True,False,646,13.78
+30d,1.03,4.062,-5.65,7.71,10.0,True,True,True,646,11.38
+90d,3.7,5.066,-4.63,12.03,10.0,True,False,False,646,14.19
+180d,6.06,4.871,-1.95,14.07,10.0,True,False,False,646,13.65

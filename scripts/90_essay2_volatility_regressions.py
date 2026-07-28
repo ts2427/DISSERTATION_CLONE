@@ -324,7 +324,7 @@ else:
 # ============================================================================
 
 print(f"\n" + "=" * 80)
-print("[COMPLETE] ESSAY 3 REGRESSION ANALYSIS COMPLETE")
+print("[COMPLETE] ESSAY 2 REGRESSION ANALYSIS COMPLETE")
 print("=" * 80)
 
 print(f"\nTables created in {OUTPUT_DIR}/:")

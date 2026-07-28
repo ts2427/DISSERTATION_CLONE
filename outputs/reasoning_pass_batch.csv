@@ -1,0 +1,19 @@
+org_name,ticker,breach_date,sic,current_assigned_cik
+"T-Mobile USA, Inc.",TMUS,2009-09-03 00:00:00,4813,1283699
+"AT&T Services, Inc.",T,2014-04-09 00:00:00,4833,732717
+Verizon,VZ,2023-05-11 00:00:00,4813,732712
+Comcast,CMCSA,2014-09-29 00:00:00,4841,1166691
+"Aero Charter, Inc.",CHTR,2020-12-06 00:00:00,4833,1091667
+Oracle Corporation,ORCL,2013-07-10 00:00:00,7372,777676
+Microsoft Corporation,MSFT,2017-07-05 00:00:00,7372,789019
+Adobe Systems Incorporated,ADBE,2013-09-11 00:00:00,7372,796343
+Ametros Financial Corporation,PNC,2018-08,6200,713676
+Evening Telegram Company d/b/a Morgan Murphy Media,JPM,2020-12-29 00:00:00,6200,19617
+"ADF International, Inc.",AIG,2017-03-10 00:00:00,6200,5272
+Duke Energy,DUK,2017-11-10 00:00:00,4911,1326160
+A&A Services,FIS,2023-10-03 00:00:00,6200,1136893
+Nuance Communications Inc,SBAC,2023-05-28 00:00:00,6500,1034054
+Frontier Communications,FYBR,2022-02-24 00:00:00,4813,20520
+Mediacom Communications Corporation,SBAC,2022-07-18 00:00:00,6500,1034054
+Time Warner Inc.,WBD,2016-08-10 00:00:00,7812,1755336
+Sirius XM Radio Inc,SIRI,2016-12-04 00:00:00,4832,908937

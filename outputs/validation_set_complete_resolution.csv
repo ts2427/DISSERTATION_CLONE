@@ -1,0 +1,35 @@
+org_name,ticker,breach_date,original_cik,final_cik,match_category,source,confidence
+AT&T Inc.,T,2024-03-17 00:00:00,732717,732717.0,EXACT_MATCH,Exact match on normalized name,HIGH
+Altice USA,ATUS,2024-02-29 00:00:00,1702780,1702780.0,EXACT_MATCH,Exact match on normalized name,HIGH
+CenturyLink,LUMN,2017-01-30 00:00:00,18926,18926.0,EXACT_MATCH,Exact match on normalized name,HIGH
+"Cisco Systems, Inc.",CSCO,2012-04-13 00:00:00,858877,858877.0,EXACT_MATCH,Exact match on normalized name,HIGH
+Entercom Communications Corp.,SBAC,2019-09-18 00:00:00,1034054,1067837.0,EXACT_MATCH,Exact match on normalized name,HIGH
+"Herbalife International of America, Inc.",BAC,2022-02,70858,1205274.0,EXACT_MATCH,Exact match on normalized name,HIGH
+"Intuit, Inc.",INTU,2008-05-26 00:00:00,896878,896878.0,EXACT_MATCH,Exact match on normalized name,HIGH
+Okta Inc,OKTA,2023-11-02 00:00:00,1660134,1660134.0,EXACT_MATCH,Exact match on normalized name,HIGH
+Snowflake Inc.,SNOW,2024-03-01 00:00:00,1640147,1640147.0,EXACT_MATCH,Exact match on normalized name,HIGH
+Sprint Corporation,TMUS,2019-03-14 00:00:00,1283699,101830.0,EXACT_MATCH,Exact match on normalized name,HIGH
+"T-Mobile US, Inc.",TMUS,2020-08-27 00:00:00,1283699,1283699.0,EXACT_MATCH,Exact match on normalized name,HIGH
+Uber,UBER,2014-05-13 00:00:00,1543151,1431473.0,EXACT_MATCH,Exact match on normalized name,HIGH
+salesforce.com,CRM,2008-02-07 00:00:00,1108524,1108524.0,EXACT_MATCH,Exact match on normalized name,HIGH
+A&A Services,FIS,2023-10-03 00:00:00,1136893,1659397.0,REASONING_RESOLUTION,SEC EDGAR - Fidelity National Information Services (1659397),LOW
+"ADF International, Inc.",,2017-03-10 00:00:00,5272,,REASONING_RESOLUTION,Not found in SEC EDGAR,LOW
+"AT&T Services, Inc.",T,2014-04-09 00:00:00,732717,732742.0,REASONING_RESOLUTION,SEC EDGAR - AT&T Inc. (732742),HIGH
+Adobe Systems Incorporated,ADBE,2013-09-11 00:00:00,796343,796343.0,REASONING_RESOLUTION,SEC EDGAR - Adobe Inc. (796343),HIGH
+"Aero Charter, Inc.",CHTR,2020-12-06 00:00:00,1091667,1059556.0,REASONING_RESOLUTION,SEC EDGAR - Charter Communications Inc. (1059556),MEDIUM
+Ametros Financial Corporation,PNC,2018-08,713676,713676.0,REASONING_RESOLUTION,"SEC EDGAR - PNC Financial Services Group, Inc. (713676)",LOW
+Comcast,CMCSA,2014-09-29 00:00:00,1166691,1018724.0,REASONING_RESOLUTION,SEC EDGAR - Comcast Corporation (1018724),HIGH
+Duke Energy,DUK,2017-11-10 00:00:00,1326160,1082894.0,REASONING_RESOLUTION,SEC EDGAR - Duke Energy Corporation (1082894),HIGH
+Evening Telegram Company d/b/a Morgan Murphy Media,,2020-12-29 00:00:00,19617,,REASONING_RESOLUTION,Not found in SEC EDGAR,LOW
+Frontier Communications,FYBR,2022-02-24 00:00:00,20520,1396790.0,REASONING_RESOLUTION,SEC EDGAR - Frontier Group Holdings (1396790),HIGH
+Mediacom Communications Corporation,,2022-07-18 00:00:00,1034054,,REASONING_RESOLUTION,Not found in SEC EDGAR; Mediacom is privately held,LOW
+Microsoft Corporation,MSFT,2017-07-05 00:00:00,789019,789019.0,REASONING_RESOLUTION,SEC EDGAR - Microsoft Corporation (789019),HIGH
+Nuance Communications Inc,SBAC,2023-05-28 00:00:00,1034054,1137475.0,REASONING_RESOLUTION,"SEC EDGAR - Nuance Communications (1137475, historical); SBAC is SBA Communications (1001085)",LOW
+Oracle Corporation,ORCL,2013-07-10 00:00:00,777676,73666.0,REASONING_RESOLUTION,SEC EDGAR - Oracle Corporation (73666),HIGH
+Sirius XM Radio Inc,SIRI,2016-12-04 00:00:00,908937,1293254.0,REASONING_RESOLUTION,SEC EDGAR - Sirius XM Holdings Inc. (1293254),HIGH
+"T-Mobile USA, Inc.",TMUS,2009-09-03 00:00:00,1283699,1136869.0,REASONING_RESOLUTION,"SEC EDGAR - T-Mobile US, Inc. (1136869)",HIGH
+Time Warner Inc.,WBD,2016-08-10 00:00:00,1755336,1907076.0,REASONING_RESOLUTION,"SEC EDGAR - Warner Bros. Discovery, Inc. (1907076)",HIGH
+Verizon,VZ,2023-05-11 00:00:00,732712,732712.0,REASONING_RESOLUTION,SEC EDGAR - Verizon Communications Inc. (732712),HIGH
+Boost Mobile,DISH,2019-03-14 00:00:00,1001082,1001082.0,SUBSIDIARY_RESOLUTION,Known subsidiary relationship,HIGH
+Cricket Wireless LLC,T,2018-08-21 00:00:00,732717,732717.0,SUBSIDIARY_RESOLUTION,Known subsidiary relationship,HIGH
+Sprint Nextel,TMUS,2012-08-01 00:00:00,1283699,1283699.0,SUBSIDIARY_RESOLUTION,Known subsidiary relationship,HIGH

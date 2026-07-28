@@ -32,14 +32,14 @@ print("=" * 80)
 
 # Load data
 df = pd.read_excel('Data/processed/FINAL_DISSERTATION_DATASET.xlsx')
-print(f"\n✓ Loaded {len(df)} breach records")
+print(f"\n[OK] Loaded {len(df)} breach records")
 
 # Filter to records with CIK
 analysis_df = df[df['cik'].notna()].copy()
-print(f"✓ Records with CIK: {len(analysis_df)}")
+print(f"[OK] Records with CIK: {len(analysis_df)}")
 
 if len(analysis_df) == 0:
-    print("\n✗ No records with CIK available")
+    print("\n[ERROR] No records with CIK available")
     exit(0)
 
 import os
@@ -232,14 +232,14 @@ print(f"Published rates are CEO only. Item 5.02-inclusive rates ~2-3x higher is 
 
 # Save results
 turnover_df.to_csv('Data/enrichment/executive_changes_item5_02.csv', index=False)
-print(f"\n✓ Saved to Data/enrichment/executive_changes_item5_02.csv")
+print(f"\n[OK] Saved to Data/enrichment/executive_changes_item5_02.csv")
 
 # Also save as the standard name for pipeline compatibility
 turnover_df.to_csv('Data/enrichment/executive_changes.csv', index=False)
-print(f"✓ Also saved to Data/enrichment/executive_changes.csv (pipeline standard)")
+print(f"[OK] Also saved to Data/enrichment/executive_changes.csv (pipeline standard)")
 
 print("\n" + "=" * 80)
-print("✓ SCRIPT 46 CORRECTED COMPLETE")
+print("[OK] SCRIPT 46 CORRECTED COMPLETE")
 print("=" * 80)
 
 print("\nCreated variables:")

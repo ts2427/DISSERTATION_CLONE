@@ -16,12 +16,12 @@ STEP 1: TOTAL EFFECT (c path) - Timing -> Turnover (no mediator)
 Model: Logit(executive_change_30d) ~ immediate_disclosure + controls
 Controls: firm_size_log, leverage, roa, prior_breaches_total
 
-Coefficient (c):         -0.6029
-Std. Error:              0.2179
-Z-score:                -2.7663
-P-value:                 0.0057
+Coefficient (c):         -0.0372
+Std. Error:              0.2513
+Z-score:                -0.1481
+P-value:                 0.8823
 
-Interpretation: Immediate disclosure increases executive turnover by -60.29% when
+Interpretation: Immediate disclosure increases executive turnover by -3.72% when
 not controlling for volatility effects.
 
 ==========================================================================================
@@ -44,43 +44,43 @@ STEP 3: DIRECT EFFECT (c' path) - Timing -> Turnover (controlling for volatility
 Model: Logit(executive_change_30d) ~ immediate_disclosure + volatility_change + controls
 
 TIMING EFFECT (Direct):
-Coefficient (c'):        -0.6013
-Std. Error:              0.2182
-Z-score:                -2.7553
-P-value:                 0.0059
+Coefficient (c'):        -0.0346
+Std. Error:              0.2515
+Z-score:                -0.1377
+P-value:                 0.8905
 
 VOLATILITY EFFECT (b path):
-Coefficient (b):          0.0073
-Std. Error:              0.0060
-Z-score (b/SE(b)):       1.2061
-P-value:                 0.2278
+Coefficient (b):          0.0054
+Std. Error:              0.0072
+Z-score (b/SE(b)):       0.7509
+P-value:                 0.4527
 
 Interpretation: When controlling for volatility, the direct timing effect changes from
--0.6029 to -0.6013. The reduction suggests volatility partially mediates
+-0.0372 to -0.0346. The reduction suggests volatility partially mediates
 the timing->turnover relationship.
 
 ==========================================================================================
 STEP 4: INDIRECT EFFECT (a × b) - Timing -> Volatility -> Turnover
 ==========================================================================================
 
-Indirect Effect (a×b):   -0.0027
-Standard Error:          0.0105
-95% Confidence Interval: [ -0.0233,   0.0179]
-Z-score:                -0.2560
-P-value:                 0.7980
+Indirect Effect (a×b):   -0.0020
+Standard Error:          0.0081
+95% Confidence Interval: [ -0.0178,   0.0138]
+Z-score:                -0.2473
+P-value:                 0.8047
 Significance:          (NS)
 
 ==========================================================================================
 MEDIATION SUMMARY
 ==========================================================================================
 
-Total Effect (c):        -0.6029  (Timing -> Turnover, total)
-Direct Effect (c'):      -0.6013  (Timing -> Turnover, direct)
-Indirect Effect (a×b):   -0.0027  (Timing -> Volatility -> Turnover)
+Total Effect (c):        -0.0372  (Timing -> Turnover, total)
+Direct Effect (c'):      -0.0346  (Timing -> Turnover, direct)
+Indirect Effect (a×b):   -0.0020  (Timing -> Volatility -> Turnover)
 ------------------------------------------------------------------------------------------
-Sum (c' + a×b):          -0.6040
+Sum (c' + a×b):          -0.0366
 
-Proportion Mediated:        0.4%  (of total effect explained by volatility)
+Proportion Mediated:        5.4%  (of total effect explained by volatility)
 
 Interpretation:
 The indirect effect represents the portion of the timing effect that operates THROUGH
@@ -97,15 +97,15 @@ CONCLUSION
 
 Volatility Mediates? PARTIALLY
 
-The timing->turnover relationship operates through 0% indirect pathway
-(via volatility) and 100% direct pathway.
+The timing->turnover relationship operates through 5% indirect pathway
+(via volatility) and 95% direct pathway.
 
 Mechanism Interpretation:
 - Information mechanism: Timing -> increases volatility -> increases pressure on boards ->
   boards respond with turnover
 - Pressure mechanism: Timing -> activates stakeholders directly -> boards respond with
   turnover independent of volatility
-- Evidence: Both mechanisms likely operate, with roughly 0%/100% split
+- Evidence: Both mechanisms likely operate, with roughly 5%/95% split
 
 This finding shows that disclosure requirements work through multiple simultaneous
 pathways—not just one causal mechanism.

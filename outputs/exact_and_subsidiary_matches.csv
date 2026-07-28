@@ -1,0 +1,17 @@
+org_name,ticker,breach_date,original_cik,resolved_cik,match_type,notes,source,match_category
+"T-Mobile US, Inc.",TMUS,2020-08-27 00:00:00,1283699,1283699.0,EXACT_UNAMBIGUOUS,SEC name: METROPCS COMMUNICATIONS INC,Exact match on normalized name,EXACT_MATCH
+Sprint Corporation,TMUS,2019-03-14 00:00:00,1283699,101830.0,EXACT_UNAMBIGUOUS,SEC name: SPRINT CORP,Exact match on normalized name,EXACT_MATCH
+AT&T Inc.,T,2024-03-17 00:00:00,732717,732717.0,EXACT_UNAMBIGUOUS,SEC name: AT&T INC.,Exact match on normalized name,EXACT_MATCH
+"Intuit, Inc.",INTU,2008-05-26 00:00:00,896878,896878.0,EXACT_UNAMBIGUOUS,SEC name: INTUIT INC,Exact match on normalized name,EXACT_MATCH
+Uber,UBER,2014-05-13 00:00:00,1543151,1431473.0,EXACT_UNAMBIGUOUS,SEC name: UBER INC,Exact match on normalized name,EXACT_MATCH
+"Cisco Systems, Inc.",CSCO,2012-04-13 00:00:00,858877,858877.0,EXACT_UNAMBIGUOUS,SEC name: CISCO SYSTEMS INC,Exact match on normalized name,EXACT_MATCH
+salesforce.com,CRM,2008-02-07 00:00:00,1108524,1108524.0,EXACT_UNAMBIGUOUS,SEC name: SALESFORCE COM INC,Exact match on normalized name,EXACT_MATCH
+Snowflake Inc.,SNOW,2024-03-01 00:00:00,1640147,1640147.0,EXACT_UNAMBIGUOUS,"SEC name: SNOWFLAKE COMPUTING, INC.",Exact match on normalized name,EXACT_MATCH
+Okta Inc,OKTA,2023-11-02 00:00:00,1660134,1660134.0,EXACT_UNAMBIGUOUS,"SEC name: OKTA, INC.",Exact match on normalized name,EXACT_MATCH
+"Herbalife International of America, Inc.",BAC,2022-02,70858,1205274.0,EXACT_UNAMBIGUOUS,SEC name: HERBALIFE INTERNATIONAL OF AMERICA INC,Exact match on normalized name,EXACT_MATCH
+Entercom Communications Corp.,SBAC,2019-09-18 00:00:00,1034054,1067837.0,EXACT_UNAMBIGUOUS,"SEC name: AUDACY, INC.",Exact match on normalized name,EXACT_MATCH
+CenturyLink,LUMN,2017-01-30 00:00:00,18926,18926.0,EXACT_UNAMBIGUOUS,SEC name: CENTURY TELEPHONE ENTERPRISES INC,Exact match on normalized name,EXACT_MATCH
+Altice USA,ATUS,2024-02-29 00:00:00,1702780,1702780.0,EXACT_UNAMBIGUOUS,"SEC name: ALTICE USA, INC.",Exact match on normalized name,EXACT_MATCH
+Sprint Nextel,TMUS,2012-08-01 00:00:00,1283699,1283699.0,SUBSIDIARY_RESOLUTION,Resolved via known subsidiary relationship,Known predecessor (Sprint Nextel merged into T-Mobile 2020),SUBSIDIARY_RESOLUTION
+Cricket Wireless LLC,T,2018-08-21 00:00:00,732717,732717.0,SUBSIDIARY_RESOLUTION,Resolved via known subsidiary relationship,Known subsidiary (Cricket Wireless LLC is AT&T),SUBSIDIARY_RESOLUTION
+Boost Mobile,DISH,2019-03-14 00:00:00,1001082,1001082.0,SUBSIDIARY_RESOLUTION,Resolved via known subsidiary relationship,Known subsidiary (Boost Mobile is DISH wireless brand),SUBSIDIARY_RESOLUTION

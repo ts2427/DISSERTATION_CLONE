@@ -26,50 +26,45 @@ Dissertation: Data Breach Disclosure Timing and Market Reactions
 University of South Alabama
 Date: February 2026
 
-CRITICAL: DATA PIPELINE ROOT
-============================
-The source of truth for this pipeline is:
-  → Data/processed/FINAL_DISSERTATION_DATASET.xlsx
+CRITICAL: DATA PIPELINE ROOT (FORM 499 CORRECTED)
+==================================================
+The current source of truth for this pipeline is:
+  → Data/processed/FINAL_DISSERTATION_DATASET_FORM499_CORRECTED.csv
 
-Do NOT manually edit the CSV file:
-  ✗ Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv
+This dataset incorporates:
+  1. CIK audit (removed fuzzy-match duplicates, n=5)
+  2. Entity matching (two-clause rule for Form 499 filers)
+  3. Form 499 filer registry (authoritative regulatory classification)
 
-Why: Script 53 (merge_CONFIRMED_enrichments.py) reads from the Excel file and regenerates
-the CSV. Any corrections made directly to the CSV will be overwritten when script 53 runs.
+Treatment variable: fcc_form499 (Form 499 filer at breach date)
+  - Replaces: fcc_reportable (SIC-based proxy)
+  - FINAL membership (7/28/2026 adjudications: Cricket treated, Boost treated,
+    DISH untreated, Aero Charter excluded): 118 treated / 37 firms in CRSP
+    sample; 115 treated in the H1-H4 regression sample (N=648)
 
-If you need to correct data:
-  1. Apply corrections to FINAL_DISSERTATION_DATASET.xlsx (the Excel source)
-  2. Delete or move the old CSV (to force regeneration)
-  3. Run this pipeline from start to finish
-  4. All downstream results will use the corrected data
+This pipeline regenerates the corrected dataset from scratch via the chain:
+  46 (Item 5.02 extraction) -> 53 (enrichment merge) -> 99 (CPNI/HHI) ->
+  98 (governance) -> 121a-c (Form 499 matching) -> 122 (manual adjudications)
+Individual script runs may produce stale outputs. Always run the complete
+pipeline for final analysis numbers.
 
-This pipeline must run sequentially in full order. Individual script runs may produce
-stale outputs or intermediate inconsistencies. Always run the complete pipeline for
-final analysis numbers.
+ESSAY 3 OUTCOME (ITEM 5.02, SUBMISSIONS API)
+============================================
+Script 46 extracts Item 5.02 filings via the EDGAR submissions JSON API
+(structured item metadata, no HTML scraping). Cached per CIK; first run
+~10-20 min, subsequent runs ~2-5 min. Verified base rates: 20.1% (30d),
+44.1% (90d), 68.2% (180d). Note: Item 5.02 covers all director/officer
+events (appointments, elections, comp), not only departures.
 
-ESSAY 3 OUTCOME MEASUREMENT ISSUE (BLOCKING SCRIPTS 91 SERIES)
-==============================================================
-Script 46_executive_changes.py measures ANY 8-K filing in the window (line 65),
-not Item 5.02 specifically (director/officer changes). This produces:
-  - Implausibly high base rates (55-59% at 180d vs 14-16% annual CEO turnover)
-  - Saturation between 90-180 days (only 6 new events out of 651)
-  - Complete separation in Q2 (FCC firms in mid-size quartile perfectly separated)
-  - Identical 90d/180d results in Q1 (outcome already captured by 90 days)
-
-TO UNBLOCK ESSAY 3 GOVERNANCE ANALYSIS (Scripts 91-91k):
-1. Modify scripts/46_executive_changes.py to parse Item 5.02 from 8-K filings
-2. Or replace with SCS/Compustat 8-K item lookup if available
-3. Regenerate executive_changes.csv with Item 5.02-specific measure
-4. All Essay 3 scripts will then produce valid results
-
-ESSAY 1 STATUS: COMPLETE & DEFENSE-READY
-=========================================
-- Classification: FCC via SIC codes (4813/4841/4899), no false positives
-- Standard errors: HC3 robust (appropriate for 10 clusters, 543 unique event dates)
-- Primary specification: Market-adjusted returns (N=648, Brown & Warner 1985)
-- Robustness: FF3/Carhart/FF5 show stable coefficient (-2.06% to -2.20%)
-- Sample composition: Diagnostic confirms p-value drift is from model choice, not sample loss
-- All results verified and locked for defense
+CANONICAL RESULTS (AUDIT CLOSED 7/28/2026)
+==========================================
+See ESSAY_RESULTS_SUMMARY_CORRECTED.md for the authoritative figures.
+Summary: Essay 1 H1-H3 bounded nulls (TOST .045/.013/<.001 at +-2.10pp),
+H4 inconclusive; Essay 2 H5 bounded null (main +0.12pp p=.914, TOST .044),
+quartile pattern = noise; Essay 3 H6 null-unbounded -> inconclusive
+(MDEs 11.5-14.9pp), Cox HR 1.43 p=.018 reported as robustness only, not
+promoted. First stage 16.71pp descriptive-only (DD unidentified, 4 pre-2007
+obs). Superseded values are listed in outputs/STALE_RESULTS_MANIFEST.txt.
 """
 
 import sys
@@ -100,6 +95,11 @@ def print_to_both(message, log_file):
     log_file.write(message + "\n")
     log_file.flush()
 
+# Scripts that legitimately need more than the default 10-minute timeout
+LONG_RUNNING_SCRIPTS = {
+    'scripts/46_executive_changes_item5_02_with_cache.py': 2400,  # SEC 8-K download, 20-30 min first run
+}
+
 def run_script(script_path, description, log_file):
     """
     Run a Python script and capture output to log.
@@ -114,6 +114,8 @@ def run_script(script_path, description, log_file):
     env = os.environ.copy()
     env['PYTHONIOENCODING'] = 'utf-8'
 
+    script_timeout = LONG_RUNNING_SCRIPTS.get(script_path.replace('\\', '/'), 600)
+
     try:
         result = subprocess.run(
             [sys.executable, script_path],
@@ -121,7 +123,7 @@ def run_script(script_path, description, log_file):
             text=True,
             encoding='utf-8',
             errors='replace',
-            timeout=600,  # 10 minute timeout
+            timeout=script_timeout,
             env=env
         )
 
@@ -148,7 +150,7 @@ def run_script(script_path, description, log_file):
             return False
 
     except subprocess.TimeoutExpired:
-        status = "[ERROR] Script timeout (>10 minutes)\n"
+        status = f"[ERROR] Script timeout (>{script_timeout//60} minutes)\n"
         print_to_both(status, log_file)
         return False
 
@@ -162,11 +164,12 @@ def verify_data(log_file):
     print_section("STEP 0: DATA VERIFICATION")
     log_file.write("\n" + "=" * 80 + "\nSTEP 0: DATA VERIFICATION\n" + "=" * 80 + "\n\n")
 
-    data_file = Path('Data/processed/FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv')
+    # Primary: Form 499 corrected dataset
+    data_file = Path('Data/processed/FINAL_DISSERTATION_DATASET_FORM499_CORRECTED.csv')
 
     if data_file.exists():
         file_size = data_file.stat().st_size / (1024 * 1024)
-        msg = f"  [OK] Enriched dataset found ({file_size:.1f} MB)\n  [OK] Ready to proceed\n"
+        msg = f"  [OK] Form 499 corrected dataset found ({file_size:.1f} MB)\n  [OK] Ready to proceed\n"
         print_to_both(msg, log_file)
         return True
     else:
@@ -181,6 +184,14 @@ def verify_outputs(log_file):
 
     # Define critical output files
     critical_files = [
+        # Form 499 Corrected (PRIMARY)
+        Path('outputs/h1_h4_form499_corrected_summary.csv'),
+        Path('outputs/h1_h4_form499_corrected_regression_results.txt'),
+        Path('outputs/h5_form499_corrected_heterogeneity.csv'),
+        Path('outputs/h5_form499_corrected_regression_results.txt'),
+        Path('outputs/h6_form499_corrected_power_analysis.csv'),
+        Path('outputs/h6_form499_corrected_regression_results.txt'),
+        # Reference (SIC-based)
         Path('outputs/tables/TABLE1_COMBINED.txt'),
         Path('outputs/tables/essay2/TABLE2_baseline_disclosure.txt'),
         Path('outputs/tables/essay2/TABLE3_fcc_regulation.txt'),
@@ -272,22 +283,41 @@ Log file: {log_path}
         # Define pipeline
         pipeline = [
             {
-                'category': 'DATA ENRICHMENT',
+                'category': 'DATA PREPARATION - OUTCOME EXTRACTION',
                 'scripts': [
+                    ('scripts/46_executive_changes_item5_02_with_cache.py', 'Essay 3 Outcome: Executive Turnover from 8-K Item 5.02 (cached; 20-30 min on first run, 2-5 min after) [MUST RUN BEFORE SCRIPT 53]'),
+                ]
+            },
+            {
+                'category': 'DATA PREPARATION - ENRICHMENTS',
+                'scripts': [
+                    ('scripts/53_merge_CONFIRMED_enrichments.py', 'Merge All Enrichments (Prior breaches, breach severity, media coverage, Item 5.02 executive turnover, enforcement) → FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv'),
                     ('scripts/99_add_cpni_hhi_variables.py', 'Add CPNI & HHI Variables (Essay 1 Alternative Explanations)'),
+                    ('scripts/98_sox404_heterogeneity.py', 'Governance Enrichment: SOX 404 proxy → FINAL_DISSERTATION_DATASET_WITH_GOVERNANCE.csv (required by 121c)'),
                 ]
             },
             {
-                'category': 'DATA PREPARATION',
+                'category': 'DATA PREPARATION - FORM 499 CLASSIFICATION',
                 'scripts': [
-                    ('scripts/53_merge_CONFIRMED_enrichments.py', 'Merge All Enrichments (Prior breaches, breach severity, media coverage, executive turnover, enforcement) → FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv'),
+                    ('scripts/121a_form499_entity_matching.py', 'Form 499 Entity Matching: Exact-string match (normalized) PRC firms to FCC registry (107/779 matched)'),
+                    ('scripts/121b_form499_coverage_validation.py', 'Form 499 Coverage Validation: Validate matches against start/end dates (88 date-valid)'),
+                    ('scripts/121c_merge_form499_classification.py', 'Merge Form 499 Classification: Add fcc_form499 binary to dataset (79 treated in regression sample)'),
+                    ('scripts/122_manual_form499_corrections.py', 'Manual Form 499 Corrections: Apply two-clause rule to SIC-flagged firms (add +36 treated via parent-brand rule) → FINAL_DISSERTATION_DATASET_FORM499_CORRECTED.csv'),
                 ]
             },
             {
-                'category': 'MAIN ANALYSIS',
+                'category': 'FORM 499 CORRECTED ANALYSES (PRIMARY)',
+                'scripts': [
+                    ('scripts/86c_essay1_h1_h4_form499_corrected.py', 'H1-H4 Re-estimation with Form 499 Corrected Classification (n=115 treated, authoritative regulatory status)'),
+                    ('scripts/90b_essay2_h5_form499_corrected.py', 'H5 Volatility Re-estimation with Form 499 Corrected (First real result, post-deduplication)'),
+                    ('scripts/91m_essay3_h6_form499_corrected.py', 'H6 Executive Turnover Re-estimation with Form 499 Corrected (First real result, MDE/TOST)'),
+                ]
+            },
+            {
+                'category': 'MAIN ANALYSIS (REFERENCE)',
                 'scripts': [
                     ('scripts/70_summary_statistics.py', 'Summary Statistics (Table 1)'),
-                    ('scripts/80_essay1_car_regressions.py', 'Essay 1 Main Regressions (H1-H4: CAR on disclosure/FCC/reputation/severity) - HC3 robust SEs as primary [COMPLETE & DEFENSE-READY]'),
+                    ('scripts/80_essay1_car_regressions.py', 'Essay 1 Main Regressions (H1-H4: CAR on disclosure/FCC/reputation/severity) - HC3 robust SEs as primary [REFERENCE - SIC-BASED]'),
                     ('scripts/h1_timing_fcc_interaction.py', 'H1 Theoretical Test: Timing × FCC Interaction (formal test of differential effects by regulatory status, canonical specification)'),
                     # ARCHIVED: Pre-2007 causal ID replaced by SCM. Runs as robustness check only.
                     # ('scripts/81_post_2007_interaction_test.py', 'FCC Causal Identification (TABLE B8: Post-2007 Interaction Test - Market Returns)'),
@@ -297,15 +327,15 @@ Log file: {log_path}
                     # ARCHIVED: Pre-2007 causal ID replaced by SCM. Runs as robustness check only.
                     # ('scripts/84_essay2_post_2007_interaction_test_volatility.py', 'Essay 2 Volatility Causal ID (TABLE B8: Post-2007 Test)'),
                     ('scripts/86_essay3_fcc_causal_identification.py', 'Essay 2 Volatility Causal ID (Industry FE, Size Sensitivity)'),
-                    ('scripts/91_essay3_governance_regressions.py', 'Essay 3 Main Regressions (Executive Turnover - Logistic Regression by Window) [BLOCKED: Scripts/46 measures ANY 8-K, not Item 5.02]'),
-                    ('scripts/91b_essay3_reduced_form_mediation.py', 'Essay 3 Reduced-Form H6 Test (Correct Specification - No Post-Treatment Variables) [BLOCKED: Outcome measurement issue]'),
-                    ('scripts/91c_essay3_mediation_bootstrap.py', 'Essay 3 Bootstrap Indirect Effect (Nonlinear Mediation on Probability Scale with 95% CI) [BLOCKED: Outcome measurement issue]'),
-                    ('scripts/91e_essay3_h6_tost_equivalence.py', 'Essay 3 H6 TOST Equivalence Test (N=651, confirms FCC effect is economically negligible) [BLOCKED: Outcome measurement issue]'),
-                    ('scripts/91f_essay3_h6_firm_size_heterogeneity.py', 'Essay 3 H6 Firm Size Heterogeneity (30d/90d/180d quartile analysis - addresses temporal persistence) [BLOCKED: Outcome measurement issue]'),
-                    ('scripts/91g_extract_reduced_form_controls.py', 'Essay 3 H6 Control Variable Significance (which breach/firm characteristics predict turnover) [BLOCKED: Outcome measurement issue]'),
-                    ('scripts/91h_essay3_cox_hazards.py', 'Essay 3 H6 Cox Proportional Hazards (Alternative functional form robustness; continuous time-to-turnover) [BLOCKED: Outcome measurement issue]'),
-                    ('scripts/91j_essay3_ols_lpm_and_negbin.py', 'Essay 3 H6 OLS Linear Probability Model & Negative Binomial (Alternative specifications robustness) [BLOCKED: Outcome measurement issue]'),
-                    ('scripts/91k_essay3_robustness_checks.py', 'Essay 3 H6 Robustness: Alternative Thresholds & Restricted Samples (5/10/14-day disclosure windows, data quality checks) [BLOCKED: Outcome measurement issue]'),
+                    ('scripts/91_essay3_governance_regressions.py', 'Essay 3 Main Regressions (Executive Turnover - Logistic Regression by Window) [UNBLOCKED]'),
+                    ('scripts/91b_essay3_reduced_form_mediation.py', 'Essay 3 Reduced-Form H6 Test (Correct Specification - No Post-Treatment Variables)'),
+                    ('scripts/91c_essay3_mediation_bootstrap.py', 'Essay 3 Bootstrap Indirect Effect (Nonlinear Mediation on Probability Scale with 95% CI)'),
+                    ('scripts/91e_essay3_h6_tost_equivalence.py', 'Essay 3 H6 TOST Equivalence Test (N=651, confirms FCC effect is economically negligible)'),
+                    ('scripts/91f_essay3_h6_firm_size_heterogeneity.py', 'Essay 3 H6 Firm Size Heterogeneity (30d/90d/180d quartile analysis - addresses temporal persistence)'),
+                    ('scripts/91g_extract_reduced_form_controls.py', 'Essay 3 H6 Control Variable Significance (which breach/firm characteristics predict turnover)'),
+                    ('scripts/91h_essay3_cox_hazards.py', 'Essay 3 H6 Cox Proportional Hazards (Alternative functional form robustness; continuous time-to-turnover)'),
+                    ('scripts/91j_essay3_ols_lpm_and_negbin.py', 'Essay 3 H6 OLS Linear Probability Model & Negative Binomial (Alternative specifications robustness)'),
+                    ('scripts/91k_essay3_robustness_checks.py', 'Essay 3 H6 Robustness: Alternative Thresholds & Restricted Samples (5/10/14-day disclosure windows, data quality checks)'),
                 ]
             },
             {
@@ -552,108 +582,40 @@ Robustness Figures:
   outputs/robustness/figures/R05_fixed_effects.png
 
 {'=' * 80}
-KEY FINDINGS
+CANONICAL RESULTS (AUDIT CLOSED 7/28/2026)
 {'=' * 80}
 
-Essay 1 - Market Reactions (Alternative Explanations):
-  [+] CPNI sensitivity test: FCC coefficient robust to CPNI control (-1.15%, p=0.010)
-  [+] Market concentration test: FCC coefficient robust to HHI control (-2.44%, p=0.006)
-  [+] Both controls: FCC coefficient remains significant (-1.22%, p=0.006)
+Authoritative figures live in ESSAY_RESULTS_SUMMARY_CORRECTED.md - read that,
+not this log, when drafting. Superseded values: outputs/STALE_RESULTS_MANIFEST.txt.
 
-Essay 2 - Market Reactions (Main, Deduplicated 784-row sample):
-  [-] Prior breaches NOT significant (H3 null on clean data)
-  [-] Health breaches NOT significant (H4 null on clean data)
-  [-] Immediate disclosure NOT significant (H1 not supported)
-  [+] H1 null hypothesis validated via TOST equivalence test (90% CI within ±2.10% bounds)
-  [+] Sensitivity check: H3/H4 null when Cencora excluded from 1,054 dataset, confirming artifacts not real effects
+Essay 1 (N=648, treated 115, Form 499 classification):
+  H1 +0.61pp p=.482, TOST .045  -> BOUNDED NULL
+  H2 -0.42pp p=.575, TOST .013  -> BOUNDED NULL
+  H3 +0.03pp p=.645, TOST <.001 -> BOUNDED NULL
+  H4 -0.39pp p=.811, TOST .148  -> INCONCLUSIVE (underpowered)
+  Frame: three bounded nulls and one underpowered.
+  First stage 16.71pp is DESCRIPTIVE ONLY (DD unidentified: 4 pre-2007 obs).
 
-FCC Causal Identification (PRIMARY: Synthetic Control Matching):
-  [+] SCM n=41 firms: −4.03% FCC effect (p=0.003, 95% CI: [-6.52%, -1.55%])
-  [+] Sprint recovered via T-Mobile proxy: 13 breaches, result robust
-  [+] Firm heterogeneity: range −29% (DISH) to +10% (Charter)
+Essay 2 (H5, N=644, spec includes return_volatility_pre, R2=.42):
+  Main +0.12pp p=.914, MDE 3.23pp, TOST +-2.10pp p=.044 -> BOUNDED NULL
+  Quartiles: only Q2 significant (one cell of four, no gradient) -> noise.
 
-  ROBUSTNESS (Post-2007 sample restriction test):
-  [+] FCC effect in post-2007 period: −2.19% (p=0.031, HC3 SEs)
-  [+] Confirms FCC penalty exists in post-regulation era
+Essay 3 (H6, N=646, Item 5.02 outcome, base rates 20.1/46.3/72.0%):
+  AMEs +1.79/+9.14/+3.08pp (p=.664/.086/.535), MDEs 11.5-14.9pp
+  -> NULL, UNBOUNDED -> report as INCONCLUSIVE; equivalence claims retired.
+  Cox HR 1.43 p=.018 (Schoenfeld .479): robustness only, NOT promoted.
 
-Standard Errors Robustness (Clustered vs HC3):
-  [+] Firm-clustered SEs increase 38% on average vs HC3
-  [+] FCC effect remains significant with conservative clustering
-  [+] Main specification findings are robust to clustering
+Membership (final, 7/28 adjudications): Cricket treated (caught defect),
+Boost treated (clause b), DISH untreated, Aero Charter excluded.
+118 treated / 37 firms CRSP; 115 in regression.
 
-Essay 3 - Information Asymmetry (Volatility):
-  [+] Pre-breach volatility dominates (R² = 0.39)
-  [+] Disclosure timing minimal effect
+Data-quality contribution: four documented failure modes
+(DATA_QUALITY_DOCUMENTATION.md) - CIK duplicates, name-token collisions,
+SIC-as-regulatory-proxy, silent Item 5.02 extraction failure.
 
-Essay 3 - Governance Response (Executive Turnover - H6):
-  [-] FCC effect on CEO turnover: 2.55pp (30d), 0.11pp (90d), -1.42pp (180d) — ALL NULL (p>.05, N=651)
-  [+] TOST Equivalence Test (N=651, ±10pp bounds):
-      - 30d: INCONCLUSIVE (CI: [-6.80pp, +11.90pp], upper bound exceeds by 1.90pp)
-      - 90d: PASSES (CI: [-9.38pp, +9.60pp], both bounds pass)
-      - 180d: INCONCLUSIVE (CI: [-10.84pp, +8.00pp], lower bound exceeds by 0.84pp)
-  [+] Mediation analysis: FCC → immediate_disclosure (14.52pp, p<.001) but disclosure → turnover NOT significant
-  [+] Causal ID validation: Balance test ✓, Placebo tests ✓, Dose-response ✓, Temporal ✓
-  [+] Control variable significance (N=651):
-      - Leverage predicts turnover at 30d (p=.007***)
-      - Prior breaches predict turnover at 90d/180d (p=.019**, .023**)
-      - Health breach predicts turnover at 90d/180d (p=.056*, .035**)
-      - Firm size does NOT predict turnover (all p>.21)
-  [+] Firm-size heterogeneity (30d/90d/180d quartile analysis):
-      - Q2 produces singular matrix at 90d/180d (outcome lacks variation)
-      - Q3 shows consistent negative FCC pattern (-17.5pp at 30d, -11.5pp at 90d, -17.6pp at 180d, marginal significance)
-      - Q1/Q4 show null FCC effects across all windows
-      - Interpretation: Heterogeneity is exploratory; appendix-only due to singular matrix in Q2 and marginal p-values in Q3
-  [+] Interpretation: FCC regulation does not trigger executive turnover in aggregate; baseline turnover (46%) is breach-driven, moderated by prior history and breach type
-
-Robustness:
-  [+] Prior breach effects robust across all specifications
-  [+] Health breach effects robust across all specifications
-  [+] FCC effect robust to firm-level clustering
-  [-] Disclosure timing effects NOT robust
-
-Heterogeneity Analysis (Phase 1-2 + Analyses #3-7):
-  [+] PHASE 1 (Governance Quality): Governance weakness independent of FCC (+0.55%, NS)
-  [+] PHASE 2 (CVSS Complexity) - BREAKTHROUGH: Simple breaches penalized 6x more by FCC
-      - Low-complexity FCC effect: -6.46%***
-      - High-complexity FCC effect: -0.19%
-      - Interaction: +6.27%** (p=0.007)
-  [+] ANALYSIS #3 (Ransomware): Ransomware protected from FCC penalty (-8.34%, p=0.069)
-  [+] ANALYSIS #4 (Media Coverage): Media shields FCC penalty (+7.08%**, p=0.006)
-      - Low-media breaches: -3.33%*** FCC effect
-      - High-media breaches: +3.75% FCC effect
-  [+] ANALYSIS #5 (Governance Windows): FCC effect immediate but transient (decays over time)
-  [+] ANALYSIS #6 (Type Diversity): Type diversity NOT moderator (-0.315%, NS)
-  [-] ANALYSIS #7 (Restatement): Data limitation - Compustat covers only 2.6% of breach firms
-
-Essay 2 Mechanism Analysis (Scripts 105-106):
-  [+] ANALYSIS #8 (Complexity Index): Complexity does NOT amplify FCC volatility effect
-      - FCC × Complexity interaction: -0.0784pp (p=0.9700, NS)
-      - Finds: FCC impact independent of unified severity/CVE/type complexity
-  [+] ANALYSIS #9 (Information Environment Composite):
-      - Spec A (Media Attention): +0.5585pp (p=0.80, NS)
-      - Spec B (Reputation Weakness): -4.5897pp (p=0.03)*
-      - Spec C (Composite, KEY): -2.6142pp (p=0.27, NS)
-      - Finding: Information environment does not significantly amplify FCC volatility effect
-
-Central Finding: FCC penalty operates through EXPECTATION MISMATCH
-  - Markets expect simple breaches to resolve quickly → FCC deadline violates expectations
-  - Markets expect complex breaches will take time → FCC deadline adds no penalty
-  - Media coverage signals information already available → FCC adds no marginal value
-  - Firm size is the dominant moderator: smallest firms most constrained by FCC deadline
-
-{'=' * 80}
-NEXT STEPS
-{'=' * 80}
-
-1. Review Essay 1 alternative explanations (CPNI & HHI) in outputs/tables/essay2/TABLE_APPENDIX_alternative_explanations.txt
-2. Review FCC causal identification test (TABLE B8) in outputs/tables/essay2/TABLE_B8_post_2007_interaction.txt
-3. Review standard errors robustness (TABLE B9) in outputs/tables/essay2/TABLE_B9_clustered_vs_hc3_comparison.txt
-4. Review H1 equivalence test results in outputs/tables/essay2/H1_TOST_Equivalence_Test.txt
-5. Review VIF diagnostics in outputs/tables/essay2/DIAGNOSTICS_VIF_summary.txt
-6. Copy regression tables and appendix tables into dissertation
-7. Review robustness check results in outputs/robustness/
-8. Include ML validation (optional) in appendix
-9. Begin writing Results sections for Essays 2 & 3
+Open questions (Dr. Johnson): identification path (descriptive vs state-law
+staggered adoption) and Essay 2 / job-talk center. SCM: rebuild under scpi
+with Form 499 membership or drop (pending Lambert) - not committee-locked.
 
 Complete log saved to: {log_path}
 
@@ -661,55 +623,30 @@ Complete log saved to: {log_path}
 """
         print_to_both(outputs, log_file)
         
-        # Final status - check with updated description names
-        critical_scripts_succeeded = (
-            results.get('Summary Statistics (Table 1)', False) and
-            results.get('Essay 2 Regressions (Tables 2-5, firm-clustered SEs) + TOST + VIF', False) and
-            results.get('Essay 3 Regressions (Tables 2-3)', False)
-        )
+        # Final status - keyed to the Form 499 primary analyses (match pipeline descriptions)
+        critical_keys = [
+            'H1-H4 Re-estimation with Form 499 Corrected Classification (n=115 treated, authoritative regulatory status)',
+            'H5 Volatility Re-estimation with Form 499 Corrected (First real result, post-deduplication)',
+            'H6 Executive Turnover Re-estimation with Form 499 Corrected (First real result, MDE/TOST)',
+        ]
+        critical_scripts_succeeded = all(results.get(k, False) for k in critical_keys)
 
-        if critical_scripts_succeeded:
-            final = f"\n[***] [SUCCESS] Core dissertation analysis complete!\n{'=' * 80}\n"
+        # Verify critical outputs exist regardless of status
+        outputs_verified = verify_outputs(log_file)
+
+        if critical_scripts_succeeded and outputs_verified:
+            final = f"\n[***] [SUCCESS] Core dissertation analysis complete and outputs verified.\n{'=' * 80}\n"
             print_to_both(final, log_file)
-
-            # Verify critical outputs exist
-            outputs_verified = verify_outputs(log_file)
-
-            # Launch Streamlit dashboard
-            dashboard_msg = f"""
-{'=' * 80}
-LAUNCHING DASHBOARD
-{'=' * 80}
-
-Opening Streamlit dashboard in your browser...
-Dashboard URL: http://localhost:8502
-
-If browser doesn't open automatically, visit the URL above.
-To stop the dashboard, press Ctrl+C in the terminal.
-
-{'=' * 80}
-"""
-            print_to_both(dashboard_msg, log_file)
-
-            # Launch dashboard in a new process
-            try:
-                dashboard_path = Path(__file__).parent / 'Dashboard' / 'app.py'
-                if dashboard_path.exists():
-                    # Use subprocess to launch Streamlit
-                    subprocess.Popen(
-                        [sys.executable, '-m', 'streamlit', 'run', str(dashboard_path)],
-                        env=os.environ.copy()
-                    )
-                    print("\n[+] Dashboard launched successfully")
-                else:
-                    print(f"\n[!] Dashboard app not found at {dashboard_path}")
-            except Exception as e:
-                print(f"\n[!] Could not launch dashboard: {str(e)}")
-                print("  You can manually launch it with: streamlit run Dashboard/app.py")
-
+            return True
+        elif critical_scripts_succeeded:
+            final = f"\n[OK] Primary analyses succeeded; some expected output files missing - review verification above.\n{'=' * 80}\n"
+            print_to_both(final, log_file)
             return True
         else:
-            final = f"\n⚠ [WARNING] Some critical analyses failed or script descriptions don't match - review log\n{'=' * 80}\n"
+            missing = [k for k in critical_keys if not results.get(k, False)]
+            final = ("\n[WARNING] Primary Form 499 analyses did not all succeed - review log.\n"
+                     + "\n".join(f"  [-] {k}" for k in missing)
+                     + f"\n{'=' * 80}\n")
             print_to_both(final, log_file)
             return False
 

@@ -20,10 +20,10 @@ Size Q4_Large          164       -1.1706      0.6818
 ESSAY 3: Executive Turnover (30-day)
 Group               N      Coefficient    P-Value
 ───────────────────────────────────────────────────────
-Size Q1_Small          171       -0.5421      0.1911
-Size Q2                174       -1.1817      0.0639
-Size Q3                175       -1.6367      0.0005
-Size Q4_Large          178        0.5583      0.1264
+Size Q1_Small          171        0.8014      0.0765
+Size Q2                174       -1.2166      0.1130
+Size Q3                175       -0.3076      0.5232
+Size Q4_Large          178       -0.2815      0.5281
 
 INTERPRETATION:
 If timing coefficients are consistent across size groups -> Effect is uniform

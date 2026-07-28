@@ -1,4 +1,4 @@
 window,model,n,variable,logit_coef,logit_se,logit_p,ame_pp,ame_se_pp,mde_80_pp,mde_85_pp,mde_90_pp,observed_below_mde_80,pseudo_r2
-30d,reduced_form,646,fcc_reportable,0.0651,0.2136,0.7607,1.5,4.915,13.77,14.727,15.932,True,0.0157
-90d,reduced_form,646,fcc_reportable,-0.0557,0.2098,0.7908,-1.32,4.96,13.895,14.861,16.077,True,0.0221
-180d,reduced_form,646,fcc_reportable,-0.12,0.2097,0.5672,-2.84,4.918,13.778,14.736,15.941,True,0.0229
+30d,reduced_form,646,fcc_reportable,0.0638,0.2545,0.802,1.03,4.062,11.381,12.173,13.168,True,0.007
+90d,reduced_form,646,fcc_reportable,0.1509,0.208,0.4682,3.7,5.066,14.194,15.18,16.422,True,0.0138
+180d,reduced_form,646,fcc_reportable,0.3216,0.2491,0.1967,6.06,4.871,13.647,14.596,15.79,True,0.0226

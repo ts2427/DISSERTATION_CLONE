@@ -21,8 +21,8 @@ Days Since Last Breach,93,563.99,864.53,1.00,39.00,160.00,756.00,5245.00,FCC Reg
 Firm Size (log assets),128,11.09,1.32,6.06,10.38,11.72,12.07,12.47,FCC Regulated
 Leverage,128,0.72,0.13,0.56,0.67,0.68,0.72,1.56,FCC Regulated
 ROA (%),128,0.01,0.01,-0.06,0.00,0.01,0.01,0.04,FCC Regulated
-Executive Change (30d),139,0.37,0.48,0.00,0.00,0.00,1.00,1.00,FCC Regulated
-Executive Change (90d),139,0.53,0.50,0.00,0.00,1.00,1.00,1.00,FCC Regulated
+Executive Change (30d),139,0.22,0.41,0.00,0.00,0.00,0.00,1.00,FCC Regulated
+Executive Change (90d),139,0.50,0.50,0.00,0.00,1.00,1.00,1.00,FCC Regulated
 Regulatory Enforcement,139,0.04,0.20,0.00,0.00,0.00,0.00,1.00,FCC Regulated
 Media Articles,139,10.76,38.21,0.00,0.00,0.00,2.00,393.00,FCC Regulated
 High Media Coverage,139,0.18,0.39,0.00,0.00,0.00,0.00,1.00,FCC Regulated
@@ -48,8 +48,8 @@ Days Since Last Breach,235,361.64,778.87,1.00,18.50,58.00,334.50,5698.00,Non-FCC
 Firm Size (log assets),585,10.33,1.22,5.01,9.61,10.29,10.91,14.74,Non-FCC
 Leverage,588,0.72,0.26,0.12,0.54,0.70,0.86,2.52,Non-FCC
 ROA (%),588,0.01,0.04,-0.33,0.00,0.01,0.02,0.21,Non-FCC
-Executive Change (30d),625,0.35,0.48,0.00,0.00,0.00,1.00,1.00,Non-FCC
-Executive Change (90d),625,0.54,0.50,0.00,0.00,1.00,1.00,1.00,Non-FCC
+Executive Change (30d),625,0.19,0.39,0.00,0.00,0.00,0.00,1.00,Non-FCC
+Executive Change (90d),625,0.43,0.50,0.00,0.00,0.00,1.00,1.00,Non-FCC
 Regulatory Enforcement,640,0.00,0.00,0.00,0.00,0.00,0.00,0.00,Non-FCC
 Media Articles,640,8.83,92.86,0.00,0.00,0.00,0.00,1870.00,Non-FCC
 High Media Coverage,640,0.05,0.22,0.00,0.00,0.00,0.00,1.00,Non-FCC
