@@ -54,3 +54,11 @@ compustat_annual_topup.csv. Pulled 2026-08-04 by scripts/159:
 WRDS pgpass (Windows: %APPDATA%/postgresql/pgpass.conf) for wrds-pgdata
 .wharton.upenn.edu:9737; scripts/159 connects as `wrds.Connection(
 wrds_username='tispivey')` and never prompts when pgpass is present.
+
+## Replication environment notes
+- Windows clones MUST use `git clone -c core.longpaths=true` (or a short target
+  path): the article-library filenames exceed default MAX_PATH and checkout
+  fails otherwise (observed 8/4/2026).
+- Public SEC inputs are git-tracked (EDGAR name/CIK lookup via LFS, ticker
+  files, registry snapshot, submissions cache); only WRDS-licensed extracts
+  follow the pull-or-skip pattern above.
