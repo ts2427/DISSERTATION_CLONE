@@ -1,0 +1,5 @@
+Restriction,Timing coef,Timing p,FCC coef,FCC p,ROA coef,ROA p,N
+Full,1.055,0.287,-0.133,0.92,7.42,0.171,339
+Excl. largest decile,1.268,0.239,-0.218,0.883,8.34,0.14,306
+Excl. smallest decile,0.624,0.548,-0.322,0.817,4.7,0.401,317
+Non-health,0.837,0.393,-0.077,0.954,7.83,0.167,324

@@ -1,0 +1,454 @@
+org_name,final_grade,n,cik,evidence
+A&A Services,EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+A.Y. McDonald Industries Inc.,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+ABM Industries Incorporated,VERIFIED,4,771497.0,EDGAR name: ABM INDUSTRIES INC
+"ADF International, Inc.",EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"AGE Industries, Ltd.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"API Financial Solutions, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+ASAP Semiconductor LLC,EXCLUDED-UNRESOLVED,3,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+ASIS International,EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+AT&T,VERIFIED-GATE1,13,732717.0,Gate1-A: active registrant; 5907 is pre-2005 AT&T Corp (ticker T -> CIK 732717)
+AT&T Inc,VERIFIED-GATE1,1,732717.0,Gate1-A: active registrant; 5907 is pre-2005 AT&T Corp (ticker T -> CIK 732717)
+AT&T Inc.,VERIFIED-GATE1,10,732717.0,Gate1-A: active registrant; 5907 is pre-2005 AT&T Corp (ticker T -> CIK 732717)
+AT&T Services,VERIFIED-REASONING,1,732717.0,SEC EDGAR: AT&T Services operating subsidiary | EDGAR-confirmed
+AT&T Services Inc.,VERIFIED-REASONING,1,732717.0,SEC EDGAR: AT&T Services variant | EDGAR-confirmed
+"AT&T Services, Inc.",VERIFIED-REASONING,7,732717.0,SEC EDGAR: AT&T Services is operating subsidiary of AT&T Inc. | EDGAR-confirmed
+"AT&T, Inc.",VERIFIED-GATE1,1,732717.0,Gate1-A: active registrant; 5907 is pre-2005 AT&T Corp (ticker T -> CIK 732717)
+ATT-Breach Notification,VERIFIED-GATE1,2,732717.0,"Gate1-G rescue: artifact-name record, AT&T equity (same class as ATT-SecurityBreach)"
+ATT-SecurityBreach,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+ATT-SecurityBreach2,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Activision Publishing, Inc.",VERIFIED,2,1870564.0,"EDGAR name: ACTIVISION PUBLISHING, INC."
+Adobe Systems Incorporated,VERIFIED-GATE1,3,796343.0,Gate1-A (ADBE)
+"Advanced Mobile Notary, LLC",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Aero Charter, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+AeroGrow International,VERIFIED-GATE1,1,1316644.0,Gate1-D exception: SEC-verified operating registrant (10-Ks 2008-2020); legacy AIG carried American International Group returns
+"AeroGrow International, Inc.",VERIFIED-GATE1,1,1316644.0,Gate1-D exception: SEC-verified operating registrant (10-Ks 2008-2020); legacy AIG carried American International Group returns
+Aladdin Capital,EXCLUDED-PRIVATE,1,,Gate1-D: private; legacy COF was noise
+"Allied-Locke Industries, Inc.",EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Alpha & Omega Semiconductor,VERIFIED,1,1387467.0,EDGAR name: ALPHA & OMEGA SEMICONDUCTOR LTD
+Altice USA,VERIFIED,2,1702780.0,"EDGAR name: ALTICE USA, INC."
+"Altice USA, Inc.",VERIFIED,1,1702780.0,"EDGAR name: ALTICE USA, INC."
+"Altria Group, Inc.",VERIFIED,1,764180.0,EDGAR name: ALTRIA GROUP INC
+Amadas Industries,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"American Alarm & Communications, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+American Electric Power,VERIFIED-GATE1,2,4904.0,Gate1-A (AEP)
+Ametros Financial Corporation,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Amgen Inc.,VERIFIED,2,318154.0,EDGAR name: AMGEN INC
+Amphenol Canada Corporation,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Aon Corporation,VERIFIED-GATE1,1,315293.0,"Gate1-A (plain-name record, pre-redomiciliation registrant)"
+Aon Corporation PLC,VERIFIED-GATE1,1,1808065.0,Gate1-B: Ireland redomiciliation entity
+Aon PLC,VERIFIED-GATE1,1,1808065.0,Gate1-B: Ireland redomiciliation entity
+Apple Inc.,VERIFIED,7,320193.0,EDGAR name: APPLE COMPUTER INC
+Ariel Corporation,VERIFIED,1,911167.0,EDGAR name: ARIEL CORP
+Arx Capital LLC,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Audacy, Inc",VERIFIED-GATE1,1,1067837.0,"Gate1-A: formerly Entercom, active registrant"
+"Automatic Data Processing, Inc.",VERIFIED,1,8670.0,EDGAR name: AUTOMATIC DATA PROCESSING INC
+B Capital Group,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+BBB Industries LLC,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"BBC Industries, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"BDP International, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Block Electric Company, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Block Inc,VERIFIED,1,1512673.0,"EDGAR name: BLOCK, INC."
+"Block and Company, Inc.",VERIFIED-REASONING,3,1512673.0,SEC EDGAR: Block Inc. (formerly Square Inc.) CIK 1512673 verified. Name changed Dec 2021 | EDGAR-confirmed
+"Block, Inc.",VERIFIED,1,1512673.0,"EDGAR name: BLOCK, INC."
+"Bonland Industries, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Boost Mobile,VERIFIED-GATE1,1,101830.0,"Gate1-F: Sprint-era equity (SEC-verified: SPRINT LLC fka SPRINT CORP/NEXTEL, 10-Ks 2014-2019)"
+"Bray International, Inc.",EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Brown Construction Services, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Brown Integrated Logistics, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Brown Paindiris & Scott, LLP",EXCLUDED-UNRESOLVED,3,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Brown, Lisle/Cummings, Inc.",VERIFIED,1,14745.0,"EDGAR name: BROWN, LISLE/CUMMINGS, INC."
+Brown-Forman Corporation,VERIFIED,1,14693.0,EDGAR name: BROWN FORMAN CORP
+"Burrelles Information Services, LLC",EXCLUDED-UNRESOLVED,3,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"CBD Industries, LLC",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+CLAS Information Services,EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"CM Group Holdings, Inc. d/b/a Creative Memories",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"CSI Financial Services, LLC",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+CSX Transportation,VERIFIED,3,88128.0,EDGAR name: CSX TRANSPORTATION INC
+"CSX Transportation, Inc.",VERIFIED,4,88128.0,EDGAR name: CSX TRANSPORTATION INC
+CWGS Group,VERIFIED-GATE1,3,1669779.0,Gate1-G rescue: Camping World Holdings (EDGAR-verified: CWGS Holding LLC 1683140 files nothing; CWH is reporting entity)
+"Cable One, Inc.",VERIFIED,4,1632127.0,"EDGAR name: CABLE ONE, INC."
+"Caesars Entertainment, Inc.",VERIFIED-GATE1,2,1590895.0,Gate1-B: CZR Eldorado-merger entity
+"Capital Asset Management Group, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Capital Brands Distribution, LLC",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Capital Integration Systems LLC,VERIFIED,1,1497060.0,EDGAR name: CAPITAL INTEGRATION SYSTEMS LLC
+Capital Lumber Company,EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Carnival Corporation,VERIFIED-GATE1,2,815097.0,Gate1-A (CCL)
+Carnival Corporation & PLC,VERIFIED,2,1125259.0,EDGAR name: CARNIVAL PLC
+Carnival Corporation & plc,VERIFIED,1,1125259.0,EDGAR name: CARNIVAL PLC
+"Cencora, Inc.",VERIFIED,57,1140859.0,EDGAR name: AMERISOURCE BERGEN CORP
+Centene Management Corporation,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Centerline Communications, LLC",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Centerstone Insurance and Financial Services,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+CenturyLink,VERIFIED,4,18926.0,EDGAR name: CENTURY TELEPHONE ENTERPRISES INC
+CenturyLink Communications,VERIFIED-GATE1,2,18926.0,Gate1-G rescue: CenturyLink/Lumen parent (Form 499 relevant carrier) (ticker LUMN -> CIK 18926)
+Centurylink Communications,VERIFIED-GATE1,1,18926.0,Gate1-G rescue: CenturyLink/Lumen parent (Form 499 relevant carrier) (ticker LUMN -> CIK 18926)
+Change Healthcare Inc.,VERIFIED-GATE1,1,731766.0,Gate1-C: UnitedHealth parent post-10/2022 acquisition; legacy GEHC was fuzzy error
+"Chart Industries, Inc.",VERIFIED,1,892553.0,EDGAR name: CHART INDUSTRIES INC
+Charter Communication,VERIFIED-GATE1,1,1091667.0,Gate1-C: traded registrant via ticker (ticker CHTR -> CIK 1091667)
+Charter Communications,VERIFIED-GATE1,2,1091667.0,Gate1-C: traded registrant via ticker (ticker CHTR -> CIK 1091667)
+"Charter Communications, Inc.",VERIFIED-GATE1,5,1091667.0,Gate1-C: traded registrant via ticker (ticker CHTR -> CIK 1091667)
+"Charter Next Generation, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Christensen Oâ€™Connor Johnson Kindness PLLC,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Cintas Corporation,VERIFIED,1,723254.0,EDGAR name: CINTAS CORP
+"Cisco Systems, Inc.",VERIFIED,2,858877.0,EDGAR name: CISCO SYSTEMS INC
+Citrix,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Citrix Systems,VERIFIED,2,877890.0,EDGAR name: CITRIX SYSTEMS INC
+Citrix Systems Inc.,VERIFIED,2,877890.0,EDGAR name: CITRIX SYSTEMS INC
+"Citrix Systems, Inc.",VERIFIED,2,877890.0,EDGAR name: CITRIX SYSTEMS INC
+"Cleo Communications US, LLC",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Coca-Cola Bottling Company of Northern New England,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Cognizant Technology Solutions Corporation,VERIFIED,1,1058290.0,EDGAR name: COGNIZANT TECHNOLOGY SOLUTIONS CORP
+Comcast,VERIFIED-GATE1,4,1166691.0,Gate1-A: 2002 AT&T-Comcast merger entity IS Comcast Corp; 22301 pre-2002
+Comcast Cable Communications LLC,VERIFIED,12,1040573.0,EDGAR name: COMCAST CABLE COMMUNICATIONS INC
+"Comcast Cable Communications, Inc.",VERIFIED,2,1040573.0,EDGAR name: COMCAST CABLE COMMUNICATIONS INC
+Communications & Power Industries LLC,VERIFIED,1,1000564.0,EDGAR name: COMMUNICATIONS & POWER INDUSTRIES INC
+Consolidated Edison Company of New York LLC,VERIFIED,2,23632.0,EDGAR name: CONSOLIDATED EDISON CO OF NEW YORK INC
+"Corebridge Financial, Inc.",VERIFIED,1,1889539.0,"EDGAR name: COREBRIDGE FINANCIAL, INC."
+Cornerstone Healthcare Group Management Services LLC,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Corteva Agriscience,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Costco Photo Center,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Cricket Wireless LLC,ADJUDICATED,2,732717.0,AT&T Inc. — Cricket Communications FRN 0004321139; LLC variant; 7/28 adjudication
+CrowdStrike Holdings Inc.,VERIFIED,1,1535527.0,"EDGAR name: CROWDSTRIKE HOLDINGS, INC."
+"CrowdStrike Holdings, Inc.",VERIFIED,1,1535527.0,"EDGAR name: CROWDSTRIKE HOLDINGS, INC."
+Crown Castle,VERIFIED,2,1051470.0,EDGAR name: CROWN CASTLE INC.
+"CyrusOne, Inc.",VERIFIED-GATE1,1,1553023.0,"Gate1-C: CYRUSONE INC. via EDGAR names (CONE delisted 2022, ticker-file fallback documented)"
+DC Group,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+DISH Network Corporation,VERIFIED-GATE1,1,1001082.0,Gate1-A (DISH equity; 920436 is operating LLC)
+DISH Network L.L.C.,VERIFIED-GATE1,1,1001082.0,Gate1-A (DISH equity; 920436 is operating LLC)
+"DISH Network, LLC",VERIFIED-GATE1,6,1001082.0,Gate1-A (DISH equity; 920436 is operating LLC)
+"Defender Industries, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Dell Inc.,VERIFIED,1,826083.0,EDGAR name: DELL COMPUTER CORP
+"Delta Air Lines, Inc.",VERIFIED,2,27904.0,EDGAR name: DELTA AIR LINES INC /DE/
+Delta Global Services,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Deluxe Corporation,VERIFIED-GATE1,1,27996.0,Gate1-A (DLX); legacy IDEX ticker was fuzzy noise
+"Derby Industries, LLC",EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"DiGiovine, Hnilo, Jordan + Johnson Ltd",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Disney Consumer Products and Interactive Media,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+DoorDash Inc.,VERIFIED,1,1792789.0,EDGAR name: DOORDASH INC
+Doubletree Suites by Hilton Walt Disney World,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Duke Energy,VERIFIED-GATE1,1,1326160.0,Gate1-A (DUK 2006 holdco; 30371 is Carolinas utility sub)
+Duke Energy Corporation,VERIFIED-GATE1,2,1326160.0,Gate1-A (DUK 2006 holdco; 30371 is Carolinas utility sub)
+"Dulany Industries, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Dynapar Corporation,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+E.W. Wylie Corporation,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"EBSCO Industries, Inc.",EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+EMC Corporation,VERIFIED,1,790070.0,EDGAR name: EMC CORP
+EMJ Corporation,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Eagle Capital Management, LLC",EXCLUDED-PRIVATE,1,,Gate1-D: private; legacy COF was noise
+EatStreet,VERIFIED,1,1560142.0,"EDGAR name: EATSTREET, INC."
+Ensinger Industries Inc.,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Ensinger Industries, Inc.",EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Entercom Communications Corp.,VERIFIED,1,1067837.0,"EDGAR name: AUDACY, INC."
+"Equifax, Inc.",VERIFIED,1,33185.0,EDGAR name: EQUIFAX INC
+"Essex Property Trust, Inc.",VERIFIED,1,920522.0,EDGAR name: ESSEX PORTFOLIO LP
+Evening Post Industries,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Evening Telegram Company d/b/a Morgan Murphy Media,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+FGX International Inc.,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Facebook,VERIFIED,3,1326801.0,EDGAR name: FACEBOOK INC
+"Facebook, Inc.",VERIFIED,1,1326801.0,EDGAR name: FACEBOOK INC
+"FedEx Ground Package System, Inc.",VERIFIED-GATE1,1,1048911.0,"Gate1-C: wholly owned subsidiary, parent-mapped (ticker FDX -> CIK 1048911)"
+Festo Corporation,EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Fidelity National Information Services, Inc.",VERIFIED-GATE1,21,1136893.0,Gate1-A (FIS; Certegy renamed 2006 - legitimately FIS despite sink history)
+Fidelity National Technology Imaging (FNTI),EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Financial Business and Consumer Solutions, Inc.",EXCLUDED-UNRESOLVED,15,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Financial Institution Service Corporation,EXCLUDED-UNRESOLVED,9,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Financial Risk Mitigation, Inc.",EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+First American Financial Corporation,VERIFIED-GATE1,2,1472787.0,Gate1-B (FAF post-2010 spinoff; ex-placeholder victim of PNC sink)
+Fiserv,VERIFIED,2,798354.0,EDGAR name: FISERV INC
+"Fiserv, Inc.",VERIFIED,2,798354.0,EDGAR name: FISERV INC
+Fluke Corporation,VERIFIED,2,37743.0,EDGAR name: FLUKE CORP
+Flutter International Inc.,EXCLUDED-NO-US-LISTING,2,,Gate1-G: pre-US-listing
+"Focus Medical Communications, LLC",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Forum Communications Company,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Fox Entertainment Group,AMBIGUOUS,1,,"Candidates: 1068002 (FOX ENTERTAINMENT GROUP INC) | 1321244 (FOX ENTERTAINMENT GROUP, INC.) || legacy ticker: FOXA"
+Fox Entertainment Group Inc.,AMBIGUOUS,1,,"Candidates: 1068002 (FOX ENTERTAINMENT GROUP INC) | 1321244 (FOX ENTERTAINMENT GROUP, INC.) || legacy ticker: FOXA"
+Fox Group,VERIFIED,1,1145813.0,EDGAR name: FOX GROUP INC
+Fox News LLC,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Franklin International,EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Freedom Financial Network, LLC",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Freeport-McMoRan Inc.,VERIFIED-GATE1,1,831259.0,Gate1-A (FCX)
+Frontier Communications,VERIFIED,1,20520.0,EDGAR name: CITIZENS COMMUNICATIONS CO
+"Frontier Communications Parent, Inc.",VERIFIED,13,20520.0,EDGAR name: CITIZENS COMMUNICATIONS CO
+GC Services,EXCLUDED-UNRESOLVED,4,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"GIGAFLIGHT Connectivity, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Gallagher NAC,VERIFIED-GATE1,4,354190.0,Gate1-G rescue: Arthur J. Gallagher subsidiary; legacy 354190 was right (ticker AJG -> CIK 354190)
+Gates Corporation,VERIFIED,3,1516658.0,EDGAR name: GATES CORP
+General Dynamics Information Technology,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"General Mills, Inc.",VERIFIED,1,40704.0,EDGAR name: GENERAL MILLS INC
+"Georgetown Capital Group, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Global Payments Inc.,VERIFIED,1,1123360.0,EDGAR name: GLOBAL PAYMENTS INC
+"Global Payments, Inc.",VERIFIED,1,1123360.0,EDGAR name: GLOBAL PAYMENTS INC
+GoDaddy,VERIFIED-GATE1,1,1609711.0,Gate1-G rescue: GoDaddy Inc post-4/2015 IPO (Form 499 relevant)
+GoDaddy.com,EXCLUDED-PRE-IPO,2,,Gate1-G: pre-IPO
+GoDaddy.com LLC,VERIFIED-GATE1,2,1609711.0,Gate1-G rescue: GoDaddy Inc post-4/2015 IPO (Form 499 relevant)
+"GoDaddy.com, LLC",VERIFIED-GATE1,5,1609711.0,Gate1-G rescue: GoDaddy Inc post-4/2015 IPO (Form 499 relevant)
+Google,VERIFIED-GATE1,1,1652044.0,Gate1-B: Alphabet Inc (ticker GOOGL)
+Google Inc.,VERIFIED-GATE1,5,1652044.0,Gate1-B: Alphabet Inc (ticker GOOGL)
+"Google, Inc.",VERIFIED-GATE1,2,1288776.0,Gate1-B: Google Inc IPO registrant
+"Grand River Capital, LLC",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Gray Television,VERIFIED,1,43196.0,EDGAR name: GRAY COMMUNICATIONS SYSTEMS INC /GA/
+Gray Television Inc,VERIFIED,1,43196.0,EDGAR name: GRAY COMMUNICATIONS SYSTEMS INC /GA/
+"Gray Television, Inc.",VERIFIED,3,43196.0,EDGAR name: GRAY COMMUNICATIONS SYSTEMS INC /GA/
+"Gray, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"HBP, Inc.",VERIFIED,1,1168812.0,EDGAR name: HBP INC
+HP Enterprise Services,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+HP Enterprise Services LLC,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"HP Enterprise Services, LLC",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"HTI Technology & Industries, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Harrison, Mauro & Morgan, P.A.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Healthcare Fiscal Management, Inc.",EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Henry Schein, Inc.",VERIFIED,3,1000228.0,EDGAR name: HENRY SCHEIN INC
+"Herbalife International of America, Inc.",VERIFIED,2,1205274.0,EDGAR name: HERBALIFE INTERNATIONAL OF AMERICA INC
+Hershey Entertainment & Resorts Company,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Hewlett Packard Company,VERIFIED,1,47217.0,EDGAR name: HEWLETT PACKARD CO
+Hewlett Packard Enterprise Company,VERIFIED,2,1645590.0,EDGAR name: HEWLETT PACKARD ENTERPRISE CO
+Hewlett-Packard Company,VERIFIED,4,47217.0,EDGAR name: HEWLETT PACKARD CO
+Holden International,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Home Box Office,VERIFIED,1,1457937.0,"EDGAR name: HOME BOX OFFICE, INC."
+"Home Box Office, Inc.",VERIFIED,4,1457937.0,"EDGAR name: HOME BOX OFFICE, INC."
+Honeywell International Inc.,VERIFIED,3,773840.0,EDGAR name: ALLIED SIGNAL INC
+"Honeywell International, Inc.",VERIFIED,2,773840.0,EDGAR name: ALLIED SIGNAL INC
+Horizon Healthcare RCM,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Hoya Optical Labs of America, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Huntington Hospitality Financial Services Corp,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Huntington Ingalls Industries, Inc.",VERIFIED,1,1501585.0,"EDGAR name: HUNTINGTON INGALLS INDUSTRIES, INC."
+Huntwood Industries,EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+IBM,VERIFIED-GATE1,2,51143.0,Gate1-G rescue: acronym defeated exact match; documented acronym mapping (ticker IBM -> CIK 51143)
+"IES Communications, LLC",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"IMA Financial Group, Inc.",VERIFIED,3,1673769.0,"EDGAR name: IMA FINANCIAL GROUP, INC."
+Impact Mobile Home Communities,EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Indian Industries, Inc. d/b/a RAVE Sports",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+InterActive Financial Marketing Group,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+International Paper Company,VERIFIED,1,1283246.0,EDGAR name: INTERNATIONAL PAPER CO
+Intuit,VERIFIED,23,896878.0,EDGAR name: INTUIT INC
+Intuit Inc,VERIFIED,18,896878.0,EDGAR name: INTUIT INC
+Intuit Inc.,VERIFIED,41,896878.0,EDGAR name: INTUIT INC
+"Intuit, Inc.",VERIFIED,16,896878.0,EDGAR name: INTUIT INC
+J&M Brown Company Inc.,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"J.B. Hunt Transport, Inc.",VERIFIED,4,1501362.0,"EDGAR name: J.B. HUNT TRANSPORT, INC."
+"Jet Industries, Inc.",EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Johnson Engineering,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Johnson Matthey, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Johnson Oâ€™Hare Company, Inc.",EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Johnson, Lauder & Savidge, LLP",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+KeraLink International,VERIFIED,1,1826210.0,"EDGAR name: KERALINK INTERNATIONAL, INC."
+"King Industries, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"LC Industries, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+LCS Financial Services,EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+LPL Financial LLC,VERIFIED-GATE1,1,1397911.0,Gate1-C: LPL Financial Holdings post-11/2010 IPO; legacy PNC was placeholder error
+"LX/JT Intermediate Holdings, Inc. d/b/a Bevolution Group",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Lavelle Industries Inc.,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Lawrence Semiconductor Research Laboratory,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Leidos, Inc.",VERIFIED,1,353394.0,"EDGAR name: LEIDOS, INC."
+Lennar Corporation,VERIFIED,1,58696.0,EDGAR name: LENNAR CORP
+"Livingston Street Capital, LLC",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+MD2 International,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+MGM Resorts International,VERIFIED,2,789570.0,EDGAR name: MGM GRAND INC
+MNP Corporation,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+MSX International Inc.,EXCLUDED-PRIVATE,3,,Gate1-D: PE-owned; legacy AIG was noise
+"MW Industries, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Marathon Petroleum Company LP,VERIFIED,2,1510295.0,EDGAR name: MARATHON PETROLEUM CORP
+"Mark Dunning Industries, Inc.",EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Marking Services, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Marriott International, Inc.",VERIFIED,1,905036.0,EDGAR name: MARRIOTT INTERNATIONAL INC
+"Marsh & McLennan Companies, Inc.",VERIFIED,1,62709.0,EDGAR name: MARSH & MCLENNAN COMPANIES INC
+Martin Showers Smith & McDonald LLP,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Mead Johnson & Company, LLC",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Mediacom Communications Corporation,VERIFIED,1,1098659.0,EDGAR name: MEDIACOM COMMUNICATIONS CORP
+Mediant Communications Inc.,VERIFIED,3,1567336.0,EDGAR name: MEDIANT COMMUNICATIONS INC.
+"Medical Healthcare Solutions, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Merlin Information Services,EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Microsoft Corporation,VERIFIED,4,789019.0,EDGAR name: MICROSOFT CORP
+"Morgan Brown & Joy, LLP",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Morgan Industrial, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Morgan Industrial, Inc. dba Omega Morgan",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Morgan Truck Body, LLC",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Motorola Mobility Inc.,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Motorola Mobility, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Motorola, Inc.",VERIFIED,2,68505.0,EDGAR name: MOTOROLA INC
+NBC Sports Group,VERIFIED-GATE1,3,1166691.0,Gate1-E: identity=Comcast equity; treatment classification independent (clause rules at Stage 4)
+NBCUniversal,VERIFIED,1,1512267.0,"EDGAR name: NBCUNIVERSAL, LLC"
+NCH Corporation,VERIFIED,5,69960.0,EDGAR name: NCH CORP
+"NCO Financial Systems, Inc.",VERIFIED,1,1396897.0,"EDGAR name: NCO FINANCIAL SYSTEMS, INC."
+NSi Industries LLC,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"NVR Settlement Services of Maryland, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"National Presto Industries, Inc.",VERIFIED,1,80172.0,EDGAR name: NATIONAL PRESTO INDUSTRIES INC
+"Newcourse Communications, Inc.",EXCLUDED-UNRESOLVED,11,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"NextGen Healthcare, Inc.",VERIFIED,2,708818.0,"EDGAR name: NEXTGEN HEALTHCARE, INC."
+Nokia Inc.,VERIFIED,1,924613.0,EDGAR name: NOKIA CORP
+"Nokia Networks and Solutions US, LLC",EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Northrop Grumman Systems Corporation,VERIFIED,1,72945.0,EDGAR name: NORTHROP CORP
+Nuance Communications Inc,VERIFIED-GATE1,1,789019.0,"Gate1-B: Microsoft subsidiary, parent-mapped"
+"Nuance Communications, Inc.",VERIFIED-GATE1,5,789019.0,"Gate1-B: Microsoft subsidiary, parent-mapped"
+Nucor Corporation,VERIFIED,5,73309.0,EDGAR name: NUCOR CORP
+"Oceaneering International, Inc.",VERIFIED,1,73756.0,EDGAR name: OCEANEERING INTERNATIONAL INC
+Okta Inc,VERIFIED,1,1660134.0,"EDGAR name: OKTA, INC."
+"Okta, Inc",VERIFIED,1,1660134.0,"EDGAR name: OKTA, INC."
+"Okta, Inc.",VERIFIED,5,1660134.0,"EDGAR name: OKTA, INC."
+"On Q Financial, LLC",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Oracle Corporation,VERIFIED-GATE1,2,1341439.0,Gate1-A (ORCL 2005 holdco)
+"Oracle USA, Inc.",EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Orbus Visual Communications, LLC",EXCLUDED-UNRESOLVED,3,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+PACCAR,VERIFIED,1,75362.0,EDGAR name: PACCAR INC
+PNC,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+PULAU Corporation,EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Pallet Logistics of America,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Paramount,VERIFIED-GATE1,3,813828.0,"Gate1-G: Paramount Global pre-Skydance close (PARA delisted from current ticker file; EDGAR-name fallback documented, CyrusOne class)"
+Paramount Global,VERIFIED-GATE1,1,813828.0,"Gate1-G: Paramount Global pre-Skydance close (PARA delisted from current ticker file; EDGAR-name fallback documented, CyrusOne class)"
+Parker-Hannifin Corporation,VERIFIED,3,76334.0,EDGAR name: PARKER HANNIFIN CORP
+PayPal Inc.,VERIFIED,1,1103415.0,EDGAR name: PAYPAL INC
+"PayPal, Inc.",VERIFIED,3,1103415.0,EDGAR name: PAYPAL INC
+"Paycom Payroll, LLC",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Paysafe Group Holdings Limited,EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Pendrick Capital Partner Holdings, LLC",EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"PepsiCo, Inc.",VERIFIED,1,77476.0,EDGAR name: PEPSICO INC
+"Perry Johnson & Associates, Inc.",EXCLUDED-UNRESOLVED,5,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Perry Johnson, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Pfizer Inc,VERIFIED,1,78003.0,EDGAR name: PFIZER INC
+Polaris Industries Inc.,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Prime Communications,VERIFIED,2,1570434.0,EDGAR name: PRIME COMMUNICATIONS INC
+"Professional Compounding Centers of America, Inc.",VERIFIED,1,1558044.0,"EDGAR name: PROFESSIONAL COMPOUNDING CENTERS OF AMERICA, INC."
+Professional Golfers' Association of America,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Regeneron Pharmaceuticals, Inc.",VERIFIED,1,872589.0,EDGAR name: REGENERON PHARMACEUTICALS INC
+Republic Services,VERIFIED,3,1060391.0,EDGAR name: REPUBLIC SERVICES INC
+"Republic Services, Inc",VERIFIED,1,1060391.0,EDGAR name: REPUBLIC SERVICES INC
+"Republic Services, Inc.",VERIFIED,3,1060391.0,EDGAR name: REPUBLIC SERVICES INC
+"Robinson Waters & O'Dorisio, P.C.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Rochester Industries Placement, Inc.",EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Roku Inc,VERIFIED-GATE1,1,1428439.0,Gate1-A (ROKU)
+Roku Inc.,VERIFIED-GATE1,1,1428439.0,Gate1-A (ROKU)
+"Roku, Inc.",VERIFIED-GATE1,2,1428439.0,Gate1-A (ROKU)
+"S&G Financial, LLC",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+SAE International,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+SCM Group,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+SOS International,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"SP Industries, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+SRI International,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"STG International, Inc.",EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"SVAM International, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Salesforce.com,VERIFIED,1,1108524.0,EDGAR name: SALESFORCE COM INC
+Seagate Technology LLC,VERIFIED-GATE1,1,1137789.0,Gate1-A (STX)
+Seagate US LLC,VERIFIED,3,1137785.0,EDGAR name: SEAGATE US LLC
+"Seim Johnson, LLP",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+ServiceNow Inc.,VERIFIED,1,1373715.0,EDGAR name: SERVICE-NOW.COM
+Shawmut Communications Group,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Sierra Pacific Industries,VERIFIED,2,90143.0,EDGAR name: SIERRA PACIFIC INDUSTRIES
+"Sinclair Broadcast Group, Inc",VERIFIED,1,912752.0,EDGAR name: SINCLAIR BROADCAST GROUP INC
+"Sinclair Broadcast Group, Inc.",VERIFIED,4,912752.0,EDGAR name: SINCLAIR BROADCAST GROUP INC
+Sirius XM Radio Inc,VERIFIED-GATE1,3,908937.0,Gate1-A (SIRI continuous registrant)
+Sirius XM Radio Inc.,VERIFIED-GATE1,12,908937.0,Gate1-A (SIRI continuous registrant)
+"Sirius XM Radio, Inc.",VERIFIED-GATE1,3,908937.0,Gate1-A (SIRI continuous registrant)
+Sirius XM Satellite Radio,VERIFIED-GATE1,1,908937.0,Gate1-A (SIRI continuous registrant)
+Snap Inc.,VERIFIED-GATE1,1,1564408.0,Gate1-A (SNAP)
+Snap-on Incorporated,VERIFIED,3,91440.0,EDGAR name: SNAP ON INC
+"Snap-on, Inc.",VERIFIED,1,91440.0,EDGAR name: SNAP ON INC
+Snowflake Inc.,VERIFIED,2,1640147.0,"EDGAR name: SNOWFLAKE COMPUTING, INC."
+Sony Card Marketing & Services Company,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Sony Corporation of America,VERIFIED,1,1091411.0,EDGAR name: SONY CORP OF AMERICA
+Sony Electronics Inc.,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Sony Interactive Entertainment,EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Sony Interactive Entertainment LLC,EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Sony Interactive Entertainment, LLC",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Sony Network Entertainment America Inc.,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Sony Online Entertainment,EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Sony Online Entertainment LLC,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Sony Pictures,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Sony Pictures Entertainment Inc,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Sony Pictures Entertainment Inc.,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Sony Pictures Entertainment, Inc.",EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Sorenson Communications,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Southwest Airlines Co.,VERIFIED,2,92380.0,EDGAR name: SOUTHWEST AIRLINES CO
+Southwest Binding & Laminating,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Spotify USA Inc.,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Sprint,VERIFIED-GATE1,7,101830.0,"Gate1-F: Sprint-era equity (SEC-verified: SPRINT LLC fka SPRINT CORP/NEXTEL, 10-Ks 2014-2019)"
+Sprint Business,VERIFIED-GATE1,1,101830.0,"Gate1-F: Sprint-era equity (SEC-verified: SPRINT LLC fka SPRINT CORP/NEXTEL, 10-Ks 2014-2019)"
+Sprint Corporation,VERIFIED-GATE1,8,101830.0,"Gate1-F: Sprint-era equity (SEC-verified: SPRINT LLC fka SPRINT CORP/NEXTEL, 10-Ks 2014-2019)"
+Sprint Nextel,VERIFIED-GATE1,2,101830.0,"Gate1-F: Sprint-era equity (SEC-verified: SPRINT LLC fka SPRINT CORP/NEXTEL, 10-Ks 2014-2019)"
+"Student Transportation of America, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Suddenlink Communications,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Sumner Communications, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Superior Communications, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"SupraNet Communications, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Synergy Healthcare Services,EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"SysInformation Healthcare Services, LLC",EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Sysco Corporation,VERIFIED,2,96021.0,EDGAR name: SYSCO CORP
+T-Mobile,VERIFIED-GATE1,13,1283699.0,Gate1-C: TMUS public parent
+"T-Mobile US, Inc.",VERIFIED-GATE1,3,1283699.0,Gate1-C: TMUS public parent
+T-Mobile USA,VERIFIED-GATE1,10,1283699.0,Gate1-C: TMUS public parent
+T-Mobile USA Inc,VERIFIED-GATE1,2,1283699.0,Gate1-C: TMUS public parent
+T-Mobile USA Inc.,VERIFIED-GATE1,4,1283699.0,Gate1-C: TMUS public parent | NOTE: pre-5/2013 no US public equity — will fail CRSP naturally
+"T-Mobile USA, Inc.",VERIFIED-GATE1,19,1283699.0,Gate1-C: TMUS public parent | NOTE: pre-5/2013 no US public equity — will fail CRSP naturally
+"T-Mobile, USA",VERIFIED-GATE1,1,1283699.0,Gate1-C: TMUS public parent
+"T. Rowe Price Retirement Plan Services, Inc.",VERIFIED,2,1387793.0,"EDGAR name: T. ROWE PRICE RETIREMENT PLAN SERVICES, INC."
+"T.R.A. Industries, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+TALX Corporation,VERIFIED,6,917524.0,EDGAR name: TALX CORP
+"TDC Financial, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Tedder Industries, LLC",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+The Boeing Company,VERIFIED,1,12927.0,EDGAR name: BOEING CO
+The Delta Companies,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+The EstÃ©e Lauder Companies Inc.,VERIFIED-GATE1,3,1001250.0,Gate1-G rescue: text-encoding artifact defeated matching; legacy 1001250 was correct (ticker EL -> CIK 1001250)
+The Hershey Company,VERIFIED,1,47111.0,EDGAR name: HERSHEY CO
+The Home Depot,VERIFIED,1,354950.0,EDGAR name: HOME DEPOT INC
+The J.M. Smucker Company,VERIFIED-GATE1,1,91419.0,Gate1-A (SJM)
+"The Mosaic Tile Company of Virginia, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+The Walt Disney Company,VERIFIED-GATE1,1,926480.0,Gate1-B: pre-2019-reorg registrant
+"The iRemedy Healthcare Companies, Inc.",VERIFIED,1,1691249.0,"EDGAR name: IREMEDY HEALTHCARE COMPANIES, INC."
+Time Warner Inc.,VERIFIED-GATE1,4,1105705.0,Gate1-B: TWX registrant 2009-6/2018
+TimeWarner,VERIFIED-GATE1,1,1105705.0,Gate1-B: TWX registrant 2009-6/2018
+Tri Delta,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Truly Nolen of America, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Twilio,VERIFIED,2,1447669.0,EDGAR name: TWILIO INC
+"Twitter, Inc.",VERIFIED,1,1418091.0,EDGAR name: TWITTER INC
+"Tyler Technologies, Inc.",VERIFIED,1,860731.0,EDGAR name: TYLER CORP /NEW/
+"US Claims Capital, LLC",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"USA Waste-Management Resources, LLC",VERIFIED-GATE1,6,823768.0,Gate1-G rescue: Waste Management family (public-record verified: 1/2021 WMR+WM employee-breach litigation)
+Uber,VERIFIED,2,1431473.0,EDGAR name: UBER INC
+Uber Technologies,VERIFIED,1,1543151.0,"EDGAR name: UBER TECHNOLOGIES, INC"
+Uber Technologies Inc,VERIFIED,2,1543151.0,"EDGAR name: UBER TECHNOLOGIES, INC"
+Uber Technologies Inc.,VERIFIED,2,1543151.0,"EDGAR name: UBER TECHNOLOGIES, INC"
+"Uber Technologies, Inc.",VERIFIED,23,1543151.0,"EDGAR name: UBER TECHNOLOGIES, INC"
+United Airlines,VERIFIED,1,319687.0,EDGAR name: CONTINENTAL AIRLINES INC /DE/
+"VMware, Inc.",VERIFIED,1,1124610.0,EDGAR name: VMWARE LLC
+Vance Street Capital,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Verizon,VERIFIED-REASONING,7,732712.0,SEC EDGAR: Verizon Communications Inc. parent | EDGAR-confirmed
+Verizon Communications,VERIFIED,1,732712.0,EDGAR name: BELL ATLANTIC CORP
+Verizon Communications Inc,VERIFIED,1,732712.0,EDGAR name: BELL ATLANTIC CORP
+Verizon Communications Inc.,VERIFIED,6,732712.0,EDGAR name: BELL ATLANTIC CORP
+Verizon Corporate Services Group Inc.,VERIFIED-GATE1,1,732712.0,Gate1-E: operating subsidiary
+Verizon Media,VERIFIED-GATE1,2,732712.0,Gate1-E: Verizon ownership window 7/2017-8/2021
+Vmware Inc,VERIFIED,1,1124610.0,EDGAR name: VMWARE LLC
+"Volkswagen Group of America, Inc.",VERIFIED,1,1834695.0,"EDGAR name: VOLKSWAGEN GROUP OF AMERICA, INC."
+Vulcan Industries,VERIFIED,1,1260451.0,EDGAR name: VULCAN INDUSTRIES INC
+W.W. Grainger Inc.,VERIFIED-GATE1,1,277135.0,Gate1-A (GWW)
+"W.W. Grainger, Inc.",VERIFIED-GATE1,2,277135.0,Gate1-A (GWW)
+WERCS d/b/a Wyoming Financial Group,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"WM Waste Management, Inc.",EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Wabtec Corporation,VERIFIED,2,943452.0,EDGAR name: WABTEC CORP
+"Warn Industries, Inc.",VERIFIED,1,1984463.0,"EDGAR name: WARN INDUSTRIES, INC."
+Warner Bros. Distributing Inc.,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Warner Music Group,EXCLUDED-PRIVATE-WINDOW,3,,Gate1-B: Access Industries private window 2011-2020
+Warner Music Group,VERIFIED-GATE1,2,1319161.0,Gate1-B: WMG public window
+Warner Music Group Corp,EXCLUDED-PRIVATE-WINDOW,1,,Gate1-B: Access Industries private window 2011-2020
+"Warner Music, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Western Union Financial Services, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Wiedenbach Brown,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+WillScot Mobile Mini Holdings Corp.,VERIFIED,1,1647088.0,EDGAR name: DOUBLE EAGLE ACQUISITION CORP.
+"Window to the World Communications, Inc.",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"Woodward Communications, Inc.",EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Workday Inc.,VERIFIED,1,1327811.0,EDGAR name: NORTH TAHOE POWER TOOLS INC
+"Worthen Industries, Inc.",EXCLUDED-UNRESOLVED,3,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Xerox Corporation,VERIFIED,1,108772.0,EDGAR name: XEROX CORP
+"Xerox State Healthcare, LLC",EXCLUDED-UNRESOLVED,2,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+Yahoo,VERIFIED-GATE1,1,1011006.0,Gate1-B: YHOO registrant (later Altaba)
+Yahoo Inc.,VERIFIED-GATE1,2,1011006.0,Gate1-B: YHOO registrant (later Altaba)
+Yahoo! Inc.,VERIFIED-GATE1,2,1011006.0,Gate1-B: YHOO registrant (later Altaba)
+Yahoo! Voices,VERIFIED-GATE1,1,1011006.0,Gate1-B: YHOO registrant (later Altaba)
+"Yahoo, Inc.",VERIFIED-GATE1,1,1011006.0,Gate1-B: YHOO registrant (later Altaba)
+"Yum! Brands, Inc.",VERIFIED,2,1041061.0,EDGAR name: TRICON GLOBAL RESTAURANTS INC
+Zscaler Inc.,VERIFIED,1,1713683.0,"EDGAR name: ZSCALER, INC."
+"Zscaler, Inc.",VERIFIED,1,1713683.0,"EDGAR name: ZSCALER, INC."
+iHeart Media Inc,EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+"iHeartMedia + Entertainment, Inc.",VERIFIED,5,1457738.0,"EDGAR name: CLEAR CHANNEL BROADCASTING, INC."
+"oneZero Financial Systems, LLC",EXCLUDED-UNRESOLVED,1,,Gate1-confirmed exclusion (FISC precedent; incl. formal Impact Mobile Home Communities closure)
+salesforce.com,VERIFIED,1,1108524.0,EDGAR name: SALESFORCE COM INC

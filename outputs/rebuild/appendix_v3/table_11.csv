@@ -1,0 +1,9 @@
+Variable,Coef (log turnover),SE,p
+fcc_form499,0.0779,0.0497,0.1167
+immediate_disclosure,0.0045,0.036,0.9016
+prior_breaches_1yr,-0.0055,0.0029,0.0598
+health_breach,0.0547,0.0935,0.5586
+firm_size_log,-0.0197,0.0137,0.1516
+leverage,-0.1624,0.1157,0.1604
+roa,0.432,0.1828,0.0181
+"N=319 (event [-5,+25] vs est [-240,-60] trading days)",,,
