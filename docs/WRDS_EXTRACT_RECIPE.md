@@ -62,3 +62,6 @@ wrds_username='tispivey')` and never prompts when pgpass is present.
 - Public SEC inputs are git-tracked (EDGAR name/CIK lookup via LFS, ticker
   files, registry snapshot, submissions cache); only WRDS-licensed extracts
   follow the pull-or-skip pattern above.
+- Local file:// clones additionally need LFS objects materialized manually
+  (git-lfs does not auto-transfer from file:// remotes); clones from the GitHub
+  remote smudge normally. Observed and worked around 8/4/2026.

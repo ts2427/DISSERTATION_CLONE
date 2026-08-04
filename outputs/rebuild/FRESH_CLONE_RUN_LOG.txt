@@ -1,0 +1,336 @@
+﻿FRESH CLONE VERIFICATION - 08/04/2026 15:30:54
+=== scripts/150_rebuild_s2_entity_resolution.py ===
+==========================================================================================
+REBUILD STAGES 1-2: UNIVERSE + ENTITY RESOLUTION
+==========================================================================================
+
+Stage 1: universe = 1054 records, 452 unique organizations. PASS
+
+Stage 2: building EDGAR name index...
+  EDGAR index: 1,020,265 normalized names, 978,691 CIKs
+  Reasoning pass: 451 entries; 391 unworked placeholders EXCLUDED from resolution (echo fuzzy CIKs); 60 substantive entries retained
+
+  Resolving organizations (exact-and-abstain -> reasoning -> adjudicated)...
+
+  Grade distribution (orgs / records):
+    ADJUDICATED               2 orgs       3 records
+    AMBIGUOUS                64 orgs     194 records
+    EXCLUDED-UNRESOLVED     213 orgs     323 records
+    REVIEW                    4 orgs       7 records
+    VERIFIED                163 orgs     495 records
+    VERIFIED-REASONING        6 orgs      32 records
+
+  Legacy-vs-resolved (orgs):
+    legacy_vs_resolved
+    NEWLY-EXCLUDED    278
+    SAME              103
+    CORRECTED          71
+
+  Suspect-CIK sinks (legacy records -> fate under fresh resolution):
+    CIK 713676: 23 legacy orgs / 50 records; retained by fresh resolution: 0 orgs (0 records)
+    CIK 927628: 14 legacy orgs / 16 records; retained by fresh resolution: 0 orgs (0 records)
+    CIK 1324404: 36 legacy orgs / 50 records; retained by fresh resolution: 0 orgs (0 records)
+    CIK 19617: 6 legacy orgs / 6 records; retained by fresh resolution: 0 orgs (0 records)
+    CIK 1034054: 25 legacy orgs / 58 records; retained by fresh resolution: 0 orgs (0 records)
+    CIK 1932393: 10 legacy orgs / 15 records; retained by fresh resolution: 0 orgs (0 records)
+    CIK 1755336: 8 legacy orgs / 18 records; retained by fresh resolution: 0 orgs (0 records)
+
+  Record-level output: 1054 records, all graded. Retained for downstream (non-excluded): 731
+
+GATE 1 package written: outputs/rebuild/GATE1_SUMMARY.md, GATE1_ENTITY_VERIFICATION_LEDGER.csv, GATE1_suspect_cik_report.csv
+STOPPING at Gate 1 per directive.
+exit: 0
+=== scripts/151_rebuild_gate1_apply.py ===
+python : C:\Users\mcobp\fc_v3\scripts\151_rebuild_gate1_apply.py:188: UserWarning: This pattern is interpreted as a regular expression, and has match groups. 
+To actually get the groups, use str.extract.
+At line:1 char:981
++ ... s.py ===" | Add-Content $log; python "scripts\$s.py" *>> $log; "exit: ...
++                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (C:\Users\mcobp\...se str.extract.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  mask = u2['org_name'].astype(str).str.contains(rx)
+C:\Users\mcobp\fc_v3\scripts\151_rebuild_gate1_apply.py:188: UserWarning: This pattern is interpreted as a regular expression, and has match groups. To 
+actually get the groups, use str.extract.
+  mask = u2['org_name'].astype(str).str.contains(rx)
+==========================================================================================
+GATE 1 VERDICT APPLICATION
+==========================================================================================
+
+Applying 52 verdict rules to 1,054 records...
+  Records touched by verdicts: 277
+
+Final grade distribution (records):
+  final_grade
+  VERIFIED                   473
+  EXCLUDED-UNRESOLVED        281
+  VERIFIED-GATE1             264
+  VERIFIED-REASONING          19
+  EXCLUDED-PRIVATE             5
+  EXCLUDED-PRIVATE-WINDOW      4
+  ADJUDICATED                  2
+  EXCLUDED-NO-US-LISTING       2
+  AMBIGUOUS                    2
+  EXCLUDED-PRE-IPO             2
+
+STOP-AND-REPORT: date-guard flags: 0 records; leftover AMBIGUOUS/REVIEW not covered by any verdict: 2 orgs / 2 records
+
+Retained (resolved, non-flagged): 758 records, 249 orgs, 165 unique CIKs
+
+Saved: stage2_signed.csv, GATE1_APPLIED_LEDGER.csv, GATE1_APPLICATION_REPORT.md
+exit: 0
+=== scripts/152_rebuild_s3_dedup.py ===
+==========================================================================================
+REBUILD STAGE 3: DEDUPLICATION
+==========================================================================================
+
+Input: 758 retained records, 249 orgs, 165 CIKs
+(a) Normalized-name+date consistency: PASS (no name+date pair spans CIKs)
+(b) CIK+date collapse: 758 records -> 524 firm-day events (234 collapsed; 99 events carry multi-filing notes)
+(c) Adjacency chains: 32 chains — 28 propose COLLAPSE (30 events would merge away), 4 FLAGGED for the sitting
+
+GATE 2 package: outputs/rebuild/GATE2_ADJACENCY_SHEET.md (+csv). Stage 3 event set: Data/processed/rebuild/stage3_events.csv
+STOPPING AT GATE 2 per directive.
+exit: 0
+=== scripts/153_rebuild_gate2_apply.py ===
+==========================================================================================
+GATE 2 APPLICATION
+==========================================================================================
+
+Collapsing 31 chains (28 approved + CH-06/09/10 signed; CH-27 kept)...
+  Events: 524 -> 489
+
+Fox Entertainment Group: 2 records -> CIK 1308161 (News Corp 2009 registrant, SEC-verified lineage)
+TALX events re-parented to Equifax 33185: 3
+Sierra Pacific Industries: 1 events noted PRIVATE-REGISTRANT (CIK 90143 kept)
+IMA Financial: 1 events noted PRIVATE-REGISTRANT (CIK 1673769 kept)
+
+Final Gate 2 event set: 491 events, 165 CIKs -> Data/processed/rebuild/stage4_input.csv
+exit: 0
+=== scripts/154_rebuild_s4_treatment.py ===
+==========================================================================================
+REBUILD STAGE 4: TREATMENT CLASSIFICATION (Form 499)
+==========================================================================================
+
+Registry snapshot: Data\edgar\form499_registry.xml | file date 2026-08-04 | 20669 filer records (committed artifact; live endpoint NOT queried)
+  Registry index: 27,985 normalized names (incl. holding_company entries)
+
+Classifying 491 events (treated-if-any-variant)...
+  Equity-parent map: 6 events 1040573 -> 1166691 (Comcast Cable Communications registrant has no equity; paren)
+  Equity-parent map: 1 events 1512267 -> 1166691 (NBCUniversal Media LLC registrant has no equity; parent = Co)
+  Equity-parent map: 3 events 1457937 -> 1105705 (Home Box Office Inc registrant has no equity; 2017 parent = )
+  Re-collapsing 4 rows sharing firm-days after re-parenting...
+
+Treated: 116 events / 38 primary orgs / 13 parent CIKs (of 489 events; counts are what they are — no targets)
+
+Treated events by parent CIK:
+  CIK 18926: 5 events | ['CenturyLink', 'CenturyLink Communications', 'Centurylink Communications']
+  CIK 20520: 4 events | ['Frontier Communications', 'Frontier Communications Parent, Inc.']
+  CIK 101830: 12 events | ['Sprint', 'Sprint Corporation', 'Sprint Nextel']
+  CIK 732712: 10 events | ['Verizon', 'Verizon Communications Inc.', 'Verizon Corporate Services Group Inc.']
+  CIK 732717: 24 events | ['AT&T', 'AT&T Inc', 'AT&T Inc.', 'AT&T Services']
+  CIK 1091667: 8 events | ['Charter Communication', 'Charter Communications', 'Charter Communications, Inc.']
+  CIK 1098659: 1 events | ['Mediacom Communications Corporation']
+  CIK 1166691: 9 events | ['Comcast', 'Comcast Cable Communications LLC', 'Comcast Cable Communications, Inc.', 'NBCUniversal']
+  CIK 1283699: 34 events | ['Sprint', 'T-Mobile', 'T-Mobile US, Inc.', 'T-Mobile USA']
+  CIK 1447669: 2 events | ['Twilio']
+  CIK 1609711: 3 events | ['GoDaddy.com LLC', 'GoDaddy.com, LLC']
+  CIK 1632127: 2 events | ['Cable One, Inc.']
+  CIK 1702780: 2 events | ['Altice USA', 'Altice USA, Inc.']
+
+Saved: stage4_treated.csv, STAGE4_TREATMENT_REPORT.md
+exit: 0
+=== scripts/159_wrds_coverage_topup.py ===
+Connecting to WRDS (pgpass, user tispivey)...
+Loading library list...
+Done
+ permno ticker             comnam     namedt   nameendt
+  14040      S    SPRINT CORP NEW 2013-07-12 2014-05-20
+  14040      S    SPRINT CORP NEW 2014-05-21 2016-12-18
+  14040      S    SPRINT CORP NEW 2016-12-19 2020-03-31
+  39087      S SPRINT NEXTEL CORP 2005-08-15 2013-07-10
+  60599    CTL     CENTURYTEL INC 1999-05-10 2001-08-23
+  60599    CTL     CENTURYTEL INC 2001-08-24 2010-05-31
+  60599    CTL    CENTURYLINK INC 2010-06-01 2011-06-21
+  60599    CTL    CENTURYLINK INC 2011-06-22 2011-09-01
+  60599    CTL    CENTURYLINK INC 2011-09-02 2020-09-17
+Daily rows pulled: 6,375 for permnos [np.int64(14040), np.int64(39087), np.int64(60599)]
+Saved: Data/wrds/crsp_daily_topup.csv, Data/wrds/ticker_permno_topup.csv
+Saved: Data/wrds/compustat_annual_topup.csv (26 rows)
+exit: 0
+=== scripts/155_rebuild_s5_outcomes.py ===
+==========================================================================================
+REBUILD STAGE 5: MARKET OUTCOMES
+==========================================================================================
+
+Input: 489 events
+  WRDS top-up names merged (Sprint S, CenturyLink CTL)
+python : Traceback (most recent call last):
+At line:1 char:981
++ ... s.py ===" | Add-Content $log; python "scripts\$s.py" *>> $log; "exit: ...
++                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "C:\Users\mcobp\fc_v3\scripts\155_rebuild_s5_outcomes.py", line 89, in <module>
+    crsp = pd.read_csv('Data/wrds/crsp_daily_returns.csv',
+                       usecols=['permno', 'date', 'ret', 'vol'])
+  File "C:\Users\mcobp\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\parsers\readers.py", line 1026, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "C:\Users\mcobp\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\parsers\readers.py", line 620, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "C:\Users\mcobp\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\parsers\readers.py", line 1620, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\mcobp\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\parsers\readers.py", line 1898, in _make_engine
+    return mapping[engine](f, **self.options)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mcobp\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\parsers\c_parser_wrapper.py", line 140, in __init__
+    self._validate_usecols_names(usecols, self.orig_names)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mcobp\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\parsers\base_parser.py", line 979, in _validate_usecols_names
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: Usecols do not match columns, columns expected but not found: ['date', 'vol', 'ret', 'permno']
+exit: 1
+HALTED AT 155_rebuild_s5_outcomes
+DONE 08/04/2026 15:31:38
+=== RESUME after LFS materialization 08/04/2026 15:33:26 ===
+=== scripts/155_rebuild_s5_outcomes.py ===
+==========================================================================================
+REBUILD STAGE 5: MARKET OUTCOMES
+==========================================================================================
+
+Input: 489 events
+  WRDS top-up names merged (Sprint S, CenturyLink CTL)
+python : Traceback (most recent call last):
+At line:1 char:847
++ ... s.py ===" | Add-Content $log; python "scripts\$s.py" *>> $log; "exit: ...
++                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "C:\Users\mcobp\fc_v3\scripts\155_rebuild_s5_outcomes.py", line 89, in <module>
+    crsp = pd.read_csv('Data/wrds/crsp_daily_returns.csv',
+                       usecols=['permno', 'date', 'ret', 'vol'])
+  File "C:\Users\mcobp\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\parsers\readers.py", line 1026, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "C:\Users\mcobp\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\parsers\readers.py", line 620, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "C:\Users\mcobp\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\parsers\readers.py", line 1620, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\mcobp\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\parsers\readers.py", line 1898, in _make_engine
+    return mapping[engine](f, **self.options)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mcobp\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\parsers\c_parser_wrapper.py", line 140, in __init__
+    self._validate_usecols_names(usecols, self.orig_names)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mcobp\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\parsers\base_parser.py", line 979, in _validate_usecols_names
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: Usecols do not match columns, columns expected but not found: ['vol', 'date', 'permno', 'ret']
+exit: 1
+HALTED AT 155_rebuild_s5_outcomes
+DONE 08/04/2026 15:33:28
+=== RESUME 2 (all LFS inputs materialized) 08/04/2026 15:34:54 ===
+=== scripts/155_rebuild_s5_outcomes.py ===
+==========================================================================================
+REBUILD STAGE 5: MARKET OUTCOMES
+==========================================================================================
+
+Input: 489 events
+  WRDS top-up names merged (Sprint S, CenturyLink CTL)
+  WRDS top-up daily rows merged
+Resolving PERMNOs and computing outcomes...
+
+CRSP coverage: 354/489 events with car_30d (366 with PERMNO)
+Treated with CRSP data: 109 events / 12 parent CIKs
+No PERMNO (die at CRSP, expected for private registrants): 123 events, 73 CIKs
+  TREATED events without PERMNO, classified:
+    Mediacom Communications Corporation | 2022-07-18 | CIK 1098659 | NO-EQUITY-AT-DATE (Mediacom private since 2011)
+    T-Mobile USA, Inc. | 2009-09-03 | CIK 1283699 | NO-EQUITY-AT-DATE (pre-2013 T-Mobile)
+    T-Mobile USA, Inc. | 2009-10-05 | CIK 1283699 | NO-EQUITY-AT-DATE (pre-2013 T-Mobile)
+    T-Mobile | 2009-10-08 | CIK 1283699 | NO-EQUITY-AT-DATE (pre-2013 T-Mobile)
+    T-Mobile USA Inc. | 2011-10-21 | CIK 1283699 | NO-EQUITY-AT-DATE (pre-2013 T-Mobile)
+    T-Mobile | 2012-05-08 | CIK 1283699 | NO-EQUITY-AT-DATE (pre-2013 T-Mobile)
+    T-Mobile | 2012-08-28 | CIK 1283699 | NO-EQUITY-AT-DATE (pre-2013 T-Mobile)
+
+Saved: stage5_outcomes.csv, STAGE5_REPORT.md
+exit: 0
+=== scripts/156_rebuild_s6_assembly.py ===
+==========================================================================================
+REBUILD STAGE 6: COVARIATES AND ASSEMBLY
+==========================================================================================
+
+Input: 489 events
+  Compustat top-up merged (Sprint, CenturyLink)
+Compustat coverage: size 350, leverage 350, roa 350, op_margin 350 (of 489)
+Immediate disclosure: 161/489 (32.9%)
+Health events (derived): 24
+Item 5.02 extraction (live EDGAR, cached)...
+  40/162 CIKs...
+  80/162 CIKs...
+  120/162 CIKs...
+  160/162 CIKs...
+Item 5.02 base rates (all events): 30d 14.9%, 90d 38.4%, 180d 61.1%
+
+CANONICAL_V3: 489 events | CRSP sample 354 | regression sample 339 (105 treated, 11 parent CIKs)
+Saved: CANONICAL_V3.csv, CANONICAL_V3_LINEAGE.md, STAGE6_REPORT.md
+exit: 0
+=== scripts/157_rebuild_s7_verification.py ===
+==========================================================================================
+REBUILD STAGE 7: VERIFICATION SUPPLEMENTS
+==========================================================================================
+
+[a] Disclosure-date verification (PRC date vs first 8-K within +90d)...
+  Sample: 335 events (116 treated + control CIKs w/3+ events)
+  treated=0: n=201, median gap 26d, mean 30.2d, share w/ 8-K in 90d 92%
+  treated=1: n=115, median gap 15d, mean 22.5d, share w/ 8-K in 90d 99%
+  (Armor table: an 8-K near the event need not reference the breach; no dates changed.)
+
+[b] OCR health-flag verification (bounded: Oct 2009+, 500+ individuals)...
+  OCR pull FAILED (404 Client Error: 404 for url: https://ocrportal.hhs.gov/ocr/breach/breach_repor) — stop-and-note per rider: verification claim deferred; health flag remains text-derived with documented rule.
+
+[c] CRSP-attrition balance table...
+               Group   N  Treated share  Mean size (log, where avail.)  Median records affected
+     Included (CRSP) 354         0.3079                         10.262                    132.5
+  Excluded (no CRSP) 135         0.0519                          9.987                     71.0
+
+Saved: STAGE7_VERIFICATION.md + three CSVs
+exit: 0
+=== scripts/158_rebuild_s8_regenerate.py ===
+==========================================================================================
+REBUILD STAGE 8: FULL REGENERATION
+==========================================================================================
+
+Samples: 489 events | CRSP 354 | regression 339 (105 treated, 11 parent CIKs)
+
+Essay 1 (H1-H4, HC3):
+  H2_FCC: -0.1332pp p=0.9197 | TOST(±2.10) p=0.0689 | MDE 3.70 | NULL-INCONCLUSIVE
+  H1_timing: +1.0550pp p=0.2866 | TOST(±2.10) p=0.1460 | MDE 2.77 | NULL-INCONCLUSIVE
+  H3_prior: +0.0215pp p=0.7364 | TOST(±2.10) p=0.0000 | MDE 0.18 | BOUNDED NULL
+  H4_health: -1.0463pp p=0.6890 | TOST(±2.10) p=0.3436 | MDE 7.32 | NULL-INCONCLUSIVE
+  ROA: +7.4192 p=0.1714
+
+ROA amendment: op_margin +7.2100 p=0.0976 (N=339); both-spec roa p=0.3980 / op_margin p=0.1509; hypothesis nulls unchanged: True
+
+Essay 2 (H5, N=338, treated 105): FCC +3.2803 p=0.0621 | TOST p=0.7487 | MDE 4.92 | R2=0.555 | NULL-INCONCLUSIVE
+
+Essay 3 (H6, N=339, treated 105):
+  30d: base 17.4% | AME +8.10pp p=0.1353 | MDE 15.2pp
+  90d: base 43.4% | AME +10.39pp p=0.1376 | MDE 19.6pp
+  180d: base 69.9% | AME +4.99pp p=0.4731 | MDE 19.5pp
+
+First stage (descriptive): treated immediate-disclosure share exceeds untreated by +15.53pp
+
+Appendix v3 tables...
+  14 tables -> outputs/rebuild/appendix_v3/
+
+Assertion check vs existing baseline: PASS
+
+Saved: CONSTANTS_BLOCK_V3.md, constants_v3.json
+exit: 0
+DONE 08/04/2026 15:35:14
