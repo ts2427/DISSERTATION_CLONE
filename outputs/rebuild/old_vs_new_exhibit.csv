@@ -1,0 +1,10 @@
+Quantity,SIC era (pre-7/28),"Legacy Form 499 (7/28, pre-audit base)",Canonical V3 (8/4 rebuild),What changed / what dissolved
+N (regression sample),648,648,339,"Verified identities + event dedup: 1,054 records were never 1,054 breaches"
+Treated (events / parent CIKs),115 / n.a. (identity unresolved),115 / 11*,105 / 11,Fuzzy CIK sinks purged; brand->parent rollups documented (*CIK count computable only post-audit)
+"H1 timing (coef, p)",varied by spec (SIC era),"+0.61, p=0.482 [TOST .045: bounded]","+1.05, p=0.287 [TOST 0.146: inconclusive]",Null throughout; the clean sample costs the bound (MDE 2.77 vs ±2.10)
+"H2 FCC regulation (coef, p)","-2.21, p=.017 ""SIGNIFICANT PENALTY""","-0.42, p=0.575 [TOST .013: bounded]","-0.13, p=0.920 [TOST 0.069: inconclusive]","DISSOLVED: misclassification. The ""penalty"" existed only while SIC codes and keyword matching (Johnson-M""att""hey class) defined treatment (Failure Mode 3)"
+"H3 prior breaches (coef, p)","reported ""supported"" in early drafts","+0.03, p=0.645 [bounded ±0.19]","+0.02, p=0.736 [bounded ±0.18]",The one bound that survives every vintage: history is priced at zero
+"H4 health (coef, p)",varied by spec,"-0.39, p=0.811 [inconclusive]","-1.05, p=0.689 [inconclusive]",Honestly underpowered in every vintage (v3 MDE 7.32)
+"Profitability (ROA coef, p)",not headlined,"+23.02, p=0.0088 (""the only variable that moves returns"")","+7.42, p=0.171; op-margin alone p=0.098; both included: neither significant",DISSOLVED under the pre-registered amendment: duplicate filings and identity contamination had concentrated in ways that flattered ROA; on clean data nothing robustly predicts reactions
+H6 executive turnover base rates,35-59% (ANY-8-K artifact),"20.1 / 46.3 / 72.0% (Item 5.02, pre-audit base)",17.4 / 43.4 / 69.9%,"DISSOLVED: silent extraction failure (Failure Mode 4), then duplicate-event inflation"
+First stage (disclosure speed),"claimed causal (""natural experiment"")",+16.71pp descriptive,"+15.53pp descriptive, with 8-K armor (treated median 15d vs 26d)","The one positive result: survives every vintage, strengthened by verification"
