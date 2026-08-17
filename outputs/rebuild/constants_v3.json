@@ -77,7 +77,7 @@
  "health_events_crsp": 15,
  "RF_top_feature": "roa",
  "treated_crsp_parent_ciks": 12,
- "immediate_share_full": 0.3292,
+ "immediate_share_full": 0.3299,
  "immediate_share_regression": 0.3658,
  "volume_fcc_coef": 0.0779,
  "volume_fcc_p": 0.1167

@@ -9,6 +9,10 @@ Every enrichment regenerated from the rebuilt event set or joined on keys:
     extract; OIBDP-based margin documented as the data-constrained proxy].
   - prior_breaches_total / _1yr recomputed from the event set per parent CIK.
   - disclosure_delay_days = reported_date - breach_date; immediate <= 7 days.
+    Signed fixes (8/17/2026): (i) where reported_date precedes breach_date the
+    delay is a source-data anomaly, not information — recoded to 0 with
+    delay_recoded = 1; (ii) immediate_disclosure is MISSING where the delay is
+    missing (unparseable reported_date), never 0 via a NaN<=7 comparison.
   - health_breach derived (documented): information_affected contains
     medical|health (case-insensitive) OR organization_type == 'MED'.
   - Item 5.02 turnover: live SEC EDGAR submissions (recent + historical pages),
@@ -99,9 +103,26 @@ ev['prior_breaches_1yr'] = p1
 # ---- disclosure timing ----
 ev['reported_dt'] = pd.to_datetime(ev['reported_date'], errors='coerce')
 ev['disclosure_delay_days'] = (ev['reported_dt'] - ev['bdt']).dt.days
-ev['immediate_disclosure'] = (ev['disclosure_delay_days'] <= 7).astype(int)
-log(f'Immediate disclosure: {int(ev["immediate_disclosure"].sum())}/{len(ev)} '
-    f'({100 * ev["immediate_disclosure"].mean():.1f}%)')
+# Signed fix (8/17/2026): reported_date < breach_date is a source-data anomaly;
+# floor the delay at 0 and flag it, so anomalous rows stay in the sample
+# without carrying a negative (information-free) delay.
+neg = ev['disclosure_delay_days'] < 0
+ev['delay_recoded'] = neg.astype(int)
+if neg.any():
+    for _, r in ev[neg].iterrows():
+        log(f'  delay_recoded: {r["org_name"]} | breach {r["breach_date"]} | '
+            f'reported {r["reported_dt"]:%Y-%m-%d} | delay {int(r["disclosure_delay_days"])} -> 0')
+    ev.loc[neg, 'disclosure_delay_days'] = 0
+# Signed fix (8/17/2026): immediate_disclosure is missing where the delay is
+# missing — NaN<=7 silently coded such rows 0; they are now NaN and excluded
+# by every downstream dropna/mean.
+ev['immediate_disclosure'] = (ev['disclosure_delay_days'] <= 7).astype(float)
+ev.loc[ev['disclosure_delay_days'].isna(), 'immediate_disclosure'] = np.nan
+n_imm = int(ev['immediate_disclosure'].sum())
+n_known = int(ev['immediate_disclosure'].notna().sum())
+log(f'Immediate disclosure: {n_imm}/{n_known} known '
+    f'({100 * ev["immediate_disclosure"].mean():.1f}%; '
+    f'{int(ev["immediate_disclosure"].isna().sum())} missing)')
 
 # ---- health flag (documented derivation; OCR cross-check at Stage 7) ----
 ia = ev['information_affected'].astype(str).str.contains('medical|health', case=False, na=False)
