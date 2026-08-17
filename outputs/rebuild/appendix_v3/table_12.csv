@@ -1,8 +1,8 @@
 Feature,Importance
-roa,0.3311
-firm_size_log,0.2323
-leverage,0.2154
-prior_breaches_1yr,0.1455
-immediate_disclosure,0.0465
-fcc_form499,0.0171
-health_breach,0.0123
+roa,0.331
+firm_size_log,0.2428
+leverage,0.2045
+prior_breaches_1yr,0.1476
+immediate_disclosure,0.0443
+fcc_form499,0.0172
+health_breach,0.0126

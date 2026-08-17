@@ -1,9 +1,9 @@
 Variable,Coef,SE,p
-const,-1.0062,4.309,0.8154
-fcc_form499,-0.1332,1.322,0.9197
-immediate_disclosure,1.055,0.9901,0.2866
-prior_breaches_1yr,0.0215,0.0638,0.7364
-health_breach,-1.0463,2.6147,0.689
-firm_size_log,0.0082,0.3594,0.9817
-leverage,-0.0476,2.1381,0.9823
-roa,7.4192,5.4249,0.1714
+const,-1.1918,4.31,0.7822
+fcc_form499,-0.2663,1.3225,0.8404
+immediate_disclosure,0.9641,0.9894,0.3298
+prior_breaches_1yr,0.0238,0.0638,0.7092
+health_breach,-1.0553,2.6194,0.687
+firm_size_log,0.0313,0.3596,0.9307
+leverage,-0.1029,2.1287,0.9614
+roa,7.6509,5.4405,0.1596

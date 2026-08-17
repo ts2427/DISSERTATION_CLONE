@@ -1,13 +1,13 @@
 Comparison,Group,Mean CAR,N,Welch diff,Welch p
-Form 499,Filer,-0.426,105,,
+Form 499,Filer,-0.545,104,,
 Form 499,Non-filer,0.014,234,,
-Form 499,Difference,-0.44,,-0.438,0.662
-Timing,Immediate,0.481,124,,
+Form 499,Difference,-0.559,,-0.557,0.578
+Timing,Immediate,0.387,123,,
 Timing,Delayed,-0.47,215,,
-Timing,Difference,0.952,,1.012,0.3127
+Timing,Difference,0.858,,0.912,0.3629
 Health,Health,-1.541,15,,
-Health,Non-health,-0.056,324,,
-Health,Difference,-1.484,,-0.643,0.5297
+Health,Non-health,-0.094,323,,
+Health,Difference,-1.447,,-0.627,0.54
 History,Any prior,0.278,203,,
-History,No prior,-0.719,136,,
-History,Difference,0.998,,1.006,0.3155
+History,No prior,-0.814,135,,
+History,Difference,1.092,,1.1,0.2725
