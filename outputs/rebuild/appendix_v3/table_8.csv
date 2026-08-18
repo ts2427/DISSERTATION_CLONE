@@ -1,3 +1,6 @@
-Spec,FCC coef,p
-Baseline HC3,-0.2663,0.8404
-+ Year FE,-0.9976,0.4396
+Quartile,Coef,p,N,Treated N
+Q1,2.845,0.555,86,2
+Q2,3.935,0.172,84,14
+Q3,0.804,0.808,83,29
+Q4,1.983,0.442,85,59
+CAPTION,"This table reports the Form 499 coefficient from the baseline specification (HC3 standard errors), estimated separately within firm-size quartiles of the regression sample. Treated event counts are reported because treated events concentrate in the larger quartiles; controls without variation within a quartile are dropped.",,,

@@ -7,3 +7,4 @@ health_breach,-1.0553,2.6194,0.687
 firm_size_log,0.0313,0.3596,0.9307
 leverage,-0.1029,2.1287,0.9614
 roa,7.6509,5.4405,0.1596
+CAPTION,"This table reports the baseline ordinary least squares regression of the 30-day CAR on the four hypothesis variables and three accounting controls, estimated on the regression sample (N = 338) with HC3 heteroskedasticity-robust standard errors.",,

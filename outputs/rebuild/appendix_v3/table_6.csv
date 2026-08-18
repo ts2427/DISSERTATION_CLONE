@@ -1,5 +1,6 @@
-Quartile,Coef,p,N,Treated N
-Q1,0.895,0.571,86,2
-Q2,-0.657,0.773,84,14
-Q3,3.169,0.356,83,29
-Q4,-1.073,0.507,85,59
+Method,Timing p,FCC p,ROA p
+OLS,0.3138,0.8277,0.1076
+HC1,0.3235,0.8384,0.1491
+HC3,0.3298,0.8404,0.1596
+Firm-clustered,0.2547,0.8227,0.1866
+CAPTION,"This table reports p-values from the baseline specification on the regression sample (N = 338) under alternative standard-error methods: classical OLS, HC1, HC3, and clustering by parent CIK (82 clusters).",,

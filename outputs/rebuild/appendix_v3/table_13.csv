@@ -1,2 +1,9 @@
-Note
-Pre-announcement leakage windows: computed in Stage 5 source data; formal table deferred to fresh-clone run (documented)
+Feature,Importance
+roa,0.331
+firm_size_log,0.2428
+leverage,0.2045
+prior_breaches_1yr,0.1476
+immediate_disclosure,0.0443
+fcc_form499,0.0172
+health_breach,0.0126
+CAPTION,"This table reports random forest feature importances (500 trees, fixed seed 42) for the seven baseline covariates predicting the 30-day CAR on the regression sample (N = 338). Importances are descriptive and carry no causal interpretation."

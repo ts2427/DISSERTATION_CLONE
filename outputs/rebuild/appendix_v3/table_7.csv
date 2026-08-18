@@ -1,5 +1,6 @@
 Quartile,Coef,p,N,Treated N
-Q1,2.845,0.555,86,2
-Q2,3.935,0.172,84,14
-Q3,0.804,0.808,83,29
-Q4,1.983,0.442,85,59
+Q1,0.895,0.571,86,2
+Q2,-0.657,0.773,84,14
+Q3,3.169,0.356,83,29
+Q4,-1.073,0.507,85,59
+CAPTION,"This table reports the immediate-disclosure coefficient from the baseline specification (HC3 standard errors), estimated separately within firm-size quartiles of the regression sample. Treated event counts are reported because treated events concentrate in the larger quartiles; controls without variation within a quartile are dropped.",,,

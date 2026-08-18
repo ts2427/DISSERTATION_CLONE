@@ -1,2 +1,4 @@
-Added control,FCC coef,FCC p,Control p,N,Note
-Records affected (max across filings),-0.2695,0.8386,0.9534,338,HHI retired with pre-audit chain
+Spec,FCC coef,p
+Baseline HC3,-0.2663,0.8404
++ Year FE,-0.9976,0.4396
+CAPTION,"This table compares the Form 499 coefficient from the baseline HC3 specification with a specification adding calendar-year fixed effects, both estimated on the regression sample (N = 338).",

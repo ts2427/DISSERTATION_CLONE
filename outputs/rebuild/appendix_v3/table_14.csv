@@ -1,5 +1,26 @@
-Hypothesis,Coef,p,TOST_p_2.10,MDE80,Status
-H2_FCC,-0.2663,0.8404,0.0833,3.703,NULL-INCONCLUSIVE
-H1_timing,0.9641,0.3298,0.1259,2.7702,NULL-INCONCLUSIVE
-H3_prior,0.0238,0.7092,0.0,0.1786,BOUNDED NULL
-H4_health,-1.0553,0.687,0.3451,7.3343,NULL-INCONCLUSIVE
+Panel,Window,Group,N,Mean CAR (pp),Median,SD,t,p
+Breach-anchored (PRIMARY),"[-30,-21]",All,354,-0.073,-0.03,5.065,-0.272,0.7854
+Breach-anchored (PRIMARY),"[-30,-21]",Treated,109,-0.144,-0.067,5.986,-0.252,0.8018
+Breach-anchored (PRIMARY),"[-30,-21]",Untreated,245,-0.042,0.005,4.609,-0.142,0.8873
+Breach-anchored (PRIMARY),"[-30,-21]",Difference (Welch),,-0.103,,,-0.159,0.8738
+Breach-anchored (PRIMARY),"[-20,-11]",All,354,0.801,0.432,6.046,2.493,0.0131
+Breach-anchored (PRIMARY),"[-20,-11]",Treated,109,0.376,0.502,6.41,0.612,0.5417
+Breach-anchored (PRIMARY),"[-20,-11]",Untreated,245,0.99,0.418,5.881,2.636,0.0089
+Breach-anchored (PRIMARY),"[-20,-11]",Difference (Welch),,-0.615,,,-0.854,0.3943
+Breach-anchored (PRIMARY),"[-10,-1]",All,354,0.088,0.101,5.843,0.282,0.7781
+Breach-anchored (PRIMARY),"[-10,-1]",Treated,109,1.231,0.37,7.106,1.809,0.0732
+Breach-anchored (PRIMARY),"[-10,-1]",Untreated,245,-0.421,-0.026,5.119,-1.288,0.1989
+Breach-anchored (PRIMARY),"[-10,-1]",Difference (Welch),,1.653,,,2.189,0.0301
+Announcement-anchored (secondary),"[-30,-21]",All,353,0.044,0.145,4.95,0.166,0.8686
+Announcement-anchored (secondary),"[-30,-21]",Treated,108,0.291,-0.195,6.003,0.504,0.615
+Announcement-anchored (secondary),"[-30,-21]",Untreated,245,-0.066,0.2,4.417,-0.233,0.8163
+Announcement-anchored (secondary),"[-30,-21]",Difference (Welch),,0.357,,,0.555,0.5794
+Announcement-anchored (secondary),"[-20,-11]",All,353,0.357,0.308,5.122,1.31,0.1911
+Announcement-anchored (secondary),"[-20,-11]",Treated,108,-0.308,-0.286,5.165,-0.62,0.5363
+Announcement-anchored (secondary),"[-20,-11]",Untreated,245,0.65,0.561,5.086,2.002,0.0464
+Announcement-anchored (secondary),"[-20,-11]",Difference (Welch),,-0.959,,,-1.615,0.108
+Announcement-anchored (secondary),"[-10,-1]",All,353,-0.291,0.042,5.507,-0.991,0.3223
+Announcement-anchored (secondary),"[-10,-1]",Treated,108,0.885,0.197,6.335,1.452,0.1494
+Announcement-anchored (secondary),"[-10,-1]",Untreated,245,-0.809,-0.032,5.027,-2.518,0.0124
+Announcement-anchored (secondary),"[-10,-1]",Difference (Welch),,1.694,,,2.459,0.015
+CAPTION,"This table reports cumulative market-adjusted abnormal returns (daily CRSP return minus the CRSP value-weighted market return, x100, summed over trading days) over three pre-event windows. In the primary panel, day 0 is the trading day nearest the breach date, identical to the main CAR anchor with its +/-50 calendar-day pull. In the secondary panel, day 0 is the trading day nearest the reported date; 1 of 354 CRSP-sample events are excluded for a missing or invalid reported date (including delay_invalid = 1 wrong-field records). Events lacking 30 complete pre-anchor trading days of abnormal returns are excluded listwise per panel (breach-anchored: 0; announcement-anchored: 0).",,,,,,,
