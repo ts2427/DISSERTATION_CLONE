@@ -92,3 +92,34 @@ run_causal_id_*.py
 CODE_TO_PAPER_VERIFICATION_SUMMARY.md
 ESSAY1_VERIFICATION_REPORT.md
 ESSAY2_VERIFICATION_REPORT.md
+
+# ==============================================================================
+# LOCAL CLAUDE CODE SETTINGS
+# ==============================================================================
+.claude/settings.local.json
+
+# ==============================================================================
+# RUN LOGS & RECOVERED SCRATCH
+# ==============================================================================
+outputs/*_run.log
+outputs/recovered/
+
+# ==============================================================================
+# CHRONOLOGY REPLICATION (SHELVED 8/2/2026 - kept local by user instruction)
+# ==============================================================================
+scripts/13[0-9]_*.py
+scripts/140_consolidate_final.py
+Data/processed/chronology_*
+Data/yfinance/
+outputs/chronology_*
+outputs/frn_verification_decisions.csv
+outputs/FRN_VERIFICATION_CHRONOLOGY.txt
+
+# ==============================================================================
+# EDGAR CACHES & SCRATCH INPUTS (regenerable from public sources)
+# ==============================================================================
+Data/edgar/*.pkl
+Data/edgar/8k_item5_02_cache/
+Data/edgar/company_tickers_exchange.json
+Data/edgar/sic_naics_crosswalk.csv
+Data/edgar/step2_*.csv
