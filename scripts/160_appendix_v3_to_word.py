@@ -1,11 +1,16 @@
 """
-REBUILD — APPENDIX V3 WORD RENDERING
-Renders outputs/rebuild/appendix_v3/table_{1..14}.csv into a single Word
+REBUILD — APPENDIX V3 WORD RENDERING (16-table citation order)
+Renders outputs/rebuild/appendix_v3/table_{1..16}.csv into a single Word
 document for the dissertation appendix. Pure rendering: no numbers computed
-here; the CSVs (asserted by Stage 8) are the source of truth.
-Output: outputs/rebuild/APPENDIX_V3_TABLES.docx
+here; the CSVs (asserted by Stage 8) are the source of truth. Each CSV's
+trailing CAPTION row supplies the table note verbatim, so the document
+cannot drift from the asserted captions; EXTRA holds interpretive addenda
+only. The sample header is built from constants_v3.json.
+Outputs: outputs/rebuild/APPENDIX_V3_TABLES.docx
+         outputs/rebuild/INTEXT_TABLES_4_5.docx
 """
 import sys
+import json
 import pandas as pd
 from pathlib import Path
 from docx import Document
@@ -15,72 +20,70 @@ sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
 TITLES = {
     1: 'Summary Statistics (CRSP Sample)',
-    2: 'Mean 30-Day CAR by Subgroup, with Welch Difference Tests',
-    3: 'Main Regression: 30-Day CAR on Hypothesis Variables and Controls (HC3)',
-    4: 'Sample Restrictions (Timing, FCC, and ROA Coefficients)',
-    5: 'Standard-Error Methods',
-    6: 'Timing Coefficient by Firm-Size Quartile',
-    7: 'FCC Coefficient by Firm-Size Quartile (Treated Counts Shown)',
-    8: 'Specification Robustness (Year Fixed Effects)',
-    9: 'Alternative Explanations (Breach Severity)',
-    10: 'Factor-Model Controls (FF3)',
-    11: 'Abnormal Log Turnover (Event [-5,+25] vs Estimation [-240,-60])',
-    12: 'Random-Forest Feature Importance',
-    13: 'Pre-Announcement Abnormal Returns (Leakage Windows)',
-    14: 'Equivalence Testing (TOST, Pre-Specified ±2.10pp Bound)',
+    2: 'Disclosure-Date Verification (First 8-K Within 90 Days)',
+    3: 'Mean and Median 30-Day CAR by Subgroup, with Welch Difference Tests',
+    4: 'Main Regression: 30-Day CAR on Hypothesis Variables and Controls (HC3)',
+    5: 'Equivalence Testing (TOST, Pre-Specified ±2.10pp Bound)',
+    6: 'Timing Effect by Regulatory Regime (Subsamples and Interaction)',
+    7: 'Sample Restrictions (Timing, FCC, and ROA Coefficients)',
+    8: 'Standard-Error Methods',
+    9: 'Timing Coefficient by Firm-Size Quartile',
+    10: 'FCC Coefficient by Firm-Size Quartile (Treated Counts Shown)',
+    11: 'Specification Robustness (Year Fixed Effects)',
+    12: 'Alternative Explanations (Breach Severity)',
+    13: 'Factor-Model Controls (FF3)',
+    14: 'Abnormal Log Turnover (Event [-5,+25] vs Estimation [-240,-60])',
+    15: 'Random-Forest Feature Importance',
+    16: 'Pre-Announcement Abnormal Returns (Leakage Windows)',
 }
 
-NOTES = {
-    1: 'CRSP sample (N=354): events with computable 30-day CARs. Covariate rows reflect '
-       'the 339 events with complete prior-fiscal-year Compustat data.',
-    2: 'Regression sample (N=339). History split: prior breaches at the same parent CIK '
-       'within 365 days (>0 vs 0). Welch difference tests reported per comparison; all null.',
-    3: 'Regression sample (N=339; 105 treated events across 11 parent CIKs). HC3 robust SEs. '
-       'Outcome: 30-day CAR per the recovered convention (sum of daily market-adjusted '
-       'returns, trading days [0,+30], nearest-trading-day anchor).',
-    4: 'ROA columns are the pre-registered amendment rows (scope closed 8/4).',
-    5: 'Firm-clustered row rests on 11 treated parent-CIK clusters; HC3 is primary.',
-    6: 'Quartiles of firm size within the regression sample (~85 events each).',
-    7: 'Treated events per quartile shown; Q1 holds 2 treated events — quartile estimates '
-       'are illustrative, not inferential.',
-    8: 'Year fixed effects; treatment is near-collinear with the telecom sector, so '
-       'within-industry specifications are not estimable with useful precision.',
-    9: 'Records affected = maximum across collapsed multi-state filings for the event. '
-       'The HHI control was retired with the pre-audit chain.',
-    10: 'Event-month FF3 factor values added as controls, per the pipeline convention.',
-    11: 'Log turnover: log(volume/shares outstanding); abnormal = event-window mean minus '
-        'estimation-window mean. N=319 events with sufficient estimation history.',
-    12: 'Random forest, 500 trees, seed 42. All four hypothesis variables rank below all '
-        'three firm controls.',
-    13: 'NOTIFICATION-ANCHOR CAVEAT: PRC breach dates are notification-anchored, so these '
+# Interpretive addenda appended after the asserted caption; keep sparse.
+EXTRA = {
+    5: 'Verdicts: H3 bounded null; H1/H2/H4 null-inconclusive.',
+    8: 'The firm-clustered row rests on 11 treated parent-CIK clusters; HC3 is primary.',
+    10: 'Q1 holds 2 treated events — quartile estimates are illustrative, not inferential.',
+    11: 'Treatment is near-collinear with the telecom sector, so within-industry '
+        'specifications are not estimable with useful precision.',
+    15: 'All four hypothesis variables rank below all three firm controls.',
+    16: 'NOTIFICATION-ANCHOR CAVEAT: PRC breach dates are notification-anchored, so these '
         'pre-announcement windows are measured against the notification clock; with a '
         'median disclosure delay of 24 days, some events\' first market disclosure '
         'plausibly falls inside the [-20,-11] window. The significant positive drift there '
         'is therefore reported, not explained away; the supportable claim is the absence '
         'of anticipatory NEGATIVE leakage in all three windows.',
-    14: 'TOST bound ±2.10pp fixed from the literature before rebuilt estimates existed. '
-        'MDE = 2.8×SE (80% power). Verdicts: H3 bounded null; H1/H2/H4 null-inconclusive.',
 }
 
-SAMPLE_HEADER = ('Sample definitions (name-your-sample rule): FULL = 489 verified breach '
-                 'events (116 treated / 13 parent CIKs); CRSP = 354 events with market data '
-                 '(109 treated / 12 parent CIKs); REGRESSION = 339 events with complete '
-                 'covariates (105 treated / 11 parent CIKs, 38 treated organizations at the '
-                 'full-sample level). Immediate-disclosure share: 32.9% full / 36.7% CRSP / '
-                 '36.6% regression.')
+C = json.loads(Path('outputs/rebuild/constants_v3.json').read_text())
+SAMPLE_HEADER = (
+    'Sample definitions (name-your-sample rule): '
+    f'FULL = {C["events_total"]} verified breach events ({C["treated_total"]} treated); '
+    f'CRSP = {C["events_crsp"]} events with market data ({C["treated_crsp"]} treated); '
+    f'REGRESSION = {C["N_regression"]} events with complete covariates '
+    f'({C["treated_regression"]} treated events, {C["treated_parent_ciks_regression"]} '
+    f'parent CIKs, {C["treated_orgs_regression"]} treated organizations). '
+    f'Immediate-disclosure share: {100 * C["immediate_share_full"]:.1f}% full / '
+    f'{100 * C["immediate_share_crsp"]:.1f}% CRSP / '
+    f'{100 * C["immediate_share_regression"]:.1f}% regression.')
 
-doc = Document()
-doc.add_heading('Essay 1 Appendix — Canonical V3 Tables', level=1)
-p = doc.add_paragraph('All values regenerate from run_all.py (Canonical V3 chain, scripts 150–159) '
-                      'and assert against outputs/rebuild/constants_v3.json. Generated by scripts/160.')
-p.runs[0].font.size = Pt(9)
-p2 = doc.add_paragraph(SAMPLE_HEADER)
-p2.runs[0].font.size = Pt(9)
 
-for i in range(1, 15):
+def load_table(i):
+    """Return (dataframe without the CAPTION row, caption text)."""
     df = pd.read_csv(f'outputs/rebuild/appendix_v3/table_{i}.csv').fillna('')
-    doc.add_heading(f'Table {i}. {TITLES[i]}', level=2)
-    cap = doc.add_paragraph(f'Note. {NOTES[i]}')
+    caption = ''
+    last = df.iloc[-1]
+    if str(last.iloc[0]) == 'CAPTION':
+        caption = str(last.iloc[1])
+        df = df.iloc[:-1]
+    return df, caption
+
+
+def render(doc, i, title, body_pt):
+    df, caption = load_table(i)
+    doc.add_heading(title, level=2)
+    note = f'Note. {caption}'
+    if i in EXTRA:
+        note += ' ' + EXTRA[i]
+    cap = doc.add_paragraph(note)
     cap.runs[0].font.size = Pt(8)
     cap.runs[0].font.italic = True
     t = doc.add_table(rows=len(df) + 1, cols=len(df.columns))
@@ -94,33 +97,29 @@ for i in range(1, 15):
         for cell in row.cells:
             for par in cell.paragraphs:
                 for run in par.runs:
-                    run.font.size = Pt(8)
+                    run.font.size = Pt(body_pt)
 
+
+doc = Document()
+doc.add_heading('Essay 1 Appendix — Canonical V3 Tables', level=1)
+p = doc.add_paragraph('All values regenerate from run_all.py (Canonical V3 chain, scripts '
+                      '150–159) and assert against outputs/rebuild/constants_v3.json. '
+                      'Table notes are the asserted captions emitted by Stage 8. '
+                      'Generated by scripts/160.')
+p.runs[0].font.size = Pt(9)
+p2 = doc.add_paragraph(SAMPLE_HEADER)
+p2.runs[0].font.size = Pt(9)
+for i in range(1, 17):
+    render(doc, i, f'Table {i}. {TITLES[i]}', body_pt=8)
 out = Path('outputs/rebuild/APPENDIX_V3_TABLES.docx')
 doc.save(out)
-print(f'Saved: {out}')
+print(f'Saved: {out} (16 tables)')
 
-# In-text renderings: Tables 3 and 14 as a separate document for the Results body
+# In-text renderings: main regression (Table 4) and TOST summary (Table 5)
 doc2 = Document()
 doc2.add_heading('In-Text Tables (Results section) — Canonical V3', level=1)
-for i, intext_title in [(3, 'Main Regression Results'), (14, 'Equivalence Testing Summary')]:
-    df = pd.read_csv(f'outputs/rebuild/appendix_v3/table_{i}.csv').fillna('')
-    doc2.add_heading(f'Table {i} (in-text). {intext_title}', level=2)
-    cap = doc2.add_paragraph(f'Note. {NOTES[i]}')
-    cap.runs[0].font.size = Pt(8)
-    cap.runs[0].font.italic = True
-    t = doc2.add_table(rows=len(df) + 1, cols=len(df.columns))
-    t.style = 'Light Grid Accent 1'
-    for j, c in enumerate(df.columns):
-        t.rows[0].cells[j].text = str(c)
-    for r, (_, row) in enumerate(df.iterrows(), start=1):
-        for j, v in enumerate(row):
-            t.rows[r].cells[j].text = str(v)
-    for row in t.rows:
-        for cell in row.cells:
-            for par in cell.paragraphs:
-                for run in par.runs:
-                    run.font.size = Pt(9)
-out2 = Path('outputs/rebuild/INTEXT_TABLES_3_14.docx')
+for i, intext_title in [(4, 'Main Regression Results'), (5, 'Equivalence Testing Summary')]:
+    render(doc2, i, f'Table {i} (in-text). {intext_title}', body_pt=9)
+out2 = Path('outputs/rebuild/INTEXT_TABLES_4_5.docx')
 doc2.save(out2)
 print(f'Saved: {out2}')

@@ -1,0 +1,6 @@
+Step,N,Lost,Reason
+"PRC record universe (Data/processed/master_breach_dataset.xlsx, git-tracked)",1054,,"All breach notification RECORDS for the matched public-firm universe, 2004-2025. Multiple records can describe one breach event (multi-state notifications, amended filings)."
+Unique breach events,784,270,Duplicate notification records collapsed to unique org_name + breach_date events: 126 events had 2+ records (max 31 records for one event - Cencora 2024-02-21). Arithmetic closes exactly: the 270 excess records among those 126 events account for the entire 270-record drop (asserted on every run). The step is pure within-key deduplication - no events were excluded.
+After CIK-duplicate removal,779,5,"Failure Mode 1: fuzzy-match CIK-to-CRSP duplicate event records removed. Dropped: Fidelity National Information Services, Inc.|2023-10-04; Financial Institution Service Corporation|2023-05-30; Intuit Inc.|2019-03-21; T-Mobile USA, Inc.|2021-08-17; T-Mobile USA|2021-08-18"
+CRSP-matched sample,672,107,"No CRSP security match / insufficient trading data (has_crsp_data = 0). Delisted, thinly traded, or unmatchable tickers."
+Regression sample (complete cases),648,24,"Missing Compustat covariates: firm_size_log missing 24, leverage missing 22, roa missing 22 (overlapping; union = 24)."

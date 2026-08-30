@@ -1,0 +1,8 @@
+Rank,Feature,Importance
+1,roa,0.3361
+2,firm_size_log,0.3213
+3,leverage,0.2279
+4,prior_breaches_1yr,0.0576
+5,immediate_disclosure,0.0272
+6,health_breach,0.0171
+7,fcc_form499,0.0128

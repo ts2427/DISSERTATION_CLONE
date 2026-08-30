@@ -1,6 +1,6 @@
-Quartile,Coef,p,N,Treated N
-Q1,0.895,0.571,86,2
-Q2,-0.657,0.773,84,14
-Q3,3.169,0.356,83,29
-Q4,-1.073,0.507,85,59
-CAPTION,"This table reports the immediate-disclosure coefficient from the baseline specification (HC3 standard errors), estimated separately within firm-size quartiles of the regression sample. Treated event counts are reported because treated events concentrate in the larger quartiles; controls without variation within a quartile are dropped.",,,
+Restriction,Timing coef,Timing p,FCC coef,FCC p,ROA coef,ROA p,N
+Full,0.964,0.33,-0.266,0.84,7.65,0.16,338
+Excl. largest decile,1.17,0.277,-0.375,0.8,8.57,0.13,305
+Excl. smallest decile,0.527,0.611,-0.471,0.736,4.92,0.379,316
+Non-health,0.743,0.447,-0.212,0.874,8.07,0.156,323
+CAPTION,This table re-estimates the baseline specification with HC3 standard errors on restricted samples; each row reports its own N. Controls without variation within a restricted sample are dropped from that row.,,,,,,

@@ -10,12 +10,13 @@ All three essays re-estimated on CANONICAL_V3 under the frozen specifications:
 ROA AMENDMENT (pre-registered 8/4, outputs/rebuild/DIRECTIVE_AMENDMENT_ROA.md):
   ROA rows in restrictions/SE/factor tables; ONE op-margin spec + ONE both-
   included spec (op_margin is OIBDP-based — oiadp absent from extract, documented).
-Appendix v3: the fourteen-table set regenerated on V3, numbered in Results
-  citation order (hypothesis summary = Table 4; severity-only Table 10 — the
-  HHI enrichment was retired with the pre-audit chain; Table 14 leakage
-  windows computed live, breach-anchored primary / announcement-anchored
-  secondary, same daily AR definition as the main CAR). Every table carries
-  a trailing CAPTION row written as dissertation prose.
+Appendix v3: the sixteen-table set regenerated on V3, numbered in Results
+  citation order (disclosure-date verification = Table 2; hypothesis summary =
+  Table 5; timing-by-regime = Table 6; severity-only Table 12 — the HHI
+  enrichment was retired with the pre-audit chain; Table 16 leakage windows
+  computed live, breach-anchored primary / announcement-anchored secondary,
+  same daily AR definition as the main CAR). Every table carries a trailing
+  CAPTION row written as dissertation prose.
 ASSERTION BASELINE: first run writes outputs/rebuild/constants_v3.json; every
   later run asserts against it (assert new values, never loosen).
 
@@ -173,6 +174,54 @@ for col in ['car_30d', 'car_5d', 'firm_size_log', 'leverage', 'roa', 'disclosure
     sumrows.append({'Variable': col, 'N': len(d), 'Mean': round(d.mean(), 3),
                     'SD': round(d.std(), 3), 'Median': round(d.median(), 3)})
 T[1] = pd.DataFrame(sumrows)
+# Table 2: Stage 7 disclosure-date verification, promoted to the appendix.
+# Same method as script 157(a): for every treated event and every untreated
+# event at parent CIKs with 3+ events (the documented control sample), the gap
+# from the PRC breach date to the firm's first 8-K filed in (breach, +90d],
+# read from the cached EDGAR submissions. Verification only — no date changes.
+CACHE8K = Path('Data/edgar/rebuild_submissions_cache')
+
+
+def first_8k_after(cik, bdt):
+    cj = CACHE8K / f'{int(cik)}.json'
+    if not cj.exists():
+        return None
+    dates = []
+    for pg in json.loads(cj.read_text()):
+        for form, dt in zip(pg.get('form', []), pg.get('filingDate', [])):
+            if form.startswith('8-K'):
+                d8 = pd.Timestamp(dt)
+                if bdt < d8 <= bdt + pd.Timedelta(days=90):
+                    dates.append(d8)
+    return min(dates) if dates else None
+
+
+big_ciks = ev.groupby('final_cik').size()
+ctrl_ciks = set(big_ciks[big_ciks >= 3].index)
+ver = ev[(ev[TREAT] == 1) | (ev['final_cik'].isin(ctrl_ciks))]
+gaps = []
+for _, r7 in ver.iterrows():
+    f8k = first_8k_after(r7['final_cik'], r7['bdt'])
+    gaps.append((int(r7[TREAT]), (f8k - r7['bdt']).days if f8k is not None else np.nan))
+gdf = pd.DataFrame(gaps, columns=['treated', 'gap_days'])
+rows_t2 = []
+for tval, glab, gkey in [(1, 'Treated (Form 499)', 'treated'),
+                         (0, 'Untreated (control CIKs, 3+ events)', 'untreated')]:
+    g_all = gdf[gdf['treated'] == tval]
+    g_have = g_all.dropna(subset=['gap_days'])
+    C[f'T2_{gkey}_N'] = len(g_all)
+    C[f'T2_{gkey}_median_gap'] = round(g_have['gap_days'].median(), 1)
+    C[f'T2_{gkey}_mean_gap'] = round(g_have['gap_days'].mean(), 2)
+    C[f'T2_{gkey}_share_8k_90d'] = round(len(g_have) / len(g_all), 4)
+    rows_t2.append({'Group': glab, 'N': len(g_all),
+                    'Median gap (days)': C[f'T2_{gkey}_median_gap'],
+                    'Mean gap (days)': C[f'T2_{gkey}_mean_gap'],
+                    'Share with 8-K in 90d': C[f'T2_{gkey}_share_8k_90d']})
+T[2] = pd.DataFrame(rows_t2)
+log(f"  Table 2 disclosure verification: treated N={C['T2_treated_N']} "
+    f"(median gap {C['T2_treated_median_gap']}d, share {C['T2_treated_share_8k_90d']:.0%}); "
+    f"untreated N={C['T2_untreated_N']} (median {C['T2_untreated_median_gap']}d, "
+    f"share {C['T2_untreated_share_8k_90d']:.0%})")
 # Registered levels: regression-sample overall CAR (previously live-only)
 C['car30d_regression_mean'] = round(reg['car_30d'].mean(), 4)
 C['car30d_regression_median'] = round(reg['car_30d'].median(), 4)
@@ -186,15 +235,51 @@ for cmp_, col, l1, l0 in [('Form 499', TREAT, 'Filer', 'Non-filer'),
     tw, pw = stats.ttest_ind(a, bgrp, equal_var=False)
     for v, lab, d in [(1, l1, a), (0, l0, bgrp)]:
         slug = lab.lower().replace(' ', '_').replace('-', '')
-        C[f'T2_{slug}_median'] = round(d.median(), 4)
+        C[f'T3_{slug}_median'] = round(d.median(), 4)
         sub.append({'Comparison': cmp_, 'Group': lab, 'Mean CAR': round(d.mean(), 3),
                     'Median CAR': round(d.median(), 3),
                     'N': len(d), 'Welch diff': '', 'Welch p': ''})
     sub.append({'Comparison': cmp_, 'Group': 'Difference', 'Mean CAR': round(a.mean() - bgrp.mean(), 3),
                 'Median CAR': '', 'N': '', 'Welch diff': round(tw, 3), 'Welch p': round(pw, 4)})
-T[2] = pd.DataFrame(sub)
-T[3] = pd.DataFrame([{'Variable': v, 'Coef': round(m.params[v], 4), 'SE': round(m.bse[v], 4),
+T[3] = pd.DataFrame(sub)
+T[4] = pd.DataFrame([{'Variable': v, 'Coef': round(m.params[v], 4), 'SE': round(m.bse[v], 4),
                       'p': round(m.pvalues[v], 4)} for v in ['const'] + CONTROLS])
+# Table 5: timing effect by regulatory regime — baseline spec on treated-only
+# and untreated-only subsamples (fcc_form499 dropped as constant within each;
+# any other constant control likewise dropped), plus the pooled spec with an
+# immediate_disclosure x fcc_form499 interaction. All HC3.
+SUBCTRL = [c for c in CONTROLS if c != TREAT]
+rows_t5 = []
+for snm, skey, d5 in [('Treated only (fcc_form499=1)', 'treated', reg[reg[TREAT] == 1]),
+                      ('Untreated only (fcc_form499=0)', 'untreated', reg[reg[TREAT] == 0])]:
+    cc5 = [c for c in SUBCTRL if d5[c].nunique() > 1]
+    m5 = sm.OLS(d5['car_30d'], sm.add_constant(d5[cc5].astype(float))).fit(cov_type='HC3')
+    C[f'T6_{skey}_timing_coef'] = round(m5.params['immediate_disclosure'], 4)
+    C[f'T6_{skey}_timing_se'] = round(m5.bse['immediate_disclosure'], 4)
+    C[f'T6_{skey}_timing_p'] = round(m5.pvalues['immediate_disclosure'], 4)
+    C[f'T6_{skey}_N'] = len(d5)
+    rows_t5.append({'Specification': snm, 'Term': 'immediate_disclosure',
+                    'Coef': C[f'T6_{skey}_timing_coef'], 'SE': C[f'T6_{skey}_timing_se'],
+                    'p': C[f'T6_{skey}_timing_p'], 'N': len(d5)})
+d5i = reg.copy()
+d5i['timing_x_fcc'] = d5i['immediate_disclosure'] * d5i[TREAT]
+m5i = sm.OLS(d5i['car_30d'],
+             sm.add_constant(d5i[CONTROLS + ['timing_x_fcc']].astype(float))).fit(cov_type='HC3')
+for term, lab in [('immediate_disclosure', 'immediate_disclosure (main effect)'),
+                  (TREAT, 'fcc_form499 (main effect)'),
+                  ('timing_x_fcc', 'immediate_disclosure x fcc_form499')]:
+    rows_t5.append({'Specification': 'Pooled with interaction', 'Term': lab,
+                    'Coef': round(m5i.params[term], 4), 'SE': round(m5i.bse[term], 4),
+                    'p': round(m5i.pvalues[term], 4), 'N': len(d5i)})
+C['T6_interaction_coef'] = round(m5i.params['timing_x_fcc'], 4)
+C['T6_interaction_se'] = round(m5i.bse['timing_x_fcc'], 4)
+C['T6_interaction_p'] = round(m5i.pvalues['timing_x_fcc'], 4)
+T[6] = pd.DataFrame(rows_t5)
+log(f"  Table 6 timing-by-regime: treated {C['T6_treated_timing_coef']:+.4f} "
+    f"p={C['T6_treated_timing_p']:.4f} (N={C['T6_treated_N']}); untreated "
+    f"{C['T6_untreated_timing_coef']:+.4f} p={C['T6_untreated_timing_p']:.4f} "
+    f"(N={C['T6_untreated_N']}); interaction {C['T6_interaction_coef']:+.4f} "
+    f"p={C['T6_interaction_p']:.4f}")
 reg['size_q'] = pd.qcut(reg['firm_size_log'], 4, labels=['Q1', 'Q2', 'Q3', 'Q4'], duplicates='drop')
 restr = [('Full', reg),
          ('Excl. largest decile', reg[reg['firm_size_log'] <= reg['firm_size_log'].quantile(.9)]),
@@ -210,15 +295,15 @@ for nm, d in restr:
                   'FCC p': round(mr.pvalues.get(TREAT, np.nan), 3),
                   'ROA coef': round(mr.params['roa'], 2), 'ROA p': round(mr.pvalues['roa'], 3),
                   'N': len(d)})
-T[5] = pd.DataFrame(rows4)
+T[7] = pd.DataFrame(rows4)
 rows5 = []
 for nm, kw in [('OLS', {}), ('HC1', {'cov_type': 'HC1'}), ('HC3', {'cov_type': 'HC3'}),
                ('Firm-clustered', {'cov_type': 'cluster', 'cov_kwds': {'groups': reg['final_cik']}})]:
     ms = sm.OLS(y, X).fit(**kw)
     rows5.append({'Method': nm, 'Timing p': round(ms.pvalues['immediate_disclosure'], 4),
                   'FCC p': round(ms.pvalues[TREAT], 4), 'ROA p': round(ms.pvalues['roa'], 4)})
-T[6] = pd.DataFrame(rows5)
-for i, var in [(7, 'immediate_disclosure'), (8, TREAT)]:
+T[8] = pd.DataFrame(rows5)
+for i, var in [(9, 'immediate_disclosure'), (10, TREAT)]:
     rows = []
     for q in ['Q1', 'Q2', 'Q3', 'Q4']:
         d = reg[reg['size_q'] == q]
@@ -236,13 +321,13 @@ reg['_ym'] = reg['bdt'].dt.to_period('Y').astype(str)
 dum = pd.get_dummies(reg['_ym'], drop_first=True).astype(float)
 Xfe = sm.add_constant(pd.concat([reg[CONTROLS].astype(float), dum], axis=1))
 mfe = sm.OLS(y, Xfe).fit(cov_type='HC3')
-T[9] = pd.DataFrame([{'Spec': 'Baseline HC3', 'FCC coef': C['H2_FCC_coef'], 'p': C['H2_FCC_p']},
+T[11] = pd.DataFrame([{'Spec': 'Baseline HC3', 'FCC coef': C['H2_FCC_coef'], 'p': C['H2_FCC_p']},
                      {'Spec': '+ Year FE', 'FCC coef': round(mfe.params[TREAT], 4),
                       'p': round(mfe.pvalues[TREAT], 4)}])
 dsev = reg.dropna(subset=['total_affected_max'])
 Xs = sm.add_constant(dsev[CONTROLS + ['total_affected_max']].astype(float))
 msv = sm.OLS(dsev['car_30d'], Xs).fit(cov_type='HC3')
-T[10] = pd.DataFrame([{'Added control': 'Records affected (max across filings)',
+T[12] = pd.DataFrame([{'Added control': 'Records affected (max across filings)',
                       'FCC coef': round(msv.params[TREAT], 4), 'FCC p': round(msv.pvalues[TREAT], 4),
                       'Control p': round(msv.pvalues['total_affected_max'], 4), 'N': int(msv.nobs),
                       'Note': 'HHI retired with pre-audit chain'}])
@@ -258,7 +343,7 @@ regf = regf.join(fm, on='ym')
 df10 = regf.dropna(subset=['Mkt-RF'])
 X10 = sm.add_constant(df10[CONTROLS + ['Mkt-RF', 'SMB', 'HML']].astype(float))
 m10 = sm.OLS(df10['car_30d'], X10).fit(cov_type='HC3')
-T[11] = pd.DataFrame([{'Model': 'Baseline', 'FCC p': C['H2_FCC_p'], 'ROA p': C['ROA_p']},
+T[13] = pd.DataFrame([{'Model': 'Baseline', 'FCC p': C['H2_FCC_p'], 'ROA p': C['ROA_p']},
                       {'Model': 'FF3 controls', 'FCC p': round(m10.pvalues[TREAT], 4),
                        'ROA p': round(m10.pvalues['roa'], 4)}])
 # Table 11: ABNORMAL LOG TURNOVER (matches the Methods description): mean
@@ -291,7 +376,7 @@ regv['_abto'] = [ab_turnover(p, b) if pd.notna(p) else np.nan
                  for p, b in zip(regv['permno'], regv['bdt'])]
 dv = regv.dropna(subset=['_abto'])
 mv = sm.OLS(dv['_abto'], sm.add_constant(dv[CONTROLS].astype(float))).fit(cov_type='HC3')
-T[12] = pd.DataFrame([{'Variable': v, 'Coef (log turnover)': round(mv.params[v], 4),
+T[14] = pd.DataFrame([{'Variable': v, 'Coef (log turnover)': round(mv.params[v], 4),
                        'SE': round(mv.bse[v], 4), 'p': round(mv.pvalues[v], 4)}
                       for v in CONTROLS] +
                      [{'Variable': f'N={int(mv.nobs)} (event [-5,+25] vs est [-240,-60] trading days)',
@@ -301,9 +386,9 @@ C['volume_fcc_p'] = round(mv.pvalues[TREAT], 4)
 from sklearn.ensemble import RandomForestRegressor
 rf = RandomForestRegressor(n_estimators=500, random_state=42, n_jobs=-1)
 rf.fit(reg[CONTROLS].astype(float), y)
-T[13] = pd.DataFrame(sorted(zip(CONTROLS, rf.feature_importances_), key=lambda x: -x[1]),
+T[15] = pd.DataFrame(sorted(zip(CONTROLS, rf.feature_importances_), key=lambda x: -x[1]),
                      columns=['Feature', 'Importance']).round(4)
-C['RF_top_feature'] = T[13].iloc[0]['Feature']
+C['RF_top_feature'] = T[15].iloc[0]['Feature']
 # Table 14: PRE-ANNOUNCEMENT LEAKAGE WINDOWS. Same daily abnormal-return
 # definition as the main CAR: (ret - vwretd) x100 summed over TRADING days.
 # PRIMARY anchor: trading day nearest breach_date (identical to the main CAR
@@ -345,7 +430,7 @@ def leak_cars(permno, anchor):
 base13 = crsp.copy()
 base13['rdt'] = pd.to_datetime(base13['reported_date'], errors='coerce')
 base13.loc[base13['delay_invalid'] == 1, 'rdt'] = pd.NaT
-C['T14_ann_excluded_no_reported'] = int(base13['rdt'].isna().sum())
+C['T16_ann_excluded_no_reported'] = int(base13['rdt'].isna().sum())
 panels13 = {}
 for pkey, pnl, anc, dsub in [
         ('breach', 'Breach-anchored (PRIMARY)', 'bdt', base13),
@@ -356,8 +441,8 @@ for pkey, pnl, anc, dsub in [
         if cars is not None:
             recs.append({'treated': int(r[TREAT]), **cars})
     panels13[pnl] = pd.DataFrame(recs)
-    C[f'T14_{pkey}_N'] = len(recs)
-    C[f'T14_{pkey}_excluded_history'] = len(dsub) - len(recs)
+    C[f'T16_{pkey}_N'] = len(recs)
+    C[f'T16_{pkey}_excluded_history'] = len(dsub) - len(recs)
 rows13 = []
 for pkey, pnl in [('breach', 'Breach-anchored (PRIMARY)'),
                   ('ann', 'Announcement-anchored (secondary)')]:
@@ -377,14 +462,14 @@ for pkey, pnl in [('breach', 'Breach-anchored (PRIMARY)'),
         rows13.append({'Panel': pnl, 'Window': wlab, 'Group': 'Difference (Welch)', 'N': '',
                        'Mean CAR (pp)': round(st.mean() - su.mean(), 3), 'Median': '', 'SD': '',
                        't': round(tw13, 3), 'p': round(pw13, 4)})
-        C[f'T14_{pkey}_{wkey}_mean'] = round(dfp[wcol].mean(), 4)
-        C[f'T14_{pkey}_{wkey}_p'] = round(stats.ttest_1samp(dfp[wcol], 0)[1], 4)
-        C[f'T14_{pkey}_{wkey}_diff_p'] = round(pw13, 4)
-T[14] = pd.DataFrame(rows13)
-log(f"  Table 14 leakage: breach panel N={C['T14_breach_N']} "
-    f"(excl {C['T14_breach_excluded_history']} history); ann panel N={C['T14_ann_N']} "
-    f"(excl {C['T14_ann_excluded_no_reported']} no-reported + {C['T14_ann_excluded_history']} history)")
-T[4] = pd.DataFrame([{'Hypothesis': labels[v],
+        C[f'T16_{pkey}_{wkey}_mean'] = round(dfp[wcol].mean(), 4)
+        C[f'T16_{pkey}_{wkey}_p'] = round(stats.ttest_1samp(dfp[wcol], 0)[1], 4)
+        C[f'T16_{pkey}_{wkey}_diff_p'] = round(pw13, 4)
+T[16] = pd.DataFrame(rows13)
+log(f"  Table 16 leakage: breach panel N={C['T16_breach_N']} "
+    f"(excl {C['T16_breach_excluded_history']} history); ann panel N={C['T16_ann_N']} "
+    f"(excl {C['T16_ann_excluded_no_reported']} no-reported + {C['T16_ann_excluded_history']} history)")
+T[5] = pd.DataFrame([{'Hypothesis': labels[v],
                        'Coef': C[f'{labels[v]}_coef'], 'p': C[f'{labels[v]}_p'],
                        'TOST_p_2.10': C[f'{labels[v]}_tost_p'],
                        'MDE80': C[f'{labels[v]}_mde80'], 'Status': C[f'{labels[v]}_status']}
@@ -397,59 +482,76 @@ CAPTIONS = {
         f'covariates are available for {int(crsp["firm_size_log"].notna().sum())} events and the '
         f'disclosure delay for {int(crsp["disclosure_delay_days"].notna().sum())}. CAR variables '
         'are cumulative market-adjusted abnormal returns in percentage points.'),
-    2: (f'This table reports mean and median 30-day CARs by subgroup on the regression sample '
+    2: (f'This table promotes the Stage 7 disclosure-date verification to the appendix. For '
+        f'every treated event and every untreated event at parent CIKs with three or more '
+        f'events in the sample (the documented control group), it reports the gap in days from '
+        f'the PRC breach date to the firm\'s first 8-K filed within ninety days after the '
+        f'breach, read from the cached SEC EDGAR submissions (treated N = {C["T2_treated_N"]}; '
+        f'untreated N = {C["T2_untreated_N"]}). Gap statistics are computed over events with '
+        'such a filing; the share column reports how many have one. A nearby 8-K need not '
+        'reference the breach, so this verifies filing activity rather than breach disclosure, '
+        'and no dates were changed on its basis.'),
+    3: (f'This table reports mean and median 30-day CARs by subgroup on the regression sample '
         f'(N = {len(reg)}). Each Difference row reports the difference in group means with a '
         'Welch two-sample t-test allowing unequal variances; medians are reported for each group '
         'but are not tested.'),
-    3: (f'This table reports the baseline ordinary least squares regression of the 30-day CAR on '
+    4: (f'This table reports the baseline ordinary least squares regression of the 30-day CAR on '
         f'the four hypothesis variables and three accounting controls, estimated on the '
         f'regression sample (N = {len(reg)}) with HC3 heteroskedasticity-robust standard errors.'),
-    4: (f'This table summarizes the four hypothesis tests from the baseline HC3 regression on the '
+    5: (f'This table summarizes the four hypothesis tests from the baseline HC3 regression on the '
         f'regression sample (N = {len(reg)}). TOST p-values test equivalence against the +/-2.10 '
         'percentage-point bound, which was fixed from the prior literature before the rebuilt '
         'estimates existed; MDE80 is the minimum detectable effect at 80 percent power.'),
-    5: ('This table re-estimates the baseline specification with HC3 standard errors on '
+    6: (f'This table estimates the disclosure-timing effect separately by regulatory regime, '
+        f'with HC3 standard errors throughout. The baseline specification is estimated on '
+        f'treated events only (fcc_form499 = 1, N = {C["T6_treated_N"]}), on untreated events '
+        f'only (N = {C["T6_untreated_N"]}), and pooled on the full regression sample '
+        f'(N = {len(reg)}) with an immediate_disclosure-by-fcc_form499 interaction. '
+        'fcc_form499 is dropped from the subsample specifications because it is constant '
+        'within each subsample; any other control without variation within a subsample is '
+        'likewise dropped.'),
+    7: ('This table re-estimates the baseline specification with HC3 standard errors on '
         'restricted samples; each row reports its own N. Controls without variation within a '
         'restricted sample are dropped from that row.'),
-    6: (f'This table reports p-values from the baseline specification on the regression sample '
+    8: (f'This table reports p-values from the baseline specification on the regression sample '
         f'(N = {len(reg)}) under alternative standard-error methods: classical OLS, HC1, HC3, '
         f'and clustering by parent CIK ({reg["final_cik"].nunique()} clusters).'),
-    7: ('This table reports the immediate-disclosure coefficient from the baseline specification '
+    9: ('This table reports the immediate-disclosure coefficient from the baseline specification '
         '(HC3 standard errors), estimated separately within firm-size quartiles of the regression '
         'sample. Treated event counts are reported because treated events concentrate in the '
         'larger quartiles; controls without variation within a quartile are dropped.'),
-    8: ('This table reports the Form 499 coefficient from the baseline specification (HC3 '
+    10: ('This table reports the Form 499 coefficient from the baseline specification (HC3 '
         'standard errors), estimated separately within firm-size quartiles of the regression '
         'sample. Treated event counts are reported because treated events concentrate in the '
         'larger quartiles; controls without variation within a quartile are dropped.'),
-    9: (f'This table compares the Form 499 coefficient from the baseline HC3 specification with '
+    11: (f'This table compares the Form 499 coefficient from the baseline HC3 specification with '
         f'a specification adding calendar-year fixed effects, both estimated on the regression '
         f'sample (N = {len(reg)}).'),
-    10: (f'This table adds breach severity, measured as the maximum records-affected count '
+    12: (f'This table adds breach severity, measured as the maximum records-affected count '
          f'across source filings, to the baseline HC3 specification (N = {int(msv.nobs)}). The '
          'pre-audit industry-concentration (HHI) control was retired with the pre-audit chain '
          'and does not appear in v3.'),
-    11: (f'This table adds month-level Fama-French three-factor values (Mkt-RF, SMB, and HML) to '
+    13: (f'This table adds month-level Fama-French three-factor values (Mkt-RF, SMB, and HML) to '
          f'the baseline HC3 specification (N = {int(m10.nobs)}). Every regression-sample event '
          'month matched the factor file, so no observations are lost.'),
-    12: (f'This table regresses abnormal log share turnover on the baseline covariates with HC3 '
+    14: (f'This table regresses abnormal log share turnover on the baseline covariates with HC3 '
          f'standard errors (N = {int(mv.nobs)}). Abnormal turnover is the mean log turnover over '
          'event trading days [-5, +25] minus the mean over estimation days [-240, -60]; '
          f'{len(reg) - int(mv.nobs)} regression-sample events lacking sufficient volume history '
          'are excluded.'),
-    13: (f'This table reports random forest feature importances (500 trees, fixed seed 42) for '
+    15: (f'This table reports random forest feature importances (500 trees, fixed seed 42) for '
          f'the seven baseline covariates predicting the 30-day CAR on the regression sample '
          f'(N = {len(reg)}). Importances are descriptive and carry no causal interpretation.'),
-    14: ('This table reports cumulative market-adjusted abnormal returns (daily CRSP return '
+    16: ('This table reports cumulative market-adjusted abnormal returns (daily CRSP return '
          'minus the CRSP value-weighted market return, x100, summed over trading days) over '
          'three pre-event windows. In the primary panel, day 0 is the trading day nearest the '
          'breach date, identical to the main CAR anchor with its +/-50 calendar-day pull. In the '
          'secondary panel, day 0 is the trading day nearest the reported date; '
-         f'{C["T14_ann_excluded_no_reported"]} of {len(base13)} CRSP-sample events are excluded '
+         f'{C["T16_ann_excluded_no_reported"]} of {len(base13)} CRSP-sample events are excluded '
          'for a missing or invalid reported date (including delay_invalid = 1 wrong-field '
          'records). Events lacking 30 complete pre-anchor trading days of abnormal returns are '
-         f'excluded listwise per panel (breach-anchored: {C["T14_breach_excluded_history"]}; '
-         f'announcement-anchored: {C["T14_ann_excluded_history"]}).'),
+         f'excluded listwise per panel (breach-anchored: {C["T16_breach_excluded_history"]}; '
+         f'announcement-anchored: {C["T16_ann_excluded_history"]}).'),
 }
 for i, t in T.items():
     cap = {c: '' for c in t.columns}

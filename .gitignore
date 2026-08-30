@@ -110,6 +110,7 @@ outputs/recovered/
 scripts/13[0-9]_*.py
 scripts/140_consolidate_final.py
 Data/processed/chronology_*
+Data/processed/stooq_delisted_outcomes.csv
 Data/yfinance/
 outputs/chronology_*
 outputs/frn_verification_decisions.csv

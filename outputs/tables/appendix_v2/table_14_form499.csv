@@ -1,0 +1,5 @@
+Hypothesis,Coefficient (pp),SE,p (test of zero),MDE 80% (pp),TOST p (±2.10pp),Status
+H1 Immediate disclosure,0.614,0.8728,0.4817,2.4439,0.0446,Bounded null
+H2 FCC regulation (Form 499),-0.4234,0.7544,0.5747,2.1124,0.0133,Bounded null
+H3 Prior breaches,0.0315,0.0683,0.6448,0.1913,0.0,Bounded null
+H4 Health breach,-0.3901,1.6341,0.8113,4.5756,0.1479,Inconclusive

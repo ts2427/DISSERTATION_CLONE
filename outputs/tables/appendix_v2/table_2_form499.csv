@@ -1,0 +1,13 @@
+Comparison,Group,Mean CAR,SE,CI Lower,CI Upper,N
+Form 499 status,Form 499 filer,-0.5337,0.6071,-1.7237,0.6563,115
+Form 499 status,Non-filer,-0.2258,0.4004,-1.0106,0.559,533
+Form 499 status,Difference (Welch t),-0.3079,-,-,-,"t=-0.42, p=0.672"
+Disclosure speed,Immediate (<=7d),0.1147,0.7237,-1.3037,1.5331,146
+Disclosure speed,Delayed (>7d),-0.3954,0.3947,-1.1691,0.3783,502
+Disclosure speed,Difference (Welch t),0.5101,-,-,-,"t=0.62, p=0.537"
+Breach type,Health,-0.9399,1.5363,-3.9511,2.0712,38
+Breach type,Non-health,-0.2394,0.3556,-0.9363,0.4576,610
+Breach type,Difference (Welch t),-0.7006,-,-,-,"t=-0.44, p=0.659"
+History,"Any prior breach, 1yr (count>0)",-0.0296,0.4866,-0.9834,0.9242,208
+History,"No prior breach, 1yr",-0.399,0.4556,-1.292,0.4939,440
+History,Difference (Welch t),0.3694,-,-,-,"t=0.55, p=0.580"

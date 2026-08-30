@@ -1,0 +1,8 @@
+Variable,Coefficient,SE,P-value
+fcc_form499,-0.0456,0.0335,0.1741
+immediate_disclosure,0.0235,0.0349,0.501
+prior_breaches_1yr,-0.0051,0.0026,0.0549
+health_breach,-0.0029,0.0555,0.958
+firm_size_log,0.0219,0.0144,0.1265
+leverage,-0.0288,0.0596,0.6288
+roa,-0.0959,0.534,0.8575

@@ -1,3 +1,6 @@
-Added control,FCC coef,FCC p,Control p,N,Note
-Records affected (max across filings),-0.2695,0.8386,0.9534,338,HHI retired with pre-audit chain
-CAPTION,"This table adds breach severity, measured as the maximum records-affected count across source filings, to the baseline HC3 specification (N = 338). The pre-audit industry-concentration (HHI) control was retired with the pre-audit chain and does not appear in v3.",,,,
+Quartile,Coef,p,N,Treated N
+Q1,2.845,0.555,86,2
+Q2,3.935,0.172,84,14
+Q3,0.804,0.808,83,29
+Q4,1.983,0.442,85,59
+CAPTION,"This table reports the Form 499 coefficient from the baseline specification (HC3 standard errors), estimated separately within firm-size quartiles of the regression sample. Treated event counts are reported because treated events concentrate in the larger quartiles; controls without variation within a quartile are dropped.",,,

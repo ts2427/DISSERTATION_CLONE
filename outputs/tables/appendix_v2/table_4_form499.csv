@@ -1,0 +1,9 @@
+Restriction,Timing Coefficient,SE,P-value,N
+Full sample,0.614,0.8728,0.4817,648
+Exclude largest decile,0.4118,0.9375,0.6605,583
+Exclude smallest decile,0.2306,0.8705,0.791,583
+Exclude outliers (3 SD),0.2604,0.7858,0.7404,637
+Form 499 filers only,-1.1304,1.5173,0.4563,115
+Non-filers only,1.1037,1.0614,0.2984,533
+Non-health breaches,0.41,0.8995,0.6485,610
+Prior breach history,0.4623,1.0248,0.652,208

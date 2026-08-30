@@ -1,10 +1,14 @@
-Variable,Coef,SE,p
-const,-1.1918,4.31,0.7822
-fcc_form499,-0.2663,1.3225,0.8404
-immediate_disclosure,0.9641,0.9894,0.3298
-prior_breaches_1yr,0.0238,0.0638,0.7092
-health_breach,-1.0553,2.6194,0.687
-firm_size_log,0.0313,0.3596,0.9307
-leverage,-0.1029,2.1287,0.9614
-roa,7.6509,5.4405,0.1596
-CAPTION,"This table reports the baseline ordinary least squares regression of the 30-day CAR on the four hypothesis variables and three accounting controls, estimated on the regression sample (N = 338) with HC3 heteroskedasticity-robust standard errors.",,
+Comparison,Group,Mean CAR,Median CAR,N,Welch diff,Welch p
+Form 499,Filer,-0.545,-0.242,104,,
+Form 499,Non-filer,0.014,0.412,234,,
+Form 499,Difference,-0.559,,,-0.557,0.578
+Timing,Immediate,0.387,1.398,123,,
+Timing,Delayed,-0.47,-0.459,215,,
+Timing,Difference,0.858,,,0.912,0.3629
+Health,Health,-1.541,0.428,15,,
+Health,Non-health,-0.094,0.145,323,,
+Health,Difference,-1.447,,,-0.627,0.54
+History,Any prior,0.278,0.446,203,,
+History,No prior,-0.814,-0.537,135,,
+History,Difference,1.092,,,1.1,0.2725
+CAPTION,This table reports mean and median 30-day CARs by subgroup on the regression sample (N = 338). Each Difference row reports the difference in group means with a Welch two-sample t-test allowing unequal variances; medians are reported for each group but are not tested.,,,,,

@@ -1,6 +1,10 @@
-Hypothesis,Coef,p,TOST_p_2.10,MDE80,Status
-H2_FCC,-0.2663,0.8404,0.0833,3.703,NULL-INCONCLUSIVE
-H1_timing,0.9641,0.3298,0.1259,2.7702,NULL-INCONCLUSIVE
-H3_prior,0.0238,0.7092,0.0,0.1786,BOUNDED NULL
-H4_health,-1.0553,0.687,0.3451,7.3343,NULL-INCONCLUSIVE
-CAPTION,"This table summarizes the four hypothesis tests from the baseline HC3 regression on the regression sample (N = 338). TOST p-values test equivalence against the +/-2.10 percentage-point bound, which was fixed from the prior literature before the rebuilt estimates existed; MDE80 is the minimum detectable effect at 80 percent power.",,,,
+Variable,Coef,SE,p
+const,-1.1918,4.31,0.7822
+fcc_form499,-0.2663,1.3225,0.8404
+immediate_disclosure,0.9641,0.9894,0.3298
+prior_breaches_1yr,0.0238,0.0638,0.7092
+health_breach,-1.0553,2.6194,0.687
+firm_size_log,0.0313,0.3596,0.9307
+leverage,-0.1029,2.1287,0.9614
+roa,7.6509,5.4405,0.1596
+CAPTION,"This table reports the baseline ordinary least squares regression of the 30-day CAR on the four hypothesis variables and three accounting controls, estimated on the regression sample (N = 338) with HC3 heteroskedasticity-robust standard errors.",,

@@ -1,0 +1,6 @@
+Specification,FCC Coefficient,SE,P-value,N
+Baseline (HC3),-0.4234,0.7544,0.5747,648
++ Industry FE (SIC3),3.2643,2.2623,0.1491,648
++ Year FE,-1.0911,0.8387,0.1933,648
++ Industry and Year FE,2.304,2.2381,0.3033,648
+"PS matched (1:1 NN, no replacement)",-0.6553,0.983,0.5063,115 pairs

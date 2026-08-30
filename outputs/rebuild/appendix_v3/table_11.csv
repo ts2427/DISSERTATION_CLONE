@@ -1,4 +1,4 @@
-Model,FCC p,ROA p
-Baseline,0.8404,0.1596
-FF3 controls,0.7358,0.1151
-CAPTION,"This table adds month-level Fama-French three-factor values (Mkt-RF, SMB, and HML) to the baseline HC3 specification (N = 338). Every regression-sample event month matched the factor file, so no observations are lost.",
+Spec,FCC coef,p
+Baseline HC3,-0.2663,0.8404
++ Year FE,-0.9976,0.4396
+CAPTION,"This table compares the Form 499 coefficient from the baseline HC3 specification with a specification adding calendar-year fixed effects, both estimated on the regression sample (N = 338).",

@@ -1,9 +1,4 @@
-Feature,Importance
-roa,0.331
-firm_size_log,0.2428
-leverage,0.2045
-prior_breaches_1yr,0.1476
-immediate_disclosure,0.0443
-fcc_form499,0.0172
-health_breach,0.0126
-CAPTION,"This table reports random forest feature importances (500 trees, fixed seed 42) for the seven baseline covariates predicting the 30-day CAR on the regression sample (N = 338). Importances are descriptive and carry no causal interpretation."
+Model,FCC p,ROA p
+Baseline,0.8404,0.1596
+FF3 controls,0.7358,0.1151
+CAPTION,"This table adds month-level Fama-French three-factor values (Mkt-RF, SMB, and HML) to the baseline HC3 specification (N = 338). Every regression-sample event month matched the factor file, so no observations are lost.",

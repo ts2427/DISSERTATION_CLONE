@@ -1,0 +1,5 @@
+Model,FCC Coefficient,SE,P-value,Timing Coefficient,Timing P-value,N
+"Market-adjusted (baseline, factor subsample)",-0.4234,0.7544,0.5747,0.614,0.4817,648
+FF3 controls,-0.261,0.7742,0.736,0.6476,0.4612,648
+Carhart 4-factor controls,-0.1941,0.7821,0.804,0.6813,0.4379,648
+FF5 controls,-0.2549,0.7815,0.7442,0.6874,0.4336,648

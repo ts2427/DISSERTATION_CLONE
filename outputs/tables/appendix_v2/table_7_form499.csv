@@ -1,0 +1,5 @@
+Size Quartile,FCC Coefficient,SE,P-value,N,Treated N,Treated Orgs,Treated Parent CIKs
+Q1,-0.0742,2.5393,0.9767,162,23,13,8
+Q2,0.5873,3.4559,0.8651,162,11,7,2
+Q3,2.052,1.9973,0.3042,162,23,11,3
+Q4,-0.2336,1.0917,0.8306,162,58,16,4

@@ -1,0 +1,25 @@
+Panel,Variable,N,Mean,SD,Min,Median,Max
+A: Full sample,car_30d,672,-0.3961,8.9316,-42.5551,0.18,34.0505
+A: Full sample,car_5d,672,-0.0799,4.1974,-26.4131,-0.0484,14.2089
+A: Full sample,firm_size_log,713,10.4694,1.2757,5.0063,10.3786,14.7407
+A: Full sample,leverage,716,0.7188,0.2444,0.1204,0.6853,2.5183
+A: Full sample,roa,716,0.01,0.0358,-0.3346,0.0072,0.2077
+A: Full sample,disclosure_delay_days,779,119.5096,225.0441,-1220,55.0,2153
+A: Full sample,records_affected_numeric,779,3337544.1142,41454972.9628,0,19.0,1000000000
+A: Full sample,Form 499 treated (count),779,127.0,-,-,-,-
+A: Full sample,Immediate disclosure (count),779,190.0,-,-,-,-
+A: Full sample,Health breach (count),779,48.0,-,-,-,-
+A: Full sample,Prior breach 1yr (count),779,94.0,-,-,-,-
+B: CRSP sample,car_30d,672,-0.3961,8.9316,-42.5551,0.18,34.0505
+B: CRSP sample,car_5d,672,-0.0799,4.1974,-26.4131,-0.0484,14.2089
+B: CRSP sample,firm_size_log,648,10.5254,1.2416,5.6397,10.398,14.7407
+B: CRSP sample,leverage,650,0.7221,0.2392,0.139,0.6927,2.5183
+B: CRSP sample,roa,650,0.0108,0.0357,-0.3346,0.007,0.2077
+B: CRSP sample,disclosure_delay_days,672,126.8839,229.9708,-4,57.0,2153
+B: CRSP sample,records_affected_numeric,672,3548705.0982,44373771.9034,0,23.5,1000000000
+B: CRSP sample,Form 499 treated (count),672,118.0,-,-,-,-
+B: CRSP sample,Immediate disclosure (count),672,155.0,-,-,-,-
+B: CRSP sample,Health breach (count),672,40.0,-,-,-,-
+B: CRSP sample,Prior breach 1yr (count),672,80.0,-,-,-,-
+B: CRSP sample,Form 499 treated organizations (unique org_name),-,37.0,-,-,-,-
+B: CRSP sample,Form 499 treated parent filers (unique CIK),-,12.0,-,-,-,-

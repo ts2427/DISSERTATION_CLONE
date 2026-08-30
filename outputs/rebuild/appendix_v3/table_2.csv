@@ -1,14 +1,4 @@
-Comparison,Group,Mean CAR,Median CAR,N,Welch diff,Welch p
-Form 499,Filer,-0.545,-0.242,104,,
-Form 499,Non-filer,0.014,0.412,234,,
-Form 499,Difference,-0.559,,,-0.557,0.578
-Timing,Immediate,0.387,1.398,123,,
-Timing,Delayed,-0.47,-0.459,215,,
-Timing,Difference,0.858,,,0.912,0.3629
-Health,Health,-1.541,0.428,15,,
-Health,Non-health,-0.094,0.145,323,,
-Health,Difference,-1.447,,,-0.627,0.54
-History,Any prior,0.278,0.446,203,,
-History,No prior,-0.814,-0.537,135,,
-History,Difference,1.092,,,1.1,0.2725
-CAPTION,This table reports mean and median 30-day CARs by subgroup on the regression sample (N = 338). Each Difference row reports the difference in group means with a Welch two-sample t-test allowing unequal variances; medians are reported for each group but are not tested.,,,,,
+Group,N,Median gap (days),Mean gap (days),Share with 8-K in 90d
+Treated (Form 499),116,15.0,22.46,0.9914
+"Untreated (control CIKs, 3+ events)",219,26.0,30.16,0.9178
+CAPTION,"This table promotes the Stage 7 disclosure-date verification to the appendix. For every treated event and every untreated event at parent CIKs with three or more events in the sample (the documented control group), it reports the gap in days from the PRC breach date to the firm's first 8-K filed within ninety days after the breach, read from the cached SEC EDGAR submissions (treated N = 116; untreated N = 219). Gap statistics are computed over events with such a filing; the share column reports how many have one. A nearby 8-K need not reference the breach, so this verifies filing activity rather than breach disclosure, and no dates were changed on its basis.",,,
