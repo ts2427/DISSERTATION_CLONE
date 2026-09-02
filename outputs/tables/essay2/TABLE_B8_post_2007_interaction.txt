@@ -1,25 +1,19 @@
-TABLE B8: POST-2007 INTERACTION TEST - ISOLATING REGULATORY EFFECT FROM INDUSTRY EFFECT
-Dependent Variable: 30-Day Cumulative Abnormal Returns (CAR)
-Tests whether FCC penalty emerges after 2007 regulation (supporting causal effect) or existed before (industry effect)
+TOMBSTONE — RETIRED 2026-09-02. DO NOT CITE.
 
-Model                                  N    FCC Coefficient    Std Error    P-Value    R²     Sig
-----------------------------------------------------------------------------------------------------
-Model 1: Full Sample (2004-2025)       653      -2.1948             1.0196     0.0313   0.0214   **
-Model 3: Post-2007 (2007+)            649      -2.1372             1.0344     0.0388   0.0223   **
+This file was the post-2007 interaction ("natural experiment validation") table, pre-rebuild CAR chain.
 
-Model 4: Interaction Specification - FCC × Post-2007
-----------------------------------------------------------------------------------------------------
-FCC Main Effect (Pre-2007):              -14.7147            12.0044     0.2203                
-FCC × Post-2007 Interaction:              12.6191            12.1083     0.2973                
-Implied Post-2007 FCC Effect:             -2.0956   (Main + Interaction)
-R²:                                    0.0249
+Every number and claim it carried is SUPERSEDED. The pre-rebuild chain it
+described (1,054 -> 784 -> 779 -> 672 -> 648; SIC/name-token treatment;
+"Rule 37.3"/"September 28, 2007"/natural-experiment framing) was replaced
+on 8/17-8/30/2026 by the canonical v3 rebuild:
+  1,054 records -> 758 (Gate 1 entity verification) -> 524 (CIK+date
+  dedup) -> 489 canonical events; treatment = FCC Form 499 registration
+  (scripts/154); rule date = December 8, 2007 (47 CFR 64.2011).
 
-Notes: FCC regulation (47 CFR § 64.2011) became effective in 2007. If the FCC penalty reflects regulatory burden,
-the coefficient should be non-significant pre-2007 and significant post-2007. If the penalty reflects industry
-characteristics, the coefficient should be similar across both periods.
+Current authoritative artifacts:
+  - outputs/rebuild/constants_v3.json          (Essay 1: 489 / 354 / 338)
+  - outputs/tables/appendix_v3/                (Essay 1 appendix)
+  - outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md  (Essay 2: 489 / 366 / 333)
+  - outputs/tables/essay2_v2/ and the ESSAY2_*.md reports (commit 115a72f)
 
-Key Finding: FCC effect emerges after regulation (Model 3 > Model 2), supporting interpretation that
-the penalty comes from regulatory constraints, not pre-existing industry characteristics.
-
-Standard errors (HC3 heteroskedasticity-consistent) in columns.
-Significance levels: * p<0.10, ** p<0.05, *** p<0.01
+Original content: git history at this path (commits before 2026-09-02).

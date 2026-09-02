@@ -1,40 +1,19 @@
-================================================================================
-COMPREHENSIVE CAUSAL IDENTIFICATION SUMMARY
-FCC Rule 37.3 as Natural Experiment
-================================================================================
+TOMBSTONE — RETIRED 2026-09-02. DO NOT CITE.
 
-To strengthen causal interpretation of FCC regulation effect, we implement
-three identification strategies:
+This file was the "FCC Rule 37.3 as Natural Experiment" causal-ID summary (essay2 label = CAR essay under the OLD numbering).
 
-1. TEMPORAL VALIDATION (TABLE B8)
---------------------------------------------------------------------------------
-   Strategy: Test if FCC coefficient emerges ONLY after 2007 regulation
-   Result: FCC effect significant post-2007 (-2.26%, p=0.0125)
-           FCC effect not significant pre-2007
-   Interpretation: Temporal pattern supports CAUSAL effect of regulation
+Every number and claim it carried is SUPERSEDED. The pre-rebuild chain it
+described (1,054 -> 784 -> 779 -> 672 -> 648; SIC/name-token treatment;
+"Rule 37.3"/"September 28, 2007"/natural-experiment framing) was replaced
+on 8/17-8/30/2026 by the canonical v3 rebuild:
+  1,054 records -> 758 (Gate 1 entity verification) -> 524 (CIK+date
+  dedup) -> 489 canonical events; treatment = FCC Form 499 registration
+  (scripts/154); rule date = December 8, 2007 (47 CFR 64.2011).
 
-2. INDUSTRY CONTROLS (TABLE above)
---------------------------------------------------------------------------------
-   Strategy: Add 2-digit SIC industry fixed effects
-   Result: FCC coefficient -1.8780 -> -1.8986
-   Interpretation: Effect STABLE with industry controls
+Current authoritative artifacts:
+  - outputs/rebuild/constants_v3.json          (Essay 1: 489 / 354 / 338)
+  - outputs/tables/appendix_v3/                (Essay 1 appendix)
+  - outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md  (Essay 2: 489 / 366 / 333)
+  - outputs/tables/essay2_v2/ and the ESSAY2_*.md reports (commit 115a72f)
 
-3. SIZE SENSITIVITY (TABLE above)
---------------------------------------------------------------------------------
-   Strategy: Test if FCC effect robust across firm size quartiles
-   Sample: FCC firms 2.02x larger than non-FCC (p<0.0001)
-   Result: FCC effect present in 1 of 4 size quartiles
-   Interpretation: Effect partially driven by size difference
-
-OVERALL CONCLUSION:
---------------------------------------------------------------------------------
-Using three complementary identification strategies, we establish that the
-FCC regulatory penalty reflects the causal effect of FCC Rule 37.3, not
-confounding from industry characteristics or firm size. The natural experiment
-design is robust to alternative specifications.
-
-  Temporal:      CHECK FCC effect emerges post-regulation only
-  Industry:      CHECK Effect stable with industry controls
-  Size:          VARIATION Effect robust across firm sizes
-
-================================================================================
+Original content: git history at this path (commits before 2026-09-02).

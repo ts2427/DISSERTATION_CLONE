@@ -1,23 +1,19 @@
-TABLE B8: POST-2007 INTERACTION TEST - VOLATILITY OUTCOMES
-Dependent Variable: Volatility Change (Post-Breach Volatility - Pre-Breach Volatility)
-Tests whether FCC effect emerges after 2007 regulation (supporting causal effect) or existed before (industry effect)
+TOMBSTONE — RETIRED 2026-09-02. DO NOT CITE.
 
-Model                                  N    FCC Coefficient    Std Error    P-Value    R²     Sig
-----------------------------------------------------------------------------------------------------
-Model 1: Full Sample (2004-2025)       649       0.3313             1.1275     0.7689   0.4215   
-Model 3: Post-2007 (2007+)            645       0.1206             1.1258     0.9147   0.4235   
+This file was the post-2007 interaction table, pre-rebuild volatility chain.
 
-Model 4: Interaction Specification - FCC × Post-2007
-----------------------------------------------------------------------------------------------------
-FCC Main Effect (Pre-2007):               13.6264            18.7103     0.4664                
-FCC × Post-2007 Interaction:             -13.4815            18.7794     0.4728                
-Implied Post-2007 FCC Effect:              0.1449   (Main + Interaction)
-R²:                                    0.4265
+Every number and claim it carried is SUPERSEDED. The pre-rebuild chain it
+described (1,054 -> 784 -> 779 -> 672 -> 648; SIC/name-token treatment;
+"Rule 37.3"/"September 28, 2007"/natural-experiment framing) was replaced
+on 8/17-8/30/2026 by the canonical v3 rebuild:
+  1,054 records -> 758 (Gate 1 entity verification) -> 524 (CIK+date
+  dedup) -> 489 canonical events; treatment = FCC Form 499 registration
+  (scripts/154); rule date = December 8, 2007 (47 CFR 64.2011).
 
-Notes: FCC regulation (47 CFR § 64.2011) became effective in 2007. If the FCC effect on volatility reflects
-regulatory burden, the coefficient should be non-significant pre-2007 and significant post-2007. If it reflects
-industry characteristics, the coefficient should be similar across both periods.
+Current authoritative artifacts:
+  - outputs/rebuild/constants_v3.json          (Essay 1: 489 / 354 / 338)
+  - outputs/tables/appendix_v3/                (Essay 1 appendix)
+  - outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md  (Essay 2: 489 / 366 / 333)
+  - outputs/tables/essay2_v2/ and the ESSAY2_*.md reports (commit 115a72f)
 
-Control Variables: immediate_disclosure, firm_size_log, leverage, roa, return_volatility_pre
-Standard errors (HC3 heteroskedasticity-consistent).
-Significance levels: * p<0.10, ** p<0.05, *** p<0.01
+Original content: git history at this path (commits before 2026-09-02).
