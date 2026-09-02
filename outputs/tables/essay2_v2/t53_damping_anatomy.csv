@@ -1,0 +1,17 @@
+dimension,cell,n,mean_elev,median,share_negative
+year,2006-2010,16,-0.148,-0.088,0.56
+year,2011-2015,40,-0.077,-0.167,0.65
+year,2016-2019,94,-0.156,-0.066,0.54
+year,2020-2024,79,-0.109,-0.139,0.56
+industry,finance/insurance (SIC 60-67),7,-0.146,0.006,0.43
+industry,retail (52-59),2,-0.141,-0.141,0.5
+industry,manufacturing (20-39),36,-0.146,-0.116,0.61
+industry,services/tech (70-79),124,-0.039,-0.067,0.55
+industry,health (80),0,,,
+industry,transport/utilities/comm (40-49),49,-0.322,-0.173,0.61
+industry,other/unclassified,11,-0.135,-0.394,0.55
+breach-size quintile,d1-2 (smallest),46,-0.05,-0.029,0.5
+breach-size quintile,d3-4,46,-0.15,-0.2,0.67
+breach-size quintile,d5-6,45,-0.149,-0.056,0.51
+breach-size quintile,d7-8,46,-0.213,-0.144,0.54
+breach-size quintile,d9-10 (largest),46,-0.065,-0.122,0.61

@@ -1,0 +1,10 @@
+sample,outcome,coef,se,ci_lo,ci_hi,n,n_treated,treated_orgs,treated_parents,mde80
+"ITT (entity-level, all treated events)",e2_vol_change,0.1575,0.1971,-0.2347,0.5497,333,102,35,11,0.559
+STRICT intent scope (HACK/INSD/CARD; DISC & PHYS/PORT/STAT dropped),e2_vol_change,0.1429,0.2223,-0.2994,0.5852,314,83,31,11,0.6304
+LENIENT intent scope (+ PHYS/PORT/STAT; DISC dropped),e2_vol_change,0.1445,0.1983,-0.2502,0.5392,331,100,34,11,0.5625
+STRICT intent scope (HACK/INSD/CARD; DISC & PHYS/PORT/STAT dropped),cpqs_chg,0.0,0.0,-0.0,0.0001,314,83,31,11,0.0001
+STRICT intent scope (HACK/INSD/CARD; DISC & PHYS/PORT/STAT dropped),edge_chg,0.0007,0.0021,-0.0035,0.0049,314,83,31,11,0.006
+STRICT intent scope (HACK/INSD/CARD; DISC & PHYS/PORT/STAT dropped),ocam_chg,-0.0278,0.0713,-0.1697,0.114,314,83,31,11,0.2021
+LENIENT intent scope (+ PHYS/PORT/STAT; DISC dropped),cpqs_chg,0.0001,0.0001,-0.0,0.0002,331,100,34,11,0.0002
+LENIENT intent scope (+ PHYS/PORT/STAT; DISC dropped),edge_chg,0.0018,0.0023,-0.0028,0.0065,331,100,34,11,0.0066
+LENIENT intent scope (+ PHYS/PORT/STAT; DISC dropped),ocam_chg,-0.0467,0.0668,-0.1796,0.0863,331,100,34,11,0.1895

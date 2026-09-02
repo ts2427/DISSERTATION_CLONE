@@ -1,0 +1,5 @@
+panel,n,n_treated,main,main_se,q1,q2,q3,q4
+(i)  pre-dedup + SIC treatment,891,183,1.612,0.911,7.65,2.86,-2.05,-3.51
+(ii) pre-dedup + Form 499 (family-level reconstruction),891,180,0.016,0.919,0.13,2.86,-3.19,-3.79
+(iii) dedup + SIC treatment (record-modal SIC),337,103,2.614,1.814,-13.08,8.57,8.91,5.02
+(iv) dedup + Form 499 (canonical),337,104,3.259,1.745,-13.08,6.35,8.91,6.6

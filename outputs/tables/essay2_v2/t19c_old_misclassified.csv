@@ -1,0 +1,4 @@
+cell,n,orgs,mean_size,mean_pre_vol,mean_vol_change
+"SIC-treated, NOT registered (manufactured)",17,11,10.17,38.3,5.06
+SIC-treated AND registered (concordant),167,38,11.16,24.3,-0.39
+control (neither),700,319,10.39,28.4,-1.95

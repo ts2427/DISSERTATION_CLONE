@@ -1,0 +1,7 @@
+spec,coef,se,ci_lo,ci_hi,n,n_treated
+"S1 PRIMARY: abnormal vol, mkt-vol control, year FE, two-way",0.0855,0.1856,-0.2839,0.4549,331,102
+S1 excl. 2008-09 & 2020,0.0605,0.1878,-0.3136,0.4346,305,88
+"raw-vol robustness row (Dai et al., Financial Review)",0.0143,0.1817,-0.3475,0.376,331,102
+"Query-2 headline (raw log-ret DV, CV1 firm) for continuity",0.1575,0.1971,-0.2347,0.5497,333,102
+"S2 baseline [-120,-60]",0.065,0.1961,-0.3255,0.4554,331,102
+"S2 baseline [-250,-50]",0.0767,0.2039,-0.3292,0.4826,328,101

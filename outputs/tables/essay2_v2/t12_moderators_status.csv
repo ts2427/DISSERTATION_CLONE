@@ -1,0 +1,6 @@
+moderator,status,n,reason
+Breach complexity (CVSS),NOT REGENERABLE,0,"NVD/CVSS columns and scripts (99, 105) retired at Rebuild Stage 0; no CVE linkage exists in CANONICAL_V3. The old claim that this ran on the full N=891 while being defined only for CVE-linked breaches was internally contradictory."
+Media coverage,NOT REGENERABLE,0,Constructed on the pre-audit dataset (script 101); source columns absent from CANONICAL_V3; no committed pipeline produces them.
+Governance quality (SOX 404 proxy),NOT REGENERABLE,0,Old-draft construct; no source data in canonical chain.
+Information-environment composite,NOT REGENERABLE,0,"Script 106 construct on pre-audit base. The old draft reported p=.275 in prose vs p=.0589 in the table for this interaction — neither value survives; retired, not carried forward."
+Reputation weakness,NOT REGENERABLE,0,Old-draft construct (its table row also printed R2=.0156 against ~.39 for every other row — a different-model artifact); no canonical source.

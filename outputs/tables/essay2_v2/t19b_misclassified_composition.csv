@@ -1,0 +1,5 @@
+cell,n,orgs,mean_size,median_size,mean_pre_vol,mean_vol_change
+"SIC-treated, NOT registered (the manufactured group)",6,3,12.26,12.25,16.2,-1.7
+SIC-treated AND registered (concordant treated),98,32,11.72,12.17,30.7,-3.78
+"registered, NOT SIC-treated (missed by SIC)",7,4,10.04,9.36,35.9,-3.52
+neither (concordant control),228,91,9.59,9.01,28.6,-2.95

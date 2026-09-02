@@ -1,0 +1,7 @@
+coef,procedure,se,ci_lo,ci_hi,p,bias
+0.1575,HC3 (heteroskedasticity-only),0.1304,-0.0991,0.4141,0.2281,"ignores within-parent correlation -> SE too SMALL, p too small"
+0.1575,"CV1 cluster (parent CIK), t(80)",0.1971,-0.2347,0.5497,0.4265,downward-biased SE with few/unbalanced treated clusters
+0.1575,"CV3 jackknife, t(80)",0.2331,-0.3065,0.6215,0.5012,conservative; MNW-recommended corroborating interval
+0.1575,"WCR wild cluster bootstrap (restricted, Rademacher, B=99,999)",,-0.2623,0.5717,0.4776,under-rejects with very few treated clusters (G1=11 is safe)
+0.1575,"WCU wild cluster bootstrap (unrestricted, B=99,999)",,,,0.5683,over-rejects with few treated clusters — opposite failure mode
+0.1575,"WCR, Webb six-point weights (B=9,999)",,,,0.4822,"robustness row; 2^G limit is on total G=81, not G1"

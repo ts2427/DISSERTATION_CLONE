@@ -1,0 +1,4 @@
+outcome,coef,se,ci_lo,ci_hi,p,n,n_treated,G,bh_threshold,bh_reject
+CPQS change,4.8e-05,3.3e-05,-1.9e-05,0.000114,0.158163,333,102,81,0.016667,False
+log-OCAM change,-0.067594,0.091941,-0.250562,0.115374,0.464372,333,102,81,0.033333,False
+EDGE change,0.002125,0.002914,-0.003673,0.007924,0.467896,333,102,81,0.05,False

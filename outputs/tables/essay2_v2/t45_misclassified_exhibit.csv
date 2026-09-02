@@ -1,0 +1,14 @@
+organization,sic_code,business_description,form_499_status
+ATT-SecurityBreach,4813,"malformed source record (org name is a breach label, not a company) — data-quality artifact",not a firm
+ATT-SecurityBreach2,4813,malformed source record — data-quality artifact,not a firm
+"Aero Charter, Inc.",4833,on-demand air charter operator,never a Form 499 filer (adjudicated out)
+"Charter Next Generation, Inc.",4833,specialty plastic films and packaging manufacturer,no Form 499 registration
+Comcast Cable Communications LLC,4841,cable broadband/television operator,"family IS Form 499 treated — lands here via a record-join gap (attribution caveat, stated)"
+"Comcast Cable Communications, Inc.",4841,cable broadband/television operator,family IS Form 499 treated — record-join gap (caveat)
+DISH Network Corporation,4841,satellite pay-television provider,adjudicated NOT treated (7/28: DISH out)
+DISH Network L.L.C.,4841,satellite pay-television provider,adjudicated NOT treated
+"DISH Network, LLC",4841,satellite pay-television provider,adjudicated NOT treated
+Impact Mobile Home Communities,4833,"manufactured-home community operator (""mobile"" ≠ mobile telephony)",no Form 499 registration
+"Johnson Matthey, Inc.",2834,specialty chemicals and catalysts manufacturer,no Form 499 registration
+Suddenlink Communications,6500,regional cable broadband operator (Altice family),family not among the 11 treated parents in the final sample
+WillScot Mobile Mini Holdings Corp.,4833,"modular office and portable-storage leasing (""Mobile Mini"" ≠ mobile telephony)",no Form 499 registration

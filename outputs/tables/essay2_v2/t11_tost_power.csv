@@ -1,0 +1,6 @@
+effect,coef,se,p,tost_p,mde80_pp,eq_bound_daily_pp,status
+"MAIN EFFECT (M4, HC3)",0.1575,0.1304,0.2281,0.5766,0.3652,0.1323,NULL — UNDERPOWERED (inconclusive)
+quartile Q1 (smallest),-1.0004,0.3162,0.0022,0.9962,0.8855,0.1323,SIGNIFICANT [1 treated parent CIKs — do not interpret bare]
+quartile Q2,0.3216,0.3225,0.3219,0.7205,0.9029,0.1323,NULL — UNDERPOWERED (inconclusive) [4 treated parent CIKs — do not interpret bare]
+quartile Q3,0.7033,0.3111,0.0267,0.9648,0.871,0.1323,SIGNIFICANT [4 treated parent CIKs — do not interpret bare]
+quartile Q4 (largest),0.3008,0.1821,0.1028,0.8211,0.5099,0.1323,NULL — UNDERPOWERED (inconclusive)

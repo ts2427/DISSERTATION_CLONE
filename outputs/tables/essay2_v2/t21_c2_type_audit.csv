@@ -1,0 +1,12 @@
+parent_cik,family_types,non_covered_types
+18926,CAP/LEC; Cellular/PCS/SMR; Incumbent Local Exchange Carrier; Interexchange Carrier (IXC); Operator Service Provider (OSP); Toll Reseller,(none)
+20520,CAP/LEC; Incumbent Local Exchange Carrier; Interexchange Carrier (IXC); Local Reseller; Toll Reseller,(none)
+101830,Cellular/PCS/SMR; Incumbent Local Exchange Carrier; Interexchange Carrier (IXC); Local Reseller; Private Service Provider; Toll Reseller,Private Service Provider
+732712,CAP/LEC; Cellular/PCS/SMR; Incumbent Local Exchange Carrier; Interexchange Carrier (IXC); Private Service Provider; Toll Reseller,Private Service Provider
+732717,CAP/LEC; Cellular/PCS/SMR; Incumbent Local Exchange Carrier; Interconnected VoIP; Interexchange Carrier (IXC); Toll Reseller,(none)
+1091667,CAP/LEC; Cellular/PCS/SMR; Interconnected VoIP; Paging & Messaging; Private Service Provider; SMR (dispatch),Private Service Provider
+1166691,CAP/LEC; Cellular/PCS/SMR; Interconnected VoIP; Other Toll; Private Service Provider; Toll Reseller,Private Service Provider
+1283699,Cellular/PCS/SMR; Interconnected VoIP; Prepaid Card; Private Service Provider; Toll Reseller,Private Service Provider
+1447669,; Interconnected VoIP,(none)
+1609711,Interconnected VoIP; Other Toll,(none)
+1632127,CAP/LEC; Incumbent Local Exchange Carrier; Interconnected VoIP; Private Service Provider,Private Service Provider
