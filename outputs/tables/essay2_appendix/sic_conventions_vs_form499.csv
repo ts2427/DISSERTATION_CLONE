@@ -1,0 +1,5 @@
+convention,N_testable,agree,agree_pct,FP,FN,characteristic_failure
+published_regulated_dummy_4812_4813,350,323,92.2857,3,24,misses every cable registrant
+prior_spec_4813_4841_4899,350,281,80.2857,6,63,misses every wireless carrier
+tuned_4812_4813_4841_4899,350,336,96.0,9,5,post-hoc; boundary-blind (Roku/Charter; GoDaddy/Twilio)
+full_range_4800_4899,350,317,90.5714,28,5,"admits broadcasters (Sirius, Gray TV, Disney)"

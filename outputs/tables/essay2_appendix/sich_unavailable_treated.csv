@@ -1,0 +1,12 @@
+organization,parent_cik,reported_date,reason
+Mediacom Communications Corporation,1098659,2022-08-30,no matched ticker
+"T-Mobile USA, Inc.",1283699,2009-09-03,no matched ticker
+"T-Mobile USA, Inc.",1283699,2009-10-05,no matched ticker
+T-Mobile,1283699,2009-10-08,no matched ticker
+T-Mobile USA Inc.,1283699,2011-10-21,no matched ticker
+T-Mobile,1283699,2012-05-08,no matched ticker
+T-Mobile,1283699,2012-08-28,no matched ticker
+T-Mobile,1283699,2013-12-31,ticker but no Compustat row in 550-day window
+"T-Mobile USA, Inc.",1283699,2013-12-30,ticker but no Compustat row in 550-day window
+"Altice USA, Inc.",1702780,2020-02-06,ticker but no Compustat row in 550-day window
+Altice USA,1702780,2024-02-29,ticker but no Compustat row in 550-day window

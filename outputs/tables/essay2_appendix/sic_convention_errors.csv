@@ -1,0 +1,23 @@
+convention,error_type,organization,parent_cik,sich,events
+published_regulated_dummy_4812_4813,FALSE_POSITIVE,ATT-Breach Notification,732717,4812,2
+published_regulated_dummy_4812_4813,FALSE_POSITIVE,Verizon Media,732712,4812,1
+published_regulated_dummy_4812_4813,FALSE_NEGATIVE,"Cable One, Inc.",1632127,4841,2
+published_regulated_dummy_4812_4813,FALSE_NEGATIVE,Charter Communication,1091667,4841,1
+published_regulated_dummy_4812_4813,FALSE_NEGATIVE,Charter Communications,1091667,4841,2
+published_regulated_dummy_4812_4813,FALSE_NEGATIVE,"Charter Communications, Inc.",1091667,4841,5
+published_regulated_dummy_4812_4813,FALSE_NEGATIVE,Comcast,1166691,4841,2
+published_regulated_dummy_4812_4813,FALSE_NEGATIVE,Comcast Cable Communications LLC,1166691,4841,4
+published_regulated_dummy_4812_4813,FALSE_NEGATIVE,"Comcast Cable Communications, Inc.",1166691,4841,2
+published_regulated_dummy_4812_4813,FALSE_NEGATIVE,GoDaddy.com LLC,1609711,7370,1
+published_regulated_dummy_4812_4813,FALSE_NEGATIVE,"GoDaddy.com, LLC",1609711,7370,2
+published_regulated_dummy_4812_4813,FALSE_NEGATIVE,NBCUniversal,1166691,4841,1
+published_regulated_dummy_4812_4813,FALSE_NEGATIVE,Twilio,1447669,7370,2
+tuned_4812_4813_4841_4899,FALSE_POSITIVE,ATT-Breach Notification,732717,4812,2
+tuned_4812_4813_4841_4899,FALSE_POSITIVE,NBC Sports Group,1166691,4841,3
+tuned_4812_4813_4841_4899,FALSE_POSITIVE,Roku Inc,1428439,4841,1
+tuned_4812_4813_4841_4899,FALSE_POSITIVE,Roku Inc.,1428439,4841,1
+tuned_4812_4813_4841_4899,FALSE_POSITIVE,"Roku, Inc.",1428439,4841,1
+tuned_4812_4813_4841_4899,FALSE_POSITIVE,Verizon Media,732712,4812,1
+tuned_4812_4813_4841_4899,FALSE_NEGATIVE,GoDaddy.com LLC,1609711,7370,1
+tuned_4812_4813_4841_4899,FALSE_NEGATIVE,"GoDaddy.com, LLC",1609711,7370,2
+tuned_4812_4813_4841_4899,FALSE_NEGATIVE,Twilio,1447669,7370,2

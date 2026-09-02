@@ -1,36 +1,36 @@
 # Essay 2 Query 4 — Parts F & B (computed live)
 
 ==========================================================================================
-ESSAY 2 QUERY 4 — PART F GRID + B1/B3 GRADIENT (N=333)
+ESSAY 2 QUERY 4 — PART F GRID + B1/B3 GRADIENT (N=331)
 ==========================================================================================
 
-Precomputing window SDs (48 window configs x 333 events)...
+Precomputing window SDs (48 window configs x 331 events)...
 
 ## F1 — Specification grid: 193 specifications
-  coef distribution (daily pp): min +0.048 | p25 +0.142 | median +0.182 | p75 +0.217 | max +0.333
+  coef distribution (daily pp): min +0.048 | p25 +0.135 | median +0.177 | p75 +0.211 | max +0.325
   p<.05: 0/193 (0.0%), all positive
   sign: 100% of specs positive
-  draft-spec position: coef +0.1575 sits at percentile 32 of the distribution (p=0.426)
+  draft-spec position: coef +0.1486 sits at percentile 30 of the distribution (p=0.464)
 
   Node influence (range of mean coef across the node's options):
-    anchor  : 0.0376 daily pp  (breach=+0.203; notification=+0.166)
-    basis   : 0.0530 daily pp  (calendar=+0.211; trading=+0.158)
-    L       : 0.0691 daily pp  (21=+0.227; 31=+0.168; 42=+0.158)
-    gap     : 0.0308 daily pp  (0=+0.198; 1=+0.182; 3=+0.167; 5=+0.191)
-    returns : 0.0043 daily pp  (log=+0.182; simple=+0.186)
-    winsor  : 0.0153 daily pp  (raw=+0.192; w199=+0.177)
+    anchor  : 0.0378 daily pp  (breach=+0.197; notification=+0.159)
+    basis   : 0.0518 daily pp  (calendar=+0.204; trading=+0.152)
+    L       : 0.0664 daily pp  (21=+0.219; 31=+0.161; 42=+0.153)
+    gap     : 0.0309 daily pp  (0=+0.191; 1=+0.175; 3=+0.160; 5=+0.185)
+    returns : 0.0044 daily pp  (log=+0.175; simple=+0.180)
+    winsor  : 0.0139 daily pp  (raw=+0.185; w199=+0.171)
   Largest single decision node: L (CORRECTS the expectation that anchor moves the estimate most).
 
   DV-variant correlation matrix (extends the r=0.45 finding):
                       notif_t_21_5  notif_t_31_3  notif_t_42_5  notif_c_31_0  breach_t_21_5  breach_c_31_0  garch_notif  canonical_ann_breach
 notif_t_21_5                 1.000         0.895         0.727         0.930          0.466          0.469        0.749                 0.451
 notif_t_31_3                 0.895         1.000         0.848         0.844          0.509          0.510        0.717                 0.502
-notif_t_42_5                 0.727         0.848         1.000         0.670          0.485          0.486        0.682                 0.470
-notif_c_31_0                 0.930         0.844         0.670         1.000          0.470          0.527        0.694                 0.496
-breach_t_21_5                0.466         0.509         0.485         0.470          1.000          0.906        0.426                 0.928
-breach_c_31_0                0.469         0.510         0.486         0.527          0.906          1.000        0.395                 0.963
+notif_t_42_5                 0.727         0.848         1.000         0.670          0.486          0.486        0.682                 0.471
+notif_c_31_0                 0.930         0.844         0.670         1.000          0.471          0.528        0.694                 0.497
+breach_t_21_5                0.466         0.509         0.486         0.471          1.000          0.906        0.426                 0.928
+breach_c_31_0                0.469         0.510         0.486         0.528          0.906          1.000        0.395                 0.963
 garch_notif                  0.749         0.717         0.682         0.694          0.426          0.395        1.000                 0.411
-canonical_ann_breach         0.451         0.502         0.470         0.496          0.928          0.963        0.411                 1.000
+canonical_ann_breach         0.451         0.502         0.471         0.497          0.928          0.963        0.411                 1.000
 
   F3 node classification (Del Giudice & Gangestad 2021): anchor = TYPE N (breach-anchoring construct-invalid per Part A; shown as documentation, not pooled); basis, L, gap, returns = Type E (principled equivalence); winsor = Type U (genuine uncertainty). Units axis excluded as a pure rescaling.
   F2: no joint permutation test is run (Semken & Rossell 2022: SCA median test Type I error can reach 1). Dispersion is the finding; framed as non-standard errors (Menkveld et al. 2024: NSE ~2.7x sampling SE; Mitton 2022: 73% of random variables significant under routine method variation).
@@ -54,8 +54,8 @@ notification       0.0            0.0
   READING: compare (i)->(ii) [treatment reclassification holding the record-level data] against (i)->(iii) [deduplication holding SIC treatment] to see which decision does the work in killing the step-down. Reconstruction approximations for (ii)/(iii) are stated in the header. Genre precedents: Karpoff & Wittry 2018 (legal-context reclassification); Karpoff et al. 2017 (database substitution, 39% replication).
 
 ## H2 — Winsorization sensitivity (headline spec)
-  raw: coef +0.1575 SE 0.1971 95% CI [-0.2347, +0.5497] (CV1 parent-CIK)
-  1/99: coef +0.1344 SE 0.1887 95% CI [-0.2410, +0.5099] (CV1 parent-CIK)
-  5/95: coef +0.0765 SE 0.1355 95% CI [-0.1932, +0.3461] (CV1 parent-CIK)
+  raw: coef +0.1486 SE 0.2021 95% CI [-0.2535, +0.5507] (CV1 parent-CIK)
+  1/99: coef +0.1266 SE 0.1936 95% CI [-0.2588, +0.5119] (CV1 parent-CIK)
+  5/95: coef +0.0695 SE 0.1402 95% CI [-0.2095, +0.3484] (CV1 parent-CIK)
 
 Grid = 193 descriptive specifications (0 hypothesis tests); B1 = 4 panels x (1 main + 4 quartiles) = 20 estimates reported as one decomposition family; H2 = 3 sensitivity rows of the single main-effect hypothesis.

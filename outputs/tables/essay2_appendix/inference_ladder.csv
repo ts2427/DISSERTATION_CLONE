@@ -1,0 +1,9 @@
+procedure,coef,se,ci_lo,ci_hi,p,df_or_B
+classical_OLS_misspecified_iid_baseline,0.1486,0.1397,-0.1262,0.4233,0.288157,t(322)
+HC1_anticonservative_bound,0.1486,0.1303,-0.1078,0.405,0.255063,t(322)
+HC3_anticonservative_bound,0.1486,0.1321,-0.1112,0.4084,0.261339,t(322)
+CV1_cluster_final_cik,0.1486,0.2021,-0.2535,0.5507,0.464267,t(80)
+CV3_jackknife_FRAME,0.1486,0.2401,-0.3291,0.6263,0.537687,t(80)
+WCR_restricted_rademacher,0.1486,,-0.2851,0.5731,0.51421,B=99999; CI 9999/side
+WCU_unrestricted_rademacher,0.1486,,,,0.58705,B=99999
+WCR_webb_sixpoint,0.1486,,,,0.5196,B=9999

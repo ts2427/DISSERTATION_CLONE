@@ -1,0 +1,7 @@
+legacy_cik,organizations_absorbed,cik_resolves_to,returns_drawn,detection,in_canonical_489
+200406,"Johnson Matthey, Inc.; Christensen O'Connor Johnson Kindness PLLC; DiGiovine Hnilo Jordan + Johnson Ltd; Johnson Engineering",JOHNSON & JOHNSON,J&J equity/financials,residual spot-check + EDGAR lookup,NO - Gate 1 re-resolved
+1034054,Suddenlink Communications,SBA COMMUNICATIONS CORP,"SBA equity/financials (SIC 6500, mktcap $2.0B)",identity evidence (T/SBA),NO - EXCLUDED-UNRESOLVED at Gate 1
+1437107,"iHeartMedia + Entertainment, Inc.","DISCOVERY COMMUNICATIONS, INC.",Discovery equity,residual screen (|resid| 4.52) + EDGAR lookup,NO - Gate 1 re-resolved
+1004980,E.W. Wylie Corporation (trucking),PG&E CORP,PG&E equity,residual screen + EDGAR lookup,NO - Gate 1 re-resolved
+1841666,PULAU Corporation,APA CORP,APA equity,residual screen + EDGAR lookup,NO - Gate 1 re-resolved
+732717,ATT-SecurityBreach; ATT-SecurityBreach2 (malformed non-firm records),AT&T INC,AT&T equity,identity evidence (signed 122 rule),ENTERED canonical as control; EXCLUDED from analytical sample 9/2 (Table 1 final step)

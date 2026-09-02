@@ -1,0 +1,26 @@
+kind,pattern,direction,basis
+stage4_pattern,Cricket,FORCE TREATED,"registry filer, LLC variant missed by exact matcher"
+stage4_pattern,T-Mobile,FORCE TREATED,open CONSOLIDATED record 822060
+stage4_pattern,Boost Mobile,FORCE TREATED,prepaid brand of Sprint Spectrum FRN 0006693022
+stage4_pattern,^Sprint,FORCE TREATED,Sprint Spectrum dba Sprint 811754
+stage4_pattern,Verizon Media,FORCE EXCLUDED,content division
+stage4_pattern,^Verizon,FORCE TREATED,carrier filer family
+stage4_pattern,^Comcast|Comcast Cable,FORCE TREATED,parent of Comcast Telephony
+stage4_pattern,Charter Communication,FORCE TREATED,parent of Charter Operating LLC
+stage4_pattern,Frontier Communications,FORCE TREATED,parent of regional filers
+stage4_pattern,Altice USA,FORCE TREATED,parent of Altice Wireless
+stage4_pattern,AT&T Services,FORCE TREATED,AT&T Inc. filing family
+stage4_pattern,CenturyLink,FORCE TREATED,CenturyLink/Lumen family
+stage4_pattern,DISH Network,FORCE EXCLUDED,satellite TV; not covered under 64.2011
+stage4_pattern,NBC Sports,FORCE EXCLUDED,no registry match
+stage4_pattern,ATT-Breach artifacts,FORCE EXCLUDED,"malformed system entities; AT&T identity, treatment excluded; also excluded from the analytical sample 9/2"
+stage4_pattern,NBCUniversal,FORCE TREATED,direct registry filer FRN 20940540
+stage4_pattern,Mediacom,FORCE TREATED,MCC Telephony filer
+stage4_pattern,Cisco Systems,FORCE EXCLUDED,Tropo link anachronistic
+stage4_pattern,Citrix,FORCE EXCLUDED,enterprise software
+stage4_pattern,^Google|Alphabet,FORCE EXCLUDED,consumer web services
+stage4_pattern,^Time ?Warner,FORCE EXCLUDED,operations test fails
+stage4_pattern,Home Box Office,FORCE EXCLUDED,filer terminated 2012-12-31
+equity_parent,1040573 -> 1166691,RE-PARENT,Comcast Cable -> Comcast Corp
+equity_parent,1512267 -> 1166691,RE-PARENT,NBCUniversal Media -> Comcast Corp
+equity_parent,1457937 -> 1105705,RE-PARENT,HBO Inc -> Time Warner (2017)

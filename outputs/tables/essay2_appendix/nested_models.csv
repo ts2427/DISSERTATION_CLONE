@@ -1,0 +1,6 @@
+model,N,R2,adjR2,variables,coef_cv3,se_cv3,ci_lo_cv3,ci_hi_cv3,p_cv3,df_cv3,se_hc3_bound,p_hc3_bound
+M1,331,0.3102,0.3059,delay_w + e2_pre_sd,,,,,,,,
+M2,331,0.3163,0.3058,delay_w + e2_pre_sd + firm_size_log + leverage + roa,,,,,,,,
+M3,331,0.3187,0.3061,delay_w + e2_pre_sd + firm_size_log + leverage + roa + fcc_form499,0.1451,0.2279,-0.3084,0.5986,0.526106,80.0,0.1254,0.248062
+M4_headline,331,0.3188,0.3019,delay_w + e2_pre_sd + firm_size_log + leverage + roa + fcc_form499 + health_breach + prior_events,0.1486,0.2401,-0.3291,0.6263,0.537687,80.0,0.1321,0.261339
+incremental_R2_treatment,331,0.318784,0.316389,increment +0.002395,,,,,,,,

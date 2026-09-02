@@ -1,7 +1,7 @@
 # Essay 2 Query 4 — Part G (computed live)
 
 ==========================================================================================
-ESSAY 2 QUERY 4 — PART G: MICROSTRUCTURE (N=333 events)
+ESSAY 2 QUERY 4 — PART G: MICROSTRUCTURE (N=331 events)
 ==========================================================================================
 
 ## G1 — Coverage by year (% firm-days):
@@ -28,24 +28,24 @@ year
 2024  19656       99.8          0.2     100.0
   Overall: 99.2% valid uncrossed closing quotes; OPENPRC populated 100.0% — CPQS is the primary microstructure outcome (premise correct: CRSP daily carries closing BID/ASK).
 
-## G2 — Outcomes built: N with CPQS 333, EDGE 333, OCAM 333
-  EDGE negative-estimate rate (signed kept, stated): pre 107, post 125 of 333 windows.
-  CPQS change: coef +0.00005 SE 0.00003 95% CI [-0.00002, +0.00011] N=333 (102 treated, G=81; month FE; CV1 parent-CIK)
-  EDGE change: coef +0.00213 SE 0.00291 95% CI [-0.00367, +0.00792] N=333 (102 treated, G=81; month FE; CV1 parent-CIK)
-  log-OCAM change: coef -0.06759 SE 0.09194 95% CI [-0.25056, +0.11537] N=333 (102 treated, G=81; month FE; CV1 parent-CIK)
+## G2 — Outcomes built: N with CPQS 331, EDGE 331, OCAM 331
+  EDGE negative-estimate rate (signed kept, stated): pre 106, post 124 of 331 windows.
+  CPQS change: coef +0.00005 SE 0.00003 95% CI [-0.00002, +0.00012] N=331 (102 treated, G=81; month FE; CV1 parent-CIK)
+  EDGE change: coef +0.00223 SE 0.00309 95% CI [-0.00392, +0.00837] N=331 (102 treated, G=81; month FE; CV1 parent-CIK)
+  log-OCAM change: coef -0.06927 SE 0.09633 95% CI [-0.26097, +0.12243] N=331 (102 treated, G=81; month FE; CV1 parent-CIK)
 
   Multiplicity (stated): 3 secondary outcomes, Benjamini-Hochberg at FDR 5%:
         outcome      p  bh_threshold  bh_reject
-    CPQS change 0.1582        0.0167      False
-log-OCAM change 0.4644        0.0333      False
-    EDGE change 0.4679        0.0500      False
+    CPQS change 0.1594        0.0167      False
+    EDGE change 0.4735        0.0333      False
+log-OCAM change 0.4742        0.0500      False
 
   Correlation of microstructure changes with the volatility DV (was volatility a reasonable proxy?):
                e2_vol_change  cpqs_chg  edge_chg  ocam_chg
-e2_vol_change          1.000    -0.048    -0.110     0.074
-cpqs_chg              -0.048     1.000     0.346     0.165
-edge_chg              -0.110     0.346     1.000     0.192
-ocam_chg               0.074     0.165     0.192     1.000
+e2_vol_change          1.000    -0.048    -0.109     0.074
+cpqs_chg              -0.048     1.000     0.347     0.163
+edge_chg              -0.109     0.347     1.000     0.192
+ocam_chg               0.074     0.163     0.192     1.000
   Koski (2007): bid-ask bounce biases measured return volatility upward, more for low-priced stocks — a pre/post change in measured volatility can itself be a spread artifact; the measures are reported side by side, volatility retained.
 
   G4 framing: total effective spread and price impact only — no adverse-selection decomposition is claimed (requires signed trades / intraday data). These are secondary outcomes; not candidate headlines. Precedents: Frino, Gaudiosi & Mollica (2026 A&F) — persistently wider spreads after cyber attacks, smaller for large firms; Katselas, Sidhu & Yu (2020 A&F) window architecture.

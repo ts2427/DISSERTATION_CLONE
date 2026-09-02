@@ -1,0 +1,9 @@
+variable,missing,share
+e2_vol_change,11,0.0306
+firm_size_log,16,0.0444
+leverage,16,0.0444
+roa,16,0.0444
+disclosure_delay_days,1,0.0028
+health_breach,0,0.0
+prior_breaches_total,0,0.0
+ATT_artifact_records (excluded at final step),2,0.0056

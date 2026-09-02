@@ -1,0 +1,4 @@
+spec,coef,se_cv3,ci_lo,ci_hi,p_cv3,G,N,R2,se_hc3_bound,p_hc3_bound,rank,warnings,effective_identifying_sample
+year_only,0.1053,0.2906,-0.4729,0.6836,0.717898,81,331,0.4377,0.145,0.46802,26/26,none emitted,"279 obs / 99 treated in 13 of 18 strata; dead: [2007, 2009, 2010, 2011, 2016]"
+industry_only,0.3649,0.2993,-0.2308,0.9605,0.226387,81,331,0.3776,0.1773,0.040507,33/33,none emitted,249 obs / 102 treated in 2 of 25 strata; dead: 23
+year_and_industry,0.1379,0.36,-0.5784,0.8542,0.70264,81,331,0.508,0.1835,0.453001,50/50,none emitted,107 obs / 62 treated in 12 of 88 year x sic2 cells

@@ -1,0 +1,13 @@
+organization,tickers,sich,curated_sic,form499
+AT&T,T,4812; 4813,4813; 4833,treated
+T-Mobile,TMUS,4812,4813; 4833,treated
+Verizon,VZ,4812; 4813,4813; 4833,treated
+Frontier,FYBR,4813,4813; 6500,treated
+Mediacom,,,6500,treated
+CenturyLink,CTL; LUMN,4813,4813; 6500,treated
+Charter,CHTR,4841,4833; 4841,treated
+Cable One,CABO; CMCSA,4841,4833; 4841,treated
+GoDaddy,GDDY,7370,7372,treated
+Twilio,TWLO,7370,7372,treated
+DISH,,,4841,control/excluded
+Roku,ROKU,4841,7372,control/excluded

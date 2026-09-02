@@ -1,9 +1,9 @@
 """
-ESSAY 2 RERUN — STAGE 0: GROUND TRUTH ON CANONICAL_V3 (Form 499 treatment)
+ESSAY 2 RERUN â€” STAGE 0: GROUND TRUTH ON CANONICAL_V3 (Form 499 treatment)
 ===========================================================================
 Regenerates every Essay 2 number from the canonical v3 pipeline
 (Data/processed/rebuild/CANONICAL_V3.csv, scripts 150-158 chain). Extends the
-Essay 1 harness — same dataset load, same Form 499 treatment column, same
+Essay 1 harness â€” same dataset load, same Form 499 treatment column, same
 permno identity layer (reused from stage 5), same assertion pattern.
 
 ESSAY 2 SPECIFICATION (from the draft, implemented as stated below):
@@ -19,7 +19,7 @@ ESSAY 2 SPECIFICATION (from the draft, implemented as stated below):
       trading day within +/-7 calendar days on the matched security's calendar.
       (Essay 1 outcomes anchor on breach_date; Essay 2 anchors on notification
       per its own spec. The permno itself is the stage-5 match at breach_date,
-      reused — notification follows breach by a median of ~15-32 days, well
+      reused â€” notification follows breach by a median of ~15-32 days, well
       inside any CRSP name window.)
   Treatment: fcc_form499 (Form 499 registration, stage 4, registry snapshot).
       NEVER SIC. No code path here touches SIC for treatment.
@@ -33,10 +33,10 @@ ESSAY 2 SPECIFICATION (from the draft, implemented as stated below):
       t == coef/se and p == 2*(1-t.cdf(|t|, df)) reconciliation assertions.
 
 RULE FACTS (constraints): 47 CFR 64.2011, effective December 8, 2007 (adopted
-in the 2007 CPNI Order; FR publication June 8, 2007, 72 FR 31948 — publication
+in the 2007 CPNI Order; FR publication June 8, 2007, 72 FR 31948 â€” publication
 only). The statutory clock: notice to USSS/FBI "as soon as practicable, [but]
 no later than seven (7) business days, after reasonable determination of the
-breach" — the clock starts at DETERMINATION, not discovery, and customer
+breach" â€” the clock starts at DETERMINATION, not discovery, and customer
 notice waits a further seven business days after law-enforcement notice.
 days_to_disclosure here is reported_date - breach OCCURRENCE date, which
 proxies neither statutory clock exactly; stated in the output.
@@ -78,10 +78,10 @@ def lg2(m=''):
 def A(desc, cond, detail=''):
     """Assertion that is VISIBLE in the artifact, not just the run log."""
     if not cond:
-        log(f'ASSERT **FAIL** — {desc} {detail}')
+        log(f'ASSERT **FAIL** â€” {desc} {detail}')
         raise AssertionError(f'{desc} {detail}')
     N_ASSERTS[0] += 1
-    log(f'ASSERT PASS — {desc}{(" [" + detail + "]") if detail else ""}')
+    log(f'ASSERT PASS â€” {desc}{(" [" + detail + "]") if detail else ""}')
 
 
 # Old-draft coefficients: an exact reproduction is evidence of LEAKAGE of the
@@ -96,7 +96,7 @@ def leak_check(label, value):
     for ov in OLD_DRAFT_COEFS:
         if abs(value - ov) < 0.005:
             LEAK_FLAGS.append(f'{label} = {value:+.4f} matches old-draft {ov} '
-                              f'— investigate leakage')
+                              f'â€” investigate leakage')
 
 
 def coef_row(fit, var, label, n=None):
@@ -122,7 +122,7 @@ def fmtrow(r):
 
 
 log('=' * 90)
-log('ESSAY 2 RERUN — GROUND TRUTH (Form 499 treatment, CANONICAL_V3)')
+log('ESSAY 2 RERUN â€” GROUND TRUTH (Form 499 treatment, CANONICAL_V3)')
 log('=' * 90)
 
 # ============================ LOAD CANONICAL =================================
@@ -192,7 +192,7 @@ cs['datadate'] = pd.to_datetime(cs['datadate'])
 cs = cs.dropna(subset=['tic'])
 by_tic = {t: g.sort_values('datadate') for t, g in cs.groupby('tic')}
 # Top-up extract (Sprint 'S', CenturyLink 'CTL') carries no sich column;
-# both are SIC 4813 in Compustat (gvkeys 010984, 002884) — documented fill.
+# both are SIC 4813 in Compustat (gvkeys 010984, 002884) â€” documented fill.
 MANUAL_SICH = {'S': 4813, 'CTL': 4813}
 
 
@@ -253,12 +253,12 @@ def level(df, name, note, unit='events'):
     return row
 
 
-lg2('## Record-level steps (treatment is assigned at Stage 4, on events —')
+lg2('## Record-level steps (treatment is assigned at Stage 4, on events â€”')
 lg2('treated counts are not defined for record-level rows)')
 lg2('')
 lg2('| Step | N | Removed | Reason |')
 lg2('|---|---|---|---|')
-lg2('| PRC universe | 1,054 | — | notification RECORDS, not breaches '
+lg2('| PRC universe | 1,054 | â€” | notification RECORDS, not breaches '
     '(records vs events is a methodological finding) |')
 lg2(f'| Entity resolution + Gate 1 | {n_retained} | {1054 - n_retained} | '
     'no verified public-registrant identity (EXCLUDED-UNRESOLVED 281, '
@@ -310,24 +310,34 @@ r3 = level(E3, 'Volatility windows computable',
 E4 = E3.dropna(subset=['firm_size_log', 'leverage', 'roa']).copy()
 r4 = level(E4, 'Compustat covariates complete', 'prior-FY size, leverage, ROA')
 E5 = E4[E4['disclosure_delay_days'].notna()].copy()
-r5 = level(E5, 'Disclosure delay valid (FINAL)',
+r5 = level(E5, 'Disclosure delay valid',
            'delay regressor present (wrong-field/unparseable dates are missing '
            'by the 8/17 signed fixes)')
+# Malformed-record exclusion (9/2/2026 signed): the two ATT-SecurityBreach
+# artifact events (breach labels, not companies; AT&T equity identity per the
+# signed 122 rule) are control-coded yet draw a REGISTRANT's stock returns â€”
+# indefensible in the control group. Excluded from the analytical sample;
+# the with-artifacts estimate is reported as a sensitivity.
+E6 = E5[~E5['org_name'].astype(str).str.contains('ATT-', na=False)].copy()
+r6 = level(E6, 'Malformed-record exclusion (FINAL)',
+           'ATT-SecurityBreach artifact records (control-coded, AT&T-identity '
+           'returns) excluded (OWN LINE, 9/2 signed)')
 lg2('')
 for a, b, nm in [(r0, r1, 'no CRSP match'), (r1, r2, 'no notification date'),
                  (r2, r2b, 'beyond WRDS extract boundary'),
                  (r2b, r3, 'windows not computable'),
-                 (r3, r4, 'missing covariates'), (r4, r5, 'missing delay')]:
+                 (r3, r4, 'missing covariates'), (r4, r5, 'missing delay'),
+                 (r5, r6, 'malformed ATT-artifact records')]:
     A(f'ledger closes: {nm}', a['n'] - b['n'] >= 0,
       f"{a['n']} -> {b['n']} (-{a['n'] - b['n']})")
-FIN = E5.reset_index(drop=True)
+FIN = E6.reset_index(drop=True)
 N = len(FIN)
 A('final N is nowhere near the old draft N=891 (dedup+CRSP applied)',
   N < 700, f'N={N}')
 lg2(f'**Final Essay 2 regression sample: N = {N} '
-    f"({r5['treated']} treated / {r5['treated_orgs']} orgs / "
-    f"{r5['treated_parent_ciks']} parent CIKs; {r5['control']} control; "
-    f"{r5['pre_rule']} pre-rule events of which {r5['pre_rule_treated']} treated).**")
+    f"({r6['treated']} treated / {r6['treated_orgs']} orgs / "
+    f"{r6['treated_parent_ciks']} parent CIKs; {r6['control']} control; "
+    f"{r6['pre_rule']} pre-rule events of which {r6['pre_rule_treated']} treated).**")
 lg2('')
 lg2('Framing is post-2007 cross-sectional (no DiD, no natural experiment).')
 lg2('Essay 1 v3 comparison: its regression sample is 338 (104 treated) built')
@@ -335,7 +345,7 @@ lg2('from the 354 events with a breach-anchored car_30d (has_crsp_data). '
     'Essay 2')
 lg2('instead keys on the 366 permno-matched events and applies its own')
 lg2('notification-anchored window requirement and the delay-regressor')
-lg2('requirement — the two samples overlap heavily but are not nested.')
+lg2('requirement â€” the two samples overlap heavily but are not nested.')
 
 # ---- decomposition of the window losses (pre vs post, per directive) --------
 lost = E2b[E2b['e2_vol_change'].isna()]
@@ -412,14 +422,14 @@ lg2('')
 lg2('| Year | Canonical N | Canonical treated | Final N | Final treated |')
 lg2('|---|---|---|---|---|')
 cy = E0['bdt'].dt.year
-fy = E5['rdt'].dt.year
+fy = E6['rdt'].dt.year
 yr_lo = int(min(cy.min(), fy.min()))
 yr_hi = int(max(cy.max(), fy.max()))
 tot = dict(cn=0, ct=0, fn=0, ft=0)
 for y in range(yr_lo, yr_hi + 1):
     cm, fm = cy == y, fy == y
     cn, ct = int(cm.sum()), int((E0.loc[cm, TREAT] == 1).sum())
-    fn_, ft = int(fm.sum()), int((E5.loc[fm, TREAT] == 1).sum())
+    fn_, ft = int(fm.sum()), int((E6.loc[fm, TREAT] == 1).sum())
     tot['cn'] += cn; tot['ct'] += ct; tot['fn'] += fn_; tot['ft'] += ft
     lg2(f'| {y} | {cn} | {ct} | {fn_} | {ft} |')
 lg2(f"| **Total** | **{tot['cn']}** | **{tot['ct']}** | **{tot['fn']}** | "
@@ -427,11 +437,11 @@ lg2(f"| **Total** | **{tot['cn']}** | **{tot['ct']}** | **{tot['fn']}** | "
 A('by-year canonical column sums to canonical N/treated',
   tot['cn'] == r0['n'] and tot['ct'] == r0['treated'])
 A('by-year final column sums to final N/treated',
-  tot['fn'] == r5['n'] and tot['ft'] == r5['treated'])
+  tot['fn'] == r6['n'] and tot['ft'] == r6['treated'])
 lg2('')
-lg2(f'Final-sample date span: notifications {E5["rdt"].min().date()} to '
-    f'{E5["rdt"].max().date()}; breach dates {E5["bdt"].min().date()} to '
-    f'{E5["bdt"].max().date()}. Any final-sample year outside 2006-2024 in '
+lg2(f'Final-sample date span: notifications {E6["rdt"].min().date()} to '
+    f'{E6["rdt"].max().date()}; breach dates {E6["bdt"].min().date()} to '
+    f'{E6["bdt"].max().date()}. Any final-sample year outside 2006-2024 in '
     'the table above contradicts the stated sample period and must be '
     'resolved in the text, not silently.')
 
@@ -462,7 +472,7 @@ lg2(f'| reported_date | {int(pr_r.sum())} | '
     f'{int((pr_r & (e1reg[TREAT] == 1)).sum())} |')
 lg2('')
 lg2(f'Computed live on the reproduced Essay 1 sample '
-    f'(N={len(e1reg)}, {int(e1reg[TREAT].sum())} treated — matches '
+    f'(N={len(e1reg)}, {int(e1reg[TREAT].sum())} treated â€” matches '
     'constants_v3.json). The audit-era "10 pre-rule / 1 treated" figure '
     '(DATA_QUALITY_DOCUMENTATION.md, DEAD_DATE_PURGE_INVENTORY.md, '
     'STALE_RESULTS_MANIFEST.txt, outputs/SAMPLE_ATTRITION_LEDGER.md) was '
@@ -481,7 +491,7 @@ CONTROLS = ['e2_pre_sd', 'firm_size_log', 'leverage', 'roa',
 
 # ============================ PHASE B: DESCRIPTIVES ==========================
 log('\n' + '=' * 90)
-log('PHASE B — DESCRIPTIVES BY TREATMENT STATUS')
+log('PHASE B â€” DESCRIPTIVES BY TREATMENT STATUS')
 log('=' * 90)
 DVARS = ['e2_vol_change', 'e2_pre_sd', 'e2_post_sd', 'disclosure_delay_days',
          'delay_w', 'firm_size_log', 'leverage', 'roa', 'health_breach',
@@ -508,12 +518,12 @@ for grp, d_ in [('treated', tt), ('control', cc), ('pooled', FIN)]:
           - d_['e2_vol_change'].mean()) < 1e-8)
 log(desc.to_string(index=False))
 log(f'\n(The old Table A2 reported identical treated/control SDs on three '
-    f'variables — 14.2/14.2, 16.3/16.3, 1.84/1.84 — impossible for unequal '
+    f'variables â€” 14.2/14.2, 16.3/16.3, 1.84/1.84 â€” impossible for unequal '
     f'groups; the independent SDs above replace it.)')
 
 # ==================== PHASE C: NESTED MODELS + SE SPECS ======================
 log('\n' + '=' * 90)
-log('PHASE C — MAIN EFFECT, NESTED MODELS, SE SPECIFICATIONS')
+log('PHASE C â€” MAIN EFFECT, NESTED MODELS, SE SPECIFICATIONS')
 log('=' * 90)
 Y = FIN['e2_vol_change'].astype(float)
 SPECS = {
@@ -560,7 +570,7 @@ log(f'\nWinsorization rule: delay capped at in-sample p99 = {P99:.0f} days '
     f'day law-enforcement clock at "reasonable determination" of the breach, '
     f'not discovery, and customer notice waits a further seven business days; '
     f'days_to_disclosure here is reported_date minus breach OCCURRENCE date, '
-    f'which measures neither statutory clock — it proxies total public-'
+    f'which measures neither statutory clock â€” it proxies total public-'
     f'notification lag, and the theory should be read against that. '
     f'With vs without winsorization:')
 for r in (MAIN, r_u, r_dw, r_du):
@@ -568,9 +578,9 @@ for r in (MAIN, r_u, r_dw, r_du):
 pd.DataFrame([MAIN, r_u, r_dw, r_du]).to_csv(OUTDIR / 't7_delay_winsor.csv',
                                              index=False)
 
-# SE specifications — every row from ONE fit, reconciled
+# SE specifications â€” every row from ONE fit, reconciled
 log('\nSE specifications for the M4 treatment coefficient '
-    '(the old draft scaled every t by 0.8806 — coef and t/p came from '
+    '(the old draft scaled every t by 0.8806 â€” coef and t/p came from '
     'different runs; here each row is one fit):')
 se_rows = []
 plain = sm.OLS(Y, X4).fit(use_t=True)
@@ -594,13 +604,13 @@ for r in se_rows:
 log(f'  Cluster counts: firm {g_f} (meets the ~40-50 convention), industry '
     f'{g_i} 2-digit-SIC clusters '
     f'({"meets" if g_i >= 40 else "BELOW"} the conventional ~40-50 threshold '
-    f'for asymptotic cluster-robust inference — treat industry-clustered p '
+    f'for asymptotic cluster-robust inference â€” treat industry-clustered p '
     f'with caution).')
 pd.DataFrame(se_rows).to_csv(OUTDIR / 't4_se_specifications.csv', index=False)
 
 # ======================= PHASE D: SIZE QUARTILES =============================
 log('\n' + '=' * 90)
-log('PHASE D — FIRM-SIZE HETEROGENEITY (quartiles of log total assets)')
+log('PHASE D â€” FIRM-SIZE HETEROGENEITY (quartiles of log total assets)')
 log('=' * 90)
 FIN['size_q'] = pd.qcut(FIN['firm_size_log'], 4,
                         labels=['Q1 (smallest)', 'Q2', 'Q3', 'Q4 (largest)'])
@@ -611,7 +621,7 @@ for q in FIN['size_q'].cat.categories:
     norg = int(d_.loc[d_[TREAT] == 1, 'org_name'].nunique())
     npar = int(d_.loc[d_[TREAT] == 1, 'final_cik'].nunique())
     note = ('' if npar >= 5 else
-            f'FEWER THAN 5 TREATED PARENT CIKs ({npar}) — do not interpret bare')
+            f'FEWER THAN 5 TREATED PARENT CIKs ({npar}) â€” do not interpret bare')
     if nt == 0 or nt == len(d_):
         q_rows.append(dict(label=f'{q}', coef=np.nan, se=np.nan, t=np.nan,
                            df=np.nan, p=np.nan, n=len(d_), n_treated=nt,
@@ -632,7 +642,7 @@ A('quartile Ns sum to full sample N', sum(r['n'] for r in q_rows) == N,
 pd.DataFrame(q_rows).to_csv(OUTDIR / 't5_size_quartiles.csv', index=False)
 
 # ============ prior-breach reconstruction table (records vs events) ==========
-log('\nPrior-breach count reconstruction (records vs events — substantive '
+log('\nPrior-breach count reconstruction (records vs events â€” substantive '
     'finding, not a silent fix):')
 rec_rows = []
 for lab, s in [('NEW: prior deduplicated events (canonical, regressor)',
@@ -653,12 +663,12 @@ log(rec.to_string(index=False))
 rec.to_csv(OUTDIR / 't6_prior_breach_reconstruction.csv', index=False)
 log('NOTE: the canonical count is per PARENT CIK (post entity-resolution), so '
     'large carrier families accumulate more prior events than the old '
-    'org-name-string count even after dedup — the two differences (dedup, '
+    'org-name-string count even after dedup â€” the two differences (dedup, '
     'parent aggregation) move in opposite directions.')
 
 # ================= PHASE E: MODERATORS AND ROBUSTNESS ========================
 log('\n' + '=' * 90)
-log('PHASE E — MODERATORS AND ROBUSTNESS')
+log('PHASE E â€” MODERATORS AND ROBUSTNESS')
 log('=' * 90)
 mods = pd.DataFrame([
     dict(moderator='Breach complexity (CVSS)', status='NOT REGENERABLE',
@@ -676,11 +686,11 @@ mods = pd.DataFrame([
     dict(moderator='Information-environment composite', status='NOT REGENERABLE',
          n='0', reason='Script 106 construct on pre-audit base. The old draft '
                        'reported p=.275 in prose vs p=.0589 in the table for '
-                       'this interaction — neither value survives; retired, '
+                       'this interaction â€” neither value survives; retired, '
                        'not carried forward.'),
     dict(moderator='Reputation weakness', status='NOT REGENERABLE', n='0',
          reason='Old-draft construct (its table row also printed R2=.0156 '
-                'against ~.39 for every other row — a different-model '
+                'against ~.39 for every other row â€” a different-model '
                 'artifact); no canonical source.'),
 ])
 log(mods.to_string(index=False))
@@ -706,14 +716,14 @@ mixed = int(((both['mean'] > 0) & (both['mean'] < 1)).sum())
 ok = np.isfinite(fe_rows[-1]['se']) and fe_rows[-1]['se'] < 1e3
 log(f'  Identification check: the combined year+industry FE treatment '
     f'coefficient is {"IDENTIFIED" if ok else "NOT identified"} '
-    f'(SE finite at {fe_rows[-1]["se"]:.3f}) — an improvement over the old '
+    f'(SE finite at {fe_rows[-1]["se"]:.3f}) â€” an improvement over the old '
     f'draft, whose combined specification collapsed because SIC-based '
     f'treatment was a function of three SIC codes. BUT the identification is '
     f'THIN: only {mixed} of {len(both)} 2-digit-SIC cells contain both '
     f'treated and control events, so the within-industry comparison rests on '
     f'those {mixed} cells. The industry-FE-only estimate (p='
     f'{fe_rows[1]["p"]:.4f}) leans on the same thin variation and on '
-    f'{len(both)} clusters (below the ~40-50 convention) — do not headline it.')
+    f'{len(both)} clusters (below the ~40-50 convention) â€” do not headline it.')
 pd.DataFrame(fe_rows).to_csv(OUTDIR / 't8_fixed_effects.csv', index=False)
 
 # ---- diagnostics (single values, stated once) ----
@@ -732,10 +742,10 @@ lm, lm_p, fval, f_p = het_breuschpagan(plain.resid, Xv)
 bp_df = Xv.shape[1] - 1
 log(f'\nBreusch-Pagan (stated ONCE, used everywhere): chi2({bp_df}) = '
     f'{lm:.4f}, p = {lm_p:.4f}. (The old draft printed chi2=3.92/p=.049 in '
-    f'prose and 15.5838/p=.0487 in its table — both retired.)')
+    f'prose and 15.5838/p=.0487 in its table â€” both retired.)')
 jb, jb_p, skew, kurt = jarque_bera(plain.resid)
 log(f'Jarque-Bera residual normality: JB = {jb:.1f}, p = {jb_p:.2e}, '
-    f'skew {skew:.2f}, kurtosis {kurt:.2f} — heavy-tailed; HC3 primary '
+    f'skew {skew:.2f}, kurtosis {kurt:.2f} â€” heavy-tailed; HC3 primary '
     f'inference stands, normality rejected as expected for volatility data.')
 
 infl = plain.get_influence()
@@ -823,7 +833,7 @@ pd.DataFrame([r_g]).to_csv(OUTDIR / 't10_garch.csv', index=False)
 # The OLD Essay 2 CODE (scripts 20/90/90b) never implemented the draft's
 # stated [-25,-5]/[+5,+25] notification-anchored log-return windows. Its DV
 # was the script-20 convention: BREACH-anchored, calendar [-40,-1]/[0,+30],
-# annualized raw-return SD — the post window CONTAINS the announcement shock.
+# annualized raw-return SD â€” the post window CONTAINS the announcement shock.
 # The stated windows exist only in create_regression_formulas_document.py
 # (documentation, alongside the fictional "Rule 37.3", SIC treatment, and a
 # third wrong date, "January 1, 2007"). The result is sensitive to this:
@@ -844,7 +854,7 @@ log('  ' + fmtrow(r_c3))
 log('  ' + fmtrow(r_cc) + f"  clusters={dc['final_cik'].nunique()}")
 log(f'  Under the old code\'s convention the effect is {r_c3["coef"]:+.2f} '
     f'annualized pp (p={r_c3["p"]:.4f} HC3) but dies under firm clustering '
-    f'(p={r_cc["p"]:.4f}) — the same pattern as the v3 baseline H5 '
+    f'(p={r_cc["p"]:.4f}) â€” the same pattern as the v3 baseline H5 '
     f'(Essay 2\'s hypothesis in constants_v3: +3.29, p=.063, estimated '
     f'under this same breach-anchored convention).')
 pd.DataFrame([r_c3, r_cc]).to_csv(OUTDIR / 't13_dv_convention.csv', index=False)
@@ -880,7 +890,7 @@ for a_ in a_rows:
         f"precede notification")
 log('  CONSTRUCT VERDICT: a strict majority of observations does NOT have '
     'the window close before notification (45.6% do), but a majority of '
-    'what the measure contains is pre-notification volatility — 56.7% of '
+    'what the measure contains is pre-notification volatility â€” 56.7% of '
     'all measured post-window days precede public notification, and the '
     'median observation has 74% of its "post" window before the market '
     'learned anything. The breach-anchored DV is disqualified as a measure '
@@ -889,13 +899,13 @@ log('  CONSTRUCT VERDICT: a strict majority of observations does NOT have '
     'treated/control difference in truncation is trivial (47.1% vs 45.0% '
     'fully-pre; treated windows contain slightly MORE post-notification '
     'days, 46.3% vs 42.0%), so there is no mechanical treatment-correlated '
-    'measurement bias on top — the disqualification is construct-wide, '
+    'measurement bias on top â€” the disqualification is construct-wide, '
     'not treatment-differential.')
 pd.DataFrame(a_rows).to_csv(OUTDIR / 't14_construct_validity.csv', index=False)
 
 # ======================= PHASE F: INFERENCE QUALITY ==========================
 log('\n' + '=' * 90)
-log('PHASE F — INFERENCE QUALITY')
+log('PHASE F â€” INFERENCE QUALITY')
 log('=' * 90)
 # TOST: Essay 1 convention (same formula as scripts/158). Essay 1's registered
 # bound is +/-2.10pp on ANNUALIZED volatility; this DV is DAILY-pp, so the
@@ -913,21 +923,21 @@ for r in [MAIN] + [q for q in q_rows if np.isfinite(q.get('coef', np.nan))]:
     tp_ = tost(r['coef'], r['se'], r['df'])
     mde = 2.8 * r['se']
     status = ('BOUNDED NULL' if tp_ < .05 else
-              ('SIGNIFICANT' if r['p'] < .05 else 'NULL — UNDERPOWERED (inconclusive)'))
+              ('SIGNIFICANT' if r['p'] < .05 else 'NULL â€” UNDERPOWERED (inconclusive)'))
     npar_ = r.get('treated_parent_ciks')
     if npar_ is not None and npar_ < 5:
-        status += f' [{npar_} treated parent CIKs — do not interpret bare]'
+        status += f' [{npar_} treated parent CIKs â€” do not interpret bare]'
     f_rows.append(dict(effect=r['label'], coef=round(r['coef'], 4),
                        se=round(r['se'], 4), p=round(r['p'], 4),
                        tost_p=round(tp_, 4), mde80_pp=round(mde, 4),
                        eq_bound_daily_pp=round(EQ_D, 4), status=status))
-    log(f"  {r['label']}: TOST(±{EQ_D:.4f} daily pp = ±2.10 annualized) "
+    log(f"  {r['label']}: TOST(Â±{EQ_D:.4f} daily pp = Â±2.10 annualized) "
         f"p={tp_:.4f}  MDE80={mde:.4f}pp  -> {status}")
 pd.DataFrame(f_rows).to_csv(OUTDIR / 't11_tost_power.csv', index=False)
-log('\n  BOUND PROVENANCE: the ±2.10pp bound was pre-specified for Essay 1\'s '
+log('\n  BOUND PROVENANCE: the Â±2.10pp bound was pre-specified for Essay 1\'s '
     'CAR outcome ("fixed from literature before rebuilt estimates existed", '
     'scripts/158) and was never independently justified as a smallest '
-    'volatility effect of interest — its use here is a unit conversion only, '
+    'volatility effect of interest â€” its use here is a unit conversion only, '
     'stated as such.')
 EQ_LIT_ANN = 4.2
 EQ_LIT_D = EQ_LIT_ANN / np.sqrt(252)
@@ -936,12 +946,12 @@ tost_lit = max(1 - stats.t.cdf((MAIN['coef'] + EQ_LIT_D) / MAIN['se'], MAIN['df'
 mde_ann = 2.8 * MAIN['se'] * np.sqrt(252)
 log(f'  LITERATURE-ANCHORED CHECK (conditional): against a candidate SESOI '
     f'of {EQ_LIT_ANN}pp annualized ({EQ_LIT_D:.4f} daily pp), TOST '
-    f'p={tost_lit:.4f} — still not equivalence-bounded. MDE80 = '
+    f'p={tost_lit:.4f} â€” still not equivalence-bounded. MDE80 = '
     f'{2.8 * MAIN["se"]:.4f} daily pp = {mde_ann:.2f}pp annualized, which '
     f'EXCEEDS {EQ_LIT_ANN}pp: this design cannot detect, at 80% power, even '
     f'the effect size used as the literature anchor. CAVEAT: the {EQ_LIT_ANN}'
     f'pp figure attributed to Obaydin, Xu & Zurbruegg (2024) could not be '
-    f'verified in the repository\'s article summary — their JBFA 2024 paper '
+    f'verified in the repository\'s article summary â€” their JBFA 2024 paper '
     f'reports crash-risk effects (NSKEW/DUVOL/COUNT, >=5% of a SD) and bad-'
     f'news-hoarding proxies, not a post-breach volatility change in pp. No '
     f'commensurable volatility-native SESOI has been located in the prior '
@@ -957,7 +967,7 @@ log(f'\nEconomic significance: main effect {MAIN["coef"]:+.4f} daily pp = '
     f'{100 * MAIN["coef"] / base_post:+.1f}% of mean post-breach volatility '
     f'({base_post:.4f} daily pp). Incremental R2 from the treatment '
     f'indicator: {inc_r2:+.4f} (M4 {M4.rsquared:.4f} vs without-treatment '
-    f'{f_no_t.rsquared:.4f}). (Old draft: .3922 vs .3896 — about a quarter '
+    f'{f_no_t.rsquared:.4f}). (Old draft: .3922 vs .3896 â€” about a quarter '
     f'of one percent.)')
 
 # ======================= LEAK CHECK + FLAG SCAN ==============================
@@ -969,10 +979,10 @@ if LEAK_FLAGS:
         log(f'LEAK FLAG: {m}')
 else:
     log('No regenerated coefficient reproduces any old-draft value '
-        f'({", ".join(f"{v:+g}" for v in OLD_DRAFT_COEFS)}) to within 0.005 — '
+        f'({", ".join(f"{v:+g}" for v in OLD_DRAFT_COEFS)}) to within 0.005 â€” '
         'no evidence of old-number leakage.')
 # ---- FORENSIC provenance closure (NOT a candidate result) ----
-log('\nFORENSIC — old-draft provenance closure (nothing here is a result; '
+log('\nFORENSIC â€” old-draft provenance closure (nothing here is a result; '
     'pre-dedup data, SIC-based fcc_reportable treatment, both retired):')
 oldf = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv',
                    low_memory=False)
@@ -1002,7 +1012,7 @@ for q in ['Q1', 'Q2', 'Q3', 'Q4']:
         f"N={len(g_)}) vs old draft {OLD_Q[q]:+.2f}")
 log('  The +7.31/+3.64/-0.54/-3.39 step-down REPRODUCES in sign, ordering, '
     'and approximate magnitude (+7.65/+2.86/-2.05/-3.51 under the full old '
-    'control set) — the old quartile numbers are the pre-deduplication + '
+    'control set) â€” the old quartile numbers are the pre-deduplication + '
     'SIC-treatment artifact, not a third-source mystery. Provenance closed. '
     'On corrected data the pattern does not exist (Phase D).')
 pd.DataFrame(frows).to_csv(OUTDIR / 't15_forensic_old_quartiles.csv',
@@ -1016,11 +1026,11 @@ log('\nCodebase flags (directive): "September 28 2007"/"Rule 37.3" and '
     'documenting the retirement. NO live v3-chain script (150-158) or this '
     'script assigns treatment by SIC or references the wrong date/rule.')
 log('\n' + '=' * 90)
-log('PIPELINE FINDINGS (item 5 — things not already named in the directive)')
+log('PIPELINE FINDINGS (item 5 â€” things not already named in the directive)')
 log('=' * 90)
 n_permno_nocar = int((ev['permno'].notna() & (ev['has_crsp_data'] == 0)).sum())
 log(f"""\
-1. FINAL_DATASET_ORIGINAL_1054.csv contained 784 rows, not 1,054 — misnamed
+1. FINAL_DATASET_ORIGINAL_1054.csv contained 784 rows, not 1,054 â€” misnamed
    (a vintage of the retired dedup set; script 142's docstring had already
    documented this). RENAMED 8/30/2026 to
    FINAL_DATASET_ORIGINAL_1054_MISNAMED_RETIRED.csv; no script reads it; the
@@ -1030,7 +1040,7 @@ log(f"""\
    (breach-anchored), not by security match: {n_permno_nocar} events carry a
    permno but has_crsp_data = 0. Essay 2's notification-anchored windows are
    computable for some of these, so this rerun keys on permno + its own
-   window requirement rather than reusing has_crsp_data — the two essays'
+   window requirement rather than reusing has_crsp_data â€” the two essays'
    CRSP samples overlap but are not nested.
 3. The canonical prior-breach count is per PARENT CIK (post entity
    resolution), so carrier families accumulate more prior events (mean
@@ -1047,7 +1057,7 @@ log(f"""\
    below the ~40-50 convention).
 6. The old draft's N = 891 REPRODUCES EXACTLY from
    FINAL_DISSERTATION_DATASET_ENRICHED.csv (1,054 rows, PRE-deduplication,
-   926 CRSP) under the old spec's dropna — the old Essay 2 ran on duplicate
+   926 CRSP) under the old spec's dropna â€” the old Essay 2 ran on duplicate
    notification records and pre-resolution identities.
 7. The old Essay 2 CODE never implemented the draft's stated volatility
    windows: scripts 20/90/90b used the breach-anchored annualized
@@ -1062,14 +1072,14 @@ log(f'\nTotal reconciliation/consistency assertions passed: {N_ASSERTS[0]}')
 def toprep():
     supported = ('SUPPORTED' if MAIN['p'] < .05 else
                  ('bounded null' if f_rows[0]['status'] == 'BOUNDED NULL'
-                  else 'null — underpowered/inconclusive'))
+                  else 'null â€” underpowered/inconclusive'))
     qtxt = '; '.join(
         f"{q['label'].replace('quartile ', '')}: {q['coef']:+.3f} "
         f"(p={q['p']:.3f}, {q['treated_parent_ciks']} treated parent CIKs"
-        + (', <5 — do not interpret bare' if q['treated_parent_ciks'] < 5 else '')
+        + (', <5 â€” do not interpret bare' if q['treated_parent_ciks'] < 5 else '')
         + ')'
         for q in q_rows if np.isfinite(q.get('coef', np.nan)))
-    return f"""# Essay 2 Appendix Tables — Form 499 rerun (ground truth)
+    return f"""# Essay 2 Appendix Tables â€” Form 499 rerun (ground truth)
 
 **Generated live by scripts/163_essay2_rerun_form499.py on CANONICAL_V3.
 Nothing here is carried forward from the old draft.**
@@ -1082,21 +1092,21 @@ coef {MAIN['coef']:+.4f}, SE {MAIN['se']:.4f}, t {MAIN['t']:+.3f},
 df {MAIN['df']:.0f}, p {MAIN['p']:.4f}, N {N}. Verdict: **{supported}**
 (TOST p = {f_rows[0]['tost_p']:.4f} against the Essay 1 bound converted to
 daily units; MDE80 = {f_rows[0]['mde80_pp']:.4f} daily pp =
-{2.8 * MAIN['se'] * np.sqrt(252):.2f}pp annualized — the design cannot
+{2.8 * MAIN['se'] * np.sqrt(252):.2f}pp annualized â€” the design cannot
 detect, at 80% power, effect sizes of the magnitude the prior literature
 discusses). DV-convention note: the breach-anchored annualized DV the old
 CODE used gives {r_c3['coef']:+.2f} (p={r_c3['p']:.3f} HC3, p={r_cc['p']:.3f}
 firm-clustered) on this sample, but it is DISQUALIFIED on construct
-validity — 56.7% of its measured post-window days precede public
-notification (median observation: 74%) — see Phase E. The draft-spec
+validity â€” 56.7% of its measured post-window days precede public
+notification (median observation: 74%) â€” see Phase E. The draft-spec
 measure is the valid one, and it is null.
 
 **2. Firm-size step-down.** {qtxt}. (Old draft's +7.31 Q1 figure is not
 reproduced; treated parent-CIK counts are now printed beside every quartile.)
 
-**3. Final N = {N}** ({r5['treated']} treated / {r5['treated_orgs']} orgs /
-{r5['treated_parent_ciks']} parent CIKs), vs Essay 1 v3 regression N = 338.
-The old draft's N = 891 is not reproducible from the canonical chain — it
+**3. Final N = {N}** ({r6['treated']} treated / {r6['treated_orgs']} orgs /
+{r6['treated_parent_ciks']} parent CIKs), vs Essay 1 v3 regression N = 338.
+The old draft's N = 891 is not reproducible from the canonical chain â€” it
 predates deduplication (1,054 records -> 489 events) and entity resolution.
 Full chain in ESSAY2_SAMPLE_ATTRITION_LEDGER.md; the volatility-window
 requirement and the delay-regressor requirement are separate lines.
@@ -1105,7 +1115,7 @@ requirement and the delay-regressor requirement are separate lines.
 (see leak check). NOT REGENERABLE AT ALL: the five moderators (CVSS, media,
 governance, information-environment, reputation), the N = 891 sample, the
 records-based prior-breach count (mean 3.65, range 0-68), and the old
-draft's t/p columns (which were internally inconsistent — every t was
+draft's t/p columns (which were internally inconsistent â€” every t was
 0.8806 x coef/SE, and its headline p = .047 was the single reconciled cell;
 the printed t = 1.769 implies p = .077).
 

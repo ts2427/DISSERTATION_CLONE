@@ -1,0 +1,5 @@
+contrast,variable,diff,se,t,p
+misclassified_vs_concordant,firm_size_log,-1.0011,0.414,-2.4177,0.02649
+misclassified_vs_concordant,volatility_change,5.4522,2.349,2.3211,0.030059
+misclassified_vs_control,firm_size_log,-0.2483,0.4044,-0.6141,0.547625
+misclassified_vs_control,volatility_change,7.0127,2.2358,3.1365,0.005734

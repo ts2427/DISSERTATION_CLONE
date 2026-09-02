@@ -1,0 +1,3 @@
+candidate,N,slope,intercept,R2,share_within_010,share_within_025
+ln_market_cap,845,0.9817,0.1795,0.8729,0.7124,0.9538
+ln_total_assets,898,0.4628,5.6013,0.4431,0.0724,0.2416

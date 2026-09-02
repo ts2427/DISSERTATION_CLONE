@@ -1,4 +1,4 @@
 measure,n,mean,sd,p50,p90,max
-"NEW: prior deduplicated events (canonical, regressor)",333,12.75,18.29,4.0,41.8,75
-OLD-STYLE regenerated: prior notification RECORDS (sum n_source_records of prior events),333,17.18,23.84,6.0,53.0,94
+"NEW: prior deduplicated events (canonical, regressor)",331,12.77,18.34,4.0,42.0,75
+OLD-STYLE regenerated: prior notification RECORDS (sum n_source_records of prior events),331,17.21,23.91,5.0,53.0,94
 "OLD DRAFT (quoted, NOT regenerable: computed on pre-dedup records, N=891 sample)",891,3.65,,,,68

@@ -1,0 +1,5 @@
+group,N,orgs,mean_ln_mktcap,sd_ln_mktcap,mean_vol_change,sd_vol_change
+misclassified_repaired,17,11,10.1711,1.6591,5.0606,8.9636
+concordant_registrants,166,38,11.1722,1.2573,-0.3915,11.462
+control,694,317,10.4194,1.0624,-1.9521,13.7592
+misclassified_prerepair_SENSITIVITY,31,13,10.9376,1.528,7.8052,11.9232

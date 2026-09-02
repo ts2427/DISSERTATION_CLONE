@@ -1,6 +1,6 @@
 level,row,coef,se,n
 L1,earnings elevation,0.78,0.0526,4867
-L1,breach elevation,-0.0907,0.0505,331
-L1,contrast (breach-earnings),-0.8707,0.0775,5198
-L1,"contrast, firm FE",-0.9523,0.1163,5198
-L3,Form 499 on elevation,0.4463,0.1583,331
+L1,breach elevation,-0.089,0.0507,329
+L1,contrast (breach-earnings),-0.869,0.0777,5196
+L1,"contrast, firm FE",-0.9522,0.1169,5196
+L3,Form 499 on elevation,0.4388,0.1625,329

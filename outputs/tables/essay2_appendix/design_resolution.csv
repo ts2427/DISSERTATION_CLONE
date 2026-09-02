@@ -1,0 +1,13 @@
+panel,quantity,value,detail
+A,SESOI_daily_pp,0.2753,"0.25 x control SD (1.101187, N_c=229)"
+A,MDE80_CV3_daily_pp,0.6808,10.808 annualized
+A,MDE_over_SESOI,2.4731,
+A,MDE80_HC3_bound_daily_pp,0.3698,understates CV3 MDE by 45.7% (MDE-vs-MDE)
+B,TOST_quarter_SD_SESOI,0.299538,"lower p 0.040623, upper p 0.299538, 90% CI [-0.2509, +0.5481], verdict INCONCLUSIVE (failed, reported)"
+B,TOST_converted_CAR_2.10ann,0.526985,"lower p 0.122726, upper p 0.526985, 90% CI [-0.2509, +0.5481], verdict INCONCLUSIVE (failed, reported)"
+C,required_parents_1pp_ann,,unattainable — below the 3.9343pp floor
+C,required_parents_2pp_ann,,unattainable — below the 3.9343pp floor
+C,required_parents_3pp_ann,,unattainable — below the 3.9343pp floor
+C,required_parents_4pp_ann,2136.0,
+C,required_parents_5pp_ann,118.0,
+C,asymptotic_MDE_floor_daily_pp,0.2478,"3.9343pp annualized (treated parents -> inf, control fixed)"

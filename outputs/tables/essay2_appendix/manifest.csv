@@ -1,0 +1,35 @@
+number,title,csv,sample_level,status
+1,Sample attrition,sample_attrition.csv,"record 1,054 -> analytical 331",emitted
+2,Descriptive statistics,descriptives_by_treatment.csv,analytical 331,emitted
+2,Descriptive statistics (differences),descriptives_differences.csv,analytical 331,emitted
+3,Correlation matrix,dv_correlations.csv,analytical 331,emitted
+4,Events by year,events_by_year.csv,analytical 331,emitted
+5,Four-panel decomposition,four_panel_decomposition.csv,prior-spec 891 records / 337 events,emitted
+7,Misclassified group per record,misclassified_records.csv,prior-spec 891 records,emitted
+8,Group comparisons,misclassified_group_comparisons.csv,prior-spec 891 records,emitted
+8,Group comparison contrasts,misclassified_group_contrasts.csv,prior-spec 891 records,emitted
+9,Q1 transition components,q1_transition_components.csv,prior-spec 891 records (mktcap partition),emitted
+9,Q1 transition records,q1_transition_records.csv,prior-spec 891 records,emitted
+10,Size-variable reconciliation,size_variable_reconciliation.csv,prior-spec records with legacy cik,emitted
+10,Identifier-collision inventory,identifier_collisions.csv,"legacy annotation (six verified sinks; floor, not census — residual screen is one-sided)",emitted
+6,Corrected-data gradient grid,gradient_grid.csv,analytical (48 window-specs),emitted
+11,Missingness pre-complete-case,missingness_precase.csv,CRSP-matched 360 (360-11-15-1-2=331),emitted
+12,Form 499 registry matches (all family entries),form499_registry_matches.csv,analytical 331 (11 parents),emitted
+13,Adjudications,treatment_adjudications.csv,canonical 489,emitted
+14,Industry-code conventions vs Form 499,sic_conventions_vs_form499.csv,canonical 489 (350 testable),emitted
+15,Classification errors by organization,sic_convention_errors.csv,canonical 489 (350 testable),emitted
+16,Compustat sich vs curated sic,sich_vs_curated_sic.csv,canonical 489,emitted
+17,Treated events outside classification comparison,sich_unavailable_treated.csv,"canonical 489 (comparison covers 350/489, 105/116 treated)",emitted
+18,Nested models,nested_models.csv,analytical 331,emitted
+19,Inference ladder,inference_ladder.csv,"analytical 331 (G=81, G1=11)",emitted
+20,Design resolution,design_resolution.csv,analytical 331,emitted
+21,Disclosure delay,disclosure_delay.csv,analytical 331,emitted
+21,Delay distribution,delay_distribution_by_group.csv,analytical 331,emitted
+21,Delay quantile regressions,delay_quantiles.csv,analytical 331,emitted
+22,Channel tests: microstructure,channel_microstructure.csv,analytical (regenerated at N=331 chain),emitted
+22,Channel tests: announcement differential,channel_announcement_differential.csv,announcement sample N=329,emitted
+23,Size quartiles canonical,size_quartiles.csv,analytical 331 (partition: ln(total assets)),emitted
+24,Pre-rule observations,prerule_events.csv,analytical 331 (identical under both anchors),emitted
+25,Specification curve summary,specification_curve.csv,analytical (regenerated at N=331 chain),emitted
+26,"LOCO, pre-rule, influence",cluster_deletion_prerule.csv,analytical 331,emitted
+27,Fixed-effects specifications,fixed_effects.csv,analytical 331,emitted
