@@ -9,5 +9,5 @@ Charter,CHTR,4841,4833; 4841,treated
 Cable One,CABO; CMCSA,4841,4833; 4841,treated
 GoDaddy,GDDY,7370,7372,treated
 Twilio,TWLO,7370,7372,treated
-DISH,,,4841,control/excluded
+DISH,DISH,4841,4841,treated
 Roku,ROKU,4841,7372,control/excluded

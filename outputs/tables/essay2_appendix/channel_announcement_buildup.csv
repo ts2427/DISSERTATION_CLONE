@@ -1,0 +1,9 @@
+item,value,detail
+unadjusted_gap,0.0942,"CV1 SE 0.1040, p 0.367560, N=331"
+treated_mean_baseline_abn_pre,1.5382,
+control_mean_baseline_abn_pre,1.2932,
+corr_elevation_baseline,-0.4934,the regression-to-the-mean arithmetic the ANCOVA absorbs
+coef_plus_baseline,0.2283,
+coef_plus_baseline_and_size,0.3782,
+coef_full_base_spec,0.4475,matches the pre-specified row above
+share_of_movement_baseline_and_size,0.8039,(coef after baseline and size minus unadjusted) over (full minus unadjusted)

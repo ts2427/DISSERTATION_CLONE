@@ -129,9 +129,11 @@ for i, (k, p) in enumerate(ps):
     log(f'    {k}: p={p:.3g} vs threshold {thr:.4f} -> '
         f'{"reject" if p <= thr else "fail"}')
 log(f'  +0.446 {"SURVIVES" if rej[2] else "FAILS"} BH within its family at '
-    f'the CV3 p-value. Cumulative program tests through Query 6: ~61; '
-    f'Query 7 adds {len(N_TESTS)} (this family). Program-wide context '
-    f'stated wherever the coefficient is reported.')
+    f'the CV3 p-value. Cumulative program tests through Query 6: 56 '
+    f'(enumerated per test in scripts/182, t53_test_ledger.csv; the '
+    f'earlier ~61 was an unenumerated estimate); '
+    f'Query 7 adds {len(N_TESTS)} (this family), total 62. Program-wide '
+    f'context stated wherever the coefficient is reported.')
 
 # ---------------- pre-specified verdict ----------------
 log('\n## PRE-SPECIFIED VERDICT (reading fixed before estimation)')

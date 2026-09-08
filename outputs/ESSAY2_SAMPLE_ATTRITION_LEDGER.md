@@ -19,25 +19,27 @@ treated counts are not defined for record-level rows)
 
 | Level | Unit | N | Treated | Treated orgs | Treated parent CIKs | Control | Pre-rule (<2007-12-08) | Pre-rule treated | Note |
 |---|---|---|---|---|---|---|---|---|---|
-| Canonical events (post-Gate 2) | events | 489 | 116 | 38 | 13 | 373 | 7 | 0 | CANONICAL_V3 |
-| CRSP security matched | events | 366 | 109 | 37 | 12 | 257 | 6 | 0 | permno resolved (stage-5 identity layer) |
-| Public notification date present | events | 366 | 109 | 37 | 12 | 257 | 6 | 0 | reported_date parseable (Essay 2 anchors on notification) |
-| Notification on/before 2024-12-31 | events | 360 | 109 | 37 | 12 | 251 | 6 | 0 | 6 events notified in 2025 dropped at the WRDS extract boundary (OWN LINE; stated sample period 2006-2024) |
-| Volatility windows computable | events | 349 | 107 | 37 | 12 | 242 | 6 | 0 | >= 15 daily returns in each 21-trading-day window (OWN LINE per directive; pre/post split below) |
-| Compustat covariates complete | events | 334 | 103 | 35 | 11 | 231 | 6 | 0 | prior-FY size, leverage, ROA |
-| Disclosure delay valid | events | 333 | 102 | 35 | 11 | 231 | 6 | 0 | delay regressor present (wrong-field/unparseable dates are missing by the 8/17 signed fixes) |
-| Malformed-record exclusion (FINAL) | events | 331 | 102 | 35 | 11 | 229 | 6 | 0 | ATT-SecurityBreach artifact records (control-coded, AT&T-identity returns) excluded (OWN LINE, 9/2 signed) |
+| Canonical events (post-Gate 2) | events | 489 | 118 | 39 | 14 | 371 | 7 | 0 | CANONICAL_V3 |
+| CRSP security matched | events | 361 | 111 | 38 | 13 | 250 | 6 | 0 | permno resolved (stage-5 identity layer) |
+| Public notification date present | events | 361 | 111 | 38 | 13 | 250 | 6 | 0 | reported_date parseable (Essay 2 anchors on notification) |
+| Notification on/before 2024-12-31 | events | 355 | 111 | 38 | 13 | 244 | 6 | 0 | 6 events notified in 2025 dropped at the WRDS extract boundary (OWN LINE; stated sample period 2006-2024) |
+| Volatility windows computable | events | 351 | 109 | 38 | 13 | 242 | 6 | 0 | >= 15 daily returns in each 21-trading-day window (OWN LINE per directive; pre/post split below) |
+| Compustat covariates complete | events | 336 | 105 | 36 | 12 | 231 | 6 | 0 | prior-FY size, leverage, ROA |
+| Disclosure delay valid | events | 335 | 104 | 36 | 12 | 231 | 6 | 0 | delay regressor present (wrong-field/unparseable dates are missing by the 8/17 signed fixes) |
+| Malformed-record exclusion (FINAL) | events | 333 | 104 | 36 | 12 | 229 | 6 | 0 | ATT-SecurityBreach artifact records (control-coded, AT&T-identity returns) excluded (OWN LINE, 9/2 signed) |
 
-**Final Essay 2 regression sample: N = 331 (102 treated / 35 orgs / 11 parent CIKs; 229 control; 6 pre-rule events of which 0 treated).**
+**Final Essay 2 regression sample: N = 333 (104 treated / 36 orgs / 12 parent CIKs; 229 control; 6 pre-rule events of which 0 treated).**
 
 Framing is post-2007 cross-sectional (no DiD, no natural experiment).
-Essay 1 v3 comparison: its regression sample is 338 (104 treated) built
-from the 354 events with a breach-anchored car_30d (has_crsp_data). Essay 2
-instead keys on the 366 permno-matched events and applies its own
+Essay 1 v3 comparison: its regression sample reproduces at 340 (106
+treated) from the 356 events with a breach-anchored car_30d
+(has_crsp_data); the committed constants_v3.json still carries 338/104
+pending Essay 1's own signed regeneration (dual-print below). Essay 2
+instead keys on the 368 permno-matched events and applies its own
 notification-anchored window requirement and the delay-regressor
 requirement â€” the two samples overlap heavily but are not nested.
 
-## Decomposition of the 11 volatility-window losses (360 -> 349)
+## Decomposition of the 4 volatility-window losses (355 -> 351)
 
 Windows are NOTIFICATION-anchored (reported_date mapped to the nearest
 trading day within +/-7 calendar days): trading days [-25,-5] pre and
@@ -45,19 +47,19 @@ trading day within +/-7 calendar days): trading days [-25,-5] pre and
 
 | Failure | N | Treated | Reason |
 |---|---|---|---|
-| No trading day within +/-7 calendar days of notification | 8 | 1 | security not trading around the notification date (delisted or gap in coverage) |
+| No trading day within +/-7 calendar days of notification | 1 | 1 | security not trading around the notification date (delisted or gap in coverage) |
 | Insufficient PRE-window returns (< 15) | 0 | 0 | recently listed or thinly traded before notification |
 | Insufficient POST-window returns (< 15) | 3 | 1 | delisted or halted shortly after notification |
 | Both windows insufficient | 0 | 0 | too few returns on both sides |
-| **Total** | **11** | **2** | |
+| **Total** | **4** | **2** | |
 
-## Composition of the 123 events failing CRSP security match (489 -> 366)
+## Composition of the 128 events failing CRSP security match (489 -> 361)
 
-7 treated (4 orgs, 2 parent CIKs) and 116 control. These are Gate-1-verified public registrants whose stage-5 identity layer resolves no PERMNO at the breach date (no listed common equity on CRSP then: OTC/foreign-listed, pre-IPO at breach, or post-delisting).
+7 treated (4 orgs, 2 parent CIKs) and 121 control. These are Gate-1-verified public registrants whose stage-5 identity layer resolves no PERMNO at the breach date (no listed common equity on CRSP then: OTC/foreign-listed, pre-IPO at breach, or post-delisting).
 
 | Organization type | N | Treated |
 |---|---|---|
-| BSO | 123 | 7 |
+| BSO | 128 | 7 |
 
 ## By-year: canonical events (breach year) and final regression sample (notification year)
 
@@ -80,12 +82,14 @@ trading day within +/-7 calendar days): trading days [-25,-5] pre and
 | 2020 | 25 | 5 | 12 | 6 |
 | 2021 | 21 | 9 | 19 | 9 |
 | 2022 | 32 | 11 | 21 | 6 |
-| 2023 | 67 | 10 | 46 | 12 |
+| 2023 | 67 | 12 | 48 | 14 |
 | 2024 | 28 | 12 | 29 | 15 |
 | 2025 | 7 | 0 | 0 | 0 |
-| **Total** | **489** | **116** | **331** | **102** |
+| **Total** | **489** | **118** | **333** | **104** |
 
 Final-sample date span: notifications 2007-01-10 to 2024-11-08; breach dates 2006-12-01 to 2024-10-04. Any final-sample year outside 2006-2024 in the table above contradicts the stated sample period and must be resolved in the text, not silently.
+
+**DUAL-PRINT (documented divergence, 9/4):** fresh Essay 1 recipe = 340/106 (DISH events entered via the scripts/179 top-up); committed constants_v3.json = 338/104 (STALE, Essay 1 regeneration pending its own signed pass). Neither number is silently adopted for the other essay.
 
 ## Cross-essay pre-rule check (Essay 1 v3 regression sample, script-158 recipe)
 
@@ -94,4 +98,4 @@ Final-sample date span: notifications 2007-01-10 to 2024-11-08; breach dates 200
 | breach_date | 6 | 0 |
 | reported_date | 6 | 0 |
 
-Computed live on the reproduced Essay 1 sample (N=338, 104 treated â€” matches constants_v3.json). The audit-era "10 pre-rule / 1 treated" figure (DATA_QUALITY_DOCUMENTATION.md, DEAD_DATE_PURGE_INVENTORY.md, STALE_RESULTS_MANIFEST.txt, outputs/SAMPLE_ATTRITION_LEDGER.md) was computed on the PRE-REBUILD regression sample and does not describe any v3 sample; whichever row above matches the prose is the citable number, and every pre/post statement must name both its cutoff and its anchor.
+Computed live on the reproduced Essay 1 sample (N=340, 106 treated; constants_v3.json remains at 338/104, see the dual-print above). The audit-era "10 pre-rule / 1 treated" figure (DATA_QUALITY_DOCUMENTATION.md, DEAD_DATE_PURGE_INVENTORY.md, STALE_RESULTS_MANIFEST.txt, outputs/SAMPLE_ATTRITION_LEDGER.md) was computed on the PRE-REBUILD regression sample and does not describe any v3 sample; whichever row above matches the prose is the citable number, and every pre/post statement must name both its cutoff and its anchor.

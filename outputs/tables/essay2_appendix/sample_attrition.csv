@@ -3,11 +3,11 @@ A_record,PRC notification records,,1054,,,,
 A_record,Entity resolution + Gate 1,296.0,758,,,,
 A_record,CIK+date deduplication,234.0,524,,,,
 A_record,Gate 2 adjacency,35.0,489,,,,
-B_event,Canonical events,,489,116.0,38.0,13.0,373.0
-B_event,CRSP security matched,123.0,366,109.0,37.0,12.0,257.0
-B_event,Notification date parseable,0.0,366,109.0,37.0,12.0,257.0
-B_event,Notification <= 2024-12-31,6.0,360,109.0,37.0,12.0,251.0
-B_event,Volatility-window requirement,11.0,349,107.0,37.0,12.0,242.0
-B_event,Compustat covariates complete,15.0,334,103.0,35.0,11.0,231.0
-B_event,Disclosure delay valid,1.0,333,102.0,35.0,11.0,231.0
-B_event,Malformed-record exclusion (FINAL),2.0,331,102.0,35.0,11.0,229.0
+B_event,Canonical events,,489,118.0,39.0,14.0,371.0
+B_event,CRSP security matched,128.0,361,111.0,38.0,13.0,250.0
+B_event,Notification date parseable,0.0,361,111.0,38.0,13.0,250.0
+B_event,Notification <= 2024-12-31,6.0,355,111.0,38.0,13.0,244.0
+B_event,Volatility-window requirement,4.0,351,109.0,38.0,13.0,242.0
+B_event,Compustat covariates complete,15.0,336,105.0,36.0,12.0,231.0
+B_event,Disclosure delay valid,1.0,335,104.0,36.0,12.0,231.0
+B_event,Malformed-record exclusion (FINAL),2.0,333,104.0,36.0,12.0,229.0

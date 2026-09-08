@@ -151,7 +151,7 @@ log('  The floor prediction (treated delays longer AND more homogeneous, '
 
 # regulatory floor — CONTAMINATION-AWARE (zero-delay records)
 z0t, z0c = int((tt == 0).sum()), int((cc == 0).sum())
-log(f'\n  ZERO-DELAY CONTAMINATION: {z0t}/102 treated and {z0c}/231 control '
+log(f'\n  ZERO-DELAY CONTAMINATION: {z0t}/{len(tt)} treated and {z0c}/{len(cc)} control '
     f'delays are EXACTLY zero ({100 * (z0t + z0c) / N:.1f}% of the sample). '
     f'Same-day public notification at scale is implausible; these are '
     f'almost certainly records whose occurrence date defaulted to the '
@@ -476,43 +476,41 @@ shares = {q: (lambda d_: (len(d_), int((~d_['f499']).sum())))(
     spec891[(spec891['q'] == q) & (spec891['fcc_reportable'] == True)])
     for q in ['Q1', 'Q2', 'Q3', 'Q4']}
 log(f'\n  Welch, OLD data (join-gap REPAIRED group): size '
-    f'manufactured-vs-concordant t={tsz_o[0]:+.2f} (p={tsz_o[1]:.4f}) — on '
-    f'the repaired group the manufactured records ARE smaller than '
-    f'concordant carriers (the pre-repair null, t=-0.54/p=.59, was a '
-    f'statement about the 14 misjoined Comcast records). Volatility '
+    f'manufactured-vs-concordant t={tsz_o[0]:+.2f} (p={tsz_o[1]:.4f}): '
+    f'null on the repaired group (the pre-repair null, t=-0.54/p=.59, '
+    f'was a statement about the 14 misjoined Comcast records; no size '
+    f'claim in either direction survives). Volatility '
     f'change, manufactured-vs-control: t={tvc_o[0]:+.2f} '
     f'(p={tvc_o[1]:.4f}; pre-repair t=+4.43/p=.0001 on the contaminated '
-    f'31-record group — reported as the join-gap sensitivity).')
+    f'31-record group, reported as the join-gap sensitivity).')
 log('  Manufactured share of SIC-treated records by size quartile '
     '(N=891 spec sample): ' + '; '.join(
         f'{q}: {v[1]}/{v[0]} ({100 * v[1] / v[0]:.0f}%)' if v[0] else f'{q}: 0'
         for q, v in shares.items()))
 log(f"  Manufactured orgs: {sorted(man_o['org_name'].unique())[:13]}")
-log(f'\n  MECHANISM VERDICT (revised 9/2, join-gap-repaired group): the '
-    f'SIC-treated-but-unregistered records are smaller than concordant '
-    f'carriers (p={tsz_o[1]:.3f} old data repaired; the earlier "not '
-    f'smaller" was a statement about the misjoined Comcast records) and '
-    f'their measured volatility CHANGES are elevated — mean '
-    f'{man_o["volatility_change"].mean():+.2f} against '
-    f'{con_o["volatility_change"].mean():+.2f} for correctly-classified '
-    f'carriers and {ctl_o["volatility_change"].mean():+.2f} for controls '
-    f'(t={tvc_o[0]:+.2f}, p={tvc_o[1]:.4f}) — with the share of the '
-    f'"treated" cell peaking in Q1 ({100 * shares["Q1"][1] / shares["Q1"][0]:.0f}% '
-    f'of Q1 SIC-treated records vs {100 * shares["Q2"][1] / max(shares["Q2"][0], 1):.0f}% '
-    f'in Q2). The Q1 records are NOT name-adjacency non-carriers (those '
-    f'sit in Q3/Q4 with unremarkable outcomes): they are DISH and '
-    f'Suddenlink — genuine communications firms OUTSIDE the Form 499 '
-    f'contribution base — a REGULATORY-STATUS distinction SIC cannot '
-    f'see. And the Q1 collapse (+7.65 -> +0.13, panel ii) is a SWAP, not '
-    f'a removal: 9 records averaging +7.56 leave (DISH/Suddenlink), 10 '
-    f'records averaging -8.62 enter (GoDaddy, Twilio — Form 499 filers '
-    f'SIC coded as software). SIC errs in both directions and both '
-    f'errors land in the small-firm cell; the published spike is the net '
-    f'of a positive-outcome exclusion failure and a negative-outcome '
-    f'inclusion failure — not a records-per-event size gradient (B2), '
-    f'and not driven by the name-adjacency admissions (data-quality '
-    f'paragraph, incl. the two ATT-SecurityBreach permno-collision '
-    f'records).')
+log(f'\n  MECHANISM VERDICT (revised 9/4, DISH date-conditional '
+    f're-adjudication): under the retired name-token classifier the '
+    f'SIC-treated-but-unregistered group is {len(man_o)} records: the two '
+    f'ATT-SecurityBreach artifacts, Suddenlink, and the name-adjacency '
+    f'admissions. DISH left the group because DISH Wireless L.L.C. (dba '
+    f'Boost Mobile, FRN 0027852722) is an open Form 499 family '
+    f'registration at its 2023 breach dates, so DISH is registered, not '
+    f'misclassified. The group shows NO size difference from concordant '
+    f'carriers (t={tsz_o[0]:+.2f}, p={tsz_o[1]:.4f}) and its share of '
+    f'SIC-treated records no longer peaks in Q1 '
+    f'({"; ".join(f"{q}: {v[1]}/{v[0]}" for q, v in shares.items())}); '
+    f'volatility manufactured-vs-control is t={tvc_o[0]:+.2f} '
+    f'(p={tvc_o[1]:.4f}), a null. The authoritative decomposition is the '
+    f'industry-code baseline (appendix Table 5): the Form 499 repair '
+    f'ATTENUATES the published Q1 spike (+7.5556, p=.0086, to +5.1482, '
+    f'p=.069) rather than eliminating it; the dropped component is '
+    f'EMPTY, and the attenuation is driven entirely by the added '
+    f'registrants industry codes miss (10 records averaging -8.62: '
+    f'GoDaddy and Twilio, Form 499 filers industry-coded as software). '
+    f'What survives is an inclusion-failure story plus a data-defect '
+    f'story (the two ATT permno-collision artifacts), not a '
+    f'regulatory-status exclusion story, and no records-per-event size '
+    f'gradient claim (B2).')
 
 # ======= C1: vintage-matched treatment verification (registry snapshot) ======
 log('\n' + '=' * 90)

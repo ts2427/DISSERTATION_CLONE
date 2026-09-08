@@ -1,0 +1,8 @@
+organization,event_date,assigned_permno,assigned_security,ticker,ticker_end_for_assigned,correct_permno
+"Motorola, Inc.",2009-01-01,48020,MOVIE STAR INC N Y,MSI,2008-01-28,22779 (Motorola Inc; MOT-era rows absent from the committed mapping)
+"Motorola, Inc.",2009-02-17,48020,MOVIE STAR INC N Y,MSI,2008-01-28,22779 (Motorola Inc; MOT-era rows absent from the committed mapping)
+"Facebook, Inc.",2008-06-09,76947,METATEC INTERNATIONAL INC,META,2002-04-25,none (pre-IPO at event date; Facebook IPO 2012-05-18)
+Facebook,2013-11-24,76947,METATEC INTERNATIONAL INC,META,2002-04-25,13407 (Meta Platforms; FB-era rows absent from the committed mapping)
+Facebook,2018-03-01,76947,METATEC INTERNATIONAL INC,META,2002-04-25,13407 (Meta Platforms; FB-era rows absent from the committed mapping)
+Facebook,2018-09-01,76947,METATEC INTERNATIONAL INC,META,2002-04-25,13407 (Meta Platforms; FB-era rows absent from the committed mapping)
+DoorDash Inc.,2019-05-04,28557,DASH INDUSTRIES INC,DASH,1992-08-26,none (pre-IPO at event date; DoorDash IPO 2020-12-09)

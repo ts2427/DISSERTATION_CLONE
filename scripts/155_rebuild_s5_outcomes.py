@@ -64,7 +64,11 @@ MANUAL = {101830: ['S'], 1288776: ['GOOG'], 1011006: ['YHOO', 'AABA'],
           1590895: ['CZR'], 1808065: ['AON'],
           # Altice: current SEC ticker file says OPTU (2025 Optimum rename) —
           # a rename artifact; the CRSP security is ATUS (permno 16753).
-          1702780: ['ATUS']}
+          1702780: ['ATUS'],
+          # DISH: delisted 2023-12-29 (EchoStar merger) before the SEC ticker
+          # snapshot; CRSP security is DISH (permno 81696). Added with the 9/4
+          # date-conditional re-adjudication + scripts/179 top-up pull.
+          1001082: ['DISH']}
 for cik, tks in MANUAL.items():
     cur = cik2tk.setdefault(cik, [])
     for t in tks:
@@ -93,6 +97,11 @@ if tp_daily.exists():
     crsp = pd.concat([crsp, pd.read_csv(tp_daily, usecols=['permno', 'date', 'ret', 'vol'])],
                      ignore_index=True)
     log('  WRDS top-up daily rows merged')
+tp_dish = Path('Data/wrds/crsp_daily_topup_dish.csv')
+if tp_dish.exists():
+    crsp = pd.concat([crsp, pd.read_csv(tp_dish, usecols=['permno', 'date', 'ret', 'vol'])],
+                     ignore_index=True)
+    log('  DISH top-up daily rows merged (permno 81696, scripts/179)')
 mkt = pd.read_csv('Data/wrds/market_indices.csv', usecols=['date', 'vwretd'])
 crsp['date'] = pd.to_datetime(crsp['date'])
 mkt['date'] = pd.to_datetime(mkt['date'])
@@ -100,6 +109,16 @@ crsp = crsp.merge(mkt, on='date', how='left')
 crsp['ar'] = (crsp['ret'] - crsp['vwretd']) * 100
 pgroups = {p: g.sort_values('date').reset_index(drop=True) for p, g in crsp.groupby('permno')}
 pvol = {p: g['vol'].mean() for p, g in crsp.groupby('permno')}
+
+
+# Fallback guard (9/6, ticker-recycling failure mode): a fallback name row
+# whose nameendt precedes the event date beyond the 7-day anchor tolerance
+# is a RECYCLED ticker's prior holder (Facebook->Metatec, Motorola 2009->
+# Movie Star, DoorDash 2019->Dash Industries), not the event firm --
+# UNLESS the row is truncated at the extract boundary (nameendt ==
+# max nameendt in the extract), where the security is still listed and the
+# name row simply ends with the extract (the five 2025-notification cases).
+EXTRACT_NAME_END = pmap['nameendt'].max()
 
 
 def find_permno(cik, bdt):
@@ -111,6 +130,11 @@ def find_permno(cik, bdt):
         pool = inwin if len(inwin) else g[g['namedt'] <= bdt].tail(1)
         if len(pool) == 0:
             continue
+        if len(inwin) == 0:
+            end_ = pool['nameendt'].iloc[-1]
+            if (end_ < bdt - timedelta(days=7)
+                    and end_ < EXTRACT_NAME_END):
+                continue  # recycled-ticker prior holder; reject
         if len(pool) > 1:  # share classes: higher mean daily volume, documented
             pool = pool.assign(_v=[pvol.get(p, 0) for p in pool['permno']]).nlargest(1, '_v')
         return int(pool['permno'].iloc[0]), t, ('window' if len(inwin) else 'fallback-prior')

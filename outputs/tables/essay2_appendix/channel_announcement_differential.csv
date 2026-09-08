@@ -1,8 +1,8 @@
 spec,kind,coef,se_cv3,p_cv3,N,G,bh_note
-base_PRE_SPECIFIED,pre-specified (8/31),0.4388,0.2012,0.032156,329,80.0,tested in 4-family @ .0375
-severity_sensitivity,sensitivity,0.45,0.2162,0.040685,329,80.0,not BH-tested
-flexible_size_sensitivity,sensitivity,0.4845,0.2253,0.034561,329,80.0,not BH-tested
-joint_sensitivity,sensitivity,0.4809,0.2369,0.045699,329,80.0,not BH-tested
-common_support_estimand_change,sensitivity,0.4244,0.1998,0.036927,324,77.0,not BH-tested
-component_treated_mean,decomposition,-0.0129,,,102,,
+base_PRE_SPECIFIED,pre-specified (8/31),0.4475,0.1972,0.025967,331,81.0,tested in 4-family @ .0375
+severity_sensitivity,sensitivity,0.4594,0.2119,0.033142,331,81.0,not BH-tested
+flexible_size_sensitivity,sensitivity,0.4864,0.2151,0.026445,331,81.0,not BH-tested
+joint_sensitivity,sensitivity,0.486,0.2279,0.036043,331,81.0,not BH-tested
+common_support_estimand_change,sensitivity,0.4326,0.1959,0.030181,326,78.0,not BH-tested
+component_treated_mean,decomposition,-0.0289,,,104,,
 component_control_mean,decomposition,-0.1231,,,227,,

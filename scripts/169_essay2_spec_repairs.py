@@ -77,6 +77,10 @@ tp = Path('Data/wrds/crsp_daily_topup.csv')
 if tp.exists():
     crsp = pd.concat([crsp, pd.read_csv(tp, usecols=['permno', 'date', 'ret'])],
                      ignore_index=True)
+tp_dish = Path('Data/wrds/crsp_daily_topup_dish.csv')
+if tp_dish.exists():
+    crsp = pd.concat([crsp, pd.read_csv(tp_dish, usecols=['permno', 'date', 'ret'])],
+                     ignore_index=True)
 crsp['date'] = pd.to_datetime(crsp['date'])
 crsp['ret'] = pd.to_numeric(crsp['ret'], errors='coerce')
 mkt = pd.read_csv('Data/wrds/market_indices.csv', usecols=['date', 'vwretd'])

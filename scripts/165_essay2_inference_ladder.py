@@ -220,20 +220,21 @@ ladder = pd.DataFrame([
     dict(procedure=f'WCR wild cluster bootstrap (restricted, Rademacher, B={B_MAIN:,})',
          se=np.nan, ci_lo=round(ci_lo, 4), ci_hi=round(ci_hi, 4),
          p=round(p_wcr, 4),
-         bias='under-rejects with very few treated clusters (G1=11 is safe)'),
+         bias=f'under-rejects with very few treated clusters (G1={G1} is safe)'),
     dict(procedure=f'WCU wild cluster bootstrap (unrestricted, B={B_MAIN:,})',
          se=np.nan, ci_lo=np.nan, ci_hi=np.nan, p=round(p_wcu, 4),
          bias='over-rejects with few treated clusters — opposite failure mode'),
     dict(procedure='WCR, Webb six-point weights (B=9,999)', se=np.nan,
          ci_lo=np.nan, ci_hi=np.nan, p=round(p_webb, 4),
-         bias='robustness row; 2^G limit is on total G=81, not G1'),
+         bias=f'robustness row; 2^G limit is on total G={G}, not G1'),
 ])
 log('\n## D5 — THE INFERENCE LADDER (treatment coefficient '
     f'{b_t:+.4f} daily pp; G={G}, G1={G1}):')
 log(ladder.to_string(index=False))
 ladder.insert(0, 'coef', round(b_t, 4))
 ladder.to_csv(OUTDIR / 't26_inference_ladder.csv', index=False)
-log(f'\n  Reading: HC3 ignores within-parent correlation, so its p=.228 is '
+log(f'\n  Reading: HC3 ignores within-parent correlation, so its '
+    f'p={p_hc3:.3f} is '
     f'a LOWER BOUND on the honest p-value; the p only moves one way as '
     f'inference honors the design. WCR and WCU agree (p={p_wcr:.3f} vs '
     f'{p_wcu:.3f}); their failure modes run in opposite directions, so '

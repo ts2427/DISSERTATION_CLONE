@@ -1,6 +1,7 @@
 parent_cik,legal_name,FRN,start,end,type,usf,holding,evidence_named,end_before_start,events_in_sample,event_span
 1632127,"ComSouth Telecommunications, LLC",0004319257,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Cable One, Inc.",,,2,2019-03-01..2019-08-08
 1632127,"ComSouth Teleservices, Inc.",0004357216,1997-01-01,2012-03-31,Toll Reseller,No,ComSouth Corporation,,,2,2019-03-01..2019-08-08
+20520,Global Valley Networks,0001550029,1997-01-01,2009-01-01,Incumbent Local Exchange Carrier,No,Frontier Communications Corporation,,,4,2022-02-24..2024-06-10
 1632127,"Low Country Carriers, Inc.",0005058177,1997-01-01,2023-06-30,Toll Reseller,No,HARGRAY COMMUNICATIONS GROUP INC,,,2,2019-03-01..2019-08-08
 18926,"CenturyTel of Midwest-Kendall, Inc",0004547089,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,,5,2013-12-27..2022-03-15
 732712,Verizon - New York Inc.,0003469442,1997-01-01,2021-09-30,Incumbent Local Exchange Carrier,No,VERIZON COMMUNICATIONS INC,YES,,10,2008-06-27..2024-02-06
@@ -12,6 +13,7 @@ parent_cik,legal_name,FRN,start,end,type,usf,holding,evidence_named,end_before_s
 18926,"Gulf Long Distance, Inc.",0004333761,1997-01-01,2014-04-01,Toll Reseller,No,"CenturyLink, Inc.",,,5,2013-12-27..2022-03-15
 101830,Sprint/United Telephone - Northwest,0001566694,1997-01-01,1997-01-01,Incumbent Local Exchange Carrier,No,Sprint Corporation,,,9,2009-02-01..2019-06-22
 18926,"CenturyTel of Lake Dallas, Inc.",0001677541,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,,5,2013-12-27..2022-03-15
+20520,CITIZENS TELECOMMUNICATIONS COMPANY OF CALIFORNIA INC,0003574316,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
 732712,St. Joseph CellTelCo,0005005541,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,,10,2008-06-27..2024-02-06
 732712,"Topeka Cellular Telephone Company, Inc.",0005757901,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,,,,10,2008-06-27..2024-02-06
 732717,"BellSouth Public Communications, Inc.",0008709081,1997-01-01,2004-03-31,Payphone Service Provider,No,"Bellsouth Telecommunications, Inc.",,,24,2008-05-23..2024-04-14
@@ -48,8 +50,17 @@ parent_cik,legal_name,FRN,start,end,type,usf,holding,evidence_named,end_before_s
 732712,NYNEX Long Distance Company,0004342580,1997-01-01,2014-11-12,Toll Reseller,No,VERIZON COMMUNICATIONS INC,,,10,2008-06-27..2024-02-06
 732712,Verizon Hawaii International Inc.,0004374443,1997-01-01,2021-09-30,Private Service Provider,No,VERIZON COMMUNICATIONS INC,,,10,2008-06-27..2024-02-06
 732712,"GTE Pacifica, Inc.",0004339933,1997-01-01,open,Interexchange Carrier (IXC),Yes,PACIFIC TELECOM INC,,,10,2008-06-27..2024-02-06
+20520,Frontier Communications Northwest Inc,0001583244,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,Northwest Fiber LLC,,,4,2022-02-24..2024-06-10
+20520,Frontier Communications West Coast Inc.,0001583228,1997-01-01,2013-07-01,Incumbent Local Exchange Carrier,No,FRONTIER COMMUNICATIONS CORPORATION,,,4,2022-02-24..2024-06-10
 732712,Frontier Communications West Coast Inc.,0001583228,1997-01-01,2013-07-01,Incumbent Local Exchange Carrier,No,FRONTIER COMMUNICATIONS CORPORATION,,,10,2008-06-27..2024-02-06
 732712,"Verizon South, Inc.",0001962588,1997-01-01,2021-09-30,Incumbent Local Exchange Carrier,No,VERIZON COMMUNICATIONS INC,,,10,2008-06-27..2024-02-06
+20520,"Citizens Telecommunications Co. of Tennessee, LLC",0003573391,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of America, Inc.",0005042080,1997-01-01,open,Interexchange Carrier (IXC),Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,CITIZENS TELECOMMUNICATIONS COMPANY OF UTAH,0003574506,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,CITIZENS TELECOMMUNICATIONS COMPANY OF NEW YORK INC,0003574548,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,Citizens Telecommunications Co. of Idaho,0003574589,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,Northwest Fiber LLC,,,4,2022-02-24..2024-06-10
+20520,Citizens Telecommunications Co. of Montana,0003574563,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,Northwest Fiber LLC,,,4,2022-02-24..2024-06-10
+20520,CITIZENS TELECOMMUNICATIONS COMPANY OF THE WHITE MOUNTAINS INC,0003572617,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
 18926,"CenturyTel of the Northwest Arkansas, LLC",0004547295,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,,5,2013-12-27..2022-03-15
 732712,Verizon Midwest,0004191789,1997-01-01,2002-09-01,Incumbent Local Exchange Carrier,No,"Verizon Communications, Inc.",,,10,2008-06-27..2024-02-06
 18926,"CenturyTel of Port Aransas, Inc.",0001685429,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,,5,2013-12-27..2022-03-15
@@ -120,6 +131,12 @@ parent_cik,legal_name,FRN,start,end,type,usf,holding,evidence_named,end_before_s
 732712,Wasatch Utah RSA No. 2 Limited Partnership,0001572387,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,,10,2008-06-27..2024-02-06
 732712,"Yuma, Arizona RSA Limited Partnership",0001837194,1997-01-01,2001-06-15,Cellular/PCS/SMR,No,Cellco Partnership,,,10,2008-06-27..2024-02-06
 732712,Grays Harbor-Mason Limited Partnership,0001572320,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,,10,2008-06-27..2024-02-06
+20520,Citizens Telecommunications Co. of West Virginia,0004054938,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,Citizens Telecommunications Co. of Tuolumne,0003573706,1997-01-01,2009-01-01,Incumbent Local Exchange Carrier,No,Frontier Communications Corporation,,,4,2022-02-24..2024-06-10
+20520,CITIZENS TELECOMMUNICATIONS COMPANY OF NEVADA,0001596881,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,"Citizens Telecommunications Co. of Golden State, Inc",0003573417,1997-01-01,2009-01-01,Incumbent Local Exchange Carrier,No,Citizens Communications Company,,,4,2022-02-24..2024-06-10
+20520,Citizens Telecommunications Company of Oregon,0003574522,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,Northwest Fiber LLC,,,4,2022-02-24..2024-06-10
+20520,"Citizens Telecomm Company of the Volunteer State, LLC",0004260568,1997-01-01,2018-01-01,Incumbent Local Exchange Carrier,No,Frontier Commnunications Corporation,,,4,2022-02-24..2024-06-10
 732712,"Sioux Falls Cellular, LP",0003770849,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,,10,2008-06-27..2024-02-06
 732712,"Bismarck MSA, LP",0001606532,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,,10,2008-06-27..2024-02-06
 732712,Eastern South Dakota Cellular (South Dakota RSA No. 9),0001608116,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,,10,2008-06-27..2024-02-06
@@ -144,12 +161,44 @@ parent_cik,legal_name,FRN,start,end,type,usf,holding,evidence_named,end_before_s
 732712,Utah RSA 6 Limited Partnership,0001607241,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,,10,2008-06-27..2024-02-06
 732712,Sioux City MSA Limited Partnership,0001609411,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,,10,2008-06-27..2024-02-06
 732712,Pueblo MSA Limited Partnership,0001609445,2001-07-01,2001-07-01,Cellular/PCS/SMR,No,Cellco Partnership,,,10,2008-06-27..2024-02-06
+20520,FRONTIER COMMUNICATIONS OF IOWA LLC,0002574960,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Minnesota, Inc.",0002624641,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Alabama, LLC",0004243952,1997-01-01,2018-01-01,Incumbent Local Exchange Carrier,No,Frontier Commnunications Corporation,,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of the South, LLC",0005061064,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Georgia, LLC",0005450093,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Lamar County, LLC",0005060439,1997-01-01,2018-01-01,Incumbent Local Exchange Carrier,No,Frontier Commnunications Corporation,,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Fairmount, LLC",0005061338,1997-01-01,2018-01-01,Incumbent Local Exchange Carrier,No,Frontier Commnunications Corporation,,,4,2022-02-24..2024-06-10
+20520,Frontier Communications of Mississippi LLC,0015453079,1997-01-01,open,Incumbent Local Exchange Carrier,No,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
 101830,"Sprint/United Telephone Company of New Jersey, Inc.",0004146585,1997-01-01,1997-01-01,Incumbent Local Exchange Carrier,No,Sprint Corporation,,,9,2009-02-01..2019-06-22
 101830,Sprint/United Tel. Co. of Pennsylvania,0004140422,1997-01-01,1997-01-01,Incumbent Local Exchange Carrier,No,Sprint Corporation,,,9,2009-02-01..2019-06-22
 18926,"CenturyTel of Minnesota, Inc",0002641967,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,Lumen Technologies Inc.,,,5,2013-12-27..2022-03-15
 18926,"CenturyTel of Postville, Inc.",0003738093,1997-01-01,open,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,,5,2013-12-27..2022-03-15
 18926,"CenturyTel of Southern Wisconsin, Inc.",0004547014,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,,5,2013-12-27..2022-03-15
 732717,"Southwestern Bell Telephone Company, LLC",0003801651,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"AT&T, Inc.",,,24,2008-05-23..2024-04-14
+20520,"Frontier Communications of AuSable Valley, Inc.",0003455896,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Breezewood, LLC",0003273240,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Canton, LLC",0003223385,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Michigan, Inc.",0006148175,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,FRONTIER COMMUNICATIONS OF INDIANA LLC,0004163317,1997-01-01,open,Incumbent Local Exchange Carrier,No,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of DePue, Inc.",0002861979,1997-01-01,open,Incumbent Local Exchange Carrier,No,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Pennsylvania, LLC",0003271236,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of New York, Inc.",0004132338,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Illinois, Inc.",0005060371,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Lakeside, Inc.",0004156162,1997-01-01,open,Incumbent Local Exchange Carrier,No,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Lakewood, LLC",0005060413,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,FRONTIER COMMUNICATIONS - MIDLAND INC,0005040266,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Mondovi, LLC",0004966362,1997-01-01,2018-01-01,Incumbent Local Exchange Carrier,No,Frontier Commnunications Corporation,,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Mt. Pulaski, Inc.",0005060496,1997-01-01,open,Incumbent Local Exchange Carrier,No,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Orion, Inc.",0005060512,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Oswayo River, LLC",0003222221,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,FRONTIER COMMUNICATIONS - PRAIRIE INC,0003765823,1997-01-01,open,Incumbent Local Exchange Carrier,No,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,FRONTIER COMMUNICATIONS -SCHUYLER INC,0005060314,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Seneca Gorham, Inc.",0003399680,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of St. Croix, LLC",0004150157,1997-01-01,2018-01-01,Incumbent Local Exchange Carrier,No,Frontier Commnunications Corporation,,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Sylvan Lake, Inc.",0005060587,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,FRONTIER COMMUNICATIONS OF THORNTOWN LLC,0005061114,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Wisconsin, LLC",0002718971,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Viroqua, LLC",0005234760,1997-01-01,2018-01-01,Incumbent Local Exchange Carrier,No,Frontier Commnunications Corporation,,,4,2022-02-24..2024-06-10
 732717,"Teleport Communications America, LLC",0004274114,1997-01-01,open,CAP/LEC,Yes,"AT&T, Inc.",,,24,2008-05-23..2024-04-14
 1632127,"Bluffton Telephone Company, LLC",0005058151,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Cable One, Inc.",,,2,2019-03-01..2019-08-08
 732717,"AT&T Enterprises, LLC",0005937974,1997-01-01,open,Interexchange Carrier (IXC),Yes,"AT&T, Inc.",YES,,24,2008-05-23..2024-04-14
@@ -227,6 +276,7 @@ parent_cik,legal_name,FRN,start,end,type,usf,holding,evidence_named,end_before_s
 18926,Qwest Corporation,0003746757,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,Lumen Technologies Inc.,,,5,2013-12-27..2022-03-15
 18926,Qwest !nterprise America,0001605625,1997-01-01,2005-08-23,CAP/LEC,No,Qwest Services Corporation,,,5,2013-12-27..2022-03-15
 18926,"U S WEST Long Distance, Inc.",0004343539,1997-01-01,1997-01-01,Toll Reseller,No,"US West Communications, Inc.",,,5,2013-12-27..2022-03-15
+20520,"Frontier Communications of America, Inc.",0005060348,1997-01-01,2003-03-31,Toll Reseller,No,Citizens Communications Company,,,4,2022-02-24..2024-06-10
 18926,"CenturyLink Communications, LLC",0018421941,1997-01-01,open,Interexchange Carrier (IXC),Yes,Lumen Technologies Inc.,,,5,2013-12-27..2022-03-15
 732717,Centennial Caldwell Cellular Corp.,0008816779,1997-01-01,2010-12-31,Cellular/PCS/SMR,No,"New Cingular Wireless PCS, LLC",,,24,2008-05-23..2024-04-14
 732717,Centennial Clairborne Cellular Corp.,0006528715,1997-01-01,2010-12-31,Cellular/PCS/SMR,No,New Cingular Wireless PCS LLC,,,24,2008-05-23..2024-04-14
@@ -253,11 +303,11 @@ parent_cik,legal_name,FRN,start,end,type,usf,holding,evidence_named,end_before_s
 732717,"Anniston-Westel Company, LLC",0001804525,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,,24,2008-05-23..2024-04-14
 732712,"Verizon Wireless Personal Communications, L.P",0001659069,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,,10,2008-06-27..2024-02-06
 732717,SBC Long Distance LLC,0003763497,1997-01-01,open,Interexchange Carrier (IXC),Yes,"AT&T, Inc.",,,24,2008-05-23..2024-04-14
-20520,Sprint Spectrum LLC,0006693022,1997-01-01,2024-12-31,Cellular/PCS/SMR,No,T MOBILE USA INC,,,4,2022-02-24..2024-06-10
 101830,Sprint Spectrum LLC,0006693022,1997-01-01,2024-12-31,Cellular/PCS/SMR,No,T MOBILE USA INC,YES,,9,2009-02-01..2019-06-22
 1283699,Sprint Spectrum LLC,0006693022,1997-01-01,2024-12-31,Cellular/PCS/SMR,No,T MOBILE USA INC,,,26,2014-01-02..2023-04-28
 732712,"Pennsylvania No. 4 Sector 2, LP",0002147494,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,,10,2008-06-27..2024-02-06
 732712,"Pennsylvania No. 3 Sector 2, LP",0002147551,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,,10,2008-06-27..2024-02-06
+20520,"Citizens Telecommunications Technologies, Inc.",0003735875,1997-01-01,open,Toll Reseller,No,CITIZENS TELEPHONE COMPANY OF KECKSBURG,,,4,2022-02-24..2024-06-10
 101830,"Sprint Telephony PCS, L.P.",0002963965,1997-01-01,2015-01-12,Cellular/PCS/SMR,No,Softbank Corp,,,9,2009-02-01..2019-06-22
 1166691,"Comcast Telephony Communications of Maryland, Inc.",0003766052,1997-01-01,2003-08-15,CAP/LEC,No,Comcast Corporation,,,9,2008-01-29..2024-10-04
 1166691,"Comcast Business Communications, LLC.",0004321725,1997-01-01,open,CAP/LEC,Yes,COMCAST CORPORATION,,,9,2008-01-29..2024-10-04
@@ -356,6 +406,9 @@ parent_cik,legal_name,FRN,start,end,type,usf,holding,evidence_named,end_before_s
 732712,The Great Salts Flats General Partnership,0001622273,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,,,,10,2008-06-27..2024-02-06
 732712,"Southern & Central Wireless, LLC",0003802923,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,,10,2008-06-27..2024-02-06
 732712,"PA RSA 1, LP",0002837151,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,,10,2008-06-27..2024-02-06
+20520,CITIZENS TELECOMMUNICATIONS COMPANY OF ILLINOIS,0003934205,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,CITIZENS TELECOMMUNICATIONS COMPANY OF NEBRASKA,0004341095,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,"Citizens Telecommunications Company of Minnesota, LLC",0004036703,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
 732712,Nsightel Wireless LLC,0004059523,1997-01-01,open,Cellular/PCS/SMR,Yes,NORTHEAST COMMUNICATIONS OF WISCONSIN INC,,,10,2008-06-27..2024-02-06
 732712,"Metro Southwest PCS, LLP",0002700839,1997-01-01,2004-12-31,Cellular/PCS/SMR,No,,,,10,2008-06-27..2024-02-06
 18926,"TW Wireless, LLC",0001621465,1997-01-01,2004-02-17,Cellular/PCS/SMR,No,"Qwest Wireless, LLC",,,5,2013-12-27..2022-03-15
@@ -370,6 +423,8 @@ parent_cik,legal_name,FRN,start,end,type,usf,holding,evidence_named,end_before_s
 732717,"New Cingular Wireless Services, Inc. CONSOLIDATED",0003766532,1997-01-01,open,Cellular/PCS/SMR,Yes,"AT&T, Inc.",,,24,2008-05-23..2024-04-14
 732712,Virginia RSA 5 Retail Limited Partnership,,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,,10,2008-06-27..2024-02-06
 732712,"Verizon Global Solutions, Inc.",0004372975,1997-01-01,2005-03-01,Private Service Provider,No,Verizon Communications Inc.,,,10,2008-06-27..2024-02-06
+20520,"Frontier Communications of Rochester, Inc.",0004320081,1997-01-01,open,Local Reseller,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,"Citizens Telecommunications of North Dakota, Inc.",0004340931,1997-01-01,2003-03-31,Incumbent Local Exchange Carrier,No,Citizens Communications Company,,,4,2022-02-24..2024-06-10
 732712,MP Communications,0006400998,1997-01-01,2005-01-01,Cellular/PCS/SMR,No,,,,10,2008-06-27..2024-02-06
 732712,Wescel Cellular of New Mexico,,1997-01-01,2003-02-01,Cellular/PCS/SMR,No,Cellco Partnership,,,10,2008-06-27..2024-02-06
 1091667,"Charter Fiberlink - Missouri, LLC",0005793922,1997-01-01,open,CAP/LEC,Yes,CC FIBERLINK LLC,,,8,2008-07-14..2023-09-01
@@ -458,6 +513,7 @@ parent_cik,legal_name,FRN,start,end,type,usf,holding,evidence_named,end_before_s
 1091667,"Charter Fiberlink VA-CCVII, LLC",0010399103,2003-01-01,2006-12-06,CAP/LEC,No,"CC VII Fiberlink, LLC",,,8,2008-07-14..2023-09-01
 1091667,"Charter Fiberlink VA-CCO, LLC",0010399053,2003-01-01,open,CAP/LEC,Yes,CCO FIBERLINK LLC,,,8,2008-07-14..2023-09-01
 1091667,"Charter Fiberlink UT-CCVII, LLC",0010399038,2003-01-01,2010-06-25,CAP/LEC,No,"CC VII Fiberlink, LLC",,,8,2008-07-14..2023-09-01
+1001082,dishNET Wireline LLC,0010436087,2003-01-01,open,CAP/LEC,No,DISH NETWORK CORPORATION,,,2,2023-02-22..2023-05-17
 1091667,"Charter Fiberlink VA-CCVI, LLC",0010399061,2003-01-01,2006-12-06,CAP/LEC,No,"CC VI Fiberlink, LLC",,,8,2008-07-14..2023-09-01
 1091667,"Charter Fiberlink ID-CCVII, LLC",0010695377,2004-01-01,2010-12-07,CAP/LEC,No,"CC VII Fiberlink, LLC",,,8,2008-07-14..2023-09-01
 732712,Verizon Business Global LLC,0010856284,2004-01-01,2021-09-30,Interexchange Carrier (IXC),No,VERIZON COMMUNICATIONS INC,,,10,2008-06-27..2024-02-06
@@ -480,6 +536,7 @@ parent_cik,legal_name,FRN,start,end,type,usf,holding,evidence_named,end_before_s
 1166691,"Comcast IP Phone II, LLC.",0015322464,2006-07-28,2016-06-23,Interconnected VoIP,No,COMCAST CABLE COMMUNICATIONS LLC,,,9,2008-01-29..2024-10-04
 1166691,"Comcast IP Phone, LLC.",0008497687,2006-07-28,open,Interconnected VoIP,Yes,COMCAST CORPORATION,,,9,2008-01-29..2024-10-04
 1632127,Cable One Inc.,0003474327,2006-08-01,open,Interconnected VoIP,Yes,"Cable One, Inc",YES,,2,2019-03-01..2019-08-08
+20520,Global Valley Services,0017464140,2006-09-11,2015-06-12,Toll Reseller,No,Frontier Commnunications Corporation,,,4,2022-02-24..2024-06-10
 732717,"LCW Wireless Operations, LLC.",0015401755,2007-01-12,2011-02-28,Cellular/PCS/SMR,No,"LCW Wireless, LLC",,,24,2008-05-23..2024-04-14
 732712,"NEP Cellcorp, Inc.",0014802284,2007-01-01,2016-02-17,Cellular/PCS/SMR,No,THE NORTH EASTERN PENNSYLVANIA TELEPHONE COMPANY,,,10,2008-06-27..2024-02-06
 1166691,"Comcast IP Phone V, LLC.",0016513004,2007-06-14,2016-08-18,Interconnected VoIP,No,COMCAST CABLE COMMUNICATIONS LLC,,,9,2008-01-29..2024-10-04
@@ -490,6 +547,7 @@ parent_cik,legal_name,FRN,start,end,type,usf,holding,evidence_named,end_before_s
 732712,"FlatPhone, Inc.",0017434176,2008-02-26,2008-09-25,CAP/LEC,No,"FLATPHONE, INC",,,10,2008-06-27..2024-02-06
 1166691,"Comcast IP Phone VI, LLC.",0015991573,2008-01-01,2016-07-01,Interconnected VoIP,No,COMCAST CABLE COMMUNICATIONS LLC,,,9,2008-01-29..2024-10-04
 1166691,"Comcast IP Phone VII, LLC.",0017430760,2008-01-01,2016-09-23,Interconnected VoIP,No,"COMCAST CABLE COMMUNICATIONS, LLC",,,9,2008-01-29..2024-10-04
+20520,"Citizens Telecom Solutions, LLC.",0009588377,2007-05-01,open,CAP/LEC,Yes,CITIZENS TELEPHONE COMPANY OF KECKSBURG,,,4,2022-02-24..2024-06-10
 1166691,"Comcast Phone II, LLC.",0011306958,2008-01-01,2020-04-01,CAP/LEC,No,COMCAST CABLE COMMUNICATIONS LLC,,,9,2008-01-29..2024-10-04
 1166691,"Masergy Cloud Communications, Inc.",0018122523,2006-10-01,open,Interconnected VoIP,Yes,COMCAST CORPORATION,,,9,2008-01-29..2024-10-04
 1632127,"Fidelity Cablevision, LLC",0000013326,2008-10-21,open,CAP/LEC,Yes,"Cable One, Inc.",,,2,2019-03-01..2019-08-08
@@ -499,14 +557,19 @@ parent_cik,legal_name,FRN,start,end,type,usf,holding,evidence_named,end_before_s
 1632127,"Fidelity Telecom, LLC.",0018745695,2009-05-14,2018-03-27,Toll Reseller,No,,,,2,2019-03-01..2019-08-08
 732712,Michigan RSA #9 Limited Partnership,0001712916,2009-06-16,2010-07-01,Cellular/PCS/SMR,No,,,,10,2008-06-27..2024-02-06
 732712,Wisconsin RSA#1 Limited Partnership,0001838584,2009-06-16,2010-01-01,Cellular/PCS/SMR,No,,,,10,2008-06-27..2024-02-06
-20520,"Boostlink, LLC.",0018893370,2009-07-16,2009-04-05,Prepaid Card,No,,,DEFECT,4,2022-02-24..2024-06-10
+20520,Frontier Communications Online and Long Distance Inc,0018812487,2010-05-27,open,Toll Reseller,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,Frontier Communications of the Southwest Inc,0018802678,2010-05-27,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
+20520,FRONTIER COMMUNICATIONS OF THE CAROLINAS LLC,0018802660,2010-05-27,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,,4,2022-02-24..2024-06-10
 732712,Verizon North LLC,0020249777,2010-05-27,2021-09-30,Incumbent Local Exchange Carrier,No,VERIZON COMMUNICATIONS INC,,,10,2008-06-27..2024-02-06
 1632127,"CoBridge Communications, LLC",0020037461,2010-08-03,open,Interconnected VoIP,Yes,"Cable One, Inc.",,,2,2019-03-01..2019-08-08
+20520,"Frontier Communications ILEC Holdings, Inc.",0018802652,2010-08-04,2010-08-04,Incumbent Local Exchange Carrier,No,,,,4,2022-02-24..2024-06-10
 732717,"STX Wireless Operations, LLC",0019612910,2010-10-04,2014-06-30,Cellular/PCS/SMR,No,AT&T INC,,,24,2008-05-23..2024-04-14
 1447669,Twilio Inc,0020237343,2010-10-07,open,,No,,YES,,2,2022-08-04..2024-04-01
 732712,Verizon Connect Inc.,0019691732,2011-05-09,2022-12-31,Cellular/PCS/SMR,No,VERIZON COMMUNICATIONS INC,,,10,2008-06-27..2024-02-06
 1283699,"UVNV, LLC",0021822333,2012-07-01,open,Cellular/PCS/SMR,Yes,"T-Mobile USA, Inc.",,,26,2014-01-02..2023-04-28
+1001082,DISH Network Corporation,0005083498,2012-03-01,2015-12-31,Satellite,No,DISH NETWORK CORPORATION,,,2,2023-02-22..2023-05-17
 732717,DISH Network Corporation,0005083498,2012-03-01,2015-12-31,Satellite,No,DISH NETWORK CORPORATION,,,24,2008-05-23..2024-04-14
+1001082,Gamma Acquisition L.L.C.,0021004817,2012-03-01,2013-05-01,Satellite,No,DISH Networks Corporation,,,2,2023-02-22..2023-05-17
 732717,Gamma Acquisition L.L.C.,0021004817,2012-03-01,2013-05-01,Satellite,No,DISH Networks Corporation,,,24,2008-05-23..2024-04-14
 1091667,"Charter Advanced Services (CA), LLC",0022352983,2013-03-01,2019-09-30,Interconnected VoIP,No,CHARTER FIBERLINK CA CCO LLC,,,8,2008-07-14..2023-09-01
 1091667,"Charter Advanced Services (CT), LLC",0022353080,2013-03-01,2019-09-30,Interconnected VoIP,No,CHARTER FIBERLINK CT-CCO LLC,,,8,2008-07-14..2023-09-01
@@ -555,9 +618,9 @@ parent_cik,legal_name,FRN,start,end,type,usf,holding,evidence_named,end_before_s
 1283699,"Mint Mobile, LLC",0028706406,2019-09-01,open,Cellular/PCS/SMR,Yes,"T-Mobile USA, Inc.",,,26,2014-01-02..2023-04-28
 1632127,"Hargray of Alabama, LLC",0028332666,2019-09-01,open,CAP/LEC,Yes,"Cable One, Inc.",,,2,2019-03-01..2019-08-08
 1632127,"Hargray of Florida, Inc.",0028469450,2019-09-01,2022-09-30,CAP/LEC,No,"Hargray Communications Group, Inc.",,,2,2019-03-01..2019-08-08
-20520,DISH Wireless L.L.C.,0027852722,2020-06-01,open,Cellular/PCS/SMR,No,,,,4,2022-02-24..2024-06-10
+1001082,DISH Wireless L.L.C.,0027852722,2020-06-01,open,Cellular/PCS/SMR,No,,YES,,2,2023-02-22..2023-05-17
 1447669,Twilio US Technology Inc.,0028844892,2020-04-01,open,Interconnected VoIP,Yes,Twilio Inc.,,,2,2022-08-04..2024-04-01
-20520,DISH WIRELESS PUERTO RICO L.L.C.,0029666096,2020-07-01,open,Cellular/PCS/SMR,No,DISH Network Corporation,,,4,2022-02-24..2024-06-10
+1001082,DISH WIRELESS PUERTO RICO L.L.C.,0029666096,2020-07-01,open,Cellular/PCS/SMR,No,DISH Network Corporation,YES,,2,2023-02-22..2023-05-17
 18926,"Preferred Communications of Texas, LLC",0030102297,1999-01-01,2021-10-31,Payphone Service Provider,No,"Lumen Technologies, Inc.",,,5,2013-12-27..2022-03-15
 732717,Liberty Mobile Puerto Rico Inc.,0003473709,1999-01-01,open,Cellular/PCS/SMR,Yes,Liberty Latin America Ltd.,,,24,2008-05-23..2024-04-14
 732717,Liberty Mobile USVI Inc.,0004499034,1999-01-01,open,Wireless Data,Yes,Liberty Latin America Ltd.,,,24,2008-05-23..2024-04-14
@@ -570,10 +633,7 @@ parent_cik,legal_name,FRN,start,end,type,usf,holding,evidence_named,end_before_s
 1091667,Evo Technology Solutions LLC,0032436412,2021-08-01,2023-02-03,Other Local,No,,,,8,2008-07-14..2023-09-01
 1091667,"Charter IP Enabled Services, LLC",0034233072,2024-01-01,open,Interconnected VoIP,No,"Charter Communications Operating, LLC",,,8,2008-07-14..2023-09-01
 1091667,"TWC IP Enabled Services, LLC",0034233080,2024-01-01,open,Interconnected VoIP,No,"Charter Communications Operating, LLC",,,8,2008-07-14..2023-09-01
-20520,Mnboost Corp.,0036281509,2025-01-01,2025-01-01,Cellular/PCS/SMR,No,,,,4,2022-02-24..2024-06-10
 18926,United Telephone Company of the Northwest,0001566694,1999-01-01,open,Incumbent Local Exchange Carrier,Yes,"Lumen Technologies, Inc.",,,5,2013-12-27..2022-03-15
-20520,Boost SubscriberCo L.L.C.,0037698057,2025-12-01,open,Cellular/PCS/SMR,Yes,,,,4,2022-02-24..2024-06-10
 101830,"Sprinter IT, LLC",0030754840,2022-01-01,open,Interconnected VoIP,No,,,,9,2009-02-01..2019-06-22
 1283699,TMUS Fiber LLC,0037828100,2025-04-01,open,Interconnected VoIP,Yes,T MOBILE USA INC,,,26,2014-01-02..2023-04-28
 1091667,"BHN IP Enabled Services, LLC",0036251585,2025-04-01,open,Interconnected VoIP,No,"Charter Communications Operating, LLC",,,8,2008-07-14..2023-09-01
-20520,"AlaniTech, LLC",0038412748,2026-05-01,open,Local Reseller,No,,,,4,2022-02-24..2024-06-10

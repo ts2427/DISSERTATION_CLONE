@@ -1,0 +1,63 @@
+script,family,test
+164_essay2_rule_delay_classification.py,A2-delay,OLS delay (raw days)
+164_essay2_rule_delay_classification.py,A2-delay,OLS delay (winsorized p99)
+164_essay2_rule_delay_classification.py,A2-delay,OLS log(1+delay)
+164_essay2_rule_delay_classification.py,A2-delay,Brown-Forsythe variance equality
+164_essay2_rule_delay_classification.py,A2-delay-nz,OLS nonzero delay (raw days)
+164_essay2_rule_delay_classification.py,A2-delay-nz,OLS nonzero log(delay)
+164_essay2_rule_delay_classification.py,A2-delay-nz,Brown-Forsythe nonzero
+164_essay2_rule_delay_classification.py,A2-delay-nz,KS nonzero
+164_essay2_rule_delay_classification.py,A2-delay-nz,log-rank nonzero
+164_essay2_rule_delay_classification.py,A2-delay,quantile q=0.1
+164_essay2_rule_delay_classification.py,A2-delay,quantile q=0.25
+164_essay2_rule_delay_classification.py,A2-delay,quantile q=0.5
+164_essay2_rule_delay_classification.py,A2-delay,quantile q=0.75
+164_essay2_rule_delay_classification.py,A2-delay,quantile q=0.9
+164_essay2_rule_delay_classification.py,A2-delay,log-rank
+164_essay2_rule_delay_classification.py,A2-delay,KS distributional equality
+164_essay2_rule_delay_classification.py,B2,records-per-event ~ log assets
+164_essay2_rule_delay_classification.py,B2,records-per-event ~ log mktcap
+164_essay2_rule_delay_classification.py,B2b,size: SIC-only vs concordant-treated
+164_essay2_rule_delay_classification.py,B2b,pre-vol: SIC-only vs concordant-treated
+164_essay2_rule_delay_classification.py,B2b,vol-change: SIC-only vs all others
+164_essay2_rule_delay_classification.py,B2b,"OLD data: size, manufactured vs concordant"
+164_essay2_rule_delay_classification.py,B2b,"OLD data: vol-change, manufactured vs control"
+164_essay2_rule_delay_classification.py,H1,first event per parent
+164_essay2_rule_delay_classification.py,H1,most recent event per parent
+164_essay2_rule_delay_classification.py,H1,parent fixed effects
+169_essay2_spec_repairs.py,S-main,S1 primary
+169_essay2_spec_repairs.py,S-main,S1 excl crisis
+169_essay2_spec_repairs.py,S-main,raw robustness
+169_essay2_spec_repairs.py,S-main,S2 distant d1
+169_essay2_spec_repairs.py,S-main,S2 distant d2
+169_essay2_spec_repairs.py,S-main,S3 IV
+169_essay2_spec_repairs.py,S-main,S4 log ratio
+169_essay2_spec_repairs.py,H4,treated-share-by-year chi2
+169_essay2_spec_repairs.py,H4,drop overlaps
+169_essay2_spec_repairs.py,H6,"announcement-window elevation (descriptive, NOT the positive control)"
+169_essay2_spec_repairs.py,P,treated share pre/post 2019 frame break
+169_essay2_spec_repairs.py,H3,common support
+170_essay2_scope_and_bounds.py,H1,"headline ITT (entity-level, all treated events)"
+170_essay2_scope_and_bounds.py,H1,headline STRICT intent scope (HACK/INSD/CARD; DISC & PHYS/PORT/STAT dropped)
+170_essay2_scope_and_bounds.py,H1,headline LENIENT intent scope (+ PHYS/PORT/STAT; DISC dropped)
+170_essay2_scope_and_bounds.py,H1,cpqs_chg STRICT intent scope (HACK/INSD/CARD; DISC & PHYS/PORT/STAT dropped)
+170_essay2_scope_and_bounds.py,H1,edge_chg STRICT intent scope (HACK/INSD/CARD; DISC & PHYS/PORT/STAT dropped)
+170_essay2_scope_and_bounds.py,H1,ocam_chg STRICT intent scope (HACK/INSD/CARD; DISC & PHYS/PORT/STAT dropped)
+170_essay2_scope_and_bounds.py,H1,cpqs_chg LENIENT intent scope (+ PHYS/PORT/STAT; DISC dropped)
+170_essay2_scope_and_bounds.py,H1,edge_chg LENIENT intent scope (+ PHYS/PORT/STAT; DISC dropped)
+170_essay2_scope_and_bounds.py,H1,ocam_chg LENIENT intent scope (+ PHYS/PORT/STAT; DISC dropped)
+170_essay2_scope_and_bounds.py,A,TOST volatility (daily pp)
+170_essay2_scope_and_bounds.py,A,TOST CPQS (fraction)
+170_essay2_scope_and_bounds.py,A,TOST EDGE (fraction)
+170_essay2_scope_and_bounds.py,A,TOST log-OCAM
+174_q6_closeout.py,poscontrol,earnings decline
+175_essay2_announcement_contrast.py,L1,earnings elevation
+175_essay2_announcement_contrast.py,L1,breach elevation
+175_essay2_announcement_contrast.py,L1,contrast
+175_essay2_announcement_contrast.py,L3,treatment on announcement elevation
+176_q7_composition_check.py,Q7-composition,KS severity
+176_q7_composition_check.py,Q7-composition,BASE (the +0.446 spec)
+176_q7_composition_check.py,Q7-composition,+ severity (ln records winsor p99 + vector FE)
+176_q7_composition_check.py,Q7-composition,+ flexible size (quartile FE + size^2)
+176_q7_composition_check.py,Q7-composition,+ severity AND flexible size (joint)
+176_q7_composition_check.py,Q7-composition,common support (controls in treated size range; CHANGE OF ESTIMAND)

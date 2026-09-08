@@ -33,12 +33,14 @@ CHAIN = [
 # grows a new reference outside the labeled forensic/sensitivity blocks.
 # Allowlist = per-file occurrence counts audited 2026-09-02:
 #   163: Phase E DV-convention sensitivity + forensic provenance (6)
-#   164: B2b misclassified-composition forensics on old data (12)
+#   164: B2b misclassified-composition forensics on old data (was 12;
+#        9 after the 9/4 MECHANISM VERDICT rewrite dropped three prose
+#        references, replacing them with appendix Table 5 figures)
 #   166: DV-variant correlation matrix + B1 four-panel decomposition (5)
 #   174: one Q6 display line (1)
 VOLCHANGE_ALLOW = {
     '163_essay2_rerun_form499.py': 6,
-    '164_essay2_rule_delay_classification.py': 12,
+    '164_essay2_rule_delay_classification.py': 9,
     '166_essay2_spec_grid.py': 5,
     '174_q6_closeout.py': 1,
 }

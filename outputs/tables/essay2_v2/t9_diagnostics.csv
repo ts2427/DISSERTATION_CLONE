@@ -1,5 +1,5 @@
 diagnostic,value,df,p
-Breusch-Pagan chi2,8.2886,8,0.4058
-Jarque-Bera,2194.9,,0.00e+00
-Cook's D > 4/N count,18.0,,
-|DFFITS| > threshold count,18.0,,
+Breusch-Pagan chi2,10.0768,8,0.2597
+Jarque-Bera,2007.5,,0.00e+00
+Cook's D > 4/N count,17.0,,
+|DFFITS| > threshold count,17.0,,

@@ -39,49 +39,47 @@ outputs\ESSAY2_QUERY4_PARTS_ACJ.md,115,"outputs\ESSAY2_QUERY4_PARTS_ACJ.md:103: 
 outputs\ESSAY2_QUERY4_PARTS_ACJ.md,116,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:104: scripts\update_proposal_documents.py:621: FCC 7-Day Rule Impacts:,7-Day Rule
 outputs\ESSAY2_QUERY4_PARTS_ACJ.md,117,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:105: scripts\update_proposal_documents.py:660: Current Rule: 7-day disclosure mandate,7-day disclosure
 outputs\ESSAY2_QUERY4_PARTS_ACJ.md,118,"outputs\ESSAY2_QUERY4_PARTS_ACJ.md:106: outputs\DEAD_DATE_PURGE_INVENTORY.md:12: ""FCC 7-Day Rule (47 CFR 64.2011, effect",7-Day Rule
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,130,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:118: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:106: scripts\update_existing_proposal.py:190:,[Dd]isclose within
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,131,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:119: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:107: scripts\update_proposal_documents.py:621,7-Day Rule
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,132,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:120: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:108: scripts\update_proposal_documents.py:660,7-day disclosure
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,133,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:121: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:109: outputs\DEAD_DATE_PURGE_INVENTORY.md:12:,7-Day Rule
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,149,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:168: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:189: Dashboard\app.py:225: - Interpretation: ,7-day disclosure
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,150,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:170: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:191: Dashboard\app.py:409: before the 2007 FC,7-Day Rule
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,151,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:171: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:192: Dashboard\app.py:422: Pre-2007 (before F,7-Day Rule
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,153,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:173: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:194: Dashboard\pages\0_Research_Story.py:103:,7-day disclosure
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,154,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:175: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:196: Dashboard\pages\1_Natural_Experiment.py:,[Mm]andatory 7
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,157,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:178: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:199: Dashboard\pages\5_Essay2_InformationAsym,7-day disclosure
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,158,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:179: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:200: Dashboard\pages\5_Essay2_InformationAsym,7-Day Rule
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,159,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:180: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:201: Dashboard\pages\6_Essay3_GovernanceRespo,7-Day Rule
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,160,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:181: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:202: Dashboard\pages\8_Key_Findings.py:287: F,7-day disclosure
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,161,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:182: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:203: Dashboard\pages\8_Key_Findings.py:359: -,7-day disclosure
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,164,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:185: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:206: (111 locations; every one describes a cu,disclosure deadline
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,165,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:187: Dashboard\app.py:225: - Interpretation: Forced 7-day disclosure INCREASES rather,7-day disclosure
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,167,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:189: Dashboard\app.py:409: before the 2007 FCC 7-Day Rule implementation. This figure,7-Day Rule
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,168,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:190: Dashboard\app.py:422: Pre-2007 (before FCC 7-Day Rule): FCC and non-FCC firms sh,7-Day Rule
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,169,"outputs\ESSAY2_QUERY4_PARTS_ACJ.md:191: Dashboard\app.py:427: the regulation takes effect, not before. This is the core ",7-Day Rule
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,170,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:192: Dashboard\pages\0_Research_Story.py:103: Regulator forces 7-day disclosure,7-day disclosure
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,172,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:194: Dashboard\pages\1_Natural_Experiment.py:66: 'Regulation passed\n(Mandatory 7-day,[Mm]andatory 7
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,173,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:195: Dashboard\pages\1_Natural_Experiment.py:111: <li><b>Requirement:</b> Disclose wi,7-Day Rule
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,174,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:196: Dashboard\pages\3_Data_Landscape.py:89: - After 2007: FCC firms forced to disclo,[Dd]isclose within
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,175,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:197: Dashboard\pages\5_Essay2_InformationAsymmetry.py:327: - Forced 7-day disclosure ,7-day disclosure
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,176,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:200: Dashboard\pages\8_Key_Findings.py:287: FCC PATH (Forced 7-day disclosure):,7-day disclosure
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,177,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:201: Dashboard\pages\8_Key_Findings.py:359: - Market EXPECTS 7-day disclosure (it's r,7-day disclosure
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,178,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:202: Dashboard\pages\9_Conclusion.py:144: - After 2007: FCC firms forced to disclose ,[Dd]isclose within
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,179,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:203: (108 locations; every one describes a customer-disclosure deadline or ceiling th,disclosure deadline
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,181,Dashboard\app.py:225: - Interpretation: Forced 7-day disclosure INCREASES rather than decreases asymmetry,7-day disclosure
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,182,Dashboard\app.py:391: <b>Essay 2:</b> FCC firms experience HIGHER volatility (+1.83%**) even with forced 7-day disclosur,7-day disclosure
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,183,Dashboard\app.py:409: before the 2007 FCC 7-Day Rule implementation. This figure provides visual proof of that assumptio,7-Day Rule
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,184,Dashboard\app.py:422: Pre-2007 (before FCC 7-Day Rule): FCC and non-FCC firms show similar CAR patterns (no significant ,7-Day Rule
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,185,"Dashboard\app.py:427: the regulation takes effect, not before. This is the core evidence that FCC 7-Day Rule causally af",7-Day Rule
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,186,Dashboard\pages\0_Research_Story.py:103: Regulator forces 7-day disclosure,7-day disclosure
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,187,"Dashboard\pages\0_Research_Story.py:283: FCC-regulated firms (telecom, cable, VoIP, satellite) → FORCED to disclose with",[Dd]isclose within
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,188,"Dashboard\pages\1_Natural_Experiment.py:66: 'Regulation passed\n(Mandatory 7-day rule)',",[Mm]andatory 7
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,189,Dashboard\pages\1_Natural_Experiment.py:111: <li><b>Requirement:</b> Disclose within 7 days (FCC 7-Day Rule)</li>,7-Day Rule
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,190,Dashboard\pages\3_Data_Landscape.py:89: - After 2007: FCC firms forced to disclose within 7 days,[Dd]isclose within
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,191,Dashboard\pages\5_Essay2_InformationAsymmetry.py:327: - Forced 7-day disclosure → Incomplete information → Market uncert,7-day disclosure
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,194,Dashboard\pages\8_Key_Findings.py:287: FCC PATH (Forced 7-day disclosure):,7-day disclosure
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,195,Dashboard\pages\8_Key_Findings.py:359: - Market EXPECTS 7-day disclosure (it's required),7-day disclosure
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,196,Dashboard\pages\9_Conclusion.py:144: - After 2007: FCC firms forced to disclose within 7 days; non-FCC still free,[Dd]isclose within
-outputs\ESSAY2_QUERY4_PARTS_ACJ.md,197,(102 locations; every one describes a customer-disclosure deadline or ceiling the rule does not contain — these are dele,disclosure deadline
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,127,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:115: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:103: scripts\update_existing_proposal.py:190:,[Dd]isclose within
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,128,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:116: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:104: scripts\update_proposal_documents.py:621,7-Day Rule
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,129,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:117: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:105: scripts\update_proposal_documents.py:660,7-day disclosure
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,130,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:118: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:106: outputs\DEAD_DATE_PURGE_INVENTORY.md:12:,7-Day Rule
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,144,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:157: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:173: Dashboard\app.py:225: - Interpretation: ,7-day disclosure
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,145,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:159: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:175: Dashboard\app.py:409: before the 2007 FC,7-Day Rule
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,146,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:160: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:176: Dashboard\app.py:422: Pre-2007 (before F,7-Day Rule
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,148,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:162: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:178: Dashboard\pages\0_Research_Story.py:103:,7-day disclosure
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,149,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:164: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:180: Dashboard\pages\1_Natural_Experiment.py:,[Mm]andatory 7
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,152,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:167: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:183: Dashboard\pages\5_Essay2_InformationAsym,7-day disclosure
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,153,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:168: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:186: Dashboard\pages\8_Key_Findings.py:287: F,7-day disclosure
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,154,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:169: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:187: Dashboard\pages\8_Key_Findings.py:359: -,7-day disclosure
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,156,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:171: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:189: (94 locations; every one describes a cus,disclosure deadline
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,157,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:173: Dashboard\app.py:225: - Interpretation: Forced 7-day disclosure INCREASES rather,7-day disclosure
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,159,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:175: Dashboard\app.py:409: before the 2007 FCC 7-Day Rule implementation. This figure,7-Day Rule
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,160,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:176: Dashboard\app.py:422: Pre-2007 (before FCC 7-Day Rule): FCC and non-FCC firms sh,7-Day Rule
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,161,"outputs\ESSAY2_QUERY4_PARTS_ACJ.md:177: Dashboard\app.py:427: the regulation takes effect, not before. This is the core ",7-Day Rule
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,162,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:178: Dashboard\pages\0_Research_Story.py:103: Regulator forces 7-day disclosure,7-day disclosure
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,164,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:180: Dashboard\pages\1_Natural_Experiment.py:66: 'Regulation passed\n(Mandatory 7-day,[Mm]andatory 7
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,165,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:181: Dashboard\pages\1_Natural_Experiment.py:111: <li><b>Requirement:</b> Disclose wi,7-Day Rule
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,166,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:182: Dashboard\pages\3_Data_Landscape.py:89: - After 2007: FCC firms forced to disclo,[Dd]isclose within
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,167,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:183: Dashboard\pages\5_Essay2_InformationAsymmetry.py:327: - Forced 7-day disclosure ,7-day disclosure
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,168,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:186: Dashboard\pages\8_Key_Findings.py:287: FCC PATH (Forced 7-day disclosure):,7-day disclosure
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,169,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:187: Dashboard\pages\8_Key_Findings.py:359: - Market EXPECTS 7-day disclosure (it's r,7-day disclosure
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,170,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:188: Dashboard\pages\9_Conclusion.py:144: - After 2007: FCC firms forced to disclose ,[Dd]isclose within
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,171,outputs\ESSAY2_QUERY4_PARTS_ACJ.md:189: (94 locations; every one describes a customer-disclosure deadline or ceiling the,disclosure deadline
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,173,Dashboard\app.py:225: - Interpretation: Forced 7-day disclosure INCREASES rather than decreases asymmetry,7-day disclosure
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,174,Dashboard\app.py:391: <b>Essay 2:</b> FCC firms experience HIGHER volatility (+1.83%**) even with forced 7-day disclosur,7-day disclosure
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,175,Dashboard\app.py:409: before the 2007 FCC 7-Day Rule implementation. This figure provides visual proof of that assumptio,7-Day Rule
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,176,Dashboard\app.py:422: Pre-2007 (before FCC 7-Day Rule): FCC and non-FCC firms show similar CAR patterns (no significant ,7-Day Rule
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,177,"Dashboard\app.py:427: the regulation takes effect, not before. This is the core evidence that FCC 7-Day Rule causally af",7-Day Rule
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,178,Dashboard\pages\0_Research_Story.py:103: Regulator forces 7-day disclosure,7-day disclosure
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,179,"Dashboard\pages\0_Research_Story.py:283: FCC-regulated firms (telecom, cable, VoIP, satellite) → FORCED to disclose with",[Dd]isclose within
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,180,"Dashboard\pages\1_Natural_Experiment.py:66: 'Regulation passed\n(Mandatory 7-day rule)',",[Mm]andatory 7
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,181,Dashboard\pages\1_Natural_Experiment.py:111: <li><b>Requirement:</b> Disclose within 7 days (FCC 7-Day Rule)</li>,7-Day Rule
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,182,Dashboard\pages\3_Data_Landscape.py:89: - After 2007: FCC firms forced to disclose within 7 days,[Dd]isclose within
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,183,Dashboard\pages\5_Essay2_InformationAsymmetry.py:327: - Forced 7-day disclosure → Incomplete information → Market uncert,7-day disclosure
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,186,Dashboard\pages\8_Key_Findings.py:287: FCC PATH (Forced 7-day disclosure):,7-day disclosure
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,187,Dashboard\pages\8_Key_Findings.py:359: - Market EXPECTS 7-day disclosure (it's required),7-day disclosure
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,188,Dashboard\pages\9_Conclusion.py:144: - After 2007: FCC firms forced to disclose within 7 days; non-FCC still free,[Dd]isclose within
+outputs\ESSAY2_QUERY4_PARTS_ACJ.md,189,(94 locations; every one describes a customer-disclosure deadline or ceiling the rule does not contain — these are delet,disclosure deadline
 outputs\ESSAY2_QUERY5_REPORT.md,43,Deadline-language locations: the t24 scan (executed below). Hypothesis logic: **none of H1–H4 requires the deadline read,7-day disclosure
 Dashboard\app.py,225,- Interpretation: Forced 7-day disclosure INCREASES rather than decreases asymmetry,7-day disclosure
 Dashboard\app.py,391,<b>Essay 2:</b> FCC firms experience HIGHER volatility (+1.83%**) even with forced 7-day disclosure. Information asymmet,7-day disclosure

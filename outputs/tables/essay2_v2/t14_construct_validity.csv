@@ -1,4 +1,4 @@
 group,n,delay_mean,delay_median,pct_window_closes_before_notification,pct_window_contains_notification,mean_pct_window_days_pre_notification,median_pct_window_days_pre_notification
-all,331,80.0,23.0,45.3,54.7,56.4,74.2
-treated,102,100.0,22.0,47.1,52.9,53.7,71.0
+all,333,79.8,23.0,45.3,54.7,56.4,74.2
+treated,104,98.9,22.0,47.1,52.9,53.7,71.0
 control,229,71.1,24.0,44.5,55.5,57.6,77.4

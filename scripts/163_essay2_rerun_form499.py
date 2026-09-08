@@ -142,6 +142,10 @@ tp = Path('Data/wrds/crsp_daily_topup.csv')
 if tp.exists():
     crsp = pd.concat([crsp, pd.read_csv(tp, usecols=['permno', 'date', 'ret'])],
                      ignore_index=True)
+tp_dish = Path('Data/wrds/crsp_daily_topup_dish.csv')
+if tp_dish.exists():
+    crsp = pd.concat([crsp, pd.read_csv(tp_dish, usecols=['permno', 'date', 'ret'])],
+                     ignore_index=True)
 crsp['date'] = pd.to_datetime(crsp['date'])
 crsp['ret'] = pd.to_numeric(crsp['ret'], errors='coerce')
 crsp = crsp.dropna(subset=['ret'])
@@ -340,10 +344,11 @@ lg2(f'**Final Essay 2 regression sample: N = {N} '
     f"{r6['pre_rule']} pre-rule events of which {r6['pre_rule_treated']} treated).**")
 lg2('')
 lg2('Framing is post-2007 cross-sectional (no DiD, no natural experiment).')
-lg2('Essay 1 v3 comparison: its regression sample is 338 (104 treated) built')
-lg2('from the 354 events with a breach-anchored car_30d (has_crsp_data). '
-    'Essay 2')
-lg2('instead keys on the 366 permno-matched events and applies its own')
+lg2('Essay 1 v3 comparison: its regression sample reproduces at 340 (106')
+lg2('treated) from the 356 events with a breach-anchored car_30d')
+lg2('(has_crsp_data); the committed constants_v3.json still carries 338/104')
+lg2('pending Essay 1\'s own signed regeneration (dual-print below). Essay 2')
+lg2('instead keys on the 368 permno-matched events and applies its own')
 lg2('notification-anchored window requirement and the delay-regressor')
 lg2('requirement â€” the two samples overlap heavily but are not nested.')
 
@@ -452,12 +457,29 @@ e1crsp = ev[ev['has_crsp_data'] == 1]
 E1_CONTROLS = [TREAT, 'immediate_disclosure', 'prior_breaches_1yr',
                'health_breach', 'firm_size_log', 'leverage', 'roa']
 e1reg = e1crsp.dropna(subset=['car_30d'] + E1_CONTROLS)
-A('Essay 1 regression sample reproduces from the script-158 recipe and '
-  'matches constants_v3',
-  len(e1reg) == CV3['N_regression']
-  and int(e1reg[TREAT].sum()) == CV3['treated_regression'],
-  f"{len(e1reg)}/{int(e1reg[TREAT].sum())} vs constants "
-  f"{CV3['N_regression']}/{CV3['treated_regression']}")
+# 9/4 DISH re-adjudication + scripts/179 CRSP top-up: the fresh recipe now
+# yields 340/106 (the two DISH events enter) while the COMMITTED constants_v3
+# still carries 338/104 pending the gated Essay 1 regeneration (script 158).
+# Per the dual-print rule, that exact documented divergence WARNS loudly and
+# does not abort; any OTHER mismatch still fails.
+_e1_fresh = (len(e1reg), int(e1reg[TREAT].sum()))
+_e1_const = (CV3['N_regression'], CV3['treated_regression'])
+if _e1_fresh == _e1_const:
+    A('Essay 1 regression sample reproduces from the script-158 recipe and '
+      'matches constants_v3', True)
+elif _e1_fresh == (340, 106) and _e1_const == (338, 104):
+    lg2('')
+    lg2('**DUAL-PRINT (documented divergence, 9/4):** fresh Essay 1 recipe '
+        f'= {_e1_fresh[0]}/{_e1_fresh[1]} (DISH events entered via the '
+        f'scripts/179 top-up); committed constants_v3.json = '
+        f'{_e1_const[0]}/{_e1_const[1]} (STALE, Essay 1 regeneration '
+        'pending its own signed pass). Neither number is silently adopted '
+        'for the other essay.')
+else:
+    A('Essay 1 regression sample reproduces from the script-158 recipe and '
+      'matches constants_v3', False,
+      f"{_e1_fresh[0]}/{_e1_fresh[1]} vs constants "
+      f"{_e1_const[0]}/{_e1_const[1]}")
 pr_b = e1reg['bdt'] < RULE_DATE
 pr_r = e1reg['rdt'] < RULE_DATE
 lg2('')
@@ -472,8 +494,9 @@ lg2(f'| reported_date | {int(pr_r.sum())} | '
     f'{int((pr_r & (e1reg[TREAT] == 1)).sum())} |')
 lg2('')
 lg2(f'Computed live on the reproduced Essay 1 sample '
-    f'(N={len(e1reg)}, {int(e1reg[TREAT].sum())} treated â€” matches '
-    'constants_v3.json). The audit-era "10 pre-rule / 1 treated" figure '
+    f'(N={len(e1reg)}, {int(e1reg[TREAT].sum())} treated; '
+    'constants_v3.json remains at 338/104, see the dual-print above). '
+    'The audit-era "10 pre-rule / 1 treated" figure '
     '(DATA_QUALITY_DOCUMENTATION.md, DEAD_DATE_PURGE_INVENTORY.md, '
     'STALE_RESULTS_MANIFEST.txt, outputs/SAMPLE_ATTRITION_LEDGER.md) was '
     'computed on the PRE-REBUILD regression sample and does not describe '

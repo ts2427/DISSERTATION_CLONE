@@ -102,7 +102,10 @@ def coverage_valid(sd, ed, er, bdt):
 
 
 # Signed adjudication pattern rules (variant-level), applied AFTER clause (a):
-# (pattern, treat, rationale) — treat=1 forces treated, 0 forces untreated.
+# (pattern, treat, rationale[, ('on_or_after', date)]) — treat=1 forces treated,
+# 0 forces untreated. The optional 4th element gates the rule to breach dates on
+# or after the given date; a gated rule that does not apply falls through to the
+# next matching rule (first applicable match wins).
 ADJ = [
     (r'Cricket', 1, 'Clause (a) adjudicated: Cricket Communications FRN 0004321139; LLC variant missed by exact matcher (7/28 record)'),
     (r'T-Mobile', 1, 'Clause (a) adjudicated 8/4: active open registry record "T-Mobile USA, Inc.- CONSOLIDATED" (499ID 822060, dba T-Mobile, start 1997, no end) — the "- CONSOLIDATED" suffix defeats exact matching for USA/US name variants (Cricket precedent, family-wide)'),
@@ -116,7 +119,15 @@ ADJ = [
     (r'Altice USA', 1, 'Clause (b): parent of Altice Wireless filer (7/28)'),
     (r'AT&T Services', 1, 'Clause (b): AT&T Inc. filing family (7/28)'),
     (r'CenturyLink', 1, 'Clause (b): CenturyLink/Lumen carrier family (Gate 1 rescue noted Form 499 relevance; regional LEC filers)'),
-    (r'DISH Network', 0, 'Adjudicated untreated (7/28): satellite TV not a telecom service under 64.2011; no covered operation at breach dates'),
+    # 9/4 date-conditional re-adjudication: the 7/28 basis ("no covered operation
+    # at breach dates") is false for events after the 2020-07-01 Boost divestiture.
+    # Registry: DISH Wireless L.L.C. FRN 0027852722 (dba Boost Mobile, Cellular/
+    # PCS/SMR, start 2020-06-01, open) and DISH Wireless Puerto Rico L.L.C. FRN
+    # 0029666096 (start 2020-07-01, open, holding DISH Network Corporation) were
+    # both open on the 2023-02-22 and 2023-05-17 breach dates. The satellite-only
+    # exclusion is retained solely for pre-divestiture events.
+    (r'DISH Network', 1, 'Clause (b) date-conditional (9/4): DISH is a facilities-based CMRS carrier from the 2020-07-01 Boost divestiture — DISH Wireless L.L.C. FRN 0027852722 (dba Boost Mobile) and DISH Wireless Puerto Rico L.L.C. FRN 0029666096 are open family registrations at the breach date; standard coverage rule applies', ('on_or_after', '2020-07-01')),
+    (r'DISH Network', 0, 'Adjudicated untreated (7/28, retained for pre-divestiture events only): satellite TV not a telecom service under 64.2011; no covered wireless operation before 2020-07-01'),
     (r'NBC Sports', 0, 'No registry match; not a carrier (7/28)'),
     (r'ATT-Breach Notification|ATT-SecurityBreach', 0, 'Artifact system entities — signed 122 rule retained; identity=AT&T equity, treatment excluded'),
     (r'NBCUniversal', 1, 'Clause (a) DOCUMENTED: direct registry filer NBCUniversal, LLC FRN 20940540 (8/4 adjudication comment — identity and treatment both recorded)'),
@@ -155,10 +166,16 @@ for _, r in ev.iterrows():
         v, legal, frn, sd, ed = holding_candidate
         why = (f'CLAUSE-B CANDIDATE (not auto-treated): holding_company match "{v}" -> '
                f'{legal} (FRN {frn}); operations test adjudicated below if a rule exists')
-    for pat, t, rationale in ADJ:
+    for adj in ADJ:
+        pat, t, rationale = adj[0], adj[1], adj[2]
+        if len(adj) == 4:
+            op, gate = adj[3]
+            assert op == 'on_or_after', f'unknown adjudication date gate: {op}'
+            if r['bdt'] < pd.Timestamp(gate):
+                continue  # gated rule inapplicable at this breach date; fall through
         if any(re.search(pat, v, re.IGNORECASE) for v in variants):
             treated, why = t, rationale
-            break  # first matching adjudication wins (rules are mutually exclusive by construction)
+            break  # first applicable adjudication wins
     res.append((treated, why))
 ev['fcc_form499'] = [t for t, _ in res]
 ev['treatment_evidence'] = [w for _, w in res]

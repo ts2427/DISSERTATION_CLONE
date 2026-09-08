@@ -1,0 +1,44 @@
+panel,item,value
+summary,records,891.0
+summary,events,618.0
+summary,mean_records_per_event,1.4417
+summary,median_records_per_event,1.0
+summary,max_records_per_event,31.0
+summary,events_with_more_than_one_record,115.0
+summary,records_in_multi_record_events,388.0
+distribution,events_with_1_records,503.0
+distribution,events_with_2_records,64.0
+distribution,events_with_3_records,26.0
+distribution,events_with_4_records,11.0
+distribution,events_with_5_records,6.0
+distribution,events_with_6_records,2.0
+distribution,events_with_8_records,1.0
+distribution,events_with_9_records,2.0
+distribution,events_with_14_records,1.0
+distribution,events_with_25_records,1.0
+distribution,events_with_31_records,1.0
+largest,c1140859 2024-02-21,31.0
+largest,c1140859 2024-04-10,25.0
+largest,"oFinancial Business and Consumer Solutions, Inc. 2024-02-14",14.0
+largest,oFinancial Institution Service Corporation 2023-05-30,9.0
+largest,c1166691 2023-10-16,9.0
+largest,"oNewcourse Communications, Inc. 2022-04-27",8.0
+largest,c732712 2023-09-21,6.0
+largest,c823768 2021-01-21,6.0
+largest,c1660134 2023-09-23,5.0
+largest,"oPerry Johnson & Associates, Inc. 2023-03-27",5.0
+largest,c1609711 2021-09-06,5.0
+largest,c789019 2023-05-28,5.0
+largest,c1283699 2015-09-15,5.0
+largest,c20520 2024-04-13,5.0
+largest,c1283699 2015-09-14,4.0
+largest,c732717 2024-03-17,4.0
+largest,c877890 2018-10-13,4.0
+largest,c908937 2016-10-31,4.0
+largest,c1543151 2023-01-23,4.0
+largest,c1001082 2023-02-23,4.0
+largest,c88128 2020-12-25,4.0
+largest,c1136893 2023-05-27,4.0
+largest,c20520 2024-04-14,4.0
+largest,oGC Services 2023-09-11,4.0
+largest,c771497 2018-01-08,4.0

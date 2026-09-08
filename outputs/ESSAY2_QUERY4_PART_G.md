@@ -1,7 +1,7 @@
 # Essay 2 Query 4 — Part G (computed live)
 
 ==========================================================================================
-ESSAY 2 QUERY 4 — PART G: MICROSTRUCTURE (N=331 events)
+ESSAY 2 QUERY 4 — PART G: MICROSTRUCTURE (N=333 events)
 ==========================================================================================
 
 ## G1 — Coverage by year (% firm-days):
@@ -31,13 +31,13 @@ year
 ## G2 — Outcomes built: N with CPQS 331, EDGE 331, OCAM 331
   EDGE negative-estimate rate (signed kept, stated): pre 106, post 124 of 331 windows.
   CPQS change: coef +0.00005 SE 0.00003 95% CI [-0.00002, +0.00012] N=331 (102 treated, G=81; month FE; CV1 parent-CIK)
-  EDGE change: coef +0.00223 SE 0.00309 95% CI [-0.00392, +0.00837] N=331 (102 treated, G=81; month FE; CV1 parent-CIK)
-  log-OCAM change: coef -0.06927 SE 0.09633 95% CI [-0.26097, +0.12243] N=331 (102 treated, G=81; month FE; CV1 parent-CIK)
+  EDGE change: coef +0.00222 SE 0.00309 95% CI [-0.00392, +0.00837] N=331 (102 treated, G=81; month FE; CV1 parent-CIK)
+  log-OCAM change: coef -0.06927 SE 0.09633 95% CI [-0.26098, +0.12244] N=331 (102 treated, G=81; month FE; CV1 parent-CIK)
 
   Multiplicity (stated): 3 secondary outcomes, Benjamini-Hochberg at FDR 5%:
         outcome      p  bh_threshold  bh_reject
-    CPQS change 0.1594        0.0167      False
-    EDGE change 0.4735        0.0333      False
+    CPQS change 0.1593        0.0167      False
+    EDGE change 0.4736        0.0333      False
 log-OCAM change 0.4742        0.0500      False
 
   Correlation of microstructure changes with the volatility DV (was volatility a reasonable proxy?):

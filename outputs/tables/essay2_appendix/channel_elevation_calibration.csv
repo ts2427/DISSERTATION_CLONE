@@ -1,0 +1,13 @@
+panel,item,value,detail
+c4_correction,corrected_mean_full,-0.0703,"raw -0.0935; c4(9) = .969311, c4(21) = .987583; every event has exactly 9 and 21 returns"
+c4_correction,corrected_mean_treated,-0.0005,raw -0.0289
+c4_correction,corrected_mean_control,-0.1024,raw -0.1231
+c4_correction,corrected_spec_coef,0.4617,"CV3 SE 0.2035, p 0.025967; the correction is an affine reparametrization at constant counts, so inference is invariant"
+placebo,placebo_mean_full,0.031,"SD across draws 0.0460; 200 draws, seed 499, mean per-draw N 328"
+placebo,placebo_mean_treated,-0.0214,
+placebo,placebo_mean_control,0.0553,
+placebo,placebo_differential_mean,-0.0325,"SD 0.1302; q05 -0.2485, median -0.0356, q95 +0.1807, max abs 0.3751"
+placebo,draws_reaching_actual,0.0,of 200; actual differential +0.4475
+placebo,draws_cv3_rejecting,0.0,of 200 at p < .05
+earnings_benchmark,earnings_elevation_mean,0.7884,"cluster SE 0.0540, t +14.6, N=5,057 announcements, 79 securities; median +0.5212"
+earnings_benchmark,breach_minus_placebo,-0.1245,breach dates damp relative to the same securities quiet periods; the damping is control-side

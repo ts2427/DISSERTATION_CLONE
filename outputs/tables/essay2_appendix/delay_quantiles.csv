@@ -1,6 +1,6 @@
 quantile,coef,se,informative
-0.1,-0.0,7.435,NO - inside exact-zero mass
-0.25,-0.0,6.6378,NO - inside exact-zero mass
-0.5,-4.5524,7.3605,yes
-0.75,13.6265,16.7146,yes
-0.9,13.4824,43.7255,yes
+0.1,-0.0,7.4799,NO - inside exact-zero mass
+0.25,-0.0,6.641,NO - inside exact-zero mass
+0.5,-4.5565,7.3534,yes
+0.75,12.2812,16.5454,yes
+0.9,0.61,45.9171,yes

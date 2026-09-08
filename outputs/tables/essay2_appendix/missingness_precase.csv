@@ -1,8 +1,8 @@
 variable,missing,share
-e2_vol_change,11,0.0306
-firm_size_log,16,0.0444
-leverage,16,0.0444
-roa,16,0.0444
+e2_vol_change,4,0.0113
+firm_size_log,15,0.0423
+leverage,15,0.0423
+roa,15,0.0423
 disclosure_delay_days,1,0.0028
 health_breach,0,0.0
 prior_breaches_total,0,0.0

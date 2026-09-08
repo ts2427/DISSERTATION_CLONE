@@ -11,7 +11,8 @@ stage4_pattern,Frontier Communications,FORCE TREATED,parent of regional filers
 stage4_pattern,Altice USA,FORCE TREATED,parent of Altice Wireless
 stage4_pattern,AT&T Services,FORCE TREATED,AT&T Inc. filing family
 stage4_pattern,CenturyLink,FORCE TREATED,CenturyLink/Lumen family
-stage4_pattern,DISH Network,FORCE EXCLUDED,satellite TV; not covered under 64.2011
+stage4_pattern,DISH Network (on/after 2020-07-01),FORCE TREATED,"date-conditional 9/4: DISH Wireless LLC FRN 0027852722 dba Boost Mobile, open at breach dates"
+stage4_pattern,DISH Network (before 2020-07-01),FORCE EXCLUDED,satellite TV; not covered under 64.2011
 stage4_pattern,NBC Sports,FORCE EXCLUDED,no registry match
 stage4_pattern,ATT-Breach artifacts,FORCE EXCLUDED,"malformed system entities; AT&T identity, treatment excluded; also excluded from the analytical sample 9/2"
 stage4_pattern,NBCUniversal,FORCE TREATED,direct registry filer FRN 20940540

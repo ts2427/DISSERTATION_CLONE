@@ -56,38 +56,38 @@ delays for covered carriers.
 ==========================================================================================
 ## A2 — NEW PRIMARY TEST: does Form 499 treatment predict disclosure delay? (N=333)
 ==========================================================================================
-  delay (raw days): coef +25.820  SE 39.246  95% CI [-52.282, +103.922]  (G=81, G1=11, CV1 parent-CIK, t(80))
-  delay (winsorized p99): coef +10.235  SE 29.788  95% CI [-49.046, +69.516]  (G=81, G1=11, CV1 parent-CIK, t(80))
-  log(1+delay): coef -0.093  SE 0.476  95% CI [-1.041, +0.854]  (G=81, G1=11, CV1 parent-CIK, t(80))
+  delay (raw days): coef +25.692  SE 38.789  95% CI [-51.486, +102.870]  (G=82, G1=12, CV1 parent-CIK, t(81))
+  delay (winsorized p99): coef +10.169  SE 29.430  95% CI [-48.388, +68.726]  (G=82, G1=12, CV1 parent-CIK, t(81))
+  log(1+delay): coef -0.086  SE 0.471  95% CI [-1.024, +0.851]  (G=82, G1=12, CV1 parent-CIK, t(81))
 
-  Dispersion: treated SD 254.4, IQR 84, CV 2.54 | control SD 125.5, IQR 76, CV 1.77 | Brown-Forsythe W=2.485 (p=0.1159)
+  Dispersion: treated SD 252.1, IQR 83, CV 2.55 | control SD 125.5, IQR 76, CV 1.77 | Brown-Forsythe W=2.361 (p=0.1253)
   The floor prediction (treated delays longer AND more homogeneous, compressed against a regulatory floor) requires treated dispersion BELOW control.
 
-  ZERO-DELAY CONTAMINATION: 41/102 treated and 75/231 control delays are EXACTLY zero (35.0% of the sample). Same-day public notification at scale is implausible; these are almost certainly records whose occurrence date defaulted to the notification date in the source. The share-of-treated-below-the-regulatory-floor statistic is therefore measuring MISSING DATA, not non-compliance, and no compliance claim is made from it. Among NON-ZERO delays, 7/61 treated (11.5%) fall below ~20 calendar days — still diagnostic only (the clock measured is occurrence-to-notification, not determination-to-notification).
+  ZERO-DELAY CONTAMINATION: 42/104 treated and 75/229 control delays are EXACTLY zero (35.1% of the sample). Same-day public notification at scale is implausible; these are almost certainly records whose occurrence date defaulted to the notification date in the source. The share-of-treated-below-the-regulatory-floor statistic is therefore measuring MISSING DATA, not non-compliance, and no compliance claim is made from it. Among NON-ZERO delays, 7/62 treated (11.3%) fall below ~20 calendar days — still diagnostic only (the clock measured is occurrence-to-notification, not determination-to-notification).
 
-  A2 EXCLUDING ZERO DELAYS (N=215: 61 treated / 154 control):
-    delay (raw days): coef +46.970  SE 57.960  95% CI [-68.545, +162.485]
-    log(delay): coef +0.028  SE 0.336  95% CI [-0.641, +0.698]
-    medians: treated 63d vs control 50d | dispersion: treated SD 312.3 CV 1.87 vs control SD 140.7 CV 1.33 | Brown-Forsythe W=3.233 (p=0.0736) | KS D=0.1536 (p=0.2246) | log-rank chi2=2.828 (p=0.0926)
+  A2 EXCLUDING ZERO DELAYS (N=216: 62 treated / 154 control):
+    delay (raw days): coef +47.142  SE 57.290  95% CI [-67.011, +161.295]
+    log(delay): coef +0.038  SE 0.333  95% CI [-0.627, +0.702]
+    medians: treated 66d vs control 50d | dispersion: treated SD 309.9 CV 1.87 vs control SD 140.7 CV 1.33 | Brown-Forsythe W=3.068 (p=0.0813) | KS D=0.1573 (p=0.1973) | log-rank chi2=2.791 (p=0.0948)
 
   Quantile regressions (delay ~ treatment + controls; treatment coefficient; iid-kernel SEs, descriptive):
-    q10: -0.00 (SE 7.44)
+    q10: -0.00 (SE 7.48)
     q25: -0.00 (SE 6.64)
-    q50: -4.55 (SE 7.36)
-    q75: +13.63 (SE 16.71)
-    q90: +13.48 (SE 43.73)
+    q50: -4.56 (SE 7.35)
+    q75: +12.28 (SE 16.55)
+    q90: +0.61 (SE 45.92)
 
-  Kaplan-Meier time-to-notification (no censoring — the sample conditions on an observed notification): median treated 22d vs control 24d; log-rank chi2=0.606 (p=0.4363)
+  Kaplan-Meier time-to-notification (no censoring — the sample conditions on an observed notification): median treated 22d vs control 24d; log-rank chi2=0.556 (p=0.4558)
 
   A2 DIRECTION, PLAINLY: see the coefficients above. If treated firms disclose no more slowly (and no more homogeneously) than controls, the rule does not bind on observed public-notification behavior — which is itself the candidate explanation for the volatility null and belongs in the essay as a finding.
 
 ==========================================================================================
 ## A3 — Delay distribution, treated vs control
 ==========================================================================================
-  group   n  zeros  min  p10  p25  p50   p75   p90    p95    max  mean    sd
-treated 102     41  0.0  0.0  0.0 22.0 84.25 214.0 342.75 1917.0 100.0 254.4
-control 229     75  0.0  0.0  0.0 24.0 76.00 199.4 313.20  961.0  71.1 125.5
-  KS test of distributional equality: D=0.0951 (p=0.5084). Exact zeros: treated 41, control 75.
+  group   n  zeros  min  p10  p25  p50  p75   p90    p95    max  mean    sd
+treated 104     42  0.0  0.0  0.0 22.0 83.0 206.0 340.25 1917.0  98.9 252.1
+control 229     75  0.0  0.0  0.0 24.0 76.0 199.4 313.20  961.0  71.1 125.5
+  KS test of distributional equality: D=0.0964 (p=0.4824). Exact zeros: treated 42, control 75.
 
 ==========================================================================================
 ## A4 — Locations describing 64.2011 as a DISCLOSURE deadline (deletions, not edits)
@@ -128,49 +128,47 @@ control 229     75  0.0  0.0  0.0 24.0 76.00 199.4 313.20  961.0  71.1 125.5
   outputs\ESSAY2_QUERY4_PARTS_ACJ.md:116: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:104: scripts\update_proposal_documents.py:621: FCC 7-Day Rule Impacts:
   outputs\ESSAY2_QUERY4_PARTS_ACJ.md:117: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:105: scripts\update_proposal_documents.py:660: Current Rule: 7-day disclosure mandate
   outputs\ESSAY2_QUERY4_PARTS_ACJ.md:118: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:106: outputs\DEAD_DATE_PURGE_INVENTORY.md:12: "FCC 7-Day Rule (47 CFR 64.2011, effect
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:130: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:118: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:106: scripts\update_existing_proposal.py:190:
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:131: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:119: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:107: scripts\update_proposal_documents.py:621
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:132: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:120: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:108: scripts\update_proposal_documents.py:660
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:133: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:121: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:109: outputs\DEAD_DATE_PURGE_INVENTORY.md:12:
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:149: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:168: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:189: Dashboard\app.py:225: - Interpretation: 
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:150: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:170: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:191: Dashboard\app.py:409: before the 2007 FC
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:151: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:171: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:192: Dashboard\app.py:422: Pre-2007 (before F
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:153: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:173: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:194: Dashboard\pages\0_Research_Story.py:103:
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:154: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:175: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:196: Dashboard\pages\1_Natural_Experiment.py:
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:157: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:178: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:199: Dashboard\pages\5_Essay2_InformationAsym
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:158: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:179: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:200: Dashboard\pages\5_Essay2_InformationAsym
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:159: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:180: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:201: Dashboard\pages\6_Essay3_GovernanceRespo
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:160: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:181: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:202: Dashboard\pages\8_Key_Findings.py:287: F
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:161: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:182: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:203: Dashboard\pages\8_Key_Findings.py:359: -
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:164: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:185: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:206: (111 locations; every one describes a cu
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:165: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:187: Dashboard\app.py:225: - Interpretation: Forced 7-day disclosure INCREASES rather
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:167: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:189: Dashboard\app.py:409: before the 2007 FCC 7-Day Rule implementation. This figure
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:168: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:190: Dashboard\app.py:422: Pre-2007 (before FCC 7-Day Rule): FCC and non-FCC firms sh
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:169: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:191: Dashboard\app.py:427: the regulation takes effect, not before. This is the core 
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:170: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:192: Dashboard\pages\0_Research_Story.py:103: Regulator forces 7-day disclosure
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:172: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:194: Dashboard\pages\1_Natural_Experiment.py:66: 'Regulation passed\n(Mandatory 7-day
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:173: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:195: Dashboard\pages\1_Natural_Experiment.py:111: <li><b>Requirement:</b> Disclose wi
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:174: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:196: Dashboard\pages\3_Data_Landscape.py:89: - After 2007: FCC firms forced to disclo
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:175: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:197: Dashboard\pages\5_Essay2_InformationAsymmetry.py:327: - Forced 7-day disclosure 
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:176: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:200: Dashboard\pages\8_Key_Findings.py:287: FCC PATH (Forced 7-day disclosure):
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:177: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:201: Dashboard\pages\8_Key_Findings.py:359: - Market EXPECTS 7-day disclosure (it's r
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:178: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:202: Dashboard\pages\9_Conclusion.py:144: - After 2007: FCC firms forced to disclose 
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:179: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:203: (108 locations; every one describes a customer-disclosure deadline or ceiling th
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:181: Dashboard\app.py:225: - Interpretation: Forced 7-day disclosure INCREASES rather than decreases asymmetry
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:182: Dashboard\app.py:391: <b>Essay 2:</b> FCC firms experience HIGHER volatility (+1.83%**) even with forced 7-day disclosur
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:183: Dashboard\app.py:409: before the 2007 FCC 7-Day Rule implementation. This figure provides visual proof of that assumptio
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:184: Dashboard\app.py:422: Pre-2007 (before FCC 7-Day Rule): FCC and non-FCC firms show similar CAR patterns (no significant 
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:185: Dashboard\app.py:427: the regulation takes effect, not before. This is the core evidence that FCC 7-Day Rule causally af
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:186: Dashboard\pages\0_Research_Story.py:103: Regulator forces 7-day disclosure
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:187: Dashboard\pages\0_Research_Story.py:283: FCC-regulated firms (telecom, cable, VoIP, satellite) → FORCED to disclose with
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:188: Dashboard\pages\1_Natural_Experiment.py:66: 'Regulation passed\n(Mandatory 7-day rule)',
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:189: Dashboard\pages\1_Natural_Experiment.py:111: <li><b>Requirement:</b> Disclose within 7 days (FCC 7-Day Rule)</li>
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:190: Dashboard\pages\3_Data_Landscape.py:89: - After 2007: FCC firms forced to disclose within 7 days
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:191: Dashboard\pages\5_Essay2_InformationAsymmetry.py:327: - Forced 7-day disclosure → Incomplete information → Market uncert
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:194: Dashboard\pages\8_Key_Findings.py:287: FCC PATH (Forced 7-day disclosure):
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:195: Dashboard\pages\8_Key_Findings.py:359: - Market EXPECTS 7-day disclosure (it's required)
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:196: Dashboard\pages\9_Conclusion.py:144: - After 2007: FCC firms forced to disclose within 7 days; non-FCC still free
-  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:197: (102 locations; every one describes a customer-disclosure deadline or ceiling the rule does not contain — these are dele
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:127: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:115: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:103: scripts\update_existing_proposal.py:190:
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:128: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:116: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:104: scripts\update_proposal_documents.py:621
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:129: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:117: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:105: scripts\update_proposal_documents.py:660
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:130: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:118: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:106: outputs\DEAD_DATE_PURGE_INVENTORY.md:12:
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:144: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:157: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:173: Dashboard\app.py:225: - Interpretation: 
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:145: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:159: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:175: Dashboard\app.py:409: before the 2007 FC
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:146: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:160: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:176: Dashboard\app.py:422: Pre-2007 (before F
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:148: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:162: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:178: Dashboard\pages\0_Research_Story.py:103:
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:149: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:164: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:180: Dashboard\pages\1_Natural_Experiment.py:
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:152: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:167: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:183: Dashboard\pages\5_Essay2_InformationAsym
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:153: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:168: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:186: Dashboard\pages\8_Key_Findings.py:287: F
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:154: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:169: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:187: Dashboard\pages\8_Key_Findings.py:359: -
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:156: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:171: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:189: (94 locations; every one describes a cus
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:157: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:173: Dashboard\app.py:225: - Interpretation: Forced 7-day disclosure INCREASES rather
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:159: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:175: Dashboard\app.py:409: before the 2007 FCC 7-Day Rule implementation. This figure
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:160: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:176: Dashboard\app.py:422: Pre-2007 (before FCC 7-Day Rule): FCC and non-FCC firms sh
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:161: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:177: Dashboard\app.py:427: the regulation takes effect, not before. This is the core 
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:162: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:178: Dashboard\pages\0_Research_Story.py:103: Regulator forces 7-day disclosure
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:164: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:180: Dashboard\pages\1_Natural_Experiment.py:66: 'Regulation passed\n(Mandatory 7-day
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:165: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:181: Dashboard\pages\1_Natural_Experiment.py:111: <li><b>Requirement:</b> Disclose wi
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:166: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:182: Dashboard\pages\3_Data_Landscape.py:89: - After 2007: FCC firms forced to disclo
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:167: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:183: Dashboard\pages\5_Essay2_InformationAsymmetry.py:327: - Forced 7-day disclosure 
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:168: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:186: Dashboard\pages\8_Key_Findings.py:287: FCC PATH (Forced 7-day disclosure):
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:169: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:187: Dashboard\pages\8_Key_Findings.py:359: - Market EXPECTS 7-day disclosure (it's r
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:170: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:188: Dashboard\pages\9_Conclusion.py:144: - After 2007: FCC firms forced to disclose 
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:171: outputs\ESSAY2_QUERY4_PARTS_ACJ.md:189: (94 locations; every one describes a customer-disclosure deadline or ceiling the
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:173: Dashboard\app.py:225: - Interpretation: Forced 7-day disclosure INCREASES rather than decreases asymmetry
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:174: Dashboard\app.py:391: <b>Essay 2:</b> FCC firms experience HIGHER volatility (+1.83%**) even with forced 7-day disclosur
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:175: Dashboard\app.py:409: before the 2007 FCC 7-Day Rule implementation. This figure provides visual proof of that assumptio
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:176: Dashboard\app.py:422: Pre-2007 (before FCC 7-Day Rule): FCC and non-FCC firms show similar CAR patterns (no significant 
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:177: Dashboard\app.py:427: the regulation takes effect, not before. This is the core evidence that FCC 7-Day Rule causally af
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:178: Dashboard\pages\0_Research_Story.py:103: Regulator forces 7-day disclosure
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:179: Dashboard\pages\0_Research_Story.py:283: FCC-regulated firms (telecom, cable, VoIP, satellite) → FORCED to disclose with
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:180: Dashboard\pages\1_Natural_Experiment.py:66: 'Regulation passed\n(Mandatory 7-day rule)',
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:181: Dashboard\pages\1_Natural_Experiment.py:111: <li><b>Requirement:</b> Disclose within 7 days (FCC 7-Day Rule)</li>
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:182: Dashboard\pages\3_Data_Landscape.py:89: - After 2007: FCC firms forced to disclose within 7 days
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:183: Dashboard\pages\5_Essay2_InformationAsymmetry.py:327: - Forced 7-day disclosure → Incomplete information → Market uncert
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:186: Dashboard\pages\8_Key_Findings.py:287: FCC PATH (Forced 7-day disclosure):
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:187: Dashboard\pages\8_Key_Findings.py:359: - Market EXPECTS 7-day disclosure (it's required)
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:188: Dashboard\pages\9_Conclusion.py:144: - After 2007: FCC firms forced to disclose within 7 days; non-FCC still free
+  outputs\ESSAY2_QUERY4_PARTS_ACJ.md:189: (94 locations; every one describes a customer-disclosure deadline or ceiling the rule does not contain — these are delet
   outputs\ESSAY2_QUERY5_REPORT.md:43: Deadline-language locations: the t24 scan (executed below). Hypothesis logic: **none of H1–H4 requires the deadline read
   Dashboard\app.py:225: - Interpretation: Forced 7-day disclosure INCREASES rather than decreases asymmetry
   Dashboard\app.py:391: <b>Essay 2:</b> FCC firms experience HIGHER volatility (+1.83%**) even with forced 7-day disclosure. Information asymmet
@@ -188,20 +186,20 @@ control 229     75  0.0  0.0  0.0 24.0 76.00 199.4 313.20  961.0  71.1 125.5
   Dashboard\pages\8_Key_Findings.py:287: FCC PATH (Forced 7-day disclosure):
   Dashboard\pages\8_Key_Findings.py:359: - Market EXPECTS 7-day disclosure (it's required)
   Dashboard\pages\9_Conclusion.py:144: - After 2007: FCC firms forced to disclose within 7 days; non-FCC still free
-  (96 locations; every one describes a customer-disclosure deadline or ceiling the rule does not contain — these are deletions.)
+  (94 locations; every one describes a customer-disclosure deadline or ceiling the rule does not contain — these are deletions.)
 
 ==========================================================================================
 ## B2 — Is duplication non-random in firm size? (489-event universe)
 ==========================================================================================
-  records-per-event ~ ln(assets): coef +0.0827 SE 0.0481 95% CI [-0.0119, +0.1772] N=350
-  records-per-event ~ ln(mktcap): coef -0.0635 SE 0.0553 95% CI [-0.1723, +0.0453] N=332
+  records-per-event ~ ln(assets): coef +0.0860 SE 0.0488 95% CI [-0.0099, +0.1819] N=346
+  records-per-event ~ ln(mktcap): coef -0.0783 SE 0.0590 95% CI [-0.1943, +0.0377] N=329
   records-per-event by size quartile:
             mean  median  max  count
 size_q                              
-Q1      1.325843     1.0    4     89
-Q2      1.425287     1.0    9     87
-Q3      2.139535     1.0   31     86
-Q4      1.443182     1.0    8     88
+Q1      1.329545     1.0    4     88
+Q2      1.494118     1.0    9     85
+Q3      2.151163     1.0   31     86
+Q4      1.448276     1.0    8     87
   Cencora illustration: 3 events, n_source_records = [31, 25, 1] — one 2024-02-21 event carries 31 notification records. Number-of-states-of-operation is NOT constructible from committed data (stated).
   (If the size gradient in records-per-event is positive, record-level analysis mechanically overweights large firms and the old size gradient is a record-vs-event artifact.)
 
@@ -209,21 +207,21 @@ Q4      1.443182     1.0    8     88
 ## B2b — Size composition of the misclassified sets (the mechanism the four-panel decomposition implies: treatment reclassification, not deduplication)
 ==========================================================================================
   SIC-treated, NOT registered (the manufactured group): n=6 (3 orgs) | ln(assets) mean 12.26 median 12.25 | pre-vol 16.2 | vol-change -1.70
-  SIC-treated AND registered (concordant treated): n=98 (32 orgs) | ln(assets) mean 11.72 median 12.17 | pre-vol 30.7 | vol-change -3.78
+  SIC-treated AND registered (concordant treated): n=100 (33 orgs) | ln(assets) mean 11.71 median 12.06 | pre-vol 31.3 | vol-change -3.50
   registered, NOT SIC-treated (missed by SIC): n=7 (4 orgs) | ln(assets) mean 10.04 median 9.36 | pre-vol 35.9 | vol-change -3.52
   neither (concordant control): n=228 (91 orgs) | ln(assets) mean 9.59 median 9.01 | pre-vol 28.6 | vol-change -2.95
 
-  Welch tests: SIC-treated-but-unregistered vs concordant treated — ln(assets) t=+3.32 (p=0.0039); pre-breach volatility t=-5.37 (p=0.0000). Volatility change, SIC-only vs all others: t=+0.87 (p=0.4044).
+  Welch tests: SIC-treated-but-unregistered vs concordant treated — ln(assets) t=+3.45 (p=0.0030); pre-breach volatility t=-5.59 (p=0.0000). Volatility change, SIC-only vs all others: t=+0.83 (p=0.4289).
   On CORRECTED data the discordant cell is nearly empty (6 events / 3 orgs — post-resolution SIC and Form 499 almost coincide), so the mechanism must be tested where the artifact was produced: the OLD record-level data.
-  OLD DATA — SIC-treated, NOT registered (manufactured): n=17 (11 orgs) | ln(assets) 10.17 | pre-vol 38.3 | vol-change +5.06
-  OLD DATA — SIC-treated AND registered (concordant): n=167 (38 orgs) | ln(assets) 11.16 | pre-vol 24.3 | vol-change -0.39
+  OLD DATA — SIC-treated, NOT registered (manufactured): n=9 (8 orgs) | ln(assets) 11.33 | pre-vol 21.3 | vol-change +4.59
+  OLD DATA — SIC-treated AND registered (concordant): n=175 (41 orgs) | ln(assets) 11.06 | pre-vol 25.9 | vol-change -0.12
   OLD DATA — control (neither): n=700 (319 orgs) | ln(assets) 10.39 | pre-vol 28.4 | vol-change -1.95
 
-  Welch, OLD data (join-gap REPAIRED group): size manufactured-vs-concordant t=-2.39 (p=0.0280) — on the repaired group the manufactured records ARE smaller than concordant carriers (the pre-repair null, t=-0.54/p=.59, was a statement about the 14 misjoined Comcast records). Volatility change, manufactured-vs-control: t=+3.14 (p=0.0057; pre-repair t=+4.43/p=.0001 on the contaminated 31-record group — reported as the join-gap sensitivity).
-  Manufactured share of SIC-treated records by size quartile (N=891 spec sample): Q1: 9/34 (26%); Q2: 0/17 (0%); Q3: 1/23 (4%); Q4: 7/109 (6%)
-  Manufactured orgs: ['ATT-SecurityBreach', 'ATT-SecurityBreach2', 'Aero Charter, Inc.', 'Charter Next Generation, Inc.', 'DISH Network Corporation', 'DISH Network L.L.C.', 'DISH Network, LLC', 'Impact Mobile Home Communities', 'Johnson Matthey, Inc.', 'Suddenlink Communications', 'WillScot Mobile Mini Holdings Corp.']
+  Welch, OLD data (join-gap REPAIRED group): size manufactured-vs-concordant t=+0.54 (p=0.6044): null on the repaired group (the pre-repair null, t=-0.54/p=.59, was a statement about the 14 misjoined Comcast records; no size claim in either direction survives). Volatility change, manufactured-vs-control: t=+1.66 (p=0.1341; pre-repair t=+4.43/p=.0001 on the contaminated 31-record group, reported as the join-gap sensitivity).
+  Manufactured share of SIC-treated records by size quartile (N=891 spec sample): Q1: 1/34 (3%); Q2: 0/17 (0%); Q3: 1/23 (4%); Q4: 7/109 (6%)
+  Manufactured orgs: ['ATT-SecurityBreach', 'ATT-SecurityBreach2', 'Aero Charter, Inc.', 'Charter Next Generation, Inc.', 'Impact Mobile Home Communities', 'Johnson Matthey, Inc.', 'Suddenlink Communications', 'WillScot Mobile Mini Holdings Corp.']
 
-  MECHANISM VERDICT (revised 9/2, join-gap-repaired group): the SIC-treated-but-unregistered records are smaller than concordant carriers (p=0.028 old data repaired; the earlier "not smaller" was a statement about the misjoined Comcast records) and their measured volatility CHANGES are elevated — mean +5.06 against -0.39 for correctly-classified carriers and -1.95 for controls (t=+3.14, p=0.0057) — with the share of the "treated" cell peaking in Q1 (26% of Q1 SIC-treated records vs 0% in Q2). The Q1 records are NOT name-adjacency non-carriers (those sit in Q3/Q4 with unremarkable outcomes): they are DISH and Suddenlink — genuine communications firms OUTSIDE the Form 499 contribution base — a REGULATORY-STATUS distinction SIC cannot see. And the Q1 collapse (+7.65 -> +0.13, panel ii) is a SWAP, not a removal: 9 records averaging +7.56 leave (DISH/Suddenlink), 10 records averaging -8.62 enter (GoDaddy, Twilio — Form 499 filers SIC coded as software). SIC errs in both directions and both errors land in the small-firm cell; the published spike is the net of a positive-outcome exclusion failure and a negative-outcome inclusion failure — not a records-per-event size gradient (B2), and not driven by the name-adjacency admissions (data-quality paragraph, incl. the two ATT-SecurityBreach permno-collision records).
+  MECHANISM VERDICT (revised 9/4, DISH date-conditional re-adjudication): under the retired name-token classifier the SIC-treated-but-unregistered group is 9 records: the two ATT-SecurityBreach artifacts, Suddenlink, and the name-adjacency admissions. DISH left the group because DISH Wireless L.L.C. (dba Boost Mobile, FRN 0027852722) is an open Form 499 family registration at its 2023 breach dates, so DISH is registered, not misclassified. The group shows NO size difference from concordant carriers (t=+0.54, p=0.6044) and its share of SIC-treated records no longer peaks in Q1 (Q1: 1/34; Q2: 0/17; Q3: 1/23; Q4: 7/109); volatility manufactured-vs-control is t=+1.66 (p=0.1341), a null. The authoritative decomposition is the industry-code baseline (appendix Table 5): the Form 499 repair ATTENUATES the published Q1 spike (+7.5556, p=.0086, to +5.1482, p=.069) rather than eliminating it; the dropped component is EMPTY, and the attenuation is driven entirely by the added registrants industry codes miss (10 records averaging -8.62: GoDaddy and Twilio, Form 499 filers industry-coded as software). What survives is an inclusion-failure story plus a data-defect story (the two ATT permno-collision artifacts), not a regulatory-status exclusion story, and no records-per-event size gradient claim (B2).
 
 ==========================================================================================
 ## C1 — Vintage-matched treatment
@@ -284,18 +282,18 @@ year
 2020        6        6
 2021       10        9
 2022       15        6
-2023       34       12
+2023       34       14
 2024       14       15
   Zero treated observations precede the December 8, 2007 effective date — visible above, not asserted. DiD and synthetic control are unavailable: no pre-treatment period exists for treated units, so no donor pool can be weighted to a treated pre-period trajectory (Abadie, Diamond & Hainmueller 2010; Abadie 2021 JEL).
 
 ==========================================================================================
 ## H1 — Repeated events within firm
 ==========================================================================================
-  treated: 11 parents, events/parent mean 9.3, median 8, max 26
+  treated: 12 parents, events/parent mean 8.7, median 6, max 26
   control: 72 parents, events/parent mean 3.2, median 1, max 76
-  first event per parent: coef -0.0015 SE 0.3616 95% CI [-0.7224, +0.7193] N=81 (11 treated)
-  most recent event per parent: coef +0.1174 SE 0.3183 95% CI [-0.5172, +0.7520] N=81 (11 treated)
-  parent fixed effects: coef +0.7199 SE 0.2310 95% CI [+0.2648, +1.1750] — identified off only 2 parents whose treatment status varies across their own events (AT&T-family and Comcast coverage-window cases); interpret accordingly.
+  first event per parent: coef +0.0184 SE 0.3614 95% CI [-0.7018, +0.7386] N=82 (12 treated)
+  most recent event per parent: coef +0.3760 SE 0.4523 95% CI [-0.5254, +1.2773] N=82 (12 treated)
+  parent fixed effects: coef +0.7187 SE 0.2313 95% CI [+0.2631, +1.1743] — identified off only 2 parents whose treatment status varies across their own events (AT&T-family and Comcast coverage-window cases); interpret accordingly.
 
 ## H3 — Sample period
   The WRDS extract ends 2024-12-31; the final sample's latest notification year is 2024. SAMPLE PERIOD IS 2006-2024 everywhere. 9 events in the 489-event universe carry 2025 notification dates; the five with matched securities (Nucor, Intuit, Workday, HPE, Zscaler) drop at the volatility-window step because the extract ends — stated in the attrition ledger.

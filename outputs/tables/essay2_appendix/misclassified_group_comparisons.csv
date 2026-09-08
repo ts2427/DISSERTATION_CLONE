@@ -1,5 +1,6 @@
 group,N,orgs,mean_ln_mktcap,sd_ln_mktcap,mean_vol_change,sd_vol_change
-misclassified_repaired,17,11,10.1711,1.6591,5.0606,8.9636
-concordant_registrants,166,38,11.1722,1.2573,-0.3915,11.462
-control,694,317,10.4194,1.0624,-1.9521,13.7592
-misclassified_prerepair_SENSITIVITY,31,13,10.9376,1.528,7.8052,11.9232
+misclassified_repaired,2,2,12.1027,0.0141,4.5495,1.7514
+concordant_registrants,160,41,11.028,1.3471,-0.5262,11.3081
+control,701,323,10.4264,1.0705,-1.8866,13.7628
+missed_by_industry_codes,28,16,10.8258,1.1842,-1.4881,17.2171
+misclassified_prerepair_SENSITIVITY,14,5,11.8855,0.5583,6.2706,13.9763

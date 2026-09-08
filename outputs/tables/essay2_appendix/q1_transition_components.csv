@@ -1,5 +1,5 @@
 component,N_records,N_events,mean,sd
-stayed,25,17,-1.1017,14.2904
-dropped,9,4,7.5565,7.5958
+stayed,33,20,0.5198,12.9356
+dropped,0,0,,
 added,10,6,-8.6179,24.4829
-never_treated,185,140,-2.3397,14.5318
+never_treated,186,141,-2.2018,14.614

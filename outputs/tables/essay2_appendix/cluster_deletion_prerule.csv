@@ -1,7 +1,10 @@
 panel,item,value,detail
-A_loco,deletions,81.0,
+A_loco,deletions,82.0,
 A_loco,sign_flips,0.0,
-A_loco,largest_change_cluster,101830.0,Sprint -> +0.0004 = removes 99.73%
-B_prerule,all_events,0.1486,N=331 (102 treated); HC3 SE 0.1321; CV3 SE 0.2401 (G=81)
-B_prerule,excl_6_prerule,0.1335,N=325 (102 treated); HC3 SE 0.1342; CV3 SE 0.2427 (G=79); diff -0.0151 = 0.114 HC3 / 0.063 CV3 SEs
-C_influence,cooks_d_exclusion,0.0676,"criterion Cook's D > 4/N (0.012085); removed 18 of 331; SE 0.0859, p 0.432060, N=313; REVERSES old draft (claimed exclusion strengthened to +2.480)"
+A_loco,largest_change_cluster,101830.0,Sprint -> +0.0478 = removes 74.34%
+A_loco,loco_min,0.0478,deleting cluster 101830
+A_loco,loco_max,0.297,deleting cluster 732717
+A_loco,cluster_size_cv,2.2633,"coefficient of variation of the 82 cluster sizes, from the t25 size column"
+B_prerule,all_events,0.1863,N=333 (104 treated); HC3 SE 0.1346; CV3 SE 0.2379 (G=82)
+B_prerule,excl_6_prerule,0.1714,N=327 (104 treated); HC3 SE 0.1367; CV3 SE 0.2401 (G=80); diff -0.0149 = 0.111 HC3 / 0.063 CV3 SEs
+C_influence,cooks_d_exclusion,0.1172,"criterion Cook's D > 4/N (0.012012); removed 17 of 333; SE 0.0918, p 0.202995, N=316; REVERSES old draft (claimed exclusion strengthened to +2.480)"
