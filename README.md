@@ -12,7 +12,7 @@ This dissertation analyzes how data breach disclosure timing and regulatory requ
 
 **Core Finding:** Markets penalize *who you are* (regulatory status), not *when you disclose*. FCC regulation imposes both information asymmetry costs (volatility) and governance disruption (executive turnover), with heterogeneous effects by firm size.
 
-**Sample:** 784 breaches (Cencora-deduplicated, 2006-2025) | 677 with CRSP market data | 141 FCC-regulated firms | Natural experiment: FCC Rule 37.3 (Sept 28, 2007)
+**Sample:** 489 deduplicated breach events (2006-2024, canonical v3 chain) | 354 with CRSP market data | 116 events at Form 499-registered carriers | Post-2007 cross-sectional design under 47 CFR 64.2011 (effective December 8, 2007)
 
 ---
 
@@ -79,7 +79,7 @@ Sample: N=653 regression observations | HC3 robust standard errors (primary)
 
 ## Causal Identification
 
-FCC Rule 37.3 (Sept 28, 2007) requires data breach notification within 30 days—a natural experiment.
+47 CFR 64.2011 (effective December 8, 2007) requires carriers to notify the USSS/FBI within seven business days of reasonable determination of a CPNI breach and embargoes public disclosure until seven further business days have passed; it sets no customer-notification deadline. Treatment is Form 499 registration status, never SIC code.
 
 **Validation Tests:**
 - ✅ **Temporal:** Effects emerge post-2007 only
@@ -150,7 +150,7 @@ dissertation-analysis/
 - Placebo tests (pre-FCC era)
 
 **Causal Identification:**
-- Natural experiment: FCC Rule 37.3 (Sept 28, 2007) mandates 30-day breach notification
+- Regulatory setting: 47 CFR 64.2011 (effective December 8, 2007) — a law-enforcement-first notification clock with a public-disclosure embargo; no customer-notification deadline exists (post-2007 cross-sectional design, no natural-experiment claim)
 - Temporal validation: Pre-2007 effects zero (parallel trends confirmed)
 - FCC classification: SIC-code based (4813=Telephone, 4841=Cable, 4899=VoIP) — NOT name-string matching
 - Covariate balance: FCC and non-FCC firms comparable pre-2007

@@ -326,8 +326,10 @@ Log file: {log_path}
                     ('scripts/86c_essay1_h1_h4_form499_corrected.py', 'H1-H4 Re-estimation with Form 499 Corrected Classification (n=115 treated, authoritative regulatory status)'),
                     ('scripts/90b_essay2_h5_form499_corrected.py', 'H5 Volatility Re-estimation with Form 499 Corrected (First real result, post-deduplication)'),
                     ('scripts/91m_essay3_h6_form499_corrected.py', 'H6 Executive Turnover Re-estimation with Form 499 Corrected (First real result, MDE/TOST)'),
-                    ('scripts/141_essay1_appendix_tables_form499.py', 'Essay 1 Appendix Tables 1-14 (Form 499 corrected, all live-computed with canonical checks; replaces retired 7/24 rebuild whose Tables 8/10/11/12/13 were hardcoded placeholders) → outputs/tables/appendix_v2/ + outputs/ESSAY1_APPENDIX_TABLES_FORM499.md'),
-                    ('scripts/142_sample_attrition_ledger.py', 'Sample Attrition Ledger (Methods source of truth: 1,054 documented / 784→779→672→648 computed live; rule-date anchor Dec 8, 2007 per 72 FR 31948 + FCC DA-08-1321; Sept 28 2007 retired) → outputs/SAMPLE_ATTRITION_LEDGER.md'),
+                    # RETIRED 2026-08-30 (Query 5 Part F): 7/28-vintage chain superseded by appendix_v3 (scripts/158/160)
+                    # ('scripts/141_essay1_appendix_tables_form499.py', 'Essay 1 Appendix Tables 1-14 (Form 499 corrected, all live-computed with canonical checks; replaces retired 7/24 rebuild whose Tables 8/10/11/12/13 were hardcoded placeholders) → outputs/tables/appendix_v2/ + outputs/ESSAY1_APPENDIX_TABLES_FORM499.md'),
+                    # RETIRED 2026-08-30 (Query 5 Part F): 7/28-vintage chain; v3 ledger lives in CANONICAL_V3_LINEAGE.md + ESSAY2 ledgers
+                    # ('scripts/142_sample_attrition_ledger.py', 'Sample Attrition Ledger (Methods source of truth: 1,054 documented / 784→779→672→648 computed live; rule-date anchor Dec 8, 2007 per 72 FR 31948 + FCC DA-08-1321; Sept 28 2007 retired) → outputs/SAMPLE_ATTRITION_LEDGER.md'),
                     ('scripts/143_essay1_results_supplements.py', 'Essay 1 Results Supplements (timing x FCC interaction, 5-day CAR, TOST min bounds, overlap share, 60/90d horizons under uniform convention; CONTAINS car_30d provenance finding - stored column inherits pre-audit computation) → outputs/ESSAY1_RESULTS_SUPPLEMENTS.md'),
                     ('scripts/144_residual_duplicate_audit.py', 'Residual-Duplicate Audit (name-variant twins defeating exact-key dedup: 26 groups/30 excess rows → 754-event candidate set; ±3-day adjacency candidates reported not collapsed; NOTHING canonical overwritten) → outputs/RESIDUAL_DUPLICATE_AUDIT.md + FINAL_DATASET_DEDUP_V2_CANDIDATE.csv'),
                 ]
@@ -341,7 +343,8 @@ Log file: {log_path}
                     # ARCHIVED: Pre-2007 causal ID replaced by SCM. Runs as robustness check only.
                     # ('scripts/81_post_2007_interaction_test.py', 'FCC Causal Identification (TABLE B8: Post-2007 Interaction Test - Market Returns)'),
                     ('scripts/82_clustered_vs_hc3_comparison.py', 'Standard Errors Robustness (TABLE B9: Clustered vs HC3 Comparison)'),
-                    ('scripts/83_fcc_causal_identification.py', 'FCC Causal ID Summary (Industry Fixed Effects, Size Sensitivity Analysis)'),
+                    # RETIRED 2026-08-30 (Query 5 Part G): Rule-37.3/DiD-era content; no causal-identification claim survives zero treated pre-rule observations
+                    # ('scripts/83_fcc_causal_identification.py', 'FCC Causal ID Summary (Industry Fixed Effects, Size Sensitivity Analysis)'),
                     ('scripts/90_essay2_volatility_regressions.py', 'Essay 2 Volatility Analysis (FCC effect on post-breach volatility, Tables 2-3) [COMPLETE]'),
                     # ARCHIVED: Pre-2007 causal ID replaced by SCM. Runs as robustness check only.
                     # ('scripts/84_essay2_post_2007_interaction_test_volatility.py', 'Essay 2 Volatility Causal ID (TABLE B8: Post-2007 Test)'),
@@ -414,7 +417,8 @@ Log file: {log_path}
                     ('scripts/91_essay3_mediation_analysis.py', 'Mediation Analysis (Essay 3): Does volatility mediate timing→turnover relationship?'),
                     ('scripts/92_heterogeneity_analysis.py', 'Heterogeneity Analysis: CAR/volatility effects vary by firm size quartiles?'),
                     ('scripts/93_market_model_sensitivity.py', 'Event Window Sensitivity: Robustness across 5d, 10d, 30d, 60d, 90d CARs'),
-                    ('scripts/94_falsification_tests.py', 'Falsification Tests: Pre-breach validation & breach-specificity confirmation'),
+                    # RETIRED 2026-08-30 (Query 5 Part G): Rule-37.3-era content
+                    # ('scripts/94_falsification_tests.py', 'Falsification Tests: Pre-breach validation & breach-specificity confirmation'),
                     ('scripts/95_low_r2_sensitivity.py', 'Low R² Sensitivity: Model adequacy with alternative specifications'),
                     ('scripts/robustness_1_alternative_windows.py', 'Alternative Event Windows: CAR across multiple breach-to-event intervals'),
                     ('scripts/robustness_2_timing_thresholds.py', 'Timing Thresholds: Disclosure timing effects (1d, 3d, 7d, 14d, 30d)'),

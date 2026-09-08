@@ -470,7 +470,7 @@ with col1:
     st.markdown("""
     ### Strategy 1: Post-2007 Temporal Test
 
-    **The FCC 7-Day Rule was enacted September 28, 2007.**
+    **47 CFR 64.2011 became effective December 8, 2007; it sets a 7-business-day law-enforcement notification clock and embargoes public disclosure — it contains no customer-disclosure deadline.**
 
     If the FCC volatility effect is causal, it should:
     - Be ABSENT before 2007 (no regulation yet)

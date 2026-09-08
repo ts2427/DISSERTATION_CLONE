@@ -124,3 +124,7 @@ Data/edgar/8k_item5_02_cache/
 Data/edgar/company_tickers_exchange.json
 Data/edgar/sic_naics_crosswalk.csv
 Data/edgar/step2_*.csv
+
+# WRDS quotes top-up (25MB, CRSP-licensed - do NOT commit; regenerate
+# with one interactive WRDS login: python scripts/167_essay2_microstructure.py)
+Data/wrds/crsp_quotes_topup.csv
