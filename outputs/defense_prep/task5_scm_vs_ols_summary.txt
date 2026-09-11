@@ -12,7 +12,7 @@ on 8/17-8/30/2026 by the canonical v3 rebuild:
 
 Current authoritative artifacts:
   - outputs/rebuild/constants_v3.json          (Essay 1: 489 / 354 / 338)
-  - outputs/tables/appendix_v3/                (Essay 1 appendix)
+  - outputs/rebuild/appendix_v3/               (Essay 1 appendix)
   - outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md  (Essay 2: 489 / 366 / 333)
   - outputs/tables/essay2_v2/ and the ESSAY2_*.md reports (commit 115a72f)
 

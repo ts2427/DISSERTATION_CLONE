@@ -53,3 +53,22 @@ These edits were also made in `run_all.py`:
 | create_essay3_appendix_sequential | lines 183, 193 | 14.52 | Marked retired |
 
 **Not run.** Per the standing rules, neither `run_all.py` nor script 158 was run. Every edited script was checked with `py_compile`.
+
+---
+
+# Addendum — 2026-09-11 (repo hygiene, after the README rewrite)
+
+## Script archived
+
+| Script | Moved to | Reason |
+|---|---|---|
+| `scripts/update_readme.py` | `scripts/root_dev_archive/update_readme.py` | A one-off that rewrote `README.md` in place through a hardcoded absolute path (`C:\Users\mcobp\DISSERTATION_CLONE\README.md`), string-replacing audit-era H1 values (`0.57%` → `0.649%`, `p=0.539` → `p=0.443`). Those values match neither the old README nor the current one, and the README now carries no numbers at all. It was never in `run_all.py`, and nothing references it. Moved with `git mv`, so its history is preserved. |
+
+## Stale pointers corrected
+
+The line `outputs/tables/appendix_v3/` names a directory that has never existed. The Essay 1 appendix tables are in **`outputs/rebuild/appendix_v3/`**, written by `scripts/158` (Word build `scripts/160`).
+
+- Corrected in 18 committed files: `outputs/SAMPLE_ATTRITION_LEDGER.md`, `outputs/ESSAY1_APPENDIX_TABLES_FORM499.md` and `outputs/ESSAY3_QUERY2_REPORT.md`, plus the 15 audit-era files that carry the same boilerplate tombstone block.
+- `scripts/141_essay1_appendix_tables_form499.py` no longer exists. The two documents that still described it as live — `docs/DATA_QUALITY_DOCUMENTATION.md` and `outputs/STALE_RESULTS_MANIFEST.txt` — now say so and name the current generator.
+
+None of these files is read by code: every reference is either the generator that writes it, a filename inside another script's printed output, or a line of banner text. None is a Git LFS pointer. The edits change documentation only.
