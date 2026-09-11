@@ -1,0 +1,242 @@
+
+==========================================================================================
+D1 — ESSAY 3 ATTRITION LEDGER (NEW, scripts/183)
+==========================================================================================
+  PRC notification records (stage2_signed.csv rows)                       1054  
+  Gate 1: records with a signed parent CIK (final_cik non-null)            758  (-296)
+  Stage 3: CIK+date firm-day events (stage3_events.csv)                    524  (-234)
+  Gate 2 chain collapse (stage4_input.csv)                                 491  (-33)
+  Stage 4/5 event set (stage5_outcomes.csv = CANONICAL_V3.csv rows)        489  (-2)
+  has_crsp_data == 1                                                       356  (-133)
+    non-missing fcc_form499                                                356  (-0)
+    non-missing immediate_disclosure                                       355  (-1)
+    non-missing prior_breaches_1yr                                         355  (-0)
+    non-missing health_breach                                              355  (-0)
+    non-missing firm_size_log                                              340  (-15)
+    non-missing leverage                                                   340  (-0)
+    non-missing roa                                                        340  (-0)
+  Essay 3 regression sample (158:131 rule, current CANONICAL_V3)           340  (-0)
+    [succession/outcome-data requirement: NONE imposed — see below]        340  (-0)
+  CLOSING CHECK: ledger end 340 == len(reg3) 340: True
+  Essay 1 level on the same file (adds car_30d): 340; Essay 3 - Essay 1 = 0
+  constants_v3.json N_essay3 = 338 (stale vintage); current file gives 340
+  DISH (CIK 1001082) rows in current Essay 3 sample: 2 [['2023-02-22', 1], ['2023-05-17', 1]]
+  Current sample minus DISH: N=338, treated 104
+  Events whose CIK filed NO 8-K of any kind in (t0-730d, t0+180d] (outcome structurally 0, not missing): 4
+    Nokia Inc. | CIK 924613 | 2013-07-22 | treated 0
+    The Walt Disney Company | CIK 926480 | 2008-07-29 | treated 0
+    Aon Corporation PLC | CIK 1808065 | 2020-12-29 | treated 0
+    Aon PLC | CIK 1808065 | 2022-02-25 | treated 0
+  Cache written 2026-08-04; events with t0+180d after that date (right-censored): 0
+
+==========================================================================================
+D2 — TREATMENT BY SAMPLE LEVEL (NEW, scripts/183; fcc_form499 from scripts/154)
+==========================================================================================
+  489-event universe                     N= 489 | treated events 118 | orgs 39 | parent CIKs 14
+  CRSP (has_crsp_data)                   N= 356 | treated events 111 | orgs 38 | parent CIKs 13
+  Essay 1 regression (adds car_30d)      N= 340 | treated events 106 | orgs 36 | parent CIKs 12
+  Essay 3 regression                     N= 340 | treated events 106 | orgs 36 | parent CIKs 12
+  Treated organizations at the Essay 3 level (org_name | parent CIK | events):
+    CenturyLink                                      18926  3
+    CenturyLink Communications                       18926  1
+    Centurylink Communications                       18926  1
+    Frontier Communications                          20520  1
+    Frontier Communications Parent, Inc.             20520  3
+    Sprint                                          101830  4
+    Sprint Corporation                              101830  6
+    Sprint Nextel                                   101830  1
+    Verizon                                         732712  7
+    Verizon Communications Inc.                     732712  2
+    Verizon Corporate Services Group Inc.           732712  1
+    AT&T                                            732717  10
+    AT&T Inc                                        732717  1
+    AT&T Inc.                                       732717  3
+    AT&T Services                                   732717  1
+    AT&T Services, Inc.                             732717  6
+    AT&T, Inc.                                      732717  1
+    Cricket Wireless LLC                            732717  2
+    DISH Network, LLC                              1001082  2
+    Charter Communication                          1091667  1
+    Charter Communications                         1091667  2
+    Charter Communications, Inc.                   1091667  5
+    Comcast                                        1166691  2
+    Comcast Cable Communications LLC               1166691  4
+    Comcast Cable Communications, Inc.             1166691  2
+    NBCUniversal                                   1166691  1
+    Sprint                                         1283699  2
+    T-Mobile                                       1283699  7
+    T-Mobile US, Inc.                              1283699  1
+    T-Mobile USA                                   1283699  5
+    T-Mobile USA Inc                               1283699  1
+    T-Mobile USA Inc.                              1283699  2
+    T-Mobile USA, Inc.                             1283699  8
+    Twilio                                         1447669  2
+    GoDaddy.com LLC                                1609711  1
+    GoDaddy.com, LLC                               1609711  2
+    Cable One, Inc.                                1632127  2
+
+==========================================================================================
+D3 — PRE-RULE EVENTS (breach_date < 2007-12-08) (NEW, scripts/183)
+==========================================================================================
+  489-event universe     pre-rule   7 | treated pre-rule 0
+  CRSP                   pre-rule   6 | treated pre-rule 0
+  Essay 3 regression     pre-rule   6 | treated pre-rule 0
+  Essay 3 breach_date range: 2006-12-01 .. 2024-12-20
+
+==========================================================================================
+B2 — CACHE SCHEMAS (NEW inspection, scripts/183)
+==========================================================================================
+  script-46 submissions_cache.pkl: UNREADABLE under current pandas (NotImplementedError); by construction (46:99-122) each value is a DataFrame with columns [form, filing_date, items] only.
+  script-46 cache_index.pkl: dict, 726 entries; three raw entries:
+    1136893_20231003: {'cik': 1136893, 'breach_date': '2023-10-03', 'executive_change_30d': 0, 'executive_change_90d': 0, 'executive_change_180d': 0, 'num_item5_02_filings_180d': 0, 'days_to_first_item_5_02': None}
+    63908_20250112: {'cik': 63908, 'breach_date': '2025-01-12', 'executive_change_30d': 0, 'executive_change_90d': 0, 'executive_change_180d': 0, 'num_item5_02_filings_180d': 0, 'days_to_first_item_5_02': None}
+    1324404_20180108: {'cik': 1324404, 'breach_date': '2018-01-08', 'executive_change_30d': 0, 'executive_change_90d': 0, 'executive_change_180d': 0, 'num_item5_02_filings_180d': 0, 'days_to_first_item_5_02': None}
+  v3 cache Data/edgar/rebuild_submissions_cache/<cik>.json: list of submissions-API filing pages; 162 CIK files; page keys = ['accessionNumber', 'filingDate', 'reportDate', 'acceptanceDateTime', 'act', 'form', 'fileNumber', 'filmNumber', 'items', 'core_type', 'size', 'isXBRL', 'isInlineXBRL', 'isXBRLNumeric', 'primaryDocument', 'primaryDocDescription']
+  Three raw 8-K/5.02 entries (CIK 1283699):
+    {"form": "8-K", "filingDate": "2026-07-07", "items": "5.02,7.01,9.01", "accessionNumber": "0001193125-26-297534", "primaryDocument": "d170112d8k.htm", "size": 303076, "primaryDocDescription": "8-K"}
+    {"form": "8-K", "filingDate": "2026-03-27", "items": "5.02", "accessionNumber": "0001193125-26-129021", "primaryDocument": "d124064d8k.htm", "size": 272342, "primaryDocDescription": "8-K"}
+    {"form": "8-K", "filingDate": "2025-12-09", "items": "5.02", "accessionNumber": "0001193125-25-312010", "primaryDocument": "d41056d8k.htm", "size": 313884, "primaryDocDescription": "8-K"}
+  NO page carries filing text. The `items` field is item-level ("5.02"); EDGAR metadata has no sub-item (a)-(f) field.
+
+==========================================================================================
+B3 — FLAGS ONLY: RE-PULL SCOPE + DESCRIPTIVES (NEW, scripts/183)
+==========================================================================================
+  Essay 3 sample events: 340; event-filing pairs in (t0, t0+180d]: 8-K 2347, of which 5.02 401
+  UNIQUE filings (accessions): all 8-K 1447; 8-K listing 5.02 241
+    within 30d: unique 8-K 344, unique 5.02 52
+    within 90d: unique 8-K 810, unique 5.02 130
+  Submission `size` field (whole filing, bytes): all-8-K 1765 MB; 5.02-only 77 MB. Primary document only is smaller.
+  Request time, 5.02 only: 241 primary docs; at SEC 10 req/s ceiling 0.4 min; at 0.12s delay + ~0.35s latency 1.9 min
+  Request time, all 8-K: 1447 primary docs; at SEC 10 req/s ceiling 2.4 min; at 0.12s delay + ~0.35s latency 11.3 min
+  Endpoints: data.sec.gov/submissions/CIK##########.json (ALREADY CACHED, carries accessionNumber + primaryDocument) -> https://www.sec.gov/Archives/edgar/data/{cik}/{accession-no-dashes}/{primaryDocument}. Exhibits (EX-99 press releases) would need the {accession}-index.json per filing (doubles requests).
+  Co-listed items on the unique 5.02 filings (descriptive; not a departure classifier):
+    5.02 only (± 9.01)                  166 (68.9%)
+    with 5.07 (shareholder vote)         17 (7.1%)
+    with 5.03 (bylaws)                   14 (5.8%)
+    with 1.01 (material agreement)       10 (4.1%)
+    with 2.02 (earnings)                 15 (6.2%)
+    with 7.01/8.01 (Reg FD / other)      46 (19.1%)
+  any-5.02 base rate  30d: stored column 17.1% (treated 23.6% / control 14.1%) | re-derived from cache 17.1% | mismatches 0
+  any-5.02 base rate  90d: stored column 43.2% (treated 54.7% / control 38.0%) | re-derived from cache 43.2% | mismatches 0
+  any-5.02 base rate 180d: stored column 70.0% (treated 76.4% / control 67.1%) | re-derived from cache 70.0% | mismatches 0
+  Text on disk: 50 primary documents in outputs\rebuild\calibration_5_02 (scripts/162, seed 42, 339-vintage sample); hand-coded cells filled: 0/50
+
+==========================================================================================
+C — DISCLOSURE TIMING (NEW, scripts/183)
+==========================================================================================
+  158:150-154 rule re-run on current CANONICAL_V3 (489-level, delay known): +15.26pp (constants_v3 first_stage_pp = 15.05)
+  Same difference in means at the Essay 3 regression level: +8.69pp
+  489-level (delay known)  treated  zero-delay 49/117 (41.9%) [of which recoded from negative: 1]
+  489-level (delay known)  control  zero-delay 104/370 (28.1%) [of which recoded from negative: 1]
+  489-level (delay known)  pooled   zero-delay 153/487 (31.4%)
+  Essay 3 regression       treated  zero-delay 42/106 (39.6%) [of which recoded from negative: 1]
+  Essay 3 regression       control  zero-delay 76/234 (32.5%) [of which recoded from negative: 1]
+  Essay 3 regression       pooled   zero-delay 118/340 (34.7%)
+
+  C4 on the Essay 3 regression sample (N=340; controls = Essay 3 set minus timing: ['prior_breaches_1yr', 'health_breach', 'firm_size_log', 'leverage', 'roa']):
+    spec=(1) <=7-day binary, LPM | dv=immediate_disclosure | n=340 | estimator=OLS, CV1 parent-CIK, t(G-1) | coef=0.0806 | se=0.0878 | ci_lo=-0.094 | ci_hi=0.2551 | p=0.3614 | G=83 | G1=12
+    spec=(1) <=7-day binary, logit | dv=immediate_disclosure | n=340 | estimator=logit AME (MLE SE) | coef=0.0827 | se=0.0681 | p=0.2241
+    spec=(2) <=7-day binary excl. zero-delay, LPM | dv=immediate_disclosure | n=222 | estimator=OLS, CV1 parent-CIK, t(G-1) | coef=0.0215 | se=0.0357 | ci_lo=-0.0496 | ci_hi=0.0926 | p=0.5488 | G=76 | G1=11
+    spec=(2) <=7-day binary excl. zero-delay, logit | dv=immediate_disclosure | n=222 | estimator=logit AME (MLE SE) | coef=0.0187 | se=0.0304 | p=0.5388
+    spec=(3a) raw delay days | dv=disclosure_delay_days | n=340 | estimator=OLS, CV1 parent-CIK, t(G-1) | coef=29.4689 | se=40.7585 | ci_lo=-51.6128 | ci_hi=110.5505 | p=0.4717 | G=83 | G1=12
+    spec=(3b) log(1+delay) | dv=delay_log1p | n=340 | estimator=OLS, CV1 parent-CIK, t(G-1) | coef=-0.2541 | se=0.4394 | ci_lo=-1.1281 | ci_hi=0.6199 | p=0.5646 | G=83 | G1=12
+    spec=(3c) raw delay, non-zero only | dv=disclosure_delay_days | n=222 | estimator=OLS, CV1 parent-CIK, t(G-1) | coef=65.8583 | se=58.3541 | ci_lo=-50.389 | ci_hi=182.1057 | p=0.2627 | G=76 | G1=11
+    spec=(3d) log(delay), non-zero only | dv=delay_log | n=222 | estimator=OLS, CV1 parent-CIK, t(G-1) | coef=0.0897 | se=0.3276 | ci_lo=-0.5628 | ci_hi=0.7422 | p=0.7849 | G=76 | G1=11
+
+  Essay 2 specification (controls ['e2_pre_sd', 'firm_size_log', 'leverage', 'roa', 'health_breach', 'prior_events']); intersection N=333 of 340 Essay 3 events:
+    spec=REPLICATION t16 raw (Essay 2 sample) | dv=disclosure_delay_days | n=333 | estimator=OLS, CV1 parent-CIK, t(G-1) | coef=25.6924 | se=38.789 | ci_lo=-51.4855 | ci_hi=102.8702 | p=0.5096 | G=82 | G1=12
+    spec=REPLICATION t16 log1p (Essay 2 sample) | dv=delay_log1p | n=333 | estimator=OLS, CV1 parent-CIK, t(G-1) | coef=-0.0863 | se=0.4712 | ci_lo=-1.0239 | ci_hi=0.8513 | p=0.8552 | G=82 | G1=12
+    spec=Essay 2 spec on Essay3∩Essay2 events: <=7 binary LPM | dv=immediate_disclosure | n=333 | estimator=OLS, CV1 parent-CIK, t(G-1) | coef=0.0427 | se=0.0952 | ci_lo=-0.1468 | ci_hi=0.2321 | p=0.6553 | G=82 | G1=12
+    spec=Essay 2 spec on Essay3∩Essay2 events: <=7 binary excl zero, LPM | dv=immediate_disclosure | n=216 | estimator=OLS, CV1 parent-CIK, t(G-1) | coef=0.0221 | se=0.0366 | ci_lo=-0.0507 | ci_hi=0.095 | p=0.5471 | G=75 | G1=11
+    spec=Essay 2 spec on Essay3∩Essay2 events: raw delay | dv=disclosure_delay_days | n=333 | estimator=OLS, CV1 parent-CIK, t(G-1) | coef=25.6924 | se=38.789 | ci_lo=-51.4855 | ci_hi=102.8702 | p=0.5096 | G=82 | G1=12
+    spec=Essay 2 spec on Essay3∩Essay2 events: log(1+delay) | dv=delay_log1p | n=333 | estimator=OLS, CV1 parent-CIK, t(G-1) | coef=-0.0863 | se=0.4712 | ci_lo=-1.0239 | ci_hi=0.8513 | p=0.8552 | G=82 | G1=12
+
+==========================================================================================
+E — T-MOBILE, CIK 1283699 (NEW, scripts/183)
+==========================================================================================
+  Events on CIK 1283699: 34 (source records collapsed: 54); in Essay 3 sample: 26; t0 = breach_date (156:199)
+          org_name breach_date       reported_date  n_source_records  has_crsp_data  disclosure_delay_days  executive_change_30d  executive_change_90d  executive_change_180d  days_to_first_item_5_02  in_essay3_sample cik_vintage_at_t0
+T-Mobile USA, Inc.  2009-09-03 2009-09-03 00:00:00                 1              0                    0.0                     0                     0                      0                      NaN                 0  MetroPCS-era CIK
+T-Mobile USA, Inc.  2009-10-05 2009-10-05 00:00:00                 1              0                    0.0                     0                     0                      1                    154.0                 0  MetroPCS-era CIK
+          T-Mobile  2009-10-08 2009-10-08 00:00:00                 1              0                    0.0                     0                     0                      1                    151.0                 0  MetroPCS-era CIK
+ T-Mobile USA Inc.  2011-10-21 2011-10-21 00:00:00                 1              0                    0.0                     0                     0                      1                    116.0                 0  MetroPCS-era CIK
+          T-Mobile  2012-05-08 2012-05-08 00:00:00                 1              0                    0.0                     1                     1                      1                     23.0                 0  MetroPCS-era CIK
+          T-Mobile  2012-08-28 2012-08-28 00:00:00                 1              0                    0.0                     0                     1                      1                     36.0                 0  MetroPCS-era CIK
+          T-Mobile  2013-11-01 2013-12-31 00:00:00                 1              1                   60.0                     1                     1                      1                      7.0                 0       T-Mobile US
+T-Mobile USA, Inc.  2013-11-26 2013-12-30 00:00:00                 1              1                   34.0                     0                     1                      1                     85.0                 0       T-Mobile US
+T-Mobile USA, Inc.  2014-01-02 2014-01-02 00:00:00                 1              1                    0.0                     0                     1                      1                     48.0                 1       T-Mobile US
+T-Mobile USA, Inc.  2015-09-14 2015-10-01 00:00:00                 9              1                   17.0                     0                     0                      1                    158.0                 1       T-Mobile US
+ T-Mobile USA Inc.  2015-10-01 2015-10-01 00:00:00                 1              1                    0.0                     0                     0                      1                    141.0                 1       T-Mobile US
+  T-Mobile USA Inc  2015-11-04 2015-11-04 00:00:00                 1              1                    0.0                     0                     0                      1                    107.0                 1       T-Mobile US
+          T-Mobile  2017-04-01 2017-06-09 00:00:00                 2              1                   69.0                     0                     0                      0                      NaN                 1       T-Mobile US
+T-Mobile USA, Inc.  2017-08-24 2017-09-14 00:00:00                 1              1                   21.0                     0                     0                      1                    120.0                 1       T-Mobile US
+T-Mobile USA, Inc.  2017-09-16 2017-10-02 00:00:00                 1              1                   16.0                     0                     0                      1                     97.0                 1       T-Mobile US
+ T-Mobile USA Inc.  2018-08-20 2018-08-23 00:00:00                 1              1                    3.0                     0                     1                      1                     74.0                 1       T-Mobile US
+      T-Mobile USA  2019-11-26 2020-03-02 00:00:00                 3              1                   97.0                     0                     1                      1                     85.0                 1       T-Mobile US
+            Sprint  2020-04-02 2020-04-02 00:00:00                 1              1                    0.0                     1                     1                      1                     14.0                 1       T-Mobile US
+            Sprint  2020-04-15 2020-04-15 00:00:00                 1              1                    0.0                     1                     1                      1                      1.0                 1       T-Mobile US
+ T-Mobile US, Inc.  2020-08-27 2020-12-08 00:00:00                 2              1                  103.0                     0                     1                      1                     77.0                 1       T-Mobile US
+          T-Mobile  2020-08-31 2020-10-09 00:00:00                 1              1                   39.0                     0                     1                      1                     73.0                 1       T-Mobile US
+          T-Mobile  2021-01-18 2021-02-09 00:00:00                 2              1                   22.0                     0                     1                      1                     51.0                 1       T-Mobile US
+T-Mobile USA, Inc.  2021-02-12 2021-03-16 00:00:00                 1              1                   32.0                     1                     1                      1                     26.0                 1       T-Mobile US
+          T-Mobile  2021-02-20 2021-03-31 00:00:00                 1              1                   39.0                     1                     1                      1                     18.0                 1       T-Mobile US
+T-Mobile USA, Inc.  2021-03-01 2021-08-16 00:00:00                 1              1                  168.0                     1                     1                      1                      9.0                 1       T-Mobile US
+          T-Mobile  2021-03-31 2021-03-31 00:00:00                 1              1                    0.0                     1                     1                      1                     12.0                 1       T-Mobile US
+T-Mobile USA, Inc.  2021-08-13 2021-08-16 00:00:00                 1              1                    3.0                     0                     1                      1                     34.0                 1       T-Mobile US
+      T-Mobile USA  2021-08-17 2021-08-19 00:00:00                 4              1                    2.0                     1                     1                      1                     30.0                 1       T-Mobile US
+      T-Mobile USA  2021-08-26 2021-08-26 00:00:00                 1              1                    0.0                     1                     1                      1                     21.0                 1       T-Mobile US
+          T-Mobile  2022-03-08 2022-03-08 00:00:00                 1              1                    0.0                     0                     1                      1                     45.0                 1       T-Mobile US
+      T-Mobile USA  2022-11-25 2023-01-19 00:00:00                 3              1                   55.0                     0                     1                      1                     70.0                 1       T-Mobile US
+T-Mobile USA, Inc.  2023-02-01 2023-04-28 00:00:00                 3              1                   86.0                     1                     1                      1                      2.0                 1       T-Mobile US
+          T-Mobile  2023-02-24 2023-04-28 00:00:00                 1              1                   63.0                     1                     1                      1                     14.0                 1       T-Mobile US
+      T-Mobile USA  2023-04-28 2023-04-28 00:00:00                 1              1                    0.0                     0                     1                      1                     54.0                 1       T-Mobile US
+
+  Event-filing pairs (5.02 within 180d): 73; unique filings 35; MetroPCS-vintage filings 8 pairs; text already on disk for 7 filings
+
+==========================================================================================
+F — MODEL STRUCTURE FACTS (NEW, scripts/183)
+==========================================================================================
+  CANONICAL_V3 carries no industry column: []
+  If SIC were merged from stage2_signed (parent-CIK mode): coverage 340/340
+    sic2: 16 cells; cells with treated 2; cells with BOTH treated and control 2; treated events in all-treated cells 0
+      treated-containing SIC2 cells (size, treated): 48: (125, 101); 73: (121, 5)
+    sic4: 25 cells; cells with treated 3; cells with BOTH treated and control 3; treated events in all-treated cells 0
+  Parent-CIK clusters in the Essay 3 sample: G=83; containing treated events G1=12
+  Controls as estimated (158:54-55,131-138): ['fcc_form499', 'immediate_disclosure', 'prior_breaches_1yr', 'health_breach', 'firm_size_log', 'leverage', 'roa']
+
+==========================================================================================
+G — RECONCILIATION OF THE v3 H6 CONSTANTS (NEW, scripts/183)
+==========================================================================================
+  30d: stored AME +7.37pp p=0.1741 MDE 15.19 -> SE 5.4250, z 1.3585, implied p 0.1743 (|diff| 0.0002); z_from_p/z = 1.0005
+  90d: stored AME +9.97pp p=0.1560 MDE 19.67 -> SE 7.0250, z 1.4192, implied p 0.1558 (|diff| 0.0002); z_from_p/z = 0.9996
+  180d: stored AME +4.77pp p=0.4941 MDE 19.51 -> SE 6.9679, z 0.6846, implied p 0.4936 (|diff| 0.0005); z_from_p/z = 0.9989
+  (MDE stored at 2dp -> SE carries rounding of up to 0.005/2.8 pp)
+  sample=current file minus DISH (constants vintage?) | window=30 | N=338 | treated=104 | base=0.1716 | ame_pp=7.37 | se_pp=5.425 | z_rep=1.3591 | z_calc=1.3591 | p_rep=0.1741 | p_calc=0.1741 | logit_coef=0.5312 | logit_se=0.3924 | logit_z_rep=1.3539 | logit_z_calc=1.3539 | logit_p=0.1758 | mde80_pp=15.19
+  sample=current file minus DISH (constants vintage?) | window=90 | N=338 | treated=104 | base=0.432 | ame_pp=9.97 | se_pp=7.025 | z_rep=1.4188 | z_calc=1.4188 | p_rep=0.156 | p_calc=0.156 | logit_coef=0.4228 | logit_se=0.3015 | logit_z_rep=1.4024 | logit_z_calc=1.4024 | logit_p=0.1608 | mde80_pp=19.67
+  sample=current file minus DISH (constants vintage?) | window=180 | N=338 | treated=104 | base=0.6982 | ame_pp=4.77 | se_pp=6.969 | z_rep=0.6839 | z_calc=0.6839 | p_rep=0.4941 | p_calc=0.4941 | logit_coef=0.2343 | logit_se=0.3434 | logit_z_rep=0.6822 | logit_z_calc=0.6822 | logit_p=0.4951 | mde80_pp=19.51
+  sample=current CANONICAL_V3 | window=30 | N=340 | treated=106 | base=0.1706 | ame_pp=6.85 | se_pp=5.383 | z_rep=1.2735 | z_calc=1.2735 | p_rep=0.2028 | p_calc=0.2028 | logit_coef=0.4957 | logit_se=0.3905 | logit_z_rep=1.2694 | logit_z_calc=1.2694 | logit_p=0.2043 | mde80_pp=15.07
+  sample=current CANONICAL_V3 | window=90 | N=340 | treated=106 | base=0.4324 | ame_pp=9.88 | se_pp=6.975 | z_rep=1.4167 | z_calc=1.4167 | p_rep=0.1566 | p_calc=0.1566 | logit_coef=0.4193 | logit_se=0.2994 | logit_z_rep=1.4005 | logit_z_calc=1.4005 | logit_p=0.1614 | mde80_pp=19.53
+  sample=current CANONICAL_V3 | window=180 | N=340 | treated=106 | base=0.7 | ame_pp=5.46 | se_pp=6.904 | z_rep=0.7902 | z_calc=0.7902 | p_rep=0.4294 | p_calc=0.4294 | logit_coef=0.2693 | logit_se=0.3418 | logit_z_rep=0.7877 | logit_z_calc=0.7877 | logit_p=0.4308 | mde80_pp=19.33
+
+==========================================================================================
+G-LEGACY — t/p/CI/mediation checks on committed 7/28-vintage tables (NEW, scripts/183)
+==========================================================================================
+  with_mediator 30d immediate_disclosure: coef/se -0.5169 | reported z -0.517 (ratio 1.0002) | p calc 0.6052 vs reported 0.6053
+  with_mediator 30d fcc_reportable: coef/se +0.2581 | reported z +0.258 (ratio 0.9996) | p calc 0.7963 vs reported 0.7964
+  with_mediator 90d immediate_disclosure: coef/se -0.3541 | reported z -0.354 (ratio 0.9998) | p calc 0.7233 vs reported 0.7235
+  with_mediator 90d fcc_reportable: coef/se +0.7508 | reported z +0.750 (ratio 0.9989) | p calc 0.4528 vs reported 0.453
+  with_mediator 180d immediate_disclosure: coef/se -1.6416 | reported z -1.642 (ratio 1.0003) | p calc 0.1007 vs reported 0.1006
+  with_mediator 180d fcc_reportable: coef/se +1.5302 | reported z +1.530 (ratio 0.9999) | p calc 0.1260 vs reported 0.1259
+  reduced_form 30d: z 0.2507 | p calc 0.8021 vs reported 0.802
+  reduced_form 90d: z 0.7255 | p calc 0.4682 vs reported 0.4682
+  reduced_form 180d: z 1.2910 | p calc 0.1967 vs reported 0.1967
+  91e TOST 30d: 90% CI calc [-5.65, 7.71] vs reported [-5.65, 7.71]
+  91e TOST 90d: 90% CI calc [-4.63, 12.03] vs reported [-4.63, 12.03]
+  91e TOST 180d: 90% CI calc [-1.95, 14.07] vs reported [-1.95, 14.07]
+  91m 30d: t 0.5241 | p calc t(641) 0.600408 vs reported 0.600408 (N=646 from the companion legacy files; 91m:94 uses df=N-5)
+  91m 90d: t 1.6079 | p calc t(641) 0.108351 vs reported 0.108351 (N=646 from the companion legacy files; 91m:94 uses df=N-5)
+  91m 180d: t 0.3155 | p calc t(641) 0.752463 vs reported 0.752463 (N=646 from the companion legacy files; 91m:94 uses df=N-5)
+  Cox: z 2.1199 p calc 0.0340 vs 0.034 | HR 1.3846 vs 1.3846 | CI [1.0248, 1.8706] vs [1.0248, 1.8708]
+  mediation 30d: a (logit) +0.9928 x b (logit) -0.1268 = -0.1259 (sign -) | reported indirect +1.12pp | reduced-form total AME +1.03pp
+  mediation 90d: a (logit) +0.9928 x b (logit) -0.0689 = -0.0684 (sign -) | reported indirect +3.69pp | reduced-form total AME +3.70pp
+  mediation 180d: a (logit) +0.9928 x b (logit) -0.3444 = -0.3419 (sign -) | reported indirect +6.05pp | reduced-form total AME +6.06pp

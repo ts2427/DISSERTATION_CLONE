@@ -1,0 +1,74 @@
+breach_date,org_name,in_essay3_sample,filing_date,days_from_t0,accession,sub_items,departure,ceo_departure,is_502b,officer_departure,what_the_text_says
+2009-10-05,"T-Mobile USA, Inc.",0,2010-03-08,154,0001193125-10-050196,e,none,0,0,0,"NEO option and restricted-stock grants (Linquist CEO, Keys, Carter, Stachiw)"
+2009-10-08,T-Mobile,0,2010-03-08,151,0001193125-10-050196,e,none,0,0,0,"NEO option and restricted-stock grants (Linquist CEO, Keys, Carter, Stachiw)"
+2011-10-21,T-Mobile USA Inc.,0,2012-02-14,116,0001193125-12-056765,e,none,0,0,0,"NEO option and restricted-stock grants (incl. Lorang, SVP & Chief Technology Officer)"
+2012-05-08,T-Mobile,0,2012-05-31,23,0001445305-12-001909,e,none,0,0,0,Severance Pay Plan amendment (President/COO; CFO/Vice Chairman)
+2012-05-08,T-Mobile,0,2012-08-03,87,0001283699-12-000010,b,director,0,1,0,"C. Kevin Landry, director: will not stand for reelection (no disagreement; health)"
+2012-05-08,T-Mobile,0,2012-10-03,148,0001283699-12-000027,e,none,0,0,0,Restricted stock / change-in-control agreement amendments (merger)
+2012-08-28,T-Mobile,0,2012-10-03,36,0001283699-12-000027,e,none,0,0,0,Restricted stock / change-in-control agreement amendments (merger)
+2012-08-28,T-Mobile,0,2013-02-07,163,0001283699-13-000011,e,none,0,0,0,NEO option and restricted-stock grants
+2013-11-01,T-Mobile,0,2013-11-08,7,0001283699-13-000134,"b,d",director,0,1,0,Rene Obermann resigned as director; Thomas Dannenfeldt appointed director
+2013-11-01,T-Mobile,0,2013-11-20,19,0001193125-13-448555,"b,d",director (technical; re-appointed),0,1,0,Srikant Datar resigned and was re-appointed the same day (DT designation mechanics)
+2013-11-01,T-Mobile,0,2014-02-19,110,0001193125-14-058782,b,director,0,1,0,"James N. Perry Jr., director: will not stand for reelection"
+2013-11-26,"T-Mobile USA, Inc.",0,2014-02-19,85,0001193125-14-058782,b,director,0,1,0,"James N. Perry Jr., director: will not stand for reelection"
+2014-01-02,"T-Mobile USA, Inc.",1,2014-02-19,48,0001193125-14-058782,b,director,0,1,0,"James N. Perry Jr., director: will not stand for reelection"
+2015-09-14,"T-Mobile USA, Inc.",1,2016-02-19,158,0001193125-16-470124,"b,e",officer (CIO),0,1,1,"Gary A. King, EVP & Chief Information Officer: employment terminates 2016-03-18; one year base salary for release"
+2015-10-01,T-Mobile USA Inc.,1,2016-02-19,141,0001193125-16-470124,"b,e",officer (CIO),0,1,1,"Gary A. King, EVP & Chief Information Officer: employment terminates 2016-03-18; one year base salary for release"
+2015-11-04,T-Mobile USA Inc,1,2016-02-19,107,0001193125-16-470124,"b,e",officer (CIO),0,1,1,"Gary A. King, EVP & Chief Information Officer: employment terminates 2016-03-18; one year base salary for release"
+2017-08-24,"T-Mobile USA, Inc.",1,2017-12-22,120,0001193125-17-377654,e,none,0,0,0,"J. Braxton Carter, EVP & CFO: amended and restated employment agreement"
+2017-09-16,"T-Mobile USA, Inc.",1,2017-12-22,97,0001193125-17-377654,e,none,0,0,0,"J. Braxton Carter, EVP & CFO: amended and restated employment agreement"
+2017-09-16,"T-Mobile USA, Inc.",1,2018-02-21,158,0001193125-18-051913,d,none,0,0,0,G. Michael Sievert (COO) elected director; board enlarged 11 to 12
+2018-08-20,T-Mobile USA Inc.,1,2018-11-02,74,0001283699-18-000063,b,director,0,1,0,"Thomas Dannenfeldt, director: resigns effective 2018-12-01 (leaving Deutsche Telekom)"
+2018-08-20,T-Mobile USA Inc.,1,2018-12-04,106,0001283699-18-000071,d,none,0,0,0,Christian P. Illek elected director to fill Dannenfeldt vacancy
+2019-11-26,T-Mobile USA,1,2020-02-19,85,0001193125-20-041926,e,officer (anticipated; filed as comp),0,0,1,"David Carey, EVP Corporate Services: comp term-sheet amendment; employment terminates on position elimination (by 2020-07-01)"
+2019-11-26,T-Mobile USA,1,2020-03-12,107,0001193125-20-071678,b,officer,0,1,1,"David Carey, EVP Corporate Services: will retire effective 2020-04-30"
+2019-11-26,T-Mobile USA,1,2020-03-25,120,0001283699-20-000064,e,none,0,0,0,"Neville Ray, President Technology: special PRSU award"
+2019-11-26,T-Mobile USA,1,2020-04-01,127,0001193125-20-093622,"b,c,d,e",CEO + director,1,1,1,CEO transition at Sprint merger close: John Legere employment as CEO terminated; G. Michael Sievert named CEO; Bruno Jacobfeuerborn resigned as director; SoftBank designees appointed; Legere/Sievert agreement amendments
+2019-11-26,T-Mobile USA,1,2020-04-16,142,0001193125-20-109354,"b,e",officer,0,1,1,David Carey departs effective 2020-04-13; severance per existing agreements
+2019-11-26,T-Mobile USA,1,2020-04-24,150,0001193125-20-119230,b,director (former CEO),0,1,0,John Legere resigned from the Board (text: departed as CEO on 2020-04-01)
+2020-04-02,Sprint,1,2020-04-16,14,0001193125-20-109354,"b,e",officer,0,1,1,David Carey departs effective 2020-04-13; severance per existing agreements
+2020-04-02,Sprint,1,2020-04-24,22,0001193125-20-119230,b,director (former CEO),0,1,0,John Legere resigned from the Board (text: departed as CEO on 2020-04-01)
+2020-04-02,Sprint,1,2020-06-17,76,0001140361-20-014081,"b,c",officer (principal financial officer),0,1,1,"J. Braxton Carter, EVP & CFO: retires effective 2020-07-01; Peter Osvaldik appointed CFO; Dara Bazzano appointed CAO"
+2020-04-02,Sprint,1,2020-06-22,81,0001140361-20-014470,b,director,0,1,0,Ronald D. Fisher resigned as director (Second A&R Stockholders Agreement)
+2020-04-15,Sprint,1,2020-04-16,1,0001193125-20-109354,"b,e",officer,0,1,1,David Carey departs effective 2020-04-13; severance per existing agreements
+2020-04-15,Sprint,1,2020-04-24,9,0001193125-20-119230,b,director (former CEO),0,1,0,John Legere resigned from the Board (text: departed as CEO on 2020-04-01)
+2020-04-15,Sprint,1,2020-06-17,63,0001140361-20-014081,"b,c",officer (principal financial officer),0,1,1,"J. Braxton Carter, EVP & CFO: retires effective 2020-07-01; Peter Osvaldik appointed CFO; Dara Bazzano appointed CAO"
+2020-04-15,Sprint,1,2020-06-22,68,0001140361-20-014470,b,director,0,1,0,Ronald D. Fisher resigned as director (Second A&R Stockholders Agreement)
+2020-08-27,"T-Mobile US, Inc.",1,2020-11-12,77,0001193125-20-291827,"b,d",director,0,1,0,"Srini Gopalan resigned as director; Leroy, Tazi, Wilkens appointed"
+2020-08-31,T-Mobile,1,2020-11-12,73,0001193125-20-291827,"b,d",director,0,1,0,"Srini Gopalan resigned as director; Leroy, Tazi, Wilkens appointed"
+2021-01-18,T-Mobile,1,2021-03-10,51,0001193125-21-076354,e,none,0,0,0,"PRSU grants to Sievert (CEO), Osvaldik (CFO), Ray"
+2021-01-18,T-Mobile,1,2021-04-12,84,0001193125-21-113210,b,director (National Security Director role),0,1,0,"Stephen Kappes resigned as director (also National Security Director, per 2021-06-24 filing)"
+2021-01-18,T-Mobile,1,2021-06-24,157,0001193125-21-198692,d,none,0,0,0,Letitia Long appointed director and National Security Director (merger national-security commitments)
+2021-02-12,"T-Mobile USA, Inc.",1,2021-03-10,26,0001193125-21-076354,e,none,0,0,0,"PRSU grants to Sievert (CEO), Osvaldik (CFO), Ray"
+2021-02-12,"T-Mobile USA, Inc.",1,2021-04-12,59,0001193125-21-113210,b,director (National Security Director role),0,1,0,"Stephen Kappes resigned as director (also National Security Director, per 2021-06-24 filing)"
+2021-02-12,"T-Mobile USA, Inc.",1,2021-06-24,132,0001193125-21-198692,d,none,0,0,0,Letitia Long appointed director and National Security Director (merger national-security commitments)
+2021-02-20,T-Mobile,1,2021-03-10,18,0001193125-21-076354,e,none,0,0,0,"PRSU grants to Sievert (CEO), Osvaldik (CFO), Ray"
+2021-02-20,T-Mobile,1,2021-04-12,51,0001193125-21-113210,b,director (National Security Director role),0,1,0,"Stephen Kappes resigned as director (also National Security Director, per 2021-06-24 filing)"
+2021-02-20,T-Mobile,1,2021-06-24,124,0001193125-21-198692,d,none,0,0,0,Letitia Long appointed director and National Security Director (merger national-security commitments)
+2021-03-01,"T-Mobile USA, Inc.",1,2021-03-10,9,0001193125-21-076354,e,none,0,0,0,"PRSU grants to Sievert (CEO), Osvaldik (CFO), Ray"
+2021-03-01,"T-Mobile USA, Inc.",1,2021-04-12,42,0001193125-21-113210,b,director (National Security Director role),0,1,0,"Stephen Kappes resigned as director (also National Security Director, per 2021-06-24 filing)"
+2021-03-01,"T-Mobile USA, Inc.",1,2021-06-24,115,0001193125-21-198692,d,none,0,0,0,Letitia Long appointed director and National Security Director (merger national-security commitments)
+2021-03-31,T-Mobile,1,2021-04-12,12,0001193125-21-113210,b,director (National Security Director role),0,1,0,"Stephen Kappes resigned as director (also National Security Director, per 2021-06-24 filing)"
+2021-03-31,T-Mobile,1,2021-06-24,85,0001193125-21-198692,d,none,0,0,0,Letitia Long appointed director and National Security Director (merger national-security commitments)
+2021-03-31,T-Mobile,1,2021-09-16,169,0001193125-21-275230,b,officer,0,1,1,"David A. Miller, EVP General Counsel & Secretary: retires 2022-04-01; leaves GC role 2021-10-11"
+2021-08-13,"T-Mobile USA, Inc.",1,2021-09-16,34,0001193125-21-275230,b,officer,0,1,1,"David A. Miller, EVP General Counsel & Secretary: retires 2022-04-01; leaves GC role 2021-10-11"
+2021-08-17,T-Mobile USA,1,2021-09-16,30,0001193125-21-275230,b,officer,0,1,1,"David A. Miller, EVP General Counsel & Secretary: retires 2022-04-01; leaves GC role 2021-10-11"
+2021-08-26,T-Mobile USA,1,2021-09-16,21,0001193125-21-275230,b,officer,0,1,1,"David A. Miller, EVP General Counsel & Secretary: retires 2022-04-01; leaves GC role 2021-10-11"
+2022-03-08,T-Mobile,1,2022-04-22,45,0001193125-22-115091,b,director,0,1,0,"Michael Wilkens, director: will not stand for re-election (leaving Deutsche Telekom)"
+2022-11-25,T-Mobile USA,1,2023-02-03,70,0001193125-23-024130,b,director,0,1,0,"Bavan Holloway, director: will not stand for re-election"
+2022-11-25,T-Mobile USA,1,2023-02-13,80,0001193125-23-035719,e,officer (announced retirement; filed as comp),0,0,1,"Neville Ray, President Technology: retirement letter agreement (retirement on or about 2023-10-01)"
+2022-11-25,T-Mobile USA,1,2023-03-10,105,0001193125-23-066908,e,none (CEO retention),0,0,0,"G. Michael Sievert, CEO: A&R employment agreement extending term five years"
+2023-02-01,"T-Mobile USA, Inc.",1,2023-02-03,2,0001193125-23-024130,b,director,0,1,0,"Bavan Holloway, director: will not stand for re-election"
+2023-02-01,"T-Mobile USA, Inc.",1,2023-02-13,12,0001193125-23-035719,e,officer (announced retirement; filed as comp),0,0,1,"Neville Ray, President Technology: retirement letter agreement (retirement on or about 2023-10-01)"
+2023-02-01,"T-Mobile USA, Inc.",1,2023-03-10,37,0001193125-23-066908,e,none (CEO retention),0,0,0,"G. Michael Sievert, CEO: A&R employment agreement extending term five years"
+2023-02-01,"T-Mobile USA, Inc.",1,2023-06-21,140,0001193125-23-171171,e,none,0,0,0,2023 Incentive Award Plan and ESPP approved at annual meeting (with 5.07)
+2023-02-01,"T-Mobile USA, Inc.",1,2023-07-11,160,0001193125-23-185341,e,none,0,0,0,PRSU grant to Peter Osvaldik (CFO)
+2023-02-01,"T-Mobile USA, Inc.",1,2023-07-20,169,0001193125-23-190499,d,none,0,0,0,James J. Kavanaugh elected director
+2023-02-24,T-Mobile,1,2023-03-10,14,0001193125-23-066908,e,none (CEO retention),0,0,0,"G. Michael Sievert, CEO: A&R employment agreement extending term five years"
+2023-02-24,T-Mobile,1,2023-06-21,117,0001193125-23-171171,e,none,0,0,0,2023 Incentive Award Plan and ESPP approved at annual meeting (with 5.07)
+2023-02-24,T-Mobile,1,2023-07-11,137,0001193125-23-185341,e,none,0,0,0,PRSU grant to Peter Osvaldik (CFO)
+2023-02-24,T-Mobile,1,2023-07-20,146,0001193125-23-190499,d,none,0,0,0,James J. Kavanaugh elected director
+2023-04-28,T-Mobile USA,1,2023-06-21,54,0001193125-23-171171,e,none,0,0,0,2023 Incentive Award Plan and ESPP approved at annual meeting (with 5.07)
+2023-04-28,T-Mobile USA,1,2023-07-11,74,0001193125-23-185341,e,none,0,0,0,PRSU grant to Peter Osvaldik (CFO)
+2023-04-28,T-Mobile USA,1,2023-07-20,83,0001193125-23-190499,d,none,0,0,0,James J. Kavanaugh elected director
+2023-04-28,T-Mobile USA,1,2023-09-08,133,0001193125-23-231377,e,officer (announced retirement; filed as comp),0,0,1,"Peter Ewens, EVP Corporate Strategy: retirement letter agreement (retires 2024-02-01)"

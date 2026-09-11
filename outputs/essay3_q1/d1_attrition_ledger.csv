@@ -1,0 +1,16 @@
+step,n,lost
+PRC notification records (stage2_signed.csv rows),1054,
+Gate 1: records with a signed parent CIK (final_cik non-null),758,296
+Stage 3: CIK+date firm-day events (stage3_events.csv),524,234
+Gate 2 chain collapse (stage4_input.csv),491,33
+Stage 4/5 event set (stage5_outcomes.csv = CANONICAL_V3.csv rows),489,2
+has_crsp_data == 1,356,133
+  non-missing fcc_form499,356,0
+  non-missing immediate_disclosure,355,1
+  non-missing prior_breaches_1yr,355,0
+  non-missing health_breach,355,0
+  non-missing firm_size_log,340,15
+  non-missing leverage,340,0
+  non-missing roa,340,0
+"Essay 3 regression sample (158:131 rule, current CANONICAL_V3)",340,0
+  [succession/outcome-data requirement: NONE imposed — see below],340,0
