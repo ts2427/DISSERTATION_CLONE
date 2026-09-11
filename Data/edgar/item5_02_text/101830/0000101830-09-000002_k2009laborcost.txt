@@ -1,0 +1,215 @@
+<DOCUMENT>
+<TYPE>8-K
+<SEQUENCE>1
+<FILENAME>k2009laborcost.txt
+<DESCRIPTION>FORM 8-K
+<TEXT>
+--------------------------------------------------------------------------------
+
+                                  UNITED STATES
+                       SECURITIES AND EXCHANGE COMMISSION
+                             Washington, D.C. 20549
+
+--------------------------------------------------------------------------------
+
+                                    FORM 8-K
+
+--------------------------------------------------------------------------------
+
+                                 CURRENT REPORT
+
+     Pursuant to Section 13 or 15(d) of the Securities Exchange Act of 1934
+
+        Date of Report (Date of earliest event reported) January 23, 2009
+
+--------------------------------------------------------------------------------
+
+                            SPRINT NEXTEL CORPORATION
+             (Exact name of Registrant as specified in its charter)
+
+--------------------------------------------------------------------------------
+
+           Kansas                      1-04721                 48-0457967
+  (State of Incorporation)     (Commission File Number)     (I.R.S. Employer
+                                                           Identification No.)
+
+
+       6200 Sprint Parkway, Overland Park, Kansas             66251
+        (Address of principal executive offices)            (Zip Code)
+
+
+        Registrant's telephone number, including area code (800) 829-0965
+
+           (Former name or former address, if changed since last report)
+
+--------------------------------------------------------------------------------
+
+Check the appropriate box below if the Form 8-K filing is intended to
+simultaneously satisfy the filing obligation of the registrant under any of the
+following provisions:
+
+|_|   Written communications pursuant to Rule 425 under the Securities
+      Act (17 CFR 230.425)
+
+|_|   Soliciting material pursuant to Rule 14a-12 under the Exchange
+      Act (17 CFR 240.14a-12)
+
+|_|   Pre-commencement communications pursuant to Rule 14d-2(b) under the
+      Exchange Act (17 CFR 240.14d-2(b))
+
+|_|   Pre-commencement communications pursuant to Rule 13e-4(c) under the
+      Exchange Act (17 CFR 240.13e-4(c))
+
+--------------------------------------------------------------------------------
+
+<PAGE>
+
+--------------------------------------------------------------------------------
+
+Item 2.05 Costs Associated with Exit or Disposal Activities.
+
+On January 23, 2009, the Board of Directors of Sprint Nextel Corporation (the
+"Company"), in response to anticipated continued pressure on subscribers,
+revenues and profitability in 2009, approved actions to reduce operating costs
+through a workforce reduction with a target of about 8,000 positions. The
+workforce reduction is expected to be largely completed by the end of the first
+quarter and will include management and non-management positions throughout the
+Company.
+
+The Company expects to recognize a charge in excess of $300 million in the first
+quarter of 2009 for severance and related costs. Approximately $45 million of
+this charge is associated with a voluntary separation program offered by the
+Company in late 2008 that has currently attracted approximately 850 of the 8,000
+targeted positions. The severance and related costs are primarily determined
+based on an existing severance plan. The majority of the above estimated charge
+is expected to result in cash expenditures during 2009.
+
+A copy of the press release announcing these actions is furnished as Exhibit
+99.1 to this Form 8-K.
+
+Item 5.02 Departure of Directors or Certain Officers; Election of Directors;
+Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.
+
+(b) On January 23, 2009, in connection with the Company's work force reduction,
+it was determined that Kathy Walker, Chief Information and Network Officer, will
+be terminated without cause effective March 31, 2009.
+
+(e)      Short-Term Incentive Compensation Plan
+
+On January 23, 2009, the Compensation Committee of the Board of Directors of the
+Company established the performance objectives and other terms of the Company's
+2009 Short-Term Incentive Plan for officers and other eligible employees of the
+Company (the "2009 STI Plan"). The 2009 STI Plan provides for a payment of
+incentive compensation to officers and other eligible employees based on the
+achievement of the following specified performance metrics during 2009: adjusted
+OIBDA (operating income before depreciation and amortization), weighted at 50%;
+a measure of retention of our post-paid wireless subscribers, which we refer to
+as post-paid churn, weighted at 20%; post-paid net additions, weighted at 20%;
+and calls from subscribers to customer care representatives, weighted at 10%.
+
+The Compensation Committee has established two six-month performance periods.
+The first period is from January 1, 2009 through June 30, 2009 and the second is
+from July 1, 2009 through December 31, 2009. Each performance period has
+discrete performance objectives, and employees must be employed on December 31,
+2009 in order to be eligible to receive compensation for both periods.
+
+The award payment under the 2009 STI Plan will be determined based on the
+Company's results using three variables: (1) the individual's annual incentive
+target opportunity, which is based on a percentage of the individual's base
+salary; (2) Company performance compared with each of the above-referenced
+performance objectives; and (3) relative weightings for each performance
+objective. Each of the performance objectives will have a threshold, target and
+maximum level of payment opportunity. The maximum payment opportunity is equal
+to 200% of the individual's target opportunity. The determination of payments
+for certain executive officers will be made so as to comply with Section 162(m)
+of the Internal Revenue Code.
+
+The short-term incentive target opportunities for the Company's executive
+officers have not been determined. Mr. Hesse's employment agreement provides for
+a target opportunity under the short-term incentive plan of not less than 170%
+of base salary - or $2,040,000 for 2009 - with actual payouts under the 2009 STI
+Plan limited to 200% of his targeted opportunity.
+
+<PAGE>
+
+The actual incentive amounts paid under the 2009 STI Plan will be based on the
+Company's actual results during 2009 in relation to the established performance
+objectives, and these payments may be greater or less than the target amounts
+that have been established.
+
+
+         Long-Term Incentive Compensation Plan
+
+On January 23, 2009, the Compensation Committee established the 2009 performance
+objectives and other terms of the Company's 2009 Long-Term Incentive Plan (the
+"2009 LTI Plan") for officers and other eligible employees of the Company.
+
+Seventy-five percent of the value of each participant's targeted opportunity
+will be in the form of non-qualified stock option grants, the number of which
+will be based on the value of each option determined using the Black-Scholes
+valuation model. The exercise price of each option will be the closing price of
+the Company's common stock on the grant date and the options will vest ratably
+in four equal portions on each of the first, second, third and fourth
+anniversaries of the grant date.
+
+The remaining 25% of the value of each participant's targeted opportunity will
+be made in the form of a performance unit award. The performance unit award is
+allocated one-third to each annual performance period for three years
+(2009-2011) and is payable in cash or unrestricted shares at the end of the
+third year. If paid out in shares, the number of shares awarded will be
+determined by dividing the payout amount by the average high and low stock price
+on the date the committee approves the form of payment. The performance unit
+award will be based on the Company's achievement of specified results in each
+annual performance period with respect to Free Cash Flow objectives for that
+performance period, and the amount of the performance unit award may range from
+0% to 200% based on the achievement of those specified results. The Compensation
+Committee may change the objectives for the second and third annual performance
+periods. The payouts may be greater or less than the target amounts that will be
+established.
+
+The stock option grants and performance unit award will be made pursuant to the
+Company's 2007 Omnibus Incentive Plan. The 2009 LTI Plan targeted opportunities
+for the Company's executive officers have not been determined.
+
+Item 9.01 Financial Statements and Exhibits.
+
+(d)   Exhibits
+
+The following exhibit is furnished with this report:
+
+Exhibit No.            Description
+
+99.1                   Press Release Announcing Workforce Reduction
+
+<PAGE>
+
+--------------------------------------------------------------------------------
+
+                                   SIGNATURES
+
+Pursuant to the requirements of the Securities Exchange Act of 1934, the
+registrant has duly caused this report to be signed on its behalf by the
+undersigned hereunto duly authorized.
+
+
+                                          SPRINT NEXTEL CORPORATION
+
+
+
+Date: January 26, 2009                      /s/ Timothy O'Grady
+                                          -------------------
+                                          By:   Timothy O'Grady
+                                                Assistant Secretary
+
+
+<PAGE>
+
+                                  EXHIBIT INDEX
+
+
+Number                 Exhibit
+
+99.1                   Press Release Announcing Workforce Reduction
+
+</TEXT>
+</DOCUMENT>

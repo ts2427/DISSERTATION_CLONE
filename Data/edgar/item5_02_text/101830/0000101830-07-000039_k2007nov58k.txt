@@ -1,0 +1,105 @@
+<DOCUMENT>
+<TYPE>8-K/A
+<SEQUENCE>1
+<FILENAME>k2007nov58k.txt
+<DESCRIPTION>FORM 8-K/A
+<TEXT>
+--------------------------------------------------------------------------------
+
+                                  UNITED STATES
+                       SECURITIES AND EXCHANGE COMMISSION
+                             Washington, D.C. 20549
+
+--------------------------------------------------------------------------------
+
+                                   FORM 8-K/A
+
+--------------------------------------------------------------------------------
+
+                                 CURRENT REPORT
+
+     Pursuant to Section 13 or 15(d) of the Securities Exchange Act of 1934
+
+                Date of Report (Date of earliest event reported)
+                       November 5, 2007 (August 7, 2007)
+
+--------------------------------------------------------------------------------
+
+                            SPRINT NEXTEL CORPORATION
+             (Exact name of Registrant as specified in its charter)
+
+--------------------------------------------------------------------------------
+
+            Kansas                     1-04721              48-0457967
+   (State of Incorporation)   (Commission File Number)   (I.R.S. Employer
+                                                        Identification No.)
+
+   2001 Edmund Halley Drive, Reston, Virginia                   20191
+    (Address of principal executive offices)                  (Zip Code)
+
+        Registrant's telephone number, including area code (703) 433-4000
+
+          (Former name or former address, if changed since last report)
+
+--------------------------------------------------------------------------------
+
+
+Check the appropriate box below if the Form 8-K filing is intended to
+simultaneously satisfy the filing obligation of the registrant under any of the
+following provisions:
+
+|_|   Written communications pursuant to Rule 425 under the Securities Act
+      (17 CFR 230.425)
+
+|_|   Soliciting material pursuant to Rule 14a-12 under the Exchange Act
+      (17 CFR 240.14a-12)
+
+|_|   Pre-commencement communications pursuant to Rule 14d-2(b) under the
+      Exchange Act (17 CFR 240.14d-2(b))
+
+|_|   Pre-commencement communications pursuant to Rule 13e-4(c) under the
+      Exchange Act (17 CFR 240.13e-4(c))
+
+
+--------------------------------------------------------------------------------
+
+<PAGE>
+
+--------------------------------------------------------------------------------
+
+Item 5.02 Departure of Directors or Principal Officers; Election of Directors;
+Appointment of Principal Officers.
+
+         This current report on Form 8-K/A updates information provided on a
+Form 8-K dated August 7, 2007 in which Sprint Nextel Corporation reported the
+appointments of Larry C. Glasscock and Rodney O'Neal to its Board of Directors.
+On November 5, 2007, the Board appointed Mr. Glasscock to serve on both the
+Audit and Finance Committees and Mr. O'Neal to serve on both the Human Capital &
+Compensation and Nominating & Corporate Governance Committees. At the same time,
+the Board appointed Linda Koch Lorimer to the Human Capital & Compensation
+Committee, Ms. Lorimer stepped down from the Audit Committee and Irvine O.
+Hockaday, Jr. stepped down from the Finance Committee.
+
+
+<PAGE>
+
+--------------------------------------------------------------------------------
+
+                                   SIGNATURES
+
+Pursuant to the requirements of the Securities Exchange Act of 1934, the
+registrant has duly caused this report to be signed on its behalf by the
+undersigned hereunto duly authorized.
+
+
+                                             SPRINT NEXTEL CORPORATION
+
+
+
+Date: November 5, 2007                           /s/ Richard A. Montfort
+                                                 -----------------------
+                                           By:   Richard A. Montfort
+                                                 Assistant Secretary
+
+</TEXT>
+</DOCUMENT>

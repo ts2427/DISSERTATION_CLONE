@@ -1,0 +1,141 @@
+<DOCUMENT>
+<TYPE>8-K
+<SEQUENCE>1
+<FILENAME>k2008oct248k.txt
+<DESCRIPTION>FORM 8-K
+<TEXT>
+--------------------------------------------------------------------------------
+
+                                  UNITED STATES
+                       SECURITIES AND EXCHANGE COMMISSION
+                             Washington, D.C. 20549
+
+--------------------------------------------------------------------------------
+
+                                    FORM 8-K
+
+--------------------------------------------------------------------------------
+
+                                 CURRENT REPORT
+
+     Pursuant to Section 13 or 15(d) of the Securities Exchange Act of 1934
+
+       Date of Report (Date of earliest event reported): October 22, 2008
+
+--------------------------------------------------------------------------------
+
+                            SPRINT NEXTEL CORPORATION
+             (Exact name of Registrant as specified in its charter)
+
+--------------------------------------------------------------------------------
+
+           Kansas                       1-04721                 48-0457967
+  (State of Incorporation)     (Commission File Number)      (I.R.S. Employer
+                                                            Identification No.)
+
+
+       6200 Sprint Parkway, Overland Park, Kansas             66251
+        (Address of principal executive offices)            (Zip Code)
+
+
+        Registrant's telephone number, including area code (800) 829-0965
+
+
+          (Former name or former address, if changed since last report)
+
+--------------------------------------------------------------------------------
+
+Check the appropriate box below if the Form 8-K filing is intended to
+simultaneously satisfy the filing obligation of the registrant under any of the
+following provisions:
+
+|_|   Written communications pursuant to Rule 425 under the Securities
+      Act (17 CFR 230.425)
+
+|_|   Soliciting material pursuant to Rule 14a-12 under the Exchange
+      Act (17 CFR 240.14a-12)
+
+|_|   Pre-commencement communications pursuant to Rule 14d-2(b) under
+      the Exchange Act (17 CFR 240.14d-2(b))
+
+|_|   Pre-commencement communications pursuant to Rule 13e-4(c) under
+      the Exchange Act (17 CFR 240.13e-4(c))
+
+--------------------------------------------------------------------------------
+
+<PAGE>
+
+--------------------------------------------------------------------------------
+
+Item 5.02 Departure of Directors or Certain Officers; Election of Directors;
+Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.
+
+(b) On October 22, 2008, Ralph V. Whitworth sent a letter to James H. Hance,
+Jr., the Chairman of the Board of Directors of Sprint Nextel Corporation
+("Sprint Nextel"), stating that, because of the need to turn his attention to
+other business matters, he has decided to resign from the Board of Directors
+effective October 23, 2008.  In his letter, Mr. Whitworth conveyed to the
+members of the Sprint Nextel Board his best regards and appreciation for the
+opportunity to have served with them.
+
+(d) On October 23, 2008, the Board of Directors of Sprint Nextel appointed a new
+independent director, Sven-Christer Nilsson, with the appointment to be
+effective as of November 10, 2008.  The Board will determine what Committees
+Mr. Nilsson will serve on once his appointment is effective.
+
+     A copy of the press release issued by Sprint Nextel on October 24, 2008
+announcing the appointment of Mr. Nilsson and the resignation of Mr. Whitworth
+is included as Exhibit 99.1 to this report and incorporated herein by reference.
+
+
+
+Item 9.01         Financial Statements and Exhibits.
+
+(d)   Exhibits
+
+The following exhibits are filed with this report:
+
+
+Exhibit No.        Description
+
+99.1               Press Release Announcing Mr. Nilsson's Appointment to and
+                   Mr. Whitworth's Resignation from Sprint Nextel's Board
+                   of Directors
+
+
+<PAGE>
+
+--------------------------------------------------------------------------------
+
+                                   SIGNATURES
+
+Pursuant to the requirements of the Securities Exchange Act of 1934, the
+registrant has duly caused this report to be signed on its behalf by the
+undersigned hereunto duly authorized.
+
+
+                                             SPRINT NEXTEL CORPORATION
+
+
+
+Date: October 24, 2008                         /s/ Timothy O'Grady
+                                                   -----------------
+                                             By:   Timothy O'Grady
+                                                   Assistant Secretary
+
+
+<PAGE>
+
+
+                                  EXHIBIT INDEX
+
+
+Number         Exhibit
+
+99.1           Press Release Announcing Mr. Nilsson's Appointment to and
+               Mr. Whitworth's Resignation from Sprint Nextel's Board of
+               Directors
+
+
+</TEXT>
+</DOCUMENT>

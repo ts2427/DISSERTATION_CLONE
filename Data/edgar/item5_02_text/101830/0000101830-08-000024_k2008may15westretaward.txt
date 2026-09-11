@@ -1,0 +1,122 @@
+<DOCUMENT>
+<TYPE>8-K
+<SEQUENCE>1
+<FILENAME>k2008may15westretaward.txt
+<DESCRIPTION>FORM 8-K
+<TEXT>
+--------------------------------------------------------------------------------
+
+                                  UNITED STATES
+                       SECURITIES AND EXCHANGE COMMISSION
+                             Washington, D.C. 20549
+
+--------------------------------------------------------------------------------
+
+                                    FORM 8-K
+
+--------------------------------------------------------------------------------
+
+                                 CURRENT REPORT
+
+     Pursuant to Section 13 or 15(d) of the Securities Exchange Act of 1934
+
+          Date of Report (Date of earliest event reported) May 12, 2008
+
+--------------------------------------------------------------------------------
+
+                            SPRINT NEXTEL CORPORATION
+             (Exact name of Registrant as specified in its charter)
+
+--------------------------------------------------------------------------------
+
+          Kansas                        1-04721               48-0457967
+ (State of Incorporation)      (Commission File Number)    (I.R.S. Employer
+                                                          Identification No.)
+
+
+       6200 Sprint Parkway, Overland Park, Kansas             66251
+        (Address of principal executive offices)           (Zip Code)
+
+        Registrant's telephone number, including area code (800) 829-0965
+
+           (Former name or former address, if changed since last report)
+
+--------------------------------------------------------------------------------
+
+Check the appropriate box below if the Form 8-K filing is intended to
+simultaneously satisfy the filing obligation of the registrant under any of the
+following provisions:
+
+|_|   Written communications pursuant to Rule 425 under the Securities
+      Act (17 CFR 230.425)
+
+|_|   Soliciting material pursuant to Rule 14a-12 under the Exchange
+      Act (17 CFR 240.14a-12)
+
+|_|   Pre-commencement communications pursuant to Rule 14d-2(b) under
+      the Exchange Act (17 CFR 240.14d-2(b))
+
+|_|   Pre-commencement communications pursuant to Rule 13e-4(c) under
+      the Exchange Act (17 CFR 240.13e-4(c))
+
+--------------------------------------------------------------------------------
+
+<PAGE>
+
+--------------------------------------------------------------------------------
+
+Item 5.02 Departure of Directors or Certain Officers; Election of Directors;
+Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.
+
+(e) On May 12, 2008, Sprint Nextel Corporation ("Sprint Nextel") announced that
+it will make a cash performance and retention award payment to Barry West, Chief
+Technology Officer & President, 4G Mobile Broadband, in the maximum amount of
+$469,356, which is equivalent to his annual base salary, for his continued
+service with our Xohm business unit. This award is part of a broader performance
+and retention plan for certain Xohm employees.
+
+Sprint Nextel will pay Mr. West 50% of the amount 120 days following the later
+of the close of the transaction with Clearwire Corporation ("Clearwire") to
+develop and deploy a broadband network based on WiMAX technology ("Clearwire
+Transaction") or December 31, 2008 and the remaining 50% one year after the
+Clearwire Transaction closes. Both payments will be dependent upon Xohm's
+performance achievement of budget, market launch readiness in key markets and
+achievement of a specific population coverage. Additionally, if the achievement
+of those objectives are not met, the award will be reduced and possibly
+eliminated altogether.
+
+If the Clearwire Transaction is terminated on or after November 7, 2008, 50% of
+the target award will be paid as soon as administratively practicable but no
+later than 45 days from the termination date. In order to receive the cash
+performance and retention award, Mr. West must be a Sprint Nextel employee on
+the scheduled payment date or subject to the following termination reasons:
+death, disability, involuntarily without cause, or resignation with
+good reason following the failure to be offered a comparable position at
+Clearwire or Sprint Nextel that is within 50 miles of his current work location.
+If Mr. West is terminated for the aforementioned reasons, he is eligible for the
+full award based on performance achievement.
+
+
+<PAGE>
+
+--------------------------------------------------------------------------------
+
+                                   SIGNATURES
+
+Pursuant to the requirements of the Securities Exchange Act of 1934, the
+registrant has duly caused this report to be signed on its behalf by the
+undersigned hereunto duly authorized.
+
+
+                                        SPRINT NEXTEL CORPORATION
+
+
+
+Date: May 16, 2008                      /s/ Timothy O'Grady
+                                        ------------------
+                                  By:   Timothy O'Grady
+                                        Assistant Secretary
+
+
+</TEXT>
+</DOCUMENT>

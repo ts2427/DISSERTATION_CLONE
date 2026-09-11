@@ -242,8 +242,18 @@ for w in (30, 90, 180):
         r = ladder(dd, yy, xx, B=9_999, full=False, fe=fe)
         sens.append(dict(window=w, sensitivity=lab, **pub(r)))
 S3 = pd.DataFrame(sens)
+# The two corner-case recall scenarios pair opposite ends of the two recall CIs: they bound how far misclassification
+# could move the estimate; they are not estimates. HC3 is not part of the inferential frame (it ignores within-parent
+# clustering; CV3/WCR are the frame), so p_hc3 must never be read as significance.
+BOUND = S3['sensitivity'].str.contains('/ control at CI')
+S3['row_type'] = np.where(BOUND, 'BOUNDING EXERCISE (recall CI endpoints; not an estimate)', 'estimate')
+S3['hc3_status'] = 'DISQUALIFIED (ignores within-parent clustering; inference = CV3/WCR; do not read p_hc3 as significance)'
 S3.to_csv(OUT / 'f3_sensitivities.csv', index=False)
 log(S3[['window', 'sensitivity', 'n', 'coef', 'se_cv3', 'p_cv3', 'ci_cv3_lo', 'ci_cv3_hi', 'p_wcr']].to_string(index=False))
+log(f"  row_type: {int(BOUND.sum())} rows are BOUNDING EXERCISES (recall at opposite CI endpoints), not estimates. "
+    "hc3_status: HC3 is DISQUALIFIED in every row (e.g. the 180d treated-low/control-high bound has p_hc3 "
+    f"{S3.loc[BOUND & (S3['window'] == 180) & S3['sensitivity'].str.contains('CI low'), 'p_hc3'].iloc[0]:.3f}; "
+    "its CV3 p is the valid one).")
 
 log('\n  Leave-one-parent-CIK-out (from the CV3 jackknife):')
 lrows = []

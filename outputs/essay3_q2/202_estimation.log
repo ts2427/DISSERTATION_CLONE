@@ -52,6 +52,7 @@ F3 — SENSITIVITIES (one row per window; CV3 inference, WCR p with B = 9,999)
     180                         recall-corrected, audit point estimates (r_T=0.842, r_C=0.750) 338  0.0135  0.1458 0.9264    -0.2767     0.3037 0.9106
     180 recall-corrected, treated recall at CI low / control at CI high (r_T=0.604, r_C=0.927) 338  0.2225  0.1543 0.1532    -0.0846     0.5296 0.1230
     180 recall-corrected, treated recall at CI high / control at CI low (r_T=0.966, r_C=0.476) 338 -0.2333  0.1989 0.2444    -0.6291     0.1626 0.1460
+  row_type: 6 rows are BOUNDING EXERCISES (recall at opposite CI endpoints), not estimates. hc3_status: HC3 is DISQUALIFIED in every row (e.g. the 180d treated-low/control-high bound has p_hc3 0.018; its CV3 p is the valid one).
 
   Leave-one-parent-CIK-out (from the CV3 jackknife):
   30d: full +0.0168; range [-0.0022, +0.0388]; sign flips 1/81; without T-Mobile -0.0022; without Sprint +0.0109; largest move: deleting 1136893 -> +0.0388
@@ -81,4 +82,4 @@ primary H6             F1 exec departure 180d 0.7052 0.6474 0.8701
    placebo F4 pre-notification exec departure 0.5281 0.4060 0.5281
 Sensitivity family: min raw CV3 p 0.1532; min BH-adjusted 0.9984
 
-Baseline constants_essay3_q2.json WRITTEN (later runs assert against it)
+Assertion check vs constants_essay3_q2.json: PASS

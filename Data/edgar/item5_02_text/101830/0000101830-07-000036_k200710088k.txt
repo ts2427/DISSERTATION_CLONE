@@ -1,0 +1,153 @@
+<DOCUMENT>
+<TYPE>8-K
+<SEQUENCE>1
+<FILENAME>k200710088k.txt
+<DESCRIPTION>8-K
+<TEXT>
+--------------------------------------------------------------------------------
+                                  UNITED STATES
+                       SECURITIES AND EXCHANGE COMMISSION
+                             Washington, D.C. 20549
+--------------------------------------------------------------------------------
+
+                                    FORM 8-K
+--------------------------------------------------------------------------------
+
+                                 CURRENT REPORT
+
+     Pursuant to Section 13 or 15(d) of the Securities Exchange Act of 1934
+
+       Date of Report (Date of earliest event reported) October 8, 2007
+--------------------------------------------------------------------------------
+
+                            SPRINT NEXTEL CORPORATION
+             (Exact name of Registrant as specified in its charter)
+--------------------------------------------------------------------------------
+
+         Kansas                     1-04721                 48-0457967
+(State of Incorporation)    (Commission File Number)     (I.R.S. Employer
+                                                        Identification No.)
+
+
+  2001 Edmund Halley Drive, Reston, Virginia                   20191
+   (Address of principal executive offices)                  (Zip Code)
+
+
+        Registrant's telephone number, including area code (703) 433-4000
+
+          (Former name or former address, if changed since last report)
+--------------------------------------------------------------------------------
+
+Check the appropriate box below if the Form 8-K filing is intended to
+simultaneously satisfy the filing obligation of the registrant under any of the
+following provisions:
+
+____    Written communications pursuant to Rule 425 under the
+        Securities Act (17 CFR 230.425)
+
+____    Soliciting material pursuant to Rule 14a-12 under the
+        Exchange Act (17 CFR 240.14a-12)
+
+____    Pre-commencement communications pursuant to Rule 14d-2(b) under
+        the Exchange Act (17 CFR 240.14d-2(b))
+
+____    Pre-commencement communications pursuant to Rule 13e-4(c) under
+        the Exchange Act (17 CFR 240.13e-4(c))
+--------------------------------------------------------------------------------
+
+<PAGE>
+
+--------------------------------------------------------------------------------
+
+Item 5.02 Departure of Directors or Certain Officers; Election of Directors;
+Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.
+
+Sprint Nextel Corporation ("Sprint Nextel") announced that effective October 8,
+2007 Gary Forsee is stepping down as the company's chairman, president and chief
+executive officer and is resigning from the Sprint Nextel Board of Directors
+effective immediately.  For purposes of Mr. Forsee's employment agreement, the
+termination date will be January 1, 2008, and the severance benefits to which
+he is entitled under his employment agreement shall be determined and
+commence as of that date.
+
+Sprint Nextel also announced that James Hance Jr., a member of the Sprint Nextel
+Board of Directors, will assume the role of acting non-executive chairman of the
+Board. It also announced that Paul Saleh, current chief financial officer of
+Sprint Nextel, will serve as acting chief executive officer of Sprint Nextel
+until a permanent replacement for Mr. Forsee is named. In addition, Sprint
+Nextel announced that, with Mr. Hance serving in the position of non-executive
+chairman, the position of lead independent director, held by Irvine Hockaday,
+will be combined with that role, but that Mr. Hockaday will remain a member of
+the Board.
+
+The information under the caption "Additional Background on Hance and Saleh" in
+the press release furnished as Exhibit 99.1 is incorporated herein by reference.
+
+Item 7.01 Regulation FD Disclosure.
+
+On October 8, 2007, Sprint Nextel issued a press release regarding the matters
+described in Item 5.02 above. Sprint Nextel also announced that it expects to
+report a net loss of approximately 337,000 post-paid subscribers in the third
+quarter 2007. In addition, Sprint Nextel announced that both adjusted OIBDA and
+consolidated operating revenue for 2007 are expected to be slightly below the
+range of previously provided guidance of $11.0 to $11.5 billion of adjusted
+OIBDA and $41 to $42 billion of consolidated operating revenue.
+
+A copy of the press release announcing these actions is attached as Exhibit 99.1
+hereto and is incorporated herein by reference.
+
+Item 9.01 Financial Statements and Exhibits.
+
+(c)     Exhibits
+
+The following exhibit is furnished with this report:
+
+Exhibit No.        Description
+
+   99.1            Press Release dated October 8, 2007
+
+
+--------------------------------------------------------------------------------
+
+
+                                       -1-
+
+
+<PAGE>
+
+--------------------------------------------------------------------------------
+
+                                   SIGNATURES
+
+Pursuant to the requirements of the Securities Exchange Act of 1934, the
+registrant has duly caused this report to be signed on its behalf by the
+undersigned hereunto duly authorized.
+
+
+
+                                        SPRINT NEXTEL CORPORATION
+
+
+Date:  October 12, 2007
+
+
+                                        /s/ Richard A. Montfort
+                                   By:  Richard A. Montfort
+                                        Assistant Secretary
+
+
+                                       -2-
+
+<PAGE>
+
+--------------------------------------------------------------------------------
+
+                                  EXHIBIT INDEX
+
+
+Number          Exhibit
+
+ 99.1           Press Release dated October 8, 2007
+
+</TEXT>
+</DOCUMENT>

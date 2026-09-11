@@ -1,0 +1,108 @@
+<DOCUMENT>
+<TYPE>8-K
+<SEQUENCE>1
+<FILENAME>v117835_8k.txt
+<TEXT>
+                                  UNITED STATES
+                       SECURITIES AND EXCHANGE COMMISSION
+                              WASHINGTON, DC 20549
+
+                                   ----------
+
+                                    FORM 8-K
+
+                                 CURRENT REPORT
+     Pursuant to Section 13 or 15(d) of the Securities Exchange Act of 1934
+
+
+         Date of report (Date of earliest event reported): June 17, 2008
+
+
+                            The J. M. Smucker Company
+               (Exact Name of Registrant as Specified in Charter)
+
+
+
+            Ohio                      1-5111                   34-0538550
+------------------------------    -----------------    -------------------------
+(State or Other Jurisdiction        (Commission             (IRS Employer
+      of Incorporation)             File Number)           Identification No.)
+
+         One Strawberry Lane
+                Orrville, Ohio                                44667-0280
+---------------------------------------------------    -------------------------
+(Address of Principal Executive Offices)                      (Zip Code)
+
+
+Registrant's telephone number, including area code:  (330) 682-3000
+                                                    -------------------
+
+
+                                 Not Applicable
+--------------------------------------------------------------------------------
+          (Former Name or Former Address, if Changed Since Last Report)
+
+
+Check the appropriate box below if the Form 8-K filing is intended to
+simultaneously satisfy the filing obligation of the registrant under any of the
+following provisions:
+
+|_|   Written communications pursuant to Rule 425 under the Securities Act (17
+      CFR 230.425)
+
+|_|   Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR
+      240.14a-12)
+
+|_|   Pre-commencement communications pursuant to Rule 14d-2(b) under the
+      Exchange Act (17 CFR 240.14d-2(b))
+
+|_|   Pre-commencement communications pursuant to Rule 13e-4(c) under the
+      Exchange Act (17 CFR 240.13e-4(c))
+
+
+<PAGE>
+
+
+Item 5.02 Departure of Directors or Certain Officers; Election of Directors;
+Appointment of Certain Officers;
+Compensatory Arrangements of Certain Officers
+
+         On June 17, 2008, the Executive Compensation Committee (the
+"Committee") of the Board of Directors (the "Board") of The J. M. Smucker
+Company (the "Company") established the performance criteria to be used in
+determining (i) the number of restricted shares or restricted stock units to be
+awarded to executive officers in 2009 under the terms of The J. M. Smucker
+Company 2006 Equity Compensation Plan and (ii) the cash awards for which
+executive officers would be eligible under the Company's Management Incentive
+Plan. Targeted awards for this purpose were set by the Committee based on the
+achievement of specified goals relating to non-GAAP earnings per share,
+individual performance, and in some instances, business unit performance of the
+Company.
+
+
+<PAGE>
+
+
+                                    SIGNATURE
+
+         Pursuant to the requirements of the Securities Exchange Act of 1934,
+the registrant has duly caused this report to be signed on its behalf by the
+undersigned hereunto duly authorized.
+
+
+                                         THE J. M. SMUCKER COMPANY
+
+
+
+                                         By:     /s/ M. Ann Harlan
+                                               ---------------------------------
+                                                M. Ann Harlan
+                                                Vice President, General Counsel,
+                                                and Secretary
+
+
+Date:  June 23, 2008
+
+
+</TEXT>
+</DOCUMENT>

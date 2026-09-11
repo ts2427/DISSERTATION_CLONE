@@ -1,0 +1,237 @@
+<DOCUMENT>
+<TYPE>8-K
+<SEQUENCE>1
+<FILENAME>k2008mar25stiandlti.txt
+<DESCRIPTION>FORM 8-K
+<TEXT>
+--------------------------------------------------------------------------------
+
+                                  UNITED STATES
+                       SECURITIES AND EXCHANGE COMMISSION
+                             Washington, D.C. 20549
+
+--------------------------------------------------------------------------------
+
+                                    FORM 8-K
+
+--------------------------------------------------------------------------------
+
+                                 CURRENT REPORT
+
+     Pursuant to Section 13 or 15(d) of the Securities Exchange Act of 1934
+
+         Date of Report (Date of earliest event reported) March 19, 2008
+
+--------------------------------------------------------------------------------
+
+                            SPRINT NEXTEL CORPORATION
+             (Exact name of Registrant as specified in its charter)
+
+--------------------------------------------------------------------------------
+
+          Kansas                        1-04721                48-0457967
+ (State of Incorporation)     (Commission File Number)      (I.R.S. Employer
+                                                           Identification No.)
+
+
+       6200 Sprint Parkway, Overland Park, Kansas           66251
+        (Address of principal executive offices)          (Zip Code)
+
+        Registrant's telephone number, including area code (800) 829-0965
+
+           (Former name or former address, if changed since last report)
+
+--------------------------------------------------------------------------------
+
+Check the appropriate box below if the Form 8-K filing is intended to
+simultaneously satisfy the filing obligation of the registrant under any of the
+following provisions:
+
+|_|   Written communications pursuant to Rule 425 under the Securities
+      Act (17 CFR 230.425)
+
+|_|   Soliciting material pursuant to Rule 14a-12 under the Exchange
+      Act (17 CFR 240.14a-12)
+
+|_|   Pre-commencement communications pursuant to Rule 14d-2(b) under
+      the Exchange Act (17 CFR 240.14d-2(b))
+
+|_|   Pre-commencement communications pursuant to Rule 13e-4(c) under
+      the Exchange Act (17 CFR 240.13e-4(c))
+
+--------------------------------------------------------------------------------
+
+<PAGE>
+
+--------------------------------------------------------------------------------
+
+Item 5.02 Departure of Directors or Certain Officers; Election of Directors;
+Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.
+
+(e) On March 19, 2008, the Human Capital and Compensation Committee (the
+"Committee") of the Board of Directors of Sprint Nextel Corporation (the
+"Company") established the performance objectives and other terms of the
+Company's short-term incentive compensation plan for the second, third and
+fourth quarters of 2008 (the "2008 STIC Plan") and the 2008 long-term incentive
+compensation plan (the "2008 LTIC Plan") for officers and other eligible
+employees of the Company. The Committee had previously established the
+performance objectives and other terms of the Company's short-term incentive
+plan for the first quarter of 2008.
+
+Given the performance of the Company in recent periods, and the Company's need
+to focus on achieving certain critical near-term objectives necessary for a
+turnaround of its performance, as discussed further below, the Committee
+designed the 2008 STIC Plan and the enhanced near-term component of the 2008
+LTIC Plan to provide incentives for its senior management team and other plan
+participants to reduce wireless post-paid churn and improve the customer
+experience, use its resources efficiently, and improve operating performance and
+free cash flow. To further this goal, the Committee approved the following
+performance objectives under the 2008 STIC Plan: (1) wireless post-paid churn,
+(2) adjusted operating income before depreciation and amortization, or OIBDA,
+(3) free cash flow and (4) calls from subscribers to customer care
+representatives. To further the focus of senior management on these critical
+objectives, for those employees who are eligible to participate in the 2008 LTIC
+Plan, as part of the 2008 LTIC Plan design, the Committee allocated one half of
+each participant's 2008 LTIC Plan targeted opportunity to be in the form of
+dollar denominated performance units payable in restricted stock unit ("RSU")
+awards, based on the Company's actual performance in the second, third and
+fourth quarters of 2008 using the same performance objectives under the 2008
+STIC Plan.
+
+A summary of the 2008 STIC Plan and 2008 LTIC Plan are as follows:
+
+         Short-Term Incentive Compensation Plan
+
+The 2008 STIC Plan is comprised of three quarterly performance periods (each, a
+"Quarterly Performance Period"): the second quarter 2008; the third quarter
+2008; and the fourth quarter 2008. The 2008 STIC Plan provides for a payment of
+incentive compensation, for each Quarterly Performance Period, based on the
+achievement of the financial or operating metrics established for each of the
+following performance objectives: (1) wireless post-paid churn, weighted at 40%;
+(2) adjusted OIBDA, weighted at 20%; (3) free cash flow, weighted at 20%; and
+(4) calls from subscribers to customer care representatives, weighted at 20%.
+
+Payment under the 2008 STIC Plan for each Quarterly Performance Period will be
+determined based on the Company's results using three variables: (1) one quarter
+of each individual's annual incentive target opportunity, which is based on a
+percentage of the individual's base salary; (2) the Company's performance during
+the applicable period compared with the financial or operating metric
+established for each performance objective; and (3) relative weightings for each
+performance objective.
+
+Each performance objective for each Quarterly Performance Period will have a
+threshold, target and maximum level of payment opportunity, with the maximum
+payment opportunity equal to 250% of the individual's target opportunity, other
+than Mr. Hesse, whose employment agreement provides that actual payouts under
+the 2008 STIC plan are limited to 200% of his targeted opportunity. To calculate
+each incentive award amount, an eligible employee's incentive target opportunity
+will be multiplied by the weightings and the payout results for each performance
+objective.
+
+The actual incentive amounts paid to each participant under each applicable
+Quarterly Performance Period will be based on the Company's actual results
+during the applicable period in relation to the financial or operating metric
+established for each performance objective. Also, payouts will be limited to a
+maximum under an adjusted operating income objective for executive officers who
+are subject to the deduction limits of Section 162(m) of the Internal Revenue
+Code.
+
+<PAGE>
+
+Mr. Hesse's employment agreement provides for a target opportunity under the
+short-term incentive plan of not less than 170% of base salary - or $2,040,000
+for 2008 - with actual payouts under the STIC plan limited to 200% of his
+targeted opportunity. The annual target opportunity for Ms. Walker is equal to
+100% of her base salary - or $520,000 for 2008 - and for Mr. West is equal to
+100% of his base salary - or $469,356 for 2008.
+
+         Enhanced Near-Term Incentive Compensation Opportunity
+
+One half of each 2008 LTIC Plan participant's targeted opportunity will be made
+in the form of dollar denominated performance units (the "Performance Units")
+that will be equally allocated to each of the three Quarterly Performance
+Periods. The Performance Units will be payable based on the Company's actual
+performance during the applicable period as compared to the financial or
+operating metric established for each performance objective and relative
+weightings for each performance objective of the 2008 STIC Plan for each of the
+Quarterly Performance Periods.
+
+Each performance objective for the applicable Quarterly Performance Period will
+have a threshold, target and maximum level of payment opportunity, with the
+maximum payment opportunity equal to 250% of the individual's target
+opportunity. To calculate each incentive award amount, an eligible employee's
+incentive target opportunity will be multiplied by the weightings and the payout
+results for each performance objective, and, for certain executive officers
+other than Mr. Hesse, will be limited to a maximum payout under an adjusted
+operating income objective intended to comply with Section 162(m) of the
+Internal Revenue Code.
+
+All payouts of Performance Units will be in the form of RSU awards that vest six
+months from the end of the applicable Quarterly Performance Period. The Company
+will determine the number of RSUs in which each Performance Unit will convert
+by dividing the value of the applicable Performance Units by the fair market
+value of our common stock.
+
+All RSU awards granted with respect to the Performance Units will be made
+pursuant to the Company's 2007 Omnibus Incentive Plan, and are eligible to
+receive dividend equivalent payments, as and to the extent declared with respect
+to the Company's common stock.
+
+         Long-Term Incentive Compensation Plan
+
+Under the 2008 LTIC Plan, the 50% portion of each plan participant's targeted
+opportunity that remains following the allocation to the Performance Units will
+be made in a combination of non-qualified stock options and RSU awards -
+one-half of which will be in the form of non-qualified stock options and the
+other half of which will be in the form of RSU awards. The Committee made the
+allocation between stock options and RSU awards to reward our executive officers
+to the extent that they create value for the shareholders and to ensure that the
+program supports our retention objectives.
+
+The stock options will vest ratably in equal amounts on February 11, 2009,
+February 11, 2010 and February 11, 2011 and have an exercise price equal to the
+closing price of a share of the Company's common stock on the date of the grant.
+The RSU awards, which are designed to enhance the Company's retention of
+executive officers, will vest entirely on February 11, 2011.
+
+All RSU awards granted will be made pursuant to the Company's 2007 Omnibus
+Incentive Plan, and are eligible to receive dividend equivalent payments, as and
+to the extent declared with respect to the Company's common stock.
+
+Because Mr. Hesse's employment agreement provides for an annual long-term
+incentive opportunity with a $10 million target value for 2008, $5 million of
+his targeted opportunity will be allocated to Performance Units under the
+enhanced near-term opportunity of the 2008 LTIC Plan and the remaining $5
+million will be allocated to grants of stock options and RSU awards. Because Ms.
+Walker's target opportunity is $2 million, $1 million of her targeted
+opportunity will be allocated to Performance Units under the enhanced near-term
+opportunity of the 2008 LTIC Plan and the remaining $1 million will be allocated
+to grants of stock options and RSU awards. Because Mr. West will not participate
+in the 2008 LTIC Plan due to consideration that he will receive under his
+employment agreement, as amended on December 31, 2007, he will not be entitled
+to grants of Performance Units under the enhanced near-term opportunity of the
+2008 LTIC Plan, stock options or RSU awards.
+
+
+<PAGE>
+
+--------------------------------------------------------------------------------
+
+                                   SIGNATURES
+
+Pursuant to the requirements of the Securities Exchange Act of 1934, the
+registrant has duly caused this report to be signed on its behalf by the
+undersigned hereunto duly authorized.
+
+
+                                     SPRINT NEXTEL CORPORATION
+
+
+
+Date: March 25, 2008                   /s/ Leonard J. Kennedy
+                                       ----------------------
+                                     By:   Leonard J. Kennedy
+                                           General Counsel
+
+</TEXT>
+</DOCUMENT>

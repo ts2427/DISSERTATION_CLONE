@@ -83,6 +83,8 @@ wrds_config.ini
 # Other working documents
 *.txt
 !requirements.txt
+# Essay 3 Query 2: Item 5.02 filing texts are pipeline inputs (scripts/195 codes all 1,078); some are .txt
+!Data/edgar/item5_02_text/**
 
 # Temporary pipeline/test files
 pipeline_run*.log

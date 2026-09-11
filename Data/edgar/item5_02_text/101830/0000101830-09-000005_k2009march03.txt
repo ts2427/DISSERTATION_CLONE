@@ -1,0 +1,169 @@
+<DOCUMENT>
+<TYPE>8-K
+<SEQUENCE>1
+<FILENAME>k2009march03.txt
+<DESCRIPTION>FORM 8-K
+<TEXT>
+--------------------------------------------------------------------------------
+
+                                  UNITED STATES
+                       SECURITIES AND EXCHANGE COMMISSION
+                             Washington, D.C. 20549
+
+--------------------------------------------------------------------------------
+
+                                    FORM 8-K
+
+--------------------------------------------------------------------------------
+
+                                 CURRENT REPORT
+
+     Pursuant to Section 13 or 15(d) of the Securities Exchange Act of 1934
+
+       Date of Report (Date of earliest event reported) February 25, 2009
+
+--------------------------------------------------------------------------------
+
+                            SPRINT NEXTEL CORPORATION
+             (Exact name of Registrant as specified in its charter)
+
+--------------------------------------------------------------------------------
+
+         Kansas                        1-04721                  48-0457967
+(State of Incorporation)       (Commission File Number)      (I.R.S. Employer
+                                                            Identification No.)
+
+       6200 Sprint Parkway, Overland Park, Kansas          66251
+        (Address of principal executive offices)        (Zip Code)
+
+
+        Registrant's telephone number, including area code (800) 829-0965
+
+           (Former name or former address, if changed since last report)
+
+--------------------------------------------------------------------------------
+
+Check the appropriate box below if the Form 8-K filing is intended to
+simultaneously satisfy the filing obligation of the registrant under any of the
+following provisions:
+
+|_|   Written communications pursuant to Rule 425 under the Securities
+      Act (17 CFR 230.425)
+
+|_|   Soliciting material pursuant to Rule 14a-12 under the Exchange
+      Act (17 CFR 240.14a-12)
+
+|_|   Pre-commencement communications pursuant to Rule 14d-2(b) under
+      the Exchange Act (17 CFR 240.14d-2(b))
+
+|_|   Pre-commencement communications pursuant to Rule 13e-4(c) under
+      the Exchange Act (17 CFR 240.13e-4(c))
+
+--------------------------------------------------------------------------------
+
+<PAGE>
+
+--------------------------------------------------------------------------------
+
+Item 5.02 Departure of Directors or Certain Officers; Election of Directors;
+Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.
+
+(b) On February 26, 2009, Sprint Nextel Corporation (the "Company") appointed
+Charles L. Hall, 59, to succeed Christopher J. Gregoire as principal accounting
+officer of the Company effective March 3, 2009. Mr. Gregoire has been appointed
+Vice President and Assistant Controller.
+
+(c) On February 26, 2009, the Company appointed Charles L. Hall as Senior Vice
+President and Controller of the Company effective March 3, 2009.
+
+Mr. Hall served as Senior Vice President - Finance of the Company from November
+2008 through March 3, 2009. Prior to joining the Company, Mr. Hall served as
+Vice President and Controller of Lyondell Chemical Company, a $25 billion
+manufacturer of chemicals and plastics, where he was responsible for financial
+accounting and reporting, internal financial controls and business performance
+analysis. Prior to Lyondell, Mr. Hall was employed by BP Amoco in Chicago, where
+he served 16 years in a variety of financial roles, including General Manager,
+Accounting and Reporting, for BP Amoco's North American operations, Controller
+of Amoco Chemical Company and Assistant Controller of Amoco Corporation.
+
+(d) On February 26, 2009, the Board of Directors of the Company appointed a new
+independent director, Frank Ianna, with the appointment to be effective as of
+March 3, 2009.
+
+The Board appointed Mr. Ianna to serve on the Nominating and Corporate
+Governance Committee upon the effectiveness of his appointment to the Board.
+
+A copy of the press release issued by the Company on March 3, 2009 announcing
+the appointment of Mr. Ianna is included as Exhibit 99.1 to this report and
+incorporated herein by reference.
+
+(e)       Long-Term Incentive Compensation Plan
+
+On January 23, 2009, the Compensation Committee of the Company's Board of
+Directors (the "Compensation Committee") established the 2009 performance
+objectives and other terms of the Company's 2009 Long-Term Incentive Plan (the
+"2009 LTI Plan") for the Company's officers and other eligible employees. The
+Company filed a Current Report on Form 8-K on January 26, 2009 summarizing the
+2009 LTI Plan.
+
+On February 25, 2009, the Compensation Committee approved the 2009 LTI Plan
+awards, which included both stock options and performance unit awards. The value
+of each performance unit award is $1.00. Daniel R. Hesse, our President and
+Chief Executive Officer, was granted a total of 2,951,389 stock options and
+$2,125,000 in performance unit awards. Keith O. Cowan, our President - Strategic
+Planning and Corporate Initiatives and Acting President - CDMA, was granted
+868,056 stock options and $625,000 in performance unit awards. Steven L. Elfman,
+our President - Network Operations and Wholesale, was granted 885,417 stock
+options and $637,500 in performance unit awards. Robert L. Johnson, our Chief
+Service Officer, was granted 377,778 stock options and $272,000 in performance
+unit awards. Pursuant to Robert H. Brust's, our Chief Financial Officer,
+employment agreement, he is not eligible to participate in the 2009 LTI Plan.
+
+Item 9.01         Financial Statements and Exhibits.
+
+(d)   Exhibits
+
+The following exhibits are filed with this report:
+
+
+Exhibit No.          Description
+99.1                 Press Release Announcing Appointment of Frank Ianna to
+                     Sprint Nextel's Board of Directors
+
+
+<PAGE>
+
+
+--------------------------------------------------------------------------------
+
+                                   SIGNATURES
+
+Pursuant to the requirements of the Securities Exchange Act of 1934, the
+registrant has duly caused this report to be signed on its behalf by the
+undersigned hereunto duly authorized.
+
+
+                                             SPRINT NEXTEL CORPORATION
+
+
+
+Date: March 3, 2009                          /s/  Timothy O'Grady
+                                             --------------------
+                                            By:   Timothy O'Grady
+                                                  Assistant Secretary
+
+
+
+<PAGE>
+
+
+                                  EXHIBIT INDEX
+
+
+Number         Exhibit
+99.1           Press Release Announcing Appointment of Frank Ianna to
+               Sprint Nextel's Board of Directors
+
+
+</TEXT>
+</DOCUMENT>

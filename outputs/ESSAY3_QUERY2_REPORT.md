@@ -848,6 +848,23 @@ See Part E above (ledger N = 338). The anchor diagnostic is .121 in both groups.
 - 180d: range [−0.0196, +0.0942]; sign flips 1/81.
 - **Dropping T-Mobile (1283699) flips the sign at 30d (−0.0022) and 180d (−0.0196), and is the largest move at 180d.** Dropping Sprint gives +0.0109, −0.0167 and +0.0386.
 
+**Full leave-one-cluster-out range** (NEW, scripts/204; `204_se_diagnostics.log`, `f1_cv3_variance_shares.csv`, `f3_loco.csv`):
+
+| Window | Full coef | Leave-one-out range | Sign flips | Cluster(s) whose deletion flips the sign |
+|---|---|---|---|---|
+| 30d | +0.0168 | [−0.0022, +0.0388] | 1/81 | T-Mobile, 1283699 (treated, 26 events): −0.0022 |
+| 90d | −0.0169 | [−0.0492, +0.0675] | 2/81 | FIS, 1136893 (control, 12 events): +0.0675; AT&T, 732717 (treated, 26 events): +0.0025 |
+| 180d | +0.0434 | [−0.0196, +0.0942] | 1/81 | T-Mobile, 1283699: −0.0196 |
+
+**At 90 days, one control cluster drives the CV3 variance.** Fidelity National Information Services (FIS, CIK 1136893, 12 events) accounts for 65.6% of the CV3 jackknife variance. Deleting it moves the coefficient from −0.0169 to +0.0675.
+
+This is most of why the CV3 SE triples between 30d and 90d (0.0329 → 0.1029), and the MDE80 with it (0.0934 → 0.2918). The outcome variance also rises, from .0398 to .1243. T-Mobile's share of the 90d CV3 variance is 10.1%, and deleting T-Mobile raises the 90d CV3 SE to 0.1189 rather than lowering it.
+
+**Labels in `f3_sensitivities.csv`:**
+- A `row_type` column marks the two corner-case recall-corrected rows at each window (treated recall at one CI end, control at the other) as **BOUNDING EXERCISES, not estimates**.
+- An `hc3_status` column marks HC3 as **DISQUALIFIED** in every row. For example, the 180d treated-low/control-high bound has HC3 p .018, but its valid CV3 p is .1532.
+- The six bounding rows remain in the 27-test sensitivity family used for BH, so `n_tests` (31) and the assertion baseline are unchanged.
+
 ## F5 — CEO-only departures; F6 — director-only departures (counts; NEW; `202_estimation.log:64–71`)
 
 | Window | CEO treated | CEO control | Director-only treated | Director-only control |
@@ -861,7 +878,7 @@ See Part E above (ledger N = 338). The anchor diagnostic is .121 in both groups.
 
 ## G6 — T-Mobile executive departures within 180 days of NOTIFICATION (NEW, scripts/203; `203_case.log`; `g6_case_table.csv`, `g6_restatement_dated.csv`)
 
-**Scope.** 34 T-Mobile breach events for parent CIK 1283699. Of these, 25 are in the analysis sample and 9 are pre-rule or outside it; none of the 9 has a departure in its window. Departures are v2 exec departure events in (rd, rd + 180], each dated to its first disclosing filing. Flags come from that filing.
+**Scope.** 34 T-Mobile breach events for parent CIK 1283699. Of these, 26 are in the analysis sample and 8 are pre-rule or outside it; none of the 8 has a departure in its window. *(Corrected after commit 3b5be1e, which said 25 and 9. The count of 26 matches the T-Mobile cluster size in `f1_cluster_diagnostics.csv`.)* Departures are v2 exec departure events in (rd, rd + 180], each dated to its first disclosing filing. Flags come from that filing.
 
 | Departure (first filing) | Title | T-Mobile events whose window contains it | Pre-announced | v2 flags | Retirement / transaction flag? |
 |---|---|---|---|---|---|

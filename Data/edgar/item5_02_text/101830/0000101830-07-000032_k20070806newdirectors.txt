@@ -1,0 +1,125 @@
+<DOCUMENT>
+<TYPE>8-K
+<SEQUENCE>1
+<FILENAME>k20070806newdirectors.txt
+<DESCRIPTION>APPOINTMENT OF TWO NEW INDEPENDENT DIRECTORS
+<TEXT>
+--------------------------------------------------------------------------------
+
+                                  UNITED STATES
+                       SECURITIES AND EXCHANGE COMMISSION
+                             Washington, D.C. 20549
+
+--------------------------------------------------------------------------------
+
+                                    FORM 8-K
+
+--------------------------------------------------------------------------------
+
+                                 CURRENT REPORT
+
+     Pursuant to Section 13 or 15(d) of the Securities Exchange Act of 1934
+
+         Date of Report (Date of earliest event reported) August 7, 2007
+
+--------------------------------------------------------------------------------
+
+                            SPRINT NEXTEL CORPORATION
+             (Exact name of Registrant as specified in its charter)
+
+--------------------------------------------------------------------------------
+
+
+         Kansas                    1-04721                 48-0457967
+(State of Incorporation)  (Commission File Number)      (I.R.S. Employer
+                                                       Identification No.)
+
+
+  2001 Edmund Halley Drive, Reston, Virginia                   20191
+   (Address of principal executive offices)                 (Zip Code)
+
+
+        Registrant's telephone number, including area code (703) 433-4000
+
+           (Former name or former address, if changed since last report)
+
+--------------------------------------------------------------------------------
+
+Check the appropriate box below if the Form 8-K filing is intended to
+simultaneously satisfy the filing obligation of the registrant under any of the
+following provisions:
+
+|_|   Written communications pursuant to Rule 425 under the Securities Act
+      (17 CFR 230.425)
+
+|_|   Soliciting material pursuant to Rule 14a-12 under the Exchange Act
+      (17 CFR 240.14a-12)
+
+|_|   Pre-commencement communications pursuant to Rule 14d-2(b) under the
+      Exchange Act (17 CFR 240.14d-2(b))
+
+|_|   Pre-commencement communications pursuant to Rule 13e-4(c) under the
+      Exchange Act (17 CFR 240.13e-4(c))
+
+--------------------------------------------------------------------------------
+
+<PAGE>
+
+--------------------------------------------------------------------------------
+
+Item 5.02 Departure of Directors or Certain Officers; Election of Directors;
+Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.
+
+On August 7, 2007, the Board of Directors of Sprint Nextel Corporation (the
+"Company") appointed two new independent directors, Larry C. Glasscock and
+Rodney O'Neal.
+
+Messrs. Glasscock and O'Neal have not been appointed to any committees of the
+board.
+
+A copy of the press release issued by the Company on August 7, 2007 announcing
+the appointment of Messrs. Glasscock and O'Neal is included as Exhibit 99 to
+this report and incorporated herein by reference.
+
+Item 9.01 Financial Statements and Exhibits.
+
+(d) Exhibits
+
+The following exhibit is filed with this report:
+
+Exhibit No.                             Description
+99                                      Press Release dated August 7, 2007.
+
+
+<PAGE>
+
+--------------------------------------------------------------------------------
+
+                                   SIGNATURES
+
+Pursuant to the requirements of the Securities Exchange Act of 1934, the
+registrant has duly caused this report to be signed on its behalf by the
+undersigned hereunto duly authorized.
+
+
+                                          SPRINT NEXTEL CORPORATION
+
+
+
+Date: August 7, 2007                      /s/ Richard A. Montfort
+                                    By:   Richard A. Montfort
+                                          Assistant Secretary
+
+
+<PAGE>
+
+--------------------------------------------------------------------------------
+
+                                  EXHIBIT INDEX
+
+
+Number         Exhibit
+  99           Press Release dated August 7, 2007.
+
+</TEXT>
+</DOCUMENT>

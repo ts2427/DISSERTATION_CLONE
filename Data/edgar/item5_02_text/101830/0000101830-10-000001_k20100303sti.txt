@@ -1,0 +1,251 @@
+<DOCUMENT>
+<TYPE>8-K
+<SEQUENCE>1
+<FILENAME>k20100303sti.txt
+<DESCRIPTION>STI COMPENSATION AND TARGETS
+<TEXT>
+--------------------------------------------------------------------------------
+
+
+
+                                  UNITED STATES
+                       SECURITIES AND EXCHANGE COMMISSION
+                             Washington, D.C. 20549
+
+
+--------------------------------------------------------------------------------
+
+
+
+
+                                    FORM 8-K
+
+
+--------------------------------------------------------------------------------
+
+
+
+
+                                 CURRENT REPORT
+
+     Pursuant to Section 13 or 15(d) of the Securities Exchange Act of 1934
+
+       Date of Report (Date of earliest event reported) February 25, 2010
+
+
+--------------------------------------------------------------------------------
+
+
+
+
+                            SPRINT NEXTEL CORPORATION
+             (Exact name of Registrant as specified in its charter)
+
+
+--------------------------------------------------------------------------------
+
+
+
+
+
+        Kansas                        1-04721                 48-0457967
+(State of Incorporation)      (Commission File Number)     (I.R.S. Employer
+                                                          Identification No.)
+
+
+        6200 Sprint Parkway, Overland Park, Kansas              66251
+         (Address of principal executive offices)             (Zip Code)
+
+
+        Registrant's telephone number, including area code (800) 829-0965
+
+
+          (Former name or former address, if changed since last report)
+
+
+--------------------------------------------------------------------------------
+
+
+
+
+Check the appropriate box below if the Form 8-K filing is intended to
+simultaneously satisfy the filing obligation of the registrant under any of the
+following provisions:
+
+|_|   Written communications pursuant to Rule 425 under the Securities Act
+      (17 CFR 230.425)
+
+
+|_|   Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR
+      240.14a-12)
+
+
+|_|   Pre-commencement communications pursuant to Rule 14d-2(b) under the
+      Exchange Act (17 CFR 240.14d-2(b))
+
+
+|_|   Pre-commencement communications pursuant to Rule 13e-4(c) under the
+      Exchange Act (17 CFR 240.13e-4(c))
+
+
+
+--------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<PAGE>
+
+
+
+
+
+
+--------------------------------------------------------------------------------
+
+
+
+
+Item 5.02 Departure of Directors or Certain Officers; Election of Directors;
+Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.
+
+(e)      Short-Term Incentive Compensation Plan
+
+     On February 26, 2010, the Compensation  Committee of the Board of Directors
+of  Sprint  Nextel  Corporation  (the  "Company")  established  the  performance
+objectives and other terms of the Company's 2010  Short-Term  Incentive Plan for
+officers and other eligible  employees of the Company (the "2010 STI Plan"). The
+Compensation  Committee has established two six-month  performance  periods. The
+first  period is from  January 1, 2010  through  June 30, 2010 and the second is
+from July 1, 2010  through  December  31,  2010.  Each  performance  period  has
+discrete performance objectives,  and employees must be employed on December 31,
+2010 in order to be eligible to receive compensation for both periods.
+
+     The 2010 STI Plan  provides  for a payment  of  incentive  compensation  to
+officers and other eligible  employees based on the achievement of the following
+specified  performance  objectives during the first-half of 2010: adjusted OIBDA
+(operating  income before  depreciation  and  amortization),  weighted at 25%; a
+measure of retention of our post-paid wireless subscribers, which we refer to as
+post-paid churn,  weighted at 20%; net service revenue  (operating  revenue less
+equipment  revenue),  weighted at 45%; and our  subscribers  on  Clearwire's  4G
+network,  which  we call 4G  subscribers,  weighted  at  10%.  The  Compensation
+Committee did not yet set performance objectives for the second-half of 2010.
+
+     Each of the  performance  objectives  will  have a  threshold,  target  and
+maximum level of payment  opportunity.  The maximum payment opportunity is equal
+to 200% of the individual's target opportunity. The award payment under the 2010
+STI  Plan  will  be  determined  based  on the  Company's  results  using  three
+variables:  (1) the individual's annual incentive target  opportunity,  which is
+based on a percentage  of the  individual's  base salary;  (2) the  Compensation
+Committee's  assessment and certification of Company  performance  compared with
+each of the above-referenced performance objectives; and (3) relative weightings
+for each  performance  objective.  The  determination  of  payments  for certain
+executive  officers  will be made so as to  comply  with  Section  162(m) of the
+Internal Revenue Code.
+
+     Mr. Hesse's  employment  agreement  provides for a target opportunity under
+the  short-term  incentive  plan of not  less  than  170% of  base  salary  - or
+$2,040,000  for 2010 - with actual  payouts  under the 2010 STI Plan  limited to
+200% of his targeted opportunity.  Mr. Brust's employment agreement provides for
+a target  opportunity  under the STI Plan of not less than 130% of base salary -
+or $1,300,000 for 2010. Mr. Cowan's  employment  agreement provides for a target
+opportunity  under STI Plan of not less than 125% of base  salary - or  $906,250
+for 2010. Mr. Elfman's  employment  agreement  provides for a target opportunity
+under STI Plan of not less than 125% of base salary - or $812,500 for 2010.  Mr.
+Robert L. Johnson's employment agreement provides for a target opportunity under
+the STI Plan of not less than 100% of base salary - or $460,000 for 2010.
+
+     The actual incentive  amounts paid under the 2010 STI Plan will be based on
+the  Company's  actual  results  during  2010  in  relation  to the  established
+performance  objectives,  and these  payments  may be  greater  or less than the
+target amounts that have been established.
+
+         Long-Term Incentive Compensation Plan for Mr. Brust
+
+     On February 25, 2010, the  Compensation  Committee  granted the 2010 awards
+for Mr. Brust under the Company's 2010  Long-Term  Incentive Plan (the "2010 LTI
+Plan"). The Compensation  Committee has not yet set any of the terms of the 2010
+LTI Plan with respect to any other officers or other  eligible  employees of the
+Company.
+
+     Pursuant to the terms of his amended employment  agreement,  dated December
+22,  2009,  Mr.  Brust's  2010 LTI Plan  target  opportunity  of $3  million  is
+allocated  equally in value in stock options and  restricted  stock units all of
+which  will vest on May 1, 2012,  subject to  compliance  with  non-compete  and
+non-solicitation  covenants under his employment agreement.  The number of stock
+options  granted  is based on the  value of each  option  determined  using  the
+Black-Scholes  valuation  model. The number of restricted share units awarded is
+based on the 30-day average trading price of the Company's common stock.
+
+     The stock option grants and  restricted  stock unit awards,  as applicable,
+will be made pursuant to the Company's 2007 Omnibus Incentive Plan.
+
+      Special Payment
+
+     On February 25, 2010, the  Compensation  Committee also approved a lump-sum
+payment  to Mr.  Elfman in the  amount of  $300,000  related  to his  successful
+leadership of the Ericsson transaction, which was completed in 2009.
+
+<PAGE>
+
+
+
+
+--------------------------------------------------------------------------------
+
+
+
+
+
+                                   SIGNATURES
+
+Pursuant  to the  requirements  of the  Securities  Exchange  Act of  1934,  the
+registrant  has duly  caused  this  report  to be  signed  on its  behalf by the
+undersigned hereunto duly authorized.
+
+
+                                       SPRINT NEXTEL CORPORATION
+
+
+
+Date: March 3, 2010                    /s/ Timothy O'Grady
+                                           By:   Timothy O'Grady
+                                                 Assistant Secretary
+
+
+
+
+</TEXT>
+</DOCUMENT>

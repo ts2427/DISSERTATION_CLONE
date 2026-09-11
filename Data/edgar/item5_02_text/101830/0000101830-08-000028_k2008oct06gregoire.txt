@@ -1,0 +1,123 @@
+<DOCUMENT>
+<TYPE>8-K
+<SEQUENCE>1
+<FILENAME>k2008oct06gregoire.txt
+<DESCRIPTION>FORM 8-K
+<TEXT>
+--------------------------------------------------------------------------------
+
+                                  UNITED STATES
+                       SECURITIES AND EXCHANGE COMMISSION
+                             Washington, D.C. 20549
+
+--------------------------------------------------------------------------------
+
+                                    FORM 8-K
+
+--------------------------------------------------------------------------------
+
+                                 CURRENT REPORT
+
+     Pursuant to Section 13 or 15(d) of the Securities Exchange Act of 1934
+
+        Date of Report (Date of earliest event reported): October 2, 2008
+
+--------------------------------------------------------------------------------
+
+                            SPRINT NEXTEL CORPORATION
+             (Exact name of Registrant as specified in its charter)
+
+--------------------------------------------------------------------------------
+
+          Kansas                     1-04721                    48-0457967
+ (State of Incorporation)    (Commission File Number)       (I.R.S. Employer
+                                                           Identification No.)
+
+      6200 Sprint Parkway, Overland Park, Kansas             66251
+       (Address of principal executive offices)            (Zip Code)
+
+        Registrant's telephone number, including area code (800) 829-0965
+
+           (Former name or former address, if changed since last report)
+
+--------------------------------------------------------------------------------
+
+Check the appropriate box below if the Form 8-K filing is intended to
+simultaneously satisfy the filing obligation of the registrant under any of the
+following provisions:
+
+|_|   Written communications pursuant to Rule 425 under the Securities
+      Act (17 CFR 230.425)
+
+|_|   Soliciting material pursuant to Rule 14a-12 under the Exchange
+      Act (17 CFR 240.14a-12)
+
+|_|   Pre-commencement communications pursuant to Rule 14d-2(b) under
+      the Exchange Act (17 CFR 240.14d-2(b))
+
+|_|   Pre-commencement communications pursuant to Rule 13e-4(c) under
+      the Exchange Act (17 CFR 240.13e-4(c))
+
+--------------------------------------------------------------------------------
+
+<PAGE>
+
+--------------------------------------------------------------------------------
+
+Item 5.02 Departure of Directors or Certain Officers; Election of Directors;
+Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.
+
+(b) On October 7, 2008, Sprint Nextel Corporation ("Sprint Nextel") announced
+that William Arendt is being succeeded by Chris Gregoire as principal accounting
+officer effective October 2, 2008.
+
+(c) On October 7, 2008, Sprint Nextel announced that Christopher Gregoire, 39,
+has been appointed Vice President and Principal Accounting Officer of Sprint
+Nextel effective October 2, 2008.
+
+Mr. Gregoire served as Vice President and Assistant Controller of Sprint Nextel
+from August 2006 through October 2, 2008. Prior to joining Sprint Nextel, Mr.
+Gregoire served as a Partner at Deloitte from August 2003 through July 2006 and
+as a Senior Manager at Deloitte from 2000.
+
+In connection with Mr. Gregoire's appointment, his severance benefit has been
+changed. Mr. Gregoire would have been entitled to severance of two times his
+base salary and 80% of his short term incentive opportunity ("STI") if his
+position as Vice President and Assistant Controller was relocated more than 50
+miles from Sprint Nextel's Reston, Virginia office on or before August 7, 2009.
+Sprint Nextel has now agreed to provide those severance benefits, and two years
+of continuation of certain employee benefits as provided under the Sprint Nextel
+Separation Plan, in the event of Mr. Gregoire's involuntary termination not for
+cause and further that he will be involuntarily terminated not for cause no
+later than August 7, 2009. These new benefits will be in lieu of the severance
+benefits to which Mr. Gregoire would have been entitled to under Sprint Nextel's
+severance plan, which would have been about ten months of his base salary and
+ten months of STI bonus at 80% of his target in the event of involuntary
+termination not for cause.
+
+
+<PAGE>
+
+--------------------------------------------------------------------------------
+
+
+                                   SIGNATURES
+
+Pursuant to the requirements of the Securities Exchange Act of 1934, the
+registrant has duly caused this report to be signed on its behalf by the
+undersigned hereunto duly authorized.
+
+
+                                       SPRINT NEXTEL CORPORATION
+
+
+
+Date: October 7, 2008                    /s/ Timothy O'Grady
+                                         -------------------
+                                       By:   Timothy O'Grady
+                                             Assistant Secretary
+
+
+
+</TEXT>
+</DOCUMENT>

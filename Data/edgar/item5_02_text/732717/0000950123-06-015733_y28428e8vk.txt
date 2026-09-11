@@ -1,0 +1,389 @@
+<DOCUMENT>
+<TYPE>8-K
+<SEQUENCE>1
+<FILENAME>y28428e8vk.txt
+<DESCRIPTION>FORM 8-K
+<TEXT>
+<PAGE>
+
+================================================================================
+
+                                  UNITED STATES
+                       SECURITIES AND EXCHANGE COMMISSION
+                             WASHINGTON, D.C. 20549
+
+                                    FORM 8-K
+
+                                 CURRENT REPORT
+     PURSUANT TO SECTION 13 OR 15(d) OF THE SECURITIES EXCHANGE ACT OF 1934
+
+Date of Report (Date of earliest event reported) DECEMBER 29, 2006
+
+                                    AT&T INC.
+             (Exact name of registrant as specified in its charter)
+
+<TABLE>
+<S>                                    <C>                   <C>
+          DELAWARE                        1-8610                  43-1301883
+(State or other jurisdiction           (Commission              (IRS Employer
+     of incorporation)                 File Number)          Identification No.)
+</TABLE>
+
+<TABLE>
+<S>                                                                   <C>
+   175 E. HOUSTON, SAN ANTONIO, TEXAS                                    78205
+(Address of principal executive offices)                              (Zip Code)
+</TABLE>
+
+Registrant's telephone number, including area code (210) 821-4105
+
+________________________________________________________________________________
+         (Former name or former address, if changed since last report.)
+
+Check the appropriate box below if the Form 8-K filing is intended to
+simultaneously satisfy the filing obligation of the registrant under any of the
+following provisions:
+
+[ ]  Written communications pursuant to Rule 425 under the Securities Act (17
+     CFR 230.425)
+
+[ ]  Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR
+     240.14a-12)
+
+[ ]  Pre-commencement communications pursuant to Rule 14d-2(b) under the
+     Exchange Act (17 CFR 240.14d-2(b))
+
+[ ]  Pre-commencement communications pursuant to Rule 13e-4(c) under the
+     Exchange Act (17 CFR 240.13e-4(c))
+
+================================================================================
+
+<PAGE>
+
+ITEM 2.01. COMPLETION OF ACQUISITION OR DISPOSITION OF ASSETS.
+
+     On December 29, 2006, the merger of ABC Consolidation Corp. ("Merger Sub"),
+a wholly owned subsidiary of AT&T Inc. ("AT&T"), with and into BellSouth
+Corporation ("BellSouth") (the "Merger") was consummated in accordance with the
+Agreement and Plan of Merger, dated as of March 4, 2006, among BellSouth, AT&T
+and Merger Sub (the "Merger Agreement"). Pursuant to the terms of the Merger
+Agreement, each outstanding share of BellSouth common stock, par value $1.00 per
+share ("BellSouth Common Shares"), was converted into and became exchangeable
+for 1.325 shares of AT&T common stock, par value $1.00 per share ("AT&T Common
+Stock"), and cash in lieu of any fractional shares. AT&T issued approximately
+2.4 billion shares of AT&T Common Stock to former holders of BellSouth Common
+Shares, giving them an approximate 38% stake in AT&T. Based on the closing price
+of $35.75 per share of AT&T Common Stock on the New York Stock Exchange on
+December 29, 2006, the last trading day before the closing of the Merger, the
+aggregate value of the consideration paid to former holders of BellSouth Common
+Shares in connection with the Merger was approximately $85.8 billion. Upon the
+closing of the Merger, BellSouth became a wholly owned subsidiary of AT&T and
+the BellSouth Common Shares, which traded under the symbol "BLS", have ceased
+trading on, and are being delisted from, the New York Stock Exchange.
+
+     The closing of the Merger followed the approval of the Federal
+Communications Commission ("FCC") of the transfer of control to AT&T of licenses
+and authorizations held directly and indirectly by BellSouth. In connection
+with the FCC's approval, AT&T agreed to certain merger commitments in a letter
+filed with the FCC on December 28, 2006, which is incorporated by the reference
+herein and attached hereto as Exhibit 99.1.
+
+     Prior to the Merger, AT&T owned a 60% interest in Cingular Wireless LLC
+("Cingular Wireless") and shared control with BellSouth, which owned a 40%
+interest in Cingular Wireless. AT&T became the sole owner of Cingular Wireless
+as a result of the Merger, which also put sole control of Cingular Wireless in
+AT&T.
+
+     The foregoing description of the Merger contained in this Item 2.01 does
+not purport to be complete and is qualified in its entirety by reference to the
+Merger Agreement, which is incorporated by reference as Exhibit 2.1 to this
+Current Report on Form 8-K and is incorporated herein by reference.
+
+ITEM 2.03. CREATION OF A DIRECT FINANCIAL OBLIGATION OR AN OBLIGATION UNDER AN
+OFF-BALANCE SHEET ARRANGEMENT OF A REGISTRANT.
+
+     On December 29, 2006, AT&T agreed to become a co-obligor on the $750
+million principal amount 7.500% Senior Notes due May 1, 2007 and on the $2
+billion principal amount 8.125% Senior Notes due May 1, 2012 originally issued
+by AT&T Wireless Services, Inc. and on which Cingular Wireless is also a
+co-obligor (the "Cingular Co-obligation").
+
+     On December 29, 2006, AT&T also agreed to unconditionally and irrevocably
+guarantee the payment of interest and principal for the $1.2 billion principal
+amount of floating rate notes of BellSouth due August 15, 2008 (the "BellSouth
+Guarantee"). AT&T has no current plans to materially change the corporate
+structures of BellSouth and Cingular.
+
+<PAGE>
+
+     The foregoing description of the Cingular Co-obligation contained in this
+Item 2.03 does not purport to be complete and is qualified in its entirety by
+reference to the Cingular Co-obligation and the underlying indenture, which are
+incorporated by reference as Exhibits 4.1 and 4.2, respectively, to this Current
+Report on Form 8-K and are incorporated herein by reference.
+
+     The foregoing description of the BellSouth Guarantee contained in this Item
+2.03 does not purport to be complete and is qualified in its entirety by
+reference to the BellSouth Guarantee, which is incorporated by reference as
+Exhibit 4.3 to this Current Report on Form 8-K and is incorporated herein by
+reference.
+
+ITEM 5.02. DEPARTURE OF DIRECTORS OR PRINCIPAL OFFICERS; ELECTION OF DIRECTORS;
+APPOINTMENT OF PRINCIPAL OFFICERS.
+
+     On December 29, 2006, the Board of Directors of AT&T increased the size of
+the board from 17 to 20 members and appointed Reuben V. Anderson, James H.
+Blanchard and James P. Kelly, each of whom previously served as a Director of
+BellSouth, as Directors of AT&T, effective as of December 29, 2006. The Board
+took this action pursuant to the terms of the Merger Agreement, which requires
+AT&T to appoint three members of the Board of Directors of BellSouth selected
+by mutual agreement of AT&T and BellSouth, to the Board of Directors of AT&T.
+
+     As of the time of the filing of this Report, Messrs. Anderson, Blanchard
+and Kelly had not been appointed to any committees of the Board of Directors
+of AT&T and AT&T had not determined to which committees, if any, Messrs.
+Anderson, Blanchard and Kelly may be appointed. AT&T will provide this
+information by filing an amendment to this Report within four business days
+after the information is determined or becomes available.
+
+     In addition, as of the time of the filing of this Report, AT&T had not yet
+determined whether any of Messrs. Anderson, Blanchard and Kelly, or any member
+of their respective immediate families, has or will have any material interest
+in any transaction with the Company or any of its subsidiaries that would
+require disclosure pursuant to Item 404(a) of Regulation S-K. AT&T has begun
+procedures to determine this information, which AT&T will provide by filing an
+amendment to this Report within four business days after any information
+requiring disclosure under this Item is determined or becomes available.
+
+ITEM 9.01 FINANCIAL STATEMENTS AND EXHIBITS.
+
+(a) Financial Statements of Businesses Acquired.
+
+     The audited consolidated balance sheets of BellSouth Corporation as of
+December 31, 2005 and December 31, 2004 and the consolidated statements of
+income, consolidated statements of cash flows and consolidated statements of
+shareholders' equity and comprehensive income of BellSouth Corporation for each
+of the three years in the period ended December 31, 2005, and the notes related
+thereto, are incorporated by reference to reference to AT&T Inc.'s Current
+Report on Form 8-K filed May 11, 2006 and attached as Exhibit 99.2 hereto.
+
+<PAGE>
+
+     The Report of Independent Registered Public Accounting Firm, issued by
+PricewaterhouseCoopers LLP (Atlanta, Georgia), dated February 27, 2006, relating
+to the BellSouth financial statements, management's assessment of the
+effectiveness of internal control over financial reporting and the effectiveness
+of internal control over financial reporting, is hereby incorporated by
+reference to Exhibit 99.2 of AT&T Inc.'s Current Report on Form 8-K filed May
+11, 2006 and attached as Exhibit 99.3 hereto.
+
+     The Report of Ernst & Young LLP, Independent Registered Public Accounting
+Firm, dated February 24, 2006, with respect to the consolidated financial
+statements of Cingular Wireless LLC, is hereby incorporated by reference to
+Exhibit 99.2 of AT&T Inc.'s Current Report on Form 8-K filed May 11, 2006 and
+attached as Exhibit 99.4 hereto.
+
+     The unaudited consolidated balance sheets of BellSouth Corporation as of
+September 30, 2006 and the consolidated statements of income, consolidated
+statements of cash flows and consolidated statements of shareholders' equity and
+comprehensive income of BellSouth Corporation for the period ended September 30,
+2006, and the notes related thereto, are incorporated by reference to AT&T
+Inc.'s Current Report on Form 8-K filed November 17, 2006 and attached as
+Exhibit 99.5 hereto.
+
+(b) Pro Forma Financial Information.
+
+     AT&T intends to file pro forma financial information under cover of Form
+8-K/A not later than 71 calendar days after the date that this Report is
+required to be filed.
+
+(d) Exhibits.
+
+The following exhibits are being filed herewith:
+
+<TABLE>
+<CAPTION>
+EXHIBIT
+ NUMBER                                 DESCRIPTION
+-------   ----------------------------------------------------------------------
+<S>       <C>
+2.1       Agreement and Plan of Merger, dated as of March 4, 2006, among
+          BellSouth Corporation, AT&T Inc., and ABC Consolidation Corp.
+          (incorporated by reference to Exhibit 2.1 to AT&T Inc.'s Current
+          Report on Form 8-K filed on March 6, 2006)
+
+4.1       Third Supplemental Indenture by and among New Cingular Wireless
+          Services, Inc. (f/k/a AT&T Wireless Services, Inc.), Cingular Wireless
+          LLC, Cingular Wireless II, LLC (f/k/a Cingular Wireless II, Inc.),
+          AT&T Inc, and U.S. Bank National Association, dated as of December 29,
+          2006, to the Indenture between AT&T Wireless Services, Inc. and U.S.
+          Bank National Association (as successor Trustee), dated as of April
+          11, 2002.
+
+4.2       Indenture between AT&T Wireless Services, Inc. and U.S. Bank National
+          Association (as successor Trustee), dated as of April 11, 2002
+          (incorporated
+</TABLE>
+
+<PAGE>
+
+<TABLE>
+<S>       <C>
+          by reference to Exhibit 4.3 of New Cingular Wireless Services, Inc.'s
+          (f/k/a AT&T Wireless Services, Inc.) Form 10-Q for the quarterly
+          period ended March 31, 2002).
+
+4.3       Guarantee of certain obligation of BellSouth Corporation
+
+23.1      Consent of PricewaterhouseCoopers LLP (Atlanta, Georgia), Independent
+          Registered Public Accounting Firm for BellSouth Corporation
+
+23.2      Consent of Ernst & Young LLP (Atlanta, Georgia), Independent
+          Registered Public Accounting Firm for Cingular Wireless LLC
+
+23.3      Consent of PricewaterhouseCoopers LLP (Seattle, Washington),
+          Independent Registered Public Accounting Firm for Omnipoint Facilities
+          Network II, LLC
+
+99.1      Letter from AT&T to the Federal Communications Commission, filed
+          December 28, 2006 (FCC Docket No. 06-74)
+
+99.2      The audited consolidated balance sheets of BellSouth Corporation as of
+          December 31, 2005 and December 31, 2004 and the consolidated
+          statements of income, consolidated statements of cash flows and
+          consolidated statements of shareholders' equity and comprehensive
+          income of BellSouth Corporation for each of the three years in the
+          period ended December 31, 2005, and the notes related thereto
+          (incorporated by reference to Exhibit 99.2 of AT&T Inc.'s Current
+          Report on Form 8-K filed May 11, 2006)
+
+99.3      The Report of Independent Registered Public Accounting Firm, issued by
+          PricewaterhouseCoopers LLP (Atlanta, Georgia), dated February 27,
+          2006, relating to the BellSouth financial statements, management's
+          assessment of the effectiveness of internal control over financial
+          reporting and the effectiveness of internal control over financial
+          reporting (incorporated by reference to Exhibit 99.2 of AT&T Inc.'s
+          Current Report on Form 8-K filed May 11, 2006)
+
+99.4      The Report of Ernst & Young LLP, Independent Registered Public
+          Accounting Firm, dated February 24, 2006, with respect to the
+          consolidated financial statements of Cingular Wireless LLC
+          (incorporated by reference to Exhibit 99.2 of AT&T Inc.'s Current
+          Report on Form 8-K filed May 11, 2006)
+
+99.5      The unaudited consolidated balance sheets of BellSouth Corporation as
+          of September 30, 2006 and the consolidated statements of income,
+          consolidated statements of cash flows and consolidated statements of
+          shareholders' equity and comprehensive income of BellSouth Corporation
+          for the period ended September 30, 2006, and the notes related thereto
+          (incorporated by reference to Exhibit 99.2 of AT&T Inc.'s Current
+          Report on Form 8-K filed November 17, 2006)
+
+
+</TABLE>
+
+<PAGE>
+
+                                    SIGNATURE
+
+     Pursuant to the requirements of the Securities Exchange Act of 1934, the
+registrant has duly caused this report to be signed on its behalf by the
+undersigned hereunto duly authorized.
+
+                                        AT&T INC.
+
+
+                                        By: /s/ James S. Kahan
+                                            ------------------------------------
+                                        Name: James S. Kahan
+                                        Title: Senior Executive Vice President--
+                                               Corporate Development
+
+Date: December 29, 2006
+
+<PAGE>
+
+                                  EXHIBIT INDEX
+
+<TABLE>
+<CAPTION>
+EXHIBIT
+ NUMBER                                 DESCRIPTION
+-------   ----------------------------------------------------------------------
+<S>       <C>
+2.1       Agreement and Plan of Merger, dated as of March 4, 2006, among
+          BellSouth Corporation, AT&T Inc., and ABC Consolidation Corp.
+          (incorporated by reference to Exhibit 2.1 to AT&T Inc.'s Current
+          Report on Form 8-K filed on March 6, 2006)
+
+4.1       Third Supplemental Indenture by and among New Cingular Wireless
+          Services, Inc. (f/k/a AT&T Wireless Services, Inc.), Cingular Wireless
+          LLC, Cingular Wireless II, LLC (f/k/a Cingular Wireless II, Inc.),
+          AT&T Inc, and U.S. Bank National Association, dated as of December 29,
+          2006,to the Indenture between AT&T Wireless Services, Inc. and U.S.
+          Bank National Association (as successor Trustee), dated as of April
+          11, 2002.
+
+4.2       Indenture between AT&T Wireless Services, Inc. and U.S. Bank National
+          Association (as successor Trustee), dated as of April 11, 2002
+          (incorporated by reference to Exhibit 4.3 of New Cingular Wireless
+          Services, Inc.'s (f/k/a AT&T Wireless Services, Inc.) Form 10-Q for
+          the quarterly period ended March 31, 2002).
+
+4.3       Guarantee of certain obligation of BellSouth Corporation
+
+23.1      Consent of PricewaterhouseCoopers LLP (Atlanta, Georgia), Independent
+          Registered Public Accounting Firm for BellSouth Corporation
+
+23.2      Consent of Ernst & Young LLP (Atlanta, Georgia), Independent
+          Registered Public Accounting Firm for Cingular Wireless LLC
+
+23.3      Consent of PricewaterhouseCoopers LLP (Seattle, Washington),
+          Independent Registered Public Accounting Firm for Omnipoint Facilities
+          Network II, LLC
+
+99.1      Letter from AT&T to the Federal Communications Commission, filed
+          December 28, 2006 (FCC Docket No. 06-74)
+
+99.2      The audited consolidated balance sheets of BellSouth Corporation as of
+          December 31, 2005 and December 31, 2004 and the consolidated
+          statements of income, consolidated statements of cash flows and
+          consolidated statements of shareholders' equity and comprehensive
+          income of BellSouth Corporation for each of the three years in the
+          period ended December 31, 2005, and the notes related thereto
+          (incorporated by reference to Exhibit 99.2 of AT&T Inc.'s Current
+          Report on Form 8-K filed May 11, 2006)
+
+99.3      The Report of Independent Registered Public Accounting Firm, issued by
+          PricewaterhouseCoopers LLP (Atlanta, Georgia), dated February 27,
+          2006, relating to the BellSouth financial statements, management's
+          assessment of the effectiveness of internal control over financial
+          reporting and the
+</TABLE>
+
+<PAGE>
+
+<TABLE>
+<S>       <C>
+          effectiveness of internal control over financial reporting
+          (incorporated by reference to Exhibit 99.2 of AT&T Inc.'s Current
+          Report on Form 8-K filed May 11, 2006)
+
+99.4      The Report of Ernst & Young LLP, Independent Registered Public
+          Accounting Firm, dated February 24, 2006, with respect to the
+          consolidated financial statements of Cingular Wireless LLC
+          (incorporated by reference to Exhibit 99.2 of AT&T Inc.'s Current
+          Report on Form 8-K filed May 11, 2006)
+
+99.5      The unaudited consolidated balance sheets of BellSouth Corporation as
+          of September 30, 2006 and the consolidated statements of income,
+          consolidated statements of cash flows and consolidated statements of
+          shareholders' equity and comprehensive income of BellSouth Corporation
+          for the period ended September 30, 2006, and the notes related thereto
+          (incorporated by reference to Exhibit 99.2 of AT&T Inc.'s Current
+          Report on Form 8-K filed November 17, 2006)
+
+</TABLE>
+
+</TEXT>
+</DOCUMENT>

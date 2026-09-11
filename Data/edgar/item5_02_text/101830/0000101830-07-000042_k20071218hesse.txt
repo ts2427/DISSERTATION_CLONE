@@ -1,0 +1,252 @@
+<DOCUMENT>
+<TYPE>8-K
+<SEQUENCE>1
+<FILENAME>k20071218hesse.txt
+<DESCRIPTION>FORM 8-K
+<TEXT>
+--------------------------------------------------------------------------------
+                                  UNITED STATES
+                       SECURITIES AND EXCHANGE COMMISSION
+                             Washington, D.C. 20549
+--------------------------------------------------------------------------------
+
+                                    FORM 8-K
+
+--------------------------------------------------------------------------------
+
+                                 CURRENT REPORT
+
+     Pursuant to Section 13 or 15(d) of the Securities Exchange Act of 1934
+
+      Date of Report (Date of earliest event reported) December 17, 2007
+
+--------------------------------------------------------------------------------
+
+                            SPRINT NEXTEL CORPORATION
+             (Exact name of Registrant as specified in its charter)
+
+--------------------------------------------------------------------------------
+
+
+         Kansas                       1-04721                 48-0457967
+(State of Incorporation)     (Commission File Number)      (I.R.S. Employer
+                                                          Identification No.)
+
+    2001 Edmund Halley Drive, Reston, Virginia             20191
+     (Address of principal executive offices)            (Zip Code)
+
+
+        Registrant's telephone number, including area code (703) 433-4000
+
+          (Former name or former address, if changed since last report)
+
+--------------------------------------------------------------------------------
+
+Check the appropriate box below if the Form 8-K filing is intended to
+simultaneously satisfy the filing obligation of the registrant under any of the
+following provisions:
+
+|_|   Written communications pursuant to Rule 425 under the Securities
+      Act (17 CFR 230.425)
+
+|_|   Soliciting material pursuant to Rule 14a-12 under the Exchange
+      Act (17 CFR 240.14a-12)
+
+|_|   Pre-commencement communications pursuant to Rule 14d-2(b) under the
+      Exchange Act (17 CFR 240.14d-2(b))
+
+|_|   Pre-commencement communications pursuant to Rule 13e-4(c) under the
+      Exchange Act (17 CFR 240.13e-4(c))
+
+--------------------------------------------------------------------------------
+
+<PAGE>
+
+--------------------------------------------------------------------------------
+
+Item 5.02. Departure of Directors or Certain Officers; Election of Directors;
+Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.
+
+On December 18, 2007, Sprint Nextel Corporation ("Sprint Nextel") announced that
+Daniel R. Hesse, 54, has been elected as a director and appointed President and
+Chief  Executive  Officer of Sprint  Nextel  effective  December  17,  2007 (the
+"Effective  Date").  The press release is filed as Exhibit 99.1 to this Form 8-K
+and is incorporated by reference herein.
+
+From May 2006 to the Effective Date, Mr. Hesse served as Chairman, President and
+Chief Executive Officer of Embarq Corporation. From June 2005 to May 2006, he
+served as Chief Executive Officer of Sprint Nextel's local telecommunications
+division. From March 2000 to June 2004, he served as Chairman, President and
+Chief Executive Officer of Terabeam Corp., a Seattle-based communications
+company. From 1997 until 2000, he served as President and Chief Executive
+Officer of AT&T Wireless Services, a division of AT&T.
+
+In connection with Embarq's agreement to release any claims that it may have
+against Sprint Nextel or Mr. Hesse with respect to Mr. Hesse's covenant not to
+compete with Embarq, Sprint Nextel and Embarq have agreed to resolve an
+arbitration proceeding related to the spin-off of Embarq, extend by three years
+the period of time that Embarq has limited rights with respect to certain Sprint
+Nextel patents, extend for one year certain pricing terms for voice wireless
+services provided by Sprint Nextel for resale by Embarq, lease terms related to
+ongoing negotiations for office space located in Overland Park to Embarq, and to
+refrain from soliciting or hiring for employment certain employees of Embarq,
+none of which will have a material impact on Sprint Nextel's financial position
+or results of operations.
+
+On December 17, 2007, Sprint Nextel entered into an employment agreement with
+Mr. Hesse (the "Agreement") with an initial term of 36 months. Under the terms
+of the Agreement, Mr. Hesse will join Sprint Nextel on the Effective Date. The
+Agreement provides for the following annual compensation:
+
+o        an annual base salary of $1,200,000;
+
+o        participation in Sprint Nextel's short-term incentive compensation
+         plan, with a targeted opportunity for 2008 equal to 170% of his annual
+         base salary, and a maximum award equal to 200% of his targeted
+         opportunity; and
+
+o        participation in Sprint Nextel's long-term incentive compensation plan,
+         with a targeted opportunity for 2008 valued at $10,000,000, in the form
+         of equity and/or cash-based awards as determined for other senior
+         executives.
+
+The Agreement states that Sprint Nextel will provide Mr. Hesse with following
+sign-on compensation:
+
+o        a $2,650,000 cash sign-on bonus;
+
+o        an option to purchase 3,275,000 shares of Sprint Nextel common stock
+         ("Sign-On Option Award"), the exercise price will be the market value
+         per share on the date of grant with respect to one million underlying
+         shares of the Sign-On Option Award, 120% of the market value per share
+         on the date of grant with respect to one million underlying shares of
+         the Sign-On Option Award, and 140% of the market value per share on the
+         date of grant with respect to the remaining underlying shares of the
+         Sign-On Option Award, all of which shall vest in equal annual
+         installments on each of the first three anniversaries of the date of
+         grant; and
+
+o        an award of RSUs with an aggregate value of $10,000,000 ("Sign-On RSU
+         Award"), which award shall vest in equal annual installments on each of
+         the first three anniversaries of the date of grant, with Mr. Hesse
+         being entitled to receive the shares underlying any vested portion of
+         the RSU seven months following his termination of employment with
+         Sprint Nextel.
+
+Under the Agreement, in the event that Mr. Hesse's employment is terminated by
+Sprint Nextel without cause (as defined in the Agreement), or Mr. Hesse
+terminates his employment for good reason (as defined in the Agreement), other
+than in connection with a change in control of Sprint Nextel:
+
+o        he will continue to receive his base salary for 24 months;
+
+o        he will receive a pro rata payment under the then-applicable short-term
+         incentive plan with respect to the portion of the fiscal year through
+         the date of termination of his employment;
+
+o        he will receive, with respect to the 24-month period following the date
+         of termination of his employment, payments under the then-existing
+         terms of the short-term incentive plan equal to the lesser of his
+         targeted opportunity as of the date of termination of his employment
+         and the payout determined by the Sprint Nextel Human Capital and
+         Compensation Committee based on actual performance of Sprint Nextel
+         compared to the targeted objectives under the plan;
+
+o        he will be entitled to continue to participate in certain benefit
+         plans; and
+
+o        the vesting of any unvested portion of the Sign-On Option Award will
+         accelerate and the restrictions with respect to any unvested portion of
+         the Sign-On RSU Award will lapse.
+
+Upon Mr. Hesse's death, the vesting of any unvested portion of the Sign-On
+Option Award will accelerate and the restrictions with respect to any unvested
+portion of the Sign-On RSU Award will lapse.
+
+In the event of Mr. Hesse's disability, he will continue to receive his base
+salary for the longer of 12 months or the applicable period under the Sprint
+Nextel long-term disability plan (reduced by any amounts paid under the plan),
+he will be entitled to continue to participate in certain benefit plans, and the
+vesting of any unvested portion of the Sign-On Option Award will accelerate and
+the
+
+<PAGE>
+
+restrictions with respect to any unvested portion of the Sign-On RSU Award
+will lapse.
+
+If, in connection with a change in control of Sprint Nextel, Mr. Hesse's
+employment is terminated without cause or Mr. Hesse terminates his employment
+for good reason during the 18-month period following a change in control
+(subject to certain exceptions), he is entitled to severance compensation and
+benefits pursuant to the terms of our Change in Control Severance Plan. In
+addition, pursuant to the terms of the Sign-On Option Award and Sign-On RSU
+Award, if (a) Mr. Hesse's employment is terminated without cause or Mr. Hesse
+terminates his employment for good reason in connection with a change in control
+of Sprint Nextel, or (b) to the extent that these awards are not assumed,
+converted or replaced with equivalent value awards by the entity resulting from
+a change in control of Sprint Nextel, the vesting of any unvested portion of the
+Sign-On Option Award will accelerate and the restrictions with respect to any
+unvested portion of the Sign-On RSU Award will lapse.
+
+For the 24-month period following the termination of Mr. Hesse's employment, he
+has agreed not to compete with Sprint Nextel or solicit employees or customers
+of Sprint Nextel. If Mr. Hesse breaches any of these obligations, he would
+forfeit his right to any severance payments and benefit to which he otherwise
+would be entitled.
+
+The Agreement is filed as Exhibit 10.1 to this Form 8-K and is incorporated by
+reference herein.
+
+
+Item 9.01 Financial Statements and Exhibits.
+
+(d) Exhibits
+
+The following exhibits are filed with this report:
+
+Exhibit No.         Description
+
+10.1                Employment Agreement, dated December 17, 2007,
+                    between Daniel R. Hesse and Sprint Nextel Corporation.
+
+99.1                Press Release Announcing Mr. Hesse's Appointment as
+                    President and Chief Executive Officer
+
+<PAGE>
+
+--------------------------------------------------------------------------------
+
+                                   SIGNATURES
+
+Pursuant to the requirements of the Securities Exchange Act of 1934, the
+registrant has duly caused this report to be signed on its behalf by the
+undersigned hereunto duly authorized.
+
+
+                                             SPRINT NEXTEL CORPORATION
+
+
+
+Date: December 19, 2007                      /s/ Richard A. Montfort
+                                             -----------------------
+                                       By:   Richard A. Montfort
+                                             Assistant Secretary
+
+<PAGE>
+
+
+                                  EXHIBIT INDEX
+
+
+Number         Exhibit
+
+  10.1         Employment Agreement, dated December 17, 2007, between
+               Daniel R. Hesse and Sprint Nextel Corporation.
+
+  99.1         Press Release Announcing Mr. Hesse's Appointment as President
+               and Chief Executive Officer
+
+
+</TEXT>
+</DOCUMENT>

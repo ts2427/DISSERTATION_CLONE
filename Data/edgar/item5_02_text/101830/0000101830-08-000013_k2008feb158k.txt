@@ -1,0 +1,147 @@
+<DOCUMENT>
+<TYPE>8-K
+<SEQUENCE>1
+<FILENAME>k2008feb158k.txt
+<DESCRIPTION>FORM 8-K
+<TEXT>
+--------------------------------------------------------------------------------
+
+                                  UNITED STATES
+                       SECURITIES AND EXCHANGE COMMISSION
+                             Washington, D.C. 20549
+
+--------------------------------------------------------------------------------
+
+                                    FORM 8-K
+
+--------------------------------------------------------------------------------
+
+                                 CURRENT REPORT
+
+     Pursuant to Section 13 or 15(d) of the Securities Exchange Act of 1934
+
+       Date of Report (Date of earliest event reported) February 15, 2008
+
+--------------------------------------------------------------------------------
+
+                            SPRINT NEXTEL CORPORATION
+             (Exact name of Registrant as specified in its charter)
+
+--------------------------------------------------------------------------------
+
+
+         Kansas                     1-04721                   48-0457967
+(State of Incorporation)    (Commission File Number)       (I.R.S. Employer
+                                                          Identification No.)
+
+
+      6200 Sprint Parkway, Overland Park, Kansas           66251
+       (Address of principal executive offices)         (Zip Code)
+
+
+        Registrant's telephone number, including area code (800) 829-0965
+
+                2001 Edmund Halley Drive, Reston, Virginia 20191
+          (Former name or former address, if changed since last report)
+
+--------------------------------------------------------------------------------
+
+Check the appropriate box below if the Form 8-K filing is intended to
+simultaneously satisfy the filing obligation of the registrant under any of the
+following provisions:
+
+|_|   Written communications pursuant to Rule 425 under the Securities
+      Act (17 CFR 230.425)
+
+|_|   Soliciting material pursuant to Rule 14a-12 under the Exchange
+      Act (17 CFR 240.14a-12)
+
+|_|   Pre-commencement communications pursuant to Rule 14d-2(b) under
+      the Exchange Act (17 CFR 240.14d-2(b))
+
+|_|   Pre-commencement communications pursuant to Rule 13e-4(c) under
+      the Exchange Act (17 CFR 240.13e-4(c))
+
+
+--------------------------------------------------------------------------------
+
+<PAGE>
+
+
+--------------------------------------------------------------------------------
+
+Item 1.01 Entry into a Material Definitive Agreement.
+
+Short-Term Incentive Plan Awards
+
+On February 11, 2008, the Human Capital and Compensation Committee (the
+"Committee") of the Board of Directors of Sprint Nextel Corporation (the
+"Company") established the performance objectives and other terms of the
+Company's Short-Term Incentive Plan for the first quarter 2008 for officers and
+other eligible employees of the Company (the "First Quarter 2008 STI Plan"). The
+First Quarter 2008 STI Plan provides for a payment of incentive compensation to
+officers and other eligible employees based on the achievement of the following
+specified performance objectives for the first quarter 2008: adjusted OIBDA
+(operating income plus depreciation, amortization and special items), weighted
+at 30%; volume of inbound customer calls to customer care, measured at 30%; a
+measure of retention of our post-paid wireless subscribers, which we refer to as
+post-paid churn, weighted at 20%; and net iDEN subscriber additions, weighted at
+20%. The HC&CC has established a short-term incentive plan only for the first
+quarter 2008, and the terms for any short-term incentive plan for remaining
+portion of 2008, including any performance objectives, will be determined at a
+future date.  The introduction of performance objectives for volume of inbound
+customer calls to customer care and net iDEN subscriber additions reflect our
+focus on reducing calls to care by removing the reasons customers call care and
+our commitment to enhancing Nextel Direct Connect subscriber performance.
+
+The award payment under the First Quarter 2008 STI Plan will be determined based
+on the Company's results using three variables: (1) one quarter of each
+individual's annual incentive target opportunity, which is based on a percentage
+of the individual's base salary; (2) Company performance compared with each
+performance objective; and (3) relative weightings for each performance
+objective. Each of the performance objectives will have a threshold, target and
+maximum level of payment opportunity, with the maximum payment opportunity equal
+to 200% of the individual's target opportunity. To calculate each incentive
+award amount, an eligible employee's incentive target opportunity will be
+multiplied by the weightings and the payout results for each performance
+objective.
+
+The actual incentive amounts paid under the First Quarter 2008 STI Plan will be
+based on the Company's actual results during the first quarter 2008 in relation
+to the established performance objectives, and these payments may be greater or
+less than the target amounts that have been established.
+
+Item 5.02 Departure of Directors or Certain Officers; Election of Directors;
+Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.
+
+(e) Paul Saleh, Sprint Nextel's former Chief Financial Officer, served as
+interim Chief Executive Officer from October 8, 2007 through December 16, 2007.
+In recognition of his service as interim Chief Executive Officer, Sprint
+Nextel will compensate Mr. Saleh with a lump sum payment of $250,000, pursuant
+to an amendment to Mr. Saleh's employment agreement.
+
+
+<PAGE>
+
+
+--------------------------------------------------------------------------------
+
+                                   SIGNATURES
+
+Pursuant to the requirements of the Securities Exchange Act of 1934, the
+registrant has duly caused this report to be signed on its behalf by the
+undersigned hereunto duly authorized.
+
+
+                                           SPRINT NEXTEL CORPORATION
+
+
+Date: February 15, 2008                    /s/ Richard A. Montfort
+                                               -----------------
+                                         By:   Richard A. Montfort
+                                               Assistant Secretary
+
+
+
+</TEXT>
+</DOCUMENT>
