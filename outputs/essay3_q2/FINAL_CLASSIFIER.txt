@@ -1,0 +1,15 @@
+FINAL CLASSIFIER — Essay 3 Query 2 (decision: Tim, 2026-09-11)
+
+Final classifier: scripts/195_essay3_q2_classifier_v2.py
+  commit 6f7be7a (committed alone, before the round-2 draw)
+  git blob ec3236471df71279531e0593304eb7b478b210b9
+  sha256 42a64e12883ce269814b884a5892ca75699185dbfec8d12f875e720b5a88a7c9
+Superseded: scripts/188_essay3_q2_classifier.py (v1; freeze commit d39bc6d; blob af2c97c).
+
+STOPPING RULE: no further revisions after round 2. Every post-round fix would require a new blind round;
+stopping here prevents open-ended tuning to the reference set. Remaining misses are documented as recall
+limitations (round 2: sheet 16 "would be leaving"; sheet 22 pay-agreement role change to Executive Advisor;
+sheet 29 interim-title implied departure). Against the reference codes (variant A), v2's executive-departure
+errors are false negatives only (precision 1.00 in round 2, 3/3; 1.00 in-sample in round 1, 29/29).
+Validation: round 1 (v1, 80 filings) and round 2 (v2, 30 filings) against Claude-coded blind reference codes;
+Tim did not hand-code. Adjudication (ADJUDICATION.xlsx) runs in parallel and does not change the classifier.

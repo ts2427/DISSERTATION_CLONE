@@ -1,0 +1,145 @@
+sample,outcome,anchor,window,version,group,n,v1_rate,v2_rate,flips_0_to_1,flips_1_to_0
+Q1 Essay 3 sample 340,exec_departure,rd,30,v2 primary (person-merged),treated,106,0.0472,0.0377,0,1
+Q1 Essay 3 sample 340,exec_departure,rd,30,v2 primary (person-merged),control,234,0.0385,0.0427,1,0
+Q1 Essay 3 sample 340,exec_departure,rd,30,v2 rs (restatement-dated),treated,106,0.0472,0.066,2,0
+Q1 Essay 3 sample 340,exec_departure,rd,30,v2 rs (restatement-dated),control,234,0.0385,0.0427,1,0
+Q1 Essay 3 sample 340,exec_departure,rd,90,v2 primary (person-merged),treated,106,0.1321,0.1132,1,3
+Q1 Essay 3 sample 340,exec_departure,rd,90,v2 primary (person-merged),control,234,0.1368,0.1581,5,0
+Q1 Essay 3 sample 340,exec_departure,rd,90,v2 rs (restatement-dated),treated,106,0.1321,0.1415,1,0
+Q1 Essay 3 sample 340,exec_departure,rd,90,v2 rs (restatement-dated),control,234,0.1368,0.1581,5,0
+Q1 Essay 3 sample 340,exec_departure,rd,180,v2 primary (person-merged),treated,106,0.3491,0.3208,1,4
+Q1 Essay 3 sample 340,exec_departure,rd,180,v2 primary (person-merged),control,234,0.2521,0.2479,5,6
+Q1 Essay 3 sample 340,exec_departure,rd,180,v2 rs (restatement-dated),treated,106,0.3491,0.3585,1,0
+Q1 Essay 3 sample 340,exec_departure,rd,180,v2 rs (restatement-dated),control,234,0.2521,0.2735,5,0
+Q1 Essay 3 sample 340,exec_departure,bd,30,v2 primary (person-merged),treated,106,0.0566,0.0566,0,0
+Q1 Essay 3 sample 340,exec_departure,bd,30,v2 primary (person-merged),control,234,0.0684,0.0641,1,2
+Q1 Essay 3 sample 340,exec_departure,bd,30,v2 rs (restatement-dated),treated,106,0.0566,0.0755,2,0
+Q1 Essay 3 sample 340,exec_departure,bd,30,v2 rs (restatement-dated),control,234,0.0684,0.0726,1,0
+Q1 Essay 3 sample 340,exec_departure,bd,90,v2 primary (person-merged),treated,106,0.1321,0.1226,1,2
+Q1 Essay 3 sample 340,exec_departure,bd,90,v2 primary (person-merged),control,234,0.1282,0.141,6,3
+Q1 Essay 3 sample 340,exec_departure,bd,90,v2 rs (restatement-dated),treated,106,0.1321,0.1415,1,0
+Q1 Essay 3 sample 340,exec_departure,bd,90,v2 rs (restatement-dated),control,234,0.1282,0.1538,6,0
+Q1 Essay 3 sample 340,exec_departure,bd,180,v2 primary (person-merged),treated,106,0.2453,0.2264,1,3
+Q1 Essay 3 sample 340,exec_departure,bd,180,v2 primary (person-merged),control,234,0.2393,0.235,6,7
+Q1 Essay 3 sample 340,exec_departure,bd,180,v2 rs (restatement-dated),treated,106,0.2453,0.2547,1,0
+Q1 Essay 3 sample 340,exec_departure,bd,180,v2 rs (restatement-dated),control,234,0.2393,0.265,6,0
+Q1 Essay 3 sample 340,ceo_departure,rd,30,v2 primary (person-merged),treated,106,0.0094,0.0,0,1
+Q1 Essay 3 sample 340,ceo_departure,rd,30,v2 primary (person-merged),control,234,0.0043,0.0043,0,0
+Q1 Essay 3 sample 340,ceo_departure,rd,30,v2 rs (restatement-dated),treated,106,0.0094,0.0283,2,0
+Q1 Essay 3 sample 340,ceo_departure,rd,30,v2 rs (restatement-dated),control,234,0.0043,0.0043,0,0
+Q1 Essay 3 sample 340,ceo_departure,rd,90,v2 primary (person-merged),treated,106,0.0472,0.0377,0,1
+Q1 Essay 3 sample 340,ceo_departure,rd,90,v2 primary (person-merged),control,234,0.0299,0.0299,0,0
+Q1 Essay 3 sample 340,ceo_departure,rd,90,v2 rs (restatement-dated),treated,106,0.0472,0.066,2,0
+Q1 Essay 3 sample 340,ceo_departure,rd,90,v2 rs (restatement-dated),control,234,0.0299,0.0299,0,0
+Q1 Essay 3 sample 340,ceo_departure,rd,180,v2 primary (person-merged),treated,106,0.0755,0.0755,2,2
+Q1 Essay 3 sample 340,ceo_departure,rd,180,v2 primary (person-merged),control,234,0.094,0.094,0,0
+Q1 Essay 3 sample 340,ceo_departure,rd,180,v2 rs (restatement-dated),treated,106,0.0755,0.0943,2,0
+Q1 Essay 3 sample 340,ceo_departure,rd,180,v2 rs (restatement-dated),control,234,0.094,0.094,0,0
+Q1 Essay 3 sample 340,ceo_departure,bd,30,v2 primary (person-merged),treated,106,0.0,0.0,0,0
+Q1 Essay 3 sample 340,ceo_departure,bd,30,v2 primary (person-merged),control,234,0.0256,0.0171,0,2
+Q1 Essay 3 sample 340,ceo_departure,bd,30,v2 rs (restatement-dated),treated,106,0.0,0.0189,2,0
+Q1 Essay 3 sample 340,ceo_departure,bd,30,v2 rs (restatement-dated),control,234,0.0256,0.0256,0,0
+Q1 Essay 3 sample 340,ceo_departure,bd,90,v2 primary (person-merged),treated,106,0.0189,0.0189,0,0
+Q1 Essay 3 sample 340,ceo_departure,bd,90,v2 primary (person-merged),control,234,0.0342,0.0256,0,2
+Q1 Essay 3 sample 340,ceo_departure,bd,90,v2 rs (restatement-dated),treated,106,0.0189,0.0377,2,0
+Q1 Essay 3 sample 340,ceo_departure,bd,90,v2 rs (restatement-dated),control,234,0.0342,0.0342,0,0
+Q1 Essay 3 sample 340,ceo_departure,bd,180,v2 primary (person-merged),treated,106,0.0472,0.0283,0,2
+Q1 Essay 3 sample 340,ceo_departure,bd,180,v2 primary (person-merged),control,234,0.0769,0.0684,0,2
+Q1 Essay 3 sample 340,ceo_departure,bd,180,v2 rs (restatement-dated),treated,106,0.0472,0.066,2,0
+Q1 Essay 3 sample 340,ceo_departure,bd,180,v2 rs (restatement-dated),control,234,0.0769,0.0769,0,0
+Q1 Essay 3 sample 340,director_departure,rd,30,v2 primary (person-merged),treated,106,0.1038,0.0755,0,3
+Q1 Essay 3 sample 340,director_departure,rd,30,v2 primary (person-merged),control,234,0.0085,0.0128,1,0
+Q1 Essay 3 sample 340,director_departure,rd,30,v2 rs (restatement-dated),treated,106,0.1038,0.0849,0,2
+Q1 Essay 3 sample 340,director_departure,rd,30,v2 rs (restatement-dated),control,234,0.0085,0.0128,1,0
+Q1 Essay 3 sample 340,director_departure,rd,90,v2 primary (person-merged),treated,106,0.1792,0.1698,0,1
+Q1 Essay 3 sample 340,director_departure,rd,90,v2 primary (person-merged),control,234,0.0556,0.0684,3,0
+Q1 Essay 3 sample 340,director_departure,rd,90,v2 rs (restatement-dated),treated,106,0.1792,0.1792,0,0
+Q1 Essay 3 sample 340,director_departure,rd,90,v2 rs (restatement-dated),control,234,0.0556,0.0684,3,0
+Q1 Essay 3 sample 340,director_departure,rd,180,v2 primary (person-merged),treated,106,0.2075,0.1981,0,1
+Q1 Essay 3 sample 340,director_departure,rd,180,v2 primary (person-merged),control,234,0.1624,0.1795,6,2
+Q1 Essay 3 sample 340,director_departure,rd,180,v2 rs (restatement-dated),treated,106,0.2075,0.2075,0,0
+Q1 Essay 3 sample 340,director_departure,rd,180,v2 rs (restatement-dated),control,234,0.1624,0.188,6,0
+Q1 Essay 3 sample 340,director_departure,bd,30,v2 primary (person-merged),treated,106,0.066,0.0472,0,2
+Q1 Essay 3 sample 340,director_departure,bd,30,v2 primary (person-merged),control,234,0.0171,0.0214,1,0
+Q1 Essay 3 sample 340,director_departure,bd,30,v2 rs (restatement-dated),treated,106,0.066,0.0472,0,2
+Q1 Essay 3 sample 340,director_departure,bd,30,v2 rs (restatement-dated),control,234,0.0171,0.0214,1,0
+Q1 Essay 3 sample 340,director_departure,bd,90,v2 primary (person-merged),treated,106,0.1887,0.1887,0,0
+Q1 Essay 3 sample 340,director_departure,bd,90,v2 primary (person-merged),control,234,0.0812,0.0983,4,0
+Q1 Essay 3 sample 340,director_departure,bd,90,v2 rs (restatement-dated),treated,106,0.1887,0.1887,0,0
+Q1 Essay 3 sample 340,director_departure,bd,90,v2 rs (restatement-dated),control,234,0.0812,0.0983,4,0
+Q1 Essay 3 sample 340,director_departure,bd,180,v2 primary (person-merged),treated,106,0.2358,0.2358,0,0
+Q1 Essay 3 sample 340,director_departure,bd,180,v2 primary (person-merged),control,234,0.1667,0.1795,3,0
+Q1 Essay 3 sample 340,director_departure,bd,180,v2 rs (restatement-dated),treated,106,0.2358,0.2358,0,0
+Q1 Essay 3 sample 340,director_departure,bd,180,v2 rs (restatement-dated),control,234,0.1667,0.1795,3,0
+Q2 scope 341,exec_departure,rd,30,v2 primary (person-merged),treated,107,0.0467,0.0374,0,1
+Q2 scope 341,exec_departure,rd,30,v2 primary (person-merged),control,234,0.0385,0.0427,1,0
+Q2 scope 341,exec_departure,rd,30,v2 rs (restatement-dated),treated,107,0.0467,0.0654,2,0
+Q2 scope 341,exec_departure,rd,30,v2 rs (restatement-dated),control,234,0.0385,0.0427,1,0
+Q2 scope 341,exec_departure,rd,90,v2 primary (person-merged),treated,107,0.1308,0.1121,1,3
+Q2 scope 341,exec_departure,rd,90,v2 primary (person-merged),control,234,0.1368,0.1581,5,0
+Q2 scope 341,exec_departure,rd,90,v2 rs (restatement-dated),treated,107,0.1308,0.1402,1,0
+Q2 scope 341,exec_departure,rd,90,v2 rs (restatement-dated),control,234,0.1368,0.1581,5,0
+Q2 scope 341,exec_departure,rd,180,v2 primary (person-merged),treated,107,0.3458,0.3178,1,4
+Q2 scope 341,exec_departure,rd,180,v2 primary (person-merged),control,234,0.2521,0.2479,5,6
+Q2 scope 341,exec_departure,rd,180,v2 rs (restatement-dated),treated,107,0.3458,0.3551,1,0
+Q2 scope 341,exec_departure,rd,180,v2 rs (restatement-dated),control,234,0.2521,0.2735,5,0
+Q2 scope 341,exec_departure,bd,30,v2 primary (person-merged),treated,107,0.0561,0.0561,0,0
+Q2 scope 341,exec_departure,bd,30,v2 primary (person-merged),control,234,0.0684,0.0641,1,2
+Q2 scope 341,exec_departure,bd,30,v2 rs (restatement-dated),treated,107,0.0561,0.0748,2,0
+Q2 scope 341,exec_departure,bd,30,v2 rs (restatement-dated),control,234,0.0684,0.0726,1,0
+Q2 scope 341,exec_departure,bd,90,v2 primary (person-merged),treated,107,0.1308,0.1215,1,2
+Q2 scope 341,exec_departure,bd,90,v2 primary (person-merged),control,234,0.1282,0.141,6,3
+Q2 scope 341,exec_departure,bd,90,v2 rs (restatement-dated),treated,107,0.1308,0.1402,1,0
+Q2 scope 341,exec_departure,bd,90,v2 rs (restatement-dated),control,234,0.1282,0.1538,6,0
+Q2 scope 341,exec_departure,bd,180,v2 primary (person-merged),treated,107,0.243,0.2243,1,3
+Q2 scope 341,exec_departure,bd,180,v2 primary (person-merged),control,234,0.2393,0.235,6,7
+Q2 scope 341,exec_departure,bd,180,v2 rs (restatement-dated),treated,107,0.243,0.2523,1,0
+Q2 scope 341,exec_departure,bd,180,v2 rs (restatement-dated),control,234,0.2393,0.265,6,0
+Q2 scope 341,ceo_departure,rd,30,v2 primary (person-merged),treated,107,0.0093,0.0,0,1
+Q2 scope 341,ceo_departure,rd,30,v2 primary (person-merged),control,234,0.0043,0.0043,0,0
+Q2 scope 341,ceo_departure,rd,30,v2 rs (restatement-dated),treated,107,0.0093,0.028,2,0
+Q2 scope 341,ceo_departure,rd,30,v2 rs (restatement-dated),control,234,0.0043,0.0043,0,0
+Q2 scope 341,ceo_departure,rd,90,v2 primary (person-merged),treated,107,0.0467,0.0374,0,1
+Q2 scope 341,ceo_departure,rd,90,v2 primary (person-merged),control,234,0.0299,0.0299,0,0
+Q2 scope 341,ceo_departure,rd,90,v2 rs (restatement-dated),treated,107,0.0467,0.0654,2,0
+Q2 scope 341,ceo_departure,rd,90,v2 rs (restatement-dated),control,234,0.0299,0.0299,0,0
+Q2 scope 341,ceo_departure,rd,180,v2 primary (person-merged),treated,107,0.0748,0.0748,2,2
+Q2 scope 341,ceo_departure,rd,180,v2 primary (person-merged),control,234,0.094,0.094,0,0
+Q2 scope 341,ceo_departure,rd,180,v2 rs (restatement-dated),treated,107,0.0748,0.0935,2,0
+Q2 scope 341,ceo_departure,rd,180,v2 rs (restatement-dated),control,234,0.094,0.094,0,0
+Q2 scope 341,ceo_departure,bd,30,v2 primary (person-merged),treated,107,0.0,0.0,0,0
+Q2 scope 341,ceo_departure,bd,30,v2 primary (person-merged),control,234,0.0256,0.0171,0,2
+Q2 scope 341,ceo_departure,bd,30,v2 rs (restatement-dated),treated,107,0.0,0.0187,2,0
+Q2 scope 341,ceo_departure,bd,30,v2 rs (restatement-dated),control,234,0.0256,0.0256,0,0
+Q2 scope 341,ceo_departure,bd,90,v2 primary (person-merged),treated,107,0.0187,0.0187,0,0
+Q2 scope 341,ceo_departure,bd,90,v2 primary (person-merged),control,234,0.0342,0.0256,0,2
+Q2 scope 341,ceo_departure,bd,90,v2 rs (restatement-dated),treated,107,0.0187,0.0374,2,0
+Q2 scope 341,ceo_departure,bd,90,v2 rs (restatement-dated),control,234,0.0342,0.0342,0,0
+Q2 scope 341,ceo_departure,bd,180,v2 primary (person-merged),treated,107,0.0467,0.028,0,2
+Q2 scope 341,ceo_departure,bd,180,v2 primary (person-merged),control,234,0.0769,0.0684,0,2
+Q2 scope 341,ceo_departure,bd,180,v2 rs (restatement-dated),treated,107,0.0467,0.0654,2,0
+Q2 scope 341,ceo_departure,bd,180,v2 rs (restatement-dated),control,234,0.0769,0.0769,0,0
+Q2 scope 341,director_departure,rd,30,v2 primary (person-merged),treated,107,0.1028,0.0748,0,3
+Q2 scope 341,director_departure,rd,30,v2 primary (person-merged),control,234,0.0085,0.0128,1,0
+Q2 scope 341,director_departure,rd,30,v2 rs (restatement-dated),treated,107,0.1028,0.0841,0,2
+Q2 scope 341,director_departure,rd,30,v2 rs (restatement-dated),control,234,0.0085,0.0128,1,0
+Q2 scope 341,director_departure,rd,90,v2 primary (person-merged),treated,107,0.1776,0.1682,0,1
+Q2 scope 341,director_departure,rd,90,v2 primary (person-merged),control,234,0.0556,0.0684,3,0
+Q2 scope 341,director_departure,rd,90,v2 rs (restatement-dated),treated,107,0.1776,0.1776,0,0
+Q2 scope 341,director_departure,rd,90,v2 rs (restatement-dated),control,234,0.0556,0.0684,3,0
+Q2 scope 341,director_departure,rd,180,v2 primary (person-merged),treated,107,0.2056,0.1963,0,1
+Q2 scope 341,director_departure,rd,180,v2 primary (person-merged),control,234,0.1624,0.1795,6,2
+Q2 scope 341,director_departure,rd,180,v2 rs (restatement-dated),treated,107,0.2056,0.2056,0,0
+Q2 scope 341,director_departure,rd,180,v2 rs (restatement-dated),control,234,0.1624,0.188,6,0
+Q2 scope 341,director_departure,bd,30,v2 primary (person-merged),treated,107,0.0654,0.0467,0,2
+Q2 scope 341,director_departure,bd,30,v2 primary (person-merged),control,234,0.0171,0.0214,1,0
+Q2 scope 341,director_departure,bd,30,v2 rs (restatement-dated),treated,107,0.0654,0.0467,0,2
+Q2 scope 341,director_departure,bd,30,v2 rs (restatement-dated),control,234,0.0171,0.0214,1,0
+Q2 scope 341,director_departure,bd,90,v2 primary (person-merged),treated,107,0.1869,0.1869,0,0
+Q2 scope 341,director_departure,bd,90,v2 primary (person-merged),control,234,0.0812,0.0983,4,0
+Q2 scope 341,director_departure,bd,90,v2 rs (restatement-dated),treated,107,0.1869,0.1869,0,0
+Q2 scope 341,director_departure,bd,90,v2 rs (restatement-dated),control,234,0.0812,0.0983,4,0
+Q2 scope 341,director_departure,bd,180,v2 primary (person-merged),treated,107,0.2336,0.2336,0,0
+Q2 scope 341,director_departure,bd,180,v2 primary (person-merged),control,234,0.1667,0.1795,3,0
+Q2 scope 341,director_departure,bd,180,v2 rs (restatement-dated),treated,107,0.2336,0.2336,0,0
+Q2 scope 341,director_departure,bd,180,v2 rs (restatement-dated),control,234,0.1667,0.1795,3,0

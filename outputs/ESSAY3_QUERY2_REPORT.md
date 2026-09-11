@@ -518,3 +518,112 @@ Remaining in-sample disagreements:
 1. report both rounds;
 2. run v2 on all 1,078 filings and report how many outcome flags change at 30/90/180 days, treated vs control;
 3. then Parts E–I.
+
+---
+
+## Round 2 — classifier v2 vs round-2 reference codes (NEW, scripts/197; `197_r2.log`, `d3_r2_agreement.csv`)
+
+**Commit order.** The history proves each step came before the next:
+1. `6f7be7a`: classifier v2 alone.
+2. `edbf670`: the round-2 sheet, with v2's answers in `validation_classifier_HIDDEN_R2.csv`. The answers were already committed here, so no separate commit was needed.
+3. `5ec8f9e`: the round-2 reference codes, in their own commit.
+
+**The reference codes** are Claude's, coded blind to v2's answers, from the sheet text first, under the round-1 rules plus Tim's four rulings. A verification pass on uncertain rows followed. **Tim did not hand-code.**
+- **File of record:** `VALIDATION_SHEET_R2_CLAUDE_RATER.xlsx` (sha256 `96fa041e…`), copied unchanged from Downloads. It matches the pasted text with 0 cell differences.
+- **Sheet 9's pre-announced code:** verified Y is primary; blind "unclear" is secondary.
+
+**Round 2 contains 5 executive departures and 0 CEO departures** (reference codes). **CEO-departure validation therefore rests on round 1, which informed v2's fixes.**
+
+Exact 95% CIs are Clopper–Pearson. Variant A compares the reference codes as given with v2's any-mention codes. Variant B compares restated reference departures, recoded N, with v2's new-only codes.
+
+| Field | n | Agreement | κ | Reference positives | v2 positives | TP / FP / FN | Precision [95% CI] | Recall [95% CI] |
+|---|---|---|---|---|---|---|---|---|
+| Executive departure (A) | 29¹ | .931 | .713 | 5 | 3 | 3 / 0 / 2 | 1.00 [.29, 1.00] | .60 [.15, .95] |
+| Executive departure (B) | 29¹ | .897 | .514 | 4 | 3 | 2 / 1 / 2 | .67 [.09, .99] | .50 [.07, .93] |
+| CEO departure (A and B) | 30 | 1.000 | n/a | 0 | 0 | 0 / 0 / 0 | n/a | n/a |
+| Director-only departure | 30 | 1.000 | 1.000 | 9 | 9 | 9 / 0 / 0 | 1.00 [.66, 1.00] | 1.00 [.66, 1.00] |
+| Pre-announced, **primary** (sheet 9 = Y) | 30 | .867 | .718 | 12 | 8 | 8 / 0 / 4 | 1.00 [.63, 1.00] | .67 [.35, .90] |
+| Pre-announced, secondary (sheet 9 = unclear) | 30 | .900 | .792 | 11 | 8 | 8 / 0 / 3 | 1.00 [.63, 1.00] | .73 [.39, .94] |
+
+¹ Sheet 29 has reference executive = "unclear" and is dropped from that field.
+
+**Round-2 disagreements.** Causes were diagnosed on the text; all are in `ADJUDICATION.xlsx`, tab round2_v2.
+- **Sheet 16 (Sprint, Crull, Chief Strategy Officer).** Missed. The text reads "it was determined that Kevin Crull … **would be leaving** the Company effective December 31, 2018". v2 knows "will be leaving" but not "would be leaving". The reference coder also flagged his executive-officer status for adjudication.
+- **Sheet 22 (Charter, Ellen, Senior EVP).** Missed. The text has no departure verb: Ellen "has agreed to remain employed by the Company as Senior Executive Vice President through November 30, 2023 and then as Executive Advisor". This is a pay-agreement role change. The reference coder counts it under ruling 2; v2's rules do not reach it.
+- **Sheet 9 (Charter, Rutledge).** v2 says pre-announced "unclear", which matches the blind reference code. The verified primary code is Y.
+- **Sheet 24 (AT&T, directors resigning at a transaction close).** Pre-announced: the reference says Y; v2 says N.
+
+**Sheet 29** (Sysco, interim Chief Accounting Officer Stone, succeeded by Johnson; reference executive = "unclear") is the recall test of the implied-departure rule, which fires on 0 of the 1,078 filings. **v2's call: executive N, CEO N, director-only N, implied-succession flag 0, action "appointment".** The implied-departure rule, as specified ("successor to / in succession to <Name>"), does not capture "will succeed Mr. Stone", so the implied departure goes unrecorded.
+
+**Both rounds together:**
+
+| Round | Classifier | Reference codes | Executive κ | Executive recall | CEO κ | Director-only κ | Pre-announced κ |
+|---|---|---|---|---|---|---|---|
+| 1 (80 filings) | v1, frozen `d39bc6d` | Claude, blind, R1 | .803 (.876 without the T-Mobile 7) | .79 | .707 (primary; .787 with sheet 31 blind) | .858 | .698 |
+| 1, in-sample (NOT a validation) | v2 | same | 1.000 | 1.00 | .902 | .955 | .902 |
+| 2 (30 filings) | v2, `6f7be7a` | Claude, blind, R2 | .713 | .60 (3/5) | no positives | 1.000 | .718 |
+
+## ADJUDICATION.xlsx (NEW, scripts/197)
+
+No earlier ADJUDICATION.xlsx existed in the repository or on disk. This one was created for this step, with these tabs:
+- **round1_v1:** the 17 round-1 disagreements between v1 and the reference codes;
+- **round2_v2:** the 5 round-2 disputes, including sheet 29;
+- **flagged_by_reference:** the 2 rows the reference coder marked "candidate for adjudication" (round 1, sheet 57 Schwartz; round 2, sheet 16 Crull).
+
+Every row has blank adjudicated_* columns, with the classifier's and the reference coder's codes side by side.
+
+## Outcome-flag changes, classifier v1 → v2 (all 1,078 filings; `e_flag_changes_v1_v2.csv`)
+
+v2 was re-run on all 1,078 filings; it reproduced its committed outputs byte for byte. Below: the Query 1 Essay 3 sample (340; 106 treated events, 234 control at this level), executive departure, **notification anchor**. Each cell reads "v1 rate → v2 rate (flips 0→1 / 1→0)".
+
+| Window | v2 primary, one departure per person: treated | v2 primary: control | v2 restatement-dated (rs): treated | rs: control |
+|---|---|---|---|---|
+| 30 | .047 → .038 (0 / 1) | .038 → .043 (1 / 0) | .047 → .066 (2 / 0) | .038 → .043 (1 / 0) |
+| 90 | .132 → .113 (1 / 3) | .137 → .158 (5 / 0) | .132 → .142 (1 / 0) | .137 → .158 (5 / 0) |
+| 180 | .349 → .321 (1 / 4) | .252 → .248 (5 / 6) | .349 → .358 (1 / 0) | .252 → .274 (5 / 0) |
+
+**On the breach anchor**, at 180 days: primary treated .245 → .226 (1 / 3) and control .239 → .235 (6 / 7); rs treated .245 → .255 (1 / 0) and control .239 → .265 (6 / 0).
+
+**CEO departure, notification anchor, 180 days:** primary treated .075 → .075 (2 / 2), control .094 → .094 (0 / 0); rs treated .075 → .094 (2 / 0).
+
+**Director-only departure, notification anchor, 180 days:** primary treated .208 → .198 (0 / 1), control .162 → .180 (6 / 2).
+
+The any-5.02 flags are identical under v1 and v2 at every window and anchor. Every row, including the 341-event scope and the 30/90-day CEO and director cells, is in `e_flag_changes_v1_v2.csv`.
+
+## The November 2019 T-Mobile filing naming Carter (0001193125-19-294093; filed 2019-11-18; items 5.02, 7.01, 9.01)
+
+Verbatim from the Item 5.02 section:
+- "In addition, (i) on November 15, 2019, T-Mobile adopted a third amendment to the amended and restated employment agreement, dated as of December 20, 2017, with J. Braxton Carter, the Company's Executive Vice President and Chief Financial Officer (the "Carter Amendment") …"
+- "The Carter Amendment amends Mr. Carter's employment agreement to (i) extend the term of Mr. Carter's employment thereunder through July 1, 2020 (the "Expiration Date") and (ii) clarify that Mr. Carter's employment with T-Mobile will automatically terminate upon the expiration of the employment term. The Carter Amendment provides that, during the remainder of his employment term, Mr. Carter shall continue to (i) serve as Executive Vice President and Chief Financial Officer of the Company, (ii) receive the same base salary as currently in effect (i.e., $950,000 per year) and (iii) be eligible to participate in employee benefit plans maintained by the Company … Except as otherwise determined by T-Mobile, Mr. Carter will not be eligible to receive STI awards or grants of LTI awards after December 31, 2019."
+- The same filing: "John Legere, the current CEO, will cease to serve as CEO of T-Mobile effective as of April 30, 2020, upon the conclusion of his current employment agreement …"
+
+Under ruling (1), both departures date to this filing, which precedes the 2019-11-26 event's breach date and its reported date (2020-03-02).
+
+## FINAL CLASSIFIER AND STOPPING RULE (Tim, 2026-09-11)
+
+**v2 is the final classifier:** `scripts/195_essay3_q2_classifier_v2.py`, commit `6f7be7a`, git blob `ec3236471df71279531e0593304eb7b478b210b9`. See `outputs/essay3_q2/FINAL_CLASSIFIER.txt`.
+
+**Stopping rule: no further revisions after round 2.** Every fix made after seeing a round needs another blind round. Without a stopping point, validation never ends and the classifier ends up tuned to the reference set.
+
+**Remaining misses are documented as recall limitations, by name:**
+- round 2, sheet 16 (Sprint, Crull): "would be leaving" (a tense variant);
+- round 2, sheet 22 (Charter, Ellen): a job change to "Executive Advisor" set in an employment agreement, with no departure verb;
+- round 2, sheet 29 (Sysco, Stone): an interim-title implied departure.
+
+**Direction of error.** Against the reference codes (restated departures counted, variant A), v2 made **no false-positive executive-departure calls in either round**: round 2 precision is 1.00 (3/3); round 1 is 1.00 (29/29, in-sample). Its executive-departure errors are false negatives only. Stated exactly:
+- Under variant B (restatements recoded N), round-2 precision is .67. v2's new-only code counts Rutledge's departure, which the reference treats as a restatement.
+- The frozen v1's round-1 precision was .958; its ServiceNow false positive was fixed in v2.
+
+If misses fall equally on treated and control events, they shrink the estimated treated–control difference toward zero and cannot manufacture one. **That is an assumption, tested below by recall by treatment status.** Adjudication (`ADJUDICATION.xlsx`) runs in parallel and does not block estimation.
+
+**STOP (validation).**
+
+Committed in this step: `5ec8f9e` (round-2 reference codes).
+
+Not yet committed:
+- scripts/197;
+- `d3_r2_agreement.csv`, `d3_r2_disagreements.csv`;
+- `ADJUDICATION.xlsx`;
+- `e_flag_changes_v1_v2.csv`;
+- the 197 logs;
+- this report section.

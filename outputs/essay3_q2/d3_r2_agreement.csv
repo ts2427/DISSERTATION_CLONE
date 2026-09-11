@@ -1,0 +1,8 @@
+field,n,agreement,kappa,ref_positives,clf_positives,tp,fp,fn,precision,precision_ci95,recall,recall_ci95
+exec departure (A: any),29,0.931,0.7129,5,3,3,0,2,1.0,"[0.2924, 1.0]",0.6,"[0.1466, 0.9473]"
+exec departure (B: new only),29,0.8966,0.514,4,3,2,1,2,0.6667,"[0.0943, 0.9916]",0.5,"[0.0676, 0.9324]"
+CEO departure (A: any),30,1.0,,0,0,0,0,0,,n/a (no clf positives),,n/a (no ref positives)
+CEO departure (B: new only),30,1.0,,0,0,0,0,0,,n/a (no clf positives),,n/a (no ref positives)
+director-only departure,30,1.0,1.0,9,9,9,0,0,1.0,"[0.6637, 1.0]",1.0,"[0.6637, 1.0]"
+"pre-announced (sheet 9 verified Y, PRIMARY)",30,0.8667,0.7183,12,8,8,0,4,1.0,"[0.6306, 1.0]",0.6667,"[0.3489, 0.9008]"
+"pre-announced (sheet 9 blind unclear, SECONDARY)",30,0.9,0.7921,11,8,8,0,3,1.0,"[0.6306, 1.0]",0.7273,"[0.3903, 0.9398]"
