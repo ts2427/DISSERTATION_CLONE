@@ -1,0 +1,4 @@
+window,treated_events,control_events,treated_n,control_n,estimated,reason
+30,0,1,107,231,False,fewer than 10 CEO departures in at least one group; counts only
+90,4,7,107,231,False,fewer than 10 CEO departures in at least one group; counts only
+180,8,22,107,231,False,fewer than 10 CEO departures in at least one group; counts only

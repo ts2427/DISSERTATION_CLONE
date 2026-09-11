@@ -711,10 +711,272 @@ The prior 12-month market-adjusted return (reported_date anchor; 339 of the 341 
 
 Committed in this step: `5ec8f9e` (round-2 reference codes).
 
-Not yet committed:
-- scripts/197;
-- `d3_r2_agreement.csv`, `d3_r2_disagreements.csv`;
-- `ADJUDICATION.xlsx`;
-- `e_flag_changes_v1_v2.csv`;
-- the 197 logs;
-- this report section.
+Commits that followed:
+- `6bd21a8`: scripts/197, `d3_r2_*`, `ADJUDICATION.xlsx`, `e_flag_changes_v1_v2.csv`, the stopping rule.
+- `762a4b9`: Part E, the recall check, the audit sheet and its hidden answers.
+- `8e18c4e`: the audit reference codes, in their own commit.
+
+---
+
+# STAGE 2 — RECALL AUDIT, ESTIMATION (F), T-MOBILE CASE (G6), PIPELINE (H), TESTS (I)
+
+Order of the work:
+1. The differential-recall condition fired.
+2. Tim chose "Audit recall, then estimate".
+3. The audit reference codes were committed alone as `8e18c4e`, after `762a4b9`.
+4. Scoring and estimation followed, in the committed order: F1, F4, E (above), F2–F3, F5–F6, G6 and the timeline, H, I.
+
+Every number below is an emitted value, quoted from the log file and line named. All computations are NEW.
+- **Sample level.** The analysis sample is N = 338 events: 107 treated and 231 control, with G = 81 parent CIKs, 12 of them treated.
+- **Terms.** "Organizations" means parent CIKs.
+- **Classifier.** Every outcome comes from the FINAL classifier v2 (`6f7be7a`): one departure per person within a parent CIK, dated to its earliest disclosing filing.
+
+## Recall audit (NEW, scripts/201; `201_audit.log`; tab `audit_v2` in `ADJUDICATION.xlsx`)
+
+**Provenance.** The reference codes are Claude's, from a separate session. They were coded blind to v2's answers (hidden file committed in `762a4b9`) and to the strata, and a blind verification pass followed. **Tim did not hand-code.**
+
+**Integrity.** File of record: `VALIDATION_SHEET_AUDIT_CLAUDE_RATER.xlsx`, sha256 `ee58191e…`. It matches the pasted text with "0 cell differences" (201_audit.log:5).
+
+**Scoring.**
+- The verified (main) columns are PRIMARY and the `blind_*` columns are SECONDARY.
+- 'unclear' rows are left out of the primary statistics. Executive departure has 3 (sheets 17, 24, 55); CEO departure has 1 (sheet 75) (201_audit.log:6–7).
+- A sensitivity scores 'unclear' as Y.
+
+**By treatment stratum**: executive departure under variant A (a restatement counts as Y), and CEO departure (201_audit.log:29–44). All intervals are Clopper–Pearson.
+
+| Field | Scoring | Stratum | n | ref Y | v2 Y | TP | FP | FN | Precision [95% CI] | Recall [95% CI] |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Exec departure | PRIMARY | treated | 38 | 19 | 16 | 16 | 0 | 3 | 1.000 [.794, 1.000] | **.842 [.604, .966]** |
+| Exec departure | PRIMARY | control | 39 | 16 | 13 | 12 | 1 | 4 | .923 [.640, .998] | **.750 [.476, .927]** |
+| Exec departure | SECONDARY (blind) | treated | 38 | 19 | 16 | 16 | 0 | 3 | 1.000 | .842 [.604, .966] |
+| Exec departure | SECONDARY (blind) | control | 37 | 14 | 13 | 12 | 1 | 2 | .923 | .857 [.572, .982] |
+| Exec departure | unclear → Y | treated | 40 | 21 | 16 | 16 | 0 | 5 | 1.000 | .762 [.528, .918] |
+| Exec departure | unclear → Y | control | 40 | 17 | 13 | 12 | 1 | 5 | .923 | .706 [.440, .897] |
+| CEO departure | PRIMARY | treated | 39 | 4 | 4 | 2 | 2 | 2 | .500 [.068, .932] | .500 [.068, .932] |
+| CEO departure | PRIMARY | control | 40 | 3 | 3 | 2 | 1 | 1 | .667 [.094, .992] | .667 [.094, .992] |
+| CEO departure | unclear → Y | treated | 40 | 5 | 4 | 2 | 2 | 3 | .500 | .400 [.053, .853] |
+
+Overall, PRIMARY (201_audit.log:13, 18):
+- Executive departure: κ .7874, precision .9655, recall .8000 [.631, .916].
+- CEO departure: κ .5298, precision and recall both .5714.
+
+Under the committed plan, **recall does not run lower for treated events**. Treated recall .842 is at or above control .750, and the two intervals overlap almost entirely. The round-2 lean toward carriers is not confirmed.
+
+The CEO field is weak in both strata. Segment and subsidiary CEOs cause false positives: sheets 48, 57 and 71. Titles moving to Executive Chairman cause misses: sheet 13. This is why F5 reports counts only.
+
+**Sheet 3 (Carnival 2022-04-27, control) is a structural, exhibit-only miss** (201_audit.log:122).
+- The whole Item 5.02 text (340 characters) says the transitions are "described in greater detail in the attached press release included as Exhibit 99.1."
+- The departure (Donald leaving as President and CEO) appears only in the exhibit, and v2 reads only the Item 5.02 text.
+
+**Exhibit-only candidates** are counted by a heuristic: a short Item 5.02 text that points to an exhibit or press release and has no departure language. The counts are unverified (201_audit.log:123–124):
+- audit sample: treated 2/40, control 4/40 (sheets 3, 19, 30, 31, 50, 80);
+- all 1,078 filings: **control 89/694 (12.8%), treated 22/384 (5.7%).**
+
+Controls lean on exhibits more often. So if the exhibit channel is systematic, v2 under-counts control departures more than treated ones. That would push the treated–control gap upward, not toward zero.
+
+**Sheet 75 (T-Mobile 2018-04-30, 0001104659-18-028086)** (201_audit.log:127–140).
+- **v2's call:** exec departure Y, CEO departure N. Its person rows are:
+  - John J. Legere (President; "Mr. Sievert will succeed Mr. Legere as President upon ratification by the T-Mobile board of directors");
+  - Michael Sievert (COO). This row is a person-level false positive: the sentence describes severance terms, not a departure.
+- **Reference:** exec Y, CEO 'unclear'.
+- **Deduplication:** it gives the 2018-04-30 filing its **own** Legere event (the President title; exec group, is_ceo 0). That event is separate from the Legere CEO-departure event first dated **2019-11-18 (0001193125-19-294093)**, because the two are 567 days apart, beyond the 540-day merge window.
+- **Neither v2 nor the deduplication treats the 2018 filing as the first disclosure of Legere's CEO departure.** That first disclosure is 2019-11-18.
+
+## F1 — PRIMARY: executive departure, LPM, notification anchor (NEW, scripts/202; `202_estimation.log:3–8`; `f1_ladder.csv`)
+
+**Specification.** The outcome is an executive-officer 5.02(b) departure in (t0, t0 + w], with t0 = reported_date. The regressor of interest is treatment. Controls are:
+- the prior 12-month market-adjusted return;
+- the F2 baseline departure rate;
+- the committed covariates.
+
+**Inference.** Clustering is by parent CIK (G = 81; 12 treated). The inference ladder is ported from Essay 2 script 165.
+
+| Window | Coef | HC3 p | CV1 p | CV3 SE | CV3 p | CV3 95% CI | WCR p | WCR 95% CI | MDE80 | Mean T / C |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 30d | **+0.0168** | .4703 | .3950 | 0.0329 | **.6118** | [−0.0487, +0.0823] | **.4924** | [−0.0336, +0.0621] | **0.0934** | .037 / .043 |
+| 90d | **−0.0169** | .7212 | .7698 | 0.1029 | **.8701** | [−0.2217, +0.1879] | **.8154** | [−0.1517, +0.1270] | **0.2918** | .112 / .160 |
+| 180d | **+0.0434** | .5158 | .6070 | 0.1144 | **.7052** | [−0.1842, +0.2711] | **.6474** | [−0.1563, +0.2352] | **0.3245** | .318 / .251 |
+
+**Cluster diagnostics.** The Carter–Schnepel–Steigerwald G* on the treatment partial leverage is 23.6, and the cluster-size CV is 2.267.
+
+**Wild bootstrap.** WCR is the restricted wild cluster bootstrap: Rademacher weights, B = 99,999 for p; the CI is by inversion with B = 9,999.
+
+**Logit AMEs (corroboration):** 30d +0.0238 (p .4362); 90d −0.0225 (p .6944); 180d +0.0392 (p .6475) (202_estimation.log:8).
+
+**Reading.** No window rejects on any rung. The 30d MDE (9.3pp) is more than twice the control mean (4.3%). At 90d and 180d the MDEs (29.2pp and 32.5pp) exceed the control means (16.0% and 25.1%). The design can rule out only very large effects.
+
+## F4 — PRE-DISCLOSURE PLACEBO (NEW; `202_estimation.log:13`; `f4_placebo.csv`)
+
+The placebo outcome is an executive departure in (t0 − 180d, t0], under the primary specification.
+- coef **−0.0658**; HC3 p .2539;
+- CV3 p **.5281**, CI [−0.2724, +0.1408];
+- WCR p **.4060**, CI [−0.2188, +0.0962];
+- means: treated .224, control .203.
+
+## E — outcome-data requirement, ledger, anchor diagnostic
+
+See Part E above (ledger N = 338). The anchor diagnostic is .121 in both groups.
+
+## F2 — baseline executive-departure rate, [t0 − 730d, t0 − 181d], per year (NEW; `202_estimation.log:18–20`; `f2_baseline.csv`)
+
+| Group | n | Mean/yr | SD | Median | p75 | Max | Share zero | Mean count |
+|---|---|---|---|---|---|---|---|---|
+| treated | 107 | 0.9861 | 0.8855 | 0.6636 | 1.3273 | 3.9818 | .2523 | 1.486 |
+| control | 231 | 0.9366 | 1.0054 | 0.6636 | 1.3273 | 3.9818 | .3463 | 1.411 |
+
+## F3 — sensitivities (NEW; `202_estimation.log:25–59`; `f3_sensitivities.csv`, `f3_sic2_cells.csv`, `f3_loco.csv`)
+
+**27 sensitivities:** nine specifications, each at three windows. All are null. The smallest CV3 p is **.1532**, at 180d, recall-corrected with treated recall at its CI low (.604) and control recall at its CI high (.927): coef +0.2225, WCR p .1230 (202_estimation.log:53).
+
+| Sensitivity | 30d coef (CV3 p) | 90d coef (CV3 p) | 180d coef (CV3 p) |
+|---|---|---|---|
+| Year FE (reported year) | +0.0219 (.5092) | −0.0002 (.9984) | +0.0636 (.4832) |
+| Two-digit SIC FE | +0.0404 (.3907) | +0.0868 (.6038) | +0.1494 (.5508) |
+| breach_date anchor (N = 337) | −0.0057 (.8962) | −0.0635 (.4627) | −0.0334 (.7885) |
+| Excluding pre-announced departures | +0.0334 (.1990) | +0.0273 (.7575) | +0.0932 (.4110) |
+| Excluding the F2 baseline control | +0.0167 (.5735) | −0.0181 (.8554) | +0.0445 (.6706) |
+| Restatement-dated outcome (ruling-1 sensitivity) | +0.0491 (.4163) | +0.0155 (.8982) | +0.0161 (.9261) |
+| Recall-corrected, audit point estimates (r_T .842, r_C .750) | +0.0177 (.6817) | −0.0387 (.7755) | +0.0135 (.9264) |
+| Recall-corrected, r_T at CI low / r_C at CI high | +0.0366 (.3779) | +0.0457 (.7105) | +0.2225 (.1532) |
+| Recall-corrected, r_T at CI high / r_C at CI low | +0.0009 (.9884) | −0.1535 (.4572) | −0.2333 (.2444) |
+
+**SIC FE caveat.** Only two SIC2 cells hold treated events: SIC 48 (102 treated / 24 control) and SIC 73 (5 / 114) (202_estimation.log:26). Under SIC FE, treatment is identified almost entirely from SIC 48's 24 controls.
+
+**Leave-one-parent-CIK-out** (202_estimation.log:57–59):
+- 30d: range [−0.0022, +0.0388]; sign flips 1/81.
+- 90d: range [−0.0492, +0.0675]; sign flips 2/81.
+- 180d: range [−0.0196, +0.0942]; sign flips 1/81.
+- **Dropping T-Mobile (1283699) flips the sign at 30d (−0.0022) and 180d (−0.0196), and is the largest move at 180d.** Dropping Sprint gives +0.0109, −0.0167 and +0.0386.
+
+## F5 — CEO-only departures; F6 — director-only departures (counts; NEW; `202_estimation.log:64–71`)
+
+| Window | CEO treated | CEO control | Director-only treated | Director-only control |
+|---|---|---|---|---|
+| 30d | 0 | 1 | 8 | 3 |
+| 90d | 4 | 7 | 18 | 15 |
+| 180d | 8 | 22 | 21 | 43 |
+
+- **F5 (secondary outcome) was not estimated:** "fewer than 10 CEO departures in at least one group; counts only". The audit's CEO precision and recall of .571 add a second reason.
+- **F6 is descriptive only** (decision L1). Denominators are 107 treated and 231 control events.
+
+## G6 — T-Mobile executive departures within 180 days of NOTIFICATION (NEW, scripts/203; `203_case.log`; `g6_case_table.csv`, `g6_restatement_dated.csv`)
+
+**Scope.** 34 T-Mobile breach events for parent CIK 1283699. Of these, 25 are in the analysis sample and 9 are pre-rule or outside it; none of the 9 has a departure in its window. Departures are v2 exec departure events in (rd, rd + 180], each dated to its first disclosing filing. Flags come from that filing.
+
+| Departure (first filing) | Title | T-Mobile events whose window contains it | Pre-announced | v2 flags | Retirement / transaction flag? |
+|---|---|---|---|---|---|
+| Gary A. King, 2016-02-19 (0001193125-16-470124) | EVP and CIO | 3 (2015-09-14, 2015-10-01, 2015-11-04) | N | termination, severance_release | **no** |
+| David A. Miller, 2021-09-16 (0001193125-21-275230) | EVP, General Counsel and Secretary | 6 (2021-02-20 → 2021-08-26) | N | retirement | **yes** (retirement) |
+| Neville Ray, 2023-02-13 (0001193125-23-035719) | President, Technology | 1 (2022-11-25) | N | retirement, health, severance_release | **yes** (retirement) |
+| Peter Ewens, 2023-09-08 (0001193125-23-231377) | EVP, Corporate Strategy & Development | 3 (2023-02-01, 2023-02-24, 2023-04-28) | N | retirement, health, severance_release | **yes** (retirement) |
+
+- **Counts:**
+  - Event–departure pairs: 13; distinct departures: 4. Pairs flagged pre-announced 0, retirement 10, transaction 0. Pairs carrying any of the three: **10 of 13** (203_case.log:66).
+  - **Distinct departures carrying any of the three: 3 of 4** (203_case.log:67). All three are retirement flags; none is pre-announced and none transaction.
+- **The "health" flag** appears to come from benefit-continuation language ("health and dental benefit coverage"), not an illness. It is not among the three flags the query asks about.
+- **Affiliation** (per `g3_director_roster`): none of the four is a Deutsche Telekom or SoftBank designee. The parsed rosters list directors only, so this column tells us nothing about officers.
+- **Verbatim, from the first filings:**
+  - King: "On February 16, 2016, T-Mobile US, Inc. (the "Company") and Gary A. King, Executive Vice President and Chief Information Officer, agreed that Mr. King will terminate his employment with the Company effect[ive …]". This filing has no EX-99 (203_case.log).
+  - Miller: "On September 10, 2021, David A. Miller, Executive Vice President, General Counsel and Secretary of T-Mobile US, Inc. (the "Company") notified the Company that he will retire from the Company effective April 1, 2022."
+  - Ray: "The Company and Mr. Ray have agreed that Mr. Ray's retirement date will be on or about October 1, 2023."
+
+### Legere and Carter — the 2019-11-18 filing (0001193125-19-294093; items 5.02, 7.01, 9.01)
+
+**Legere**, verbatim:
+> "…announced that G. Michael Sievert, age 50, has been appointed as Chief Executive Officer ("CEO") of T-Mobile, effective as of May 1, 2020. John Legere, the current CEO, will cease to serve as CEO of T-Mobile effective as of April 30, 2020, upon the conclusion of his current employment agreement with T-Mobile. Mr. Legere will continue to serve as CEO of T-Mobile and as a member of the Board through such date, and will continue to serve as a member of the Board thereafter."
+
+**Carter**, verbatim:
+> "…on November 15, 2019, T-Mobile adopted a third amendment to the amended and restated employment agreement, dated as of December 20, 2017, with J. Braxton Carter, the Company's Executive Vice President and Chief Financial Officer (the "Carter Amendment") … The Carter Amendment amends Mr. Carter's employment agreement to (i) extend the term of Mr. Carter's employment thereunder through July 1, 2020 (the "Expiration Date") and (ii) clarify that Mr. Carter's employment with T-Mobile will automatically terminate upon the expiration of the employment term."
+
+**v2 dates both departures to this filing, 2019-11-18.**
+- Legere: exec event, is_ceo 1. Later filings 0001193125-20-093622 (2020-04-01) and 0001193125-20-119230 (2020-04-24) restate it.
+- Carter: exec event. Later filing 0001140361-20-014081 (2020-06-17) restates it.
+- Timing against the 2019-11-26 event (203_case.log:107–108):
+  - The Sievert employment agreement (2019-11-15) is −108 days from reported_date (2020-03-02) and −11 days from breach_date.
+  - The 8-K (2019-11-18) is −105 days from reported_date and −8 days from breach_date.
+- **Legere and Carter are therefore NOT in G6 under the primary rules.** Both were announced before the breach occurred and before notification. They fall in the F4 placebo window, (t0 − 180d, t0], for the 2019-11-26 event and also for the 2020-04-02 and 2020-04-15 events.
+- **Under the restatement-dated sensitivity** (`g6_restatement_dated.csv`; 11 additions, 203_case.log:68):
+  - Legere enters at +30d (2020-04-01) for the 2019-11-26 event.
+  - Carter enters at +107d (2020-06-17), and also for the April 2020 events.
+- **The 2020-04-01 EX-99.1** (`d886127dex991.htm`) calls it the "long-planned Chief Executive Officer transition from John Legere to Mike Sievert", completed "ahead of schedule" with the merger's close (203_case.log:97).
+
+### T-Mobile timeline (`tmobile_timeline.csv`; 173 dated rows, 203_case.log:113)
+
+| Row type | Rows |
+|---|---|
+| Breach occurrence (PRC) | 34 |
+| Public notification (PRC reported_date) | 34 |
+| 10-Q charge/settlement/recovery | 25 |
+| Director departure (v2, first disclosure) | 16 |
+| Proxy: first committee cyber/privacy mention | 15 |
+| Proxy: controlled-company status | 14 |
+| Exec departure (v2, first disclosure) | 11 |
+| 10-K charge/settlement/recovery | 10 |
+| Proxy CD&A: pay metric adjusted for the August 2021 cyberattack | 5 |
+| Incident 8-K (7.01/8.01) | 5 |
+| 10-K Item 1C: named security role and oversight | 3 |
+| Exec CEO departure (v2, first disclosure) | 1 |
+
+## H — pipeline hygiene (NEW edits; `outputs/RETIREMENT_LEDGER.md`)
+
+**Removed from `run_all.py` (commented out with reasons):**
+- 91m, and its `critical_keys` entry;
+- 91, 91b, 91c, 91e, 91f, 91g, 91h, 91j, 91k;
+- 102;
+- 91_mediation.
+
+**Other run_all.py changes:**
+- The legacy Essay 3 outputs are commented out of `verify_outputs`, and the Query 2 outputs are added.
+- The docstring and banners mark 16.71pp, 14.52pp and the 7/28 H6 figures as RETIRED.
+- New category "ESSAY 3 — QUERY 2 CHAIN", in order 187 → 195 → 199 → 202 → 190 → 191 → 203.
+  - 202 asserts against `constants_essay3_q2.json` (202:312).
+  - 199 asserts that its helper reproduces v2 (199:189).
+  - 187 asserts the fixed draws (187:175).
+  - 195 is frozen and not edited.
+
+**Hardcoded values retired:**
+- Script 96: `turnover_prob_increase = 0.053` is now NaN, so the turnover costs print nan.
+- Script 97: Table E and Figure 3 (the hardcoded quartile values) are gated off.
+- Script 161: line 68.
+- The 14.52 strings in the four legacy appendix builders.
+
+**Script 46 stays in run_all** (parking lot).
+
+**Not run:** run_all and script 158. The edited scripts pass `py_compile`.
+
+## I — test ledger and Benjamini–Hochberg (NEW; `202_estimation.log:76–82`; `i_tests.csv`)
+
+The new Essay 3 code runs **31 hypothesis tests**:
+- 3 primary (F1);
+- 1 placebo (F4);
+- 27 sensitivities (F3).
+
+Not counted, as descriptive or corroborating: the logit AMEs, F2, F5/F6 counts, and leave-one-out.
+
+BH adjustment is within each family, on CV3 p:
+
+| Family | Test | CV3 p | WCR p | BH p |
+|---|---|---|---|---|
+| primary H6 | F1 30d | .6118 | .4924 | .8701 |
+| primary H6 | F1 90d | .8701 | .8154 | .8701 |
+| primary H6 | F1 180d | .7052 | .6474 | .8701 |
+| placebo | F4 | .5281 | .4060 | .5281 |
+| sensitivity (27) | min raw .1532 | — | — | min BH .9984 |
+
+**No test rejects, raw or adjusted.** The Essay 3 constants are in `outputs/essay3_q2/constants_essay3_q2.json`; `constants_v3.json` is untouched.
+
+---
+
+## Answers
+
+1. **At each window, is executive departure higher for treated events, under the CV3 and wild-bootstrap rungs, and what is the MDE?** No window shows it.
+   - 30d: +0.0168, CV3 p .6118, WCR p .4924, MDE80 0.0934.
+   - 90d: −0.0169, CV3 p .8701, WCR p .8154, MDE80 0.2918.
+   - 180d: +0.0434, CV3 p .7052, WCR p .6474, MDE80 0.3245.
+   - These are 338 events: 107 treated across 12 parent CIKs, 81 parent-CIK clusters in all.
+
+2. **Does the pre-disclosure placebo show the same treated–control gap?** No. The placebo coefficient is −0.0658 (CV3 p .5281, WCR p .4060; means .224 vs .203). It is no gap and of opposite sign to the 30d and 180d estimates, so it neither supports nor undermines a disclosure effect that F1 did not find.
+
+3. **How many T-Mobile executive departures within 180 days of notification carry a pre-announced, retirement, or transaction flag, out of how many total?**
+   - **3 of 4** distinct departures (Miller, Ray, Ewens: all retirement flags, none pre-announced or transaction). **10 of 13** event–departure pairs.
+   - Legere and Carter are outside the count because the 2019-11-18 filing disclosed both before the 2019-11-26 breach and its 2020-03-02 notification.

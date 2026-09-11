@@ -162,14 +162,14 @@ for label, market_cap in [
 
 print(f"\n[Step 3/4] Calculating executive turnover costs...")
 
-# From Essay 3: timing affects executive turnover probability
-# Need to extract coefficient from your results
-# For now, use reported finding: ~5.3pp increase in turnover with immediate disclosure
-turnover_prob_increase = 0.053  # 5.3 percentage points
+# RETIRED 2026-09-11 (Essay 3 Query 2 Part H): the hardcoded 0.053 (+5.3pp) had no computed source and was
+# retired in the 7/28 audit; the Query 2 estimate (outputs/ESSAY3_QUERY2_REPORT.md) is a null that does not
+# support a turnover cost. Set to NaN so every turnover-cost figure below prints as nan rather than a number.
+turnover_prob_increase = float('nan')  # RETIRED: was 0.053 (no computed source)
 
-print("\nEXECUTIVE TURNOVER COST - GOVERNANCE DISRUPTION")
+print("\nEXECUTIVE TURNOVER COST - GOVERNANCE DISRUPTION  [RETIRED 2026-09-11 — no computed effect; values print as nan]")
 print("-" * 80)
-print(f"Disclosure timing effect on executive turnover: +{turnover_prob_increase*100:.1f}pp")
+print(f"Disclosure timing effect on executive turnover: {turnover_prob_increase*100:.1f}pp (RETIRED)")
 print()
 
 # Executive turnover costs (from governance literature)
@@ -416,7 +416,8 @@ borrowing costs.
 
 C. EXECUTIVE TURNOVER COST (Governance Disruption)
 
-Disclosure timing accelerates executive departures (+5.3 percentage points):
+[RETIRED 2026-09-11] The former "+5.3 percentage points" had no computed source. The Essay 3
+Query 2 estimate is null (outputs/ESSAY3_QUERY2_REPORT.md); the turnover-cost lines below are nan:
 
 Expected cost per breach (from governance literature):
 • Direct costs: ${direct_cost_low/1e6:.1f}M - ${direct_cost_high/1e6:.1f}M

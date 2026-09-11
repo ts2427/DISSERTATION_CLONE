@@ -1,0 +1,84 @@
+
+====================================================================================================
+F1 — PRIMARY: LPM, notification anchor (N=338; treated 107; parent CIKs 81, treated parent CIKs 12)
+====================================================================================================
+  30d: coef +0.0168 | HC3 p 0.4703 | CV1 p 0.3950 | CV3 SE 0.0329 p 0.6118 CI [-0.0487, +0.0823] | WCR p 0.4924 CI [-0.0336, +0.0621] | G 81 G1 12 G* 23.6 CV 2.267 | MDE80 0.0934 | means T 0.037 C 0.043
+  90d: coef -0.0169 | HC3 p 0.7212 | CV1 p 0.7698 | CV3 SE 0.1029 p 0.8701 CI [-0.2217, +0.1879] | WCR p 0.8154 CI [-0.1517, +0.1270] | G 81 G1 12 G* 23.6 CV 2.267 | MDE80 0.2918 | means T 0.112 C 0.160
+  180d: coef +0.0434 | HC3 p 0.5158 | CV1 p 0.6070 | CV3 SE 0.1144 p 0.7052 CI [-0.1842, +0.2711] | WCR p 0.6474 CI [-0.1563, +0.2352] | G 81 G1 12 G* 23.6 CV 2.267 | MDE80 0.3245 | means T 0.318 C 0.251
+  Logit AME (cluster-robust, corroboration): 30d +0.0238 (SE 0.0306, p 0.4362); 90d -0.0225 (SE 0.0573, p 0.6944); 180d +0.0392 (SE 0.0857, p 0.6475)
+
+====================================================================================================
+F4 — PLACEBO: executive departure in (t0 - 180d, t0], primary specification
+====================================================================================================
+  coef -0.0658 | HC3 p 0.2539 | CV3 p 0.5281 CI [-0.2724, +0.1408] | WCR p 0.4060 CI [-0.2188, +0.0962] | means T 0.224 C 0.203
+
+====================================================================================================
+F2 — baseline executive-departure rate [t0 - 730d, t0 - 181d], per year
+====================================================================================================
+  group   n  mean_rate_py     sd  median    p75    max  share_zero  mean_count
+treated 107        0.9861 0.8855  0.6636 1.3273 3.9818      0.2523       1.486
+control 231        0.9366 1.0054  0.6636 1.3273 3.9818      0.3463       1.411
+
+====================================================================================================
+F3 — SENSITIVITIES (one row per window; CV3 inference, WCR p with B = 9,999)
+====================================================================================================
+  Audit recall (exec, primary): treated 0.842 [0.604, 0.966], control 0.750 [0.476, 0.927]
+  SIC2 cells containing treated events: SIC 48: 102 treated / 24 control; SIC 73: 5 treated / 114 control
+ window                                                                            sensitivity   n    coef  se_cv3  p_cv3  ci_cv3_lo  ci_cv3_hi  p_wcr
+     30                                                                year FE (reported year) 338  0.0219  0.0331 0.5092    -0.0439     0.0878 0.2989
+     30                                                                       two-digit SIC FE 338  0.0404  0.0468 0.3907    -0.0528     0.1336 0.2337
+     30                                                                     breach_date anchor 337 -0.0057  0.0437 0.8962    -0.0927     0.0812 0.8799
+     30                                                     excluding pre-announced departures 338  0.0334  0.0258 0.1990    -0.0179     0.0848 0.2031
+     30                                                      excluding the F2 baseline control 338  0.0167  0.0296 0.5735    -0.0422     0.0757 0.4859
+     30                                                         restatement-dated outcome (rs) 338  0.0491  0.0601 0.4163    -0.0705     0.1687 0.4979
+     30                         recall-corrected, audit point estimates (r_T=0.842, r_C=0.750) 338  0.0177  0.0429 0.6817    -0.0678     0.1031 0.5623
+     30 recall-corrected, treated recall at CI low / control at CI high (r_T=0.604, r_C=0.927) 338  0.0366  0.0413 0.3779    -0.0456     0.1189 0.3329
+     30 recall-corrected, treated recall at CI high / control at CI low (r_T=0.966, r_C=0.476) 338  0.0009  0.0650 0.9884    -0.1284     0.1303 0.9825
+     90                                                                year FE (reported year) 338 -0.0002  0.1054 0.9984    -0.2099     0.2095 0.9979
+     90                                                                       two-digit SIC FE 338  0.0868  0.1667 0.6038    -0.2449     0.4185 0.5216
+     90                                                                     breach_date anchor 337 -0.0635  0.0860 0.4627    -0.2347     0.1077 0.3412
+     90                                                     excluding pre-announced departures 338  0.0273  0.0880 0.7575    -0.1478     0.2023 0.6626
+     90                                                      excluding the F2 baseline control 338 -0.0181  0.0989 0.8554    -0.2149     0.1787 0.8235
+     90                                                         restatement-dated outcome (rs) 338  0.0155  0.1204 0.8982    -0.2242     0.2551 0.8647
+     90                         recall-corrected, audit point estimates (r_T=0.842, r_C=0.750) 338 -0.0387  0.1351 0.7755    -0.3076     0.2302 0.6820
+     90 recall-corrected, treated recall at CI low / control at CI high (r_T=0.604, r_C=0.927) 338  0.0457  0.1227 0.7105    -0.1985     0.2899 0.6123
+     90 recall-corrected, treated recall at CI high / control at CI low (r_T=0.966, r_C=0.476) 338 -0.1535  0.2055 0.4572    -0.5625     0.2555 0.2862
+    180                                                                year FE (reported year) 338  0.0636  0.0903 0.4832    -0.1160     0.2432 0.3899
+    180                                                                       two-digit SIC FE 338  0.1494  0.2493 0.5508    -0.3468     0.6455 0.4848
+    180                                                                     breach_date anchor 337 -0.0334  0.1241 0.7885    -0.2805     0.2137 0.7457
+    180                                                     excluding pre-announced departures 338  0.0932  0.1128 0.4110    -0.1313     0.3177 0.3585
+    180                                                      excluding the F2 baseline control 338  0.0445  0.1043 0.6706    -0.1630     0.2521 0.6313
+    180                                                         restatement-dated outcome (rs) 338  0.0161  0.1728 0.9261    -0.3278     0.3600 0.9036
+    180                         recall-corrected, audit point estimates (r_T=0.842, r_C=0.750) 338  0.0135  0.1458 0.9264    -0.2767     0.3037 0.9106
+    180 recall-corrected, treated recall at CI low / control at CI high (r_T=0.604, r_C=0.927) 338  0.2225  0.1543 0.1532    -0.0846     0.5296 0.1230
+    180 recall-corrected, treated recall at CI high / control at CI low (r_T=0.966, r_C=0.476) 338 -0.2333  0.1989 0.2444    -0.6291     0.1626 0.1460
+
+  Leave-one-parent-CIK-out (from the CV3 jackknife):
+  30d: full +0.0168; range [-0.0022, +0.0388]; sign flips 1/81; without T-Mobile -0.0022; without Sprint +0.0109; largest move: deleting 1136893 -> +0.0388
+  90d: full -0.0169; range [-0.0492, +0.0675]; sign flips 2/81; without T-Mobile -0.0492; without Sprint -0.0167; largest move: deleting 1136893 -> +0.0675
+  180d: full +0.0434; range [-0.0196, +0.0942]; sign flips 1/81; without T-Mobile -0.0196; without Sprint +0.0386; largest move: deleting 1283699 -> -0.0196
+
+====================================================================================================
+F5 — CEO-only departures; F6 — director-only departures (counts)
+====================================================================================================
+ window  treated_events  control_events  treated_n  control_n  estimated                                                          reason
+     30               0               1        107        231      False fewer than 10 CEO departures in at least one group; counts only
+     90               4               7        107        231      False fewer than 10 CEO departures in at least one group; counts only
+    180               8              22        107        231      False fewer than 10 CEO departures in at least one group; counts only
+ window  treated_events  control_events
+     30               8               3
+     90              18              15
+    180              21              43
+
+====================================================================================================
+I — TEST LEDGER and Benjamini-Hochberg within families (CV3 p-values)
+====================================================================================================
+Hypothesis tests in the new Essay 3 code: 31 (sensitivities 27, primary H6 3, placebo 1). Descriptive/corroborating, not counted: logit AMEs (3), F2 distribution, F5/F6 counts, leave-one-out.
+    family                               test      p  p_wcr   p_bh
+primary H6              F1 exec departure 30d 0.6118 0.4924 0.8701
+primary H6              F1 exec departure 90d 0.8701 0.8154 0.8701
+primary H6             F1 exec departure 180d 0.7052 0.6474 0.8701
+   placebo F4 pre-notification exec departure 0.5281 0.4060 0.5281
+Sensitivity family: min raw CV3 p 0.1532; min BH-adjusted 0.9984
+
+Baseline constants_essay3_q2.json WRITTEN (later runs assert against it)

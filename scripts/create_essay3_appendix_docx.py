@@ -194,7 +194,7 @@ def create_appendix():
                 run.font.size = Pt(10)
 
     data = [
-        ['FCC (logit)', '0.8313', '0.2352', '< 0.001 ***', '14.52', '0.0887'],
+        ['FCC (logit)', '0.8313', '0.2352', '< 0.001 ***', '14.52 [RETIRED 2026-09-11]', '0.0887'],
     ]
 
     for row_data in data:
@@ -208,7 +208,7 @@ def create_appendix():
     interp = doc.add_paragraph()
     interp_run = interp.add_run('Interpretation: ')
     interp_run.font.bold = True
-    interp.add_run('Strong first stage. FCC regulation increases probability of immediate disclosure by 14.52 percentage points. Behavioral treatment effect is large and significant, satisfying the first condition of quasi-experimental design.')
+    interp.add_run('[RETIRED 2026-09-11: the 14.52 percentage-point first stage has no computed source in the current chain; see outputs/ESSAY3_QUERY1_REPORT.md C1.] Strong first stage. FCC regulation increases probability of immediate disclosure by 14.52 percentage points. Behavioral treatment effect is large and significant, satisfying the first condition of quasi-experimental design.')
     for run in interp.runs:
         run.font.size = Pt(10)
 

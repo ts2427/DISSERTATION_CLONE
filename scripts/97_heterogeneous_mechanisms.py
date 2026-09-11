@@ -287,11 +287,15 @@ for quartile_label in size_quartile_labels:
 # SECTION 5: EXECUTIVE TURNOVER HETEROGENEITY
 # ============================================================================
 
+# RETIRED 2026-09-11 (Essay 3 Query 2 Part H): Table E and Figure 3 used the any-Item-5.02 outcome
+# (executive_change_30d) and the SIC-era treatment; superseded by the Query 2 chain. Gated off.
+RETIRED_ESSAY3 = True
+
 print("\n" + "="*80)
-print("TABLE E: ESSAY 3 (EXECUTIVE TURNOVER) - HETEROGENEOUS BY FIRM SIZE")
+print("TABLE E: ESSAY 3 (EXECUTIVE TURNOVER) - HETEROGENEOUS BY FIRM SIZE  [RETIRED 2026-09-11 — not run]")
 print("="*80 + "\n")
 
-for quartile_label in size_quartile_labels:
+for quartile_label in ([] if RETIRED_ESSAY3 else size_quartile_labels):
     subset = df_crsp[df_crsp['size_quartile'] == quartile_label].copy()
 
     reg_vars = ['executive_change_30d', 'fcc_reportable', 'immediate_disclosure',
@@ -391,30 +395,34 @@ plt.savefig(output_dir / 'Essay2_Heterogeneous_Volatility.png', dpi=300, bbox_in
 plt.close()
 print(f"[OK] Saved: Essay2_Heterogeneous_Volatility.png")
 
-# Figure 3: Executive Turnover Effects by Firm Size (Essay 3)
-fig, ax = plt.subplots(figsize=(11, 6))
-fcc_turnover = [19.23, -20.08, -29.96, 11.72]
-timing_turnover = [-22.53, -20.58, -20.27, 5.79]
+# Figure 3: Executive Turnover Effects by Firm Size (Essay 3) — RETIRED 2026-09-11: hardcoded values with no
+# computed source in the current chain. Gated off; the existing PNG on disk is a legacy artifact.
+if not RETIRED_ESSAY3:
+    fig, ax = plt.subplots(figsize=(11, 6))
+    fcc_turnover = [19.23, -20.08, -29.96, 11.72]
+    timing_turnover = [-22.53, -20.58, -20.27, 5.79]
 
-x = np.arange(len(size_labels))
-width = 0.35
+    x = np.arange(len(size_labels))
+    width = 0.35
 
-bars1 = ax.bar(x - width/2, fcc_turnover, width, label='FCC Effect', color='#2ca02c', alpha=0.8, edgecolor='black')
-bars2 = ax.bar(x + width/2, timing_turnover, width, label='Timing Effect', color='#d62728', alpha=0.8, edgecolor='black')
+    bars1 = ax.bar(x - width/2, fcc_turnover, width, label='FCC Effect', color='#2ca02c', alpha=0.8, edgecolor='black')
+    bars2 = ax.bar(x + width/2, timing_turnover, width, label='Timing Effect', color='#d62728', alpha=0.8, edgecolor='black')
 
-ax.set_xlabel('Firm Size Quartile', fontsize=12, fontweight='bold')
-ax.set_ylabel('Effect on Executive Turnover (percentage points)', fontsize=12, fontweight='bold')
-ax.set_title('Essay 3: Heterogeneous Effects on Executive Turnover by Firm Size', fontsize=13, fontweight='bold')
-ax.set_xticks(x)
-ax.set_xticklabels(size_labels)
-ax.axhline(y=0, color='black', linestyle='-', linewidth=0.8)
-ax.legend(fontsize=11, loc='best')
-ax.grid(axis='y', alpha=0.3)
+    ax.set_xlabel('Firm Size Quartile', fontsize=12, fontweight='bold')
+    ax.set_ylabel('Effect on Executive Turnover (percentage points)', fontsize=12, fontweight='bold')
+    ax.set_title('Essay 3: Heterogeneous Effects on Executive Turnover by Firm Size', fontsize=13, fontweight='bold')
+    ax.set_xticks(x)
+    ax.set_xticklabels(size_labels)
+    ax.axhline(y=0, color='black', linestyle='-', linewidth=0.8)
+    ax.legend(fontsize=11, loc='best')
+    ax.grid(axis='y', alpha=0.3)
 
-plt.tight_layout()
-plt.savefig(output_dir / 'Essay3_Heterogeneous_Turnover.png', dpi=300, bbox_inches='tight')
-plt.close()
-print(f"[OK] Saved: Essay3_Heterogeneous_Turnover.png")
+    plt.tight_layout()
+    plt.savefig(output_dir / 'Essay3_Heterogeneous_Turnover.png', dpi=300, bbox_inches='tight')
+    plt.close()
+    print(f"[OK] Saved: Essay3_Heterogeneous_Turnover.png")
+else:
+    print("[RETIRED] Essay3_Heterogeneous_Turnover.png not regenerated (hardcoded legacy values)")
 
 # ============================================================================
 # SUMMARY & SAVE

@@ -250,7 +250,7 @@ data_a = [
     ['FCC logit coefficient', '0.8313'],
     ['Standard error', '0.2352'],
     ['p-value', '< .001 ***'],
-    ['Average marginal effect', '+14.52pp'],
+    ['Average marginal effect', '+14.52pp [RETIRED 2026-09-11: no computed source]'],
 ]
 
 for i, row_data in enumerate(data_a, start=1):

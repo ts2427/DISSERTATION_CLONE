@@ -1,0 +1,4 @@
+window,full_coef,loco_min,loco_max,sign_flips,of_G,largest_move_cik,largest_move_coef,without_TMobile,without_Sprint
+30,0.0168,-0.0022,0.0388,1,81,1136893,0.0388,-0.0022,0.0109
+90,-0.0169,-0.0492,0.0675,2,81,1136893,0.0675,-0.0492,-0.0167
+180,0.0434,-0.0196,0.0942,1,81,1283699,-0.0196,-0.0196,0.0386

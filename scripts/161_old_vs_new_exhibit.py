@@ -65,7 +65,7 @@ rows = [
      f"{100*C['H6_30d_base_rate']:.1f} / {100*C['H6_90d_base_rate']:.1f} / {100*C['H6_180d_base_rate']:.1f}%",
      'DISSOLVED: silent extraction failure (Failure Mode 4), then duplicate-event inflation'),
     ('First stage (disclosure speed)', 'claimed causal ("natural experiment")',
-     '+16.71pp descriptive', f"+{C['first_stage_pp']:.2f}pp descriptive, with 8-K armor "
+     '+16.71pp descriptive [RETIRED 2026-09-11: no computed source; ESSAY3_QUERY1_REPORT C1]', f"+{C['first_stage_pp']:.2f}pp descriptive, with 8-K armor "
      '(treated median 15d vs 26d)', 'The one positive result: survives every vintage, '
      'strengthened by verification'),
 ]

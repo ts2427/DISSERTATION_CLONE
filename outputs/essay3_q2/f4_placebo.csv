@@ -1,0 +1,2 @@
+y,n,G,G1,coef,se_hc3,p_hc3,se_cv1,p_cv1,se_cv3,p_cv3,ci_cv3_lo,ci_cv3_hi,mde80_cv3,treated_mean,control_mean,p_wcr,B_wcr,ci_wcr_lo,ci_wcr_hi,G_star,cluster_size_cv
+placebo_exec_departure_rd,338,81,12,-0.0658,0.0576,0.2539,0.0699,0.3496,0.1038,0.5281,-0.2724,0.1408,0.2945,0.2243,0.2035,0.406,99999,-0.2188,0.0962,23.6,2.267

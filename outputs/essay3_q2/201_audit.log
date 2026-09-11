@@ -1,0 +1,142 @@
+
+====================================================================================================
+RECALL AUDIT — v2 vs audit reference codes (Claude, blind to v2 and strata; Tim did not hand-code)
+====================================================================================================
+File of record outputs\essay3_q2\VALIDATION_SHEET_AUDIT_CLAUDE_RATER.xlsx sha256 ee58191e12bfe05219084f792b3a6306beb01be75258af03a7d575c8f45043c1; workbook vs pasted text: 0 cell differences
+  'exec_departure' unclear rows (primary): 3 ['17', '24', '55']
+  'ceo_departure' unclear rows (primary): 1 ['75']
+  'director_only_departure' unclear rows (primary): 0 []
+  'pre_announced' unclear rows (primary): 0 []
+
+Overall:
+                                      field                scoring  n  excluded_unclear  agreement  kappa  ref_Y  clf_Y  tp  fp  fn  precision precision_ci95  recall    recall_ci95
+                         exec departure (A)     PRIMARY (verified) 77                 3     0.8961 0.7874     35     29  28   1   7     0.9655 [0.822, 0.999]  0.8000 [0.631, 0.916]
+                         exec departure (A)      SECONDARY (blind) 75                 5     0.9200 0.8355     33     29  28   1   5     0.9655 [0.822, 0.999]  0.8485 [0.681, 0.949]
+                         exec departure (A) SENSITIVITY unclear->Y 80                 0     0.8625 0.7212     38     29  28   1  10     0.9655 [0.822, 0.999]  0.7368 [0.569, 0.866]
+exec departure (B: restated->N vs new-only)     PRIMARY (verified) 77                 3     0.9091 0.8053     30     27  25   2   5     0.9259 [0.757, 0.991]  0.8333 [0.653, 0.944]
+exec departure (B: restated->N vs new-only) SENSITIVITY unclear->Y 80                 0     0.8750 0.7349     33     27  25   2   8     0.9259 [0.757, 0.991]  0.7576 [0.577, 0.889]
+                              CEO departure     PRIMARY (verified) 79                 1     0.9241 0.5298      7      7   4   3   3     0.5714 [0.184, 0.901]  0.5714 [0.184, 0.901]
+                              CEO departure      SECONDARY (blind) 78                 2     0.9359 0.5806      6      7   4   3   2     0.5714 [0.184, 0.901]  0.6667 [0.223, 0.957]
+                              CEO departure SENSITIVITY unclear->Y 80                 0     0.9125 0.4853      8      7   4   3   4     0.5714 [0.184, 0.901]  0.5000 [0.157, 0.843]
+                    director-only departure     PRIMARY (verified) 80                 0     0.9375 0.7462     12     11   9   2   3     0.8182 [0.482, 0.977]  0.7500 [0.428, 0.945]
+                    director-only departure SENSITIVITY unclear->Y 80                 0     0.9375 0.7462     12     11   9   2   3     0.8182 [0.482, 0.977]  0.7500 [0.428, 0.945]
+                              pre-announced     PRIMARY (verified) 80                 0     0.8125 0.6320     41     29  28   1  13     0.9655 [0.822, 0.999]  0.6829 [0.519, 0.819]
+                              pre-announced      SECONDARY (blind) 80                 0     0.8250 0.6673     39     29  28   1  11     0.9655 [0.822, 0.999]  0.7179 [0.551, 0.850]
+                              pre-announced SENSITIVITY unclear->Y 80                 0     0.8125 0.6320     41     29  28   1  13     0.9655 [0.822, 0.999]  0.6829 [0.519, 0.819]
+
+By treatment stratum (executive and CEO departure):
+                                      field                scoring stratum  n  excluded_unclear  ref_Y  clf_Y  tp  fp  fn  precision precision_ci95  recall    recall_ci95
+                         exec departure (A)     PRIMARY (verified) treated 38                 2     19     16  16   0   3     1.0000 [0.794, 1.000]  0.8421 [0.604, 0.966]
+                         exec departure (A)     PRIMARY (verified) control 39                 1     16     13  12   1   4     0.9231 [0.640, 0.998]  0.7500 [0.476, 0.927]
+                         exec departure (A)      SECONDARY (blind) treated 38                 2     19     16  16   0   3     1.0000 [0.794, 1.000]  0.8421 [0.604, 0.966]
+                         exec departure (A)      SECONDARY (blind) control 37                 3     14     13  12   1   2     0.9231 [0.640, 0.998]  0.8571 [0.572, 0.982]
+                         exec departure (A) SENSITIVITY unclear->Y treated 40                 0     21     16  16   0   5     1.0000 [0.794, 1.000]  0.7619 [0.528, 0.918]
+                         exec departure (A) SENSITIVITY unclear->Y control 40                 0     17     13  12   1   5     0.9231 [0.640, 0.998]  0.7059 [0.440, 0.897]
+exec departure (B: restated->N vs new-only)     PRIMARY (verified) treated 38                 2     15     14  13   1   2     0.9286 [0.661, 0.998]  0.8667 [0.595, 0.983]
+exec departure (B: restated->N vs new-only)     PRIMARY (verified) control 39                 1     15     13  12   1   3     0.9231 [0.640, 0.998]  0.8000 [0.519, 0.957]
+exec departure (B: restated->N vs new-only) SENSITIVITY unclear->Y treated 40                 0     17     14  13   1   4     0.9286 [0.661, 0.998]  0.7647 [0.501, 0.932]
+exec departure (B: restated->N vs new-only) SENSITIVITY unclear->Y control 40                 0     16     13  12   1   4     0.9231 [0.640, 0.998]  0.7500 [0.476, 0.927]
+                              CEO departure     PRIMARY (verified) treated 39                 1      4      4   2   2   2     0.5000 [0.068, 0.932]  0.5000 [0.068, 0.932]
+                              CEO departure     PRIMARY (verified) control 40                 0      3      3   2   1   1     0.6667 [0.094, 0.992]  0.6667 [0.094, 0.992]
+                              CEO departure      SECONDARY (blind) treated 39                 1      4      4   2   2   2     0.5000 [0.068, 0.932]  0.5000 [0.068, 0.932]
+                              CEO departure      SECONDARY (blind) control 39                 1      2      3   2   1   0     0.6667 [0.094, 0.992]  1.0000 [0.158, 1.000]
+                              CEO departure SENSITIVITY unclear->Y treated 40                 0      5      4   2   2   3     0.5000 [0.068, 0.932]  0.4000 [0.053, 0.853]
+                              CEO departure SENSITIVITY unclear->Y control 40                 0      3      3   2   1   1     0.6667 [0.094, 0.992]  0.6667 [0.094, 0.992]
+
+====================================================================================================
+Disagreements (primary codes)
+====================================================================================================
+  [2] Sprint Nextel 2020-04-01 (treated) | ceo_departure, director_only_departure, pre_announced
+     ref: exec=Y / ceo=Y / dir=Y / pre=Y (blind exec=Y / ceo=Y / pre=unclear) | Executives: Raul Marcelo Claure (Executive Chairman), Michel Combes (President and CEO), Nestor Cano (COO), John Saw (CTO), Andrew Davies (CFO), Jorge Gracia (C
+     v2 : exec=Y / ceo=N / dir=N / pre=N | Paul Schieber (PAO: Vice President Controller)
+  [3] Carnival Corporation 2022-04-27 (control) | exec_departure, ceo_departure
+     ref: exec=Y / ceo=Y / dir=N / pre=N (blind exec=unclear / ceo=unclear / pre=N) | Arnold Donald, President and CEO (becomes Vice Chair)
+     v2 : exec=N / ceo=N / dir=N / pre=N | 
+  [9] Adobe Systems Incorporated 2014-01-29 (control) | exec_departure, pre_announced
+     ref: exec=Y / ceo=N / dir=N / pre=Y (blind exec=Y / ceo=N / pre=unclear) | Kevin Lynch (no longer with the Company; former EVP and CTO)
+     v2 : exec=N / ceo=N / dir=N / pre=N | 
+  [13] AT&T 2020-04-28 (treated) | ceo_departure, pre_announced
+     ref: exec=Y / ceo=Y / dir=N / pre=Y (blind exec=Y / ceo=Y / pre=Y) | Randall Stephenson, CEO (becomes Executive Chairman; retiring January 2021)
+     v2 : exec=Y / ceo=N / dir=N / pre=N | Randall Stephenson (other_exec: Executive Chairman of the Board)
+  [15] American Electric Power 2019-09-18 (control) | director_only_departure
+     ref: exec=N / ceo=N / dir=N / pre=N (blind exec=N / ceo=N / pre=N) | 
+     v2 : exec=N / ceo=N / dir=Y / pre=N | Art Garcia (director: director)
+  [17] Hewlett Packard Enterprise Company 2023-12-15 (control) | pre_announced
+     ref: exec=unclear / ceo=N / dir=N / pre=Y (blind exec=unclear / ceo=N / pre=Y) | Jeremy K. Cox, Interim CFO and Principal Financial Officer (stays as SVP, Controller, PAO)
+     v2 : exec=N / ceo=N / dir=N / pre=N | 
+  [19] AT&T 2019-09-06 (treated) | exec_departure, pre_announced
+     ref: exec=Y / ceo=N / dir=N / pre=Y (blind exec=Y / ceo=N / pre=Y) | John Donovan, CEO of AT&T Communications, LLC (subsidiary CEO, not principal executive officer)
+     v2 : exec=N / ceo=N / dir=N / pre=N | 
+  [21] Sprint Nextel 2016-05-06 (treated) | director_only_departure, pre_announced
+     ref: exec=N / ceo=N / dir=Y / pre=Y (blind exec=N / ceo=N / pre=Y) | Robert Bennett, director
+     v2 : exec=N / ceo=N / dir=N / pre=N | 
+  [22] GoDaddy.com LLC 2021-05-05 (treated) | exec_departure, pre_announced
+     ref: exec=Y / ceo=N / dir=N / pre=Y (blind exec=Y / ceo=N / pre=Y) | Mr. Winborne, CFO and principal financial officer (serves until 2021-06-02)
+     v2 : exec=N / ceo=N / dir=N / pre=N | 
+  [24] AT&T 2022-08-04 (treated) | pre_announced
+     ref: exec=unclear / ceo=N / dir=N / pre=Y (blind exec=unclear / ceo=N / pre=Y) | Pascal Desroches, Senior EVP and CFO (no longer principal accounting officer)
+     v2 : exec=N / ceo=N / dir=N / pre=N | 
+  [27] ServiceNow Inc. 2024-07-24 (control) | pre_announced
+     ref: exec=Y / ceo=N / dir=N / pre=N (blind exec=Y / ceo=N / pre=N) | Chirantan 'CJ' Desai, President and COO
+     v2 : exec=Y / ceo=N / dir=N / pre=Y | Mr. Desai (COO: President and Chief Operating Officer)
+  [29] Sprint Nextel 2009-03-27 (treated) | director_only_departure, pre_announced
+     ref: exec=N / ceo=N / dir=Y / pre=Y (blind exec=N / ceo=N / pre=Y) | Irvine O. Hockaday Jr., director
+     v2 : exec=N / ceo=N / dir=N / pre=N | 
+  [34] Hewlett-Packard Company 2006-09-12 (control) | exec_departure
+     ref: exec=N / ceo=N / dir=Y / pre=Y (blind exec=N / ceo=N / pre=Y) | George A. Keyworth II, director
+     v2 : exec=Y / ceo=N / dir=Y / pre=Y | Patricia C. Dunn (other_exec: executive Chairman of the Board of Directors); Keyworth II (director: director); Dr. Keyworth (director: Board)
+  [39] T-Mobile USA, Inc. 2016-06-22 (treated) | exec_departure, pre_announced
+     ref: exec=Y / ceo=N / dir=N / pre=Y (blind exec=Y / ceo=N / pre=Y) | Michael J. Morgan, SVP Finance and Chief Accounting Officer (moves to a new role)
+     v2 : exec=N / ceo=N / dir=N / pre=N | 
+  [40] Automatic Data Processing, Inc. 2012-11-01 (control) | exec_departure, pre_announced
+     ref: exec=Y / ceo=N / dir=N / pre=Y (blind exec=Y / ceo=N / pre=Y) | Christopher Reidy, CFO
+     v2 : exec=N / ceo=N / dir=N / pre=N | 
+  [47] Intuit, Inc. 2008-02-08 (control) | exec_departure, pre_announced
+     ref: exec=Y / ceo=N / dir=N / pre=Y (blind exec=unclear / ceo=N / pre=Y) | Jeffrey E. Stiefler (SVP, Financial Institutions Division, per verification)
+     v2 : exec=N / ceo=N / dir=N / pre=N | 
+  [48] Honeywell International Inc. 2021-07-14 (control) | ceo_departure
+     ref: exec=Y / ceo=N / dir=N / pre=N (blind exec=Y / ceo=N / pre=N) | Rajeev Gautam, President and CEO, Performance Materials and Technologies segment (segment CEO)
+     v2 : exec=Y / ceo=Y / dir=N / pre=N | Rajeev Gautam (CEO: President and Chief Executive Officer); Rajeev Gautam (CEO: President Chief Executive Officer); Rajeev Gautam (CEO: President Chief Executiv
+  [51] Charter Communications, Inc. 2008-07-08 (treated) | director_only_departure
+     ref: exec=Y / ceo=N / dir=N / pre=Y (blind exec=Y / ceo=N / pre=Y) | Robert A. Quigley, EVP and Chief Marketing Officer
+     v2 : exec=Y / ceo=N / dir=Y / pre=Y | None (director: DIRECTORS OR CERTAIN OFFICERS; ELECTION OF DIRECTORS); Robert A. Quigley (other_exec: Executive Vice President and Chief Marketing Officer)
+  [55] Verizon 2013-06-10 (treated) | pre_announced
+     ref: exec=unclear / ceo=N / dir=N / pre=Y (blind exec=unclear / ceo=N / pre=Y) | Robert J. Barish, SVP and Controller (succeeded; stays leading FP&A)
+     v2 : exec=N / ceo=N / dir=N / pre=N | 
+  [57] CenturyLink 2013-03-25 (treated) | ceo_departure
+     ref: exec=Y / ceo=N / dir=N / pre=Y (blind exec=Y / ceo=N / pre=Y) | James E. Ousley, CEO, Savvis Operations (segment CEO)
+     v2 : exec=Y / ceo=Y / dir=N / pre=Y | James E. Ousley (CEO: Chief Executive Officer); James E. Ousley (CEO: Chief Executive Officer)
+  [70] DISH Network, LLC 2023-11-13 (treated) | pre_announced
+     ref: exec=Y / ceo=Y / dir=N / pre=N (blind exec=Y / ceo=Y / pre=unclear) | W. Erik Carlson, President and CEO (stays on board through merger)
+     v2 : exec=Y / ceo=Y / dir=N / pre=unclear | Mr. Carlson (CEO: President and Chief Executive Officer)
+  [71] Verizon 2017-10-04 (treated) | ceo_departure
+     ref: exec=Y / ceo=N / dir=N / pre=N (blind exec=Y / ceo=N / pre=N) | Marni M. Walden, EVP and President, Global Media
+     v2 : exec=Y / ceo=Y / dir=N / pre=N | Lowell McAdam (CEO: Chief Executive Officer)
+  [75] T-Mobile USA, Inc. 2018-04-30 (treated) | reference unclear
+     ref: exec=Y / ceo=unclear / dir=N / pre=Y (blind exec=Y / ceo=unclear / pre=Y) | John J. Legere, President (title passes to Sievert 2018-04-29; employment term set to end 2020-04-30, 'unless earlier terminated'); J. Braxton Carter, EVP and C
+     v2 : exec=Y / ceo=N / dir=N / pre=Y | John J. Legere (president: President upon ratification by the T-Mobile board of directors); Michael Sievert (COO: Chief Operating Officer)
+
+====================================================================================================
+Sheet 3 — structural (exhibit-only) miss; exhibit-only candidates by stratum
+====================================================================================================
+Sheet 3 Carnival Corporation 2022-04-27 (control): reference exec=Y CEO=Y (blind unclear/unclear); v2 exec=N CEO=N. Item 5.02 text (340 chars): Carnival Corporation and Carnival plc have announced senior executive transitions, described in greater detail in the attached press release included as Exhibit 99.1. Compensation for each person is still under consideration and will be reported once finalized. The information set forth in Exhibit 99.1 is incorporated herein by reference.
+Audit sample, exhibit-only candidates (heuristic: short 5.02 text that points to an exhibit/press release and has no departure language): treated 2/40; control 4/40 | sheet ids ['3', '19', '30', '31', '50', '80']
+All 1,078 filings, exhibit-only candidates by stratum (heuristic, unverified): control 89/694 (12.8%); treated 22/384 (5.7%)
+
+====================================================================================================
+Sheet 75 — T-Mobile 2018-04-30 (0001104659-18-028086)
+====================================================================================================
+Reference: exec=Y CEO=unclear (blind CEO unclear); John J. Legere, President (title passes to Sievert 2018-04-29; employment term set to end 2020-04-30, 'unless earlier terminated'); J. Braxton Carter, EVP and CFO (term extended to a transaction-contingent end date)
+v2: exec=Y (new-only Y) CEO=N; persons: John J. Legere (president: President upon ratification by the T-Mobile board of directors); Michael Sievert (COO: Chief Operating Officer)
+     grp    pkey first_date n_filings                                                     accessions is_ceo
+director  legere 2020-04-24         1                                           0001193125-20-119230      0
+    exec  carter 2013-05-02         1                                           0001193125-13-193449      0
+    exec  carter 2019-11-18         2                      0001140361-20-014081;0001193125-19-294093      0
+    exec  legere 2018-04-30         1                                           0001104659-18-028086      0
+    exec  legere 2019-11-18         3 0001193125-19-294093;0001193125-20-093622;0001193125-20-119230      1
+    exec sievert 2018-04-30         1                                           0001104659-18-028086      0
+De-duplication: the 2018-04-30 filing forms its OWN Legere event (exec group, is_ceo=0: the President title), separate from the Legere CEO-departure event first dated 2019-11-18 (0001193125-19-294093), because the two disclosures are 567 days apart (> the 540-day merge window). v2 therefore does NOT treat the 2018 filing as the first disclosure of Legere's CEO departure.
+  v2 row: John J. Legere [president] verb='succeed/replace' :: 5 On April 29, 2018, T-Mobile announced that Mr. Sievert will succeed Mr. Legere as President upon ratification by the T-Mobile board of directors.
+  v2 row: Michael Sievert [COO] verb='termination of the employment' :: The Sievert Amendment also amends Mr. Sievert’s compensation term sheet to provide that, upon Mr. Sievert’s termination of the employment by T-Mobile without “cause” or due to a “constructive termination” (each as defined in Mr. Sievert’s compensation term sheet), then, subject to his timely execution and non-revocation of a release of claims in favor of T-Mobile, Mr. Sievert w
+
+ADJUDICATION.xlsx: added tab audit_v2 (23 rows)

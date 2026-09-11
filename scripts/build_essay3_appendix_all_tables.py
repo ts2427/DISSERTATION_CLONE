@@ -127,7 +127,7 @@ md = """# ESSAY 3 APPENDIX: EXECUTIVE TURNOVER AND GOVERNANCE RESPONSE
 | FCC logit coefficient | 0.8313 |
 | Standard error | 0.2352 |
 | p-value | < .001 *** |
-| Average marginal effect | +14.52pp |
+| Average marginal effect | +14.52pp [RETIRED 2026-09-11: no computed source] |
 | Pseudo R² | 0.0887 |
 
 **N = 651 | Dependent Variable:** immediate_disclosure = 1 if firm disclosed within 7 days
@@ -159,7 +159,7 @@ md = """# ESSAY 3 APPENDIX: EXECUTIVE TURNOVER AND GOVERNANCE RESPONSE
 | 90-day | 0.25 | -8.99 | +10.96 | YES | **No** |
 | 180-day | -1.45 | -11.54 | +8.16 | YES | **No** |
 
-**Note:** Bootstrap confidence intervals spanning zero indicate no significant mediation. The indirect effect (FCC → immediate_disclosure → turnover) does not significantly explain the total FCC effect at any window. Indirect effect = product of a-path (FCC → immediate disclosure, +14.52pp) and b-path (immediate disclosure → turnover), accounting for nonlinear mediation in logit framework.
+**Note:** Bootstrap confidence intervals spanning zero indicate no significant mediation. The indirect effect (FCC → immediate_disclosure → turnover) does not significantly explain the total FCC effect at any window. Indirect effect = product of a-path (FCC → immediate disclosure, +14.52pp [RETIRED 2026-09-11: no computed source; mediation dropped, decision L3]) and b-path (immediate disclosure → turnover), accounting for nonlinear mediation in logit framework.
 
 ---
 

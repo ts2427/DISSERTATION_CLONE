@@ -1,0 +1,32 @@
+family,test,p,p_wcr,p_bh
+primary H6,F1 exec departure 30d,0.6118,0.4924,0.8701
+primary H6,F1 exec departure 90d,0.8701,0.8154,0.8701
+primary H6,F1 exec departure 180d,0.7052,0.6474,0.8701
+placebo,F4 pre-notification exec departure,0.5281,0.406,0.5281
+sensitivities,F3 year FE (reported year) 30d,0.5092,0.2989,0.9984
+sensitivities,F3 two-digit SIC FE 30d,0.3907,0.2337,0.9984
+sensitivities,F3 breach_date anchor 30d,0.8962,0.8799,0.9984
+sensitivities,F3 excluding pre-announced departures 30d,0.199,0.2031,0.9984
+sensitivities,F3 excluding the F2 baseline control 30d,0.5735,0.4859,0.9984
+sensitivities,F3 restatement-dated outcome (rs) 30d,0.4163,0.4979,0.9984
+sensitivities,"F3 recall-corrected, audit point estimates (r_T=0.842, r_C=0.750) 30d",0.6817,0.5623,0.9984
+sensitivities,"F3 recall-corrected, treated recall at CI low / control at CI high (r_T=0.604, r_C=0.927) 30d",0.3779,0.3329,0.9984
+sensitivities,"F3 recall-corrected, treated recall at CI high / control at CI low (r_T=0.966, r_C=0.476) 30d",0.9884,0.9825,0.9984
+sensitivities,F3 year FE (reported year) 90d,0.9984,0.9979,0.9984
+sensitivities,F3 two-digit SIC FE 90d,0.6038,0.5216,0.9984
+sensitivities,F3 breach_date anchor 90d,0.4627,0.3412,0.9984
+sensitivities,F3 excluding pre-announced departures 90d,0.7575,0.6626,0.9984
+sensitivities,F3 excluding the F2 baseline control 90d,0.8554,0.8235,0.9984
+sensitivities,F3 restatement-dated outcome (rs) 90d,0.8982,0.8647,0.9984
+sensitivities,"F3 recall-corrected, audit point estimates (r_T=0.842, r_C=0.750) 90d",0.7755,0.682,0.9984
+sensitivities,"F3 recall-corrected, treated recall at CI low / control at CI high (r_T=0.604, r_C=0.927) 90d",0.7105,0.6123,0.9984
+sensitivities,"F3 recall-corrected, treated recall at CI high / control at CI low (r_T=0.966, r_C=0.476) 90d",0.4572,0.2862,0.9984
+sensitivities,F3 year FE (reported year) 180d,0.4832,0.3899,0.9984
+sensitivities,F3 two-digit SIC FE 180d,0.5508,0.4848,0.9984
+sensitivities,F3 breach_date anchor 180d,0.7885,0.7457,0.9984
+sensitivities,F3 excluding pre-announced departures 180d,0.411,0.3585,0.9984
+sensitivities,F3 excluding the F2 baseline control 180d,0.6706,0.6313,0.9984
+sensitivities,F3 restatement-dated outcome (rs) 180d,0.9261,0.9036,0.9984
+sensitivities,"F3 recall-corrected, audit point estimates (r_T=0.842, r_C=0.750) 180d",0.9264,0.9106,0.9984
+sensitivities,"F3 recall-corrected, treated recall at CI low / control at CI high (r_T=0.604, r_C=0.927) 180d",0.1532,0.123,0.9984
+sensitivities,"F3 recall-corrected, treated recall at CI high / control at CI low (r_T=0.966, r_C=0.476) 180d",0.2444,0.146,0.9984

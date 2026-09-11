@@ -1,0 +1,174 @@
+date,type,description,source
+2009-09-03,breach occurrence (PRC),"T-Mobile USA, Inc.; 1 record(s); in analysis sample 0",CANONICAL_V3
+2009-09-03,public notification (PRC reported_date),breach 2009-09-03; PRC source state AG; incident 8-K none within +/-30d,g2_disclosure_channel
+2009-10-05,breach occurrence (PRC),"T-Mobile USA, Inc.; 1 record(s); in analysis sample 0",CANONICAL_V3
+2009-10-05,public notification (PRC reported_date),breach 2009-10-05; PRC source other; incident 8-K none within +/-30d,g2_disclosure_channel
+2009-10-08,breach occurrence (PRC),T-Mobile; 1 record(s); in analysis sample 0,CANONICAL_V3
+2009-10-08,public notification (PRC reported_date),breach 2009-10-08; PRC source other; incident 8-K none within +/-30d,g2_disclosure_channel
+2011-10-21,breach occurrence (PRC),T-Mobile USA Inc.; 1 record(s); in analysis sample 0,CANONICAL_V3
+2011-10-21,public notification (PRC reported_date),breach 2011-10-21; PRC source other; incident 8-K none within +/-30d,g2_disclosure_channel
+2012-05-08,breach occurrence (PRC),T-Mobile; 1 record(s); in analysis sample 0,CANONICAL_V3
+2012-05-08,public notification (PRC reported_date),breach 2012-05-08; PRC source other; incident 8-K none within +/-30d,g2_disclosure_channel
+2012-08-03,"director departure (v2, first disclosure)",Kevin Landry (MetroPCS-era filer),0001283699-12-000010
+2012-08-28,breach occurrence (PRC),T-Mobile; 1 record(s); in analysis sample 0,CANONICAL_V3
+2012-08-28,public notification (PRC reported_date),breach 2012-08-28; PRC source other; incident 8-K none within +/-30d,g2_disclosure_channel
+2013-05-02,"director departure (v2, first disclosure)",Srikant Datar | Srikant M. Datar,0001193125-13-193449
+2013-05-02,"exec departure (v2, first disclosure)",Braxton Carter,0001193125-13-193449
+2013-05-02,"exec departure (v2, first disclosure)",Malcolm M. Lorang,0001193125-13-193449
+2013-05-17,proxy: controlled-company status,holders ; stated % ,0001193125-13-226248
+2013-10-25,"director departure (v2, first disclosure)",René Obermann,0001283699-13-000120
+2013-11-01,breach occurrence (PRC),T-Mobile; 1 record(s); in analysis sample 0,CANONICAL_V3
+2013-11-20,"director departure (v2, first disclosure)",nan,0001193125-13-448555
+2013-11-26,breach occurrence (PRC),"T-Mobile USA, Inc.; 1 record(s); in analysis sample 0",CANONICAL_V3
+2013-12-30,public notification (PRC reported_date),breach 2013-11-26; PRC source state AG; incident 8-K none within +/-30d,g2_disclosure_channel
+2013-12-31,public notification (PRC reported_date),breach 2013-11-01; PRC source state AG; incident 8-K none within +/-30d,g2_disclosure_channel
+2014-01-02,breach occurrence (PRC),"T-Mobile USA, Inc.; 1 record(s); in analysis sample 1",CANONICAL_V3
+2014-01-02,public notification (PRC reported_date),breach 2014-01-02; PRC source other; incident 8-K none within +/-30d,g2_disclosure_channel
+2014-02-19,"director departure (v2, first disclosure)","James N. Perry, Jr.",0001193125-14-058782
+2014-04-24,proxy: controlled-company status,holders ; stated % ,0001193125-14-157312
+2015-02-18,"exec departure (v2, first disclosure)",Mr. Alling,0001193125-15-052763
+2015-04-22,proxy: controlled-company status,holders ; stated % ,0001193125-15-142092
+2015-09-14,breach occurrence (PRC),"T-Mobile USA, Inc.; 9 record(s); in analysis sample 1",CANONICAL_V3
+2015-10-01,breach occurrence (PRC),T-Mobile USA Inc.; 1 record(s); in analysis sample 1,CANONICAL_V3
+2015-10-01,public notification (PRC reported_date),breach 2015-09-14; PRC source state AG; incident 8-K none within +/-30d,g2_disclosure_channel
+2015-10-01,public notification (PRC reported_date),breach 2015-10-01; PRC source other; incident 8-K none within +/-30d,g2_disclosure_channel
+2015-11-04,breach occurrence (PRC),T-Mobile USA Inc; 1 record(s); in analysis sample 1,CANONICAL_V3
+2015-11-04,public notification (PRC reported_date),breach 2015-11-04; PRC source other; incident 8-K none within +/-30d,g2_disclosure_channel
+2016-02-19,"exec departure (v2, first disclosure)",Gary A. King,0001193125-16-470124
+2016-04-28,proxy: controlled-company status,holders ; stated % ,0001193125-16-564011
+2017-04-01,breach occurrence (PRC),T-Mobile; 2 record(s); in analysis sample 1,CANONICAL_V3
+2017-04-27,proxy: controlled-company status,holders ; stated % ,0001193125-17-143185
+2017-06-09,public notification (PRC reported_date),breach 2017-04-01; PRC source state AG; incident 8-K none within +/-30d,g2_disclosure_channel
+2017-08-24,breach occurrence (PRC),"T-Mobile USA, Inc.; 1 record(s); in analysis sample 1",CANONICAL_V3
+2017-09-14,public notification (PRC reported_date),breach 2017-08-24; PRC source state AG; incident 8-K none within +/-30d,g2_disclosure_channel
+2017-09-16,breach occurrence (PRC),"T-Mobile USA, Inc.; 1 record(s); in analysis sample 1",CANONICAL_V3
+2017-10-02,public notification (PRC reported_date),breach 2017-09-16; PRC source state AG; incident 8-K none within +/-30d,g2_disclosure_channel
+2018-04-26,proxy: controlled-company status,holders Deutsche Telekom; stated % 63%,0001193125-18-134957
+2018-04-26,proxy: first committee cyber/privacy mention,Risk and Compliance Committee — information security,0001193125-18-134957
+2018-04-26,proxy: first committee cyber/privacy mention,Risk and Compliance Committee — privacy,0001193125-18-134957
+2018-04-30,"exec departure (v2, first disclosure)",John J. Legere,0001104659-18-028086
+2018-04-30,"exec departure (v2, first disclosure)",Michael Sievert,0001104659-18-028086
+2018-08-20,breach occurrence (PRC),T-Mobile USA Inc.; 1 record(s); in analysis sample 1,CANONICAL_V3
+2018-08-23,public notification (PRC reported_date),breach 2018-08-20; PRC source state AG; incident 8-K none within +/-30d,g2_disclosure_channel
+2018-11-02,"director departure (v2, first disclosure)",Thomas Dannenfeldt,0001283699-18-000063
+2019-04-19,"director departure (v2, first disclosure)",Mr. Swantee,0001283699-19-000066
+2019-04-26,proxy: controlled-company status,holders Deutsche Telekom; stated % 63.0%,0001193125-19-122304
+2019-11-18,"exec departure (v2, first disclosure)",Braxton Carter,0001193125-19-294093
+2019-11-18,"exec departure (v2, first disclosure) [CEO]",John J. Legere | John Legere,0001193125-19-294093
+2019-11-26,breach occurrence (PRC),T-Mobile USA; 3 record(s); in analysis sample 1,CANONICAL_V3
+2020-02-19,"exec departure (v2, first disclosure)",David Carey,0001193125-20-041926
+2020-03-02,public notification (PRC reported_date),breach 2019-11-26; PRC source state AG; incident 8-K none within +/-30d,g2_disclosure_channel
+2020-04-01,"director departure (v2, first disclosure)",Srikant Madhav Datar,0001193125-20-093622
+2020-04-01,"director departure (v2, first disclosure)",Bruno Jacobfeuerborn,0001193125-20-093622
+2020-04-02,breach occurrence (PRC),Sprint; 1 record(s); in analysis sample 1,CANONICAL_V3
+2020-04-02,public notification (PRC reported_date),breach 2020-04-02; PRC source other; incident 8-K none within +/-30d,g2_disclosure_channel
+2020-04-15,breach occurrence (PRC),Sprint; 1 record(s); in analysis sample 1,CANONICAL_V3
+2020-04-15,public notification (PRC reported_date),breach 2020-04-15; PRC source other; incident 8-K none within +/-30d,g2_disclosure_channel
+2020-04-21,proxy: controlled-company status,holders Deutsche Telekom; SoftBank; stated % 43.6%; 24.7%,0001193125-20-113504
+2020-04-24,"director departure (v2, first disclosure)",John Legere,0001193125-20-119230
+2020-06-22,"director departure (v2, first disclosure)",Ronald D. Fisher,0001140361-20-014470
+2020-08-27,breach occurrence (PRC),"T-Mobile US, Inc.; 2 record(s); in analysis sample 1",CANONICAL_V3
+2020-08-31,breach occurrence (PRC),T-Mobile; 1 record(s); in analysis sample 1,CANONICAL_V3
+2020-10-09,public notification (PRC reported_date),breach 2020-08-31; PRC source state AG; incident 8-K none within +/-30d,g2_disclosure_channel
+2020-11-12,"director departure (v2, first disclosure)",Srini Gopalan,0001193125-20-291827
+2020-12-08,public notification (PRC reported_date),breach 2020-08-27; PRC source state AG; incident 8-K none within +/-30d,g2_disclosure_channel
+2021-01-18,breach occurrence (PRC),T-Mobile; 2 record(s); in analysis sample 1,CANONICAL_V3
+2021-02-09,public notification (PRC reported_date),breach 2021-01-18; PRC source state AG; incident 8-K none within +/-30d,g2_disclosure_channel
+2021-02-12,breach occurrence (PRC),"T-Mobile USA, Inc.; 1 record(s); in analysis sample 1",CANONICAL_V3
+2021-02-20,breach occurrence (PRC),T-Mobile; 1 record(s); in analysis sample 1,CANONICAL_V3
+2021-03-01,breach occurrence (PRC),"T-Mobile USA, Inc.; 1 record(s); in analysis sample 1",CANONICAL_V3
+2021-03-16,public notification (PRC reported_date),breach 2021-02-12; PRC source state AG; incident 8-K none within +/-30d,g2_disclosure_channel
+2021-03-31,breach occurrence (PRC),T-Mobile; 1 record(s); in analysis sample 1,CANONICAL_V3
+2021-03-31,public notification (PRC reported_date),breach 2021-02-20; PRC source state AG; incident 8-K none within +/-30d,g2_disclosure_channel
+2021-03-31,public notification (PRC reported_date),breach 2021-03-31; PRC source other; incident 8-K none within +/-30d,g2_disclosure_channel
+2021-04-12,"director departure (v2, first disclosure)",Stephen Kappes,0001193125-21-113210
+2021-04-21,proxy: controlled-company status,holders Deutsche Telekom; SoftBank; stated % 43.2%; 8.5%; 52.1%; 0.4%,0001193125-21-124685
+2021-04-21,proxy: first committee cyber/privacy mention,Audit Committee — cybersecurity,0001193125-21-124685
+2021-04-21,proxy: first committee cyber/privacy mention,Audit Committee — privacy,0001193125-21-124685
+2021-04-21,proxy: first committee cyber/privacy mention,Audit reporting or assessments to the Audit Committee — cybersecurity,0001193125-21-124685
+2021-04-21,proxy: first committee cyber/privacy mention,Audit reporting or assessments to the Audit Committee — privacy,0001193125-21-124685
+2021-04-21,proxy: first committee cyber/privacy mention,Risk and Compliance Committee — cybersecurity,0001193125-21-124685
+2021-08-13,breach occurrence (PRC),"T-Mobile USA, Inc.; 1 record(s); in analysis sample 1",CANONICAL_V3
+2021-08-16,incident 8-K (7.01/8.01),"[d131772d8k.htm] We have determined that unauthorized access to some T-Mobile data occurred, however we have not yet determined that there is any personal customer data involved.",0001193125-21-248002
+2021-08-16,public notification (PRC reported_date),breach 2021-03-01; PRC source state AG; incident 8-K 0001193125-21-248002,g2_disclosure_channel
+2021-08-16,public notification (PRC reported_date),breach 2021-08-13; PRC source state AG; incident 8-K 0001193125-21-248002,g2_disclosure_channel
+2021-08-17,breach occurrence (PRC),T-Mobile USA; 4 record(s); in analysis sample 1,CANONICAL_V3
+2021-08-18,incident 8-K (7.01/8.01),"[d202902d8k.htm] On August 17, 2021, T-Mobile US, Inc. (“T-Mobile,” “we,” “our” or “us”) issued a press release providing an update on our ongoing investigation into the recent cyberattack against T-Mobile. || [d202902dex991.htm] EX-99.1 2 d202902dex991.htm EX-99.1 EX-99.1 Exhibit 99.1 T-Mobile Shar",0001193125-21-249635
+2021-08-19,public notification (PRC reported_date),breach 2021-08-17; PRC source state AG; incident 8-K 0001193125-21-248002,g2_disclosure_channel
+2021-08-20,incident 8-K (7.01/8.01),"[d362750d8k.htm] On August 20, 2021, T-Mobile US, Inc. (“T-Mobile,” “we,” “our” or “us”) posted the following statement to its website: T-Mobile Shares Updated Information Regarding Ongoing Investigation into Cyberattack (8/20/21) We have continued to work around the clock on the forensic analysis a",0001193125-21-251974
+2021-08-26,breach occurrence (PRC),T-Mobile USA; 1 record(s); in analysis sample 1,CANONICAL_V3
+2021-08-26,public notification (PRC reported_date),breach 2021-08-26; PRC source other; incident 8-K 0001193125-21-248002,g2_disclosure_channel
+2021-08-27,incident 8-K (7.01/8.01),"[d223733d8k.htm] On August 27, 2021, T-Mobile US, Inc. (“T-Mobile,” “we,” “our” or “us”) posted the following statement to its website: The Cyberattack Against T-Mobile and Our Customers: What happened, and what we are doing about it. || [d223733d8k.htm] By Mike Sievert CEO, T-Mobile The last two we",0001193125-21-258261
+2021-09-16,"exec departure (v2, first disclosure)",David A. Miller,0001193125-21-275230
+2022-03-08,breach occurrence (PRC),T-Mobile; 1 record(s); in analysis sample 1,CANONICAL_V3
+2022-03-08,public notification (PRC reported_date),breach 2022-03-08; PRC source other; incident 8-K none within +/-30d,g2_disclosure_channel
+2022-04-22,"director departure (v2, first disclosure)",Michael Wilkens,0001193125-22-115091
+2022-04-27,proxy: controlled-company status,holders Deutsche Telekom; SoftBank; stated % 46.6%; 4.9%; 51.9%; 0.4%; 4.9%,0001193125-22-123750
+2022-04-27,proxy: first committee cyber/privacy mention,Nominating and Corporate Governance Committee — cybersecurity,0001193125-22-123750
+2022-04-27,proxy: first committee cyber/privacy mention,Nominating and Corporate Governance Committee — information security,0001193125-22-123750
+2022-04-27,proxy: first committee cyber/privacy mention,Nominating and Corporate Governance Committee — privacy,0001193125-22-123750
+2022-07-29,10-K/10-Q: charge/settlement/recovery (10-Q),"amounts $150 million: In addition to the committed aggregate incremental spend of $150 million for data security and related technology in 2022 and 2023 under the proposed settlement agreement, we intend to commit substantial additional resources towards cybersecurity initiatives over the next several years. 29 Table of ",0001283699-22-000117
+2022-07-29,10-K/10-Q: charge/settlement/recovery (10-Q),"amounts $300 million: Legal-related expenses, including from the impact of the settlement of certain litigation associated with the August 2021 cyberattack, of $300 million, net of tax, for the three and six months ended June 30, 2022.",0001283699-22-000117
+2022-07-29,10-K/10-Q: charge/settlement/recovery (10-Q),"amounts $400 million: Higher legal-related expenses, including the settlement of certain litigation associated with the August 2021 cyberattack of $400 million; and",0001283699-22-000117
+2022-10-27,10-K/10-Q: charge/settlement/recovery (10-Q),"amounts $ 50 million: During the three and nine months ended September 30, 2022, we recognized $ 50 million in reimbursements from insurance carriers for costs incurred related to the August 2021 cyberattack, which is included as a reduction to Selling, general and administrative expenses on our Condensed Consolidated St",0001283699-22-000141
+2022-10-27,10-K/10-Q: charge/settlement/recovery (10-Q),"amounts $150 million: In addition to the committed aggregate incremental spend of $150 million for data security and related technology in 2022 and 2023 under the proposed settlement agreement, we intend to commit substantial additional resources towards cybersecurity initiatives over the next several years.",0001283699-22-000141
+2022-10-27,10-K/10-Q: charge/settlement/recovery (10-Q),"amounts $286 million: Legal-related expenses, net of recoveries, including from the impact of the settlement of certain litigation associated with the August 2021 cyberattack, of $286 million, net of tax, for the nine months ended September 30, 2022.",0001283699-22-000141
+2022-10-27,10-K/10-Q: charge/settlement/recovery (10-Q),"amounts $50 million: During the three and nine months ended September 30, 2022, we recognized $50 million in reimbursements from insurance carriers for costs incurred related to the August 2021 cyberattack.",0001283699-22-000141
+2022-10-27,10-K/10-Q: charge/settlement/recovery (10-Q),"amounts $400 million: Higher legal-related expenses, net of recoveries, including $400 million recognized in June 2022 for the settlement of certain litigation associated with the August 2021 cyberattack; partially offset by",0001283699-22-000141
+2022-11-22,"director departure (v2, first disclosure)",Omar Tazi,0001193125-22-290740
+2022-11-25,breach occurrence (PRC),T-Mobile USA; 3 record(s); in analysis sample 1,CANONICAL_V3
+2023-01-19,incident 8-K (7.01/8.01),"[d641142d8k.htm] On January 5, 2023, T-Mobile US, Inc. (the “Company,” “we,” or “our”) identified that a bad actor was obtaining data through a single Application Programming Interface (“API”) without authorization. || [d641142d8k.htm] We promptly commenced an investigation with external cybersecuri",0001193125-23-010949
+2023-01-19,public notification (PRC reported_date),breach 2022-11-25; PRC source state AG; incident 8-K 0001193125-23-010949,g2_disclosure_channel
+2023-02-01,breach occurrence (PRC),"T-Mobile USA, Inc.; 3 record(s); in analysis sample 1",CANONICAL_V3
+2023-02-03,"director departure (v2, first disclosure)",Bavan Holloway,0001193125-23-024130
+2023-02-13,"exec departure (v2, first disclosure)",Neville Ray,0001193125-23-035719
+2023-02-14,10-K/10-Q: charge/settlement/recovery (10-K),"amounts $150 million: In addition to the committed aggregate incremental spend of $150 million for data security and related technology in 2022 and 2023 under the proposed settlement agreement, we intend to allocate substantial additional resources towards cybersecurity initiatives over the next several years.",0001283699-23-000016
+2023-02-14,10-K/10-Q: charge/settlement/recovery (10-K),"amounts $100 million: During the year ended December 31, 2022, we recognized $100 million in reimbursements from insurance carriers for costs incurred related to the August 2021 cyberattack.",0001283699-23-000016
+2023-02-14,10-K/10-Q: charge/settlement/recovery (10-K),"amounts $400 million; $100 million: Higher legal-related expenses, net of recoveries, including $400 million recognized in June 2022 for the settlement of certain litigation associated with the August 2021 cyberattack, partially offset by $100 million in reimbursements from insurance carriers received in 2022 associated with the Augus",0001283699-23-000016
+2023-02-14,10-K/10-Q: charge/settlement/recovery (10-K),"amounts $293 million: Certain legal-related expenses, net of recoveries, including from the impact of the settlement of certain litigation associated with the August 2021 cyberattack, of $293 million, net of tax, for the year ended December 31, 2022.",0001283699-23-000016
+2023-02-14,10-K/10-Q: charge/settlement/recovery (10-K),"amounts $ 100 million: During the year ended December 31, 2022, we recognized $ 100 million in reimbursements from insurance carriers for costs incurred related to the August 2021 cyberattack, which is included as a reduction to Selling, general and administrative expenses on our Consolidated Statements of Comprehensive I",0001283699-23-000016
+2023-02-24,breach occurrence (PRC),T-Mobile; 1 record(s); in analysis sample 1,CANONICAL_V3
+2023-04-27,10-K/10-Q: charge/settlement/recovery (10-Q),"amounts $50 million: During the three months ended March 31, 2023, we recognized $50 million in reimbursements from insurance carriers for costs incurred related to the August 2021 cyberattack.",0001283699-23-000087
+2023-04-27,10-K/10-Q: charge/settlement/recovery (10-Q),"amounts $ 11,862; $ 11,201; $ 661: While we have made progress to date, we plan to continue to make substantial investments to strengthen our cybersecurity program in future periods. 31 Table of Contents Results of Operations Set forth below is a summary of our consolidated financial results: Three Months Ended March 31, Change (in m",0001283699-23-000087
+2023-04-27,10-K/10-Q: charge/settlement/recovery (10-Q),"amounts $ 50 million: During the three months ended March 31, 2023, we recognized $ 50 million in reimbursements from insurance carriers for costs incurred related to the August 2021 cyberattack, which is included as a reduction to Selling, general 23 Index for Notes to the Condensed Consolidated Financial Statements and",0001283699-23-000087
+2023-04-28,breach occurrence (PRC),T-Mobile USA; 1 record(s); in analysis sample 1,CANONICAL_V3
+2023-04-28,proxy CD&A: pay metric adjusted for the August 2021 cyberattack,"If none of the performance thresholds had been achieved during 2022, no awards would have been paid. ⬛ PROXY STATEMENT 2023 47 Table of Contents Executive Compensation Metric Weight Minimum Performance (in millions) Target Performance (in millions) Maximum Performance (in millions) Actual Performance (in millions) Achievement US GAAP Service Revenue 20% $56,917 $59,917 $60,667 $61,323 200 % Total Net Additions 20% 4.",0001193125-23-126842
+2023-04-28,proxy CD&A: pay metric adjusted for the August 2021 cyberattack,"Actual performance of Free Cash Flow under our 2022 STIP equals Free Cash Flow for the full year 2022 of $7,656 million as reported in our Annual Report on Form 10-K, plus the impact of the August 2021 cyberattack of $40 million.",0001193125-23-126842
+2023-04-28,proxy: controlled-company status,holders Deutsche Telekom; SoftBank; stated % 54.0%; 0.4%; 3.3%,0001193125-23-126842
+2023-04-28,proxy: first committee cyber/privacy mention,Nominating and Corporate Governance Committee — data security,0001193125-23-126842
+2023-04-28,public notification (PRC reported_date),breach 2023-02-01; PRC source state AG; incident 8-K none within +/-30d,g2_disclosure_channel
+2023-04-28,public notification (PRC reported_date),breach 2023-02-24; PRC source state AG; incident 8-K none within +/-30d,g2_disclosure_channel
+2023-04-28,public notification (PRC reported_date),breach 2023-04-28; PRC source other; incident 8-K none within +/-30d,g2_disclosure_channel
+2023-07-27,10-K/10-Q: charge/settlement/recovery (10-Q),"amounts $ 400 million; $ 50 million: In connection with the proposed class action settlement and the separate settlements, we recorded a total pre-tax charge of approximately $ 400 million in the second quarter of 2022. 24 Index for Notes to the Condensed Consolidated Financial Statements During the six months ended June 30, 2023, we r",0001283699-23-000134
+2023-07-27,10-K/10-Q: charge/settlement/recovery (10-Q),"amounts $ 12,070; $ 11,445; $ 625; $ 23,932; $ 22,646; $ 1,286: While we have made progress to date, we plan to continue to make substantial investments to strengthen our cybersecurity program in future periods. 32 Table of Contents Results of Operations Set forth below is a summary of our consolidated financial results: Three Months Ended June 30, Change Six Mo",0001283699-23-000134
+2023-07-27,10-K/10-Q: charge/settlement/recovery (10-Q),"amounts $50 million: During the six months ended June 30, 2023, we recognized $50 million in reimbursements from insurance carriers for costs incurred related to the August 2021 cyberattack.",0001283699-23-000134
+2023-07-27,10-K/10-Q: charge/settlement/recovery (10-Q),"amounts $400 million: Lower legal-related expenses, primarily driven by the settlement of certain litigation associated with the August 2021 cyberattack of $400 million during the six months ended June 30, 2022; and",0001283699-23-000134
+2023-07-27,10-K/10-Q: charge/settlement/recovery (10-Q),"amounts $300 million; $32 million: Legal-related expenses, net, including the impact of the settlement of certain litigation associated with the August 2021 cyberattack, of $300 million for the three and six months ended June 30, 2022, compared to Legal-related recoveries, net, of $32 million for the six months ended June 30, 2023.",0001283699-23-000134
+2023-07-27,10-K/10-Q: charge/settlement/recovery (10-Q),"amounts $400 million: Lower legal-related expenses, primarily driven by the settlement of certain litigation associated with the August 2021 cyberattack of $400 million during the three months ended June 30, 2022;",0001283699-23-000134
+2023-09-08,"exec departure (v2, first disclosure)",Peter Ewens,0001193125-23-231377
+2023-10-25,10-K/10-Q: charge/settlement/recovery (10-Q),"amounts $ 50 million: During each of the nine months ended September 30, 2023 and 2022, we recognized $ 50 million in reimbursements from insurance carriers for costs incurred related to the August 2021 cyberattack, which is included as a reduction to Selling, general and administrative expenses on our Condensed Consolid",0001283699-23-000151
+2023-10-25,10-K/10-Q: charge/settlement/recovery (10-Q),"amounts $ 12,288; $ 11,548; $ 740; $ 36,220; $ 34,194; $ 2,026: While we have made progress to date, we plan to continue to make substantial investments to strengthen our cybersecurity program in future periods. 33 Table of Contents Results of Operations Set forth below is a summary of our consolidated financial results: Three Months Ended September 30, Change N",0001283699-23-000151
+2023-10-25,10-K/10-Q: charge/settlement/recovery (10-Q),"amounts $50 million: During the nine months ended September 30, 2023, we recognized $50 million in reimbursements from insurance carriers for costs incurred related to the August 2021 cyberattack.",0001283699-23-000151
+2023-10-25,10-K/10-Q: charge/settlement/recovery (10-Q),"amounts $32 million; $14 million; $286 million: Legal-related recoveries, net, associated with the settlement of certain litigation resulting from the August 2021 cyberattack, of $32 million for the nine months ended September 30, 2023, compared to $14 million in Legal-related recoveries, net, and $286 million in Legal-related expenses, net, for ",0001283699-23-000151
+2023-10-25,10-K/10-Q: charge/settlement/recovery (10-Q),"amounts $400 million: Lower legal-related expenses, including $400 million recognized in June 2022 associated with the settlement of certain litigation resulting from the August 2021 cyberattack; and",0001283699-23-000151
+2024-02-02,10-K Item 1C: named security role and oversight,"As part of management’s oversight of cybersecurity, our Chief Security Officer (“CSO”) presents on our cybersecurity practices to the Nominating and Corporate Governance Committee of our Board of Directors (the “NCG Committee”) and to our full Board of Directors on a periodic basis.",0001283699-24-000008
+2024-02-02,10-K/10-Q: charge/settlement/recovery (10-K),"amounts $32 million; $293 million: Legal-related recoveries, net, associated with the settlement of certain litigation resulting from the August 2021 cyberattack, of $32 million for the year ended December 31, 2023, compared to $293 million in Legal-related expenses, net, for the year ended December 31, 2022.",0001283699-24-000008
+2024-02-02,10-K/10-Q: charge/settlement/recovery (10-K),"amounts $400 million: Lower legal-related expenses, including from the impact of $400 million recognized in June 2022 associated with the settlement of certain litigation resulting from the August 2021 cyberattack;",0001283699-24-000008
+2024-02-02,10-K/10-Q: charge/settlement/recovery (10-K),"amounts $ 50 million; $ 100 million: During the years ended December 31, 2023 and 2022, we recognized $ 50 million and $ 100 million, respectively, in reimbursements from insurance carriers for costs incurred related to the August 2021 cyberattack, which is included as a reduction to Selling, general and administrative expense on our C",0001283699-24-000008
+2024-04-26,10-K/10-Q: charge/settlement/recovery (10-Q),"amounts $ 50 million: During the three months ended March 31, 2023, we recognized $ 50 million in reimbursements from insurance carriers for costs incurred related to the August 2021 cyberattack, which is included as a reduction to Selling, general and administrative expenses on our Condensed Consolidated Statements of C",0001283699-24-000065
+2024-04-26,proxy CD&A: pay metric adjusted for the August 2021 cyberattack,"Actual performance of Core Adjusted EBITDA equals Core Adjusted EBITDA for the full year 2023 of $29,116 million as reported in our Annual Report on Form 10-K, minus $97 million, reflecting the impact of certain 2023 device promotions. 2 Actual performance of Total Net Additions equals Total Net Additions for the full year 2023 of 5.932 million as reported in our Annual Report on Form 10-K, plus 1.441 million to adju",0001193125-24-117940
+2024-04-26,proxy: controlled-company status,holders Deutsche Telekom; SoftBank; stated % 57.9%; 7.8%,0001193125-24-117940
+2024-07-31,10-K/10-Q: charge/settlement/recovery (10-Q),"amounts $ 50 million: During the six months ended June 30, 2023, we recognized $ 50 million in reimbursements from insurance carriers for costs incurred related to the August 2021 cyberattack, which is included as a reduction to Selling, general and administrative expenses on our Condensed Consolidated Statements of Comp",0001283699-24-000111
+2024-10-23,10-K/10-Q: charge/settlement/recovery (10-Q),"amounts $ 50 million: During the nine months ended September 30, 2023, we recognized $ 50 million in reimbursements from insurance carriers for costs incurred related to the August 2021 cyberattack, which is included as a reduction to Selling, general and administrative expenses on our Condensed Consolidated Statements o",0001283699-24-000142
+2025-01-31,10-K Item 1C: named security role and oversight,"As part of management’s oversight of cybersecurity, our Chief Security Officer (“CSO”) presents on our cybersecurity practices to the Nominating and Corporate Governance Committee of our Board of Directors (the “NCG Committee”) and to our full Board of Directors on a periodic basis.",0001283699-25-000012
+2025-01-31,10-K/10-Q: charge/settlement/recovery (10-K),"amounts $ 105 million; $ 50 million; $ 100 million: During the years ended December 31, 2024, 2023 and 2022, we recognized $ 105 million, $ 50 million and $ 100 million, respectively, in reimbursements from insurance carriers for costs incurred related to the August 2021 cyberattack, which is included as a reduction to Selling, general and administra",0001283699-25-000012
+2025-04-18,proxy: controlled-company status,holders Deutsche Telekom; SoftBank; stated % 58.9%; 7.5%,0001193125-25-085753
+2026-02-11,10-K Item 1C: named security role and oversight,"See “Risk Factors – We have experienced cyberattacks and could in the future be further harmed by disruption, data loss or other security breaches, whether directly or indirectly through third parties whose products and services we rely on in operating our business .” Governance Disclosure of Management’s Responsibilities Chief Information Officer The Chief Information Officer is responsible for overseeing the Compan",0001283699-26-000010
+2026-02-11,10-K/10-Q: charge/settlement/recovery (10-K),"amounts $ 105 million; $ 50 million: During the years ended December 31, 2024 and 2023, we recognized $ 105 million and $ 50 million, respectively, in reimbursements from insurance carriers for costs incurred related to the August 2021 cyberattack, which is included as a reduction to Selling, general and administrative expenses on our ",0001283699-26-000010
+2026-04-27,proxy CD&A: pay metric adjusted for the August 2021 cyberattack,"Forward-looking statements are based on current expectations and assumptions, which are subject to risks and uncertainties that may cause actual results to differ materially from the forward-looking statements, including, but not limited to, our efforts to reduce our greenhouse gas emissions, as well as changes in laws or regulations affecting us, such as changes in cybersecurity, data privacy, environmental, safety ",0001193125-26-181884
+2026-04-27,proxy CD&A: pay metric adjusted for the August 2021 cyberattack,"These device promotions created a non-cash contract asset benefiting Core Adjusted EBITDA, but with an in-year adverse impact to Service Revenues. 4 In connection with our annual short-term incentives, actual performance of Core Adjusted EBITDA for the full year 2025 as reported in our Annual Report on Form 10-K, further adjusted to reflect the impact of IP address sale performance to account for the difference betwe",0001193125-26-181884
+2026-04-27,proxy: controlled-company status,holders Deutsche Telekom; stated % 54.5%,0001193125-26-181884
+2026-04-27,proxy: first committee cyber/privacy mention,"Nominating, Corporate Governance and Compliance Committee — cybersecurity",0001193125-26-181884
+2026-04-27,proxy: first committee cyber/privacy mention,"Nominating, Corporate Governance and Compliance Committee — data security",0001193125-26-181884
+2026-04-27,proxy: first committee cyber/privacy mention,"Nominating, Corporate Governance and Compliance Committee — information security",0001193125-26-181884
+2026-04-27,proxy: first committee cyber/privacy mention,"Nominating, Corporate Governance and Compliance Committee — privacy",0001193125-26-181884
