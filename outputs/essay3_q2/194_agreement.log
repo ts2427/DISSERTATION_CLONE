@@ -1,0 +1,128 @@
+Rows matched: 80 | T-Mobile calibration filings: 7 (sheet_ids [33, 37, 39, 51, 53, 74, 75])
+Sheet 31: source=random30, CIK 1283699, accession 0001193125-13-193449 -> in the T-Mobile calibration 7: False
+
+   variant                       sample                   field  n  agreement  kappa  ref_Y  clf_Y  both_Y  clf_only_Y  ref_only_Y  precision  recall
+         A                       all 80          exec_departure 80     0.9125 0.8034     29     24    23.0         1.0         6.0     0.9583  0.7931
+         A                       all 80           ceo_departure 80     0.9625 0.7073      6      5     4.0         1.0         2.0     0.8000  0.6667
+         A                       all 80 director_only_departure 80     0.9625 0.8582     14     11    11.0         0.0         3.0     1.0000  0.7857
+         A                       all 80           pre_announced 80     0.8875 0.6980     20     12    12.0         0.0         8.0     1.0000  0.6000
+         A excl. T-Mobile calibration 7          exec_departure 73     0.9452 0.8760     25     23    22.0         1.0         3.0     0.9565  0.8800
+         A excl. T-Mobile calibration 7           ceo_departure 73     0.9726 0.7853      5      5     4.0         1.0         1.0     0.8000  0.8000
+         A excl. T-Mobile calibration 7 director_only_departure 73     0.9589 0.8192     11      8     8.0         0.0         3.0     1.0000  0.7273
+         A excl. T-Mobile calibration 7           pre_announced 73     0.8904 0.7191     19     12    12.0         0.0         7.0     1.0000  0.6316
+         B                       all 80          exec_departure 80     0.8875 0.7289     23     24    19.0         5.0         4.0     0.7917  0.8261
+         B                       all 80           ceo_departure 80     0.9500 0.4754      3      5     2.0         3.0         1.0     0.4000  0.6667
+         B                       all 80 director_only_departure 80     0.9500 0.8042     13     11    10.0         1.0         3.0     0.9091  0.7692
+         B                       all 80           pre_announced 80     0.8375 0.5192     17     12     9.0         3.0         8.0     0.7500  0.5294
+         B excl. T-Mobile calibration 7          exec_departure 73     0.8904 0.7400     21     23    18.0         5.0         3.0     0.7826  0.8571
+         B excl. T-Mobile calibration 7           ceo_departure 73     0.9452 0.4729      3      5     2.0         3.0         1.0     0.4000  0.6667
+         B excl. T-Mobile calibration 7 director_only_departure 73     0.9589 0.8192     11      8     8.0         0.0         3.0     1.0000  0.7273
+         B excl. T-Mobile calibration 7           pre_announced 73     0.8356 0.5355     16     12     9.0         3.0         7.0     0.7500  0.5625
+A-S31blind                       all 80           ceo_departure 79     0.9747 0.7865      5      5     NaN         NaN         NaN        NaN     NaN
+A-S31blind excl. T-Mobile calibration 7           ceo_departure 72     0.9861 0.8816      4      5     NaN         NaN         NaN        NaN     NaN
+
+Person agreement (exec departure Y in both): 19/23 share at least one departing surname
+
+Filings with any disagreement: 17 of 80
+
+[2] Frontier Communications 2022-06-24 (calibration) fields: exec_departure | restates=N
+   hand: exec=Y / ceo_=N / dire=N / pre_=N | Donald W. Daniels, SVP and Chief Accounting Officer
+   clf : exec=N / ceo_=N / dire=N / pre_=N | 
+   note: Leaving after transition period; no departure date stated, CAO role passes to McGloin effective 2022-06-24.
+   text: William McGloin, currently Frontier’s Vice President, Controller, has been appointed Chief Accounting Officer and Controller, effective June 24, 2022, with the roles of Chief Accounting Officer and Controller being combined. Mr. McGloin, 52, has served at Frontier for eight years, most recently as Frontier’s Vice President, Controller, since 2018 and as Vice President, Assistant Controller since 2014. Mr. McGloin is a Certified Public Accountant 
+
+[7] Snowflake Inc. 2024-02-28 (random30) fields: pre_announced | restates=N
+   hand: exec=Y / ceo_=Y / dire=N / pre_=Y | Frank Slootman, CEO (retired; remains Chairman)
+   clf : exec=Y / ceo_=Y / dire=N / pre_=N | Frank Slootman (CEO: Chief Executive Officer); Frank Slootman (CEO: the Company’s new Chief Executive Officer)
+   note: Retirement effective 2024-02-27, before reference date 2024-03-01.
+   text: Effective February 27, 2024, Frank Slootman retired as Chief Executive Officer of Snowflake Inc. (the “ Company ”), and Sridhar Ramaswamy was appointed to succeed Mr. Slootman as the Company’s new Chief Executive Officer. Mr. Slootman will remain Chairman of the Company’s board of directors (the “ Board ”), and Mr. Ramaswamy will serve as a Class III member of the Board. Prior to his appointment as Chief Executive Officer, Mr. Ramaswamy, age 57, 
+
+[14] PACCAR 2018-02-16 (calibration) fields: director_only_departure | restates=N
+   hand: exec=N / ceo_=N / dire=Y / pre_=N | Luiz Kaufmann, director (retirement 2018-04-29)
+   clf : exec=N / ceo_=N / dire=N / pre_=N | 
+   note: Director departure mentioned incidentally as the vacancy filled by Feder.
+   text: On February 16, 2018, the PACCAR Inc Board of Directors elected Franklin L. Feder to the PACCAR Inc Board of Directors effective April 30, 2018. Mr. Feder will serve as a Class III director to fill the vacancy created by the retirement of Luiz Kaufmann on April 29, 2018. The information required by Item 5.02(d)(3) is not available at this time. There are no reportable transactions under Item 404(a) of Regulation S-K. He will receive compensation 
+
+[21] Sysco Corporation 2022-05-04 (random30) fields: pre_announced | restates=N
+   hand: exec=Y / ceo_=N / dire=N / pre_=Y | Tim Ørting Jørgensen, EVP and President, Foodservice Operations International
+   clf : exec=Y / ceo_=N / dire=N / pre_=N | Mr. Tim (other_exec: Named Executive Officer)
+   note: Departed 2022-05-03, before reference date (filing predates the event).
+   text: Departure of Named Executive Officer (Item 5.02(b)) Mr. Tim Ørting Jørgensen, the Executive Vice President and President, Foodservice Operations, International of Sysco Corporation (“ Sysco ” or the “ Company ”), has departed the Company effective May 3, 2022. Additionally, effective May 3, 2022, Mr. Ørting’s Executive Agreement (the “ Agreement ”) dated August 21, 2020 was terminated, resulting in his eligibility to receive a payment in lieu of 
+
+[27] Verizon 2023-03-03 (random30) fields: pre_announced | restates=N
+   hand: exec=Y / ceo_=N / dire=N / pre_=Y | Matthew D. Ellis, EVP and CFO
+   clf : exec=Y / ceo_=N / dire=N / pre_=N | Matthew D. Ellis (CFO: Verizon’s Executive Vice President and Chief Financial Officer); Anthony T. Skiadas (PAO: Verizon’s Senior Vice President and Controller); Kyle Malady (president: Executive Vice President and President)
+   note: Succession announced 2023-03-02, before reference date; leaves 2023-05-01. Kyle Malady ceased one EVP role but took another; not coded as a departure.
+   text: On March 2, 2023, the Verizon Board of Directors appointed Anthony T. Skiadas, Verizon’s Senior Vice President and Controller, to succeed Matthew D. Ellis as Verizon’s Executive Vice President and Chief Financial Officer, effective May 1, 2023. On the same day, the Human Resources Committee of the Board of Directors approved a compensation increase for Mr. Skiadas in connection with his appointment. Effective May 1, 2023, Mr. Skiadas’ base salary
+
+[31] T-Mobile USA, Inc. 2013-05-02 (random30) fields: ceo_departure | restates=N
+   hand: exec=Y / ceo_=Y / dire=Y / pre_=Y | Roger D. Linquist, Mark A. Stachiw, Dennis T. Currier, Christine B. Kornegay, Malcolm M. Lorang (resigned as executive officers); J. Braxton Carter (resigned as CAO, remained CFO); Arthur C. Patterson, John F. Callahan Jr., C. Kevin Landry (directors)
+   clf : exec=Y / ceo_=N / dire=Y / pre_=Y | Kevin Landry (director: directors); Braxton Carter (PAO: Chief Accounting Officer); Malcolm M. Lorang (other_exec: executive officer)
+   note: Transaction-driven (MetroPCS/T-Mobile combination, 2013-04-30). CEO = Y after verification: the registrant's own 8-K exhibit of 2013-04-24 (MetroPCS Q1 2013 release) identifies Linquist as Chairman and CEO of MetroPCS, the registrant before its renaming. Originally coded unclear from sheet text alone.
+   text: Board of Directors On April 30, 2013, in connection with the consummation of the Transaction and the Mergers, the Board was increased to 11 members, and Roger D. Linquist, Arthur C. Patterson, John (Jack) F. Callahan, Jr., and C. Kevin Landry resigned from their positions as directors of the Company. W. Michael Barnes and James N. Perry, Jr. continue to serve as directors of the Company. Effective April 30, 2013, the following individuals were ap
+
+[32] Fidelity National Information Services, Inc. 2023-08-22 (calibration) fields: exec_departure | restates=N
+   hand: exec=Y / ceo_=N / dire=N / pre_=N | Erik D. Hoag, CFO
+   clf : exec=N / ceo_=N / dire=N / pre_=N | 
+   note: Left CFO position 2023-08-21, after reference date; remains non-executive employee through year end.
+   text: Effective as of August 21, 2023, the Board of Directors of Fidelity National Information Services, Inc. (the “Company”) appointed James Kehoe as the Chief Financial Officer of the Company. Mr. Kehoe, age 60, joins FIS from Walgreens Boots Alliance, Inc., where he served as Executive Vice President and Global Chief Financial Officer since June 2018. Prior to that, Mr. Kehoe served as Global Chief Financial Officer and Corporate Officer at Takeda P
+
+[37] T-Mobile USA 2020-04-16 (calibration, TMO-cal7) fields: exec_departure | restates=Y
+   hand: exec=Y / ceo_=N / dire=N / pre_=N | David Carey, EVP Corporate Services
+   clf : exec=N / ceo_=N / dire=N / pre_=N | 
+   note: Text cites prior announcement dated 2020-03-12, after reference date 2020-03-02. An earlier (e) filing dated 2020-02-12 set his termination terms but is not referenced here.
+   text: As previously announced on March 12, 2020, David Carey is retiring from his position as Executive Vice President, Corporate Services of T-Mobile US, Inc. (the “Company”). On April 10, 2020, the Company and Mr. Carey determined that Mr. Carey would depart the Company effective April 13, 2020. In connection with his departure, Mr. Carey will be eligible to receive certain severance payments and benefits described in, and, in accordance with the ter
+
+[39] T-Mobile USA 2020-02-19 (calibration, TMO-cal7) fields: exec_departure, pre_announced | restates=N
+   hand: exec=Y / ceo_=N / dire=N / pre_=Y | David Carey, EVP Corporate Services
+   clf : exec=N / ceo_=N / dire=N / pre_=N | 
+   note: Filed under (e): amendment states employment will automatically terminate by 2020-07-01 or on position elimination. Agreement dated 2020-02-12, before reference date.
+   text: On February 12, 2020, T-Mobile US, Inc. (“T-Mobile”) adopted the first amendment to the compensation term sheet, dated as of April 28, 2018 (the “Compensation Term Sheet”), with David Carey, T-Mobile’s Executive Vice President, Corporate Services (the “Amendment”). The Amendment amends the Compensation Term Sheet to extend the term of Mr. Carey’s employment thereunder through, and to clarify that Mr. Carey’s employment with T-Mobile will automati
+
+[52] ServiceNow Inc. 2024-10-23 (calibration) fields: exec_departure | restates=N
+   hand: exec=N / ceo_=N / dire=N / pre_=N | 
+   clf : exec=Y / ceo_=N / dire=N / pre_=N | Amit Zavery (COO: President Chief Product Officer Chief Operating Officer)
+   note: 
+   text: On October 21, 2024, the Board of Directors (the "Board") of the Company appointed Amit Zavery, age 53, as President, Chief Product Officer and Chief Operating Officer of the Company, effective October 28, 2024. Mr. Zavery joins the Company from Alphabet Inc., a multinational technology company, where he served as VP/GM and Head of Platform, Google Cloud from March 2019. Prior to joining Google Cloud, Mr. Zavery served in various leadership roles
+
+[53] T-Mobile USA 2020-04-24 (calibration, TMO-cal7) fields: exec_departure, ceo_departure | restates=Y
+   hand: exec=Y / ceo_=Y / dire=Y / pre_=N | John Legere, director (resigned from Board); former CEO
+   clf : exec=N / ceo_=N / dire=Y / pre_=N | John Legere (director: Board of Directors (the “Board); John Legere (director: Board)
+   note: Filing's own event is the Board resignation (2020-04-24). The CEO departure (2020-04-01) is restated as background; both after reference date.
+   text: On April 24, 2020, John Legere notified T-Mobile US, Inc. (the “Company”) that he was resigning from the Board of Directors (the “Board”) of the Company, effective immediately, to pursue other options. Mr. Legere noted that he was not resigning because of any disagreement with management or the Board on any matter. Previously, on April 1, 2020, upon his departure as CEO of the Company, Mr. Legere had stated that intended to continue as a member o
+
+[58] Parker-Hannifin Corporation 2022-07-28 (calibration) fields: pre_announced | restates=N
+   hand: exec=Y / ceo_=N / dire=N / pre_=N | Andrew M. Weeks, VP and President, Engineered Materials Group
+   clf : exec=Y / ceo_=N / dire=N / pre_=unclear | Andrew M. Weeks (other_exec: Vice President)
+   note: Notice 2022-07-26, after reference date. Verified: Weeks is listed among executive officers in Parker's FY2021 10-K.
+   text: On July 26, 2022, Andrew M. Weeks notified Parker-Hannifin Corporation (the “Company”) that he will retire on August 31, 2022. Mr. Weeks will continue to serve as Vice President and President – Engineered Materials Group until his successor is named, and thereafter as Vice President until his retirement date. In connection with his retirement, the Company and Mr. Weeks have entered into a separation agreement, effective July 26, 2022 (the “Separa
+
+[62] Fidelity National Information Services, Inc. 2024-02-01 (calibration) fields: director_only_departure | restates=N
+   hand: exec=N / ceo_=N / dire=Y / pre_=N | Vijay D'Silva and Louise Parent, directors (declining re-election)
+   clf : exec=N / ceo_=N / dire=N / pre_=N | 
+   note: Notice 2024-01-31, after reference date; transaction-driven.
+   text: In connection with the closing of the Transaction, FIS announced that Vijay D’Silva and Louise Parent have agreed to join the board of managers of the Purchased Entity and, as a consequence, Vijay D’Silva and Louise Parent informed FIS on January 31, 2024 that they will decline to stand for re-election at FIS’s 2024 annual meeting of shareholders. Vijay D’Silva and Louise Parent each informed FIS that their decision not to stand for re-election w
+
+[63] Pfizer Inc 2007-05-23 (calibration) fields: pre_announced | restates=N
+   hand: exec=Y / ceo_=N / dire=N / pre_=Y | John L. LaMattina, SVP and President, R&D; Alan G. Levin, SVP and CFO
+   clf : exec=Y / ceo_=N / dire=N / pre_=N | Pfizer Research (CFO: Senior Vice President; Chief Financial Officer)
+   note: Board authorization 2007-05-18, before reference date.
+   text: On May 18, 2007, the Board of Directors authorized the Company to enter into agreements whereby Dr. John L. LaMattina, Senior Vice President; President - Pfizer Research and Development, will retire, and Mr. Alan G. Levin, Senior Vice President; Chief Financial Officer, will resign, from the Company when their successors are appointed but no later than December 31, 2007. Dr. LaMattina has served the Company for over 30 years in various capacities
+
+[66] Microsoft Corporation 2021-05-20 (random30) fields: exec_departure, pre_announced | restates=N
+   hand: exec=Y / ceo_=N / dire=N / pre_=Y | Jean-Philippe Courtois, EVP (ceases to be an executive officer 2021-06-30)
+   clf : exec=N / ceo_=N / dire=N / pre_=N | 
+   note: Remains an employee in a new role. Filing predates reference date.
+   text: Effective July 1, 2021, Jean-Phillipe Courtois will begin a new role within Microsoft as Executive Vice President and President, National Transformation Partnerships. As of June 30, 2021, he will no longer be an executive officer.
+
+[71] Southwest Airlines Co. 2017-01-12 (random30) fields: ceo_departure, pre_announced | restates=N
+   hand: exec=Y / ceo_=N / dire=N / pre_=Y | Gary C. Kelly, President (relinquishes President title; remains CEO and Chairman)
+   clf : exec=Y / ceo_=Y / dire=N / pre_=N | Gary C. Kelly (CEO: Chief Executive Officer)
+   note: Leaves the president position only; not a CEO departure. Effective 2017-01-10, before reference date.
+   text: On January 10, 2017, Thomas M. Nealon was appointed as President of Southwest Airlines Co. (the “Company”), effective the same day. Mr. Nealon, 55, previously served as the Company’s Executive Vice President Strategy & Innovation since January 2016. Prior to becoming an executive officer of the Company, Mr. Nealon served on the Company’s Board of Directors from December 2010 until November 2015. Mr. Nealon has also served as Group Executive Vice 
+
+[76] Hewlett Packard Enterprise Company 2024-02-08 (calibration) fields: director_only_departure, pre_announced | restates=N
+   hand: exec=N / ceo_=N / dire=Y / pre_=Y | Daniel Ammann, director
+   clf : exec=N / ceo_=N / dire=N / pre_=N | 
+   note: Notice 2024-02-06, before reference date.
+   text: On February 6, 2024, Daniel Ammann notified the Board of Directors of Hewlett Packard Enterprise Company that he does not wish to seek re-election at our 2024 Annual Meeting of Stockholders. Accordingly, Mr. Ammann’s term as a director will end when his current term expires at our 2024 Annual Meeting of Stockholders, which is expected to be held on April 10, 2024.

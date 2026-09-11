@@ -1,0 +1,19 @@
+variant,sample,field,n,agreement,kappa,ref_Y,clf_Y,both_Y,clf_only_Y,ref_only_Y,precision,recall
+A,all 80,exec_departure,80,0.9125,0.8034,29,24,23.0,1.0,6.0,0.9583,0.7931
+A,all 80,ceo_departure,80,0.9625,0.7073,6,5,4.0,1.0,2.0,0.8,0.6667
+A,all 80,director_only_departure,80,0.9625,0.8582,14,11,11.0,0.0,3.0,1.0,0.7857
+A,all 80,pre_announced,80,0.8875,0.698,20,12,12.0,0.0,8.0,1.0,0.6
+A,excl. T-Mobile calibration 7,exec_departure,73,0.9452,0.876,25,23,22.0,1.0,3.0,0.9565,0.88
+A,excl. T-Mobile calibration 7,ceo_departure,73,0.9726,0.7853,5,5,4.0,1.0,1.0,0.8,0.8
+A,excl. T-Mobile calibration 7,director_only_departure,73,0.9589,0.8192,11,8,8.0,0.0,3.0,1.0,0.7273
+A,excl. T-Mobile calibration 7,pre_announced,73,0.8904,0.7191,19,12,12.0,0.0,7.0,1.0,0.6316
+B,all 80,exec_departure,80,0.8875,0.7289,23,24,19.0,5.0,4.0,0.7917,0.8261
+B,all 80,ceo_departure,80,0.95,0.4754,3,5,2.0,3.0,1.0,0.4,0.6667
+B,all 80,director_only_departure,80,0.95,0.8042,13,11,10.0,1.0,3.0,0.9091,0.7692
+B,all 80,pre_announced,80,0.8375,0.5192,17,12,9.0,3.0,8.0,0.75,0.5294
+B,excl. T-Mobile calibration 7,exec_departure,73,0.8904,0.74,21,23,18.0,5.0,3.0,0.7826,0.8571
+B,excl. T-Mobile calibration 7,ceo_departure,73,0.9452,0.4729,3,5,2.0,3.0,1.0,0.4,0.6667
+B,excl. T-Mobile calibration 7,director_only_departure,73,0.9589,0.8192,11,8,8.0,0.0,3.0,1.0,0.7273
+B,excl. T-Mobile calibration 7,pre_announced,73,0.8356,0.5355,16,12,9.0,3.0,7.0,0.75,0.5625
+A-S31blind,all 80,ceo_departure,79,0.9747,0.7865,5,5,,,,,
+A-S31blind,excl. T-Mobile calibration 7,ceo_departure,72,0.9861,0.8816,4,5,,,,,

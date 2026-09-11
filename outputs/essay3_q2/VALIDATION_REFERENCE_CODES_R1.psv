@@ -1,0 +1,81 @@
+sheet_id|company|filing_date|exec_departure|ceo_departure|director_only_departure|person_and_role|pre_announced|restates_prior_disclosure|notes
+1|Charter Communications|2023-02-24|N|N|N||N|N|
+2|Frontier Communications|2022-06-24|Y|N|N|Donald W. Daniels, SVP and Chief Accounting Officer|N|N|Leaving after transition period; no departure date stated, CAO role passes to McGloin effective 2022-06-24.
+3|GoDaddy.com, LLC|2022-01-26|N|N|N||N|N|
+4|PepsiCo, Inc.|2021-08-05|N|N|N||N|N|
+5|AT&T|2013-12-12|N|N|N||N|N|
+6|Nucor Corporation|2023-08-08|N|N|N||N|N|
+7|Snowflake Inc.|2024-02-28|Y|Y|N|Frank Slootman, CEO (retired; remains Chairman)|Y|N|Retirement effective 2024-02-27, before reference date 2024-03-01.
+8|Fidelity National Information Services, Inc.|2024-02-23|Y|N|N|Erik D. Hoag, CFO; Ido Gileadi, COO|Y|Y|Both departures restate earlier announcements (Hoag 2023-08-21, Gileadi 2023-04-17). Hoag remains an employee in a new role. Filing's own event is the (e) agreements.
+9|Sprint Nextel|2008-12-19|N|N|N||N|N|
+10|GoDaddy.com LLC|2021-12-06|N|N|N||N|N|
+11|Seagate Technology LLC|2017-10-18|N|N|N||N|N|
+12|Hewlett-Packard Company|2006-11-17|N|N|N||N|N|
+13|Duke Energy Corporation|2021-09-27|Y|N|N|Douglas F. Esamann, EVP Energy Solutions and President, Midwest/Florida Regions and Natural Gas Business (retired)|Y|Y|Retirement effective 2021-08-01, before reference date. Filing's own event is a consulting agreement. Verified: retirement first announced in Duke's 2021-03-30 release; Esamann was an EVP on the senior management team.
+14|PACCAR|2018-02-16|N|N|Y|Luiz Kaufmann, director (retirement 2018-04-29)|N|N|Director departure mentioned incidentally as the vacancy filled by Feder.
+15|The Home Depot|2014-02-28|N|N|N||N|N|
+16|Apple Inc.|2015-12-17|N|N|N||N|N|
+17|GoDaddy.com, LLC|2022-07-08|N|N|N||N|N|
+18|Marathon Petroleum Company LP|2018-08-10|Y|N|N|C. Michael Palmer, SVP Supply, Distribution and Planning, named executive officer|Y|N|Announced 2018-08-10, before reference date. Also named EVP on merger close, retirement effective 2019-01-01.
+19|Intuit Inc.|2018-05-22|Y|N|N|Dan Wernikoff, EVP and GM, Consumer Group|N|N|Notice 2018-05-21, after reference date. Filed under (b).
+20|Crown Castle|2014-02-21|N|N|N||N|N|
+21|Sysco Corporation|2022-05-04|Y|N|N|Tim Ørting Jørgensen, EVP and President, Foodservice Operations International|Y|N|Departed 2022-05-03, before reference date (filing predates the event).
+22|Intuit Inc.|2024-05-02|N|N|N||N|N|
+23|NBC Sports Group|2012-09-14|N|N|N||N|N|
+24|PACCAR|2018-05-04|N|N|N||N|N|
+25|Fidelity National Information Services, Inc.|2007-11-16|N|N|N||N|N|
+26|Adobe Systems Incorporated|2019-01-24|Y|N|Y|Brad Rencher, EVP and GM Digital Experience; Edward Barnholt and Robert Burgess, directors (not standing)|Y|N|Director notices 2019-01-17, Rencher announced 2019-01-24; both before reference date. Verified: Rencher was a named executive officer in Adobe's 2018 proxy.
+27|Verizon|2023-03-03|Y|N|N|Matthew D. Ellis, EVP and CFO|Y|N|Succession announced 2023-03-02, before reference date; leaves 2023-05-01. Kyle Malady ceased one EVP role but took another; not coded as a departure.
+28|AT&T|2013-02-04|N|N|N||N|N|
+29|Frontier Communications Parent, Inc.|2024-05-20|N|N|N||N|N|
+30|Uber Technologies, Inc.|2023-11-17|N|N|N||N|N|
+31|T-Mobile USA, Inc.|2013-05-02|Y|Y|Y|Roger D. Linquist, Mark A. Stachiw, Dennis T. Currier, Christine B. Kornegay, Malcolm M. Lorang (resigned as executive officers); J. Braxton Carter (resigned as CAO, remained CFO); Arthur C. Patterson, John F. Callahan Jr., C. Kevin Landry (directors)|Y|N|Transaction-driven (MetroPCS/T-Mobile combination, 2013-04-30). CEO = Y after verification: the registrant's own 8-K exhibit of 2013-04-24 (MetroPCS Q1 2013 release) identifies Linquist as Chairman and CEO of MetroPCS, the registrant before its renaming. Originally coded unclear from sheet text alone.
+32|Fidelity National Information Services, Inc.|2023-08-22|Y|N|N|Erik D. Hoag, CFO|N|N|Left CFO position 2023-08-21, after reference date; remains non-executive employee through year end.
+33|T-Mobile|2021-04-12|N|N|Y|Stephen Kappes, director|N|N|Notice 2021-04-06, after reference date.
+34|Sprint Nextel|2016-11-03|N|N|N||N|N|
+35|Uber Technologies, Inc.|2019-07-24|N|N|Y|Matt Cohler, director|Y|N|Notice 2019-07-23, before reference date.
+36|Uber Technologies, Inc.|2023-08-01|Y|N|N|Nelson Chai, CFO|N|N|Announced 2023-08-01, after reference date.
+37|T-Mobile USA|2020-04-16|Y|N|N|David Carey, EVP Corporate Services|N|Y|Text cites prior announcement dated 2020-03-12, after reference date 2020-03-02. An earlier (e) filing dated 2020-02-12 set his termination terms but is not referenced here.
+38|Intuit Inc.|2018-08-23|Y|Y|N|Brad Smith, President and CEO (becomes Executive Chairman); Tayloe Stansbury, EVP and CTO|N|N|Announced 2018-08-23, after reference date.
+39|T-Mobile USA|2020-02-19|Y|N|N|David Carey, EVP Corporate Services|Y|N|Filed under (e): amendment states employment will automatically terminate by 2020-07-01 or on position elimination. Agreement dated 2020-02-12, before reference date.
+40|Cisco Systems, Inc.|2012-09-19|N|N|Y|Jerry Yang, director|N|N|Notice 2012-09-13, after reference date.
+41|Intuit, Inc.|2014-02-11|N|N|N||N|N|
+42|Cencora, Inc.|2024-03-15|Y|Y|N|Steven H. Collis, CEO (retiring effective 2024-10-01; becomes Executive Chairman)|Y|Y|8-K/A restating the original 2024-03-12 filing; agreement and original disclosure dated before reference date.
+43|Comcast|2022-12-30|N|N|N||N|N|
+44|CenturyLink|2019-12-30|N|N|Y|Glen F. Post III and Harvey P. Perry, directors|Y|N|Notice 2019-12-28, before reference date.
+45|CenturyLink|2014-06-02|N|N|N||N|N|
+46|Duke Energy Corporation|2013-08-06|N|N|N||N|N|Promotion; no departing officer named.
+47|Verizon Communications Inc.|2024-02-02|N|N|N||N|N|
+48|CenturyLink|2022-03-28|Y|N|N|Indraneel Dev, EVP and CFO|Y|N|Announced 2022-03-28, before reference date; employment ends 2022-04-01.
+49|Charter Communications, Inc.|2013-05-02|N|N|Y|Stan Parker, Darren Glatt, Bruce Karsh, Edgar Lee, directors|unclear|N|Resignations tied to Liberty Media closing (2013-05-01, after reference date) under a 'previously announced' stockholders agreement with no date given.
+50|Verizon|2008-10-01|Y|N|N|William P. Barr, EVP and General Counsel|N|N|Announced 2008-09-29, after reference date.
+51|T-Mobile|2021-03-10|N|N|N||N|N|
+52|ServiceNow Inc.|2024-10-23|N|N|N||N|N|
+53|T-Mobile USA|2020-04-24|Y|Y|Y|John Legere, director (resigned from Board); former CEO|N|Y|Filing's own event is the Board resignation (2020-04-24). The CEO departure (2020-04-01) is restated as background; both after reference date.
+54|Uber Technologies, Inc.|2025-02-07|N|N|Y|Wan Ling Martello, director|N|N|Notice 2025-02-04, after reference date.
+55|T-Mobile USA, Inc.|2017-03-28|N|N|N||N|N|
+56|Caesars Entertainment, Inc.|2024-01-30|N|N|N||N|N|
+57|Sprint Corporation|2015-10-15|Y|N|N|Michael Schwartz, SVP Corporate Strategy and Development|Y|N|Notice 2015-10-09, before reference date. Title verified as SVP Corporate Strategy and Development; executive-officer or NEO status NOT verified in sources found. Sprint reported it under Item 5.02. Candidate for adjudication.
+58|Parker-Hannifin Corporation|2022-07-28|Y|N|N|Andrew M. Weeks, VP and President, Engineered Materials Group|N|N|Notice 2022-07-26, after reference date. Verified: Weeks is listed among executive officers in Parker's FY2021 10-K.
+59|Adobe Systems Incorporated|2020-01-30|N|N|N||N|N|
+60|Sprint Corporation|2018-07-02|Y|Y|N|Marcelo Claure, CEO (ceased; became Executive Chairman)|unclear|Y|'As previously disclosed' with no date; effective 2018-05-31, after reference date. Filing's own events are the Davies appointment and amended agreements. Claure agreement also sets termination at the T-Mobile merger close.
+61|Sprint Nextel|2012-11-20|N|N|N||N|N|
+62|Fidelity National Information Services, Inc.|2024-02-01|N|N|Y|Vijay D'Silva and Louise Parent, directors (declining re-election)|N|N|Notice 2024-01-31, after reference date; transaction-driven.
+63|Pfizer Inc|2007-05-23|Y|N|N|John L. LaMattina, SVP and President, R&D; Alan G. Levin, SVP and CFO|Y|N|Board authorization 2007-05-18, before reference date.
+64|Frontier Communications|2021-07-01|N|N|N||N|N|Director appointment; Turcke leaves Audit chair but remains on the committee.
+65|Verizon Corporate Services Group Inc.|2014-02-11|N|N|N||N|N|
+66|Microsoft Corporation|2021-05-20|Y|N|N|Jean-Philippe Courtois, EVP (ceases to be an executive officer 2021-06-30)|Y|N|Remains an employee in a new role. Filing predates reference date.
+67|AT&T|2014-06-30|N|N|N||N|N|
+68|Adobe Systems Incorporated|2020-04-10|N|N|Y|Charles M. Geschke, director|N|N|Notice 2020-04-06, after reference date.
+69|Essex Property Trust, Inc.|2014-01-31|N|N|N||N|N|
+70|CyrusOne, Inc.|2018-02-22|Y|N|N|Amitabh Rai, SVP and Chief Accounting Officer|N|N|Notice 2018-02-16, after reference date.
+71|Southwest Airlines Co.|2017-01-12|Y|N|N|Gary C. Kelly, President (relinquishes President title; remains CEO and Chairman)|Y|N|Leaves the president position only; not a CEO departure. Effective 2017-01-10, before reference date.
+72|Republic Services|2018-10-01|N|N|N||N|N|
+73|Intuit|2008-12-19|N|N|N||N|N|
+74|T-Mobile USA, Inc.|2016-02-19|Y|N|N|Gary A. King, EVP and Chief Information Officer|N|N|Agreed 2016-02-16, after reference date.
+75|T-Mobile USA|2023-02-03|N|N|Y|Bavan Holloway, director|N|N|Notice 2023-01-30, after reference date.
+76|Hewlett Packard Enterprise Company|2024-02-08|N|N|Y|Daniel Ammann, director|Y|N|Notice 2024-02-06, before reference date.
+77|Hewlett Packard Enterprise Company|2024-01-23|Y|N|N|Alan May, EVP and Chief People Officer|Y|N|Notice 2024-01-17, before reference date; remains an employee.
+78|Frontier Communications Parent, Inc.|2024-02-05|N|N|N||N|N|
+79|Verizon|2016-09-01|Y|N|N|Francis J. Shammo, EVP and CFO|Y|N|Announced 2016-09-01, before reference date.
+80|AT&T|2014-11-07|N|N|N||N|N|

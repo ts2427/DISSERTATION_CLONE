@@ -1,0 +1,31 @@
+sheet_id,accession,source,clf_exec_departure,clf_exec_departure_new,clf_ceo_departure,clf_ceo_departure_new,clf_director_only_departure,clf_person_role,clf_pre_announced,clf_restated_mention,clf_vacancy_mention,clf_implied_succession,clf_action
+1,0001193125-24-086510,random30_r2,N,N,N,N,Y,Byron Deeter (director: board of directors); Byron Deeter (director: Board); Byron Deeter (director: Board),N,0,0,0,departure
+2,0001193125-21-284200,random30_r2,N,N,N,N,Y,None (director: board of directors),Y,0,0,0,departure
+3,0000101830-16-000070,random30_r2,N,N,N,N,Y,Nikesh Arora (director: director),Y,0,0,0,departure
+4,0001193125-22-293869,random30_r2,N,N,N,N,N,,N,0,0,0,compensation only
+5,0001193125-22-301591,random30_r2,N,N,N,N,N,,N,0,0,0,election
+6,0001193125-21-206409,random30_r2,Y,Y,N,N,N,Anthony Goland (other_exec: officer),N,0,0,0,departure
+7,0000277135-16-000057,random30_r2,Y,Y,N,N,N,William Lomax (PAO: principal accounting officer),Y,0,0,0,departure
+8,0000892569-06-001297,random30_r2,N,N,N,N,N,,N,0,0,0,other
+9,0001091667-23-000137,random30_r2,Y,Y,N,N,N,"Thomas M. Rutledge (other_exec: Executive Chairman of the Board of Directors); Thomas M. Rutledge (other_exec: Executive Chairman); Thomas M. Rutledge (director: Board, on October 24, 2023 the Board); Eric L. Zinterhofer (other_exec: Executive Chairman)",unclear,1,1,0,departure
+10,0000896878-18-000025,random30_r2,N,N,N,N,N,,N,0,0,0,appointment
+11,0000732717-08-000070,random30_r2,N,N,N,N,N,,N,0,0,0,election
+12,0000930413-16-005595,random30_r2,N,N,N,N,Y,Anthony J. Bates (director: Director),Y,0,0,0,departure
+13,0001058290-19-000038,random30_r2,N,N,N,N,Y,John E. Klein (director: Board),Y,0,0,0,departure
+14,0001645590-24-000078,random30_r2,N,N,N,N,N,,N,0,0,0,compensation only
+15,0000732717-12-000063,random30_r2,N,N,N,N,N,,N,0,0,0,election
+16,0000101830-18-000057,random30_r2,N,N,N,N,N,,N,0,0,0,other
+17,0000101830-09-000013,random30_r2,N,N,N,N,N,,N,0,0,0,compensation only
+18,0001193125-11-252379,random30_r2,N,N,N,N,N,,N,0,0,0,compensation only
+19,0001640147-23-000044,random30_r2,N,N,N,N,Y,Carl M. Eschenbach (director: Director); Carl M. Eschenbach (director: director Board); Carl M. Eschenbach (director: director Board),Y,0,1,0,departure
+20,0001283699-19-000066,random30_r2,N,N,N,N,Y,Mr. Swantee (director: Board or any committee of the Board),Y,0,0,0,departure
+21,0000277135-17-000044,random30_r2,N,N,N,N,N,,N,0,0,0,election
+22,0001091667-23-000119,random30_r2,N,N,N,N,N,,N,0,0,0,compensation only
+23,0001091667-08-000034,random30_r2,N,N,N,N,N,,N,0,0,0,compensation only
+24,0001193125-22-076137,random30_r2,N,N,N,N,Y,Geoffrey Y. Yang (director: directors),N,0,0,0,departure
+25,0001510295-18-000225,random30_r2,N,N,N,N,N,,N,0,0,0,compensation only
+26,0001609711-23-000009,random30_r2,N,N,N,N,Y,Ryan Roslansky (director: Directors); Ryan Roslansky (director: Board),Y,0,1,0,departure
+27,0001193125-21-001982,random30_r2,N,N,N,N,N,,N,0,0,0,election
+28,0001193125-23-154352,random30_r2,N,N,N,N,N,,N,0,0,0,compensation only
+29,0000096021-23-000190,random30_r2,N,N,N,N,N,,N,0,0,0,appointment
+30,0000773840-23-000088,random30_r2,N,N,N,N,N,,N,0,0,0,election

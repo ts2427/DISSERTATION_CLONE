@@ -407,4 +407,114 @@ Two Sprint events carry reported dates that precede their breach dates by years:
 
 **Contamination to disclose.** 7 of the 50 calibration documents are T-Mobile filings whose hand codes were published in the Query 1 report (E2). Their text was also read before the freeze, in Query 1. D3 should report agreement both with and without those 7.
 
-**Stage 1 ends here.** Stage 2 starts only after Tim codes the sheet: D3 agreement and kappa, then E–I.
+**Stage 1 ends here.** Stage 2 starts after the sheet is coded: D3 agreement and kappa, then E–I.
+
+---
+
+# STAGE 2 — PART D3: VALIDATION (round 1 done; classifier revised; round 2 sheet drawn — STOP)
+
+## Provenance of the reference codes (recorded on Tim's instruction)
+
+**Tim did not hand-code the validation sheet.** The reference codes are **Claude's**, produced in a separate session:
+- coded **blind to the classifier output**;
+- coded from the sheet's Item 5.02 text only, under the sheet README rules;
+- followed by a verification pass on uncertain rows using SEC filings, company releases and (sheet 57) trade press. The verification log is reproduced in `outputs/essay3_q2/VALIDATION_REFERENCE_CODES_R1_README.txt`.
+
+Tim reviewed and adopted them as the reference standard. Earlier wording in this project that called them "your codes" or "Tim's codes" is corrected here.
+
+The coder's interpretive rules where the README is silent (pre-announced dates; leaving a covered title; restatements tagged `restates_prior_disclosure`; EVP/SVP departures; "unclear") are in the same README file.
+
+**Sheet 31** (T-Mobile, 2013-05-02) is scored at its **verified** CEO code (Y) as **primary** and its blind code ("unclear", dropped) as **secondary**. It is a random-draw filing, not one of the seven T-Mobile calibration filings, so it stays in the primary statistics. The seven are sheets 33, 37, 39, 51, 53, 74 and 75, per the sheet's own source column.
+
+## Round 1 — frozen classifier v1 (scripts/188, freeze commit `d39bc6d`, blob `af2c97c`) vs reference codes
+
+NEW, scripts/194; `d3_agreement.csv`, `d3_disagreements.csv`. Variant A = reference codes as given, with restated departures = Y (coder rule 3).
+
+| Field | κ, all 80 | Agreement | Precision / recall | κ, excluding the 7 T-Mobile calibration filings |
+|---|---|---|---|---|
+| Executive departure | **.803** | .913 | .958 / .793 | **.876** |
+| CEO departure (sheet 31 verified Y, primary) | .707 | .963 | .800 / .667 | .785 |
+| CEO departure (sheet 31 blind, secondary) | .787 | .975 | | .882 |
+| Director-only departure | .858 | .963 | 1.000 / .786 | .819 |
+| Pre-announced | .698 | .888 | 1.000 / .600 | .719 |
+
+Variant B (restated departures recoded N), all 80: executive departure κ .729, CEO κ .475, director-only κ .804, pre-announced κ .519.
+
+Person agreement: on the 23 filings both call an executive departure, 19 share at least one departing surname.
+
+**Round-1 disagreements (17 filings) and their causes:**
+
+*v1 bugs:*
+- the "retiring" stem was never matched (sheet 37);
+- "forfeited upon his departure" from a prior employer counted as a departure (sheet 52);
+- "continue in his role as CEO" was not treated as keeping the title (sheet 71);
+- phrasings not recognised:
+  - "no longer be an executive officer" (66);
+  - "decline to stand for re-election" (62);
+  - "does not wish to seek re-election" (76);
+  - "will be leaving" (2);
+  - "has left his position as" (32);
+  - "Mr. X's employment … will … terminate" (39).
+
+*Definitional differences:*
+- restated departures (53);
+- pay-agreement-only departures (39);
+- vacancy mentions (14);
+- pre-announced with an effective date before the reference date (7, 21, 27, 63, 71, 76).
+
+Sheet 31's CEO call depends on outside verification, not the text.
+
+## Revision: classifier v2 (scripts/195), committed alone as `6f7be7a` (blob `ec32364`) before the round-2 draw
+
+**General-rule fixes** (Tim's list plus the phrasings above):
+- the "retiring" stem;
+- prior-employer departures ignored;
+- "continue in his role as" treated as keeping the title;
+- "no longer be an executive officer";
+- "decline to stand / does not wish to seek re-election";
+- "will be leaving";
+- "has left his position";
+- "<Name>'s employment … will terminate".
+
+**One narrow implied-departure rule:** "successor to / in succession to <Name>" with a covered title. It is tagged, and **it fires on 0 of the 1,078 filings**, so it has no false positives to drop in round 2 and captures nothing.
+
+**Rulings implemented:**
+
+(1) **One departure per person within parent CIK, dated to its earliest disclosing filing.** Restatements create no new events; the restatement-dated, filing-level outcomes are kept as the `rs_*` sensitivity.
+- Result: **768 departure mentions → 513 departure events** (300 exec, 213 director).
+- **63 events merge more than one filing, folding 70 filings** into an earlier disclosure.
+- 38 mentions carry no person name and cannot merge.
+
+(2) Pay-agreement-only departures count.
+
+(3) Vacancy mentions count for director departures only.
+
+(4) Pre-announced uses every date in a departure sentence, including effective dates.
+
+**Merge spot-check** (25 random multi-filing events, seed 7, in `195_classifier.log`):
+- Name matching is correct in the cases checked, e.g. Legere, Carter, Collis, Stephenson, Stephens and Rencher.
+- **One false merge was found and fixed before the commit:** "Duke Energy" and "Progress Energy" had been read as persons keyed "energy". Corporate words can no longer be merge keys, and 0 such keys remain.
+- **T-Mobile, for the case:** under ruling (1), both Legere's CEO departure and Carter's CFO departure date to the November 2019 filing 0001193125-19-294093:
+  - Legere: "will cease to serve as CEO of T-Mobile effective as of April 30, 2020";
+  - Carter: the "Carter Amendment" states his "employment with T-Mobile will automatically terminate upon the expiration of the employment term".
+
+  For the 2019-11-26 event, that filing precedes t0 on both anchors.
+
+**In-sample check** (v2 on the round-1 80 — these filings informed the fixes, so this is NOT a validation):
+- executive departure κ 1.000 (variant A) and .912 (variant B);
+- CEO κ .902; director-only κ .955; pre-announced κ .902.
+
+Remaining in-sample disagreements:
+- sheet 31, the CEO call that rests on outside verification;
+- sheet 53, where the classifier doesn't code Legere's board resignation as director-only because he is also coded as a restated CEO departure.
+
+## Round 2 — fresh blind sheet (scripts/196): drawn, STOP
+
+- **The sheet:** `outputs/essay3_q2/VALIDATION_SHEET_R2.xlsx`, 30 filings in the same format and README as round 1. Order randomised with seed 4343.
+- **The draw:** seed 20260912, from a pool of 596. The pool is the B1-scope filings excluding the round-1 80, the 40 development filings and the 35 T-Mobile documents read in Query 1.
+- **The v2 answers** are only in `validation_classifier_HIDDEN_R2.csv`, which includes the "new only" variants and the restated, vacancy and implied flags.
+
+**Stop here until round 2 is coded blind.** After round 2, the plan is:
+1. report both rounds;
+2. run v2 on all 1,078 filings and report how many outcome flags change at 30/90/180 days, treated vs control;
+3. then Parts E–I.

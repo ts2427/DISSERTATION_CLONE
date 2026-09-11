@@ -1,0 +1,51 @@
+classifier file sha256 42a64e12883ce269814b884a5892ca75699185dbfec8d12f875e720b5a88a7c9
+Filings coded: 1078/1078; Item 5.02 section found: 1077; labels printed: 278
+  filings with exec_departure: 306
+  filings with ceo_departure: 74
+  filings with director_departure: 182
+  filings with appointment: 230
+  filings with election: 293
+  action (filing level): action; departure            474; compensation only    240; election             214; appointment          109; other                 41
+
+Ruling (1) merge: 768 departure mentions -> 513 departure events (exec 300, director 213); 63 events merge >1 filing (70 filings folded into an earlier disclosure); unmergeable (no name) mentions: 38
+Spot-check of merged events (random 25 of the multi-filing events, seed 7): cik | group | key | persons | accessions
+  732712 | exec | mead | Daniel S. Mead | 0001193125-15-051424;0001193125-16-617604
+  47217 | exec | dunn | Patricia C. Dunn | 0001104659-06-060568;0001104659-06-062623
+  1108524 | exec | cakebread | Steve Cakebread | 0001193125-06-123693;0001193125-06-174639
+  1001082 | exec | carlson | Erik Carlson | Mr. Carlson | 0001104659-23-088620;0001104659-23-114464;0001104659-23-116755
+  1060391 | exec | slager | Donald W. Slager | 0001060391-21-000027;0001193125-21-100584
+  796343 | exec | garrett | Mark Garrett | 0000796343-18-000039;0000796343-18-000072
+  1058290 | director | chadwick | Jonathan Chadwick | 0001058290-19-000028;0001058290-19-000030
+  1060391 | exec | holmes | Tod C. Holmes | 0001060391-12-000023;0001193125-12-186198;0001193125-12-282327
+  1136893 | director | hawkins | Mark J. Hawkins | 0001136893-21-000145;0001136893-21-000196
+  320193 | exec | oppenheimer | Peter Oppenheimer | 0001181431-14-021923;0001193125-14-084697
+  1140859 | exec | collis | Steven H. Collis | 0001104659-24-033278;0001104659-24-035045
+  732717 | exec | stephenson | Randall Stephenson | 0001193125-20-123202;0001193125-21-015737
+  732717 | exec | stephens | John Stephens | 0001193125-20-296128;0001193125-21-100281
+  773840 | exec | tus | John J. Tus | 0000773840-19-000018;0000930413-19-002021
+  1283699 | exec | legere | John J. Legere | John Legere | 0001193125-19-294093;0001193125-20-093622;0001193125-20-119230
+  1609711 | director | robel | Chuck Robel | 0001609711-22-000118;0001609711-23-000099
+  101830 | exec | schulman | Daniel H. Schulman | Daniel Schulman | 0000101830-10-000015;0000101830-11-000010
+  1283699 | exec | carey | David Carey | 0001193125-20-041926;0001193125-20-071678;0001193125-20-109354
+  277135 | exec | ryan | James T. Ryan | 0000277135-17-000028;0001104659-16-137921
+  796343 | exec | rencher | Brad Rencher | 0000796343-19-000008;0000796343-19-000024
+  1091667 | exec | rutledge | Thomas M. Rutledge | 0001091667-22-000104;0001091667-23-000137
+  27904 | exec | anderson | Richard H. Anderson | 0001019687-16-005064;0001683168-16-000288
+  732717 | exec | lindner | Richard G. Lindner | 0000732717-11-000016;0000732717-11-000033
+  1283699 | director | kappes | Stephen Kappes | 0001193125-21-113210;0001193125-21-198692
+  1283699 | exec | carter | Braxton Carter | 0001140361-20-014081;0001193125-19-294093
+
+C4 crosswalk:
+               sample anchor  window   N  any_502_treated  exec_departure_treated  ceo_departure_treated  director_departure_treated  v3_any502_treated  any_502_control  exec_departure_control  ceo_departure_control  director_departure_control  v3_any502_control  any502_not_exec_events  any502_events  bd_any502_vs_v3_mismatch
+            scope 341     rd      30 341           0.2523                  0.0374                 0.0000                      0.0748             0.2430           0.1197                  0.0427                 0.0043                      0.0128             0.1410                      41             55                       NaN
+            scope 341     rd      90 341           0.5421                  0.1121                 0.0374                      0.1682             0.5514           0.3974                  0.1581                 0.0299                      0.0684             0.3803                     102            151                       NaN
+            scope 341     rd     180 341           0.7664                  0.3178                 0.0748                      0.1963             0.7664           0.6410                  0.2479                 0.0940                      0.1795             0.6709                     140            232                       NaN
+            scope 341     bd      30 341           0.2430                  0.0561                 0.0000                      0.0467             0.2430           0.1410                  0.0641                 0.0171                      0.0214             0.1410                      38             59                       0.0
+            scope 341     bd      90 341           0.5514                  0.1215                 0.0187                      0.1869             0.5514           0.3803                  0.1410                 0.0256                      0.0983             0.3803                     102            148                       0.0
+            scope 341     bd     180 341           0.7664                  0.2243                 0.0280                      0.2336             0.7664           0.6709                  0.2350                 0.0684                      0.1795             0.6709                     160            239                       0.0
+Q1 Essay 3 sample 340     rd      30 340           0.2547                  0.0377                 0.0000                      0.0755             0.2358           0.1197                  0.0427                 0.0043                      0.0128             0.1410                      41             55                       NaN
+Q1 Essay 3 sample 340     rd      90 340           0.5472                  0.1132                 0.0377                      0.1698             0.5472           0.3974                  0.1581                 0.0299                      0.0684             0.3803                     102            151                       NaN
+Q1 Essay 3 sample 340     rd     180 340           0.7642                  0.3208                 0.0755                      0.1981             0.7642           0.6410                  0.2479                 0.0940                      0.1795             0.6709                     139            231                       NaN
+Q1 Essay 3 sample 340     bd      30 340           0.2358                  0.0566                 0.0000                      0.0472             0.2358           0.1410                  0.0641                 0.0171                      0.0214             0.1410                      37             58                       0.0
+Q1 Essay 3 sample 340     bd      90 340           0.5472                  0.1226                 0.0189                      0.1887             0.5472           0.3803                  0.1410                 0.0256                      0.0983             0.3803                     101            147                       0.0
+Q1 Essay 3 sample 340     bd     180 340           0.7642                  0.2264                 0.0283                      0.2358             0.7642           0.6709                  0.2350                 0.0684                      0.1795             0.6709                     159            238                       0.0
