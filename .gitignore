@@ -106,6 +106,27 @@ ESSAY2_VERIFICATION_REPORT.md
 outputs/*_run.log
 outputs/recovered/
 
+# Essay 2 session logs, scripts 163-177 (kept local by Tim's instruction 2026-09-11)
+outputs/163_extension_rerun.log
+outputs/164_repair_rerun.log
+outputs/164_vintage_rerun.log
+outputs/165_vintage_rerun.log
+outputs/166_repair_rerun.log
+outputs/166_vintage_rerun.log
+outputs/167_essay2_microstructure_vintage.log
+outputs/169_essay2_spec_repairs_vintage.log
+outputs/169_rerun.log
+outputs/170_essay2_scope_and_bounds_vintage.log
+outputs/172_att_exclusion_rerun.log
+outputs/174_q6_closeout_att.log
+outputs/174_q6_closeout_vintage.log
+outputs/175_essay2_announcement_contrast_att.log
+outputs/175_essay2_announcement_contrast_vintage.log
+outputs/176_q7_composition_check_att.log
+outputs/176_q7_composition_check_vintage.log
+outputs/177_q7_damping_anatomy_att.log
+outputs/177_q7_damping_anatomy_vintage.log
+
 # ==============================================================================
 # CHRONOLOGY REPLICATION (SHELVED 8/2/2026 - kept local by user instruction)
 # ==============================================================================
@@ -130,3 +151,12 @@ Data/edgar/step2_*.csv
 # WRDS quotes top-up (25MB, CRSP-licensed - do NOT commit; regenerate
 # with one interactive WRDS login: python scripts/167_essay2_microstructure.py)
 Data/wrds/crsp_quotes_topup.csv
+
+# ==============================================================================
+# TRACKED BY DEFAULT REGARDLESS OF EXTENSION (last match wins; keep these last)
+# ==============================================================================
+# Claude companions and query documents, and the Essay 3 Query 2 working directory: these hold .md/.txt/.xlsx
+# deliverables that the blanket extension rules above would otherwise hide, so new files there are tracked by
+# default and must be excluded deliberately, not by accident.
+!docs/claude/**
+!outputs/essay3_q2/**
