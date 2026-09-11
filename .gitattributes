@@ -2,3 +2,14 @@
 # Keep local, don't commit to git (add to .gitignore)
 Data/edgar/form499_registry.xml filter=lfs diff=lfs merge=lfs -text
 Data/edgar/cik-lookup-data.txt filter=lfs diff=lfs merge=lfs -text
+# Essay 3 Query 2 chain inputs (2026-09-11): committed as LFS pointers but lacked the attribute since 5f5c950, so a
+# clean clone checked out raw pointer text. Objects verified on GitHub (LFS batch API). The other LFS pointer files
+# without an attribute are NOT re-enabled here (LFS quota history; see 5f5c950).
+Data/wrds/crsp_daily_returns.csv filter=lfs diff=lfs merge=lfs -text
+Data/wrds/market_indices.csv filter=lfs diff=lfs merge=lfs -text
+Data/wrds/compustat_annual.csv filter=lfs diff=lfs merge=lfs -text
+Data/wrds/compustat_fundamentals.csv filter=lfs diff=lfs merge=lfs -text
+Data/wrds/ticker_permno_mapping.csv filter=lfs diff=lfs merge=lfs -text
+Data/processed/DATA_DICTIONARY_ENRICHED.csv filter=lfs diff=lfs merge=lfs -text
+# Frozen classifier (6f7be7a): keep LF on every checkout so its logged sha256 (42a64e12…) reproduces on Windows
+scripts/195_essay3_q2_classifier_v2.py text eol=lf
