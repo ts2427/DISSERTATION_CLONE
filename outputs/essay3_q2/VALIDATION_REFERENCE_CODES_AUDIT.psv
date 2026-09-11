@@ -1,0 +1,81 @@
+sheet_id|company|filing_date|exec_departure|ceo_departure|director_only_departure|person_and_role|pre_announced|restates_prior_disclosure|blind_exec|blind_ceo|blind_pre|notes
+1|Twilio|2021-10-27|Y|N|N|George Hu, Chief Operating Officer|Y|N|Y|N|Y|Notice 2021-10-25, before reference date; stays as strategic advisor.
+2|Sprint Nextel|2020-04-01|Y|Y|Y|Executives: Raul Marcelo Claure (Executive Chairman), Michel Combes (President and CEO), Nestor Cano (COO), John Saw (CTO), Andrew Davies (CFO), Jorge Gracia (CLO), Paul Schieber (VP and Controller). Directors only: Bethune, Doyle, Fisher, Genachowski, Kappes, Mullen, Son, Tucker|Y|N|Y|Y|unclear|Transaction-driven (T-Mobile/Sprint close, 2020-04-01). BLIND pre-announced = unclear (Business Combination Agreement cited, undated). VERIFIED: the agreement is dated 2018-04-29, before the reference date; primary = Y.
+3|Carnival Corporation|2022-04-27|Y|Y|N|Arnold Donald, President and CEO (becomes Vice Chair)|N|N|unclear|unclear|N|BLIND: exec/CEO = unclear; the Item 5.02 text only points to Exhibit 99.1. VERIFIED from the filing's own Ex. 99.1 (2022-04-26): Donald leaves President and CEO effective 2022-08-01. Primary = Y. STRUCTURAL: the departure appears only in the exhibit, which a classifier reading the Item 5.02 section cannot see.
+4|Fidelity National Information Services, Inc.|2023-01-20|N|N|Y|Mark A. Ernst, director|Y|N|N|N|Y|Notice 2023-01-13, before reference date.
+5|Republic Services|2013-04-29|Y|N|N|Charles F. Serianni, SVP and Chief Accounting Officer (moves to another role)|Y|N|Y|N|Y|Leaves the PAO title while staying employed. Effective 2013-04-29, before reference date.
+6|AT&T|2011-03-29|Y|N|N|Richard G. Lindner, Senior EVP and CFO (retiring)|Y|Y|Y|N|Y|8-K/A restating the 2011-03-07 disclosure; dates before reference date.
+7|Equifax, Inc.|2017-09-26|Y|Y|N|Richard F. Smith, Chairman and CEO and director (retiring)|N|N|Y|Y|N|Announced 2017-09-26, after reference date.
+8|Sprint Nextel|2008-10-24|N|N|Y|Ralph V. Whitworth, director|Y|N|N|N|Y|Letter 2008-10-22, before reference date.
+9|Adobe Systems Incorporated|2014-01-29|Y|N|N|Kevin Lynch (no longer with the Company; former EVP and CTO)|Y|Y|Y|N|unclear|Background mention in a compensation filing. BLIND pre-announced = unclear (no departure date in text). VERIFIED: Lynch resigned 2013-03-18, effective 2013-03-22, before reference date; primary = Y.
+10|Delta Air Lines, Inc.|2017-04-11|N|N|Y|Thomas E. Donilon, director|Y|N|N|N|Y|Effective 2017-04-07, before reference date.
+11|Verizon|2018-09-06|N|N|N||N|N|N|N|N|
+12|Hewlett Packard Enterprise Company|2023-06-14|N|N|N||N|N|N|N|N|
+13|AT&T|2020-04-28|Y|Y|N|Randall Stephenson, CEO (becomes Executive Chairman; retiring January 2021)|Y|N|Y|Y|Y|Board action 2020-04-23, before reference date.
+14|Carnival Corporation|2022-06-24|N|N|N||N|N|N|N|N|Weinstein appointment; the predecessor is not named in this text (see sheet 3).
+15|American Electric Power|2019-09-18|N|N|N||N|N|N|N|N|Director election; the retirement mentioned is from another company.
+16|GoDaddy.com LLC|2019-08-02|Y|Y|N|Scott W. Wagner, CEO and director (retiring, health reasons)|Y|N|Y|Y|Y|Announced 2019-08-01, before reference date.
+17|Hewlett Packard Enterprise Company|2023-12-15|unclear|N|N|Jeremy K. Cox, Interim CFO and Principal Financial Officer (stays as SVP, Controller, PAO)|Y|N|unclear|N|Y|Interim title, not covered by the rules. Dates before the reference date if counted.
+18|Carnival Corporation|2022-05-16|Y|N|N|Peter C. Anderson, Chief Ethics and Compliance Officer, named executive officer|N|N|Y|N|N|Notice 2022-05-13, after reference date.
+19|AT&T|2019-09-06|Y|N|N|John Donovan, CEO of AT&T Communications, LLC (subsidiary CEO, not principal executive officer)|Y|Y|Y|N|Y|Restates the 2019-08-26 disclosure; before reference date.
+20|Intuit, Inc.|2007-06-14|Y|N|N|Robert B. (Brad) Henske, SVP and GM, Consumer Tax Group|Y|N|Y|N|Y|Resigned 2007-06-14, before reference date; stays as a non-officer employee.
+21|Sprint Nextel|2016-05-06|N|N|Y|Robert Bennett, director|Y|N|N|N|Y|Notice 2016-05-03, before reference date.
+22|GoDaddy.com LLC|2021-05-05|Y|N|N|Mr. Winborne, CFO and principal financial officer (serves until 2021-06-02)|Y|N|Y|N|Y|Implied departure: successor appointed with a stated end date for the incumbent, no departure verb. Appointment 2021-05-01, before reference date.
+23|Cable One, Inc.|2018-04-02|Y|N|N|Kevin P. Coyle, SVP and CFO (intends to retire early 2019)|Y|N|Y|N|Y|Announced 2018-04-02, before reference date.
+24|AT&T|2022-08-04|unclear|N|N|Pascal Desroches, Senior EVP and CFO (no longer principal accounting officer)|Y|N|unclear|N|Y|Designation transfer only; he keeps his office. Not covered by the rules.
+25|Duke Energy Corporation|2021-11-15|N|N|N||N|N|N|N|N|
+26|Yum! Brands, Inc.|2023-07-19|N|N|N||N|N|N|N|N|
+27|ServiceNow Inc.|2024-07-24|Y|N|N|Chirantan 'CJ' Desai, President and COO|N|N|Y|N|N|Resigned 2024-07-24, after reference date. Text states a policy violation found by an internal investigation.
+28|Okta, Inc.|2023-04-28|N|N|Y|Patrick Grady, director|Y|N|N|N|Y|Notice 2023-04-25, before reference date.
+29|Sprint Nextel|2009-03-27|N|N|Y|Irvine O. Hockaday Jr., director|Y|N|N|N|Y|Notice 2009-03-23, before reference date.
+30|Delta Air Lines, Inc.|2017-10-23|N|N|N||N|N|N|N|N|
+31|Intuit, Inc.|2015-01-23|N|N|N||N|N|N|N|N|
+32|Verizon|2019-12-05|N|N|N||N|N|N|N|N|
+33|Aon Corporation|2020-04-27|N|N|N||N|N|N|N|N|
+34|Hewlett-Packard Company|2006-09-12|N|N|Y|George A. Keyworth II, director|Y|N|N|N|Y|Patricia Dunn gives up the non-executive chair but stays a director, so she is not coded. Dates before reference date.
+35|T-Mobile USA, Inc.|2015-02-18|Y|N|N|Jim Alling, EVP and COO, T-Mobile Business|Y|N|Y|N|Y|Notice 2015-02-17, before reference date.
+36|Sprint Nextel|2015-08-03|Y|N|N|Joseph Euteneuer, CFO|Y|N|Y|N|Y|Announced 2015-08-03, before reference date.
+37|AT&T|2019-07-29|N|N|N||N|N|N|N|N|
+38|Duke Energy Corporation|2020-09-25|N|N|N||N|N|N|N|N|
+39|T-Mobile USA, Inc.|2016-06-22|Y|N|N|Michael J. Morgan, SVP Finance and Chief Accounting Officer (moves to a new role)|Y|N|Y|N|Y|Leaves the PAO title while staying employed. Effective 2016-06-20, before reference date.
+40|Automatic Data Processing, Inc.|2012-11-01|Y|N|N|Christopher Reidy, CFO|Y|N|Y|N|Y|Announced 2012-11-01, before reference date.
+41|Cencora, Inc.|2024-03-12|Y|Y|N|Steven H. Collis, President and CEO (retiring; becomes Executive Chairman)|Y|N|Y|Y|Y|Original disclosure (the round-1 8-K/A restated it). 2024-03-11, before reference date.
+42|Apple Inc.|2014-03-05|Y|N|N|Peter Oppenheimer, SVP and CFO (retiring)|Y|N|Y|N|Y|Announced 2014-03-04, before reference date.
+43|Sprint Nextel|2009-03-03|Y|N|N|Christopher J. Gregoire, principal accounting officer (becomes VP and Assistant Controller)|Y|N|Y|N|Y|Leaves the PAO designation. 2009-02-26, before reference date.
+44|Gray Television, Inc.|2017-01-20|N|N|N||N|N|N|N|N|
+45|AT&T|2007-10-19|N|N|N||N|N|N|N|N|
+46|AT&T|2015-06-26|N|N|N||N|N|N|N|N|
+47|Intuit, Inc.|2008-02-08|Y|N|N|Jeffrey E. Stiefler (SVP, Financial Institutions Division, per verification)|Y|N|unclear|N|Y|BLIND: exec = unclear (text gives no title). VERIFIED: SVP, Financial Institutions Division; executive-officer status not confirmed. Primary = Y, flagged for adjudication. Agreement 2008-02-04, before reference date.
+48|Honeywell International Inc.|2021-07-14|Y|N|N|Rajeev Gautam, President and CEO, Performance Materials and Technologies segment (segment CEO)|N|N|Y|N|N|Notice 2021-07-14, after reference date.
+49|Henry Schein, Inc.|2024-05-24|N|N|N||N|N|N|N|N|
+50|Sprint Nextel|2015-08-11|N|N|N||N|N|N|N|N|
+51|Charter Communications, Inc.|2008-07-08|Y|N|N|Robert A. Quigley, EVP and Chief Marketing Officer|Y|Y|Y|N|Y|'As previously announced'; resignation effective 2008-07-01, before reference date.
+52|Intuit, Inc.|2014-07-29|Y|N|N|Daniel Maurer, SVP and GM, Small Business Management Solutions (retiring)|Y|N|Y|N|Y|Filing 2014-07-29, before reference date.
+53|Comcast|2014-12-23|N|N|N||N|N|N|N|N|
+54|Verizon|2018-10-04|N|N|Y|Gregory D. Wasson, director|Y|N|N|N|Y|Effective 2018-10-01, before reference date.
+55|Verizon|2013-06-10|unclear|N|N|Robert J. Barish, SVP and Controller (succeeded; stays leading FP&A)|Y|N|unclear|N|Y|Implied departure from the Controller title; the text does not say Controller is the principal accounting officer. Dates before reference date if counted.
+56|Comcast|2024-04-15|N|N|N||N|N|N|N|N|
+57|CenturyLink|2013-03-25|Y|N|N|James E. Ousley, CEO, Savvis Operations (segment CEO)|Y|N|Y|N|Y|Filed under (b). Filing predates reference date.
+58|Comcast|2011-11-23|N|N|N||N|N|N|N|N|
+59|IBM|2011-01-28|N|N|N||N|N|N|N|N|
+60|Verizon|2016-12-20|N|N|Y|Donald T. Nicolaisen, director|Y|N|N|N|Y|Notice 2016-12-19, before reference date.
+61|AT&T|2024-03-01|N|N|N||N|N|N|N|N|
+62|Pfizer Inc|2007-08-22|N|N|N||N|N|N|N|N|Appointment only; 'termination from Alcatel-Lucent' refers to a prior employer.
+63|Adobe Systems Incorporated|2013-01-28|N|N|N||N|N|N|N|N|
+64|W.W. Grainger, Inc.|2017-08-02|Y|N|N|James T. Ryan, Chairman (retiring as director, officer and employee)|Y|N|Y|N|Y|Not the CEO (Macpherson is CEO). Notice 2017-08-02, before reference date.
+65|Fidelity National Information Services, Inc.|2023-04-21|Y|N|N|Ido Gileadi, Corporate EVP and COO|Y|N|Y|N|Y|Original disclosure (the round-1 FIS filing restated it). Announced 2023-04-17, before reference date.
+66|Charter Communications, Inc.|2014-05-09|N|N|N||N|N|N|N|N|
+67|Delta Air Lines, Inc.|2016-10-11|Y|N|N|Richard H. Anderson, Executive Chairman|Y|N|Y|N|Y|Notice 2016-10-10, before reference date.
+68|AT&T|2023-02-02|Y|N|N|Debra L. Dial, SVP, Chief Accounting Officer and Controller (retiring)|Y|N|Y|N|Y|Announced 2023-01-27, before reference date.
+69|Comcast|2023-10-03|N|N|N||N|N|N|N|N|
+70|DISH Network, LLC|2023-11-13|Y|Y|N|W. Erik Carlson, President and CEO (stays on board through merger)|N|Y|Y|Y|unclear|BLIND pre-announced = unclear ('previously disclosed', no date). VERIFIED: notice 2023-11-03 (DISH 8-K), after reference date; primary = N.
+71|Verizon|2017-10-04|Y|N|N|Marni M. Walden, EVP and President, Global Media|N|N|Y|N|N|Announced by the 2017-10-04 filing, after reference date.
+72|Charter Communications, Inc.|2012-05-01|N|N|N||N|N|N|N|N|
+73|Sprint Nextel|2019-05-22|N|N|N||N|N|N|N|N|
+74|Sirius XM Radio Inc.|2015-06-23|N|N|N||N|N|N|N|N|
+75|T-Mobile USA, Inc.|2018-04-30|Y|unclear|N|John J. Legere, President (title passes to Sievert 2018-04-29; employment term set to end 2020-04-30, 'unless earlier terminated'); J. Braxton Carter, EVP and CFO (term extended to a transaction-contingent end date)|Y|N|Y|unclear|Y|CEO coded unclear: the amendment sets an end date for Legere's employment, but it is a term extension, not framed as a departure. The President title change is coded as an executive departure (same rule as round-1 Southwest/Kelly). 2018-04-29, before reference date. See chat note on first-disclosure dating.
+76|Verizon|2019-02-08|N|N|Y|Richard L. Carrion, director; Lowell C. McAdam, Chairman (not standing; resigns as Chairman); M. Frances Keeth, director (mandatory retirement)|Y|N|N|N|Y|McAdam is coded director-only because the text gives him only the Chairman role. Notices February 2019, before reference date.
+77|Verizon|2007-09-11|N|N|Y|James R. Barker, director|Y|N|N|N|Y|Retired 2007-09-06, before reference date.
+78|CenturyLink|2021-01-20|Y|N|N|Eric J. Mortensen, SVP and Controller, principal accounting officer (retiring)|N|N|Y|N|N|Notice 2021-01-18, after reference date.
+79|Hewlett-Packard Company|2010-03-23|N|N|N||N|N|N|N|N|
+80|PACCAR|2017-12-14|N|N|N||N|N|N|N|N|Schippers elected President and CFO; no predecessor named.
