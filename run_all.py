@@ -59,6 +59,42 @@ RETIRED 2026-09-11: script 46's any-Item-5.02 flags as the Essay 3 outcome (Item
 covers appointments, elections and pay, not only departures). Script 46 itself stays in
 run_all for now because script 53 merges its committed output for legacy Essay 1/2 scripts.
 
+IF YOU ARE RUNNING THIS FOR THE FIRST TIME, READ THIS
+=====================================================
+What the dissertation's current results are, and where they come from:
+
+  Essay 1 (market reaction)      canonical v3 chain, scripts 150-158
+                                 -> outputs/rebuild/constants_v3.json (assertion baseline)
+                                 -> outputs/rebuild/appendix_v3/ (16 tables; Word build scripts/160)
+  Essay 2 (information asymmetry) canonical chain, scripts 163-182
+                                 -> outputs/tables/essay2_v2/ and the outputs/ESSAY2_*.md reports
+  Essay 3 (governance response)  Query 2 chain, scripts 187/195/199/202/190/191/203/204
+                                 -> outputs/essay3_q2/ and outputs/ESSAY3_QUERY2_REPORT.md
+                                 -> its own baseline, outputs/essay3_q2/constants_essay3_q2.json.
+                                    Essay 3 results do NOT come from scripts/158 or constants_v3.json.
+
+All three essays report NULL results. The design is post-2007 cross-sectional: there are no treated
+events before the rule took effect, so nothing here supports a causal or natural-experiment claim.
+Inference is CV3 (cluster jackknife) plus a wild cluster bootstrap; HC3 is reported for comparison
+only and is DISQUALIFIED as a significance test. Start from README.md and, for Essay 3,
+outputs/essay3_q2/ESSAY3_STARTING_POINT.md.
+
+WHAT THIS PIPELINE DOES NOT REGENERATE (know this before trusting a clean run):
+  1. Git LFS. Many legacy files are committed as LFS pointers whose filter=lfs attribute was dropped
+     in 5f5c950, so a clean clone writes small placeholder files with NO error. The Essay 3 chain's
+     inputs are fine; several Essay 1/2 inputs and outputs are not. A placeholder begins
+     "version https://git-lfs.github.com/spec/v1". See README.md.
+  2. outputs/tables/essay2_appendix/*.csv (41 files) have NO committed generator. scripts/178 only
+     renders them into ESSAY2_APPENDIX.docx (itself gitignored). They are committed artifacts only.
+  3. The Essay 2 microstructure channel (scripts/167) needs Data/wrds/crsp_quotes_topup.csv, which is
+     CRSP-licensed and gitignored. It cannot be reproduced from a clean clone without a WRDS login.
+  4. scripts/173 and scripts/179 are one-time licensed WRDS pulls. Their outputs ARE committed
+     (Data/wrds/q6_*.csv, Data/wrds/crsp_daily_topup_dish.csv), so do NOT re-run them.
+  5. The Essay 3 validation and audit scripts (196, 197, 198, 200, 201) draw blind samples once and
+     are not staged here; their outputs are committed under outputs/essay3_q2/.
+  6. Retired chains are kept for provenance, not for citation: see outputs/RETIREMENT_LEDGER.md and
+     outputs/STALE_RESULTS_MANIFEST.txt. Files marked TOMBSTONE must not be cited.
+
 CANONICAL RESULTS (AUDIT CLOSED 7/28/2026)
 ==========================================
 See ESSAY_RESULTS_SUMMARY_CORRECTED.md for the authoritative figures.
@@ -105,6 +141,10 @@ LONG_RUNNING_SCRIPTS = {
     'scripts/187_essay3_q2_fetch_502_text.py': 3600,  # Item 5.02 text; skips documents already on disk
     'scripts/191_essay3_q2_tmobile_proxy_periodic.py': 2400,  # T-Mobile DEF 14A/10-K/10-Q; skips cached files
     'scripts/202_essay3_q2_estimation.py': 3600,  # wild cluster bootstrap, B = 99,999
+    'scripts/163_essay2_rerun_form499.py': 3600,  # Essay 2 ground truth: full DV rebuild + nested models
+    'scripts/166_essay2_spec_grid.py': 3600,  # 193-specification measurement grid
+    'scripts/181_essay2_spec_curve_permutation.py': 3600,  # permutation null across the 193-spec grid
+    'scripts/182_essay2_test_ledger.py': 3600,  # re-executes six Essay 2 scripts via runpy
 }
 
 def run_script(script_path, description, log_file):
@@ -205,7 +245,17 @@ def verify_outputs(log_file):
         Path('outputs/essay3_q2/f1_ladder.csv'),
         Path('outputs/essay3_q2/constants_essay3_q2.json'),
         Path('outputs/essay3_q2/tmobile_timeline.csv'),
-        # Reference (SIC-based)
+        Path('outputs/essay3_q2/f1_se_diagnostics.csv'),
+        # Essay 1 — canonical v3 chain (CURRENT)
+        Path('outputs/rebuild/constants_v3.json'),
+        Path('outputs/rebuild/appendix_v3/table_1.csv'),
+        # Essay 2 — canonical chain, scripts 163-182 (CURRENT)
+        Path('outputs/tables/essay2_v2/t51_elevation_calibration.csv'),
+        Path('outputs/tables/essay2_v2/t52_spec_curve_permutation.csv'),
+        Path('outputs/tables/essay2_v2/t53_test_ledger.csv'),
+        # COMMITTED BUT NOT REGENERATED, so deliberately not required here:
+        #   outputs/tables/essay2_appendix/*.csv (no committed generator) and ESSAY2_APPENDIX.docx (gitignored).
+        # LEGACY / REFERENCE (SIC-based and 7/28-era chains; retained for the old-vs-new exhibit, NOT current results)
         Path('outputs/tables/TABLE1_COMBINED.txt'),
         Path('outputs/tables/essay2/TABLE2_baseline_disclosure.txt'),
         Path('outputs/tables/essay2/TABLE3_fcc_regulation.txt'),
@@ -326,6 +376,41 @@ Log file: {log_path}
                     ('scripts/190_essay3_q2_tmobile_sprint_case.py', 'Essay 3 G1/G2/G5: T-Mobile and Sprint data collection (cached)'),
                     ('scripts/191_essay3_q2_tmobile_proxy_periodic.py', 'Essay 3 G3/G4: T-Mobile DEF 14A / 10-K / 10-Q passages (cached)'),
                     ('scripts/203_essay3_q2_tmobile_case_timeline.py', 'Essay 3 G6: T-Mobile case table on the notification anchor + dated timeline'),
+                    ('scripts/204_essay3_q2_se_diagnostics.py', 'Essay 3 F1 diagnostics: SE at each inference rung, CV3 jackknife variance shares, leave-one-cluster-out ranges, base rates (asserts against f1_ladder.csv)'),
+                    # NOT STAGED - one-off blind validation draws; outputs committed under outputs/essay3_q2/:
+                    #   196 (round-2 sheet), 197 (round-2 scoring), 198 (differential recall),
+                    #   200 (recall-audit sheet), 201 (recall-audit scoring).
+                    # scripts/195 is FROZEN (commit 6f7be7a). Do not edit it: any revision invalidates the
+                    # blind validation and requires a fresh round.
+                ]
+            },
+            {
+                'category': 'ESSAY 2 — CANONICAL CHAIN (volatility / information asymmetry; CURRENT, scripts 163-182)',
+                'scripts': [
+                    ('scripts/163_essay2_rerun_form499.py', 'Essay 2 ground truth on CANONICAL_V3: DV (e2_vol_change), sample ledger, nested models, diagnostics -> outputs/tables/essay2_v2/'),
+                    ('scripts/164_essay2_rule_delay_classification.py', 'Rule text (47 CFR 64.2011), disclosure-delay tests, classification audits, census'),
+                    ('scripts/165_essay2_inference_ladder.py', 'Inference ladder on parent CIK: CV1/CV3, wild cluster bootstrap, G/G1/G* diagnostics'),
+                    ('scripts/166_essay2_spec_grid.py', 'Measurement grid (193 specifications) + gradient decomposition'),
+                    ('scripts/169_essay2_spec_repairs.py', 'Abnormal-volatility DV, leakage tests, calendar clustering, balance'),
+                    ('scripts/170_essay2_scope_and_bounds.py', 'Intent-scope restriction (64.2011(e)) and equivalence bounds'),
+                    ('scripts/171_essay2_figures.py', 'Specification-curve and power-curve figures'),
+                    ('scripts/175_essay2_announcement_contrast.py', 'Announcement-window contrast — the rescoped primary Essay 2 result'),
+                    ('scripts/176_q7_composition_check.py', 'Composition check on the announcement-window differential'),
+                    ('scripts/177_q7_damping_anatomy.py', 'Descriptive anatomy of the control-side damping'),
+                    ('scripts/180_essay2_elevation_calibration.py', 'Elevation calibration: c4(n) bias correction, placebo dates, earnings benchmark'),
+                    ('scripts/181_essay2_spec_curve_permutation.py', 'Permutation null for the specification curve (treatment permuted at parent-entity level)'),
+                    ('scripts/174_q6_closeout.py', 'Query 6 closeout: T-Mobile focal case, carrier denominator, Sprint seam, earnings control (parts needing the uncommitted quotes top-up skip loudly)'),
+                    ('scripts/182_essay2_test_ledger.py', 'Program-wide test ledger -> outputs/tables/essay2_v2/t53_test_ledger.csv (re-executes 164/169/170/174/175/176 via runpy to collect their N_TESTS ledgers)'),
+                    # scripts/172_essay2_run_all.py is a standalone Essay 2 runner covering 163-171 only; it
+                    # predates 174-182. It is not staged here to avoid running those scripts twice.
+                    # NOT STAGED - licensed WRDS pulls whose outputs are already committed; do NOT re-run:
+                    #   scripts/173_q6_wrds_pull.py    -> Data/wrds/q6_{gics,gics_hist,rdq,stocknames}.csv
+                    #   scripts/179_dish_crsp_topup.py -> Data/wrds/crsp_daily_topup_dish.csv
+                    # BLOCKED - scripts/167_essay2_microstructure.py needs Data/wrds/crsp_quotes_topup.csv
+                    #   (CRSP-licensed, gitignored). The microstructure channel cannot be reproduced from a
+                    #   clean clone without a WRDS login.
+                    # NOT REGENERABLE - outputs/tables/essay2_appendix/*.csv has no committed generator;
+                    #   scripts/178 only renders those CSVs into ESSAY2_APPENDIX.docx.
                 ]
             },
             {
@@ -344,9 +429,13 @@ Log file: {log_path}
                     ('scripts/90b_essay2_h5_form499_corrected.py', 'H5 Volatility Re-estimation with Form 499 Corrected (First real result, post-deduplication)'),
                     # RETIRED 2026-09-11 (Essay 3 Query 2 Part H): 7/28-chain H6 on the any-5.02 outcome; superseded by the Query 2 chain
                     # ('scripts/91m_essay3_h6_form499_corrected.py', 'H6 Executive Turnover Re-estimation with Form 499 Corrected (First real result, MDE/TOST)'),
-                    # RETIRED 2026-08-30 (Query 5 Part F): 7/28-vintage chain superseded by appendix_v3 (scripts/158/160)
+                    # RETIRED 2026-08-30 (Query 5 Part F): 7/28-vintage chain superseded by appendix_v3 (scripts/158/160).
+                    # The script itself was DELETED in 0e75740; the entry below is provenance only. The current
+                    # Essay 1 appendix is outputs/rebuild/appendix_v3/ (scripts/158, Word build scripts/160).
                     # ('scripts/141_essay1_appendix_tables_form499.py', 'Essay 1 Appendix Tables 1-14 (Form 499 corrected, all live-computed with canonical checks; replaces retired 7/24 rebuild whose Tables 8/10/11/12/13 were hardcoded placeholders) → outputs/tables/appendix_v2/ + outputs/ESSAY1_APPENDIX_TABLES_FORM499.md'),
-                    # RETIRED 2026-08-30 (Query 5 Part F): 7/28-vintage chain; v3 ledger lives in CANONICAL_V3_LINEAGE.md + ESSAY2 ledgers
+                    # RETIRED 2026-08-30 (Query 5 Part F): 7/28-vintage chain; v3 ledger lives in CANONICAL_V3_LINEAGE.md + ESSAY2 ledgers.
+                    # The script itself was DELETED in 0e75740; the entry below is provenance only. Do not revive it:
+                    # outputs/SAMPLE_ATTRITION_LEDGER.md is now a TOMBSTONE and regenerating it would overwrite that.
                     # ('scripts/142_sample_attrition_ledger.py', 'Sample Attrition Ledger (Methods source of truth: 1,054 documented / 784→779→672→648 computed live; rule-date anchor Dec 8, 2007 per 72 FR 31948 + FCC DA-08-1321; Sept 28 2007 retired) → outputs/SAMPLE_ATTRITION_LEDGER.md'),
                     ('scripts/143_essay1_results_supplements.py', 'Essay 1 Results Supplements (timing x FCC interaction, 5-day CAR, TOST min bounds, overlap share, 60/90d horizons under uniform convention; CONTAINS car_30d provenance finding - stored column inherits pre-audit computation) → outputs/ESSAY1_RESULTS_SUPPLEMENTS.md'),
                     ('scripts/144_residual_duplicate_audit.py', 'Residual-Duplicate Audit (name-variant twins defeating exact-key dedup: 26 groups/30 excess rows → 754-event candidate set; ±3-day adjacency candidates reported not collapsed; NOTHING canonical overwritten) → outputs/RESIDUAL_DUPLICATE_AUDIT.md + FINAL_DATASET_DEDUP_V2_CANDIDATE.csv'),
