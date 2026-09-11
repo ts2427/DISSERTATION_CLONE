@@ -6,7 +6,7 @@ Every number in it is SUPERSEDED. That chain was replaced on 8/17-8/30/2026 by t
   Essay 1: CRSP 354 / regression 338 (104 treated, 11 parent filer CIKs).
 
 Authoritative artifact: **constants_v3.json** (outputs/rebuild/constants_v3.json), with the live-computed Essay 1
-appendix in outputs/tables/appendix_v3/ (scripts/141). See also outputs/SAMPLE_ATTRITION_LEDGER.md (retired) and
+appendix in outputs/rebuild/appendix_v3/ (scripts/158; Word build scripts/160). See also outputs/SAMPLE_ATTRITION_LEDGER.md (retired) and
 outputs/PENDING_REBASELINE.md.
 
 Committed 2026-09-11 for the record only, so the retired figures have a git history and can be cited as history.

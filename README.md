@@ -1,237 +1,172 @@
 # Data Breach Disclosure Timing and Market Reactions
 
-**Author:** Timothy D. Spivey  
-**Institution:** University of South Alabama  
+**Author:** Timothy D. Spivey
+**Institution:** University of South Alabama
 **Year:** 2026
 
----
-
-## Executive Summary
-
-This dissertation analyzes how data breach disclosure timing and regulatory requirements affect stock market reactions, information asymmetry, and governance response using a natural experiment design.
-
-**Core Finding:** Markets penalize *who you are* (regulatory status), not *when you disclose*. FCC regulation imposes both information asymmetry costs (volatility) and governance disruption (executive turnover), with heterogeneous effects by firm size.
-
-**Sample:** 489 deduplicated breach events (2006-2024, canonical v3 chain) | 354 with CRSP market data | 116 events at Form 499-registered carriers | Post-2007 cross-sectional design under 47 CFR 64.2011 (effective December 8, 2007)
+Code, data-construction pipeline, and committed outputs for a three-essay dissertation on how the timing of data breach disclosure, and a firm's regulatory status under it, relate to market reactions, information asymmetry, and governance response.
 
 ---
 
-## Quick Start
+## Read this first
 
-### 1. Setup (5 minutes)
+**This README carries no results.** Every figure in this project lives in a committed artifact with a generating script, and numbers are cited from those files, never from prose. The pointers below say where each result lives; they do not restate it.
+
+**What the three essays find.** All three report null results. None of them supports its hypothesis, and the design does not license causal claims:
+
+- The regulatory setting is **47 CFR 64.2011** (effective December 8, 2007). Its clock runs to law enforcement, and public disclosure is embargoed afterward; it sets no customer-notification deadline. See `docs/fcc_premise_verification.md`.
+- There are no treated events before the rule took effect, so a difference-in-differences design is not identified. The essays are **post-2007 cross-sectional**.
+- Do not describe this project as a natural experiment, a quasi-experiment, or causal evidence.
+
+**Treatment** is FCC Form 499 registration status, established by a documented two-clause rule with adjudications. It is never SIC code.
+
+**Inference frame.** Cluster-jackknife (CV3) standard errors on parent CIK, with a restricted wild cluster bootstrap. HC3 is reported for comparison only and is **disqualified**: it ignores within-parent clustering. No HC3 p-value should be read as significance anywhere in this project.
+
+**Equivalence claims are retired.** No TOST result is current.
+
+---
+
+## Setup
 
 ```bash
-# Clone and navigate
-git clone https://github.com/ts2427/DISSERTATION_CLONE.git
+# Clone. core.longpaths is required on Windows or checkout will fail.
+git clone -c core.longpaths=true https://github.com/ts2427/DISSERTATION_CLONE.git
 cd DISSERTATION_CLONE
 
-# Create environment
-python -m venv venv
-source venv/bin/activate  # macOS/Linux
-# or: venv\Scripts\activate  # Windows
-
-# Install dependencies
+python -m venv .venv
+source .venv/Scripts/activate   # Windows (Git Bash); use .venv/bin/activate on macOS/Linux
 pip install -r requirements.txt
-
-# Download data (see Data Setup section below)
 ```
 
-### 2. Data Setup (Required)
+### Git LFS — read before running anything
 
-Data files are NOT in GitHub (size constraints). Download from Google Drive:
+Several inputs and committed outputs are stored with Git LFS. The Essay 3 chain's inputs are configured correctly and arrive as real files in a clean clone.
 
-**[Shared Data Folder](https://drive.google.com/drive/folders/1aeEnpS-agQeaQCpgyD9UqQJDuJD1oij-?usp=sharing)**
+**Many legacy files are not.** Their pointers were committed, but the `filter=lfs` rule for their paths was removed from `.gitattributes` in an earlier commit, so a clean clone writes a small placeholder file instead of the data, **with no error**. The objects themselves are intact on GitHub; only the rule is missing. Affected paths are concentrated under `Data/JSON Files/`, `Data/enrichment/`, `Data/audit_analytics/` and several `outputs/` table directories, which means **Essays 1 and 2 are not fully reproducible from a clean clone today**.
 
-Copy the `Data/` folder to your repo root. Verify with:
+To tell a placeholder from real data:
 
 ```bash
-python -c "import pandas as pd; df = pd.read_csv('Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv'); print(f'Loaded: {len(df)} breaches')"
+head -c 60 <file>   # a placeholder begins: version https://git-lfs.github.com/spec/v1
 ```
 
-### 3. Run Analysis
+Restoring the rule by directory is a planned task, tracked in `outputs/PENDING_REBASELINE.md`.
+
+### Data not in Git
+
+Licensed and bulk inputs (CRSP, Compustat, and other WRDS extracts) are not redistributed here. See `docs/WRDS_EXTRACT_RECIPE.md` for how each extract was pulled and how to reproduce it with your own WRDS credentials. Public EDGAR inputs used by the Essay 3 chain, including the Item 5.02 filing texts, are committed.
+
+---
+
+## Running the analysis
 
 ```bash
-# Complete pipeline (OLS + robustness, ~40 minutes)
-python run_all.py
-
-# Or individual essays
-python Notebooks/01_descriptive_statistics.py
-python Notebooks/02_essay2_volatility_analysis.py
-python Notebooks/03_essay3_governance_response.py
+python run_all.py          # full pipeline; see the docstring for stage order and gating
 ```
 
----
+`run_all.py` is the authority on stage order, which scripts are current, and which are retired. Read its docstring before running anything.
 
-## Key Findings
-
-| Essay | Hypothesis | Result | Interpretation |
-|-------|-----------|--------|-----------------|
-| **1** | H1: Timing Effect | +0.8394% (p=0.3504, NS) | Disclosure speed does NOT matter for stock returns |
-| **1** | H2: FCC Regulation | -2.1179% (p=0.0494**) | FCC firms suffer 2.1% abnormal return penalty |
-| **2** | H5: Volatility (FCC) | +1.793% (p=0.0487*) | Small firms: +7.31% (p=0.003); Large firms: -3.39% (p=0.015) |
-| **3** | H6: Executive Turnover | Odds ratio 0.518 (p=0.007***) | Immediate disclosure REDUCES 30-day turnover risk by 48% |
-
-**Integration:** Markets penalize FCC regulation directly (-2.1% returns) AND indirectly (through volatility shock). Governance responds via executive displacement, not mediated by volatility.
-
-Sample: N=653 regression observations | HC3 robust standard errors (primary)
-
----
-
-## Causal Identification
-
-47 CFR 64.2011 (effective December 8, 2007) requires carriers to notify the USSS/FBI within seven business days of reasonable determination of a CPNI breach and embargoes public disclosure until seven further business days have passed; it sets no customer-notification deadline. Treatment is Form 499 registration status, never SIC code.
-
-**Validation Tests:**
-- ✅ **Temporal:** Effects emerge post-2007 only
-- ✅ **Balance:** FCC and non-FCC firms comparable pre-2007
-- ✅ **Heterogeneity:** Effects vary by firm size (consistent pattern)
-- ✅ **Robustness:** Stable across specifications, clustering, and industry controls
-
----
-
-## Project Structure
+**Essay 3 has its own chain** and must not be run through `run_all.py` or `scripts/158`:
 
 ```
-dissertation-analysis/
-├── run_all.py                 # Main pipeline
-├── Data/                      # Download from Google Drive (not in Git)
-│   ├── raw/                   # Original breaches
-│   ├── processed/             # Enriched dataset (1,054 × 83 cols)
-│   └── wrds/                  # CRSP/Compustat stock & financial data
-├── Notebooks/                 # Analysis notebooks
-├── scripts/                   # Data processing & regression scripts
-├── Dashboard/                 # Streamlit interactive dashboard
-└── outputs/                   # Generated tables, figures, diagnostics
+scripts/187 -> 195 -> 199 -> 202 -> 190 -> 191 -> 203 -> 204
 ```
 
----
-
-## Key Outputs
-
-**After running the pipeline:**
-
-### 📊 CANONICAL RESULTS (START HERE)
-- **`outputs/CANONICAL_RESULTS_SUMMARY_20260722.txt`** — Complete Essay 1-3 verified results, heterogeneity analysis, defense positioning
-
-### Main Results Tables
-- `outputs/tables/TABLE1_COMBINED.txt` — Descriptive statistics (n=784)
-- `outputs/tables/essay2/TABLE2_baseline_disclosure.txt` — H1: Disclosure timing effect (HC3 robust SEs)
-- `outputs/tables/essay2/TABLE3_fcc_regulation.txt` — H2: FCC regulation effect (HC3 robust SEs)
-- `outputs/tables/essay2/TABLE_B9_clustered_vs_hc3_comparison.txt` — **PRIMARY: All H1-H4 full specification with HC3 vs clustered comparison**
-- `outputs/tables/essay3_governance/TABLE2_turnover_summary.csv` — H6: Executive turnover (30/90/180-day windows)
-
-### Causal Identification & Robustness
-- `outputs/tables/essay2/TABLE_FCC_Industry_FE_Comparison.txt` — Industry FE robustness
-- `outputs/tables/essay2/TABLE_FCC_Size_Sensitivity.txt` — Firm size heterogeneity
-- `outputs/tables/essay2/H1_TOST_Equivalence_Test.txt` — Equivalence testing confirms H1 null
-- `outputs/tables/essay2/DIAGNOSTICS_VIF_summary.txt` — Multicollinearity verification
-
-### Heterogeneity Analysis
-- `outputs/tables/essay3/TABLE2_volatility_changes.txt` — H5: Volatility by firm size quartiles
-- `outputs/tables/essay3_governance/mediation_bootstrap_indirect_effects.csv` — Mediation analysis (volatility does NOT mediate timing→turnover)
+`scripts/195` is the frozen final classifier; do not edit it. `scripts/202` asserts its results against a committed baseline, so a silent change in the estimates fails the run. Start from `outputs/essay3_q2/ESSAY3_STARTING_POINT.md`.
 
 ---
 
-## Methodologies
+## Where the current results live
 
-**Essays 1-3 use:**
-- Event study framework (MacKinlay 1997) for abnormal returns
-- OLS regression with HC3 heteroskedasticity-consistent robust standard errors (primary)
-- Alternative: Firm-level clustered SEs (for robustness comparison in TABLE B9)
-- Logistic regression for binary outcomes (executive turnover)
-- TOST equivalence testing (H1: demonstrates timing effect is null AND economically negligible)
-- Full specification testing: All four hypothesis predictors included simultaneously to isolate each effect
+### Essay 1 — market reaction
+- `outputs/rebuild/constants_v3.json` — the assertion baseline; the authoritative source for every Essay 1 figure
+- `outputs/rebuild/CONSTANTS_BLOCK_V3.md` — the same constants, annotated
+- `outputs/rebuild/appendix_v3/` — appendix tables, live-computed (written by `scripts/158`; Word build in `scripts/160`)
+- `outputs/rebuild/GATE1_SUMMARY.md`, `GATE1_APPLICATION_REPORT.md` — entity verification
 
-**Robustness Checks:**
-- Industry fixed effects (12 SIC groups)
-- Firm size stratification (quartiles)
-- Alternative event windows (5-day, 30-day, 60-day CAR)
-- Bootstrap mediation analysis (does volatility mediate timing→turnover? No)
-- Placebo tests (pre-FCC era)
+### Essay 2 — information asymmetry
+- `outputs/ESSAY2_QUERY4_REPORT.md`, `ESSAY2_QUERY5_REPORT.md`, `ESSAY2_QUERY6_REPORT.md`, `ESSAY2_QUERY7_REPORT.md` — the analysis record, in order
+- `outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md` — sample chain
+- `outputs/ESSAY2_MECHANICAL_RULES.md` — the rules applied to the sample
+- `outputs/ESSAY2_ANNOUNCEMENT_CONTRAST.md` — the announcement-window contrast
+- `outputs/tables/essay2_appendix/` — appendix tables (`manifest.csv` lists them; Word build in `scripts/178`)
 
-**Causal Identification:**
-- Regulatory setting: 47 CFR 64.2011 (effective December 8, 2007) — a law-enforcement-first notification clock with a public-disclosure embargo; no customer-notification deadline exists (post-2007 cross-sectional design, no natural-experiment claim)
-- Temporal validation: Pre-2007 effects zero (parallel trends confirmed)
-- FCC classification: SIC-code based (4813=Telephone, 4841=Cable, 4899=VoIP) — NOT name-string matching
-- Covariate balance: FCC and non-FCC firms comparable pre-2007
-
----
-
-## Variables
-
-**Dependent Variables:**
-- `car_30d` — 30-day cumulative abnormal return (Essay 1)
-- `volatility_change` — Change in return volatility post-breach (Essay 2)
-- `executive_change_30d` — Binary: CEO departure within 30 days (Essay 3)
-
-**Key Independent Variables:**
-- `immediate_disclosure` — Binary: ≤7 days to disclosure (24.5% of sample)
-- `fcc_reportable` — Binary: FCC-regulated telecom/cable firm (SIC 4813/4841/4899, 18% of sample)
-- `prior_breaches_1yr` — Count: Firm's breaches in prior year
-- `health_breach` — Binary: HIPAA-covered (PHI) data (6.1% of sample)
-
-**Controls:**
-- `firm_size_log` — log(market cap at breach)
-- `leverage` — debt/assets ratio
-- `roa` — net income/total assets
-
-For full variable dictionary: `Data/processed/DATA_DICTIONARY_ENRICHED.csv`
+### Essay 3 — governance response
+- `outputs/ESSAY3_QUERY2_REPORT.md` — the current analysis, end to end: sample ledger, estimation, validation, T-Mobile case
+- `outputs/essay3_q2/ESSAY3_STARTING_POINT.md` — one-page orientation; start here
+- `outputs/essay3_q2/constants_essay3_q2.json` — Essay 3's assertion baseline, separate from `constants_v3.json`
+- `outputs/essay3_q2/` — all estimation, validation and case outputs
+- `outputs/ESSAY3_QUERY1_REPORT.md` — the discovery pass that preceded the rebuild
+- `docs/claude/ESSAY3_POST_RERUN_STATE.md`, `docs/claude/ESSAY3_HANDOFF.md` — the settled state and handoff
 
 ---
 
-## Interactive Dashboard
+## Retired material — do not cite
 
-Explore results interactively:
+Superseded results remain in the repository for provenance. Several carry a `TOMBSTONE — RETIRED` header; treat any file so marked as history.
+
+- `outputs/RETIREMENT_LEDGER.md` — what was retired, why, and what replaced it
+- `outputs/STALE_RESULTS_MANIFEST.txt` — superseded output files
+- `outputs/PENDING_REBASELINE.md` — known gaps and planned maintenance
+
+Claims that appear in older drafts and are **no longer supported**: any first-stage effect of the rule on disclosure timing; any mediation result; any equivalence or TOST claim; Cox hazard results; BoardEx-based turnover measurement; SIC-code treatment; and any Item 5.02 filing rate described as executive turnover.
+
+---
+
+## Reproducibility
+
+The Essay 3 chain is verified reproducible from a clean clone: scripts 195 through 204 run end to end and every emitted file matches the committed version.
+
+Two failures found during that verification are worth knowing about, because both produced wrong output **without raising an error**:
+
+1. A `.gitignore` rule silently excluded pipeline inputs, so the classifier coded a subset of its filings, exited normally, and emitted different rates.
+2. A missing LFS rule delivered placeholder files in place of data.
+
+The lesson is recorded in `docs/DATA_QUALITY_DOCUMENTATION.md`: verify a pipeline by comparing emitted outputs against committed ones from a clean clone, not by checking that scripts exit cleanly.
+
+---
+
+## Repository layout
+
+```
+run_all.py           Pipeline entry point and stage authority
+scripts/             Data construction, estimation, validation
+Notebooks/           Exploratory analysis
+Data/                Inputs (see Git LFS and Data sections above)
+outputs/             Committed results, tables, reports, ledgers
+docs/                Methods documentation, data quality, audit records
+tests/               Unit and integration tests
+validation/          Validation artifacts
+Dashboard/           Streamlit app (see note below)
+```
+
+Working notes and query documents live in `docs/claude/`.
+
+**Note on `.gitignore`:** `*.md`, `*.txt`, `*.xlsx` and `*.docx` are ignored repository-wide, so deliverables in those formats need `git add -f` unless they sit in a directory with a negated rule (`docs/claude/`, `outputs/essay3_q2/`). Check for missing work with `git status --porcelain --ignored=matching -- <dir>`.
+
+---
+
+## Dashboard
 
 ```bash
 streamlit run Dashboard/app.py
 ```
 
-Navigate through:
-1. Research story & questions
-2. Natural experiment validation
-3. Sample composition
-4. Essay 1-3 findings & heterogeneity
-5. Cross-essay synthesis
-6. Raw data explorer
-
----
-
-## Sample Composition
-
-| Group | N | % |
-|-------|---|---|
-| **Total Breaches (Cencora-deduplicated)** | 784 | 100% |
-| With CRSP price data | 677 | 86.4% |
-| Regression sample (complete data) | 653 | 83.3% |
-| **FCC-Regulated** (SIC 4813/4841/4899) | 141 | 18.0% |
-| **Non-FCC** | 643 | 82.0% |
-| Immediate Disclosure (≤7 days) | 192 | 24.5% |
-| Delayed Disclosure (>30 days) | 470 | 60.0% |
-| With prior breaches | 331 | 42.2% |
-| Health data breaches | 48 | 6.1% |
-| Financial data breaches | 202 | 25.8% |
+**The dashboard has not been updated to the current chain.** It still presents the retired natural-experiment framing and pre-rebuild results. Do not use it to read current findings.
 
 ---
 
 ## Citation
 
 ```
-Spivey, T. D. (2026). Data breach disclosure timing and market reactions. 
+Spivey, T. D. (2026). Data breach disclosure timing and market reactions.
 Dissertation, University of South Alabama.
 ```
 
----
+## Contact
 
-## Questions?
-
-**Contact:** Timothy Spivey  
-**Email:** ts2427@jagmail.southalabama.edu
-
-For data access issues or technical questions about the code, see `STREAMLIT_DEPLOYMENT.md` for cloud setup or troubleshooting.
-
----
+Timothy Spivey — ts2427@jagmail.southalabama.edu
 
 ## License
 
-This research project is provided as-is for academic use.
+Provided as-is for academic use.
