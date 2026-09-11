@@ -1,0 +1,57 @@
+
+====================================================================================================
+E1 — helper validation: rebuild every T-Mobile outcome and compare with v2's committed outcomes
+====================================================================================================
+T-Mobile events 26; columns compared 56; mismatching columns: none
+
+====================================================================================================
+E1 — structural zeros: resolution
+====================================================================================================
+926480 -> 1001039: 6 Item 5.02 filings of the correct filer in [2006-07-30, 2009-01-25] classified
+1808065 -> 315293: 15 Item 5.02 filings of the correct filer in [2018-12-30, 2022-12-10] classified
+ final_cik                org_name breach_date       reported_date  treated  action  outcome_cik                                                                                                                                                    reason
+    924613              Nokia Inc.  2013-07-22 2013-07-22 00:00:00        0 EXCLUDE          NaN                 Nokia Corp: foreign private issuer (20-F/6-K); files no Form 8-K, so Item 5.02 departures are never reported; no correct 8-K filer exists
+    926480 The Walt Disney Company  2008-07-29 2008-07-29 00:00:00        0     FIX    1001039.0 CIK 926480 holds only 13 no-action letters (2001-2006); The Walt Disney Company filed its 8-Ks in 2008 under CIK 1001039 (later TWDC Enterprises 18 Corp)
+   1808065     Aon Corporation PLC  2020-12-29 2022-05-31 00:00:00        0     FIX     315293.0                                       CIK 1808065 (Aon plc, Ireland, 2020) is used for securities registrations only; Aon files its 8-Ks under CIK 315293
+   1808065                 Aon PLC  2022-02-25 2022-06-13 00:00:00        0     FIX     315293.0                                       CIK 1808065 (Aon plc, Ireland, 2020) is used for securities registrations only; Aon files its 8-Ks under CIK 315293
+  replaced outcomes for 926480 2008-07-29: exec_departure_180_rd=0, any_502_180_rd=1
+  replaced outcomes for 1808065 2020-12-29: exec_departure_180_rd=0, any_502_180_rd=1
+  replaced outcomes for 1808065 2022-02-25: exec_departure_180_rd=0, any_502_180_rd=1
+
+====================================================================================================
+E1 — prior 12-month market-adjusted return (CRSP daily; VW index)
+====================================================================================================
+prior-return available (rd anchor): 339 of 341; (bd anchor): 338
+count    339.0000
+mean       0.0304
+std        0.2719
+min       -0.7330
+25%       -0.1147
+50%        0.0470
+75%        0.1667
+max        1.1502
+
+====================================================================================================
+E2 — ATTRITION LEDGER (1,054 records -> Essay 3 analysis sample)
+====================================================================================================
+                                                                 step    N                                                                                note  treated  control  treated_parent_ciks  treated_corporate_families  pre_rule_treated  pre_rule_control
+                PRC notification records (master_breach_dataset.xlsx) 1054                                                        records; treatment undefined      NaN      NaN                  NaN                         NaN               NaN               NaN
+                                            Gate 1: signed parent CIK  758                                                                             records      NaN      NaN                  NaN                         NaN               NaN               NaN
+                                    Stage 3: CIK+date firm-day events  524                                                                              events      NaN      NaN                  NaN                         NaN               NaN               NaN
+                                            Gate 2 adjacency collapse  491                                                                              events      NaN      NaN                  NaN                         NaN               NaN               NaN
+                            Stage 4/5 canonical events (CANONICAL_V3)  489                                                equity re-parenting re-collapse (-2)    118.0    371.0                 14.0                        13.0               0.0               7.0
+                                            CRSP data (has_crsp_data)  356                                                                                        111.0    245.0                 13.0                        12.0               0.0               6.0
+           Compustat covariates (size, leverage, ROA) = Query 2 scope  341 Query 1 sample was 340; +1: Sprint Nextel 2012-08-01 (immediate_disclosure missing)    107.0    234.0                 12.0                        11.0               0.0               6.0
+Outcome-data requirement (>=1 8-K in [t0-730d, t0+180d], outcome CIK)  340            Nokia excluded (no 8-K filer); Disney, Aon x2 fixed to correct filer CIK    107.0    233.0                 12.0                        11.0               0.0               6.0
+Prior 12-month market-adjusted return available (>=150 daily returns)  338                                                                     ANALYSIS SAMPLE    107.0    231.0                 12.0                        11.0               0.0               6.0
+
+Outcome-data requirement removes 1 (treated 0, control 1): Nokia Inc. 2013-07-22
+Prior-return requirement removes 2 (treated 0): Uber Technologies, Inc. 2019-10-28 (117 days); Zscaler, Inc. 2018-10-10 (143 days)
+
+====================================================================================================
+E3 — anchor diagnostic: breach-anchored 180-day window ends before reported_date
+====================================================================================================
+  treated: 13/107 = 0.121
+  control: 28/231 = 0.121
+
+Written e_analysis_sample.csv: 341 scope events, 338 in the analysis sample

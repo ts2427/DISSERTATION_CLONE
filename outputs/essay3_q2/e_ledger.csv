@@ -1,0 +1,10 @@
+step,N,note,treated,control,treated_parent_ciks,treated_corporate_families,pre_rule_treated,pre_rule_control
+PRC notification records (master_breach_dataset.xlsx),1054,records; treatment undefined,,,,,,
+Gate 1: signed parent CIK,758,records,,,,,,
+Stage 3: CIK+date firm-day events,524,events,,,,,,
+Gate 2 adjacency collapse,491,events,,,,,,
+Stage 4/5 canonical events (CANONICAL_V3),489,equity re-parenting re-collapse (-2),118.0,371.0,14.0,13.0,0.0,7.0
+CRSP data (has_crsp_data),356,,111.0,245.0,13.0,12.0,0.0,6.0
+"Compustat covariates (size, leverage, ROA) = Query 2 scope",341,Query 1 sample was 340; +1: Sprint Nextel 2012-08-01 (immediate_disclosure missing),107.0,234.0,12.0,11.0,0.0,6.0
+"Outcome-data requirement (>=1 8-K in [t0-730d, t0+180d], outcome CIK)",340,"Nokia excluded (no 8-K filer); Disney, Aon x2 fixed to correct filer CIK",107.0,233.0,12.0,11.0,0.0,6.0
+Prior 12-month market-adjusted return available (>=150 daily returns),338,ANALYSIS SAMPLE,107.0,231.0,12.0,11.0,0.0,6.0

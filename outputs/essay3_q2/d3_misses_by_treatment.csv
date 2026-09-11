@@ -1,0 +1,16 @@
+round,classifier,field,sheet_id,company,cik,filing_date,treated,reference_person,restates_prior_disclosure
+1,v1 (d39bc6d),exec,2,Frontier Communications,20520,2022-06-24,1,"Donald W. Daniels, SVP and Chief Accounting Officer",N
+1,v1 (d39bc6d),exec,32,"Fidelity National Information Services, Inc.",1136893,2023-08-22,0,"Erik D. Hoag, CFO",N
+1,v1 (d39bc6d),exec,37,T-Mobile USA,1283699,2020-04-16,1,"David Carey, EVP Corporate Services",Y
+1,v1 (d39bc6d),exec,39,T-Mobile USA,1283699,2020-02-19,1,"David Carey, EVP Corporate Services",N
+1,v1 (d39bc6d),exec,53,T-Mobile USA,1283699,2020-04-24,1,"John Legere, director (resigned from Board); former CEO",Y
+1,v1 (d39bc6d),exec,66,Microsoft Corporation,789019,2021-05-20,0,"Jean-Philippe Courtois, EVP (ceases to be an executive officer 2021-06-30)",N
+1,v1 (d39bc6d),ceo,31,"T-Mobile USA, Inc.",1283699,2013-05-02,1,"Roger D. Linquist, Mark A. Stachiw, Dennis T. Currier, Christine B. Kornegay, Malcolm M. Lorang (resigned as executive officers); J. Braxton Carter (resigned as CAO, remained CFO); Arthur C. Patterson, John F. Callahan Jr., C. Kevin Landry (directors)",N
+1,v1 (d39bc6d),ceo,53,T-Mobile USA,1283699,2020-04-24,1,"John Legere, director (resigned from Board); former CEO",Y
+1,v1 (d39bc6d),director_only,14,PACCAR,75362,2018-02-16,0,"Luiz Kaufmann, director (retirement 2018-04-29)",N
+1,v1 (d39bc6d),director_only,62,"Fidelity National Information Services, Inc.",1136893,2024-02-01,0,"Vijay D'Silva and Louise Parent, directors (declining re-election)",N
+1,v1 (d39bc6d),director_only,76,Hewlett Packard Enterprise Company,1645590,2024-02-08,0,"Daniel Ammann, director",N
+1,v2 (6f7be7a) IN-SAMPLE,ceo,31,"T-Mobile USA, Inc.",1283699,2013-05-02,1,"Roger D. Linquist, Mark A. Stachiw, Dennis T. Currier, Christine B. Kornegay, Malcolm M. Lorang (resigned as executive officers); J. Braxton Carter (resigned as CAO, remained CFO); Arthur C. Patterson, John F. Callahan Jr., C. Kevin Landry (directors)",N
+1,v2 (6f7be7a) IN-SAMPLE,director_only,53,T-Mobile USA,1283699,2020-04-24,1,"John Legere, director (resigned from Board); former CEO",Y
+2,v2 (6f7be7a),exec,16,Sprint Nextel,101830,2018-12-06,1,"Kevin Crull, Chief Strategy Officer",N
+2,v2 (6f7be7a),exec,22,"Charter Communications, Inc.",1091667,2023-08-21,1,"David G. Ellen, Senior Executive Vice President (through 2023-11-30, then Executive Advisor)",N

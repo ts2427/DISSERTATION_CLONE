@@ -1,0 +1,5 @@
+final_cik,org_name,breach_date,reported_date,treated,action,outcome_cik,reason
+924613,Nokia Inc.,2013-07-22,2013-07-22 00:00:00,0,EXCLUDE,,"Nokia Corp: foreign private issuer (20-F/6-K); files no Form 8-K, so Item 5.02 departures are never reported; no correct 8-K filer exists"
+926480,The Walt Disney Company,2008-07-29,2008-07-29 00:00:00,0,FIX,1001039.0,CIK 926480 holds only 13 no-action letters (2001-2006); The Walt Disney Company filed its 8-Ks in 2008 under CIK 1001039 (later TWDC Enterprises 18 Corp)
+1808065,Aon Corporation PLC,2020-12-29,2022-05-31 00:00:00,0,FIX,315293.0,"CIK 1808065 (Aon plc, Ireland, 2020) is used for securities registrations only; Aon files its 8-Ks under CIK 315293"
+1808065,Aon PLC,2022-02-25,2022-06-13 00:00:00,0,FIX,315293.0,"CIK 1808065 (Aon plc, Ireland, 2020) is used for securities registrations only; Aon files its 8-Ks under CIK 315293"

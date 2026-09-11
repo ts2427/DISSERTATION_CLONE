@@ -618,6 +618,97 @@ If misses fall equally on treated and control events, they shrink the estimated 
 
 **STOP (validation).**
 
+## Differential-recall check (NEW, scripts/198; `d3_misses_by_treatment.csv`, `d3_recall_by_treatment.csv`)
+
+**Every classifier miss across both rounds, by treatment status.** A miss means reference = Y, classifier = N, under variant A. Treatment is that of the event the filing was drawn for.
+
+| Round / classifier | Field | Sheet | Company | Treated |
+|---|---|---|---|---|
+| 1 / v1 | exec | 2 | Frontier Communications | yes |
+| 1 / v1 | exec | 32 | Fidelity National Information Services | no |
+| 1 / v1 | exec | 37 | T-Mobile | yes |
+| 1 / v1 | exec | 39 | T-Mobile | yes |
+| 1 / v1 | exec | 53 | T-Mobile | yes |
+| 1 / v1 | exec | 66 | Microsoft | no |
+| 1 / v1 | CEO | 31 | T-Mobile | yes |
+| 1 / v1 | CEO | 53 | T-Mobile | yes |
+| 1 / v1 | director-only | 14 | PACCAR | no |
+| 1 / v1 | director-only | 62 | Fidelity National Information Services | no |
+| 1 / v1 | director-only | 76 | Hewlett Packard Enterprise | no |
+| 1 / v2, **in-sample** | CEO | 31 | T-Mobile | yes |
+| 1 / v2, **in-sample** | director-only | 53 | T-Mobile | yes |
+| **2 / v2** | **exec** | **16** | **Sprint** | **yes** |
+| **2 / v2** | **exec** | **22** | **Charter** | **yes** |
+
+**Executive-departure recall by group:**
+
+| Round / classifier | Treated recall [Clopper–Pearson 95% CI] | Control recall [95% CI] |
+|---|---|---|
+| 1 / v1 | 8/12 = .67 [.35, .90] | 15/17 = .88 [.64, .99] |
+| 1 / v2 (in-sample) | 12/12 = 1.00 [.74, 1.00] | 17/17 = 1.00 [.81, 1.00] |
+| **2 / v2 (out-of-sample)** | **1/3 = .33 [.01, .91]** | **2/2 = 1.00 [.16, 1.00]** |
+
+**The condition fired.** Every miss of the final classifier v2, in either round (two in-sample, two out-of-sample), is in a treated (carrier) filing, and v1 showed the same lean.
+
+The counts are small and every interval overlaps. But if carrier filings word departures differently, the misses **bias the treated–control difference downward**; they do not merely shrink it toward zero. That can mask a positive effect or create a spurious negative one.
+
+**Decision (Tim, 2026-09-11):** keep v2 frozen, so the stopping rule is intact. Measure recall by treatment status on a blind audit stratified by treatment, then estimate with a misclassification sensitivity.
+
+## Recall audit sheet (NEW, scripts/200): drawn — STOP until coded blind
+
+- **The sheet:** `outputs/essay3_q2/VALIDATION_SHEET_AUDIT.xlsx`, 80 filings in the same format and README as rounds 1–2. It has **no treatment column**, and the order is randomised (seed 4444).
+- **The draw:** 40 treated (seed 20260913) and 40 control (seed 20260914), from the B1-scope filings not already coded or read. That pool holds 185 eligible treated and 381 control filings. The stratum is the treatment of the event the filing was drawn for.
+- **v2's answers and each filing's stratum** are only in `validation_classifier_HIDDEN_AUDIT.csv`.
+- The audit **measures and does not revise.** v2 stays frozen (`6f7be7a`).
+
+---
+
+# STAGE 2 — PART E: SAMPLE (NEW, scripts/199; `e_ledger.csv`, `e1_cik_resolution.csv`, `e_analysis_sample.csv`)
+
+Essay 3 runs on today's CANONICAL_V3; `constants_v3.json` is untouched. The outcome comes from final classifier v2.
+
+**Helper validation.** Script 199 rebuilds outcomes for re-pointed CIKs. As a check, it rebuilt all 26 T-Mobile events' outcomes and matched v2's committed values on every one of the 56 outcome columns. A mismatch would have stopped the run.
+
+### E1. Outcome-data requirement and the four Query 1 structural zeros
+
+| Event | Action | Outcome CIK | Reason |
+|---|---|---|---|
+| Nokia (924613), 2013-07-22, control | **EXCLUDED** | — | Foreign private issuer (20-F/6-K); files no Form 8-K, so no Item 5.02 departures can exist. |
+| Walt Disney (926480), 2008-07-29, control | **FIXED** | 1001039 | CIK 926480 holds only 13 no-action letters (2001–2006); Disney's 2008 8-Ks are under CIK 1001039. 6 of its Item 5.02 filings were classified with v2. |
+| Aon (1808065), 2020-12-29 and 2022-02-25, control | **FIXED** | 315293 | CIK 1808065 is used for registrations only; Aon's 8-Ks are under CIK 315293. 15 of its Item 5.02 filings were classified with v2. |
+
+After the fixes, the requirement (at least one 8-K of any kind in `[t0 − 730d, t0 + 180d]`, t0 = reported_date) removes **1 event**: Nokia, a control.
+
+### E2. Ledger
+
+Record-level steps carry no treatment. Parent entities are the same as parent CIKs, since the pipeline has no separate key. "Families" is a labeled alternative that folds Sprint (101830) into T-Mobile (1283699).
+
+| Step | N | Treated | Control | Treated parent CIKs | Treated families | Pre-rule (treated / control) |
+|---|---|---|---|---|---|---|
+| PRC notification records | 1,054 | — | — | — | — | — |
+| Gate 1 signed parent CIK (records) | 758 | — | — | — | — | — |
+| Stage 3 firm-day events | 524 | — | — | — | — | — |
+| Gate 2 adjacency collapse | 491 | — | — | — | — | — |
+| CANONICAL_V3 events | 489 | 118 | 371 | 14 | 13 | 0 / 7 |
+| CRSP data | 356 | 111 | 245 | 13 | 12 | 0 / 6 |
+| Compustat covariates = Query 2 scope | **341** | 107 | 234 | 12 | 11 | 0 / 6 |
+| Outcome-data requirement | 340 | 107 | 233 | 12 | 11 | 0 / 6 |
+| **Prior 12-month market-adjusted return available (≥150 daily returns) = ANALYSIS SAMPLE** | **338** | **107** | **231** | **12** | **11** | **0 / 6** |
+
+Why the scope is 341 against Query 1's 340: Query 1 required `immediate_disclosure`, which decision L3 removed. The +1 is **Sprint Nextel, 2012-08-01**, whose `immediate_disclosure` is missing. It is a wrong-field delay record; its reported_date is 2009-03-30.
+
+The prior-return requirement removes 2 controls, both recent IPOs: Uber (reported 2019-10-28; 117 daily returns) and Zscaler (2018-10-10; 143).
+
+### E3. Anchor diagnostic
+
+The share of analysis-sample events whose breach-anchored 180-day window ends before reported_date, meaning every departure in that window predates public disclosure:
+- **treated: 13/107 = .121**
+- **control: 28/231 = .121**
+
+The prior 12-month market-adjusted return (reported_date anchor; 339 of the 341 scope events have one) has mean +0.030, SD 0.272, median +0.047.
+
+**Estimation (F1 onward) waits for the recall audit, per Tim's decision.**
+
 Committed in this step: `5ec8f9e` (round-2 reference codes).
 
 Not yet committed:

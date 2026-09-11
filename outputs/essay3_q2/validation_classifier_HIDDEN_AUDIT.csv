@@ -1,0 +1,81 @@
+sheet_id,accession,cik,treated_stratum,clf_exec_departure,clf_exec_departure_new,clf_ceo_departure,clf_director_only_departure,clf_person_role,clf_pre_announced,clf_action
+1,0001447669-21-000263,1447669,1,Y,Y,N,N,George Hu (COO: Chief Operating Officer),Y,departure
+2,0001193125-20-093630,101830,1,Y,Y,N,N,Paul Schieber (PAO: Vice President Controller),N,departure
+3,0001104659-22-051225,815097,0,N,N,N,N,,N,compensation only
+4,0001193125-23-011458,1136893,0,N,N,N,Y,Mark A. Ernst (director: Board); Mark A. Ernst (director: Board),Y,departure
+5,0001060391-13-000021,1060391,0,Y,Y,N,N,Charles F. Serianni (PAO: Chief Accounting Officer),Y,departure
+6,0000732717-11-000033,732717,1,Y,Y,N,N,Richard G. Lindner (CFO: Executive Vice President and Chief Financial Officer),Y,departure
+7,0001193125-17-293765,33185,0,Y,Y,Y,N,Richard F. Smith (CEO: Chief Executive Officer and a director),N,departure
+8,0000101830-08-000030,101830,1,N,N,N,Y,Sprint Nextel (director: Board of Directors),Y,departure
+9,0000796343-14-000007,796343,0,N,N,N,N,,N,appointment
+10,0001683168-17-000876,27904,0,N,N,N,Y,Thomas E. Donilon (director: Board),Y,departure
+11,0001193125-18-268028,732712,1,N,N,N,N,,N,election
+12,0001645590-23-000076,1645590,0,N,N,N,N,,N,election
+13,0001193125-20-123202,732717,1,Y,Y,N,N,Randall Stephenson (other_exec: Executive Chairman of the Board),N,departure
+14,0000815097-22-000047,815097,0,N,N,N,N,,N,appointment
+15,0000004904-19-000042,4904,0,N,N,N,Y,Art Garcia (director: director),N,departure
+16,0001609711-19-000190,1609711,1,Y,Y,Y,N,Scott W. Wagner (CEO: Chief Executive Officer); Scott W. Wagner (director: Board),Y,departure
+17,0001645590-23-000110,1645590,0,N,N,N,N,,N,appointment
+18,0001104659-22-061290,815097,0,Y,Y,N,N,Peter C. Anderson (other_exec: Chief Ethics and Compliance Officer named executive officer); Peter C. Anderson (other_exec: Chief Risk and Compliance Officer),N,departure
+19,0001193125-19-239966,732717,1,N,N,N,N,,N,compensation only
+20,0000950134-07-013435,896878,0,Y,Y,N,N,None (other_exec: Senior Vice President),Y,departure
+21,0000101830-16-000063,101830,1,N,N,N,N,,N,other
+22,0001609711-21-000059,1609711,1,N,N,N,N,,N,appointment
+23,0001437749-18-006058,1632127,1,Y,Y,N,N,Kevin P. Coyle (CFO: Senior Vice President Chief Financial Officer); Kevin P. Coyle (CFO: Senior Vice President Chief Financial Officer),Y,departure
+24,0000732717-22-000091,732717,1,N,N,N,N,,N,appointment
+25,0001104659-21-138544,1326160,0,N,N,N,N,,N,election
+26,0001041061-23-000035,1041061,0,N,N,N,N,,N,election
+27,0001373715-24-000269,1373715,0,Y,Y,N,N,Mr. Desai (COO: President and Chief Operating Officer),Y,departure
+28,0001193125-23-127592,1660134,0,N,N,N,Y,Patrick Grady (director: Board of Directors of the Company (the “Board),Y,departure
+29,0000101830-09-000007,101830,1,N,N,N,N,,N,other
+30,0001683168-17-002723,27904,0,N,N,N,N,,N,election
+31,0001193125-15-019001,896878,0,N,N,N,N,,N,other
+32,0001193125-19-307167,732712,0,N,N,N,N,,N,election
+33,0001193125-20-120011,315293,0,N,N,N,N,,N,compensation only
+34,0001104659-06-060568,47217,0,Y,Y,N,Y,Patricia C. Dunn (other_exec: executive Chairman of the Board of Directors); Keyworth II (director: director); Dr. Keyworth (director: Board),Y,departure
+35,0001193125-15-052763,1283699,1,Y,Y,N,N,Mr. Alling (other_exec: officer),Y,departure
+36,0001193125-15-275046,101830,1,Y,Y,N,N,Joseph Euteneuer (CFO: Chief Financial Officer),Y,departure
+37,0000732717-19-000034,732717,1,N,N,N,N,,N,election
+38,0001104659-20-108520,1326160,0,N,N,N,N,,N,compensation only
+39,0001193125-16-628913,1283699,1,N,N,N,N,,N,appointment
+40,0001171843-12-003874,8670,0,N,N,N,N,,N,appointment
+41,0001104659-24-033278,1140859,0,Y,Y,Y,N,"Steven H. Collis (CEO: the Company’s President and Chief Executive Officer (“CEO”)); Steven H. Collis (CEO: CEO since July 2011, will retire from the role of CEO and become Executive Chairman of the Board)",Y,departure
+42,0001193125-14-084697,320193,0,Y,Y,N,N,Peter Oppenheimer (CFO: Senior Vice President Chief Financial Officer),Y,departure
+43,0000101830-09-000005,101830,1,Y,Y,N,N,Christopher J. Gregoire (PAO: principal accounting officer of the Company effective March 3),Y,departure
+44,0001437749-17-000933,43196,0,N,N,N,N,,N,compensation only
+45,0000732717-07-000089,732717,1,N,N,N,N,,N,compensation only
+46,0000732717-15-000056,732717,1,N,N,N,N,,N,election
+47,0000950134-08-001977,896878,0,N,N,N,N,,N,compensation only
+48,0001193125-21-215278,773840,0,Y,Y,Y,N,Rajeev Gautam (CEO: President and Chief Executive Officer); Rajeev Gautam (CEO: President Chief Executive Officer); Rajeev Gautam (CEO: President Chief Executive Officer),N,departure
+49,0001193125-24-147029,1000228,0,N,N,N,N,,N,compensation only
+50,0000101830-15-000024,101830,1,N,N,N,N,,N,compensation only
+51,0001091667-08-000143,1091667,1,Y,N,N,Y,None (director: DIRECTORS OR CERTAIN OFFICERS; ELECTION OF DIRECTORS); Robert A. Quigley (other_exec: Executive Vice President and Chief Marketing Officer),Y,departure
+52,0001193125-14-284196,896878,0,Y,Y,N,N,Daniel Maurer (other_exec: Senior Vice President); Daniel Maurer (other_exec: Senior Vice President),Y,departure
+53,0000950103-14-008968,1166691,1,N,N,N,N,,N,compensation only
+54,0001193125-18-292824,732712,1,N,N,N,Y,Gregory D. Wasson (director: Board); Gregory D. Wasson (director: Board of Directors),Y,departure
+55,0001193125-13-253564,732712,1,N,N,N,N,,N,other
+56,0001166691-24-000019,1166691,1,N,N,N,N,,N,election
+57,0001193125-13-124519,18926,1,Y,Y,Y,N,James E. Ousley (CEO: Chief Executive Officer); James E. Ousley (CEO: Chief Executive Officer),Y,departure
+58,0001193125-11-320674,1166691,0,N,N,N,N,,N,compensation only
+59,0001104659-11-003613,51143,0,N,N,N,N,,N,compensation only
+60,0001193125-16-798875,732712,1,N,N,N,Y,Donald T. Nicolaisen (director: Board); Donald T. Nicolaisen (director: Board of Directors),Y,departure
+61,0000732717-24-000012,732717,1,N,N,N,N,,N,election
+62,0000078003-07-000213,78003,0,N,N,N,N,,N,appointment
+63,0000796343-13-000017,796343,0,N,N,N,N,,N,appointment
+64,0000277135-17-000028,277135,0,Y,Y,N,N,"James T. Ryan (other_exec: Board ”) of his retirement as a director, officer); James T. Ryan (director: Board)",Y,departure
+65,0001136893-23-000069,1136893,0,Y,Y,N,N,"Ido Gileadi (COO: Executive Vice President, Chief Operating Officer); Ido Gileadi (COO: Executive Vice President Chief Operating Officer)",Y,departure
+66,0001091667-14-000139,1091667,1,N,N,N,N,,N,compensation only
+67,0001683168-16-000288,27904,0,Y,Y,N,N,Richard H. Anderson (other_exec: Board of Directors of Delta of his retirement from the Board and the position of Executive Chairman),Y,departure
+68,0001193125-23-022845,732717,1,Y,Y,N,N,Debra L. Dial (PAO: Senior Vice President - Chief Accounting Officer and Controller); Debra L. Dial (PAO: the Company’s Senior Vice President – Chief Accounting Officer and Controller effective Ap),Y,departure
+69,0000950103-23-014572,1166691,1,N,N,N,N,,N,election
+70,0001104659-23-116755,1001082,1,Y,N,Y,N,Mr. Carlson (CEO: President and Chief Executive Officer),unclear,departure
+71,0001193125-17-303383,732712,1,Y,Y,Y,N,Lowell McAdam (CEO: Chief Executive Officer),N,departure
+72,0001091667-12-000050,1091667,1,N,N,N,N,,N,compensation only
+73,0000101830-19-000017,101830,1,N,N,N,N,,N,appointment
+74,0000930413-15-002882,908937,0,N,N,N,N,,N,appointment
+75,0001104659-18-028086,1283699,1,Y,Y,N,N,John J. Legere (president: President upon ratification by the T-Mobile board of directors); Michael Sievert (COO: Chief Operating Officer),Y,departure
+76,0001193125-19-031476,732712,1,N,N,N,Y,Richard L. Carrión (director: Board of Directors); Lowell C. McAdam (director: Board of Directors); Lowell C. McAdam (director: Board); Frances Keeth (director: Board in accordance with the Board),Y,departure
+77,0001193125-07-199004,732712,1,N,N,N,Y,James R. Barker (director: Board of Directors),Y,departure
+78,0001193125-21-011905,18926,1,Y,Y,N,N,Eric J. Mortensen (PAO: Senior Vice President Controller),N,departure
+79,0001104659-10-015887,47217,0,N,N,N,N,,N,compensation only
+80,0001193125-17-369333,75362,0,N,N,N,N,,N,compensation only
