@@ -160,3 +160,6 @@ Data/wrds/crsp_quotes_topup.csv
 # default and must be excluded deliberately, not by accident.
 !docs/claude/**
 !outputs/essay3_q2/**
+
+# ...except the raw stdout captures, which duplicate the committed *.log files (must stay after the negation above)
+outputs/essay3_q2/*_stdout.txt
