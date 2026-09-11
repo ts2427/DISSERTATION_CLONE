@@ -36,7 +36,7 @@ Produced 2026-09-11. **Stage 1 only. Stage 1 stops here: nothing is estimated on
 
 | Essay / artifact | Chain | Regression N | Treated events | Treated parent CIKs | Treated `org_name` strings (label only) |
 |---|---|---|---|---|---|
-| Essay 1: `outputs/ESSAY1_APPENDIX_TABLES_FORM499.md` (untracked; its generator, scripts/141, was retired from run_all 2026-08-30) | **7/28 audit** (1,054 → 784 → 779 → 672 → 648) | 648 | 115 | 11 | 35 |
+| Essay 1: `outputs/ESSAY1_APPENDIX_TABLES_FORM499.md` (committed 2026-09-11 with a TOMBSTONE header, do not cite; its generator, scripts/141, was retired from run_all 2026-08-30 and no longer exists — the current appendix is `outputs/rebuild/appendix_v3/` from scripts/158) | **7/28 audit** (1,054 → 784 → 779 → 672 → 648) | 648 | 115 | 11 | 35 |
 | Essay 1: `constants_v3.json` (committed; the v3 artifact the tombstone names as authoritative) | **v3** (1,054 → 758 → 524 → 489) | 338 | 104 | 11 | 35 |
 | Essay 2: `outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md` (committed b11e884, after the DISH top-up) | v3 | 333 | 104 | 12 | 36 |
 | Essay 3: `constants_v3.json` (committed, before the top-up) | v3 | 338 | 104 (`CONSTANTS_BLOCK_V3.md:144`) | not stored | not stored |
