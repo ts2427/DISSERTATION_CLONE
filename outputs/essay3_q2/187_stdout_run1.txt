@@ -1,0 +1,13 @@
+Scope events: 341 (treated 107, parent CIKs 83); reported_date missing: 0
+Filings in scope: 738 unique accessions across 79 CIKs (1618 event-filing pairs); submission size total 233 MB
+  100/738 | fetched 91 reused 9 already 0 failed 0
+  200/738 | fetched 188 reused 12 already 0 failed 0
+  300/738 | fetched 281 reused 19 already 0 failed 0
+  400/738 | fetched 374 reused 26 already 0 failed 0
+  500/738 | fetched 471 reused 29 already 0 failed 0
+  600/738 | fetched 544 reused 56 already 0 failed 0
+  700/738 | fetched 632 reused 68 already 0 failed 0
+Fetch complete: in scope 738 | fetched 666 | reused 72 (calibration 49, T-Mobile 23) | already on disk 0 | FAILED 0
+Calibration 50 inside scope: 49/50 (outside: ['0000101830-12-000110'])
+Text store size: 26.3 MB
+Validation draw: 30 of pool 666 (seed 20260911). Dev draw: 40 (seed 1117).

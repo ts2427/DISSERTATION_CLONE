@@ -1,0 +1,7 @@
+CLASSIFIER FREEZE — Essay 3 Query 2 Part C5
+frozen: 2026-09-11 13:26:45
+file: scripts/188_essay3_q2_classifier.py
+sha256: ee0cc05dc1826c4b5e394ca5562374d5c7053e1644127aa7696f07590003fedc
+git blob hash (git hash-object): af2c97c280629edc5c06dd8d4a2b7874378fb9d0
+NOT committed (Tim: no commits until he says). The git blob hash is what the file's blob id will be when committed.
+Developed on: outputs/essay3_q2/dev_ids.csv (40, seed 1117) + 28 non-calibration T-Mobile documents read in Query 1; dev rounds 1-4 logged in 188_dev_round{1..4}.txt. Validation (30, seed 20260911) and calibration (50) codes never printed during development.

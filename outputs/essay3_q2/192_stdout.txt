@@ -1,0 +1,6 @@
+CEO-departure filings: 73 (+2 named in G6) | exhibit rows 80
+status
+no EX-99 in index    42
+already_on_disk      36
+fetched               1
+index FAILED          1

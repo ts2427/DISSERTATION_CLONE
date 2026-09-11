@@ -1,0 +1,81 @@
+sheet_id,accession,source,clf_exec_departure,clf_ceo_departure,clf_director_only_departure,clf_person_role,clf_pre_announced,clf_action
+1,0001091667-23-000034,calibration,N,N,N,,N,compensation only
+2,0001140361-22-023997,calibration,N,N,N,,N,appointment
+3,0001609711-22-000011,calibration,N,N,N,,N,appointment
+4,0000077476-21-000044,random30,N,N,N,,N,election
+5,0000732717-13-000101,calibration,N,N,N,,N,compensation only
+6,0001193125-23-206313,calibration,N,N,N,,N,election
+7,0001640147-24-000033,random30,Y,Y,N,Frank Slootman (CEO: Chief Executive Officer); Frank Slootman (CEO: the Company’s new Chief Executive Officer),N,departure
+8,0001193125-24-044681,random30,Y,N,N,Ido Gileadi (COO: Chief Operating Officer),Y,departure
+9,0001193125-08-257043,random30,N,N,N,,N,compensation only
+10,0001609711-21-000126,random30,N,N,N,,N,compensation only
+11,0001137789-17-000068,random30,N,N,N,,N,other
+12,0001104659-06-075980,random30,N,N,N,,N,election
+13,0001326160-21-000219,random30,Y,N,N,"Mr. Douglas (president: Executive Vice President, Energy Solutions and President)",Y,departure
+14,0001193125-18-048187,calibration,N,N,N,,N,election
+15,0000354950-14-000006,calibration,N,N,N,,N,compensation only
+16,0001193125-15-406279,calibration,N,N,N,,N,appointment
+17,0001609711-22-000092,calibration,N,N,N,,N,compensation only
+18,0001510295-18-000146,random30,Y,N,N,Michael Palmer (other_exec: Senior Vice President named executive officer),Y,departure
+19,0000896878-18-000073,calibration,Y,N,N,Dan Wernikoff (other_exec: Executive Vice President); Dan Wernikoff (other_exec: senior vice president),N,departure
+20,0001193125-14-062781,calibration,N,N,N,,N,election
+21,0001193125-22-139528,random30,Y,N,N,Mr. Tim (other_exec: Named Executive Officer),N,departure
+22,0000896878-24-000021,calibration,N,N,N,,N,election
+23,0001193125-12-392575,calibration,N,N,N,,N,compensation only
+24,0001193125-18-152947,calibration,N,N,N,,N,compensation only
+25,0000892569-07-001428,calibration,N,N,N,,N,appointment
+26,0000796343-19-000008,random30,Y,N,Y,Robert Burgess (director: Board of Directors); Brad Rencher (other_exec: Executive Vice President),Y,departure
+27,0001193125-23-058988,random30,Y,N,N,Matthew D. Ellis (CFO: Verizon’s Executive Vice President and Chief Financial Officer); Anthony T. Skiadas (PAO: Verizon’s Senior Vice President and Controller); Kyle Malady (president: Executive Vice President and President),N,departure
+28,0000732717-13-000012,random30,N,N,N,,N,election
+29,0001140361-24-026861,calibration,N,N,N,,N,compensation only
+30,0001552781-23-000451,random30,N,N,N,,N,election
+31,0001193125-13-193449,random30,Y,N,Y,Kevin Landry (director: directors); Braxton Carter (PAO: Chief Accounting Officer); Malcolm M. Lorang (other_exec: executive officer),Y,departure
+32,0001193125-23-218012,calibration,N,N,N,,N,appointment
+33,0001193125-21-113210,calibration,N,N,Y,Stephen Kappes (director: Board),N,departure
+34,0000101830-16-000092,random30,N,N,N,,N,compensation only
+35,0001193125-19-201404,random30,N,N,Y,Matt Cohler (director: board of directors); Matt Cohler (director: Board); Matt Cohler (director: directors),Y,departure
+36,0001543151-23-000021,calibration,Y,N,N,Nelson Chai (CFO: Chief Financial Officer); Nelson Chai (CFO: Chief Financial Officer),N,departure
+37,0001193125-20-109354,calibration,N,N,N,,N,compensation only
+38,0000896878-18-000162,calibration,Y,Y,N,Brad Smith (CEO: President and Chief Executive Officer); Brad Smith (CEO: President and Chief Executive Officer); Sasan Goodarzi (other_exec: Senior Vice President and Chief Product and Platform Officer); Tayloe Stansbury (other_exec: Executive Vice President and Chief Technology Officer); Tayloe Stansbury (other_exec: Intuit’s Chief Technology Officer),N,departure
+39,0001193125-20-041926,calibration,N,N,N,,N,compensation only
+40,0001193125-12-396875,calibration,N,N,Y,Cisco Systems (director: Board”) of his decision to retire from the Board); Jerry Yang (director: Board has reduced the size of the Board),N,departure
+41,0000896878-14-000030,random30,N,N,N,,N,appointment
+42,0001104659-24-035045,calibration,Y,Y,N,Steven H. Collis (CEO: Chief Executive Officer (“CEO),Y,departure
+43,0000950103-22-021872,random30,N,N,N,,N,appointment
+44,0001193125-19-325996,random30,N,N,Y,Glen F. Post (director: board of directors),Y,departure
+45,0001193125-14-221590,calibration,N,N,N,,N,other
+46,0001104659-13-060144,random30,N,N,N,,N,appointment
+47,0001193125-24-022476,calibration,N,N,N,,N,compensation only
+48,0001193125-22-085992,random30,Y,N,N,Indraneel Dev (CFO: Executive Vice President and Chief Financial Officer of the Company and its principal subs),Y,departure
+49,0001091667-13-000058,calibration,N,N,Y,Stan Parker (director: board),unclear,departure
+50,0001193125-08-204660,calibration,Y,N,N,William P. Barr (other_exec: Executive Vice President General Counsel),N,departure
+51,0001193125-21-076354,calibration,N,N,N,,N,compensation only
+52,0001373715-24-000342,calibration,Y,N,N,Amit Zavery (COO: President Chief Product Officer Chief Operating Officer),N,departure
+53,0001193125-20-119230,calibration,N,N,Y,John Legere (director: Board of Directors (the “Board); John Legere (director: Board),N,departure
+54,0001552781-25-000025,calibration,N,N,Y,Uber Technologies (director: board of directors),N,departure
+55,0001193125-17-099960,random30,N,N,N,,N,compensation only
+56,0001590895-24-000004,calibration,N,N,N,,N,compensation only
+57,0000101830-15-000030,calibration,Y,N,N,Michael Schwartz (other_exec: Senior Vice President),Y,departure
+58,0001193125-22-204998,calibration,Y,N,N,Andrew M. Weeks (other_exec: Vice President),unclear,departure
+59,0000796343-20-000040,calibration,N,N,N,,N,appointment
+60,0000101830-18-000029,calibration,Y,Y,N,Marcelo Claure (CEO: Chief Executive Officer (“CEO),unclear,departure
+61,0000101830-12-000110,calibration,N,N,N,,N,compensation only
+62,0001193125-24-021392,calibration,N,N,N,,N,other
+63,0000078003-07-000122,calibration,Y,N,N,Pfizer Research (CFO: Senior Vice President; Chief Financial Officer),N,departure
+64,0001193125-21-205666,random30,N,N,N,,N,election
+65,0001193125-14-045399,calibration,N,N,N,,N,compensation only
+66,0001193125-21-167940,random30,N,N,N,,N,other
+67,0000732717-14-000094,calibration,N,N,N,,N,election
+68,0000796343-20-000085,calibration,N,N,Y,Charles M. Geschke (director: Board); Charles M. Geschke (director: Board),N,departure
+69,0001140361-14-003902,random30,N,N,N,,N,election
+70,0001553023-18-000025,random30,Y,N,N,Amitabh Rai (PAO: Senior Vice President and Chief Accounting Officer); Amitabh Rai (PAO: Chief Accounting Officer),N,departure
+71,0001193125-17-008419,random30,Y,Y,N,Gary C. Kelly (CEO: Chief Executive Officer),N,departure
+72,0001193125-18-288678,random30,N,N,N,,N,election
+73,0000950134-08-022449,calibration,N,N,N,,N,compensation only
+74,0001193125-16-470124,calibration,Y,N,N,Gary A. King (other_exec: Executive Vice President Chief Information Officer),N,departure
+75,0001193125-23-024130,calibration,N,N,Y,Bavan Holloway (director: Board of Directors (the “Board); Bavan Holloway (director: Board),N,departure
+76,0001645590-24-000016,calibration,N,N,N,,N,other
+77,0001645590-24-000004,calibration,Y,N,N,None (other_exec: Executive Vice President and Chief People Officer); None (other_exec: executive officer),Y,departure
+78,0000950157-24-000104,calibration,N,N,N,,N,compensation only
+79,0001193125-16-699639,calibration,Y,N,N,Francis J. Shammo (CFO: Chief Financial Officer); Francis J. Shammo (CFO: Verizon’s Executive Vice President and Chief Financial Officer effective November 1),Y,departure
+80,0000732717-14-000126,random30,N,N,N,,N,election

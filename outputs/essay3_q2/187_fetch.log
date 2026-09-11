@@ -1,0 +1,17 @@
+Scope events: 341 (treated 107, parent CIKs 83); reported_date missing: 0
+Spec scope (B1 verbatim): 738 filings; extension adds 340 (baseline pre-window to -730d; post-window to max(bd, rd)+180d)
+Filings in scope: 1078 unique accessions across 79 CIKs (2693 event-filing pairs); submission size total 305 MB
+  100/1078 | fetched 0 reused 0 already 100 failed 0
+  200/1078 | fetched 0 reused 0 already 200 failed 0
+  300/1078 | fetched 1 reused 0 already 299 failed 0
+  400/1078 | fetched 1 reused 0 already 399 failed 0
+  500/1078 | fetched 1 reused 0 already 499 failed 0
+  600/1078 | fetched 1 reused 0 already 599 failed 0
+  700/1078 | fetched 1 reused 0 already 699 failed 0
+  800/1078 | fetched 1 reused 0 already 799 failed 0
+  900/1078 | fetched 1 reused 0 already 899 failed 0
+  1000/1078 | fetched 1 reused 0 already 999 failed 0
+Fetch complete: in scope 1078 | fetched 1 | reused 0 (calibration 50, T-Mobile 27) | already on disk 1077 | FAILED 0
+Calibration 50 inside scope: 50/50 (outside: [])
+Text store size: 38.3 MB
+Validation draw: 30 of pool 666 (seed 20260911). Dev draw: 40 (seed 1117).

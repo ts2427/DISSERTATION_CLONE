@@ -1,0 +1,7 @@
+essay,chain,regression_N,treated,parent_ciks,family_entities,org_name_strings,status
+"Essay 1 (7/28 appendix, outputs/ESSAY1_APPENDIX_TABLES_FORM499.md, untracked)","7/28 audit (1,054->784->779->672->648)",648,115,11,n/a,35,retired: generator scripts/141 commented out of run_all 2026-08-30
+"Essay 1 (v3, constants_v3.json)","v3 (1,054->758->524->489)",338,104,11,,35,committed constants (8/17-8/30 vintage)
+Essay 2 (outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md),v3,333,104,12,,36,committed b11e884 (post DISH top-up)
+"Essay 3 (v3, constants_v3.json)",v3,338,104,(not stored),,(not stored),committed constants (pre-top-up)
+"Essay 1 regression, today's CANONICAL_V3",v3,340,106,12,11,36,NEW recount (scripts/186)
+"Essay 3 regression, today's CANONICAL_V3",v3,340,106,12,11,36,NEW recount (scripts/186)

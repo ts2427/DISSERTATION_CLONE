@@ -1,0 +1,76 @@
+Inventory (2013-01-01..2026-08-04): {'10-Q': 41, 'DEFA14A': 37, 'DEF 14A': 14, '10-K': 14, 'DEFR14A': 2, 'DEFM14A': 1, 'DEFC14A': 1, '10-Q/A': 1}
+Parsed forms: ['10-K', '10-Q', 'DEF 14A']; listed only: ['10-Q/A', 'DEFA14A', 'DEFC14A', 'DEFM14A', 'DEFR14A']
+Fetch: 69 ok / 0 failed; raw 201.2 MB, gz 11.8 MB
+G3 2013-05-17: sentences 2219, CD&A chars 207205
+G3 2014-04-24: sentences 1539, CD&A chars 141695
+G3 2015-04-22: sentences 1430, CD&A chars 21533
+G3 2016-04-28: sentences 1269, CD&A chars 26672
+G3 2017-04-27: sentences 1413, CD&A chars 32495
+G3 2018-04-26: sentences 1572, CD&A chars 34137
+G3 2019-04-26: sentences 1490, CD&A chars 43170
+G3 2020-04-21: sentences 1711, CD&A chars 42014
+  roster table parse incomplete 2021-04-21: rows 14 vs bio blocks 13
+G3 2021-04-21: sentences 1912, CD&A chars 49822
+G3 2022-04-27: sentences 1742, CD&A chars 44888
+G3 2023-04-28: sentences 2510, CD&A chars 45134
+G3 2024-04-26: sentences 1833, CD&A chars 43393
+G3 2025-04-18: sentences 1544, CD&A chars 41666
+G3 2026-04-27: sentences 1626, CD&A chars 62861
+G4 10-K 2013-03-01: body headings 48
+G4 10-Q 2013-04-25: body headings 9
+G4 10-Q 2013-08-08: body headings 14
+G4 10-Q 2013-11-07: body headings 13
+G4 10-K 2014-02-25: body headings 28
+G4 10-Q 2014-05-01: body headings 10
+G4 10-Q 2014-07-31: body headings 11
+G4 10-Q 2014-10-28: body headings 13
+G4 10-K 2015-02-19: body headings 33
+G4 10-Q 2015-04-28: body headings 9
+G4 10-Q 2015-07-30: body headings 9
+G4 10-Q 2015-10-27: body headings 10
+G4 10-K 2016-02-17: body headings 32
+G4 10-Q 2016-04-26: body headings 14
+G4 10-Q 2016-07-27: body headings 12
+G4 10-Q 2016-10-24: body headings 12
+G4 10-K 2017-02-14: body headings 33
+G4 10-Q 2017-04-24: body headings 14
+G4 10-Q 2017-07-20: body headings 17
+G4 10-Q 2017-10-23: body headings 16
+G4 10-K 2018-02-08: body headings 46
+G4 10-Q 2018-05-01: body headings 50
+G4 10-Q 2018-08-01: body headings 52
+G4 10-Q 2018-10-30: body headings 57
+G4 10-K 2019-02-07: body headings 79
+G4 10-Q 2019-04-25: body headings 32
+G4 10-Q 2019-07-26: body headings 71
+G4 10-Q 2019-10-28: body headings 73
+G4 10-K 2020-02-06: body headings 87
+G4 10-Q 2020-05-06: body headings 45
+G4 10-Q 2020-08-06: body headings 40
+G4 10-Q 2020-11-05: body headings 85
+G4 10-K 2021-02-23: body headings 107
+G4 10-Q 2021-05-04: body headings 36
+G4 10-Q 2021-08-03: body headings 43
+G4 10-Q 2021-11-02: body headings 50
+G4 10-K 2022-02-11: body headings 107
+G4 10-Q 2022-05-06: body headings 32
+G4 10-Q 2022-07-29: body headings 38
+G4 10-Q 2022-10-27: body headings 48
+G4 10-K 2023-02-14: body headings 98
+G4 10-Q 2023-04-27: body headings 41
+G4 10-Q 2023-07-27: body headings 46
+G4 10-Q 2023-10-25: body headings 49
+G4 10-K 2024-02-02: body headings 94
+G4 10-Q 2024-04-26: body headings 34
+G4 10-Q 2024-07-31: body headings 48
+G4 10-Q 2024-10-23: body headings 52
+G4 10-K 2025-01-31: body headings 98
+G4 10-Q 2025-04-24: body headings 49
+G4 10-Q 2025-07-23: body headings 54
+G4 10-Q 2025-10-23: body headings 61
+G4 10-K 2026-02-11: body headings 112
+G4 10-Q 2026-04-28: body headings 51
+G4 10-Q 2026-07-23: body headings 54
+
+G3 rows: controlled 220, roster 106, committee x term 101, CD&A 85 (pay_link 19)
+G4 unique sentences: incident 392 (cyber_related 335), charges 188 (cyber_related 35), Item 1C rows 82; timeline rows 423

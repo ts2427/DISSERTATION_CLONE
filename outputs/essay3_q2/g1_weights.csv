@@ -1,0 +1,5 @@
+level,treated_events,tmobile_events,tmobile_share,sprint_cik_events,tmobile_plus_sprint,tmobile_plus_sprint_share,treated_parent_ciks
+489-event universe,118,34,0.2881,12,46,0.3898,14
+CRSP,111,28,0.2523,12,40,0.3604,13
+Q2 scope (Essay 3 sample without the timing requirement),107,26,0.243,12,38,0.3551,12
+Q1 Essay 3 regression sample,106,26,0.2453,11,37,0.3491,12

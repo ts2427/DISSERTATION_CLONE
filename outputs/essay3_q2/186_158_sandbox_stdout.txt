@@ -1,0 +1,33 @@
+==========================================================================================
+REBUILD STAGE 8: FULL REGENERATION
+==========================================================================================
+
+Samples: 489 events | CRSP 356 | regression 340 (106 treated, 12 parent CIKs)
+
+Essay 1 (H1-H4, HC3):
+  H2_FCC: -0.4994pp p=0.7326 | TOST(±2.10) p=0.1371 | MDE 4.09 | NULL-INCONCLUSIVE
+  H1_timing: +1.4143pp p=0.1712 | TOST(±2.10) p=0.2538 | MDE 2.89 | NULL-INCONCLUSIVE
+  H3_prior: +0.0258pp p=0.6916 | TOST(±2.10) p=0.0000 | MDE 0.18 | BOUNDED NULL
+  H4_health: -0.9405pp p=0.7176 | TOST(±2.10) p=0.3280 | MDE 7.28 | NULL-INCONCLUSIVE
+  ROA: +7.7592 p=0.1533
+
+ROA amendment: op_margin +7.8076 p=0.0773 (N=340); both-spec roa p=0.4001 / op_margin p=0.1265; hypothesis nulls unchanged: True
+
+Essay 2 (H5, N=339, treated 106): FCC +3.9442 p=0.0292 | TOST p=0.8456 | MDE 5.07 | R2=0.529 | SIGNIFICANT
+
+Essay 3 (H6, N=340, treated 106):
+  30d: base 17.1% | AME +6.85pp p=0.2028 | MDE 15.1pp
+  90d: base 43.2% | AME +9.88pp p=0.1566 | MDE 19.5pp
+  180d: base 70.0% | AME +5.46pp p=0.4294 | MDE 19.3pp
+
+First stage (descriptive): treated immediate-disclosure share exceeds untreated by +15.26pp
+
+Appendix v3 tables...
+  Table 2 disclosure verification: treated N=118 (median gap 15.0d, share 99%); untreated N=219 (median 26.0d, share 92%)
+  Table 6 timing-by-regime: treated +0.5562 p=0.7835 (N=106); untreated +1.9307 p=0.1052 (N=234); interaction -1.6411 p=0.4754
+  Table 16 leakage: breach panel N=356 (excl 0 history); ann panel N=355 (excl 1 no-reported + 0 history)
+  16 tables (citation order, captioned) -> outputs/rebuild/appendix_v3/
+
+Baseline constants_v3.json WRITTEN (future runs assert against it)
+
+Saved: CONSTANTS_BLOCK_V3.md, constants_v3.json

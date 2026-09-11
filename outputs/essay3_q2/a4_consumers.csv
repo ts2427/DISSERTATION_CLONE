@@ -1,0 +1,126 @@
+script,reads_executive_changes_csv,reads_DEDUPLICATED_ENRICHED,uses_executive_change_columns,run_all,run_all_line
+scripts/00_data_validation_checks.py,False,True,True,active,381
+scripts/100_ransomware_heterogeneity.py,False,True,False,active,404
+scripts/101_media_coverage_heterogeneity.py,False,True,False,active,405
+scripts/101_media_coverage_heterogeneity_essay2.py,False,True,False,not in run_all,
+scripts/102_extended_governance_windows.py,False,True,True,active,406
+scripts/103_breach_type_diversity.py,False,True,False,active,407
+scripts/104_restatement_prediction.py,False,True,False,not in run_all,
+scripts/104_restatement_summary.py,False,True,False,active,408
+scripts/105_complexity_index_heterogeneity.py,False,True,False,commented,410
+scripts/106_information_environment_composite.py,False,True,False,active,411
+scripts/186_essay3_q2_chain_reconciliation.py,False,True,True,not in run_all,
+scripts/40_MASTER_enrichment.py,True,False,False,not in run_all,
+scripts/46_executive_changes.py,True,False,True,not in run_all,
+scripts/46_executive_changes_item5_02.py,True,False,True,not in run_all,
+scripts/46_executive_changes_item5_02_with_cache.py,True,False,True,active,288
+scripts/53_merge_CONFIRMED_enrichments.py,True,True,True,active,294
+scripts/60_train_ml_model.py,False,True,True,active,391
+scripts/61_ml_validation.py,False,True,True,active,392
+scripts/70_summary_statistics.py,False,True,True,active,340
+scripts/80_essay1_car_regressions.py,False,True,False,active,341
+scripts/81_post_2007_interaction_test.py,False,True,False,commented,344
+scripts/82_clustered_vs_hc3_comparison.py,False,True,False,active,345
+scripts/84_essay2_post_2007_interaction_test_volatility.py,False,True,False,commented,350
+scripts/86_essay3_fcc_causal_identification.py,False,True,False,active,351
+scripts/90_essay2_volatility_regressions.py,False,True,False,active,348
+scripts/91_essay3_governance_regressions.py,True,True,True,active,352
+scripts/91_essay3_mediation_analysis.py,False,True,True,active,417
+scripts/91b_essay3_reduced_form_mediation.py,False,True,True,active,353
+scripts/91c_essay3_mediation_bootstrap.py,False,True,True,active,354
+scripts/91d_essay3_h6_heterogeneity.py,False,True,True,not in run_all,
+scripts/91f_essay3_h6_firm_size_heterogeneity.py,False,True,True,active,356
+scripts/91g_extract_reduced_form_controls.py,False,True,True,active,357
+scripts/91i_essay3_cfo_placebo.py,False,True,True,not in run_all,
+scripts/91j_essay3_ols_lpm_and_negbin.py,False,True,True,active,359
+scripts/91k_essay3_robustness_checks.py,False,True,True,active,360
+scripts/92_enforcement_analysis.py,False,True,False,commented,385
+scripts/92_heterogeneity_analysis.py,False,True,True,active,418
+scripts/93_market_model_sensitivity.py,False,True,False,active,419
+scripts/95_low_r2_sensitivity.py,False,True,True,active,422
+scripts/96_economic_significance.py,False,True,False,active,398
+scripts/97_heterogeneous_mechanisms.py,False,True,True,active,399
+scripts/98_propensity_score_matching.py,False,True,False,not in run_all,
+scripts/98_sox404_heterogeneity.py,False,True,False,active,400
+scripts/98_sox404_heterogeneity_essay2.py,False,True,False,not in run_all,
+scripts/99_add_cpni_hhi_variables.py,False,True,False,active,295
+scripts/99_cvss_complexity_heterogeneity.py,False,True,False,commented,403
+scripts/99_cvss_complexity_heterogeneity_BROKEN_June22.py,False,True,False,not in run_all,
+scripts/99_cvss_complexity_heterogeneity_essay2.py,False,True,False,not in run_all,
+scripts/99_firm_fixed_effects_analysis.py,False,True,False,active,382
+scripts/99_firm_fixed_effects_analysis_BROKEN_June22.py,False,True,False,not in run_all,
+scripts/apply_exact_matching_full_dataset.py,False,True,False,not in run_all,
+scripts/boost_mobile_detailed_forensics.py,False,True,False,not in run_all,
+scripts/boost_mobile_forensics.py,False,True,False,not in run_all,
+scripts/calendar_month_clustering_60_90.py,False,True,False,active,436
+scripts/canonical_fcc_firm_list.py,False,True,False,not in run_all,
+scripts/check_boost_mobile.py,False,True,False,not in run_all,
+scripts/check_file_state.py,False,True,False,not in run_all,
+scripts/cik_assignment_investigation.py,False,True,False,not in run_all,
+scripts/compare_cik_corrections.py,False,True,False,not in run_all,
+scripts/corrected_longrun_car_clustering.py,False,True,False,active,435
+scripts/cox_timevarying_hazard.py,False,True,True,not in run_all,
+scripts/create_regression_coefficient_plots.py,False,True,True,not in run_all,
+scripts/create_table_b7_word.py,False,True,False,not in run_all,
+scripts/defense_prep_all_tasks.py,False,True,False,active,452
+scripts/diagnostic_top_five_near_duplicates.py,False,True,False,not in run_all,
+scripts/extended_bhar_60d_90d.py,False,True,False,active,446
+scripts/extract_all_unmatched_org_names.py,False,True,False,not in run_all,
+scripts/factor_model_carhart_ff5.py,False,True,False,active,445
+scripts/factor_model_robustness.py,False,True,False,not in run_all,
+scripts/factor_models_complete.py,False,True,False,not in run_all,
+scripts/ff3_canonical_specification.py,False,True,False,not in run_all,
+scripts/ff3_simple_merge.py,False,True,False,active,444
+scripts/firm_by_firm_scm_simple_working.py,False,True,False,not in run_all,
+scripts/firm_count_reconciliation.py,False,True,False,not in run_all,
+scripts/fix_cik_assignments_and_dedup.py,False,True,False,not in run_all,
+scripts/h1_abnormal_trading_volume.py,False,True,False,not in run_all,
+scripts/h1_complete_robustness_648.py,False,True,False,not in run_all,
+scripts/h1_comprehensive_power_analysis.py,False,True,False,not in run_all,
+scripts/h1_timing_fcc_interaction.py,False,True,False,active,342
+scripts/h1_timing_robustness_648.py,False,True,False,not in run_all,
+scripts/h2_firm_level_estimation.py,False,True,False,not in run_all,
+scripts/h2_robustness_three_analyses.py,False,True,False,not in run_all,
+scripts/longrun_bhar_analysis.py,False,True,False,not in run_all,
+scripts/longrun_bhar_extended.py,False,True,False,not in run_all,
+scripts/overlap_audit_fcc_clustering.py,False,True,False,active,434
+scripts/prepare_full_reasoning_pass.py,False,True,False,not in run_all,
+scripts/remove_duplicates_and_save.py,False,True,False,not in run_all,
+scripts/robustness_1_alternative_windows.py,False,True,False,active,423
+scripts/robustness_2_timing_thresholds.py,False,True,False,active,424
+scripts/robustness_3_sample_restrictions.py,False,True,False,active,425
+scripts/robustness_4_standard_errors.py,False,True,False,active,426
+scripts/robustness_5_fixed_effects.py,False,True,False,active,427
+scripts/robustness_summary_648.py,False,True,False,not in run_all,
+scripts/root_dev_archive/build_essay1_appendix_verified.py,False,True,False,not in run_all,
+scripts/root_dev_archive/build_final_appendix_14tables.py,False,True,False,not in run_all,
+scripts/root_dev_archive/calculate_preannouncement.py,False,True,False,not in run_all,
+scripts/root_dev_archive/calculate_preannouncement_648.py,False,True,False,not in run_all,
+scripts/root_dev_archive/check_step2_results.py,False,True,False,not in run_all,
+scripts/root_dev_archive/rebuild_essay1_appendix_tables.py,False,True,False,not in run_all,
+scripts/root_dev_archive/rebuild_tables_4_5_7_with_log.py,False,True,False,not in run_all,
+scripts/root_dev_archive/reconcile_appendix_numbers.py,False,True,False,not in run_all,
+scripts/root_dev_archive/verify_factor_models.py,False,True,False,not in run_all,
+scripts/run_causal_identification_pipeline.py,False,True,False,not in run_all,
+scripts/run_causal_identification_pipeline_BROKEN_June22.py,False,True,False,not in run_all,
+scripts/run_enrichments.py,True,False,False,not in run_all,
+scripts/sample_composition_diagnostic.py,False,True,False,active,443
+scripts/scm_breach_event_level.py,False,True,False,not in run_all,
+scripts/scm_breach_event_nearest_neighbor.py,False,True,False,not in run_all,
+scripts/scm_breach_event_numpy.py,False,True,False,not in run_all,
+scripts/scm_breach_event_numpy_fast.py,False,True,False,not in run_all,
+scripts/scm_data_preparation_BROKEN_June22.py,False,True,True,not in run_all,
+scripts/scm_mahalanobis_distance.py,False,True,False,active,366
+scripts/scpi_corrected.py,False,True,False,not in run_all,
+scripts/scpi_scm_implementation.py,False,True,False,not in run_all,
+scripts/scpi_simple.py,False,True,False,not in run_all,
+scripts/sec_2023_rule_preliminary.py,False,True,False,not in run_all,
+scripts/step2_match_prc_to_edgar.py,False,True,False,not in run_all,
+scripts/step2_match_prc_to_sec_efficient.py,False,True,False,not in run_all,
+scripts/step2_match_prc_to_sec_historical.py,False,True,False,not in run_all,
+scripts/step2b_enhance_manual_worksheet.py,False,True,False,not in run_all,
+scripts/verify_cfo_placebo.py,False,True,True,not in run_all,
+scripts/verify_cox_schoenfeld.py,False,True,True,not in run_all,
+scripts/verify_duplicate_candidates.py,False,True,False,not in run_all,
+scripts/verify_fcc_entity_assignments.py,False,True,False,not in run_all,
+scripts/verify_h4_coefficient.py,False,True,False,not in run_all,
