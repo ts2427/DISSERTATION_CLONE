@@ -1,0 +1,31 @@
+sheet_id|company|filing_date|exec_departure|ceo_departure|director_only_departure|person_and_role|pre_announced|restates_prior_disclosure|notes
+1|Twilio|2024-04-04|N|N|Y|Byron Deeter, independent director (retiring, not standing)|N|N|Notice 2024-04-03, after reference date.
+2|Snap Inc.|2021-09-27|N|N|Y|A.G. Lafley, director|Y|N|Notice 2021-09-22, before reference date.
+3|Sprint Nextel|2016-06-24|N|N|Y|Nikesh Arora, director|Y|N|Notice 2016-06-22, before reference date.
+4|Henry Schein, Inc.|2022-11-29|N|N|N||N|N|
+5|Huntington Ingalls Industries, Inc.|2022-12-09|N|N|N||N|N|
+6|Aon Corporation|2021-07-01|Y|N|N|Anthony Goland, Section 16 officer (stepping down as officer; continues to lead New Ventures Group)|N|N|Leaves executive-officer status while staying employed (same rule as round-1 sheet 66). Announced 2021-06-25, after reference date.
+7|W.W. Grainger, Inc.|2016-10-03|Y|N|N|William Lomax, VP and Controller, principal accounting officer|Y|N|Resigned effective 2016-10-01, before reference date; remains a non-executive employee through year end.
+8|Fidelity National Information Services, Inc.|2006-10-27|N|N|N||N|N|Appointments only; Foley becomes Executive Chairman. No departure stated.
+9|Charter Communications, Inc.|2023-10-25|Y|N|N|Thomas M. Rutledge, Executive Chairman (retiring; continues as non-voting director emeritus)|Y|Y|Blind code for pre-announced was 'unclear' ('previously announced' with no date). Verified: Charter's 2022-09-21 release announced he would serve as Executive Chairman through November 2023; that date precedes the reference date, so primary = Y, secondary = unclear. Not coded director-only: he was an executive director, not a director-only member.
+10|Intuit, Inc.|2018-01-23|N|N|N||N|N|Previously announced CFO appointment and employment agreement; no departure stated in this text.
+11|AT&T|2008-09-29|N|N|N||N|N|
+12|Sirius XM Radio Inc.|2016-02-22|N|N|Y|Anthony J. Bates, director|Y|N|Notice 2016-02-18, before reference date.
+13|Cognizant Technology Solutions Corporation|2019-12-06|N|N|Y|John E. Klein, director|Y|N|Notice 2019-12-02, before reference date. Director-only status inferred from the text, which names only a Board role.
+14|Hewlett Packard Enterprise Company|2024-04-12|N|N|N||N|N|
+15|AT&T|2012-06-29|N|N|N||N|N|
+16|Sprint Nextel|2018-12-06|Y|N|N|Kevin Crull, Chief Strategy Officer|Y|N|Determined 2018-12-03, before reference date. Executive-officer status not stated in the text; sources show he reported directly to the CEO, but officer status not confirmed. Candidate for adjudication.
+17|Sprint Nextel|2009-08-05|N|N|N||N|N|
+18|Cisco Systems, Inc.|2011-09-20|N|N|N||N|N|Compensation agreement; the severance provision is conditional, not a departure.
+19|Snowflake Inc.|2023-04-07|N|N|Y|Carl M. Eschenbach, Class III director|Y|N|Notice 2023-04-05, before reference date; becomes an advisor.
+20|T-Mobile USA, Inc.|2019-04-19|N|N|Y|Olaf Swantee, director (not standing for re-election)|Y|N|Notice 2019-04-15, before reference date.
+21|W.W. Grainger, Inc.|2017-12-13|N|N|N||N|N|
+22|Charter Communications, Inc.|2023-08-21|Y|N|N|David G. Ellen, Senior Executive Vice President (through 2023-11-30, then Executive Advisor)|Y|N|Departure set by an employment agreement (ruling 2: pay-agreement departures count). Agreement dated 2023-08-15, before reference date.
+23|Charter Communications, Inc.|2008-03-11|N|N|N||N|N|
+24|AT&T|2022-03-15|N|N|Y|Samuel A. Di Piazza Jr., Debra L. Lee, Geoffrey Y. Yang, directors (resigning on the WBD transaction close)|Y|N|Transaction-driven and conditional on the close. Filing predates reference date.
+25|Marathon Petroleum Company LP|2018-11-14|N|N|N||N|N|
+26|GoDaddy.com LLC|2023-01-25|N|N|Y|Ryan Roslansky and Lee Wittlinger, directors|Y|N|Notices 2023-01-22 and 2023-01-24, before reference date.
+27|Apple Inc.|2021-01-05|N|N|N||N|N|
+28|Henry Schein, Inc.|2023-05-25|N|N|N||N|N|
+29|Sysco Corporation|2023-10-17|unclear|N|N|Scott B. Stone, Interim Chief Accounting Officer (continues as VP Financial Reporting)|N|N|Implied departure: successor named to a covered title, no departure verb. The departing title is interim, which the rules do not cover, so coded unclear. Appointment 2023-10-12, after reference date.
+30|Honeywell International Inc.|2023-11-28|N|N|N||N|N|
