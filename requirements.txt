@@ -9,3 +9,7 @@ openpyxl>=3.1
 streamlit>=1.29
 scikit-learn>=1.3
 gdown>=4.7.1
+# Survival analysis: scripts/164 (Essay 2 delay logrank test) imports lifelines.statistics,
+# and scripts/182 re-executes 164. Missing here until 2026-09-11, so both failed in a clean
+# clone with ModuleNotFoundError. Also used by the retired Cox scripts (91h, cox_timevarying_hazard).
+lifelines>=0.27

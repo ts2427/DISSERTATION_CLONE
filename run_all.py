@@ -86,8 +86,9 @@ WHAT THIS PIPELINE DOES NOT REGENERATE (know this before trusting a clean run):
      "version https://git-lfs.github.com/spec/v1". See README.md.
   2. outputs/tables/essay2_appendix/*.csv (41 files) have NO committed generator. scripts/178 only
      renders them into ESSAY2_APPENDIX.docx (itself gitignored). They are committed artifacts only.
-  3. The Essay 2 microstructure channel (scripts/167) needs Data/wrds/crsp_quotes_topup.csv, which is
-     CRSP-licensed and gitignored. It cannot be reproduced from a clean clone without a WRDS login.
+  3. Data/wrds/crsp_quotes_topup.csv is CRSP-licensed and gitignored, so scripts/167 (microstructure
+     channel) and scripts/170 (intent-scope restriction and equivalence bounds) cannot be reproduced
+     from a clean clone without a WRDS login. 167 is not staged; 170 is staged and FAILS loudly.
   4. scripts/173 and scripts/179 are one-time licensed WRDS pulls. Their outputs ARE committed
      (Data/wrds/q6_*.csv, Data/wrds/crsp_daily_topup_dish.csv), so do NOT re-run them.
   5. The Essay 3 validation and audit scripts (196, 197, 198, 200, 201) draw blind samples once and
@@ -224,8 +225,15 @@ def verify_data(log_file):
         print_to_both(msg, log_file)
         return False
 
-def verify_outputs(log_file):
-    """Verify critical output files exist after analysis"""
+def verify_outputs(log_file, run_start=None):
+    """Verify critical output files exist AND were written by this run.
+
+    run_start: epoch seconds recorded when the pipeline began. A required file whose mtime predates
+    it is reported STALE - it exists only because it is committed in the repository, not because this
+    run produced it. Until 2026-09-11 this function tested existence alone, so a clean-clone run in
+    which six scripts failed (including the Stage 8 assertion) still reported SUCCESS on files that
+    had come straight from git. Passing run_start=None restores the old existence-only behaviour.
+    """
     print_section("OUTPUT VERIFICATION")
     log_file.write("\n" + "=" * 80 + "\nOUTPUT VERIFICATION\n" + "=" * 80 + "\n\n")
 
@@ -282,16 +290,20 @@ def verify_outputs(log_file):
 
     present_files = []
     missing_files = []
+    stale_files = []
 
     for filepath in critical_files:
-        if filepath.exists():
-            present_files.append(str(filepath))
-        else:
+        if not filepath.exists():
             missing_files.append(str(filepath))
+        elif run_start is not None and filepath.stat().st_mtime < run_start:
+            stale_files.append(str(filepath))
+        else:
+            present_files.append(str(filepath))
 
     # Report results
     msg = f"\nCritical Output Files:\n"
-    msg += f"  Present: {len(present_files)}/{len(critical_files)}\n"
+    msg += f"  Written by this run: {len(present_files)}/{len(critical_files)}\n"
+    msg += f"  Stale (pre-existing, NOT written by this run): {len(stale_files)}/{len(critical_files)}\n"
     msg += f"  Missing: {len(missing_files)}/{len(critical_files)}\n"
 
     if present_files:
@@ -305,9 +317,16 @@ def verify_outputs(log_file):
             msg += f"  [-] {f}\n"
         msg += f"\nNote: Some expected files may not be present if certain scripts were skipped.\n"
 
+    if stale_files:
+        msg += f"\n[!] Files NOT written by this run (they exist only because they are committed):\n"
+        for f in sorted(stale_files):
+            msg += f"  [~] {f}\n"
+        msg += ("\nA stale file means the script that produces it failed or did not run. Do NOT read these\n"
+                "as results of this run - check the [FAILED] list above.\n")
+
     print_to_both(msg, log_file)
 
-    return len(missing_files) == 0
+    return len(missing_files) == 0 and len(stale_files) == 0
 
 def run_all():
     """Execute complete dissertation analytics pipeline"""
@@ -392,7 +411,7 @@ Log file: {log_path}
                     ('scripts/165_essay2_inference_ladder.py', 'Inference ladder on parent CIK: CV1/CV3, wild cluster bootstrap, G/G1/G* diagnostics'),
                     ('scripts/166_essay2_spec_grid.py', 'Measurement grid (193 specifications) + gradient decomposition'),
                     ('scripts/169_essay2_spec_repairs.py', 'Abnormal-volatility DV, leakage tests, calendar clustering, balance'),
-                    ('scripts/170_essay2_scope_and_bounds.py', 'Intent-scope restriction (64.2011(e)) and equivalence bounds'),
+                    ('scripts/170_essay2_scope_and_bounds.py', 'Intent-scope restriction (64.2011(e)) and equivalence bounds — REQUIRES the licensed Data/wrds/crsp_quotes_topup.csv (same file as 167); FAILS in a clean clone without a WRDS login'),
                     ('scripts/171_essay2_figures.py', 'Specification-curve and power-curve figures'),
                     ('scripts/175_essay2_announcement_contrast.py', 'Announcement-window contrast — the rescoped primary Essay 2 result'),
                     ('scripts/176_q7_composition_check.py', 'Composition check on the announcement-window differential'),
@@ -765,23 +784,36 @@ Complete log saved to: {log_path}
         critical_scripts_succeeded = all(results.get(k, False) for k in critical_keys)
 
         # Verify critical outputs exist regardless of status
-        outputs_verified = verify_outputs(log_file)
+        outputs_verified = verify_outputs(log_file, run_start=start_time)
 
-        if critical_scripts_succeeded and outputs_verified:
-            final = f"\n[***] [SUCCESS] Core dissertation analysis complete and outputs verified.\n{'=' * 80}\n"
-            print_to_both(final, log_file)
-            return True
-        elif critical_scripts_succeeded:
-            final = f"\n[OK] Primary analyses succeeded; some expected output files missing - review verification above.\n{'=' * 80}\n"
-            print_to_both(final, log_file)
-            return True
-        else:
-            missing = [k for k in critical_keys if not results.get(k, False)]
-            final = ("\n[WARNING] Primary Form 499 analyses did not all succeed - review log.\n"
-                     + "\n".join(f"  [-] {k}" for k in missing)
+        # 2026-09-11: ANY script failure now fails the pipeline. Previously this returned True whenever
+        # the two Form 499 "critical keys" succeeded, so a clean-clone run with six failed scripts -
+        # including scripts/158, whose assertion caught a stale baseline - still exited 0 and printed
+        # SUCCESS. Exit status must reflect the whole run, not two hand-picked scripts.
+        if failed:
+            final = (f"\n[FAILED] {len(failed)} of {len(results)} scripts did not complete. This is NOT a clean run.\n"
+                     + "\n".join(f"  [-] {f}" for f in failed)
                      + f"\n{'=' * 80}\n")
             print_to_both(final, log_file)
             return False
+
+        if not outputs_verified:
+            final = ("\n[FAILED] Every script ran, but required outputs are missing or were not written by this\n"
+                     f"run - see OUTPUT VERIFICATION above.\n{'=' * 80}\n")
+            print_to_both(final, log_file)
+            return False
+
+        if critical_scripts_succeeded:
+            final = f"\n[***] [SUCCESS] Core dissertation analysis complete and outputs verified.\n{'=' * 80}\n"
+            print_to_both(final, log_file)
+            return True
+
+        missing = [k for k in critical_keys if not results.get(k, False)]
+        final = ("\n[WARNING] Primary Form 499 analyses did not all succeed - review log.\n"
+                 + "\n".join(f"  [-] {k}" for k in missing)
+                 + f"\n{'=' * 80}\n")
+        print_to_both(final, log_file)
+        return False
 
 def main():
     """Main entry point"""
