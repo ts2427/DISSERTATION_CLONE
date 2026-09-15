@@ -1,3 +1,37 @@
+"""
+================================================================================
+!! SYNTHETIC OUTPUT - NOT FOR ANALYSIS. DO NOT CITE. DO NOT USE AS A REGRESSOR. !!
+================================================================================
+This script does NOT query any FCC, FTC, or other enforcement database. It
+FABRICATES its enforcement flags with a seeded pseudo-random draw:
+
+    random.seed(int(cik) if cik else idx)
+    has_enforcement = 1 if random.random() < 0.3 else 0   # see lines ~51-66
+
+and it FABRICATES the penalty as a linear function of breach size:
+
+    penalty_amount = min(affected * 0.001, 10000000)
+
+Every value in the columns below is therefore invented. They are not
+observations of anything:
+
+    has_enforcement, enforcement_type, penalty_amount_usd,
+    enforcement_within_1yr, enforcement_within_2yr, enforcement_within_365d
+
+The file it writes (Data/enrichment/regulatory_enforcement.csv) carries no
+action date and no docket number, so it cannot date an enforcement action even
+in principle. Its breach_id indexes the retired 1,054-row chain; the current
+CANONICAL_V3 (489 rows) has no such key.
+
+Real FCC enforcement actions (consent decrees, NALs, forfeiture orders) must be
+hand-collected from FCC primary sources. See
+outputs/essay3_q2/enforcement_timing_exploratory.md, Part 3, for the required
+fields.
+
+STATUS: retained for provenance only. Not staged in run_all.py. Do not delete.
+Downstream consumers are documented in the contamination trace (2026-09-15).
+================================================================================
+"""
 import pandas as pd
 import requests
 from datetime import datetime, timedelta
