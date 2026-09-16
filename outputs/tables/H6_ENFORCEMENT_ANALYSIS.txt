@@ -1,3 +1,28 @@
+================================================================================
+!! SYNTHETIC FILE - RETIRED. DO NOT CITE. DO NOT USE THE PROSE BELOW. !!
+================================================================================
+Every number in this file derives from fabricated data. The "enforcement cases"
+it describes do not exist. Its source column, has_enforcement, is a seeded
+random.random() draw gated on breach size, produced by
+scripts/47_regulatory_enforcement.py. No FCC or FTC database was ever queried.
+
+Specifically unusable:
+  - "Enforcement cases: 6" and "Prevalence: 0.77%" are artifacts of a coin flip.
+  - "FCC-regulated: 6 / 6" is an artifact of construction: the random draw only
+    fires when fcc_regulated is true, so the contrast was manufactured.
+  - "enforcement is concentrated among repeat offenders (mean 7.17 prior
+    breaches)" interprets random numbers; the draw is scaled by breach size.
+  - The block headed "MANUSCRIPT LANGUAGE FOR H6" must never be pasted into any
+    draft. It also contradicts the stats above, reporting 0.6% where the
+    descriptive block reports 0.77%.
+
+Retained deliberately as the record of what was retired; do not delete. See
+Data/enrichment/README.md, outputs/STALE_RESULTS_MANIFEST.txt ("RETIRED (data
+decision 3)"), and outputs/essay3_q2/enforcement_timing_exploratory.md (Part 3).
+Real FCC enforcement data must be hand-collected from FCC primary sources.
+Marked 2026-09-15.
+================================================================================
+
 H6 ANALYSIS: REGULATORY ENFORCEMENT AND DISCLOSURE TIMING
 ================================================================================
 

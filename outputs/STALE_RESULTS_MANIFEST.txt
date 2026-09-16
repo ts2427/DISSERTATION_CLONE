@@ -202,3 +202,51 @@ citation-armor from FCC primary sources only.
 
 DECISION 4 RECORDED: delisted-firm attrition DISCLOSED not recovered; balance
 table becomes a Stage 7 deliverable feeding the limitations paragraph.
+
+================================================================================
+RETIRED 2026-09-15: ARTIFACTS THAT CARRIED THE SYNTHETIC ENFORCEMENT VARIABLE
+================================================================================
+
+The seven files below reported has_enforcement (and, in the ML files, three
+further enforcement columns) until the two removals described under "Status"
+below. Every one of those values was fabricated:
+scripts/47_regulatory_enforcement.py generates has_enforcement with
+a seeded random.random() draw gated on breach size, and penalty_amount_usd as
+breach size * 0.001. No FCC or FTC database was ever queried. See
+Data/enrichment/README.md.
+
+Summary-statistics tables (script 70; variable row "Regulatory Enforcement"):
+  1. outputs/tables/TABLE1_PANEL_A_full_sample.csv
+  2. outputs/tables/TABLE1_PANEL_B_crsp_sample.csv
+  3. outputs/tables/TABLE1_PANEL_C_by_fcc.csv
+  4. outputs/tables/TABLE1_PANEL_D_by_timing.csv
+  5. outputs/tables/TABLE1_COMBINED.txt
+
+Panel C was the most misleading: it reported a 4% enforcement rate for
+FCC-regulated firms against 0% for non-FCC firms. That contrast is an artifact
+of construction, not a finding - script 47's random draw only fires when
+fcc_regulated is true, so non-FCC is zero by definition.
+
+Machine-learning feature importance (script 60; feature group 'regulatory' =
+has_enforcement, enforcement_within_365d, enforcement_within_1yr,
+enforcement_within_2yr). These were live model inputs, not merely reported:
+  6. outputs/ml_models/feature_importance_car30d.csv
+  7. outputs/ml_models/feature_importance_volatility.csv
+
+Status. These two removals were made as separate commits:
+  - The "Regulatory Enforcement" variable row has been removed from
+    scripts/70_summary_statistics.py and files 1-5 regenerated without it.
+    Those diffs are pure deletions; no surviving value in any TABLE1 file moved.
+  - The 'regulatory' feature group has been removed from
+    scripts/60_train_ml_model.py and files 6-7 regenerated without it, in the
+    companion commit. There the four dropped features were live model inputs,
+    so the remaining importances redistribute and the model metrics shift
+    slightly; those files are not comparable line-for-line with earlier copies.
+
+Any earlier copy of these seven files - in a draft, a slide, or an appendix -
+still contains the synthetic variable and must not be cited.
+
+Related: outputs/tables/H6_ENFORCEMENT_ANALYSIS.txt is synthetic in its
+entirety and is retained only as the record of what was retired; it now carries
+a header saying so. Its "MANUSCRIPT LANGUAGE FOR H6" block must never be used.
+See also the earlier entry "RETIRED (data decision 3)" above.

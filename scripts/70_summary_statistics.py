@@ -85,7 +85,12 @@ variables = {
         'material_weakness': 'Material Weakness',
         'executive_change_30d': 'Executive Change (30d)',
         'executive_change_90d': 'Executive Change (90d)',
-        'has_enforcement': 'Regulatory Enforcement',
+        # REMOVED 2026-09-15: 'has_enforcement': 'Regulatory Enforcement'.
+        # Synthetic input - fabricated by a seeded random.random() draw in
+        # scripts/47_regulatory_enforcement.py. It was reported as a real
+        # variable row in all five committed TABLE1 files, including a
+        # manufactured 4% vs 0% FCC/non-FCC contrast in Panel C.
+        # See Data/enrichment/README.md. Do not reinstate.
         'media_coverage_count': 'Media Articles',
         'high_media_coverage': 'High Media Coverage'
     }
