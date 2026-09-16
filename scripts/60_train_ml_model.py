@@ -95,10 +95,14 @@ feature_groups = {
         'sox_404_effective', 'material_weakness',
         'executive_change_30d', 'executive_change_90d', 'executive_change_180d'
     ],
-    'regulatory': [
-        'has_enforcement', 'enforcement_within_365d',
-        'enforcement_within_1yr', 'enforcement_within_2yr'
-    ]
+    # REMOVED 2026-09-15: the 'regulatory' feature group, which was
+    #   ['has_enforcement', 'enforcement_within_365d',
+    #    'enforcement_within_1yr', 'enforcement_within_2yr']
+    # All four are synthetic - fabricated by a seeded random.random() draw in
+    # scripts/47_regulatory_enforcement.py, gated on breach size. They were live
+    # model inputs here: enforcement_within_2yr carried non-zero importance
+    # (0.00286) in the committed feature_importance_car30d.csv.
+    # See Data/enrichment/README.md. Do not reinstate.
 }
 
 # Collect all available features
