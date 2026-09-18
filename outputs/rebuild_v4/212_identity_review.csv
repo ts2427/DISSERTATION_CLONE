@@ -1,0 +1,9 @@
+final_cik,org_name,edgar,comnam,cusip8,ncusip_on_row,breach_date,namedt,nameenddt,permno_rejected,note
+1283699,"T-Mobile USA, Inc.",,METROPCS COMMUNICATIONS INC,87259010,59170810,2009-09-03,2007-04-19,2013-04-30,91937.0,CRSP name at breach_date does not match the breached organization; parent relationship unverified
+1283699,"T-Mobile USA, Inc.",,METROPCS COMMUNICATIONS INC,87259010,59170810,2009-10-05,2007-04-19,2013-04-30,91937.0,CRSP name at breach_date does not match the breached organization; parent relationship unverified
+1283699,T-Mobile,,METROPCS COMMUNICATIONS INC,87259010,59170810,2009-10-08,2007-04-19,2013-04-30,91937.0,CRSP name at breach_date does not match the breached organization; parent relationship unverified
+1283699,T-Mobile USA Inc.,,METROPCS COMMUNICATIONS INC,87259010,59170810,2011-10-21,2007-04-19,2013-04-30,91937.0,CRSP name at breach_date does not match the breached organization; parent relationship unverified
+1283699,T-Mobile,,METROPCS COMMUNICATIONS INC,87259010,59170810,2012-05-08,2007-04-19,2013-04-30,91937.0,CRSP name at breach_date does not match the breached organization; parent relationship unverified
+1283699,T-Mobile,,METROPCS COMMUNICATIONS INC,87259010,59170810,2012-08-28,2007-04-19,2013-04-30,91937.0,CRSP name at breach_date does not match the breached organization; parent relationship unverified
+1308161,Fox Entertainment Group,,NEWS CORP,90130A30,65248E10,2009-04-09,2008-12-29,2013-06-30,90441.0,CRSP name at breach_date does not match the breached organization; parent relationship unverified
+1308161,Fox Entertainment Group Inc.,,NEWS CORP,90130A30,65248E10,2009-04-15,2008-12-29,2013-06-30,90441.0,CRSP name at breach_date does not match the breached organization; parent relationship unverified

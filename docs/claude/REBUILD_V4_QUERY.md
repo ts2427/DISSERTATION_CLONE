@@ -119,14 +119,49 @@ to "past-extract" may enter; the Stage 5 ledger must show this.
 **Rule, applied identically to treated and control:**
 
 1. `final_cik` → gvkey via `comp.company.cik` (zero-padded 10-char).
-2. gvkey → **primary US issue**: use `comp.company.priusa` where present; otherwise take
-   all US common issues and **log that the fallback was used**, per event.
+2. gvkey → **all US common issues** — `comp.security` where `tpci='0'` and
+   `excntry='USA'`. **AMENDED 2026-09-18: `priusa` is not point-in-time** and must not
+   gate the search. Sprint is the proof: `priusa=10` → `85207U10` → permno 14040, which
+   exists only from 2013-07-12, so every pre-2013 Sprint event would fail while
+   `iid=01` → `85206110` → permno **39087** (`SPRINT NEXTEL CORP`, 2005-08-15 →
+   2013-07-10) sat unexamined. Both are permnos v3 used.
 3. issue → `cusip[:8]`, uppercased.
 4. `cusip8` → permno in `crsp.stocknames`, in this order:
-   a. **`ncusip` match** (historical CUSIP) where `namedt ≤ breach_date ≤ nameenddt`;
-   b. failing that, **header `cusip` match** with a names row valid on breach_date.
+   a. **`ncusip` match** (historical CUSIP) where `namedt ≤ breach_date ≤ nameenddt`,
+      across **any** US common issue of the gvkey;
+   b. failing that on every US common issue, **header `cusip` match** with a names row
+      valid on breach_date — and only then does the identity gate apply.
+   **Tie-break**, where more than one permno is valid: (i) prefer the issue named by
+   `comp.company.priusa`; (ii) prefer `shrcd` 11 over 10; (iii) prefer the later
+   `namedt`. The report states which rule fired and how often. Observed: the tie arises
+   on 15 events across four dual-class firms (Brown-Forman, Gray Television, Comcast,
+   Google) and rule (i) resolves all of them.
 5. Require `shrcd ∈ {10, 11}` on breach_date.
-6. Document the tie-break rule in the script header and the report.
+6. **Identity gate (added 2026-09-18, mandatory).** Date validity and `shrcd` are not
+   sufficient. CRSP keeps **one permno across a reverse merger** and back-fills the
+   header `cusip` with the surviving firm's identifier, changing only `comnam` and
+   `ncusip`. **permno 91937** is continuous from `METROPCS COMMUNICATIONS INC`
+   (2007-04-19 → 2013-04-30) into `T MOBILE U S INC`, with header cusip `87259010`
+   throughout. All six T-Mobile events before 2013-04-29 match that row on the header,
+   with `shrcd` 11 and valid dates, and would link to MetroPCS. So:
+   - `cusip_ncusip` links are accepted on date validity and `shrcd` alone.
+   - `cusip_header` links are accepted **only if** the CRSP `comnam` on the row valid
+     at breach_date matches the PRC org string **or** the resolved EDGAR name.
+     Otherwise the event is **excluded**, reason `"registrant at breach_date is a
+     different firm (header-cusip back-fill)"`. The rule decides; there is no manual
+     review queue. Every exclusion is written to
+     `outputs/rebuild_v4/212_identity_review.csv` with both names, both CUSIPs and the
+     names-row dates.
+   - **Normalisation** (deterministic, both sides): uppercase; every character outside
+     A–Z0–9 becomes a space; split on whitespace; drop legal-suffix and filler tokens
+     (INC, CORP, CO, COMPANY, LLC, LP, LTD, PLC, HOLDINGS, GROUP, THE, NEW, CLASS,
+     TRUST, PARTNERS, ENTERPRISES, …).
+   - **Token match:** let A and B be the normalised tokens of length ≥ 4 from each
+     name. If both are non-empty, match iff they intersect. If either is empty, match
+     iff the full normalised token sequences are equal.
+   - The T-Mobile pre-2013-04-29 regression must PASS **via this gate**, not via the
+     date rule.
+7. Document the tie-break rule in the script header and the report.
 
 **Output fields:** permno, gvkey, cusip8, `link_source` ∈ {`cusip_ncusip`,
 `cusip_header`, `manual_override`}, the names-row validity dates, and the comnam on
@@ -178,8 +213,20 @@ EDGAR blocks the sandbox, so Tim runs this on his machine. The User-Agent comes 
 environment variable Tim sets with his name and email, as SEC fair-access requires.
 Keep requests at or below 10 per second.
 
-- **Input:** `crsp_drop_nominations.csv`, plus any Stage 2 "lost" events whose CIK is a
-  subsidiary.
+- **Input (amended 2026-09-18):** `outputs/rebuild_v4/stage3_candidates.csv`, written by
+  script 212, is the worklist. Its `candidate_type` column carries three kinds:
+  - `gate_exclusion` — a header-CUSIP link the Stage 2 identity gate refused because the
+    CRSP `comnam` at breach_date matched neither the org string nor the EDGAR name.
+    Verified the same way as any other re-parenting: an **Exhibit 21** naming the
+    subsidiary.
+  - `a_subsidiary` — a CIK with no Compustat gvkey that a nomination identifies as a
+    subsidiary registrant. Verified by **Exhibit 21**.
+  - `b_successor_cik` — a listed firm whose Compustat record now sits under a different
+    CIK after a holding-company reorganization or merger. The successor is **nominated by
+    name and marked `unverified`**. Verified by a **successor filing — an 8-K or a Form
+    12g-3 naming the predecessor** — to the same citation standard as Exhibit 21: record
+    the accession and the matching line. A name resemblance alone never classifies.
+  Plus `crsp_drop_nominations.csv` and any Stage 2 "lost" event whose CIK is a subsidiary.
 - **Classification rule:** name knowledge may nominate a parent; only an Exhibit 21
   match classifies. Fetch the nominated parent's 10-K Exhibit 21 filed within 18 months
   of breach_date. Classify as listed-parent only if the subsidiary appears in that

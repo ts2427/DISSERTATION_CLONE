@@ -1,0 +1,72 @@
+candidate_type,cik,org,breach_date,crsp_permno,comnam_at_breach,candidate,confidence,reason,shared_tokens,generic_only
+gate_exclusion,1283699,"T-Mobile USA, Inc.",2009-09-03,91937.0,METROPCS COMMUNICATIONS INC,,,CRSP name at breach_date does not match the breached organization; parent relationship unverified,,
+gate_exclusion,1283699,"T-Mobile USA, Inc.",2009-10-05,91937.0,METROPCS COMMUNICATIONS INC,,,CRSP name at breach_date does not match the breached organization; parent relationship unverified,,
+gate_exclusion,1283699,T-Mobile,2009-10-08,91937.0,METROPCS COMMUNICATIONS INC,,,CRSP name at breach_date does not match the breached organization; parent relationship unverified,,
+gate_exclusion,1283699,T-Mobile USA Inc.,2011-10-21,91937.0,METROPCS COMMUNICATIONS INC,,,CRSP name at breach_date does not match the breached organization; parent relationship unverified,,
+gate_exclusion,1283699,T-Mobile,2012-05-08,91937.0,METROPCS COMMUNICATIONS INC,,,CRSP name at breach_date does not match the breached organization; parent relationship unverified,,
+gate_exclusion,1283699,T-Mobile,2012-08-28,91937.0,METROPCS COMMUNICATIONS INC,,,CRSP name at breach_date does not match the breached organization; parent relationship unverified,,
+gate_exclusion,1308161,Fox Entertainment Group,2009-04-09,90441.0,NEWS CORP,,,CRSP name at breach_date does not match the breached organization; parent relationship unverified,,
+gate_exclusion,1308161,Fox Entertainment Group Inc.,2009-04-15,90441.0,NEWS CORP,,,CRSP name at breach_date does not match the breached organization; parent relationship unverified,,
+b_successor_cik,14745,"Brown, Lisle/Cummings, Inc.",,,,"BROWN FORMAN CORP (gvkey 2435, cik 14693)",unverified,no gvkey in Compustat for this CIK,BROWN,False
+b_successor_cik,58696,Lennar Corporation,,,,"LENNAR CORP (gvkey 6669, cik 920760)",unverified,no gvkey in Compustat for this CIK,LENNAR,False
+a_subsidiary,72945,Northrop Grumman Systems Corporation,,,,Northrop Grumman Corporation,,no gvkey in Compustat for this CIK,,False
+a_subsidiary,108772,Xerox Corporation,,,,Xerox Holdings Corporation,,no gvkey in Compustat for this CIK,,False
+a_subsidiary,353394,"Leidos, Inc.",,,,"Leidos Holdings, Inc.",,no gvkey in Compustat for this CIK,,False
+b_successor_cik,826083,Dell Inc.,,,,"DELL TECHNOLOGIES INC (gvkey 14489, cik 1571996)",unverified,no gvkey in Compustat for this CIK,DELL,False
+b_successor_cik,912752,"Sinclair Broadcast Group, Inc.",,,,"SINCLAIR INC (gvkey 60800, cik 1971213)",unverified,no gvkey in Compustat for this CIK,SINCLAIR,False
+b_successor_cik,1000564,Communications & Power Industries LLC,,,,"ABM INDUSTRIES INC (gvkey 1410, cik 771497)",unverified,no gvkey in Compustat for this CIK,INDUSTRIES,True
+a_subsidiary,1091411,Sony Corporation of America,,,,Sony Group Corporation,,no gvkey in Compustat for this CIK,,False
+a_subsidiary,1137785,Seagate US LLC,,,,Seagate Technology Holdings plc,,no gvkey in Compustat for this CIK,,False
+a_subsidiary,1205274,"Herbalife International of America, Inc.",,,,Herbalife Ltd.,,no gvkey in Compustat for this CIK,,False
+b_successor_cik,1260451,Vulcan Industries,,,,"ABM INDUSTRIES INC (gvkey 1410, cik 771497)",unverified,no gvkey in Compustat for this CIK,INDUSTRIES,True
+b_successor_cik,1283246,International Paper Company,,,,"HONEYWELL INTERNATIONAL INC (gvkey 1300, cik 773840)",unverified,no gvkey in Compustat for this CIK,INTERNATIONAL,True
+a_subsidiary,1387793,"T. Rowe Price Retirement Plan Services, Inc.",,,,"T. Rowe Price Group, Inc.",,no gvkey in Compustat for this CIK,,False
+b_successor_cik,1396897,"NCO Financial Systems, Inc.",,,,"CISCO SYSTEMS INC (gvkey 20779, cik 858877)",unverified,no gvkey in Compustat for this CIK,SYSTEMS,True
+b_successor_cik,1431473,Uber,,,,"UBER TECHNOLOGIES INC (gvkey 35077, cik 1543151)",unverified,no gvkey in Compustat for this CIK,UBER,False
+a_subsidiary,1457738,"iHeartMedia + Entertainment, Inc.",,,,"iHeartMedia, Inc.",,no gvkey in Compustat for this CIK,,False
+b_successor_cik,1497060,Capital Integration Systems LLC,,,,"CISCO SYSTEMS INC (gvkey 20779, cik 858877)",unverified,no gvkey in Compustat for this CIK,SYSTEMS,True
+a_subsidiary,1501362,"J.B. Hunt Transport, Inc.",,,,"J.B. Hunt Transport Services, Inc.",,no gvkey in Compustat for this CIK,,False
+a_subsidiary,1516658,Gates Corporation,,,,Gates Industrial Corporation plc,,no gvkey in Compustat for this CIK,,False
+b_successor_cik,1567336,Mediant Communications Inc.,,,,"VERIZON COMMUNICATIONS INC (gvkey 2136, cik 732712)",unverified,no gvkey in Compustat for this CIK,COMMUNICATIONS,True
+b_successor_cik,1570434,Prime Communications,,,,"VERIZON COMMUNICATIONS INC (gvkey 2136, cik 732712)",unverified,no gvkey in Compustat for this CIK,COMMUNICATIONS,True
+b_successor_cik,1673769,"IMA Financial Group, Inc.",,,,"COREBRIDGE FINANCIAL INC (gvkey 41084, cik 1889539)",unverified,no gvkey in Compustat for this CIK,FINANCIAL,True
+b_successor_cik,1691249,"The iRemedy Healthcare Companies, Inc.",,,,"NEXTGEN HEALTHCARE INC (gvkey 8858, cik 708818)",unverified,no gvkey in Compustat for this CIK,HEALTHCARE,True
+b_successor_cik,1808065,Aon Corporation PLC,,,,"AON PLC (gvkey 3221, cik 315293)",unverified,no gvkey in Compustat for this CIK,AON,False
+b_successor_cik,1826210,KeraLink International,,,,"HONEYWELL INTERNATIONAL INC (gvkey 1300, cik 773840)",unverified,no gvkey in Compustat for this CIK,INTERNATIONAL,True
+a_subsidiary,1834695,"Volkswagen Group of America, Inc.",,,,Volkswagen AG,,no gvkey in Compustat for this CIK,,False
+a_subsidiary,1870564,"Activision Publishing, Inc.",,,,"Activision Blizzard, Inc.",,no gvkey in Compustat for this CIK,,False
+a_subsidiary,1984463,"Warn Industries, Inc.",,,,Dover Corporation,,no gvkey in Compustat for this CIK,,False
+ncusip_name_mismatch,51143,IBM,2007-02-23,12490.0,INTERNATIONAL BUSINESS MACHS COR,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,51143,IBM,2011-04-14,12490.0,INTERNATIONAL BUSINESS MACHS COR,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,732717,AT&T,2008-05-23,66093.0,A T & T INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,732717,AT&T,2012-01-01,66093.0,A T & T INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,732717,AT&T,2013-01-01,66093.0,A T & T INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,732717,AT&T,2013-11-05,66093.0,A T & T INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,732717,AT&T,2014-02-01,66093.0,A T & T INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,732717,AT&T,2014-04-01,66093.0,A T & T INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,732717,AT&T,2014-06-11,66093.0,A T & T INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,732717,ATT-Breach Notification,2014-08-05,66093.0,A T & T INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,732717,AT&T,2014-10-09,66093.0,A T & T INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,732717,ATT-Breach Notification,2014-10-16,66093.0,A T & T INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,732717,AT&T,2017-01-25,66093.0,A T & T INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,732717,Cricket Wireless LLC,2018-08-17,66093.0,A T & T INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,732717,Cricket Wireless LLC,2018-08-21,66093.0,A T & T INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,732717,"AT&T, Inc.",2019-01-01,66093.0,A T & T INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,732717,AT&T,2022-06-01,66093.0,A T & T INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,732717,AT&T Inc.,2024-03-17,66093.0,A T & T INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,732717,AT&T Inc.,2024-03-26,66093.0,A T & T INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,732717,AT&T Inc,2024-04-09,66093.0,A T & T INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,732717,AT&T Inc.,2024-04-14,66093.0,A T & T INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,790070,EMC Corporation,2014-01-07,10147.0,E M C CORP MA,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,1105705,TimeWarner,2015-02-19,77418.0,TIME WARNER INC NEW,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,1166691,NBC Sports Group,2012-08-24,89525.0,COMCAST CORP NEW,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,1166691,NBC Sports Group,2013-08-24,89525.0,COMCAST CORP NEW,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,1166691,NBC Sports Group,2013-10-15,89525.0,COMCAST CORP NEW,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,1512673,"Block and Company, Inc.",2016-02-01,15826.0,SQUARE INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,1512673,"Block and Company, Inc.",2016-02-09,15826.0,SQUARE INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,1512673,"Block and Company, Inc.",2016-03-21,15826.0,SQUARE INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,1652044,Google Inc.,2016-03-29,90319.0,ALPHABET INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,1652044,Google Inc.,2016-05-06,90319.0,ALPHABET INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,1652044,Google Inc.,2016-08-10,90319.0,ALPHABET INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,1652044,"Google, Inc.",2017-06-29,90319.0,ALPHABET INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
+ncusip_name_mismatch,1669779,CWGS Group,2022-01-14,16437.0,CAMPING WORLD HOLDINGS INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and no upstream parent or successor relationship is documented in final_evidence",,False
