@@ -60,8 +60,10 @@ import importlib.util
 import json
 import os
 import re
+import socket
 import sys
 import time
+from http.client import IncompleteRead, RemoteDisconnected
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.error import HTTPError, URLError
@@ -85,6 +87,13 @@ RETRY_CODES = {429, 503}     # throttling and "service unavailable" are transien
 MAX_ATTEMPTS = 5
 BACKOFF_BASE = 2.0           # 2, 4, 8, 16 seconds, unless Retry-After says otherwise
 MIN_DOC_BYTES = 2048         # below this, a non-JSON response is not a filing
+REQUEST_TIMEOUT = 60         # seconds; 30 was too tight for large 10-K exhibits
+
+# Transport failures that mean "try again", not "no such document". A read timeout fires
+# inside r.read() rather than urlopen, and TimeoutError is a SIBLING of URLError under
+# OSError, so it was caught by neither handler and killed run 3 outright.
+TRANSIENT_ERRORS = (TimeoutError, socket.timeout, ConnectionResetError,
+                    IncompleteRead, RemoteDisconnected)
 
 QUARANTINE = Path("Data/edgar/ex21_cache_v4_quarantine")
 RUN_LOG = Path("outputs/rebuild_v4/213_run_log.md")
@@ -196,12 +205,16 @@ def _throttle():
 def fetch(url):
     """Cached, rate-limited, retrying GET. -> bytes, or None if the document is absent.
 
-    Run 2 died on a bare HTTP 503 raised straight out of urlopen. 429 and 503 are the
-    server asking for a pause, not a verdict, so they are retried with exponential
-    backoff and Retry-After honoured.
+    Run 2 died on a bare HTTP 503 out of urlopen; run 3 died on a read TimeoutError out of
+    r.read(). Both mean "try again", not "no such document", so both are retried with
+    exponential backoff, Retry-After honoured when the server sends one.
 
     ONLY a 200 whose body is not an error page is ever written to the cache. Caching a
     throttle page would convert a transient outage into a permanent false UNVERIFIED.
+
+    The response is read inside the try, but the status check and the cache write are in
+    the else branch, so a disk error while writing is never mistaken for a network blip
+    and retried five times.
     """
     p = cache_path(url)
     if p.exists():
@@ -211,21 +224,11 @@ def fetch(url):
         _throttle()
         req = Request(url, headers={"User-Agent": user_agent()})
         wait = None
+        status = data = None
         try:
-            with urlopen(req, timeout=30) as r:
+            with urlopen(req, timeout=REQUEST_TIMEOUT) as r:
                 status = getattr(r, "status", None) or getattr(r, "code", 200)
                 data = r.read()
-            if status != 200:
-                last = f"HTTP {status}"
-                wait = BACKOFF_BASE ** attempt
-            elif looks_like_error(data):
-                # 200 with a throttle page in the body: the dangerous case.
-                last = "HTTP 200 carrying an SEC error/throttle page"
-                wait = BACKOFF_BASE ** attempt
-            else:
-                CACHE.mkdir(parents=True, exist_ok=True)
-                p.write_bytes(data)
-                return data
         except HTTPError as e:
             if e.code == 404:
                 return None
@@ -239,6 +242,21 @@ def fetch(url):
         except URLError as e:
             last = f"network error: {e}"
             wait = BACKOFF_BASE ** attempt
+        except TRANSIENT_ERRORS as e:
+            last = f"{type(e).__name__}: {e}"
+            wait = BACKOFF_BASE ** attempt
+        else:
+            if status != 200:
+                last = f"HTTP {status}"
+                wait = BACKOFF_BASE ** attempt
+            elif looks_like_error(data):
+                # 200 with a throttle page in the body: the dangerous case.
+                last = "HTTP 200 carrying an SEC error/throttle page"
+                wait = BACKOFF_BASE ** attempt
+            else:
+                CACHE.mkdir(parents=True, exist_ok=True)
+                p.write_bytes(data)
+                return data
         if attempt >= MAX_ATTEMPTS:
             break
         print(f"    {last} for {url.rsplit('/', 1)[-1]}; "

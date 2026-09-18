@@ -594,13 +594,50 @@ m213.urlopen, calls = scripted([http_err(404)])
 none_ok = m213.fetch("https://www.sec.gov/Archives/edgar/data/1/a/missing.htm") is None
 print(f"  {'PASS' if none_ok else 'FAIL'} | 404 -> None after {calls['n']} attempt")
 
+# transport failures that are NOT HTTP errors: a read timeout fires inside r.read(), and
+# TimeoutError is a sibling of URLError under OSError, so it reached neither handler and
+# killed run 3. Each must recover on the next attempt.
+from http.client import IncompleteRead as _IncompleteRead
+from http.client import RemoteDisconnected as _RemoteDisconnected
+
+TRANSIENT_CASES = [
+    ("TimeoutError", TimeoutError("The read operation timed out")),
+    ("ConnectionResetError", ConnectionResetError(10054, "forcibly closed by peer")),
+    ("IncompleteRead", _IncompleteRead(b"partial")),
+    ("RemoteDisconnected", _RemoteDisconnected("Remote end closed connection")),
+]
+trans_ok = True
+for i, (label, exc) in enumerate(TRANSIENT_CASES):
+    u = f"https://www.sec.gov/Archives/edgar/data/1/a/transient{i}.htm"
+    m213.urlopen, calls = scripted([exc, FILING])
+    got = m213.fetch(u)
+    one = (got == FILING and calls["n"] == 2 and m213.cache_path(u).exists())
+    trans_ok &= one
+    print(f"  {'PASS' if one else 'FAIL'} | {label} then 200 -> recovered in "
+          f"{calls['n']} attempts, cached")
+
+u = "https://www.sec.gov/Archives/edgar/data/1/a/always_timeout.htm"
+m213.urlopen, calls = scripted([TimeoutError("The read operation timed out")])
+try:
+    m213.fetch(u)
+    ptime_ok, why = False, "returned instead of raising"
+except RuntimeError as e:
+    ptime_ok = (calls["n"] == m213.MAX_ATTEMPTS and not m213.cache_path(u).exists())
+    why = str(e)[:56]
+print(f"  {'PASS' if ptime_ok else 'FAIL'} | persistent timeout -> {calls['n']} attempts "
+      f"then raise, nothing cached | {why}")
+timeout_ok = m213.REQUEST_TIMEOUT >= 60
+print(f"  {'PASS' if timeout_ok else 'FAIL'} | per-request timeout "
+      f"{m213.REQUEST_TIMEOUT}s (>= 60)")
+
 ra_ok = (m213.retry_after(http_err(503, retry_after=7)) == 7.0
          and m213.retry_after(http_err(503)) is None)
 print(f"  {'PASS' if ra_ok else 'FAIL'} | Retry-After honoured (7s), absent -> None")
 rate_ok2 = m213.MIN_INTERVAL == 0.0 and _sv["mi"] <= 0.2
 print(f"  {'PASS' if rate_ok2 else 'FAIL'} | configured rate {_sv['mi']}s >= 0.2 "
       f"(<= 5 req/s)")
-results.append(retry_ok and persist_ok and err_ok and none_ok and ra_ok and rate_ok2)
+results.append(retry_ok and persist_ok and err_ok and none_ok and ra_ok and rate_ok2
+               and trans_ok and ptime_ok and timeout_ok)
 
 # a throttle page already sitting in the cache is quarantined, a real filing is not
 print(f"\n{'='*70}\nTEST: 213 quarantines poisoned cache entries\n{'='*70}")
