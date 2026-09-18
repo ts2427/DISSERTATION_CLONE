@@ -81,7 +81,21 @@ MIN_INTERVAL = 0.11          # <= 10 requests/second, with headroom
 WINDOW_DAYS = 548            # 18 months either side of breach_date
 SUCCESSOR_SCAN_CAP = 40      # bound the 8-K scan; succession forms are tried first
 
-EX21_RE = re.compile(r"ex.?-?\s?21", re.I)
+# `ex[-_ ]?21` and NOT `ex.?-?\s?21`. The wildcard let the "1" of "ex121" be consumed, so
+# dex121.htm (Exhibit 12.1, ratio of earnings to fixed charges) matched as an Exhibit 21.
+# News Corp's 2009 10-K contains dex121.htm, dex21.htm AND dex321.htm; the old pattern
+# matched all three and took the first in directory order, i.e. Exhibit 12.1. Fox then
+# came back UNVERIFIED because the wrong document was searched.
+EX21_RE = re.compile(r"ex[-_ ]?21", re.I)
+
+# Succession language. Rule 3: naming the other firm is not enough - the SAME passage must
+# also say what the relationship is, or any filing that merely mentions the other company
+# would verify a succession.
+SUCCESSION_RE = re.compile(
+    r"successor|predecessor|holding\s+company\s+reorgani[sz]ation|"
+    r"rule\s*12\s*g-?\s*3|12\s*g-?\s*3|merger|merged", re.I)
+
+TICKERS_URL = "https://www.sec.gov/files/company_tickers.json"
 CIK_IN_CAND = re.compile(r"cik\s+(\d+)", re.I)
 SUBSIDIARY_TYPES = ("a_subsidiary", "ncusip_name_mismatch", "gate_exclusion")
 
@@ -165,6 +179,7 @@ def submissions(cik):
         d = fetch(f"https://data.sec.gov/submissions/{extra.get('name','')}")
         if d:
             frames.append(pd.DataFrame(json.loads(d.decode("utf-8", "replace"))))
+    frames = [f for f in frames if f is not None and not f.empty]
     if not frames:
         return pd.DataFrame()
     df = pd.concat(frames, ignore_index=True)
@@ -226,16 +241,56 @@ def to_lines(raw):
     return out
 
 
-def match_line(name, lines):
-    """First line naming `name` under Stage 2's normalisation. -> (line, shared_tokens).
+def line_names(name, line):
+    """Does this ONE line actually name `name`? -> (bool, evidence_tokens).
 
-    The shared token must not be an industry word alone; see the header note.
+    A line names the firm iff it contains EVERY significant token of the name, or its
+    space-stripped concatenation equals the name's. One shared token is never enough:
+    that standard verified "Brown, Lisle/Cummings, Inc." against a line reading
+    "Brown-Forman Corporation", and "Communications & Power Industries LLC" against
+    "AMERICAN ELECTRIC POWER COMPANY, INC.", on BROWN and POWER respectively.
     """
+    nt = M212.norm_tokens(name)
+    sig = {t for t in nt if len(t) >= M212.SIGNIFICANT_LEN}
+    lt = M212.norm_tokens(line)
+    if sig and sig <= set(lt):
+        return True, "|".join(sorted(sig))
+    ca, cb = "".join(nt), "".join(lt)
+    if ca and ca == cb:
+        return True, ca
+    return False, ""
+
+
+def match_line(name, lines):
+    """First line that NAMES `name`. -> (line, evidence_tokens)."""
     for ln in lines:
-        ok, shared = M212.name_overlap(ln, name)
-        if ok and not M212.generic_only(shared):
-            return ln, "|".join(sorted(shared))
+        ok, ev = line_names(name, ln)
+        if ok:
+            return ln, ev
     return None, None
+
+
+def match_passage(name, passages):
+    """First passage naming `name` AND carrying succession language. -> (passage, ev)."""
+    for p in passages:
+        ok, ev = line_names(name, p)
+        if ok and SUCCESSION_RE.search(p):
+            return p, ev
+    return None, None
+
+
+def ticker_to_cik():
+    """SEC's own ticker -> CIK table, so a nominated parent is never a CIK from memory."""
+    raw = fetch(TICKERS_URL)
+    if raw is None:
+        return {}
+    j = json.loads(raw.decode("utf-8", "replace"))
+    out = {}
+    for v in j.values():
+        t = str(v.get("ticker", "")).strip().upper()
+        if t:
+            out.setdefault(t, int(v["cik_str"]))
+    return out
 
 
 def doc_url(cik, accession, name):
@@ -308,14 +363,17 @@ def verify_successor(cik_a, name_a, cik_b, name_b):
             raw = fetch(url)
             if raw is None:
                 continue
-            line, shared = match_line(other_name, to_lines(raw))
-            if line:
+            passage, ev = match_passage(other_name, to_lines(raw))
+            if passage:
                 return blank(verdict="VERIFIED",
-                             reason=f"CIK {filer_cik} filing names {other_name!r}",
+                             reason=f"CIK {filer_cik} filing names {other_name!r} in a "
+                                    f"passage carrying succession language",
                              accession=acc, form=str(f["form"]),
-                             filing_date=str(f["filingDate"]), matching_line=line[:300],
-                             shared_tokens=shared, document_url=url)
-    return blank(reason="no 8-K or 12g-3 by either party names the other")
+                             filing_date=str(f["filingDate"]),
+                             matching_line=passage[:300],
+                             shared_tokens=ev, document_url=url)
+    return blank(reason="no 8-K or 12g-3 by either party names the other in a passage "
+                        "carrying succession language")
 
 
 # ------------------------------------------------------------------- CIK resolution
@@ -339,7 +397,7 @@ def permno_to_cik():
     return out
 
 
-def resolve_parent(row, noms, pn2cik):
+def resolve_parent(row, noms, pn2cik, tick2cik):
     """-> (parent_cik or None, parent_name, how)."""
     ct = row["candidate_type"]
     if ct == "b_successor_cik":
@@ -348,9 +406,21 @@ def resolve_parent(row, noms, pn2cik):
                 "parsed from the Stage 2 candidate string")
     if ct == "a_subsidiary":
         hit = noms[noms["cik"] == row["cik"]]
+        pname = str(row.get("candidate", ""))
         pc = pd.to_numeric(hit["parent_cik"], errors="coerce").dropna()
-        return ((int(pc.iloc[0]) if len(pc) else None),
-                str(row.get("candidate", "")), "nomination file parent_cik")
+        if len(pc):
+            return int(pc.iloc[0]), pname, "nomination file parent_cik"
+        # Name knowledge may NOMINATE a parent, never verify one. The ticker comes from
+        # the nomination file and the CIK from SEC's own table, so no CIK originates in
+        # anybody's memory - and the Exhibit 21 still decides. Volkswagen (VWAGY) and
+        # Activision (ATVI) reach a parent CIK only by this route.
+        tick = hit["ticker"].dropna().astype(str).str.strip().str.upper()
+        if len(tick) and tick.iloc[0] in tick2cik:
+            basis = str(hit["basis"].iloc[0]) if "basis" in hit.columns else ""
+            return (tick2cik[tick.iloc[0]], pname,
+                    f"NOMINATED: ticker {tick.iloc[0]} -> CIK via SEC "
+                    f"company_tickers.json; basis: {basis[:80]}")
+        return None, pname, "no parent_cik and no usable ticker in the nomination file"
     pn = pd.to_numeric(pd.Series([row.get("crsp_permno")]), errors="coerce").iloc[0]
     if pd.isna(pn):
         return None, str(row.get("comnam_at_breach", "")), "no permno on the row"
@@ -369,6 +439,7 @@ def main():
     cand = pd.read_csv(S3)
     noms = pd.read_csv(NOMS)
     pn2cik = permno_to_cik()
+    tick2cik = ticker_to_cik()
     base_ciks, _, _ = M211.load_base_ciks()
 
     print(f"stage 3 worklist: {len(cand)} rows")
@@ -378,7 +449,7 @@ def main():
 
     rows = []
     for _, r in cand.iterrows():
-        pcik, pname, how = resolve_parent(r, noms, pn2cik)
+        pcik, pname, how = resolve_parent(r, noms, pn2cik, tick2cik)
         if r["candidate_type"] == "b_successor_cik":
             res = verify_successor(int(r["cik"]), str(r["org"]), pcik, pname)
         else:

@@ -590,11 +590,22 @@ def main():
                        breach_date=r["breach_date"], crsp_permno=r["permno_rejected"],
                        comnam_at_breach=r["comnam"], candidate="", confidence="",
                        reason=GATE_REASON))
-    for _, r in nog[nog["candidate_type"].isin(["a_subsidiary", "b_successor_cik"])].iterrows():
-        s3.append(dict(candidate_type=r["candidate_type"], cik=r["final_cik"], org=r["org"],
-                       breach_date="", crsp_permno="", comnam_at_breach="",
-                       candidate=r["candidate"], confidence=r["confidence"],
-                       shared_tokens=r["shared_tokens"], generic_only=r["generic_only"],
+    # ONE ROW PER EVENT, with a breach_date on every row. These used to be emitted one per
+    # CIK with breach_date blank, which reached Stage 3 as NaT and made the 18-month 10-K
+    # window meaningless ("no 10-K within 548 days of NaT"). The classification is per
+    # CIK; the event dates come from the underlying events.
+    nogmap = nog.set_index("final_cik")[
+        ["candidate_type", "candidate", "confidence", "shared_tokens", "generic_only"]
+    ].to_dict("index")
+    for _, r in L[L["note"] == "no gvkey"].iterrows():
+        c = nogmap.get(r["final_cik"])
+        if not c or c["candidate_type"] not in ("a_subsidiary", "b_successor_cik"):
+            continue
+        s3.append(dict(candidate_type=c["candidate_type"], cik=r["final_cik"],
+                       org=r["org_name"], breach_date=r["breach_date"], crsp_permno="",
+                       comnam_at_breach="", candidate=c["candidate"],
+                       confidence=c["confidence"], shared_tokens=c["shared_tokens"],
+                       generic_only=c["generic_only"],
                        reason="no gvkey in Compustat for this CIK"))
     for _, r in nc_s3.iterrows():
         s3.append(dict(candidate_type="ncusip_name_mismatch", cik=r["final_cik"],

@@ -1,6 +1,6 @@
 # REBUILD V4 — Stage 2 point-in-time linker (CUSIP route)
 
-- run (UTC): 2026-09-18T20:00:39+00:00
+- run (UTC): 2026-09-18T20:19:52+00:00
 - events 489 | comp.company 148 | comp.security 308 | stocknames 613
 - rule: all US common issues (tpci=0, excntry=USA), ncusip-first, header fallback behind the identity gate
 
@@ -329,12 +329,12 @@ None: every header accept shares a real identity token.
 
 ## Stage 3 candidates
 
-31 rows written to `outputs/rebuild_v4/stage3_candidates.csv`.
+40 rows written to `outputs/rebuild_v4/stage3_candidates.csv`.
 
 | type | rows |
 |---|---|
-| a_subsidiary | 13 |
+| a_subsidiary | 19 |
+| b_successor_cik | 11 |
 | gate_exclusion | 8 |
-| b_successor_cik | 8 |
 | ncusip_name_mismatch | 2 |
 

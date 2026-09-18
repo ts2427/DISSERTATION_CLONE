@@ -442,6 +442,58 @@ print(f"  {'PASS' if rate_ok else 'FAIL'} | MIN_INTERVAL {m213.MIN_INTERVAL}s <=
 print(f"  {'PASS' if ua_ok else 'FAIL'} | missing {m213.UA_ENV} aborts | {ua_msg[:60]}")
 results.append(lines_ok and ex_ok and none_ok and rate_ok and ua_ok)
 
+# ------- the run-1 failures, as permanent regression tests -------
+print(f"\n{'='*70}\nTEST: 213 evidence standard (the run-1 canaries)\n{'='*70}")
+name_cases = [
+    # (subsidiary/firm name, candidate line, must_match, why)
+    ("Brown, Lisle/Cummings, Inc.", "Brown-Forman Corporation", False,
+     "single SURNAME overlap must FAIL (run-1 canary)"),
+    ("Communications & Power Industries LLC", "AMERICAN ELECTRIC POWER COMPANY, INC.",
+     False, "single WORD overlap (POWER) must FAIL (run-1 canary)"),
+    ("Cricket Wireless LLC", "New Cingular Wireless", False,
+     "single word (WIRELESS) must FAIL"),
+    ("Northrop Grumman Systems Corporation",
+     "Northrop Grumman Systems Corporation — Delaware", True,
+     "exact listing line must VERIFY"),
+    ("TimeWarner", "Time Warner Inc.", True,
+     "space-stripped concatenation must VERIFY"),
+    ("International Paper Company", "International Paper Company", True,
+     "full-name listing must VERIFY"),
+]
+ev_ok = True
+for nm, line, want, why in name_cases:
+    got, tokens = m213.line_names(nm, line)
+    ev_ok &= (got == want)
+    print(f"  {'PASS' if got == want else 'FAIL'} | {nm[:34]!r} vs {line[:38]!r} -> {got}"
+          f"  ({why})")
+results.append(ev_ok)
+
+print(f"\n{'='*70}\nTEST: 213 succession language required in the same passage\n{'='*70}")
+NAMED_NO_LANG = "Sinclair Broadcast Group, Inc. reported quarterly results today."
+NAMED_WITH_LANG = ("Sinclair, Inc. is the successor issuer to Sinclair Broadcast Group, "
+                   "Inc. pursuant to Rule 12g-3(a).")
+LANG_NO_NAME = "The registrant is the successor issuer pursuant to Rule 12g-3(a)."
+p1, _ = m213.match_passage("Sinclair Broadcast Group, Inc.", [NAMED_NO_LANG])
+p2, ev2 = m213.match_passage("Sinclair Broadcast Group, Inc.", [NAMED_WITH_LANG])
+p3, _ = m213.match_passage("Sinclair Broadcast Group, Inc.", [LANG_NO_NAME])
+succ_ok = (p1 is None) and (p2 is not None) and (p3 is None)
+print(f"  {'PASS' if p1 is None else 'FAIL'} | named, NO succession language -> {p1}")
+print(f"  {'PASS' if p2 else 'FAIL'} | named + succession language -> matched on {ev2}")
+print(f"  {'PASS' if p3 is None else 'FAIL'} | succession language, name absent -> {p3}")
+results.append(succ_ok)
+
+print(f"\n{'='*70}\nTEST: 213 exhibit selection (the Fox false negative)\n{'='*70}")
+NEWSCORP_FILES = ["d10k.htm", "dex106.htm", "dex121.htm", "dex21.htm", "dex231.htm",
+                  "dex311.htm", "dex312.htm", "dex321.htm"]
+picked = m213.find_ex21_name(NEWSCORP_FILES)
+fox_ok = picked == "dex21.htm"
+print(f"  {'PASS' if fox_ok else 'FAIL'} | News Corp 2009 10-K files -> picked {picked!r} "
+      f"(must be dex21.htm, NOT dex121.htm = Exhibit 12.1)")
+also_ok = (m213.find_ex21_name(["dex121.htm"]) is None
+           and m213.find_ex21_name(["dex321.htm"]) is None)
+print(f"  {'PASS' if also_ok else 'FAIL'} | Exhibit 12.1 and 32.1 alone -> None")
+results.append(fox_ok and also_ok)
+
 print(f"\n{'='*70}")
 print(f"RESULT: {sum(results)}/{len(results)} tests passed")
 print("=" * 70)
