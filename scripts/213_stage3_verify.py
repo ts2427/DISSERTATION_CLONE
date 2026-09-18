@@ -149,6 +149,13 @@ STOPWORDS = {"OF", "AND", "FOR"}
 # keeps its leading 21.
 LEAD_RE = re.compile(r"^\s*(?:[-–—•*·]+\s*|\(?\d{1,3}[.)]\s+)")
 
+TOKEN_RE = re.compile(r"[A-Za-z0-9]+")
+
+# What may follow a subsidiary's name on an Exhibit 21 line: a comma, a dash, a tab, two
+# or more spaces (column alignment), or a parenthesis. A SINGLE space does not qualify -
+# that is how "Xerox Financial Services LLC" continues into a different company's name.
+DELIM_RE = re.compile(r"^(?:[,;:–—-]|\t|\(|\)|\s{2,})")
+
 TICKERS_URL = "https://www.sec.gov/files/company_tickers.json"
 CIK_IN_CAND = re.compile(r"cik\s+(\d+)", re.I)
 SUBSIDIARY_TYPES = ("a_subsidiary", "ncusip_name_mismatch", "gate_exclusion")
@@ -401,6 +408,50 @@ def norm213(text):
     return [t for t in M212.norm_tokens(text) if t not in STOPWORDS]
 
 
+def norm_spans(text):
+    """norm213's tokens, each carrying its (start, end) offset in `text`.
+
+    Replays M212.norm_tokens exactly - drop legal suffixes, join runs of single letters,
+    then drop stopwords - while keeping offsets, so the boundary test can look at the RAW
+    line. Deriving the token list from these spans rather than calling norm213 separately
+    guarantees the two can never drift apart.
+    """
+    toks = [(m.group(0).upper(), m.start(), m.end()) for m in TOKEN_RE.finditer(str(text))]
+    toks = [t for t in toks if t[0] not in M212.LEGAL_TOKENS]
+    out, run = [], []
+    for t in toks:
+        if len(t[0]) == 1:
+            run.append(t)
+            continue
+        if run:
+            out.append(("".join(r[0] for r in run), run[0][1], run[-1][2]))
+            run = []
+        out.append(t)
+    if run:
+        out.append(("".join(r[0] for r in run), run[0][1], run[-1][2]))
+    return [t for t in out if t[0] not in STOPWORDS]
+
+
+def boundary_ok(s, end):
+    """Does the firm's name END where the prefix match ended? -> (bool, why).
+
+    Without this, a name that reduces to ONE token matches any longer entry beginning
+    with that word: Xerox Corporation -> [XEROX] matched "Xerox Financial Services LLC",
+    Leidos, Inc. -> [LEIDOS] matched "Leidos Biomedical Research, Inc.", and Dell Inc.
+    and Aon Corporation PLC reduce the same way.
+    """
+    rest = s[end:]
+    if not rest.strip():
+        return True, "end of line"
+    if DELIM_RE.match(rest):
+        return True, "delimiter"
+    m = TOKEN_RE.search(s, end)          # the next RAW token, legal tokens retained
+    nxt = m.group(0).upper() if m else ""
+    if nxt in M212.LEGAL_TOKENS:
+        return True, f"next token {nxt} is a legal suffix"
+    return False, nxt
+
+
 def line_names(name, line):
     """Does this Exhibit 21 LINE name `name`? -> (bool, evidence). PREFIX rule.
 
@@ -417,12 +468,19 @@ def line_names(name, line):
     Under the prefix rule the first is rejected (FORTUNE != FOX) and so is the second
     (SUBSIDIARIES != XEROX), while the genuine "Xerox Corporation ... New York" entry
     still verifies - which is why lines naming the parent are NOT rejected outright.
+
+    A prefix alone is not sufficient, because several worklist names reduce to a SINGLE
+    token once legal suffixes go: Xerox Corporation -> [XEROX], Leidos, Inc. -> [LEIDOS],
+    Dell Inc. -> [DELL], Aon Corporation PLC -> [AON]. So the match must also end at a
+    name boundary: see boundary_ok.
     """
     nt = norm213(name)
     if not nt:
         return False, ""
-    lt = norm213(LEAD_RE.sub("", str(line)))
-    if lt[:len(nt)] == nt:
+    s = LEAD_RE.sub("", str(line))
+    spans = norm_spans(s)
+    lt = [t for t, _, _ in spans]
+    if lt[:len(nt)] == nt and boundary_ok(s, spans[len(nt) - 1][2])[0]:
         return True, " ".join(nt)
     # Retained from the previous rule so a spaceless source name still matches its spaced
     # listing ("TimeWarner" vs "Time Warner Inc."). Equality, not prefix.

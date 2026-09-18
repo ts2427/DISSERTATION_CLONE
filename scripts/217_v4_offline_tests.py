@@ -472,6 +472,20 @@ name_cases = [
      "leading numbering must be stripped"),
     ("Fox Entertainment Group", "Fox Entertainment Group Holdings Inc. — Delaware", True,
      "a longer entry starting with the name must VERIFY"),
+    # boundary rule: these names reduce to ONE token once legal suffixes are dropped,
+    # so a bare prefix would match any longer firm beginning with that word
+    ("Xerox Corporation", "Xerox Financial Services LLC — Delaware", False,
+     "boundary: [XEROX] must not match a different Xerox entity"),
+    ("Leidos, Inc.", "Leidos Biomedical Research, Inc.", False,
+     "boundary: [LEIDOS] must not match Leidos Biomedical Research"),
+    ("Leidos, Inc.", "Leidos, Inc. — Delaware", True,
+     "boundary: comma ends the name, so the genuine entry VERIFIES"),
+    ("Fox", "Fox Baseball Holdings, Inc.", False,
+     "boundary: a bare single token must not match a longer entry"),
+    ("Dell Inc.", "Dell Technologies Inc.", False,
+     "boundary: [DELL] must not match Dell Technologies"),
+    ("Aon Corporation PLC", "Aon Service Corporation", False,
+     "boundary: [AON] must not match Aon Service Corporation"),
 ]
 ev_ok = True
 for nm, line, want, why in name_cases:

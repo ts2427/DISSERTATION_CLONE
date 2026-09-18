@@ -104,3 +104,60 @@ Run 2 requires SEC network access and therefore Tim's `SEC_EDGAR_USER_AGENT`. Th
 Exhibit 21 (`dex21.htm`) was never fetched by run 1 and is not in the cache, so the
 question *"does News Corp's 2009 Exhibit 21 list Fox Entertainment Group?"* remains
 unanswered. It costs one request under the corrected exhibit selection.
+
+> **Answered later, by run 3.** News Corp's 2009 Exhibit 21 (accession
+> 0001193125-09-172310, `dex21.htm`, 3,034 lines, 305 of them containing FOX) **does**
+> list `FOX ENTERTAINMENT GROUP, INC.` verbatim. The run-1 UNVERIFIED was a false
+> negative caused solely by reading Exhibit 12.1.
+
+---
+
+## Run 2 — CRASHED, no output
+
+Died on an HTTP 503 raised straight out of `urlopen` during `verify_successor` and wrote
+no log at all. Nothing to invalidate, because nothing was produced. It is the reason
+`fetch` now retries 429/503 and `safe_main` writes a partial log on any failure.
+
+---
+
+## Run 3 — INVALID (superseded evidence rule)
+
+- output: `outputs/rebuild_v4/213_verification_log.csv` + `213_run_log.md` — **void**
+- cache: **kept**, 195 documents, no error or throttle page among them
+- reached 17 of 40 rows, then aborted cleanly on
+  `TimeoutError: The read operation timed out` at
+  `b_successor_cik cik 1000564 Communications & Power Industries LLC breach_date 2020-01-18`
+- verdicts produced: 9 VERIFIED, 8 UNVERIFIED
+
+The abort itself was handled correctly — the partial log and the `## ABORTED` section
+were both written, which is what run 2's failure was supposed to fix, and it worked. The
+run is void for a different reason: **5 of the 9 VERIFIED rows rested on the wrong
+lines**, under an evidence rule that has since been replaced.
+
+| # | row | line accepted | assessment |
+|---|---|---|---|
+| 1-2 | Fox Entertainment Group (×2) | `Fortune Star Entertainment (HK) Limited` | right verdict, WRONG line — a different company |
+| 3 | Lennar Corporation | `… The Bank of New York Mellon (as successor trustee)` | FALSE POSITIVE — trustee succession, not corporate |
+| 4 | Northrop Grumman Systems Corporation | `Northrop Grumman Systems Corporation` | sound |
+| 5 | Xerox Corporation | `Subsidiaries of Xerox Holdings Corporation` | FALSE POSITIVE — the exhibit's own heading |
+| 6 | Leidos, Inc. | `Leidos, Inc.` | sound |
+| 7-9 | Sinclair Broadcast Group, Inc. (×3) | `Seventh Amendment … Credit Agreement …` | FALSE POSITIVE — a credit-agreement exhibit index |
+
+Causes, both now fixed:
+
+1. **"All tokens of length >= 4" silently dropped short distinctive tokens.** "Fox
+   Entertainment Group" reduced to the single required token ENTERTAINMENT, because FOX
+   is three characters, and matched the first line in a 3,034-line exhibit containing
+   that word. "Xerox Corporation" reduced to {XEROX} and matched the heading.
+2. **Bare "successor" counted as succession language**, so a successor *trustee* and a
+   credit-agreement amendment both qualified.
+
+Replaced by a PREFIX rule for Exhibit 21 (the line's tokens must begin with the firm's
+complete token sequence, every token of any length, ending at a name boundary) and by
+succession language restricted to registrants (successor issuer / successor registrant /
+predecessor registrant / Rule 12g-3 / holding company reorganization).
+
+Rejecting the accepted line is not the same as rejecting the row: Xerox Holdings'
+Exhibit 21 may well list Xerox Corporation further down, and Lennar and Sinclair may have
+genuine succession filings elsewhere in the scan. Those rows are simply **undecided**
+until a run under the corrected rule, and must not be carried forward as VERIFIED.
