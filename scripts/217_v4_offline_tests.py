@@ -504,6 +504,160 @@ also_ok = (m213.find_ex21_name(["dex121.htm"]) is None
 print(f"  {'PASS' if also_ok else 'FAIL'} | Exhibit 12.1 and 32.1 alone -> None")
 results.append(fox_ok and also_ok)
 
+# ------- 213 transport: retries, and never caching an error page -------
+print(f"\n{'='*70}\nTEST: 213 retry/backoff and error-page handling (mocked HTTP)\n{'='*70}")
+import os as _os2
+from email.message import Message
+from urllib.error import HTTPError as _HTTPError
+
+FILING = b"<html><body>" + b"Northrop Grumman Systems Corporation " * 120 + b"</body></html>"
+THROTTLE = (b"<html><h1>SEC.gov | Request Rate Threshold Exceeded</h1>"
+            b"<p>Your Request Originates from an Undeclared Automated Tool</p></html>")
+
+
+class FakeResp:
+    def __init__(self, data, status=200):
+        self._d, self.status = data, status
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *a):
+        return False
+
+    def read(self):
+        return self._d
+
+
+def scripted(seq):
+    """Fake urlopen replaying `seq`; an Exception entry is raised, bytes are returned."""
+    state = {"n": 0}
+
+    def _open(req, timeout=None):
+        item = seq[min(state["n"], len(seq) - 1)]
+        state["n"] += 1
+        if isinstance(item, BaseException):
+            raise item
+        return FakeResp(item)
+    return _open, state
+
+
+def http_err(code, retry_after=None):
+    h = Message()
+    if retry_after is not None:
+        h["Retry-After"] = str(retry_after)
+    return _HTTPError("https://www.sec.gov/x", code, "err", h, None)
+
+
+_sv = dict(cache=m213.CACHE, mi=m213.MIN_INTERVAL, bb=m213.BACKOFF_BASE,
+           uo=m213.urlopen, ol=m213.OUT_LOG, oc=m213.OUT_CIKS, rl=m213.RUN_LOG,
+           q=m213.QUARANTINE)
+_ua_prev = _os2.environ.get(m213.UA_ENV)
+_os2.environ[m213.UA_ENV] = "Offline Test test@example.com"
+m213.CACHE = TMP / "cache"
+m213.QUARANTINE = TMP / "quarantine"
+m213.MIN_INTERVAL = 0.0
+m213.BACKOFF_BASE = 0.0
+
+# 503 then 200 -> succeeds, and the good bytes land in the cache
+m213.urlopen, calls = scripted([http_err(503), FILING])
+got = m213.fetch("https://www.sec.gov/Archives/edgar/data/1/a/retry_ok.htm")
+retry_ok = (got == FILING and calls["n"] == 2
+            and m213.cache_path("https://www.sec.gov/Archives/edgar/data/1/a/retry_ok.htm").exists())
+print(f"  {'PASS' if retry_ok else 'FAIL'} | 503 then 200 -> recovered in {calls['n']} "
+      f"attempts, cached")
+
+# persistent 503 -> raises after MAX_ATTEMPTS, nothing cached
+m213.urlopen, calls = scripted([http_err(503)])
+try:
+    m213.fetch("https://www.sec.gov/Archives/edgar/data/1/a/always503.htm")
+    persist_ok, why = False, "returned instead of raising"
+except RuntimeError as e:
+    persist_ok = (calls["n"] == m213.MAX_ATTEMPTS
+                  and not m213.cache_path("https://www.sec.gov/Archives/edgar/data/1/a/always503.htm").exists())
+    why = str(e)[:56]
+print(f"  {'PASS' if persist_ok else 'FAIL'} | persistent 503 -> {calls['n']} attempts "
+      f"then raise, nothing cached | {why}")
+
+# HTTP 200 carrying a throttle page -> NEVER cached (the dangerous case)
+m213.urlopen, calls = scripted([THROTTLE])
+try:
+    m213.fetch("https://www.sec.gov/Archives/edgar/data/1/a/throttle.htm")
+    err_ok = False
+except RuntimeError:
+    err_ok = not m213.cache_path("https://www.sec.gov/Archives/edgar/data/1/a/throttle.htm").exists()
+print(f"  {'PASS' if err_ok else 'FAIL'} | 200 + throttle body -> never cached, retried "
+      f"{calls['n']}x then raised")
+
+# 404 is an answer, not a failure
+m213.urlopen, calls = scripted([http_err(404)])
+none_ok = m213.fetch("https://www.sec.gov/Archives/edgar/data/1/a/missing.htm") is None
+print(f"  {'PASS' if none_ok else 'FAIL'} | 404 -> None after {calls['n']} attempt")
+
+ra_ok = (m213.retry_after(http_err(503, retry_after=7)) == 7.0
+         and m213.retry_after(http_err(503)) is None)
+print(f"  {'PASS' if ra_ok else 'FAIL'} | Retry-After honoured (7s), absent -> None")
+rate_ok2 = m213.MIN_INTERVAL == 0.0 and _sv["mi"] <= 0.2
+print(f"  {'PASS' if rate_ok2 else 'FAIL'} | configured rate {_sv['mi']}s >= 0.2 "
+      f"(<= 5 req/s)")
+results.append(retry_ok and persist_ok and err_ok and none_ok and ra_ok and rate_ok2)
+
+# a throttle page already sitting in the cache is quarantined, a real filing is not
+print(f"\n{'='*70}\nTEST: 213 quarantines poisoned cache entries\n{'='*70}")
+m213.CACHE.mkdir(parents=True, exist_ok=True)
+(m213.CACHE / "aaaa_throttle.htm").write_bytes(THROTTLE)
+(m213.CACHE / "bbbb_good.htm").write_bytes(FILING)
+(m213.CACHE / "cccc_api.json").write_bytes(b'{"filings": {"recent": {}}}')
+(m213.CACHE / "dddd_tiny.htm").write_bytes(b"<html>short</html>")
+found = m213.quarantine_bad_cache()
+names = sorted(n for n, _ in found)
+q_ok = (names == ["aaaa_throttle.htm", "dddd_tiny.htm"]
+        and (m213.QUARANTINE / "aaaa_throttle.htm").exists()
+        and (m213.CACHE / "bbbb_good.htm").exists()
+        and (m213.CACHE / "cccc_api.json").exists())
+print(f"  {'PASS' if q_ok else 'FAIL'} | quarantined {names}; filing and JSON kept")
+results.append(q_ok)
+
+# an abort still writes the partial log and an ABORTED section
+print(f"\n{'='*70}\nTEST: 213 abort writes a partial log (211 safe_run_pull pattern)\n{'='*70}")
+m213.OUT_LOG, m213.OUT_CIKS, m213.RUN_LOG = (TMP / "vlog.csv", TMP / "vciks.txt",
+                                             TMP / "vrun.md")
+m213.ROWS.clear()
+m213.ROWS.extend([
+    {"candidate_type": "a_subsidiary", "cik": 1, "org": "A", "verdict": "VERIFIED",
+     "parent_cik": 111, "reason": "named in Exhibit 21"},
+    {"candidate_type": "a_subsidiary", "cik": 2, "org": "B", "verdict": "UNVERIFIED",
+     "parent_cik": "", "reason": "not listed"}])
+m213.LAST["row"] = "gate_exclusion cik 1308161 Fox Entertainment Group"
+
+
+def boom():
+    raise RuntimeError("HTTP 503 after 5 attempts: https://www.sec.gov/x")
+
+
+try:
+    m213.safe_main(runner=boom)
+    aborted = None
+except SystemExit as e:
+    aborted = str(e)
+vlog = pd.read_csv(TMP / "vlog.csv") if (TMP / "vlog.csv").exists() else pd.DataFrame()
+runmd = (TMP / "vrun.md").read_text(encoding="utf-8") if (TMP / "vrun.md").exists() else ""
+abort_ok = (aborted and "503" in aborted and len(vlog) == 2 and "## ABORTED" in runmd
+            and "Fox Entertainment Group" in runmd)
+print(f"  {'PASS' if abort_ok else 'FAIL'} | exit: {str(aborted)[:48]}")
+print(f"  -> partial log rows: {len(vlog)} | ABORTED section: {'## ABORTED' in runmd} | "
+      f"last row recorded: {'Fox Entertainment Group' in runmd}")
+results.append(bool(abort_ok))
+
+m213.ROWS.clear()
+m213.CACHE, m213.MIN_INTERVAL, m213.BACKOFF_BASE = _sv["cache"], _sv["mi"], _sv["bb"]
+m213.urlopen, m213.QUARANTINE = _sv["uo"], _sv["q"]
+m213.OUT_LOG, m213.OUT_CIKS, m213.RUN_LOG = _sv["ol"], _sv["oc"], _sv["rl"]
+if _ua_prev is None:
+    _os2.environ.pop(m213.UA_ENV, None)
+else:
+    _os2.environ[m213.UA_ENV] = _ua_prev
+
 print(f"\n{'='*70}")
 print(f"RESULT: {sum(results)}/{len(results)} tests passed")
 print("=" * 70)

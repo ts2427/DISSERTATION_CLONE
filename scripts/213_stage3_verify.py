@@ -77,9 +77,33 @@ OUT_LOG = Path("outputs/rebuild_v4/213_verification_log.csv")
 OUT_CIKS = Path("outputs/rebuild_v4/213_extra_ciks.txt")
 
 UA_ENV = "SEC_EDGAR_USER_AGENT"
-MIN_INTERVAL = 0.11          # <= 10 requests/second, with headroom
+MIN_INTERVAL = 0.20          # <= 5 requests/second (halved after a 503 in run 2)
 WINDOW_DAYS = 548            # 18 months either side of breach_date
 SUCCESSOR_SCAN_CAP = 40      # bound the 8-K scan; succession forms are tried first
+
+RETRY_CODES = {429, 503}     # throttling and "service unavailable" are transient
+MAX_ATTEMPTS = 5
+BACKOFF_BASE = 2.0           # 2, 4, 8, 16 seconds, unless Retry-After says otherwise
+MIN_DOC_BYTES = 2048         # below this, a non-JSON response is not a filing
+
+QUARANTINE = Path("Data/edgar/ex21_cache_v4_quarantine")
+RUN_LOG = Path("outputs/rebuild_v4/213_run_log.md")
+
+# Text that means SEC served an error or throttle page rather than a document. These can
+# come back with HTTP 200, so the STATUS CODE IS NOT ENOUGH - the body has to be checked.
+# A cached throttle page is worse than a failed run: it looks like a document forever, and
+# silently produces a false UNVERIFIED on every future run.
+ERROR_MARKERS = (
+    "request rate threshold exceeded",
+    "undeclared automated tool",
+    "your request originates from an undeclared automated tool",
+    "service unavailable",
+    "too many requests",
+    "sec.gov | request rate threshold exceeded",
+)
+
+ROWS = []                    # completed verification rows, for the partial log on abort
+LAST = {"row": "(none reached)"}
 
 # `ex[-_ ]?21` and NOT `ex.?-?\s?21`. The wildcard let the "1" of "ex121" be consumed, so
 # dex121.htm (Exhibit 12.1, ratio of earnings to fixed charges) matched as an Exhibit 21.
@@ -140,34 +164,116 @@ def cache_path(url):
     return CACHE / f"{h}_{tail}"
 
 
-def fetch(url):
-    """Cached, rate-limited GET. Returns bytes, or None if the document is absent.
+def looks_like_error(data):
+    """Is this an SEC error/throttle page rather than a document?"""
+    if data is None:
+        return True
+    head = data[:4096].decode("utf-8", "replace").lower()
+    return any(mk in head for mk in ERROR_MARKERS)
 
-    Tests replace this wholesale; every network path in the script goes through it.
-    """
-    p = cache_path(url)
-    if p.exists():
-        return p.read_bytes()
+
+def retry_after(err):
+    """Retry-After in seconds, if the server named one."""
+    try:
+        raw = err.headers.get("Retry-After") if err.headers else None
+    except Exception:
+        raw = None
+    if not raw:
+        return None
+    try:
+        return max(0.0, float(str(raw).strip()))
+    except ValueError:
+        return None
+
+
+def _throttle():
     dt = time.time() - _last_call[0]
     if dt < MIN_INTERVAL:
         time.sleep(MIN_INTERVAL - dt)
     _last_call[0] = time.time()
-    req = Request(url, headers={"User-Agent": user_agent()})
-    try:
-        with urlopen(req, timeout=30) as r:
-            data = r.read()
-    except HTTPError as e:
-        if e.code == 404:
-            return None
-        if e.code == 403:
-            sys.exit(f"HTTP 403 from SEC for {url}\nThe SEC WAF blocks by IP address. "
-                     f"Stopping rather than recording this as a failure to verify.")
-        raise
-    except URLError as e:
-        sys.exit(f"network error for {url}: {e}")
-    CACHE.mkdir(parents=True, exist_ok=True)
-    p.write_bytes(data)
-    return data
+
+
+def fetch(url):
+    """Cached, rate-limited, retrying GET. -> bytes, or None if the document is absent.
+
+    Run 2 died on a bare HTTP 503 raised straight out of urlopen. 429 and 503 are the
+    server asking for a pause, not a verdict, so they are retried with exponential
+    backoff and Retry-After honoured.
+
+    ONLY a 200 whose body is not an error page is ever written to the cache. Caching a
+    throttle page would convert a transient outage into a permanent false UNVERIFIED.
+    """
+    p = cache_path(url)
+    if p.exists():
+        return p.read_bytes()
+    last = ""
+    for attempt in range(1, MAX_ATTEMPTS + 1):
+        _throttle()
+        req = Request(url, headers={"User-Agent": user_agent()})
+        wait = None
+        try:
+            with urlopen(req, timeout=30) as r:
+                status = getattr(r, "status", None) or getattr(r, "code", 200)
+                data = r.read()
+            if status != 200:
+                last = f"HTTP {status}"
+                wait = BACKOFF_BASE ** attempt
+            elif looks_like_error(data):
+                # 200 with a throttle page in the body: the dangerous case.
+                last = "HTTP 200 carrying an SEC error/throttle page"
+                wait = BACKOFF_BASE ** attempt
+            else:
+                CACHE.mkdir(parents=True, exist_ok=True)
+                p.write_bytes(data)
+                return data
+        except HTTPError as e:
+            if e.code == 404:
+                return None
+            if e.code == 403:
+                sys.exit(f"HTTP 403 from SEC for {url}\nThe SEC WAF blocks by IP address. "
+                         f"Stopping rather than recording this as a failure to verify.")
+            if e.code not in RETRY_CODES:
+                raise
+            last = f"HTTP {e.code}"
+            wait = retry_after(e) or BACKOFF_BASE ** attempt
+        except URLError as e:
+            last = f"network error: {e}"
+            wait = BACKOFF_BASE ** attempt
+        if attempt >= MAX_ATTEMPTS:
+            break
+        print(f"    {last} for {url.rsplit('/', 1)[-1]}; "
+              f"retry {attempt}/{MAX_ATTEMPTS - 1} in {wait:.1f}s", flush=True)
+        time.sleep(wait)
+    raise RuntimeError(f"{last} after {MAX_ATTEMPTS} attempts: {url}")
+
+
+def quarantine_bad_cache(move=True):
+    """Move any cached SEC error/throttle page out of the cache. -> list of (name, why).
+
+    A run that cached a throttle page produces false UNVERIFIEDs that no amount of
+    re-running will fix, because the bad bytes are served from disk forever.
+    """
+    found = []
+    if not CACHE.exists():
+        return found
+    for p in sorted(CACHE.iterdir()):
+        if not p.is_file():
+            continue
+        data = p.read_bytes()
+        try:
+            json.loads(data)
+            continue                      # a valid API response
+        except Exception:
+            pass
+        if looks_like_error(data):
+            found.append((p.name, "SEC error/throttle page"))
+        elif len(data) < MIN_DOC_BYTES:
+            found.append((p.name, f"non-JSON and only {len(data)} bytes; not a filing"))
+    if move and found:
+        QUARANTINE.mkdir(parents=True, exist_ok=True)
+        for name, _ in found:
+            (CACHE / name).replace(QUARANTINE / name)
+    return found
 
 
 def submissions(cik):
@@ -185,11 +291,21 @@ def submissions(cik):
         d = fetch(f"https://data.sec.gov/submissions/{extra.get('name','')}")
         if d:
             frames.append(pd.DataFrame(json.loads(d.decode("utf-8", "replace"))))
-    frames = [f for f in frames if f is not None and not f.empty]
-    if not frames:
+    # Trim to the columns actually used and drop empty / all-NA entries BEFORE concat.
+    # Submission shards have ragged schemas, and concatenating a frame whose columns are
+    # entirely NA is deprecated.
+    keep = ("form", "accessionNumber", "filingDate", "primaryDocument")
+    trimmed = []
+    for f in frames:
+        if f is None or f.empty:
+            continue
+        g = f[[c for c in keep if c in f.columns]].dropna(how="all")
+        if not g.empty:
+            trimmed.append(g)
+    if not trimmed:
         return pd.DataFrame()
-    df = pd.concat(frames, ignore_index=True)
-    for col in ("form", "accessionNumber", "filingDate", "primaryDocument"):
+    df = pd.concat(trimmed, ignore_index=True)
+    for col in keep:
         if col not in df.columns:
             df[col] = ""
     df["form"] = df["form"].astype(str).str.upper().str.strip()
@@ -455,53 +571,100 @@ def main():
     tick2cik = ticker_to_cik()
     base_ciks, _, _ = M211.load_base_ciks()
 
+    bad = quarantine_bad_cache()
     print(f"stage 3 worklist: {len(cand)} rows")
     print(f"already pulled  : {len(base_ciks)} CIKs")
     print(f"cache           : {CACHE}")
+    if bad:
+        print(f"QUARANTINED     : {len(bad)} bad cache file(s) -> {QUARANTINE}")
+        for name, why in bad:
+            print(f"    {name}  ({why})")
+    else:
+        print("cache scan      : no error or throttle pages found")
     print()
 
-    rows = []
     for _, r in cand.iterrows():
+        LAST["row"] = (f"{r['candidate_type']} cik {r['cik']} {r['org']} "
+                       f"breach_date {r.get('breach_date', '')}")
         pcik, pname, how = resolve_parent(r, noms, pn2cik, tick2cik)
         if r["candidate_type"] == "b_successor_cik":
             res = verify_successor(int(r["cik"]), str(r["org"]), pcik, pname)
         else:
             res = verify_subsidiary(pcik, str(r["org"]),
                                     pd.to_datetime(r.get("breach_date"), errors="coerce"))
-        rows.append({"candidate_type": r["candidate_type"], "cik": r["cik"],
+        ROWS.append({"candidate_type": r["candidate_type"], "cik": r["cik"],
                      "org": r["org"], "breach_date": r.get("breach_date", ""),
                      "candidate": r.get("candidate", ""), "parent_cik": pcik or "",
                      "parent_name": pname, "cik_resolved_by": how, **res})
         print(f"  {res['verdict']:<10} {r['candidate_type']:<21} {str(r['org'])[:38]:<38} "
               f"{res['reason'][:60]}")
 
-    log = pd.DataFrame(rows)
-    OUT_LOG.parent.mkdir(parents=True, exist_ok=True)
-    log.to_csv(OUT_LOG, index=False)
-
-    ver = log[log["verdict"] == "VERIFIED"]
-    new = sorted({int(c) for c in pd.to_numeric(ver["parent_cik"], errors="coerce")
-                  .dropna()} - set(base_ciks))
-    stamp = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    OUT_CIKS.write_text(
-        "\n".join([f"# REBUILD V4 Stage 3 - verified CIKs not among the "
-                   f"{len(base_ciks)} already pulled",
-                   f"# generated {stamp} by scripts/213_stage3_verify.py",
-                   "# feed to: python scripts/211_wrds_pull_v4.py --extra-ciks "
-                   f"{OUT_CIKS.as_posix()}"] + [str(c) for c in new]) + "\n",
-        encoding="utf-8")
-
+    write_outputs(base_ciks)
+    log = pd.DataFrame(ROWS)
     print()
     print(log["verdict"].value_counts().to_string())
     print()
     print(pd.crosstab(log["candidate_type"], log["verdict"]).to_string())
     print()
     print(f"WROTE {OUT_LOG}")
-    print(f"WROTE {OUT_CIKS}  ({len(new)} CIK(s) not already pulled)")
+    print(f"WROTE {OUT_CIKS}")
     print()
     print("UNVERIFIED rows stay EXCLUDED, ncusip_name_mismatch included.")
     return 0
 
 
+def write_outputs(base_ciks, aborted=None):
+    """Always writes whatever ROWS holds. A partial log beats no log."""
+    OUT_LOG.parent.mkdir(parents=True, exist_ok=True)
+    log = pd.DataFrame(ROWS)
+    log.to_csv(OUT_LOG, index=False)
+    stamp = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    new = []
+    if len(log):
+        ver = log[log["verdict"] == "VERIFIED"]
+        new = sorted({int(c) for c in
+                      pd.to_numeric(ver.get("parent_cik"), errors="coerce").dropna()}
+                     - set(base_ciks or []))
+    OUT_CIKS.write_text(
+        "\n".join([f"# REBUILD V4 Stage 3 - verified CIKs not among the "
+                   f"{len(base_ciks or [])} already pulled",
+                   f"# generated {stamp} by scripts/213_stage3_verify.py"
+                   + ("  [PARTIAL - RUN ABORTED]" if aborted else ""),
+                   "# feed to: python scripts/211_wrds_pull_v4.py --extra-ciks "
+                   f"{OUT_CIKS.as_posix()}"] + [str(c) for c in new]) + "\n",
+        encoding="utf-8")
+    lines = [f"# REBUILD V4 — Stage 3 verification run log", "",
+             f"- finished (UTC): {stamp}", f"- rows written: {len(log)}"]
+    if aborted:
+        lines += ["", "## ABORTED", "",
+                  f"**{aborted}**", "",
+                  f"- last row reached: `{LAST['row']}`",
+                  f"- rows completed before the abort: {len(log)}",
+                  "- the log above is PARTIAL; the remaining candidates were never "
+                  "attempted and are neither VERIFIED nor UNVERIFIED",
+                  "- nothing downstream should treat this run as complete"]
+    else:
+        lines += ["", "## COMPLETE", "", "All worklist rows were attempted."]
+    RUN_LOG.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return len(log)
+
+
+def safe_main(runner=None):
+    """Any failure still writes the partial log and an ABORTED section (cf. 211)."""
+    runner = runner or main
+    try:
+        return runner()
+    except BaseException as e:                       # SystemExit included
+        note = f"unhandled {type(e).__name__}: {e}"
+        if ROWS:
+            write_outputs(None, aborted=note)
+            print(f"\nABORTED after {len(ROWS)} row(s). Partial log written to {OUT_LOG}")
+            print(f"Run log with the ABORTED section: {RUN_LOG}")
+            print(f"Last row reached: {LAST['row']}")
+        if isinstance(e, SystemExit):
+            raise
+        sys.exit(note)
+
+
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(safe_main())
