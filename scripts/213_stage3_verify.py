@@ -156,10 +156,42 @@ SUCCESSION_RE = re.compile(
 # Dropped from both sides before comparing, on top of M212's legal-suffix tokens.
 STOPWORDS = {"OF", "AND", "FOR"}
 
+# Entity-form suffixes, for EXHIBIT 21 matching only. Everything else - HOLDINGS, GROUP,
+# INTERNATIONAL, VENTURES, FINANCIAL - is a NAME token.
+#
+# M212.LEGAL_TOKENS is deliberately NOT used here and is NOT modified. Stage 2 needs it to
+# equate a CRSP name with a PRC org string, where dropping HOLDINGS is right. Inside an
+# Exhibit 21 it is wrong: it made "Xerox Corporation" and "Xerox Holdings Corporation"
+# normalise identically to [XEROX], so run 4 verified Xerox on its own parent's line, and
+# would equally have accepted Xerox AG, Xerox Limited or Xerox Holdings, Inc.
+ENTITY_FORMS = {
+    "INC", "INCORPORATED", "CORP", "CORPORATION", "CO", "COMPANY", "LLC", "LLP", "LP",
+    "LTD", "LIMITED", "PLC", "AG", "SA", "NV", "AB", "AS", "GMBH", "BV", "SARL", "SRL",
+    "SPA", "KK", "PTY",
+}
+FORM_CANON = {"INCORPORATED": "INC", "CORPORATION": "CORP", "COMPANY": "CO",
+              "LIMITED": "LTD"}
+
 # Leading numbering or bullets on an Exhibit 21 line: "1.", "(12)", "-", "*". Deliberately
 # requires a digit to be followed by "." or ")" so that "21st Century Fox Film Corporation"
 # keeps its leading 21.
 LEAD_RE = re.compile(r"^\s*(?:[-–—•*·]+\s*|\(?\d{1,3}[.)]\s+)")
+
+# A QUOTED parenthetical defined term: ("SBG"), (the "Company"), (“ SBG ”).
+ALIAS_RE = re.compile(
+    r"[\(\[]\s*(?:the\s+)?[\"“”‘’']\s*"
+    r"([A-Za-z][A-Za-z0-9 .&/'-]{0,38}?)\s*[\"“”‘’']\s*[\)\]]",
+    re.I)
+# "FULL NAME followed by a parenthetical" means ADJACENCY, not "somewhere earlier in the
+# paragraph". At 200 the Sinclair filing also adopted the agreement's defined term
+# ("Share Exchange Agreement") as an alias for the COMPANY, because the company's name
+# happened to sit inside the lookback, and the verification then rested on that.
+#
+# Measured on that filing, the minimum lookback at which each term still sees the full
+# name: SBG 60, Share Exchange Agreement 140, New Sinclair 210, Other Assets 230, and the
+# other 13 defined terms never. 100 sits in the middle of the 60 -> 140 gap.
+ALIAS_WINDOW = 100
+GENERIC_ALIASES = {"COMPANY", "REGISTRANT", "ISSUER", "WE", "US", "THE COMPANY"}
 
 TOKEN_RE = re.compile(r"[A-Za-z0-9]+")
 
@@ -456,16 +488,22 @@ def norm213(text):
     return [t for t in M212.norm_tokens(text) if t not in STOPWORDS]
 
 
-def norm_spans(text):
-    """norm213's tokens, each carrying its (start, end) offset in `text`.
+def _raw_tokens(text):
+    return [m.group(0).upper() for m in TOKEN_RE.finditer(str(text))]
 
-    Replays M212.norm_tokens exactly - drop legal suffixes, join runs of single letters,
-    then drop stopwords - while keeping offsets, so the boundary test can look at the RAW
-    line. Deriving the token list from these spans rather than calling norm213 separately
-    guarantees the two can never drift apart.
-    """
+
+def ex21_tokens(text):
+    """NAME tokens for Exhibit 21 matching: entity forms and stopwords removed."""
+    toks = M212.join_initial_runs(_raw_tokens(text))
+    return [t for t in toks if t not in ENTITY_FORMS and t not in STOPWORDS]
+
+
+def ex21_spans(text):
+    """ex21_tokens, each carrying its (start, end) offset, so the boundary test can look
+    at the RAW line. Single-letter runs are joined FIRST, so "A/S" becomes AS and is then
+    recognised as an entity form. Deriving the token list from these spans rather than
+    from a second call guarantees the two cannot drift apart."""
     toks = [(m.group(0).upper(), m.start(), m.end()) for m in TOKEN_RE.finditer(str(text))]
-    toks = [t for t in toks if t[0] not in M212.LEGAL_TOKENS]
     out, run = [], []
     for t in toks:
         if len(t[0]) == 1:
@@ -477,7 +515,13 @@ def norm_spans(text):
         out.append(t)
     if run:
         out.append(("".join(r[0] for r in run), run[0][1], run[-1][2]))
-    return [t for t in out if t[0] not in STOPWORDS]
+    return [t for t in out if t[0] not in ENTITY_FORMS and t[0] not in STOPWORDS]
+
+
+def entity_forms(text):
+    """Canonicalised entity-form suffixes present in `text`. INC == INCORPORATED etc."""
+    toks = M212.join_initial_runs(_raw_tokens(text))
+    return {FORM_CANON.get(t, t) for t in toks if t in ENTITY_FORMS}
 
 
 def boundary_ok(s, end):
@@ -493,10 +537,10 @@ def boundary_ok(s, end):
         return True, "end of line"
     if DELIM_RE.match(rest):
         return True, "delimiter"
-    m = TOKEN_RE.search(s, end)          # the next RAW token, legal tokens retained
+    m = TOKEN_RE.search(s, end)          # the next RAW token, entity forms retained
     nxt = m.group(0).upper() if m else ""
-    if nxt in M212.LEGAL_TOKENS:
-        return True, f"next token {nxt} is a legal suffix"
+    if nxt in ENTITY_FORMS:
+        return True, f"next token {nxt} is an entity-form suffix"
     return False, nxt
 
 
@@ -522,19 +566,72 @@ def line_names(name, line):
     Dell Inc. -> [DELL], Aon Corporation PLC -> [AON]. So the match must also end at a
     name boundary: see boundary_ok.
     """
-    nt = norm213(name)
+    nt = ex21_tokens(name)
     if not nt:
         return False, ""
+    want = entity_forms(name)
     s = LEAD_RE.sub("", str(line))
-    spans = norm_spans(s)
+    spans = ex21_spans(s)
     lt = [t for t, _, _ in spans]
-    if lt[:len(nt)] == nt and boundary_ok(s, spans[len(nt) - 1][2])[0]:
-        return True, " ".join(nt)
+    if lt[:len(nt)] == nt:
+        end = spans[len(nt) - 1][2]
+        # the name must end here, AND if it carries an entity form the line must carry an
+        # equivalent one after the match - Xerox AG and Xerox Limited are not Xerox Corp
+        if boundary_ok(s, end)[0] and (not want or (entity_forms(s[end:]) & want)):
+            return True, " ".join(nt)
     # Retained from the previous rule so a spaceless source name still matches its spaced
-    # listing ("TimeWarner" vs "Time Warner Inc."). Equality, not prefix.
+    # listing ("TimeWarner" vs "Time Warner Inc."). Equality, not prefix - and subject to
+    # the SAME entity-form condition, or it silently reopens the hole the prefix branch
+    # just closed: once entity forms are dropped, "Xerox Corporation", "Xerox AG",
+    # "Xerox Limited", "Xerox GmbH" and "Xerox S.p.A." all reduce to [XEROX] and their
+    # concatenations are identical. TimeWarner carries no entity form, so it is unaffected.
     ca = "".join(nt)
-    if ca and ca == "".join(lt):
+    if ca and ca == "".join(lt) and (not want or (entity_forms(s) & want)):
         return True, ca
+    return False, ""
+
+
+def document_aliases(name, lines):
+    """Defined terms this DOCUMENT introduces for `name`. -> set of alias strings.
+
+    A filing names a party once and then uses a defined term: "the company formerly known
+    as Sinclair Broadcast Group, Inc., a Maryland corporation ("SBG")", after which every
+    operative sentence says SBG. The succession sentence therefore never contains the full
+    name, and requiring both in one passage can never be satisfied.
+
+    Three constraints keep this narrow. The term must be QUOTED - "(Commission File
+    Number)" and "(b)" also follow the full name in these filings, and would otherwise
+    become aliases for it. The full name must pass passage_names within ALIAS_WINDOW
+    characters before the parenthetical, so an alias defined for a different company does
+    not transfer. And that window is deliberately SHORT, because a filing defines many
+    terms near its own name - an agreement, a share class, a date - and a generous window
+    adopts all of them as aliases for the company. Aliases are scoped to the document
+    that defines them.
+
+    Extraction runs on the JOINED text because to_lines splits these parentheticals: the
+    name ends one passage and the quoted term begins the next.
+    """
+    joined = " ".join(lines)
+    out = set()
+    for mm in ALIAS_RE.finditer(joined):
+        term = mm.group(1).strip()
+        if not term or term.upper() in GENERIC_ALIASES:
+            continue
+        if passage_names(name, joined[max(0, mm.start() - ALIAS_WINDOW):mm.start()])[0]:
+            out.add(term)
+    return out
+
+
+def passage_names_aliased(name, passage, aliases=()):
+    """passage_names, plus this document's defined terms for the same firm."""
+    ok, ev = passage_names(name, passage)
+    if ok:
+        return True, ev
+    ptoks = set(norm213(passage))
+    for a in aliases:
+        at = set(norm213(a))
+        if at and at <= ptoks:
+            return True, f"defined term {a!r}"
     return False, ""
 
 
@@ -562,10 +659,10 @@ def match_line(name, lines):
     return None, None
 
 
-def match_passage(name, passages):
+def match_passage(name, passages, aliases=()):
     """First passage naming `name` AND carrying succession language. -> (passage, ev)."""
     for p in passages:
-        ok, ev = passage_names(name, p)
+        ok, ev = passage_names_aliased(name, p, aliases)
         if ok and SUCCESSION_RE.search(p):
             return p, ev
     return None, None
@@ -708,7 +805,9 @@ def verify_successor(cik_a, name_a, cik_b, name_b):
             raw = fetch(url)
             if raw is None:
                 continue
-            passage, ev = match_passage(other_name, to_lines(raw))
+            lines = to_lines(raw)
+            passage, ev = match_passage(other_name, lines,
+                                        document_aliases(other_name, lines))
             if passage:
                 return blank(verdict="VERIFIED",
                              reason=f"CIK {filer_cik} filing names {other_name!r} in a "

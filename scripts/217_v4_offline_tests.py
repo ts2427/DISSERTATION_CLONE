@@ -470,8 +470,18 @@ name_cases = [
      "the genuine Xerox entry must VERIFY"),
     ("Leidos, Inc.", "12. Leidos, Inc. — Delaware", True,
      "leading numbering must be stripped"),
-    ("Fox Entertainment Group", "Fox Entertainment Group Holdings Inc. — Delaware", True,
-     "a longer entry starting with the name must VERIFY"),
+    ("Fox Entertainment Group", "Fox Entertainment Group Holdings Inc. — Delaware", False,
+     "HOLDINGS is a NAME token, so this is a different entity (was True pre-ruling)"),
+    # entity-form ruling: HOLDINGS/GROUP are name tokens; only the narrow form set is a
+    # suffix, and the line's form must match the subsidiary's
+    ("Xerox Corporation", "Xerox Holdings Corporation", False,
+     "run-4 FP: the PARENT must FAIL"),
+    ("Xerox Corporation", "Xerox AG", False, "entity form AG != CORP"),
+    ("Xerox Corporation", "Xerox Limited", False, "entity form LTD != CORP"),
+    ("Xerox Corporation", "Xerox Holdings, Inc.", False, "HOLDINGS is a name token"),
+    ("Xerox Corporation", "Xerox GmbH", False, "entity form GMBH != CORP"),
+    ("Xerox Corporation", "Xerox S.p.A.", False, "entity form SPA != CORP"),
+    ("Xerox Corporation", "Xerox Ventures LLC", False, "VENTURES is a name token"),
     # boundary rule: these names reduce to ONE token once legal suffixes are dropped,
     # so a bare prefix would match any longer firm beginning with that word
     ("Xerox Corporation", "Xerox Financial Services LLC — Delaware", False,
@@ -536,6 +546,67 @@ print(f"  {'PASS' if p6 is None else 'FAIL'} | run-3 FP: 'successor TRUSTEE' ind
 print(f"  {'PASS' if p7 is None else 'FAIL'} | run-3 FP: Sinclair credit-agreement "
       f"exhibit index -> {p7}")
 results.append(succ_ok)
+
+print(f"\n{'='*70}\nTEST: 213 defined-term aliases (the Sinclair split)\n{'='*70}")
+SBG_DEF = ('As previously disclosed, on April 3, 2023, the company formerly known as '
+           'Sinclair Broadcast Group, Inc., a Maryland corporation (“ SBG ”), entered '
+           'into an Agreement of Share Exchange and Plan of Reorganization.')
+SBG_OPERATIVE = ('that, following the Share Exchange, New Sinclair became the successor '
+                 'issuer to SBG. More specifically, pursuant to Exchange Act Rule '
+                 '12g-3(a), the New Sinclair Class A Common Shares are deemed registered.')
+SBG_DOC = [SBG_DEF, SBG_OPERATIVE]
+NAME = "Sinclair Broadcast Group, Inc."
+
+al = m213.document_aliases(NAME, SBG_DOC)
+a1 = "SBG" in al
+p, ev = m213.match_passage(NAME, SBG_DOC, al)
+a2 = (p == SBG_OPERATIVE)
+print(f"  {'PASS' if a1 else 'FAIL'} | alias extracted from the joined text: {sorted(al)}")
+print(f"  {'PASS' if a2 else 'FAIL'} | operative passage VERIFIES via alias ({ev})")
+
+# without the alias the same passage must still fail - it never names the firm
+p0, _ = m213.match_passage(NAME, [SBG_OPERATIVE])
+a3 = p0 is None
+print(f"  {'PASS' if a3 else 'FAIL'} | same passage WITHOUT aliases -> {p0}")
+
+# an alias defined for a different company must not transfer
+OTHER = ['Acme Unrelated Industries, Inc., a Delaware corporation (“ACME”), did things.',
+         'New Acme became the successor issuer to ACME pursuant to Rule 12g-3(a).']
+a4 = not m213.document_aliases(NAME, OTHER)
+p4, _ = m213.match_passage(NAME, OTHER, m213.document_aliases(NAME, OTHER))
+a4 = a4 and p4 is None
+print(f"  {'PASS' if a4 else 'FAIL'} | alias defined for another firm does not transfer")
+
+# generic defined terms never become aliases
+GEN = ['Sinclair Broadcast Group, Inc., a Maryland corporation (the “Company”), reported.',
+       'the Company became the successor issuer pursuant to Rule 12g-3(a).']
+gal = m213.document_aliases(NAME, GEN)
+p5, _ = m213.match_passage(NAME, GEN, gal)
+a5 = ("Company" not in gal) and p5 is None
+print(f"  {'PASS' if a5 else 'FAIL'} | generic term never an alias: {sorted(gal)} -> {p5}")
+
+# unquoted parentheticals are not defined terms
+UNQ = ['Sinclair Broadcast Group, Inc. (Commission File Number 001-12925) filed this.',
+       'Commission File Number was the successor issuer pursuant to Rule 12g-3(a).']
+a6 = not m213.document_aliases(NAME, UNQ)
+print(f"  {'PASS' if a6 else 'FAIL'} | unquoted parenthetical is not an alias: "
+      f"{sorted(m213.document_aliases(NAME, UNQ))}")
+
+# a LATER defined term in the same sentence must not be adopted as the company's alias.
+# This is the real Sinclair wording: at a 200-char window the agreement's term became an
+# alias for the company and the verification rested on it.
+FALSE_ALIAS = [
+    'As previously disclosed, on April 3, 2023, the company formerly known as Sinclair '
+    'Broadcast Group, Inc., a Maryland corporation (“SBG”), entered into an Agreement of '
+    'Share Exchange and Plan of Reorganization, dated as of April 3, 2023, by and among '
+    'the parties thereto (the “Share Exchange Agreement”), providing for the transaction.',
+    'The purpose of the transactions contemplated by the Share Exchange Agreement was to '
+    'effect a holding company reorganization.']
+fal = m213.document_aliases(NAME, FALSE_ALIAS)
+a7 = (fal == {"SBG"})
+print(f"  {'PASS' if a7 else 'FAIL'} | only the adjacent term is an alias: {sorted(fal)} "
+      f"(must be ['SBG'], NOT 'Share Exchange Agreement')")
+results.append(all([a1, a2, a3, a4, a5, a6, a7]))
 
 print(f"\n{'='*70}\nTEST: 213 Exhibit 21 selection by DOCUMENT TYPE\n{'='*70}")
 JBH_CIK, JBH_ACC = 728535, "0001437749-20-004119"
