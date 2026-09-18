@@ -66,22 +66,44 @@ repo.
 **CIK list:** every `final_cik` in `CANONICAL_V3` (489 events), plus every nominated
 parent CIK in `outputs/essay3_q2/crsp_drop_nominations.csv`.
 
+**AMENDED 2026-09-18 — the CUSIP route.** The CCM route is unavailable on this
+subscription. Run 1 failed with `InsufficientPrivilege: permission denied for schema
+crsp_a_ccm`, and `scripts/216` confirmed no gvkey→permno link table is reachable
+anywhere (`wrdssec` blocked too; the `wrdsapps.*link` tables are bond/short/FactSet/TAQ/
+patent bridges, not CCM). The `ccmxpf_lnkhist` and `wrdssec` pulls are **dropped** and
+`comp.security` added. Chain: **CIK → gvkey → CUSIP(8) → permno**.
+
 **Pulls,** each written to `Data/wrds_v4/`:
 
-1. `comp.company`, the whole table: gvkey, conm, cik, and any available date or status
-   fields.
-2. `crsp.ccmxpf_lnkhist`, the whole table: gvkey, lpermno, lpermco, linktype, linkprim,
-   linkdt, linkenddt.
-3. The WRDS SEC Analytics historical CIK–GVKEY link table, **if the subscription
-   includes it.** If it is unavailable, log that and continue.
-4. `crsp.stocknames` for every permno reached through steps 1–3: permno, namedt,
-   nameenddt, ticker, comnam, shrcd, exchcd.
-5. `crsp.dsf` for those permnos, from 2005-01-01 to the latest available date: permno,
-   date, ret, retx, prc, vol, shrout.
-6. `crsp.dsi` over the same range: date, vwretd, ewretd.
+1. `comp.company` filtered by CIK — `SELECT *`, so **`priusa` survives if present**
+   (Stage 2 uses it to pick the primary US issue). CIK is zero-padded to 10 characters,
+   confirmed against run 1 at 148/185 = 80%.
+2. `comp.security` filtered by the gvkeys step 1 reaches: gvkey, cusip, tic, exchg, plus
+   a derived `cusip8`.
+3. `crsp.stocknames` filtered by the **8-character** CUSIPs step 2 reaches, matched on
+   **both `ncusip` (historical) and `cusip` (header)**: permno, namedt, nameenddt,
+   ncusip, cusip, ticker, comnam, shrcd, exchcd.
+4. `crsp.dsf` for the permnos step 3 reaches, from 2005-01-01 to the latest available
+   date: permno, date, ret, retx, prc, vol, shrout.
+5. `crsp.dsi` over the same range: date, vwretd, ewretd.
+
+**Two traps the pull must be built around:**
+
+- **CUSIP length.** Compustat stores 9 characters including the check digit; CRSP stores
+  8. Matching 9 against 8 returns nothing and looks exactly like "these securities are
+  not in CRSP." Trim to `cusip[:8]`, uppercase, and log the trim with a sample.
+- **One company, several securities.** A gvkey can carry several issues. Hit rates are
+  measured as **distinct keys reached, never row counts**, or a one-to-many join reads
+  as over 100%.
+
+**Sentinels run the whole chain.** 1283699 T-Mobile, 732717 AT&T, 101830 Sprint must each
+reach a gvkey **and** a CUSIP **and** a permno; the abort names the step that broke.
+Checking only the gvkey step would let the CUSIP-length failure through silently, since
+`comp.company` would still look healthy.
 
 Write `outputs/rebuild_v4/211_pull_log.md` with the pull timestamp, the WRDS username
-(not the password), row counts, date ranges, and the sha256 of each file.
+(not the password), row counts, the hit rate at every step, the sentinel trace, date
+ranges, and the sha256 of each file.
 
 **Record the new CRSP end date.** If it extends past 2024-12-31, events previously lost
 to "past-extract" may enter; the Stage 5 ledger must show this.
@@ -92,18 +114,30 @@ to "past-extract" may enter; the Stage 5 ledger must show this.
 
 ## Stage 2 — Point-in-time linker (script 212)
 
+**AMENDED 2026-09-18 — the CUSIP route,** since no CCM link table is reachable.
+
 **Rule, applied identically to treated and control:**
 
-1. For each event, find `final_cik` → gvkey via `comp.company.cik`, then via the SEC
-   Analytics link table if it was pulled and the first step fails.
-2. Take the gvkey → permno link from `ccmxpf_lnkhist` where linktype ∈ {LU, LC},
-   linkprim ∈ {P, C}, and linkdt ≤ breach_date ≤ linkenddt. A missing linkenddt means
-   the link is ongoing.
-3. Require shrcd ∈ {10, 11} on breach_date in `stocknames`.
-4. Document the tie-break rule in the script header and the report.
+1. `final_cik` → gvkey via `comp.company.cik` (zero-padded 10-char).
+2. gvkey → **primary US issue**: use `comp.company.priusa` where present; otherwise take
+   all US common issues and **log that the fallback was used**, per event.
+3. issue → `cusip[:8]`, uppercased.
+4. `cusip8` → permno in `crsp.stocknames`, in this order:
+   a. **`ncusip` match** (historical CUSIP) where `namedt ≤ breach_date ≤ nameenddt`;
+   b. failing that, **header `cusip` match** with a names row valid on breach_date.
+5. Require `shrcd ∈ {10, 11}` on breach_date.
+6. Document the tie-break rule in the script header and the report.
 
-**Output fields:** permno, gvkey, `link_source` ∈ {auto_ccm, auto_seccik,
-manual_override}, link dates, and the comnam on breach_date.
+**Output fields:** permno, gvkey, cusip8, `link_source` ∈ {`cusip_ncusip`,
+`cusip_header`, `manual_override`}, the names-row validity dates, and the comnam on
+breach_date.
+
+**Validation against v3 (new, required).** For every event v3 linked, report whether v4
+reaches the same permno. List **every** disagreement with both permnos, the CRSP comnam
+on breach_date for each, and the reason. This is the load-bearing check on the route
+change: the CUSIP path is not the path v3 used, so agreement on the events v3 got right
+is the evidence that v4 is not quietly linking to different securities. Counts by treated
+and control.
 
 **Manual overrides.** Write `outputs/rebuild_v4/link_overrides.csv` with columns: cik,
 date range, permno, reason, and evidence (a citation). For each entry in the v3

@@ -1,87 +1,73 @@
 """
-REBUILD V4 — STAGE 1: WRDS PULL (run locally by Tim; never run in the sandbox)
+REBUILD V4 — STAGE 1: WRDS PULL, CUSIP ROUTE (run locally by Tim)
 =====================================================================================
-Pulls the point-in-time Compustat/CRSP link tables and daily returns needed by the
-Stage 2 linker (scripts/212). Every pull is FILTERED — by the CIK list, then by the
-gvkeys those CIKs reach, then by the permnos those gvkeys reach. No table is pulled
-whole.
+The CCM route is unavailable on this subscription. Run 1 died with
+
+    psycopg2.errors.InsufficientPrivilege: permission denied for schema crsp_a_ccm
+
+and scripts/216 confirmed that no gvkey -> permno link table is reachable anywhere
+(wrdssec is blocked too; the wrdsapps.*link tables are bond/short/FactSet/TAQ/patent
+bridges, not CCM). Reachable: comp.company, comp.security, crsp.stocknames,
+crsp.dsenames, crsp.msenames, crsp.dsf, crsp.dsi.
+
+So the chain is:
+
+    CIK -> gvkey            comp.company.cik   (zero-padded 10-char; confirmed run 1)
+    gvkey -> CUSIP          comp.security.cusip
+    CUSIP -> permno         crsp.stocknames, on ncusip (historical) or cusip (header)
+    permno -> daily         crsp.dsf
 
     python scripts/211_wrds_pull_v4.py                       # first pull
     python scripts/211_wrds_pull_v4.py --extra-ciks FILE     # later top-up
 
+TWO TRAPS THIS SCRIPT IS BUILT AROUND
+-------------------------------------
+1. CUSIP LENGTH. Compustat stores a 9-character CUSIP including the check digit; CRSP
+   stores 8. Matching 9 against 8 returns nothing and looks exactly like "these
+   securities are not in CRSP". Every CUSIP is trimmed to cusip[:8], uppercased, and
+   the trim is logged with a sample.
+2. ONE COMPANY, SEVERAL SECURITIES. A gvkey can carry several issues (share classes).
+   Hit rates are therefore measured as DISTINCT KEYS REACHED, never row counts, or a
+   one-to-many join reads as >100%.
+
 FAILS LOUDLY
 ------------
-A silent partial pull is the worst outcome here: Stage 2 would link a subset and the
-v3-to-v4 comparison would read as "events lost" when the truth is "rows never
-arrived." So every step asserts before continuing, and any failure writes the log and
-aborts with a nonzero exit:
+Each step asserts before the next begins; any failure writes the log and exits nonzero.
 
-  comp.company      hit rate (CIKs matched / CIKs requested) must be >= 50%;
-                    the sentinel CIKs below must each return a gvkey;
-                    empty result aborts
-  ccmxpf_lnkhist    empty result aborts; gvkey and permno reach reported
-  crsp.stocknames   empty result aborts; permno reach reported
-  crsp.dsf          empty result aborts; permno reach reported
-  crsp.dsi          empty result aborts (Stage 2's market adjustment depends on it)
+  comp.company      empty aborts; CIK hit rate must be >= 50%
+  comp.security     empty aborts; gvkey -> CUSIP hit rate reported
+  crsp.stocknames   empty aborts; CUSIP -> permno hit rate reported
+  crsp.dsf          empty aborts; permno -> daily hit rate reported
+  crsp.dsi          empty aborts (Stage 2's market adjustment needs it)
 
-Every hit rate is written to 211_pull_log.md, pass or fail.
+SENTINELS RUN THE WHOLE CHAIN. 1283699 T-Mobile, 732717 AT&T, 101830 Sprint must each
+reach a gvkey AND a CUSIP AND a permno. Checking only the gvkey step would let the
+CUSIP-length failure through silently, since comp.company would still look healthy.
+The abort names the step that broke. Skipped in top-up mode, where the CIK list is
+arbitrary.
 
-CIK LITERAL FORM
-----------------
-comp.company.cik is a character column. This script tries the zero-padded 10-character
-form first (Compustat's stored form) and, if that matches nothing at all, retries
-unpadded. The form that worked is logged. A wrong guess here would look exactly like
-"these firms are not in Compustat," which is why it retries rather than assumes.
+Any unhandled exception becomes an abort() so the log is always written (the run-1
+defect), and scrub() redacts password-shaped text from driver messages.
 
-SENTINELS
----------
-1283699 T-Mobile, 732717 AT&T, 101830 Sprint. All three are large listed registrants
-present in CANONICAL_V3 and known to have CRSP securities. If any returns no gvkey,
-the join key or the CIK form is wrong and the pull aborts rather than producing a
-plausible-looking subset. Skipped in top-up mode, where the CIK list is arbitrary.
-
-TOP-UP MODE (--extra-ciks)
---------------------------
-For Stage 3, once Exhibit 21 verifies additional parent CIKs. FILE is one CIK per
-line, or a CSV carrying a cik / final_cik / parent_cik / outcome_cik column. A top-up
-pulls ONLY those CIKs and writes files suffixed `_topup_<UTC stamp>`; write() refuses
-to clobber an existing path, and the log gains a new section rather than being
-replaced. Stage 2 reads the first pull plus any top-ups as a set.
-
-CREDENTIALS
------------
-Handled entirely by the `wrds` package against your local configuration. This script
-never accepts a password argument, never prints one, never writes one to disk, and
-never records one in the log. It logs only the username the connection reports.
-
-INPUTS (read-only)
-------------------
-    Data/processed/rebuild/CANONICAL_V3.csv            final_cik  (489 events)
-    outputs/essay3_q2/crsp_drop_nominations.csv        parent_cik (nominated parents)
+comp.company is pulled with SELECT *, so priusa survives if the subscription exposes
+it; Stage 2 uses it to pick the primary US issue. Whether it is present is logged.
 
 OUTPUTS
 -------
-    Data/wrds_v4/comp_company.csv          gvkey, conm, cik, + available date/status
-    Data/wrds_v4/ccmxpf_lnkhist.csv        gvkey, lpermno, lpermco, linktype,
-                                           linkprim, linkdt, linkenddt
-    Data/wrds_v4/sec_cik_gvkey.csv         SEC Analytics link table, IF subscribed
-    Data/wrds_v4/crsp_stocknames.csv       permno, namedt, nameenddt, ticker, comnam,
-                                           shrcd, exchcd
-    Data/wrds_v4/crsp_dsf.csv              permno, date, ret, retx, prc, vol, shrout
-    Data/wrds_v4/crsp_dsi.csv              date, vwretd, ewretd
-    outputs/rebuild_v4/211_pull_log.md     timestamp, username, row counts, hit rates,
-                                           date ranges, sha256 of every file
+    Data/wrds_v4/comp_company.csv       CIK -> gvkey, all columns (priusa if present)
+    Data/wrds_v4/comp_security.csv      gvkey -> cusip/tic/exchg, plus cusip8
+    Data/wrds_v4/crsp_stocknames.csv    permno, namedt, nameenddt, ncusip, cusip,
+                                        ticker, comnam, shrcd, exchcd
+    Data/wrds_v4/crsp_dsf.csv           permno, date, ret, retx, prc, vol, shrout
+    Data/wrds_v4/crsp_dsi.csv           date, vwretd, ewretd
+    outputs/rebuild_v4/211_pull_log.md  timestamp, username, hit rates, sentinel trace,
+                                        date ranges, sha256 of every file
 
-linktype/linkprim are deliberately NOT filtered in the pull. Stage 2 applies the LU/LC
-and P/C rules, so pulling every link row for our gvkeys keeps that decision auditable
-in scripts/212 rather than silently pre-filtering it here.
+RECORD THE CRSP END DATE. If max(dsf.date) runs past 2024-12-31, events the v3 chain
+lost as "past-extract" may re-enter; Stage 5 reports those separately from events
+recovered by relinking.
 
-RECORD THE CRSP END DATE. If max(dsf.date) extends past 2024-12-31, events the v3 chain
-lost as "past-extract" may re-enter; the Stage 5 ledger reports those separately from
-events recovered by relinking.
-
-READ-ONLY with respect to every v3 path. Writes only under Data/wrds_v4/ and
-outputs/rebuild_v4/.
+READ-ONLY with respect to every v3 path.
 """
 import argparse
 import hashlib
@@ -103,7 +89,6 @@ NOMS = Path("outputs/essay3_q2/crsp_drop_nominations.csv")
 SENTINEL_CIKS = {1283699: "T-Mobile", 732717: "AT&T", 101830: "Sprint"}
 MIN_HIT_RATE = 0.50
 
-# Module state. SUFFIX/TOPUP are set once by main(); tests set them directly.
 LOG = []
 HIT_RATES = []
 SUFFIX = ""
@@ -111,7 +96,6 @@ TOPUP = False
 
 
 def reset_state(suffix="", topup=False):
-    """Used by main() and by the offline tests so each run starts clean."""
     global LOG, HIT_RATES, SUFFIX, TOPUP
     LOG, HIT_RATES, SUFFIX, TOPUP = [], [], suffix, topup
 
@@ -119,6 +103,12 @@ def reset_state(suffix="", topup=False):
 def log(msg=""):
     print(msg, flush=True)
     LOG.append(str(msg))
+
+
+def scrub(text):
+    """Never let a credential reach the log."""
+    t = str(text)
+    return re.sub(r"(?i)\b(password|pwd|passwd)\s*=\s*\S+", r"\1=***REDACTED***", t)
 
 
 def flush_log():
@@ -136,24 +126,12 @@ def hit_rate_table():
     if not HIT_RATES:
         return
     log("")
-    log("## Hit rates")
+    log("## Hit rates (distinct keys reached, never row counts)")
     log("")
     log("| step | reached | requested | rate |")
     log("|---|---:|---:|---:|")
     for label, got, want, rate in HIT_RATES:
         log(f"| {label} | {got:,} | {want:,} | {100 * rate:.1f}% |")
-
-
-def scrub(text):
-    """Never let a credential reach the log.
-
-    A driver-level exception can carry the connection string, and psycopg2 messages
-    are pasted verbatim into the abort record. Redact anything password-shaped before
-    it is written.
-    """
-    t = str(text)
-    t = re.sub(r"(?i)\b(password|pwd|passwd)\s*=\s*\S+", r"\1=***REDACTED***", t)
-    return t
 
 
 def abort(msg):
@@ -170,17 +148,11 @@ def abort(msg):
 
 
 def safe_run_pull(db, ciks):
-    """run_pull, but ANY exception becomes an abort() so the log is always written.
-
-    Run 1 (2026-10) failed here: psycopg2 raised InsufficientPrivilege on
-    crsp.ccmxpf_lnkhist and the traceback bypassed abort() entirely, so no log was
-    produced and the only evidence was a half-written comp_company.csv. Anticipated
-    conditions are not the only way a pull dies.
-    """
+    """Any exception becomes an abort(), so the log is always written."""
     try:
         return run_pull(db, ciks)
     except SystemExit:
-        raise                      # abort() already flushed the log
+        raise
     except BaseException as e:
         abort(f"unhandled {type(e).__name__} during the pull: {scrub(e)}")
 
@@ -198,6 +170,21 @@ def check_hit_rate(label, got, want, minimum=None):
         abort(f"{label} hit rate {100 * rate:.1f}% is below the "
               f"{100 * minimum:.0f}% floor ({got} of {want})")
     return rate
+
+
+def check_sentinels(step, reached, cik_form):
+    """reached: cik -> set of keys at this step. Aborts naming the step that broke."""
+    if TOPUP:
+        return
+    missing = [f"{n} ({c})" for c, n in SENTINEL_CIKS.items()
+               if c in reached and not reached[c]]
+    if missing:
+        abort(f"sentinel CIKs reached no {step}: {', '.join(missing)} "
+              f"(CIK form: {cik_form}). The chain breaks at the {step} step - "
+              f"earlier steps looked healthy, which is exactly the failure a "
+              f"gvkey-only sentinel would have missed.")
+    ok = ", ".join(f"{SENTINEL_CIKS[c]}={len(v)}" for c, v in sorted(reached.items()))
+    log(f"  sentinels reached a {step}: {ok}")
 
 
 def sha256_file(p):
@@ -223,6 +210,7 @@ def int_list(vals):
 
 
 def fetch_chunked(db, sql_template, values, formatter):
+    """sql_template may contain {values} more than once; str.format fills every one."""
     frames = []
     for part in chunked(values):
         frames.append(db.raw_sql(sql_template.format(values=formatter(part))))
@@ -233,7 +221,6 @@ def fetch_chunked(db, sql_template, values, formatter):
 
 
 def write(df, name):
-    """Write to OUT_DATA/<stem><SUFFIX><ext>; never clobber."""
     OUT_DATA.mkdir(parents=True, exist_ok=True)
     p = OUT_DATA / f"{Path(name).stem}{SUFFIX}{Path(name).suffix}"
     if p.exists():
@@ -269,8 +256,12 @@ def read_extra_ciks(path):
     return out
 
 
+def cusip8(series):
+    """Compustat 9-char (with check digit) -> CRSP 8-char, uppercased."""
+    return series.astype(str).str.strip().str.upper().str[:8]
+
+
 def fetch_company(db, ciks):
-    """comp.company filtered by CIK. Zero-padded form first, then unpadded."""
     sql = "select * from comp.company where cik in ({values})"
     df = fetch_chunked(db, sql, [f"{c:010d}" for c in ciks], quote_list)
     form = "zero-padded 10-char"
@@ -283,73 +274,78 @@ def fetch_company(db, ciks):
 
 
 def run_pull(db, ciks):
-    """The six filtered pulls, with assertions. Takes an open db so tests can mock it."""
     files = []
+    cikset = set(ciks)
 
-    # ---- 1. comp.company --------------------------------------------------
-    log("## 1. comp.company (filtered by CIK)")
+    # ---- 1. comp.company: CIK -> gvkey -------------------------------------
+    log("## 1. comp.company (filtered by CIK)  ->  gvkey")
     comp, cik_form = fetch_company(db, ciks)
     require_nonempty(comp, "comp.company")
-    log(f"  CIK literal form recorded: {cik_form}")
     comp = comp.copy()
     comp["_cik_int"] = pd.to_numeric(comp.get("cik"), errors="coerce")
+    log(f"  priusa column present: {'priusa' in comp.columns}"
+        f"{'' if 'priusa' in comp.columns else '  (Stage 2 falls back to all US common issues)'}")
     matched = {int(c) for c in comp["_cik_int"].dropna()}
-    check_hit_rate("comp.company CIK -> gvkey", len(matched & set(ciks)), len(ciks),
-                   MIN_HIT_RATE)
-    if not TOPUP:
-        missing = [f"{n} ({c})" for c, n in SENTINEL_CIKS.items()
-                   if c in ciks and len(comp.loc[comp["_cik_int"] == c, "gvkey"].dropna()) == 0]
-        if missing:
-            abort("sentinel CIKs returned no gvkey: " + ", ".join(missing) +
-                  f" (CIK form tried: {cik_form}) - the join key or CIK form is wrong")
-        log(f"  sentinels OK: {', '.join(SENTINEL_CIKS.values())} each returned a gvkey")
+    check_hit_rate("CIK -> gvkey", len(matched & cikset), len(ciks), MIN_HIT_RATE)
+    gv_by_cik = {c: set(comp.loc[comp["_cik_int"] == c, "gvkey"].dropna())
+                 for c in SENTINEL_CIKS if c in cikset}
+    check_sentinels("gvkey", gv_by_cik, cik_form)
     gvkeys = sorted({g for g in comp["gvkey"].dropna()}) if "gvkey" in comp.columns else []
     log(f"  gvkeys reached: {len(gvkeys)}")
     files.append(write(comp.drop(columns=["_cik_int"]), "comp_company.csv"))
 
-    # ---- 2. ccmxpf_lnkhist ------------------------------------------------
-    log("\n## 2. crsp.ccmxpf_lnkhist (filtered by gvkey)")
-    lnk = fetch_chunked(
-        db,
-        "select gvkey, lpermno, lpermco, linktype, linkprim, linkdt, linkenddt "
-        "from crsp.ccmxpf_lnkhist where gvkey in ({values})",
-        gvkeys, quote_list) if gvkeys else pd.DataFrame()
-    require_nonempty(lnk, "crsp.ccmxpf_lnkhist")
-    log(f"  link rows: {len(lnk):,}   linktypes: {sorted(lnk['linktype'].dropna().unique())}")
-    check_hit_rate("gvkey -> CCM link", lnk["gvkey"].nunique(), len(gvkeys))
-    permnos = sorted({int(p) for p in lnk["lpermno"].dropna()})
-    log(f"  permnos reached: {len(permnos)}")
-    files.append(write(lnk, "ccmxpf_lnkhist.csv"))
+    # ---- 2. comp.security: gvkey -> CUSIP -----------------------------------
+    log("\n## 2. comp.security (filtered by gvkey)  ->  CUSIP")
+    sec = fetch_chunked(db, "select * from comp.security where gvkey in ({values})",
+                        gvkeys, quote_list) if gvkeys else pd.DataFrame()
+    require_nonempty(sec, "comp.security")
+    sec = sec.copy()
+    if "cusip" not in sec.columns:
+        abort("comp.security has no cusip column; the CUSIP route cannot proceed")
+    raw_len = sec["cusip"].astype(str).str.strip().str.len()
+    sec["cusip8"] = cusip8(sec["cusip"])
+    log(f"  security rows: {len(sec):,}   raw cusip lengths: "
+        f"{sorted(set(raw_len.dropna().astype(int)))} -> trimmed to 8")
+    sample = sec[["cusip", "cusip8"]].dropna().head(3).values.tolist()
+    log(f"  trim sample: {sample}")
+    # one gvkey can carry several issues: count COMPANIES reached, not rows
+    gv_with_cusip = {g for g in sec.loc[sec["cusip8"].str.len() == 8, "gvkey"].dropna()}
+    check_hit_rate("gvkey -> CUSIP", len(gv_with_cusip & set(gvkeys)), len(gvkeys))
+    cu_by_cik = {c: {u for g in gv for u in
+                     sec.loc[sec["gvkey"] == g, "cusip8"].dropna()}
+                 for c, gv in gv_by_cik.items()}
+    check_sentinels("CUSIP", cu_by_cik, cik_form)
+    cusips = sorted({u for u in sec["cusip8"].dropna() if len(u) == 8})
+    log(f"  distinct 8-char CUSIPs reached: {len(cusips)}")
+    files.append(write(sec, "comp_security.csv"))
 
-    # ---- 3. SEC Analytics link (optional) ---------------------------------
-    log("\n## 3. SEC Analytics CIK-GVKEY link (optional)")
-    sec = pd.DataFrame()
-    for table in ("wrdssec.wciklink_gvkey", "wrdssec_midas.wciklink_gvkey"):
-        try:
-            sec = fetch_chunked(db, f"select * from {table} where cik in ({{values}})",
-                                [f"{c:010d}" for c in ciks], quote_list)
-            log(f"  pulled from {table}: {len(sec):,} rows")
-            break
-        except Exception as e:
-            log(f"  {table} unavailable ({type(e).__name__}: {str(e)[:90]})")
-    if len(sec) == 0:
-        log("  no SEC Analytics link table available; continuing (Stage 2 uses CCM only)")
-    files.append(write(sec, "sec_cik_gvkey.csv"))
-
-    # ---- 4. crsp.stocknames -----------------------------------------------
-    log("\n## 4. crsp.stocknames (filtered by permno)")
+    # ---- 3. crsp.stocknames: CUSIP -> permno --------------------------------
+    log("\n## 3. crsp.stocknames (filtered by 8-char CUSIP, ncusip OR cusip)  ->  permno")
     names = fetch_chunked(
         db,
-        "select permno, namedt, nameenddt, ticker, comnam, shrcd, exchcd "
-        "from crsp.stocknames where permno in ({values})",
-        permnos, int_list)
+        "select permno, namedt, nameenddt, ncusip, cusip, ticker, comnam, shrcd, exchcd "
+        "from crsp.stocknames where ncusip in ({values}) or cusip in ({values})",
+        cusips, quote_list)
     require_nonempty(names, "crsp.stocknames")
-    log(f"  name rows: {len(names):,}")
-    check_hit_rate("permno -> stocknames", names["permno"].nunique(), len(permnos))
+    names = names.copy()
+    hit_nc = set(names["ncusip"].dropna().astype(str).str.upper())
+    hit_hd = set(names["cusip"].dropna().astype(str).str.upper())
+    reached = (hit_nc | hit_hd) & set(cusips)
+    log(f"  name rows: {len(names):,}   matched via ncusip: {len(hit_nc & set(cusips))}, "
+        f"via header cusip: {len(hit_hd & set(cusips))}")
+    check_hit_rate("CUSIP -> permno", len(reached), len(cusips))
+    pm_by_cik = {}
+    for c, cu in cu_by_cik.items():
+        m = names[names["ncusip"].astype(str).str.upper().isin(cu)
+                  | names["cusip"].astype(str).str.upper().isin(cu)]
+        pm_by_cik[c] = {int(p) for p in m["permno"].dropna()}
+    check_sentinels("permno", pm_by_cik, cik_form)
+    permnos = sorted({int(p) for p in names["permno"].dropna()})
+    log(f"  permnos reached: {len(permnos)}")
     files.append(write(names, "crsp_stocknames.csv"))
 
-    # ---- 5. crsp.dsf -------------------------------------------------------
-    log("\n## 5. crsp.dsf (filtered by permno; the dominant payload)")
+    # ---- 4. crsp.dsf --------------------------------------------------------
+    log("\n## 4. crsp.dsf (filtered by permno; the dominant payload)")
     dsf = fetch_chunked(
         db,
         "select permno, date, ret, retx, prc, vol, shrout from crsp.dsf "
@@ -360,15 +356,15 @@ def run_pull(db, ciks):
     check_hit_rate("permno -> daily returns", dsf["permno"].nunique(), len(permnos))
     files.append(write(dsf, "crsp_dsf.csv"))
 
-    # ---- 6. crsp.dsi -------------------------------------------------------
-    log("\n## 6. crsp.dsi (market index, date range only)")
+    # ---- 5. crsp.dsi --------------------------------------------------------
+    log("\n## 5. crsp.dsi (market index, date range only)")
     dsi = db.raw_sql(
         f"select date, vwretd, ewretd from crsp.dsi where date >= '{START_DATE}'")
     require_nonempty(dsi, "crsp.dsi")
     log(f"  index rows: {len(dsi):,}   range: {date_range(dsi)}")
     files.append(write(dsi, "crsp_dsi.csv"))
 
-    # ---- CRSP end date -----------------------------------------------------
+    # ---- CRSP end date ------------------------------------------------------
     log("\n## CRSP coverage end date")
     end = pd.to_datetime(dsf["date"], errors="coerce").max()
     log(f"- max(crsp.dsf.date) = {end.date()}")
@@ -384,12 +380,12 @@ def run_pull(db, ciks):
 
 
 def main():
-    ap = argparse.ArgumentParser(description="REBUILD V4 Stage 1 WRDS pull (filtered)")
+    ap = argparse.ArgumentParser(description="REBUILD V4 Stage 1 WRDS pull (CUSIP route)")
     ap.add_argument("--extra-ciks", metavar="FILE",
                     help="TOP-UP MODE. One CIK per line, or a CSV with a cik/final_cik/"
                          "parent_cik/outcome_cik column. Pulls ONLY these CIKs and writes "
                          "new files suffixed _topup_<stamp>; the first pull is never "
-                         "overwritten. Intended for Stage 3 verified parents.")
+                         "overwritten.")
     args = ap.parse_args()
 
     topup = bool(args.extra_ciks)
@@ -420,16 +416,17 @@ def main():
 
     started = datetime.now(timezone.utc)
     if topup:
-        log(f"\n---\n\n# REBUILD V4 — Stage 1 TOP-UP pull ({stamp})")
+        log(f"\n---\n\n# REBUILD V4 — Stage 1 TOP-UP pull, CUSIP route ({stamp})")
         log("")
         log(f"- top-up source: `{args.extra_ciks}`")
         log(f"- CIK filter list: {len(ciks)} CIKs (top-up only; the first pull is untouched)")
-        log(f"- output suffix: `{SUFFIX}` — no file from the first pull is overwritten")
+        log(f"- output suffix: `{SUFFIX}`")
     else:
-        log("# REBUILD V4 — Stage 1 WRDS pull log")
+        log("# REBUILD V4 — Stage 1 WRDS pull log (CUSIP route)")
         log("")
         log(f"- CIK filter list: {len(ciks)} CIKs "
             f"({n_canon} from CANONICAL_V3, +{n_nom} nominated parents not already present)")
+    log(f"- route: CIK -> gvkey -> CUSIP(8) -> permno   (CCM is blocked; see scripts/216)")
     log(f"- pull started (UTC): {started.isoformat(timespec='seconds')}")
     log(f"- daily data from: {START_DATE}")
     log("")
@@ -461,7 +458,7 @@ def main():
     for f in files:
         log(f"| `{f['path']}` | {f['rows']:,} | {f['bytes']/1e6:,.1f} | `{f['sha256']}` |")
     log("")
-    log(f"- total written: {total/1e6:,.1f} MB (Stage 0 estimate 33-53 MB)")
+    log(f"- total written: {total/1e6:,.1f} MB")
     hit_rate_table()
     log("")
     log(f"- pull finished (UTC): {datetime.now(timezone.utc).isoformat(timespec='seconds')}")

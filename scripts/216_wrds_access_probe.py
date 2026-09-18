@@ -89,6 +89,28 @@ def flush():
     return f"WROTE {OUT}"
 
 
+def is_ccm_link(table):
+    """True only for a CRSP/Compustat Merged gvkey -> permno link table.
+
+    The first version of this probe tested `"ccm" in t or "lnk" in t or "link" in t`
+    and reported "a link table IS reachable" on the strength of
+    wrdsapps.bondcrsp_link, compeushortlink, fscrsplink, tclink and
+    uspatents_gvkey_linking. None of those maps gvkey to permno: they are a bond-CRSP
+    bridge, a European short-interest link, a FactSet-CRSP link, a TAQ-CRSP link and a
+    patent-gvkey link respectively. A substring match on "link" is not a test of what
+    a table links.
+
+    The CCM family is identified structurally instead: the bare table name begins with
+    `ccmxpf_` (ccmxpf_lnkhist, ccmxpf_linktable, ccmxpf_lnkused), or the library itself
+    is CCM-family and the table name carries lnk/link.
+    """
+    lib, _, name = table.lower().rpartition(".")
+    if name.startswith("ccmxpf_"):
+        return True
+    lib_is_ccm = "ccm" in lib
+    return lib_is_ccm and ("lnk" in name or "link" in name)
+
+
 def probe(db, table):
     """LIMIT 1 against one table. Returns (ok, detail)."""
     try:
@@ -194,13 +216,20 @@ def main():
         # ---- 4. verdict ----------------------------------------------------
         log("## 4. Verdict for the Stage 2 rule")
         log("")
-        ccm_ok = [t for t in reachable if "ccm" in t.lower() or "lnk" in t.lower()
-                  or "link" in t.lower()]
+        ccm_ok = [t for t in reachable if is_ccm_link(t)]
         log(f"- reachable tables: {len(reachable)}")
         log(f"- blocked tables  : {len(blocked)}")
         log("")
+        other_links = [t for t in reachable
+                       if not is_ccm_link(t)
+                       and any(h in t.lower() for h in ("link", "lnk"))]
+        if other_links:
+            log(f"- reachable tables whose NAME contains link/lnk but which are NOT "
+                f"gvkey->permno links, and so do not qualify: "
+                f"{', '.join(f'`{t}`' for t in other_links)}")
+            log("")
         if ccm_ok:
-            log(f"**A link table IS reachable:** {', '.join(f'`{t}`' for t in ccm_ok)}")
+            log(f"**A CCM link table IS reachable:** {', '.join(f'`{t}`' for t in ccm_ok)}")
             log("Stage 2 can use the gvkey -> permno link with linktype/linkprim and "
                 "date validity, as originally specified.")
         else:
