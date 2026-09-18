@@ -87,8 +87,10 @@ the others and must be re-derived under the corrected rule.
 2. Exhibit 21 match: a line must contain EVERY significant token of the subsidiary name,
    or its space-stripped concatenation must equal the candidate's.
 3. Successor match: a SINGLE passage must both name the other firm to the same standard
-   AND carry succession language (successor, predecessor, holding company reorganization,
-   Rule 12g-3, merger).
+   AND carry succession language — successor, predecessor, successor issuer, Rule 12g-3,
+   holding company reorganization. Merger language is explicitly NOT succession language:
+   it appears in ordinary acquisition 8-Ks that create no successor registrant, and
+   accepting it would readmit the 2026 filings that made run 1 invalid.
 4. Parent nomination: name knowledge may NOMINATE a parent CIK, with the basis recorded;
    only the filing verifies.
 5. `EX21_RE` tightened to `ex[-_ ]?21`, which matches `dex21.htm` and not `dex121.htm`.

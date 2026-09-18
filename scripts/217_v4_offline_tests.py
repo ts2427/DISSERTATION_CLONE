@@ -473,13 +473,23 @@ NAMED_NO_LANG = "Sinclair Broadcast Group, Inc. reported quarterly results today
 NAMED_WITH_LANG = ("Sinclair, Inc. is the successor issuer to Sinclair Broadcast Group, "
                    "Inc. pursuant to Rule 12g-3(a).")
 LANG_NO_NAME = "The registrant is the successor issuer pursuant to Rule 12g-3(a)."
+MERGER_ONLY = ("Sinclair, Inc. completed its merger with Sinclair Broadcast Group, Inc. "
+               "and the merged entity will continue to operate the stations.")
+AON_STYLE = ("Aon plc is the successor issuer to Aon Corporation PLC pursuant to "
+             "Rule 12g-3(a) under the Exchange Act.")
 p1, _ = m213.match_passage("Sinclair Broadcast Group, Inc.", [NAMED_NO_LANG])
 p2, ev2 = m213.match_passage("Sinclair Broadcast Group, Inc.", [NAMED_WITH_LANG])
 p3, _ = m213.match_passage("Sinclair Broadcast Group, Inc.", [LANG_NO_NAME])
-succ_ok = (p1 is None) and (p2 is not None) and (p3 is None)
+p4, _ = m213.match_passage("Sinclair Broadcast Group, Inc.", [MERGER_ONLY])
+p5, ev5 = m213.match_passage("Aon Corporation PLC", [AON_STYLE])
+succ_ok = all([p1 is None, p2 is not None, p3 is None, p4 is None, p5 is not None])
 print(f"  {'PASS' if p1 is None else 'FAIL'} | named, NO succession language -> {p1}")
 print(f"  {'PASS' if p2 else 'FAIL'} | named + succession language -> matched on {ev2}")
 print(f"  {'PASS' if p3 is None else 'FAIL'} | succession language, name absent -> {p3}")
+print(f"  {'PASS' if p4 is None else 'FAIL'} | named + MERGER language only -> {p4} "
+      f"(merger is not succession)")
+print(f"  {'PASS' if p5 else 'FAIL'} | Aon-style 'successor issuer ... Rule 12g-3' -> "
+      f"matched on {ev5}")
 results.append(succ_ok)
 
 print(f"\n{'='*70}\nTEST: 213 exhibit selection (the Fox false negative)\n{'='*70}")

@@ -88,12 +88,18 @@ SUCCESSOR_SCAN_CAP = 40      # bound the 8-K scan; succession forms are tried fi
 # came back UNVERIFIED because the wrong document was searched.
 EX21_RE = re.compile(r"ex[-_ ]?21", re.I)
 
-# Succession language. Rule 3: naming the other firm is not enough - the SAME passage must
-# also say what the relationship is, or any filing that merely mentions the other company
-# would verify a succession.
+# Succession language. Naming the other firm is not enough: the SAME passage must also say
+# what the relationship IS, or any filing that merely mentions the other company verifies a
+# succession.
+#
+# "merger" and "merged" are deliberately NOT here. Merger language appears in ordinary 8-Ks
+# announcing acquisitions that create no successor-registrant relationship at all, so
+# accepting it would readmit exactly the 2026 filings that made run 1 invalid. A succession
+# is a specific act - one registrant standing in another's place - and it is described in
+# specific words.
 SUCCESSION_RE = re.compile(
     r"successor|predecessor|holding\s+company\s+reorgani[sz]ation|"
-    r"rule\s*12\s*g-?\s*3|12\s*g-?\s*3|merger|merged", re.I)
+    r"rule\s*12\s*g-?\s*3|12\s*g-?\s*3", re.I)
 
 TICKERS_URL = "https://www.sec.gov/files/company_tickers.json"
 CIK_IN_CAND = re.compile(r"cik\s+(\d+)", re.I)
@@ -253,8 +259,15 @@ def line_names(name, line):
     nt = M212.norm_tokens(name)
     sig = {t for t in nt if len(t) >= M212.SIGNIFICANT_LEN}
     lt = M212.norm_tokens(line)
-    if sig and sig <= set(lt):
-        return True, "|".join(sorted(sig))
+    # Some firms have NO token of significant length once legal suffixes are dropped:
+    # "Aon Corporation PLC" -> {AON}, "IBM" -> {IBM}, "EMC Corporation" -> {EMC}. For those
+    # the short tokens ARE the name, so require all of them instead of falling through to
+    # concatenation equality, which can never hold against a sentence. This does not
+    # loosen anything for ordinary names: whenever a significant token exists, only the
+    # significant tokens are required, exactly as before.
+    need = sig if sig else set(nt)
+    if need and need <= set(lt):
+        return True, "|".join(sorted(need))
     ca, cb = "".join(nt), "".join(lt)
     if ca and ca == cb:
         return True, ca
