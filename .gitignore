@@ -163,3 +163,12 @@ Data/wrds/crsp_quotes_topup.csv
 
 # ...except the raw stdout captures, which duplicate the committed *.log files (must stay after the negation above)
 outputs/essay3_q2/*_stdout.txt
+
+# ==============================================================================
+# REBUILD V4 (branch rebuild-v4) — appended at Stage 0 under the amended prime
+# directive. Exhibit 21 documents cached by scripts/213 are pipeline inputs; many
+# are .txt and would otherwise be hidden by the blanket "*.txt" rule at line 84.
+# Same shape as the existing !Data/edgar/item5_02_text/** precedent above.
+# Appended only; no existing rule is modified.
+# ==============================================================================
+!Data/edgar/ex21_cache_v4/**
