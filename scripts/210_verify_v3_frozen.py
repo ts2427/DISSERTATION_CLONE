@@ -266,11 +266,19 @@ def verify():
     print(f"tracked in scope: {len(now):,}")
     for n in notes:
         print(f"append-only     : {n}")
+    # Ruling (Stage 0): zero eol artifacts is REQUIRED on the authoring machine. On
+    # another platform -- the Stage 6 clean-clone test on Linux, where core.autocrlf
+    # differs -- artifacts are permitted, but each must be counted and listed with its
+    # blob match and its clean `git diff` shown, so a content change can never hide here.
     if eol_artifacts:
-        print(f"eol artifacts   : {len(eol_artifacts)} file(s) differ on disk but "
-              f"`git diff --quiet` is clean -> PASS")
-        for p in eol_artifacts[:10]:
-            print(f"   {p}")
+        print(f"eol artifacts   : {len(eol_artifacts)} file(s) -- disk bytes differ from "
+              f"the manifest but git reports no difference. PERMITTED OFF-PLATFORM ONLY;")
+        print("                  on the authoring machine this must be 0.")
+        for p in eol_artifacts:
+            blob_ok = now.get(p) == base[p]["blob_id"]
+            rc = git_rc("diff", "--quiet", commit, "--", p)
+            print(f"   {p}\n      blob matches baseline: {blob_ok}   "
+                  f"git diff --quiet exit: {rc}")
     print(f"\nSHA256 CHANGED (real content)  : {len(sha_bad)}")
     for p, a, b in sha_bad[:25]:
         print(f"   {p}\n      was {a}  now {b}")

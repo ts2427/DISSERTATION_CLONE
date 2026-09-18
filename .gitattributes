@@ -21,3 +21,8 @@ scripts/195_essay3_q2_classifier_v2.py text eol=lf
 # Appended only; no existing rule above is modified.
 # ==============================================================================
 Data/wrds_v4/** filter=lfs diff=lfs merge=lfs -text
+# Frozen v3 input under the REBUILD V4 freeze: pin LF so the working-tree bytes match the
+# manifest sha (4a46a82a…) on every platform. Without this, core.autocrlf=true renders it
+# CRLF on checkout, flipping the disk sha to 0d8e556c… and forcing scripts/210 to pass it
+# through the eol-artifact branch. Same pattern as scripts/195 above.
+scripts/204_essay3_q2_se_diagnostics.py text eol=lf
