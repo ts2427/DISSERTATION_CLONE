@@ -500,18 +500,29 @@ def main():
         par, basis = nomap.get(int(cik), (None, ""))
         if par and basis.startswith("name knowledge"):
             return "a_subsidiary", par, "", "", False, ""
+        # Scan EVERY Compustat name before settling. A match on a real identity token
+        # beats a match on an industry word, so a generic hit is held aside rather than
+        # returned: it is only used if the entire table yields nothing better. Returning
+        # the first hit would let scan order decide, and let an ABM INDUSTRIES appearing
+        # early mask a genuine successor appearing late.
+        generic_fallback = None
         for _, cr in conm.iterrows():
             ok, shared, _ = best_overlap(cr["conm"], org, edgar)
-            if ok and cr["cik_int"] != cik:
-                cand = f"{cr['conm']} (gvkey {cr['gvkey']}, cik {int(cr['cik_int'])})"
-                toks = "|".join(sorted(shared))
-                if generic_only(shared):
-                    # A shared industry word is not evidence of succession. The match is
-                    # recorded in the note and the CIK falls through to c_no_compustat;
-                    # it is NOT nominated and does NOT reach stage3_candidates.csv.
-                    return ("c_no_compustat", "", "", toks, True,
-                            f"{GENERIC_NOTE}: rejected {cand} on {toks}")
+            if not ok or cr["cik_int"] == cik:
+                continue
+            cand = f"{cr['conm']} (gvkey {cr['gvkey']}, cik {int(cr['cik_int'])})"
+            toks = "|".join(sorted(shared))
+            if not generic_only(shared):
                 return "b_successor_cik", cand, "unverified", toks, False, ""
+            if generic_fallback is None:
+                generic_fallback = (cand, toks)
+        if generic_fallback is not None:
+            # A shared industry word is not evidence of succession. The rejected match is
+            # kept in the note; the CIK falls through to c_no_compustat and does NOT
+            # reach stage3_candidates.csv.
+            cand, toks = generic_fallback
+            return ("c_no_compustat", "", "", toks, True,
+                    f"{GENERIC_NOTE}: rejected {cand} on {toks}")
         if par and basis.startswith("self"):
             return "c_no_compustat", par, "", "", False, ""
         return (("c_no_compustat", "", "", "", False, "") if not par

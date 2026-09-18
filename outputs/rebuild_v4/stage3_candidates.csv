@@ -14,9 +14,11 @@ a_subsidiary,108772,Xerox Corporation,,,,Xerox Holdings Corporation,,no gvkey in
 a_subsidiary,353394,"Leidos, Inc.",,,,"Leidos Holdings, Inc.",,no gvkey in Compustat for this CIK,,False
 b_successor_cik,826083,Dell Inc.,,,,"DELL TECHNOLOGIES INC (gvkey 14489, cik 1571996)",unverified,no gvkey in Compustat for this CIK,DELL,False
 b_successor_cik,912752,"Sinclair Broadcast Group, Inc.",,,,"SINCLAIR INC (gvkey 60800, cik 1971213)",unverified,no gvkey in Compustat for this CIK,SINCLAIR,False
+b_successor_cik,1000564,Communications & Power Industries LLC,,,,"AMERICAN ELECTRIC POWER CO (gvkey 1440, cik 4904)",unverified,no gvkey in Compustat for this CIK,POWER,False
 a_subsidiary,1091411,Sony Corporation of America,,,,Sony Group Corporation,,no gvkey in Compustat for this CIK,,False
 a_subsidiary,1137785,Seagate US LLC,,,,Seagate Technology Holdings plc,,no gvkey in Compustat for this CIK,,False
 a_subsidiary,1205274,"Herbalife International of America, Inc.",,,,Herbalife Ltd.,,no gvkey in Compustat for this CIK,,False
+b_successor_cik,1283246,International Paper Company,,,,"INTL PAPER CO (gvkey 6104, cik 51434)",unverified,no gvkey in Compustat for this CIK,PAPER,False
 a_subsidiary,1387793,"T. Rowe Price Retirement Plan Services, Inc.",,,,"T. Rowe Price Group, Inc.",,no gvkey in Compustat for this CIK,,False
 b_successor_cik,1431473,Uber,,,,"UBER TECHNOLOGIES INC (gvkey 35077, cik 1543151)",unverified,no gvkey in Compustat for this CIK,UBER,False
 a_subsidiary,1457738,"iHeartMedia + Entertainment, Inc.",,,,"iHeartMedia, Inc.",,no gvkey in Compustat for this CIK,,False

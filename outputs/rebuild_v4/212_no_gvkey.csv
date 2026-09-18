@@ -8,14 +8,14 @@ final_cik,org,edgar,events,grp,candidate_type,candidate,confidence,shared_tokens
 826083,Dell Inc.,DELL COMPUTER CORP,1,control,b_successor_cik,"DELL TECHNOLOGIES INC (gvkey 14489, cik 1571996)",unverified,DELL,False,
 912752,"Sinclair Broadcast Group, Inc.",SINCLAIR BROADCAST GROUP INC,3,control,b_successor_cik,"SINCLAIR INC (gvkey 60800, cik 1971213)",unverified,SINCLAIR,False,
 926480,The Walt Disney Company,,1,control,c_no_compustat,,,,False,
-1000564,Communications & Power Industries LLC,COMMUNICATIONS & POWER INDUSTRIES INC,1,control,c_no_compustat,,,INDUSTRIES,True,"nomination rested only on an industry word: rejected ABM INDUSTRIES INC (gvkey 1410, cik 771497) on INDUSTRIES"
+1000564,Communications & Power Industries LLC,COMMUNICATIONS & POWER INDUSTRIES INC,1,control,b_successor_cik,"AMERICAN ELECTRIC POWER CO (gvkey 1440, cik 4904)",unverified,POWER,False,
 1091411,Sony Corporation of America,SONY CORP OF AMERICA,1,control,a_subsidiary,Sony Group Corporation,,,False,
 1137785,Seagate US LLC,SEAGATE US LLC,2,control,a_subsidiary,Seagate Technology Holdings plc,,,False,
 1145813,Fox Group,FOX GROUP INC,1,control,d_other,,,,False,
 1168812,"HBP, Inc.",HBP INC,1,control,d_other,,,,False,
 1205274,"Herbalife International of America, Inc.",HERBALIFE INTERNATIONAL OF AMERICA INC,1,control,a_subsidiary,Herbalife Ltd.,,,False,
 1260451,Vulcan Industries,VULCAN INDUSTRIES INC,1,control,c_no_compustat,,,INDUSTRIES,True,"nomination rested only on an industry word: rejected ABM INDUSTRIES INC (gvkey 1410, cik 771497) on INDUSTRIES"
-1283246,International Paper Company,INTERNATIONAL PAPER CO,1,control,c_no_compustat,,,INTERNATIONAL,True,"nomination rested only on an industry word: rejected HONEYWELL INTERNATIONAL INC (gvkey 1300, cik 773840) on INTERNATIONAL"
+1283246,International Paper Company,INTERNATIONAL PAPER CO,1,control,b_successor_cik,"INTL PAPER CO (gvkey 6104, cik 51434)",unverified,PAPER,False,
 1288776,"Google, Inc.",,1,control,c_no_compustat,,,,False,
 1387793,"T. Rowe Price Retirement Plan Services, Inc.","T. ROWE PRICE RETIREMENT PLAN SERVICES, INC.",2,control,a_subsidiary,"T. Rowe Price Group, Inc.",,,False,
 1396897,"NCO Financial Systems, Inc.","NCO FINANCIAL SYSTEMS, INC.",1,control,c_no_compustat,,,SYSTEMS,True,"nomination rested only on an industry word: rejected CISCO SYSTEMS INC (gvkey 20779, cik 858877) on SYSTEMS"

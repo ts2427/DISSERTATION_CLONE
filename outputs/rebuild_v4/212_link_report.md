@@ -1,6 +1,6 @@
 # REBUILD V4 — Stage 2 point-in-time linker (CUSIP route)
 
-- run (UTC): 2026-09-18T19:52:05+00:00
+- run (UTC): 2026-09-18T20:00:39+00:00
 - events 489 | comp.company 148 | comp.security 308 | stocknames 613
 - rule: all US common issues (tpci=0, excntry=USA), ncusip-first, header fallback behind the identity gate
 
@@ -157,8 +157,8 @@ Tie-break usage: {'priusa': 17, 'shrcd': 0, 'namedt': 0} (priusa resolves the du
 | type | CIKs |
 |---|---|
 | a_subsidiary | 13 |
-| c_no_compustat | 13 |
-| b_successor_cik | 6 |
+| c_no_compustat | 11 |
+| b_successor_cik | 8 |
 | d_other | 4 |
 
 | final_cik | org | grp | events | candidate_type | candidate | confidence | shared_tokens |
@@ -172,14 +172,14 @@ Tie-break usage: {'priusa': 17, 'shrcd': 0, 'namedt': 0} (priusa resolves the du
 | 826083 | Dell Inc. | control | 1 | b_successor_cik | DELL TECHNOLOGIES INC (gvkey 14489, cik 1571996) | unverified | DELL |
 | 912752 | Sinclair Broadcast Group, Inc. | control | 3 | b_successor_cik | SINCLAIR INC (gvkey 60800, cik 1971213) | unverified | SINCLAIR |
 | 926480 | The Walt Disney Company | control | 1 | c_no_compustat |  |  |  |
-| 1000564 | Communications & Power Industries LLC | control | 1 | c_no_compustat |  |  | INDUSTRIES |
+| 1000564 | Communications & Power Industries LLC | control | 1 | b_successor_cik | AMERICAN ELECTRIC POWER CO (gvkey 1440, cik 4904) | unverified | POWER |
 | 1091411 | Sony Corporation of America | control | 1 | a_subsidiary | Sony Group Corporation |  |  |
 | 1137785 | Seagate US LLC | control | 2 | a_subsidiary | Seagate Technology Holdings plc |  |  |
 | 1145813 | Fox Group | control | 1 | d_other |  |  |  |
 | 1168812 | HBP, Inc. | control | 1 | d_other |  |  |  |
 | 1205274 | Herbalife International of America, Inc. | control | 1 | a_subsidiary | Herbalife Ltd. |  |  |
 | 1260451 | Vulcan Industries | control | 1 | c_no_compustat |  |  | INDUSTRIES |
-| 1283246 | International Paper Company | control | 1 | c_no_compustat |  |  | INTERNATIONAL |
+| 1283246 | International Paper Company | control | 1 | b_successor_cik | INTL PAPER CO (gvkey 6104, cik 51434) | unverified | PAPER |
 | 1288776 | Google, Inc. | control | 1 | c_no_compustat |  |  |  |
 | 1387793 | T. Rowe Price Retirement Plan Services, Inc. | control | 2 | a_subsidiary | T. Rowe Price Group, Inc. |  |  |
 | 1396897 | NCO Financial Systems, Inc. | control | 1 | c_no_compustat |  |  | SYSTEMS |
@@ -225,18 +225,18 @@ The rule accepts a match on ONE shared token of length >= 4. That is fine for `C
 | 58696 | Lennar Corporation | LENNAR CORP (gvkey 6669, cik 920760) | LENNAR |
 | 826083 | Dell Inc. | DELL TECHNOLOGIES INC (gvkey 14489, cik 1571996) | DELL |
 | 912752 | Sinclair Broadcast Group, Inc. | SINCLAIR INC (gvkey 60800, cik 1971213) | SINCLAIR |
+| 1000564 | Communications & Power Industries LLC | AMERICAN ELECTRIC POWER CO (gvkey 1440, cik 4904) | POWER |
+| 1283246 | International Paper Company | INTL PAPER CO (gvkey 6104, cik 51434) | PAPER |
 | 1431473 | Uber | UBER TECHNOLOGIES INC (gvkey 35077, cik 1543151) | UBER |
 | 1808065 | Aon Corporation PLC | AON PLC (gvkey 3221, cik 315293) | AON |
 
-### Reclassified to c_no_compustat — nomination rested only on an industry word (10)
+### Reclassified to c_no_compustat — nomination rested only on an industry word (8)
 
 These are not nominations and do NOT reach `stage3_candidates.csv`. The rejected candidate is kept in `note` so the decision is auditable.
 
 | final_cik | org | grp | events | candidate_type | shared_tokens | note |
 |---|---|---|---|---|---|---|
-| 1000564 | Communications & Power Industries LLC | control | 1 | c_no_compustat | INDUSTRIES | nomination rested only on an industry word: rejected ABM INDUSTRIES INC (gvkey 1410, cik 771497) on INDUSTRIES |
 | 1260451 | Vulcan Industries | control | 1 | c_no_compustat | INDUSTRIES | nomination rested only on an industry word: rejected ABM INDUSTRIES INC (gvkey 1410, cik 771497) on INDUSTRIES |
-| 1283246 | International Paper Company | control | 1 | c_no_compustat | INTERNATIONAL | nomination rested only on an industry word: rejected HONEYWELL INTERNATIONAL INC (gvkey 1300, cik 773840) on INTERNATIONAL |
 | 1396897 | NCO Financial Systems, Inc. | control | 1 | c_no_compustat | SYSTEMS | nomination rested only on an industry word: rejected CISCO SYSTEMS INC (gvkey 20779, cik 858877) on SYSTEMS |
 | 1497060 | Capital Integration Systems LLC | control | 1 | c_no_compustat | SYSTEMS | nomination rested only on an industry word: rejected CISCO SYSTEMS INC (gvkey 20779, cik 858877) on SYSTEMS |
 | 1567336 | Mediant Communications Inc. | control | 1 | c_no_compustat | COMMUNICATIONS | nomination rested only on an industry word: rejected VERIZON COMMUNICATIONS INC (gvkey 2136, cik 732712) on COMMUNICATIONS |
@@ -329,12 +329,12 @@ None: every header accept shares a real identity token.
 
 ## Stage 3 candidates
 
-29 rows written to `outputs/rebuild_v4/stage3_candidates.csv`.
+31 rows written to `outputs/rebuild_v4/stage3_candidates.csv`.
 
 | type | rows |
 |---|---|
 | a_subsidiary | 13 |
 | gate_exclusion | 8 |
-| b_successor_cik | 6 |
+| b_successor_cik | 8 |
 | ncusip_name_mismatch | 2 |
 
