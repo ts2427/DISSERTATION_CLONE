@@ -7,7 +7,20 @@ gvkeys those CIKs reach, then by the permnos those gvkeys reach. No table is pul
 whole. That is the amended Stage 1 spec and it cuts the payload from ~64-146 MB to
 ~33-53 MB.
 
-    python scripts/211_wrds_pull_v4.py
+    python scripts/211_wrds_pull_v4.py                       # first pull
+    python scripts/211_wrds_pull_v4.py --extra-ciks FILE     # later top-up
+
+TOP-UP MODE (--extra-ciks)
+--------------------------
+For Stage 3, once Exhibit 21 verifies additional parent CIKs that were not in the
+first pull. FILE is one CIK per line, or a CSV carrying a cik / final_cik /
+parent_cik / outcome_cik column.
+
+A top-up pulls ONLY those CIKs and writes new files suffixed `_topup_<UTC stamp>`
+(comp_company_topup_20261001T120000Z.csv, and so on). It never overwrites a file
+from the first pull — write() refuses to clobber an existing path — and it appends
+a new, separately headed section to 211_pull_log.md rather than replacing it.
+Stage 2 therefore reads the first pull plus any top-ups as a set.
 
 CREDENTIALS
 -----------
@@ -52,6 +65,7 @@ the five fallback-prior 2025 cases) may re-enter. The Stage 5 ledger must show t
 This script is READ-ONLY with respect to every v3 path. It writes only under
 Data/wrds_v4/ and outputs/rebuild_v4/.
 """
+import argparse
 import hashlib
 import sys
 from datetime import datetime, timezone
@@ -62,6 +76,9 @@ import pandas as pd
 OUT_DATA = Path("Data/wrds_v4")
 OUT_LOG = Path("outputs/rebuild_v4/211_pull_log.md")
 START_DATE = "2005-01-01"
+# Empty for the first pull; "_topup_<stamp>" under --extra-ciks. Set once by main().
+# Every output filename carries it, so a top-up can never overwrite the first pull.
+SUFFIX = ""
 CHUNK = 500                      # keep IN-lists well inside server limits
 
 CANON = Path("Data/processed/rebuild/CANONICAL_V3.csv")
@@ -109,8 +126,15 @@ def fetch_chunked(db, sql_template, values, formatter):
 
 
 def write(df, name):
+    """Write to OUT_DATA/<stem><SUFFIX><ext>.
+
+    SUFFIX is "" for the first pull and "_topup_<stamp>" in top-up mode, so a
+    top-up writes new, suffixed files and never overwrites the first pull.
+    """
     OUT_DATA.mkdir(parents=True, exist_ok=True)
-    p = OUT_DATA / name
+    p = OUT_DATA / f"{Path(name).stem}{SUFFIX}{Path(name).suffix}"
+    if p.exists():
+        sys.exit(f"refusing to overwrite an existing file: {p}")
     df.to_csv(p, index=False)
     sha = sha256_file(p)
     size = p.stat().st_size
@@ -125,32 +149,78 @@ def date_range(df, col="date"):
     return f"{s.min().date()} .. {s.max().date()}"
 
 
+def read_extra_ciks(path):
+    """One CIK per line, or a CSV with a cik/final_cik/parent_cik column."""
+    p = Path(path)
+    if not p.exists():
+        sys.exit(f"--extra-ciks file not found: {p}")
+    if p.suffix.lower() == ".csv":
+        df = pd.read_csv(p)
+        for col in ("cik", "final_cik", "parent_cik", "outcome_cik"):
+            if col in df.columns:
+                return {int(c) for c in pd.to_numeric(df[col], errors="coerce").dropna()}
+        sys.exit(f"--extra-ciks CSV has no cik/final_cik/parent_cik/outcome_cik column: {p}")
+    out = set()
+    for line in p.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if line and not line.startswith("#"):
+            out.add(int(line))
+    return out
+
+
 def main():
+    global SUFFIX
+    ap = argparse.ArgumentParser(description="REBUILD V4 Stage 1 WRDS pull (filtered)")
+    ap.add_argument("--extra-ciks", metavar="FILE",
+                    help="TOP-UP MODE. One CIK per line, or a CSV with a cik/final_cik/"
+                         "parent_cik/outcome_cik column. Pulls ONLY these CIKs and writes "
+                         "new files suffixed _topup_<stamp>; the first pull is never "
+                         "overwritten. Intended for Stage 3 verified parents.")
+    args = ap.parse_args()
+
+    topup = bool(args.extra_ciks)
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    suffix = f"_topup_{stamp}" if topup else ""
+    SUFFIX = suffix                      # every write() call picks this up
+
     try:
         import wrds
     except ImportError:
         sys.exit("The `wrds` package is not installed. pip install wrds")
 
     # ---- CIK list -------------------------------------------------------------
-    if not CANON.exists():
-        sys.exit(f"missing input: {CANON}")
-    ciks = set(int(c) for c in pd.read_csv(CANON, low_memory=False)["final_cik"].dropna())
-    n_canon = len(ciks)
-    n_nom = 0
-    if NOMS.exists():
-        pc = pd.to_numeric(pd.read_csv(NOMS)["parent_cik"], errors="coerce").dropna()
-        nom = set(int(c) for c in pc)
-        n_nom = len(nom - ciks)
-        ciks |= nom
+    n_canon = n_nom = n_extra = 0
+    if topup:
+        ciks = read_extra_ciks(args.extra_ciks)
+        n_extra = len(ciks)
+        if not ciks:
+            sys.exit("--extra-ciks resolved to an empty CIK list")
+    else:
+        if not CANON.exists():
+            sys.exit(f"missing input: {CANON}")
+        ciks = set(int(c) for c in pd.read_csv(CANON, low_memory=False)["final_cik"].dropna())
+        n_canon = len(ciks)
+        if NOMS.exists():
+            pc = pd.to_numeric(pd.read_csv(NOMS)["parent_cik"], errors="coerce").dropna()
+            nom = set(int(c) for c in pc)
+            n_nom = len(nom - ciks)
+            ciks |= nom
     ciks = sorted(ciks)
     cik10 = [f"{c:010d}" for c in ciks]
 
     started = datetime.now(timezone.utc)
-    log("# REBUILD V4 — Stage 1 WRDS pull log")
-    log("")
+    if topup:
+        log(f"\n---\n\n# REBUILD V4 — Stage 1 TOP-UP pull ({stamp})")
+        log("")
+        log(f"- top-up source: `{args.extra_ciks}`")
+        log(f"- CIK filter list: {n_extra} CIKs (top-up only; the first pull is untouched)")
+        log(f"- output suffix: `{suffix}` — no file from the first pull is overwritten")
+    else:
+        log("# REBUILD V4 — Stage 1 WRDS pull log")
+        log("")
+        log(f"- CIK filter list: {len(ciks)} CIKs "
+            f"({n_canon} from CANONICAL_V3, +{n_nom} nominated parents not already present)")
     log(f"- pull started (UTC): {started.isoformat(timespec='seconds')}")
-    log(f"- CIK filter list: {len(ciks)} CIKs "
-        f"({n_canon} from CANONICAL_V3, +{n_nom} nominated parents not already present)")
     log(f"- daily data from: {START_DATE}")
     log("")
 
@@ -270,8 +340,14 @@ def main():
             pass
 
     OUT_LOG.parent.mkdir(parents=True, exist_ok=True)
-    OUT_LOG.write_text("\n".join(LOG) + "\n", encoding="utf-8")
-    print(f"\nWROTE {OUT_LOG}")
+    body = "\n".join(LOG) + "\n"
+    if topup and OUT_LOG.exists():
+        with open(OUT_LOG, "a", encoding="utf-8") as f:   # append a new section
+            f.write(body)
+        print(f"\nAPPENDED top-up section to {OUT_LOG}")
+    else:
+        OUT_LOG.write_text(body, encoding="utf-8")
+        print(f"\nWROTE {OUT_LOG}")
     print("Next: return the log. Do not run scripts/212 until Stage 1 is reviewed.")
     return 0
 

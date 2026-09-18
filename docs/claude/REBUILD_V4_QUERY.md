@@ -188,6 +188,17 @@ value, the new value, and a verbatim source quote.
   columns for the v3 value and the difference at every step, by treated and control.
 - **Symmetry table:** `link_source` counts by treated and control, and CRSP-step
   retention by group, v3 against v4.
+- **Attribution of gains (amended).** If `crsp.dsf` extends past 2024-12-31, the ledger
+  must not pool the two distinct causes of recovery. Report them as separate lines, each
+  by treated and control:
+  - **recovered by relinking** — the event has CRSP data in v4 that it lacked in v3
+    because the point-in-time linker found a permno the v3 CIK→ticker matcher missed,
+    and its window lies inside the v3 extract (on or before 2024-12-31);
+  - **added by the longer extract** — the event has CRSP data in v4 only because the
+    new pull reaches past 2024-12-31 (the v3 "past-extract" cases: National Presto
+    2025-03-01, iHeartMedia 2025-04-30, and the five `fallback-prior` 2025 events).
+  An event that needs both is counted under relinking and flagged; the ledger states the
+  overlap count explicitly so the two lines never double-count.
 - Run script 210. It must pass.
 
 **STOP.** Report the ledger, the symmetry table, and every event that entered or left
