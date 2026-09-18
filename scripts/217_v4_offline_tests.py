@@ -537,6 +537,76 @@ print(f"  {'PASS' if p7 is None else 'FAIL'} | run-3 FP: Sinclair credit-agreeme
       f"exhibit index -> {p7}")
 results.append(succ_ok)
 
+print(f"\n{'='*70}\nTEST: 213 Exhibit 21 selection by DOCUMENT TYPE\n{'='*70}")
+JBH_CIK, JBH_ACC = 728535, "0001437749-20-004119"
+JBH_FILES = ["ex_174335.htm", "ex_174336.htm", "ex_174405.htm", "jbht20191231_10k.htm"]
+HDR_RAW = ("<html><pre>\n"
+           "<DOCUMENT>\n<TYPE>10-K\n<SEQUENCE>1\n<FILENAME>jbht20191231_10k.htm\n</DOCUMENT>\n"
+           "<DOCUMENT>\n<TYPE>EX-21\n<SEQUENCE>5\n<FILENAME>ex_174335.htm\n</DOCUMENT>\n"
+           "<DOCUMENT>\n<TYPE>EX-32.1\n<SEQUENCE>8\n<FILENAME>ex_174405.htm\n</DOCUMENT>\n"
+           "</pre></html>").encode()
+HDR_ESCAPED = (HDR_RAW.decode().replace("<DOCUMENT>", "&lt;DOCUMENT&gt;")
+               .replace("<TYPE>", "&lt;TYPE&gt;").replace("<SEQUENCE>", "&lt;SEQUENCE&gt;")
+               .replace("<FILENAME>", "&lt;FILENAME&gt;")
+               .replace("</DOCUMENT>", "&lt;/DOCUMENT&gt;")).encode()
+HDR_URL = (f"https://www.sec.gov/Archives/edgar/data/{JBH_CIK}/"
+           f"{JBH_ACC.replace('-', '')}/{JBH_ACC}-index-headers.html")
+
+_svf = m213.fetch
+type_ok = True
+for label, payload in (("raw SGML", HDR_RAW), ("HTML-escaped", HDR_ESCAPED)):
+    m213.fetch = make_fetch({HDR_URL: payload})
+    got, how = m213.pick_ex21(JBH_CIK, JBH_ACC, JBH_FILES)
+    one = (got == "ex_174335.htm" and "EX-21" in how)
+    type_ok &= one
+    print(f"  {'PASS' if one else 'FAIL'} | {label}: J.B. Hunt ex_174335.htm found by "
+          f"type ({how}) — no filename rule could")
+
+# the type route must never pick EX-32.1, and must not be fooled when the header is absent
+m213.fetch = make_fetch({})
+got, how = m213.pick_ex21(JBH_CIK, JBH_ACC, JBH_FILES)
+nohdr_ok = got is None
+print(f"  {'PASS' if nohdr_ok else 'FAIL'} | no header available and no Ex-21 filename "
+      f"-> {got}")
+m213.fetch = make_fetch({})
+got, how = m213.pick_ex21(1, "0000000000-00-000000", ["exhibit21.htm", "dex321.htm"])
+fb_ok = (got == "exhibit21.htm" and "filename" in how)
+print(f"  {'PASS' if fb_ok else 'FAIL'} | filename fallback finds exhibit21.htm ({how})")
+m213.fetch = _svf
+
+names_seen = ["w47962exv21.htm", "a202210k-exhibit21q42022.htm",
+              "exhibit21-ihmedia2024q4.htm", "gtes-exhibit211xq42022.htm",
+              "a2017123110-kaexhibit21.htm", "exhibit21.htm", "dex21.htm"]
+decoys = ["dex121.htm", "dex321.htm", "exhibit321-ihmedia2024q4.htm",
+          "gtes-exhibit321xq42022.htm", "a2017123110-kaexhibit32.htm", "w47962exv23.htm",
+          "exhibit23-ihmedia2024q4.htm"]
+fn_hit = [n for n in names_seen if m213.find_ex21_name([n]) == n]
+fn_bad = [n for n in decoys if m213.find_ex21_name([n])]
+print(f"  {'PASS' if len(fn_hit) == len(names_seen) else 'FAIL'} | broadened filename "
+      f"finds {len(fn_hit)}/{len(names_seen)} real Ex-21 names")
+print(f"  {'PASS' if not fn_bad else 'FAIL'} | EX-12.1 / EX-32.1 / EX-23 never selected "
+      f"{fn_bad or ''}")
+results.append(type_ok and nohdr_ok and fb_ok and len(fn_hit) == len(names_seen)
+               and not fn_bad)
+
+print(f"\n{'='*70}\nTEST: 213 parent nomination from cik-lookup-data.txt\n{'='*70}")
+if not m213.CIK_LOOKUP.exists():
+    print(f"  SKIP | {m213.CIK_LOOKUP} not present on this machine")
+    results.append(True)
+else:
+    got = m213.lookup_ciks({"Activision Blizzard, Inc.", "Volkswagen AG",
+                            "Zzzz Nonexistent Holdings Inc."})
+    av = got.get("Activision Blizzard, Inc.", (None, ""))
+    vw = got.get("Volkswagen AG", (None, ""))
+    nx = got.get("Zzzz Nonexistent Holdings Inc.", (None, ""))
+    look_ok = (av[0] == 718877 and vw[0] == 1111708 and nx[0] is None)
+    print(f"  {'PASS' if av[0] == 718877 else 'FAIL'} | Activision Blizzard, Inc. -> "
+          f"{av[0]} ({av[1]})")
+    print(f"  {'PASS' if vw[0] == 1111708 else 'FAIL'} | Volkswagen AG -> {vw[0]} "
+          f"({vw[1]})  [not the AUTO LEASE TRUSTs or the /ADR/ entry]")
+    print(f"  {'PASS' if nx[0] is None else 'FAIL'} | absent name -> {nx[0]} ({nx[1]})")
+    results.append(look_ok)
+
 print(f"\n{'='*70}\nTEST: 213 exhibit selection (the Fox false negative)\n{'='*70}")
 NEWSCORP_FILES = ["d10k.htm", "dex106.htm", "dex121.htm", "dex21.htm", "dex231.htm",
                   "dex311.htm", "dex312.htm", "dex321.htm"]

@@ -102,6 +102,7 @@ REQUEST_TIMEOUT = 60         # seconds; 30 was too tight for large 10-K exhibits
 TRANSIENT_ERRORS = (TimeoutError, socket.timeout, ConnectionResetError,
                     IncompleteRead, RemoteDisconnected)
 
+CIK_LOOKUP = Path("Data/edgar/cik-lookup-data.txt")
 QUARANTINE = Path("Data/edgar/ex21_cache_v4_quarantine")
 RUN_LOG = Path("outputs/rebuild_v4/213_run_log.md")
 
@@ -121,12 +122,23 @@ ERROR_MARKERS = (
 ROWS = []                    # completed verification rows, for the partial log on abort
 LAST = {"row": "(none reached)"}
 
-# `ex[-_ ]?21` and NOT `ex.?-?\s?21`. The wildcard let the "1" of "ex121" be consumed, so
-# dex121.htm (Exhibit 12.1, ratio of earnings to fixed charges) matched as an Exhibit 21.
-# News Corp's 2009 10-K contains dex121.htm, dex21.htm AND dex321.htm; the old pattern
-# matched all three and took the first in directory order, i.e. Exhibit 12.1. Fox then
-# came back UNVERIFIED because the wrong document was searched.
-EX21_RE = re.compile(r"ex[-_ ]?21", re.I)
+# FILENAME fallback only - the authoritative source is the document TYPE, see pick_ex21.
+#
+# Covers ex21 / ex-21 / exv21 / exhibit21 and the .1 variants, and never matches Exhibit
+# 12.1 or 32.1. Run 4 reported "no Exhibit 21" for six filings that all HAD one, because
+# the previous pattern required "21" to follow "ex" immediately: w47962exv21.htm,
+# a202210k-exhibit21q42022.htm, exhibit21-ihmedia2024q4.htm, gtes-exhibit211xq42022.htm
+# and a2017123110-kaexhibit21.htm were all missed.
+#
+# Broadening this is still not enough on its own: J.B. Hunt's Exhibit 21 is ex_174335.htm,
+# numbered sequentially with no exhibit number anywhere in the name. No filename rule can
+# find that one, which is why document type is the primary route.
+EX21_RE = re.compile(r"(?:exhibit|exv|ex)[-_ ]?21(?![0-9]{2})", re.I)
+
+# <DOCUMENT> blocks in the filing's SGML header carry the authoritative document type.
+DOCBLOCK_RE = re.compile(r"(?i)<DOCUMENT>")
+DOCTYPE_RE = re.compile(r"(?i)<TYPE>\s*([^\s<]+)")
+DOCNAME_RE = re.compile(r"(?i)<FILENAME>\s*([^\s<]+)")
 
 # Succession language. Naming the other firm is not enough: the SAME passage must also say
 # what the relationship IS, or any filing that merely mentions the other company verifies a
@@ -376,11 +388,47 @@ def filing_files(cik, accession):
 
 
 def find_ex21_name(names):
-    """The Exhibit 21 document among a filing's files, if it is there."""
+    """FALLBACK: the Exhibit 21 document by filename, if the name gives it away."""
     for n in names:
         if EX21_RE.search(n) and n.lower().endswith((".htm", ".html", ".txt")):
             return n
     return None
+
+
+def filing_doc_types(cik, accession):
+    """-> {filename: TYPE} from the filing's SGML header. {} if unavailable.
+
+    index.json is NOT a source for this: its "type" field holds the icon name EDGAR uses
+    in its directory listing ('text.gif', 'image2.gif'), not the document type. The
+    dissemination header is the only place the real type lives.
+    """
+    acc = str(accession)
+    url = (f"https://www.sec.gov/Archives/edgar/data/{int(cik)}/"
+           f"{acc.replace('-', '')}/{acc}-index-headers.html")
+    raw = fetch(url)
+    if raw is None:
+        return {}
+    text = html.unescape(raw.decode("utf-8", "replace"))
+    out = {}
+    for block in DOCBLOCK_RE.split(text)[1:]:
+        t, f = DOCTYPE_RE.search(block), DOCNAME_RE.search(block)
+        if t and f:
+            out.setdefault(f.group(1).strip(), t.group(1).strip().upper())
+    return out
+
+
+def pick_ex21(cik, accession, names):
+    """The Exhibit 21 document. -> (filename or None, how it was chosen).
+
+    Document TYPE first (EX-21, EX-21.1, ...), filename only as a fallback.
+    """
+    for fn, tp in filing_doc_types(cik, accession).items():
+        if tp.startswith("EX-21") and fn.lower().endswith((".htm", ".html", ".txt")):
+            return fn, f"document type {tp}"
+    fn = find_ex21_name(names)
+    if fn:
+        return fn, "filename pattern (no EX-21 document type found)"
+    return None, ""
 
 
 TAG_RE = re.compile(r"<[^>]+>")
@@ -523,6 +571,59 @@ def match_passage(name, passages):
     return None, None
 
 
+def lookup_ciks(names):
+    """SEC's historical name->CIK index, one pass. -> {name: (cik or None, basis)}.
+
+    company_tickers.json lists only CURRENT tickers, so a foreign parent with no US
+    listing (Volkswagen AG) and a parent that files under a different name from its
+    operating subsidiary (Activision Blizzard) never resolve through it.
+    cik-lookup-data.txt is the complete historical name index, 1.05 M lines of
+    "NAME:0000000000:".
+
+    The match is EXACT on the normalised token sequence AND must be unique, so
+    "Volkswagen AG" resolves while VOLKSWAGEN AUTO LEASE TRUST 2002-A and
+    VOLKSWAGEN A G /ADR/ cannot collide with it. An ambiguous name is NOT nominated.
+    Name knowledge only ever nominates; the Exhibit 21 still decides.
+    """
+    out = {}
+    if not names:
+        return out
+    if not CIK_LOOKUP.exists():
+        return {n: (None, f"{CIK_LOOKUP} not present") for n in names}
+    want = {}
+    for n in names:
+        k = tuple(norm213(n))
+        if k:
+            want.setdefault(k, []).append(n)
+    probes = {k[0] for k in want}          # cheap substring pre-filter over 40 MB
+    hits = {}
+    with open(CIK_LOOKUP, "r", encoding="latin-1", errors="replace") as fh:
+        for line in fh:
+            s = line.strip()
+            if not s.endswith(":"):
+                continue
+            up = s.upper()
+            if not any(p in up for p in probes):
+                continue
+            nm, _, cik = s[:-1].rpartition(":")
+            if not cik.isdigit():
+                continue
+            k = tuple(norm213(nm))
+            if k in want:
+                hits.setdefault(k, set()).add(int(cik))
+    for k, names_for_key in want.items():
+        found = hits.get(k, set())
+        if len(found) == 1:
+            val = (found.pop(), "SEC cik-lookup-data.txt exact unique name match")
+        elif not found:
+            val = (None, "no exact name match in cik-lookup-data.txt")
+        else:
+            val = (None, f"ambiguous in cik-lookup-data.txt: {len(found)} CIKs match")
+        for n in names_for_key:
+            out[n] = val
+    return out
+
+
 def ticker_to_cik():
     """SEC's own ticker -> CIK table, so a nominated parent is never a CIK from memory."""
     raw = fetch(TICKERS_URL)
@@ -562,7 +663,7 @@ def verify_subsidiary(parent_cik, sub_name, breach_date):
         return blank(reason=f"no 10-K within {WINDOW_DAYS} days of {breach_date}")
     acc, form = str(f["accessionNumber"]), str(f["form"])
     fdate = str(f["filingDate"])
-    ex = find_ex21_name(filing_files(parent_cik, acc))
+    ex, how = pick_ex21(parent_cik, acc, filing_files(parent_cik, acc))
     if not ex:
         return blank(reason="no Exhibit 21 in the nearest 10-K", accession=acc,
                      form=form, filing_date=fdate)
@@ -575,7 +676,7 @@ def verify_subsidiary(parent_cik, sub_name, breach_date):
     if not line:
         return blank(reason=f"Exhibit 21 does not list {sub_name!r}", accession=acc,
                      form=form, filing_date=fdate, document_url=url)
-    return blank(verdict="VERIFIED", reason="named in Exhibit 21", accession=acc,
+    return blank(verdict="VERIFIED", reason=f"named in Exhibit 21 ({how})", accession=acc,
                  form=form, filing_date=fdate, matching_line=line[:300],
                  shared_tokens=shared, document_url=url)
 
@@ -641,7 +742,7 @@ def permno_to_cik():
     return out
 
 
-def resolve_parent(row, noms, pn2cik, tick2cik):
+def resolve_parent(row, noms, pn2cik, tick2cik, name2cik=None):
     """-> (parent_cik or None, parent_name, how)."""
     ct = row["candidate_type"]
     if ct == "b_successor_cik":
@@ -658,13 +759,16 @@ def resolve_parent(row, noms, pn2cik, tick2cik):
         # the nomination file and the CIK from SEC's own table, so no CIK originates in
         # anybody's memory - and the Exhibit 21 still decides. Volkswagen (VWAGY) and
         # Activision (ATVI) reach a parent CIK only by this route.
+        nb = str(hit["basis"].iloc[0]) if "basis" in hit.columns else ""
         tick = hit["ticker"].dropna().astype(str).str.strip().str.upper()
         if len(tick) and tick.iloc[0] in tick2cik:
-            basis = str(hit["basis"].iloc[0]) if "basis" in hit.columns else ""
             return (tick2cik[tick.iloc[0]], pname,
                     f"NOMINATED: ticker {tick.iloc[0]} -> CIK via SEC "
-                    f"company_tickers.json; basis: {basis[:80]}")
-        return None, pname, "no parent_cik and no usable ticker in the nomination file"
+                    f"company_tickers.json; basis: {nb[:80]}")
+        cik, how = (name2cik or {}).get(pname, (None, "name lookup not attempted"))
+        if cik:
+            return cik, pname, f"NOMINATED: {how}; basis: {nb[:80]}"
+        return None, pname, f"no parent_cik, no usable ticker; {how}"
     pn = pd.to_numeric(pd.Series([row.get("crsp_permno")]), errors="coerce").iloc[0]
     if pd.isna(pn):
         return None, str(row.get("comnam_at_breach", "")), "no permno on the row"
@@ -686,7 +790,30 @@ def main():
     tick2cik = ticker_to_cik()
     base_ciks, _, _ = M211.load_base_ciks()
 
+    # Parents that reach no CIK through the nomination file or company_tickers.json get
+    # one chance at SEC's historical name index, resolved in a single pass.
+    need = set()
+    for _, r in cand.iterrows():
+        if r["candidate_type"] != "a_subsidiary":
+            continue
+        hit = noms[noms["cik"] == r["cik"]]
+        if len(pd.to_numeric(hit["parent_cik"], errors="coerce").dropna()):
+            continue
+        tk = hit["ticker"].dropna().astype(str).str.strip().str.upper()
+        if len(tk) and tk.iloc[0] in tick2cik:
+            continue
+        nm = str(r.get("candidate", "")).strip()
+        if nm and nm.lower() != "nan":
+            need.add(nm)
+    name2cik = lookup_ciks(need)
+
     bad = quarantine_bad_cache()
+    if need:
+        print(f"parents nominated from {CIK_LOOKUP.name}:")
+        for n in sorted(need):
+            c, b = name2cik.get(n, (None, ""))
+            print(f"    {n[:42]:<42} -> {c or 'UNRESOLVED'}  ({b})")
+        print()
     print(f"stage 3 worklist: {len(cand)} rows")
     print(f"already pulled  : {len(base_ciks)} CIKs")
     print(f"cache           : {CACHE}")
@@ -701,7 +828,7 @@ def main():
     for _, r in cand.iterrows():
         LAST["row"] = (f"{r['candidate_type']} cik {r['cik']} {r['org']} "
                        f"breach_date {r.get('breach_date', '')}")
-        pcik, pname, how = resolve_parent(r, noms, pn2cik, tick2cik)
+        pcik, pname, how = resolve_parent(r, noms, pn2cik, tick2cik, name2cik)
         if r["candidate_type"] == "b_successor_cik":
             res = verify_successor(int(r["cik"]), str(r["org"]), pcik, pname)
         else:
