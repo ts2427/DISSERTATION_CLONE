@@ -1,37 +1,37 @@
-final_cik,org,edgar,events,grp,candidate_type,candidate,confidence,shared_tokens,generic_only
-14745,"Brown, Lisle/Cummings, Inc.","BROWN, LISLE/CUMMINGS, INC.",1,control,b_successor_cik,"BROWN FORMAN CORP (gvkey 2435, cik 14693)",unverified,BROWN,False
-58696,Lennar Corporation,LENNAR CORP,1,control,b_successor_cik,"LENNAR CORP (gvkey 6669, cik 920760)",unverified,LENNAR,False
-72945,Northrop Grumman Systems Corporation,NORTHROP CORP,1,control,a_subsidiary,Northrop Grumman Corporation,,,False
-108772,Xerox Corporation,XEROX CORP,1,control,a_subsidiary,Xerox Holdings Corporation,,,False
-353394,"Leidos, Inc.","LEIDOS, INC.",1,control,a_subsidiary,"Leidos Holdings, Inc.",,,False
-813828,Paramount,,2,control,c_no_compustat,,,,False
-826083,Dell Inc.,DELL COMPUTER CORP,1,control,b_successor_cik,"DELL TECHNOLOGIES INC (gvkey 14489, cik 1571996)",unverified,DELL,False
-912752,"Sinclair Broadcast Group, Inc.",SINCLAIR BROADCAST GROUP INC,3,control,b_successor_cik,"SINCLAIR INC (gvkey 60800, cik 1971213)",unverified,SINCLAIR,False
-926480,The Walt Disney Company,,1,control,c_no_compustat,,,,False
-1000564,Communications & Power Industries LLC,COMMUNICATIONS & POWER INDUSTRIES INC,1,control,b_successor_cik,"ABM INDUSTRIES INC (gvkey 1410, cik 771497)",unverified,INDUSTRIES,True
-1091411,Sony Corporation of America,SONY CORP OF AMERICA,1,control,a_subsidiary,Sony Group Corporation,,,False
-1137785,Seagate US LLC,SEAGATE US LLC,2,control,a_subsidiary,Seagate Technology Holdings plc,,,False
-1145813,Fox Group,FOX GROUP INC,1,control,d_other,,,,False
-1168812,"HBP, Inc.",HBP INC,1,control,d_other,,,,False
-1205274,"Herbalife International of America, Inc.",HERBALIFE INTERNATIONAL OF AMERICA INC,1,control,a_subsidiary,Herbalife Ltd.,,,False
-1260451,Vulcan Industries,VULCAN INDUSTRIES INC,1,control,b_successor_cik,"ABM INDUSTRIES INC (gvkey 1410, cik 771497)",unverified,INDUSTRIES,True
-1283246,International Paper Company,INTERNATIONAL PAPER CO,1,control,b_successor_cik,"HONEYWELL INTERNATIONAL INC (gvkey 1300, cik 773840)",unverified,INTERNATIONAL,True
-1288776,"Google, Inc.",,1,control,c_no_compustat,,,,False
-1387793,"T. Rowe Price Retirement Plan Services, Inc.","T. ROWE PRICE RETIREMENT PLAN SERVICES, INC.",2,control,a_subsidiary,"T. Rowe Price Group, Inc.",,,False
-1396897,"NCO Financial Systems, Inc.","NCO FINANCIAL SYSTEMS, INC.",1,control,b_successor_cik,"CISCO SYSTEMS INC (gvkey 20779, cik 858877)",unverified,SYSTEMS,True
-1431473,Uber,UBER INC,1,control,b_successor_cik,"UBER TECHNOLOGIES INC (gvkey 35077, cik 1543151)",unverified,UBER,False
-1457738,"iHeartMedia + Entertainment, Inc.","CLEAR CHANNEL BROADCASTING, INC.",2,control,a_subsidiary,"iHeartMedia, Inc.",,,False
-1497060,Capital Integration Systems LLC,CAPITAL INTEGRATION SYSTEMS LLC,1,control,b_successor_cik,"CISCO SYSTEMS INC (gvkey 20779, cik 858877)",unverified,SYSTEMS,True
-1501362,"J.B. Hunt Transport, Inc.","J.B. HUNT TRANSPORT, INC.",2,control,a_subsidiary,"J.B. Hunt Transport Services, Inc.",,,False
-1516658,Gates Corporation,GATES CORP,2,control,a_subsidiary,Gates Industrial Corporation plc,,,False
-1558044,"Professional Compounding Centers of America, Inc.","PROFESSIONAL COMPOUNDING CENTERS OF AMERICA, INC.",1,control,d_other,,,,False
-1560142,EatStreet,"EATSTREET, INC.",1,control,d_other,,,,False
-1567336,Mediant Communications Inc.,MEDIANT COMMUNICATIONS INC.,1,control,b_successor_cik,"VERIZON COMMUNICATIONS INC (gvkey 2136, cik 732712)",unverified,COMMUNICATIONS,True
-1570434,Prime Communications,PRIME COMMUNICATIONS INC,1,control,b_successor_cik,"VERIZON COMMUNICATIONS INC (gvkey 2136, cik 732712)",unverified,COMMUNICATIONS,True
-1673769,"IMA Financial Group, Inc.",,1,control,b_successor_cik,"COREBRIDGE FINANCIAL INC (gvkey 41084, cik 1889539)",unverified,FINANCIAL,True
-1691249,"The iRemedy Healthcare Companies, Inc.","IREMEDY HEALTHCARE COMPANIES, INC.",1,control,b_successor_cik,"NEXTGEN HEALTHCARE INC (gvkey 8858, cik 708818)",unverified,HEALTHCARE,True
-1808065,Aon Corporation PLC,,2,control,b_successor_cik,"AON PLC (gvkey 3221, cik 315293)",unverified,AON,False
-1826210,KeraLink International,"KERALINK INTERNATIONAL, INC.",1,control,b_successor_cik,"HONEYWELL INTERNATIONAL INC (gvkey 1300, cik 773840)",unverified,INTERNATIONAL,True
-1834695,"Volkswagen Group of America, Inc.","VOLKSWAGEN GROUP OF AMERICA, INC.",1,control,a_subsidiary,Volkswagen AG,,,False
-1870564,"Activision Publishing, Inc.","ACTIVISION PUBLISHING, INC.",2,control,a_subsidiary,"Activision Blizzard, Inc.",,,False
-1984463,"Warn Industries, Inc.","WARN INDUSTRIES, INC.",1,control,a_subsidiary,Dover Corporation,,,False
+final_cik,org,edgar,events,grp,candidate_type,candidate,confidence,shared_tokens,generic_only,note
+14745,"Brown, Lisle/Cummings, Inc.","BROWN, LISLE/CUMMINGS, INC.",1,control,b_successor_cik,"BROWN FORMAN CORP (gvkey 2435, cik 14693)",unverified,BROWN,False,
+58696,Lennar Corporation,LENNAR CORP,1,control,b_successor_cik,"LENNAR CORP (gvkey 6669, cik 920760)",unverified,LENNAR,False,
+72945,Northrop Grumman Systems Corporation,NORTHROP CORP,1,control,a_subsidiary,Northrop Grumman Corporation,,,False,
+108772,Xerox Corporation,XEROX CORP,1,control,a_subsidiary,Xerox Holdings Corporation,,,False,
+353394,"Leidos, Inc.","LEIDOS, INC.",1,control,a_subsidiary,"Leidos Holdings, Inc.",,,False,
+813828,Paramount,,2,control,c_no_compustat,,,,False,
+826083,Dell Inc.,DELL COMPUTER CORP,1,control,b_successor_cik,"DELL TECHNOLOGIES INC (gvkey 14489, cik 1571996)",unverified,DELL,False,
+912752,"Sinclair Broadcast Group, Inc.",SINCLAIR BROADCAST GROUP INC,3,control,b_successor_cik,"SINCLAIR INC (gvkey 60800, cik 1971213)",unverified,SINCLAIR,False,
+926480,The Walt Disney Company,,1,control,c_no_compustat,,,,False,
+1000564,Communications & Power Industries LLC,COMMUNICATIONS & POWER INDUSTRIES INC,1,control,c_no_compustat,,,INDUSTRIES,True,"nomination rested only on an industry word: rejected ABM INDUSTRIES INC (gvkey 1410, cik 771497) on INDUSTRIES"
+1091411,Sony Corporation of America,SONY CORP OF AMERICA,1,control,a_subsidiary,Sony Group Corporation,,,False,
+1137785,Seagate US LLC,SEAGATE US LLC,2,control,a_subsidiary,Seagate Technology Holdings plc,,,False,
+1145813,Fox Group,FOX GROUP INC,1,control,d_other,,,,False,
+1168812,"HBP, Inc.",HBP INC,1,control,d_other,,,,False,
+1205274,"Herbalife International of America, Inc.",HERBALIFE INTERNATIONAL OF AMERICA INC,1,control,a_subsidiary,Herbalife Ltd.,,,False,
+1260451,Vulcan Industries,VULCAN INDUSTRIES INC,1,control,c_no_compustat,,,INDUSTRIES,True,"nomination rested only on an industry word: rejected ABM INDUSTRIES INC (gvkey 1410, cik 771497) on INDUSTRIES"
+1283246,International Paper Company,INTERNATIONAL PAPER CO,1,control,c_no_compustat,,,INTERNATIONAL,True,"nomination rested only on an industry word: rejected HONEYWELL INTERNATIONAL INC (gvkey 1300, cik 773840) on INTERNATIONAL"
+1288776,"Google, Inc.",,1,control,c_no_compustat,,,,False,
+1387793,"T. Rowe Price Retirement Plan Services, Inc.","T. ROWE PRICE RETIREMENT PLAN SERVICES, INC.",2,control,a_subsidiary,"T. Rowe Price Group, Inc.",,,False,
+1396897,"NCO Financial Systems, Inc.","NCO FINANCIAL SYSTEMS, INC.",1,control,c_no_compustat,,,SYSTEMS,True,"nomination rested only on an industry word: rejected CISCO SYSTEMS INC (gvkey 20779, cik 858877) on SYSTEMS"
+1431473,Uber,UBER INC,1,control,b_successor_cik,"UBER TECHNOLOGIES INC (gvkey 35077, cik 1543151)",unverified,UBER,False,
+1457738,"iHeartMedia + Entertainment, Inc.","CLEAR CHANNEL BROADCASTING, INC.",2,control,a_subsidiary,"iHeartMedia, Inc.",,,False,
+1497060,Capital Integration Systems LLC,CAPITAL INTEGRATION SYSTEMS LLC,1,control,c_no_compustat,,,SYSTEMS,True,"nomination rested only on an industry word: rejected CISCO SYSTEMS INC (gvkey 20779, cik 858877) on SYSTEMS"
+1501362,"J.B. Hunt Transport, Inc.","J.B. HUNT TRANSPORT, INC.",2,control,a_subsidiary,"J.B. Hunt Transport Services, Inc.",,,False,
+1516658,Gates Corporation,GATES CORP,2,control,a_subsidiary,Gates Industrial Corporation plc,,,False,
+1558044,"Professional Compounding Centers of America, Inc.","PROFESSIONAL COMPOUNDING CENTERS OF AMERICA, INC.",1,control,d_other,,,,False,
+1560142,EatStreet,"EATSTREET, INC.",1,control,d_other,,,,False,
+1567336,Mediant Communications Inc.,MEDIANT COMMUNICATIONS INC.,1,control,c_no_compustat,,,COMMUNICATIONS,True,"nomination rested only on an industry word: rejected VERIZON COMMUNICATIONS INC (gvkey 2136, cik 732712) on COMMUNICATIONS"
+1570434,Prime Communications,PRIME COMMUNICATIONS INC,1,control,c_no_compustat,,,COMMUNICATIONS,True,"nomination rested only on an industry word: rejected VERIZON COMMUNICATIONS INC (gvkey 2136, cik 732712) on COMMUNICATIONS"
+1673769,"IMA Financial Group, Inc.",,1,control,c_no_compustat,,,FINANCIAL,True,"nomination rested only on an industry word: rejected COREBRIDGE FINANCIAL INC (gvkey 41084, cik 1889539) on FINANCIAL"
+1691249,"The iRemedy Healthcare Companies, Inc.","IREMEDY HEALTHCARE COMPANIES, INC.",1,control,c_no_compustat,,,HEALTHCARE,True,"nomination rested only on an industry word: rejected NEXTGEN HEALTHCARE INC (gvkey 8858, cik 708818) on HEALTHCARE"
+1808065,Aon Corporation PLC,,2,control,b_successor_cik,"AON PLC (gvkey 3221, cik 315293)",unverified,AON,False,
+1826210,KeraLink International,"KERALINK INTERNATIONAL, INC.",1,control,c_no_compustat,,,INTERNATIONAL,True,"nomination rested only on an industry word: rejected HONEYWELL INTERNATIONAL INC (gvkey 1300, cik 773840) on INTERNATIONAL"
+1834695,"Volkswagen Group of America, Inc.","VOLKSWAGEN GROUP OF AMERICA, INC.",1,control,a_subsidiary,Volkswagen AG,,,False,
+1870564,"Activision Publishing, Inc.","ACTIVISION PUBLISHING, INC.",2,control,a_subsidiary,"Activision Blizzard, Inc.",,,False,
+1984463,"Warn Industries, Inc.","WARN INDUSTRIES, INC.",1,control,a_subsidiary,Dover Corporation,,,False,

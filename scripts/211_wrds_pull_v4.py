@@ -84,7 +84,8 @@ START_DATE = "2005-01-01"
 CHUNK = 500
 
 CANON = Path("Data/processed/rebuild/CANONICAL_V3.csv")
-NOMS = Path("outputs/essay3_q2/crsp_drop_nominations.csv")
+# The committed copy, not outputs/essay3_q2/ (which stays untracked). Missing ABORTS.
+NOMS = Path("outputs/rebuild_v4/inputs/crsp_drop_nominations.csv")
 
 SENTINEL_CIKS = {1283699: "T-Mobile", 732717: "AT&T", 101830: "Sprint"}
 MIN_HIT_RATE = 0.50
@@ -379,6 +380,24 @@ def run_pull(db, ciks):
     return files
 
 
+def load_base_ciks():
+    """CANONICAL_V3 CIKs plus nominated parent CIKs -> (ciks, n_canon, n_nom).
+
+    BOTH inputs are required. A missing nomination file used to be tolerated, which meant
+    a clean clone would quietly pull a smaller CIK universe than the one behind the
+    committed outputs - a silent, invisible difference. It now aborts.
+    """
+    missing = [str(p) for p in (CANON, NOMS) if not p.exists()]
+    if missing:
+        sys.exit("missing input file(s); refusing to pull with partial inputs:\n  "
+                 + "\n  ".join(missing))
+    ciks = {int(c) for c in pd.read_csv(CANON, low_memory=False)["final_cik"].dropna()}
+    n_canon = len(ciks)
+    pc = pd.to_numeric(pd.read_csv(NOMS)["parent_cik"], errors="coerce").dropna()
+    nom = {int(c) for c in pc}
+    return ciks | nom, n_canon, len(nom - ciks)
+
+
 def main():
     ap = argparse.ArgumentParser(description="REBUILD V4 Stage 1 WRDS pull (CUSIP route)")
     ap.add_argument("--extra-ciks", metavar="FILE",
@@ -403,15 +422,7 @@ def main():
         if not ciks:
             sys.exit("--extra-ciks resolved to an empty CIK list")
     else:
-        if not CANON.exists():
-            sys.exit(f"missing input: {CANON}")
-        ciks = {int(c) for c in pd.read_csv(CANON, low_memory=False)["final_cik"].dropna()}
-        n_canon = len(ciks)
-        if NOMS.exists():
-            pc = pd.to_numeric(pd.read_csv(NOMS)["parent_cik"], errors="coerce").dropna()
-            nom = {int(c) for c in pc}
-            n_nom = len(nom - ciks)
-            ciks |= nom
+        ciks, n_canon, n_nom = load_base_ciks()
     ciks = sorted(ciks)
 
     started = datetime.now(timezone.utc)

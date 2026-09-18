@@ -55,11 +55,11 @@ they intersect. If either is empty, match iff the full normalised sequences are 
 
 The same names_match is applied to cusip_ncusip links REPORT-ONLY: no ncusip link is
 ever excluded on a name mismatch, but every one is listed with its final_evidence,
-because a mismatch there means the CUSIP is right and the name is not. Where
-final_evidence already documents a parent or successor relationship (a Gate 2 note, a
-re-parenting, a merger), the mismatch is explained. Where it does not, the event is
-written to stage3_candidates.csv as `ncusip_name_mismatch`: the link stands, but the
-identity is unexplained and a human should look.
+because a mismatch there means the CUSIP is right and the name is not. A mismatch is
+EXPLAINED iff final_evidence carries a Gate 1 or Gate 2 verdict or an EDGAR confirmation
+— i.e. the v3 chain already adjudicated the identity. Otherwise the event is written to
+stage3_candidates.csv as `ncusip_name_mismatch`: the link stands, but the identity is
+unadjudicated and a human should look.
 
 WHAT THE MATCHES REST ON
 ------------------------
@@ -70,10 +70,13 @@ words (GENERIC_TOKENS) is FLAGGED in the report. Flagging changes nothing: the r
 unchanged and no flagged row is excluded. It exists so the weak matches are visible
 before anyone decides whether the rule should tighten.
 
-Reads only Data/wrds_v4/*.csv, CANONICAL_V3, crsp_drop_nominations.csv.
+Reads only Data/wrds_v4/*.csv, CANONICAL_V3, and the COMMITTED nomination copy at
+outputs/rebuild_v4/inputs/crsp_drop_nominations.csv. Every input is required: a missing
+file aborts, so a clean clone either reproduces this exactly or fails loudly.
 Writes only outputs/rebuild_v4/212_*.csv, stage3_candidates.csv, 212_link_report.md.
 Touches no v3 path.
 """
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -83,7 +86,9 @@ import pandas as pd
 W = Path("Data/wrds_v4")
 OUT = Path("outputs/rebuild_v4")
 CANON = Path("Data/processed/rebuild/CANONICAL_V3.csv")
-NOMS = Path("outputs/essay3_q2/crsp_drop_nominations.csv")
+# The committed copy, not outputs/essay3_q2/. The essay3_q2 original stays untracked, so
+# a clean clone could not reproduce the no-gvkey classification from it. Missing ABORTS.
+NOMS = Path("outputs/rebuild_v4/inputs/crsp_drop_nominations.csv")
 
 TMOBILE_CIK, TMOBILE_CUTOFF = 1283699, pd.Timestamp("2013-04-29")
 SPRINT_CIK, SPRINT_CUTOFF = 101830, pd.Timestamp("2013-07-12")
@@ -111,11 +116,12 @@ GENERIC_TOKENS = {
     "SOLUTIONS", "NETWORKS", "MEDIA", "ENERGY", "GENERAL", "UNITED", "FIRST",
 }
 
-# Upstream evidence that a parent/subsidiary or successor relationship is already
-# documented in the v3 chain. A name mismatch carrying one of these is explained; a
-# mismatch carrying none is a Stage 3 candidate.
-UPSTREAM_MARKERS = ("GATE2", "GATE 2", "SUBSIDIAR", "PARENT", "RE-PARENT", "REPARENT",
-                    "SUCCESSOR", "MERGER", "ACQUIR", "SPUN", "SPIN")
+# A name mismatch is EXPLAINED iff the v3 chain already adjudicated the identity: any
+# Gate 1 or Gate 2 verdict, or an EDGAR confirmation. The previous keyword list
+# ("parent", "subsidiary", "merger") was a bad proxy - it recognised Gate2 wording but
+# missed Gate1-B/E/G rescues that are equally adjudicated, so it reported 34 unexplained
+# mismatches when almost none were.
+GATE_RE = re.compile(r"GATE\s*-?\s*[12]\b")
 
 LOG = []
 
@@ -134,21 +140,55 @@ def md(df, floatfmt=None):
     return "\n".join(out)
 
 
+def join_initial_runs(toks):
+    """A T T -> ATT; E M C -> EMC; SIRIUS X M RADIO -> SIRIUS XM RADIO.
+
+    CRSP writes initialisms letter-spaced ("A T & T INC", "E M C CORP MA") while the PRC
+    org string does not ("AT&T", "EMC Corporation"). Without this, every such pair
+    tokenises to single letters, no token reaches SIGNIFICANT_LEN, and the comparison
+    falls through to exact-sequence equality and fails on a firm matching itself.
+    """
+    out, run = [], []
+    for t in toks:
+        if len(t) == 1:
+            run.append(t)
+            continue
+        if run:
+            out.append("".join(run))
+            run = []
+        out.append(t)
+    if run:
+        out.append("".join(run))
+    return out
+
+
 def norm_tokens(name):
     if name is None or (isinstance(name, float) and pd.isna(name)):
         return []
     s = "".join(ch if ch.isalnum() else " " for ch in str(name).upper())
-    return [t for t in s.split() if t and t not in LEGAL_TOKENS]
+    return join_initial_runs([t for t in s.split() if t and t not in LEGAL_TOKENS])
 
 
 def name_overlap(a, b):
-    """-> (matched, shared_tokens). Same rule as names_match, but shows its working."""
+    """-> (matched, shared_tokens). Same rule as names_match, but shows its working.
+
+    1. significant tokens (len >= 4) on both sides that intersect
+    2. else equal space-stripped concatenations ("TimeWarner" vs "TIME WARNER INC NEW",
+       "AT&T" -> AT|T vs "A T & T INC" -> ATT; both concatenate to ATT)
+    3. else, when either side has no significant token, exact sequence equality
+    """
     ta, tb = norm_tokens(a), norm_tokens(b)
     sa = {t for t in ta if len(t) >= SIGNIFICANT_LEN}
     sb = {t for t in tb if len(t) >= SIGNIFICANT_LEN}
     if sa and sb:
         shared = sa & sb
-        return bool(shared), shared
+        if shared:
+            return True, shared
+    ca, cb = "".join(ta), "".join(tb)
+    if ca and ca == cb:
+        return True, {ca}
+    if sa and sb:
+        return False, set()
     eq = (ta == tb) and bool(ta)
     return eq, set(ta) if eq else set()
 
@@ -173,12 +213,25 @@ def generic_only(shared):
     return bool(shared) and set(shared) <= GENERIC_TOKENS
 
 
-def has_upstream_note(evidence):
+def documented_identity(evidence):
+    """True iff final_evidence carries a Gate 1 / Gate 2 verdict or an EDGAR confirmation.
+
+    That is the whole test. An identity the v3 chain adjudicated is explained, however it
+    worded the verdict; anything else is a Stage 3 candidate regardless of how plausible
+    the relationship looks to a reader.
+    """
     e = str(evidence).upper()
-    return any(m in e for m in UPSTREAM_MARKERS)
+    return bool(GATE_RE.search(e)) or "EDGAR" in e
 
 
 def main():
+    missing = [str(p) for p in (CANON, NOMS,
+                                W / "comp_company.csv", W / "comp_security.csv",
+                                W / "crsp_stocknames.csv") if not p.exists()]
+    if missing:
+        sys.exit("missing input file(s); refusing to run with partial inputs:\n  "
+                 + "\n  ".join(missing))
+
     ev = pd.read_csv(CANON, low_memory=False)
     ev["bdt"] = pd.to_datetime(ev["breach_date"], errors="coerce")
     ev["grp"] = ev["fcc_form499"].map({1: "treated", 0: "control"})
@@ -377,18 +430,27 @@ def main():
         f"the name differs, not that the security is wrong.")
     log("")
     nc_bad = nc_bad.copy()
-    nc_bad["upstream_note"] = nc_bad["final_evidence"].apply(has_upstream_note)
+    nc_bad["documented"] = nc_bad["final_evidence"].apply(documented_identity)
     if len(nc_bad):
-        log(md(nc_bad[["final_cik", "org_name", "comnam", "permno", "upstream_note",
+        log(md(nc_bad[["final_cik", "org_name", "comnam", "permno", "documented",
                        "final_evidence"]].drop_duplicates(["final_cik", "comnam"])))
     log("")
-    nc_s3 = nc_bad[~nc_bad["upstream_note"]]
-    log(f"Of these, **{int(nc_bad['upstream_note'].sum())}** carry an upstream documented "
-        f"parent/successor relationship in `final_evidence` (the name differs because the "
-        f"v3 chain already re-parented the event, and says so). The remaining "
-        f"**{len(nc_s3)}** have no such note and go to `stage3_candidates.csv` as "
-        f"`ncusip_name_mismatch` — the link stands, but the identity is unexplained.")
+    nc_s3 = nc_bad[~nc_bad["documented"]]
+    log(f"**{int(nc_bad['documented'].sum())}** of the {len(nc_bad)} carry a Gate 1 or "
+        f"Gate 2 verdict or an EDGAR confirmation in `final_evidence`: the v3 chain already "
+        f"adjudicated the identity, so the differing name is explained. The remaining "
+        f"**{len(nc_s3)}** carry neither and go to `stage3_candidates.csv` as "
+        f"`ncusip_name_mismatch` — the link stands, but the identity is unadjudicated.")
     log("")
+    # The table above is de-duplicated on (final_cik, comnam) to keep it readable, which
+    # can HIDE an unadjudicated row behind an adjudicated one sharing the same CIK and
+    # CRSP name. The Stage 3 rows are therefore listed in full, no de-duplication.
+    if len(nc_s3):
+        log(f"### The {len(nc_s3)} unadjudicated mismatch(es), in full")
+        log("")
+        log(md(nc_s3[["final_cik", "org_name", "comnam", "breach_date", "permno",
+                      "final_evidence"]]))
+        log("")
 
     # ---------- v3 agreement ----------
     log("## Agreement with v3")
@@ -427,28 +489,37 @@ def main():
         org=("org_name", "first"), edgar=("edgar", "first"),
         events=("org_name", "size"), grp=("grp", "first")).reset_index()
     nomap = {}
-    if NOMS.exists():
-        nm = pd.read_csv(NOMS)
-        for _, r in nm.dropna(subset=["cik"]).iterrows():
-            nomap.setdefault(int(r["cik"]), (r.get("parent"), str(r.get("basis", ""))))
+    nm = pd.read_csv(NOMS)
+    for _, r in nm.dropna(subset=["cik"]).iterrows():
+        nomap.setdefault(int(r["cik"]), (r.get("parent"), str(r.get("basis", ""))))
     conm = comp[["gvkey", "cik_int", "conm"]].dropna(subset=["conm"])
+
+    GENERIC_NOTE = "nomination rested only on an industry word"
 
     def classify(cik, org, edgar):
         par, basis = nomap.get(int(cik), (None, ""))
         if par and basis.startswith("name knowledge"):
-            return "a_subsidiary", par, "", "", False
+            return "a_subsidiary", par, "", "", False, ""
         for _, cr in conm.iterrows():
             ok, shared, _ = best_overlap(cr["conm"], org, edgar)
             if ok and cr["cik_int"] != cik:
-                return ("b_successor_cik",
-                        f"{cr['conm']} (gvkey {cr['gvkey']}, cik {int(cr['cik_int'])})",
-                        "unverified", "|".join(sorted(shared)), generic_only(shared))
+                cand = f"{cr['conm']} (gvkey {cr['gvkey']}, cik {int(cr['cik_int'])})"
+                toks = "|".join(sorted(shared))
+                if generic_only(shared):
+                    # A shared industry word is not evidence of succession. The match is
+                    # recorded in the note and the CIK falls through to c_no_compustat;
+                    # it is NOT nominated and does NOT reach stage3_candidates.csv.
+                    return ("c_no_compustat", "", "", toks, True,
+                            f"{GENERIC_NOTE}: rejected {cand} on {toks}")
+                return "b_successor_cik", cand, "unverified", toks, False, ""
         if par and basis.startswith("self"):
-            return "c_no_compustat", par, "", "", False
-        return ("c_no_compustat", "", "", "", False) if not par else ("d_other", par, "", "", False)
+            return "c_no_compustat", par, "", "", False, ""
+        return (("c_no_compustat", "", "", "", False, "") if not par
+                else ("d_other", par, "", "", False, ""))
 
-    nog[["candidate_type", "candidate", "confidence", "shared_tokens", "generic_only"]] = \
-        nog.apply(lambda r: pd.Series(classify(r["final_cik"], r["org"], r["edgar"])), axis=1)
+    nog[["candidate_type", "candidate", "confidence", "shared_tokens", "generic_only",
+         "note"]] = nog.apply(
+        lambda r: pd.Series(classify(r["final_cik"], r["org"], r["edgar"])), axis=1)
     log(md(nog["candidate_type"].value_counts().rename_axis("type").reset_index(name="CIKs")))
     log("")
     log(md(nog[["final_cik", "org", "grp", "events", "candidate_type", "candidate",
@@ -470,19 +541,25 @@ def main():
     log(md(ha))
     log("")
     bn = nog[nog["candidate_type"] == "b_successor_cik"][
-        ["final_cik", "org", "candidate", "shared_tokens", "generic_only"]]
-    log("### b_successor_cik nominations")
+        ["final_cik", "org", "candidate", "shared_tokens"]]
+    log("### b_successor_cik nominations that survive")
     log("")
-    log(md(bn))
+    log(md(bn) if len(bn) else "None.")
+    log("")
+    rc = nog[nog["generic_only"].eq(True)][
+        ["final_cik", "org", "grp", "events", "candidate_type", "shared_tokens", "note"]]
+    log(f"### Reclassified to c_no_compustat — {GENERIC_NOTE} ({len(rc)})")
+    log("")
+    log("These are not nominations and do NOT reach `stage3_candidates.csv`. The rejected "
+        "candidate is kept in `note` so the decision is auditable.")
+    log("")
+    log(md(rc) if len(rc) else "None.")
     log("")
     flag_h = ha[ha["generic_only"].eq(True)]
-    flag_b = bn[bn["generic_only"].eq(True)]
-    log(f"### FLAGGED: matched on generic tokens only — {len(flag_h)} header accept(s), "
-        f"{len(flag_b)} successor nomination(s)")
+    log(f"### Header accepts resting on generic tokens only — {len(flag_h)}")
     log("")
-    log(md(flag_h) if len(flag_h) else "No header accept rests on generic tokens alone.")
-    log("")
-    log(md(flag_b) if len(flag_b) else "No successor nomination rests on generic tokens alone.")
+    log(md(flag_h) if len(flag_h)
+        else "None: every header accept shares a real identity token.")
     log("")
 
     # ---------- unmatched common-USA CUSIPs ----------
@@ -514,8 +591,8 @@ def main():
                        crsp_permno=r["permno"], comnam_at_breach=r["comnam"],
                        candidate="", confidence="", shared_tokens="", generic_only=False,
                        reason="ncusip link accepted; CRSP name matches neither the org "
-                              "string nor the EDGAR name, and no upstream parent or "
-                              "successor relationship is documented in final_evidence"))
+                              "string nor the EDGAR name, and final_evidence carries no "
+                              "Gate 1 / Gate 2 verdict and no EDGAR confirmation"))
     S3 = pd.DataFrame(s3)
     log("## Stage 3 candidates")
     log("")
