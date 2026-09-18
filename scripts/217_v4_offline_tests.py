@@ -606,7 +606,25 @@ fal = m213.document_aliases(NAME, FALSE_ALIAS)
 a7 = (fal == {"SBG"})
 print(f"  {'PASS' if a7 else 'FAIL'} | only the adjacent term is an alias: {sorted(fal)} "
       f"(must be ['SBG'], NOT 'Share Exchange Agreement')")
-results.append(all([a1, a2, a3, a4, a5, a6, a7]))
+# the STRONGEST succession phrase wins, even when a weaker one comes first
+ORDER_DOC = [
+    'Sinclair Broadcast Group, Inc., a Maryland corporation (“SBG”), did things.',
+    'The purpose of the transactions was to effect a holding company reorganization in '
+    'which New Sinclair would become the publicly-traded parent of SBG.',
+    'Following the Share Exchange, New Sinclair became the successor issuer to SBG '
+    'pursuant to Exchange Act Rule 12g-3(a).']
+oal = m213.document_aliases(NAME, ORDER_DOC)
+op, oev = m213.match_passage(NAME, ORDER_DOC, oal)
+a8 = (op == ORDER_DOC[2])
+print(f"  {'PASS' if a8 else 'FAIL'} | strongest phrase wins over document order -> "
+      f"{'successor issuer passage' if a8 else op}")
+# and a weak-only document still verifies on the weak passage
+WEAK_ONLY = [ORDER_DOC[0], ORDER_DOC[1]]
+wp, _ = m213.match_passage(NAME, WEAK_ONLY, m213.document_aliases(NAME, WEAK_ONLY))
+a9 = (wp == ORDER_DOC[1])
+print(f"  {'PASS' if a9 else 'FAIL'} | weak-only document still verifies on the weak "
+      f"passage")
+results.append(all([a1, a2, a3, a4, a5, a6, a7, a8, a9]))
 
 print(f"\n{'='*70}\nTEST: 213 Exhibit 21 selection by DOCUMENT TYPE\n{'='*70}")
 JBH_CIK, JBH_ACC = 728535, "0001437749-20-004119"

@@ -153,6 +153,15 @@ SUCCESSION_RE = re.compile(
     r"successor\s+issuer|successor\s+registrant|predecessor\s+registrant|"
     r"rule\s*12\s*g-?\s*3|holding\s+company\s+reorgani[sz]ation", re.I)
 
+# Not all succession language is equally probative. "successor issuer" and Rule 12g-3 name
+# the registrant relationship itself; "holding company reorganization" describes the
+# transaction that produced it. A passage carrying the former wins over one carrying only
+# the latter, and document order only breaks ties among equals. Sinclair's 8-K says
+# "holding company reorganization" at passage 83 and "became the successor issuer to SBG
+# ... pursuant to Exchange Act Rule 12g-3(a)" at passage 106; the second is the evidence.
+STRONG_SUCCESSION_RE = re.compile(
+    r"successor\s+issuer|successor\s+registrant|rule\s*12\s*g-?\s*3", re.I)
+
 # Dropped from both sides before comparing, on top of M212's legal-suffix tokens.
 STOPWORDS = {"OF", "AND", "FOR"}
 
@@ -660,12 +669,21 @@ def match_line(name, lines):
 
 
 def match_passage(name, passages, aliases=()):
-    """First passage naming `name` AND carrying succession language. -> (passage, ev)."""
+    """Best passage naming `name` AND carrying succession language. -> (passage, ev).
+
+    Strongest phrase wins; document order only breaks ties. A weak match is held and
+    returned only if the whole document yields nothing stronger.
+    """
+    weak = None
     for p in passages:
         ok, ev = passage_names_aliased(name, p, aliases)
-        if ok and SUCCESSION_RE.search(p):
+        if not (ok and SUCCESSION_RE.search(p)):
+            continue
+        if STRONG_SUCCESSION_RE.search(p):
             return p, ev
-    return None, None
+        if weak is None:
+            weak = (p, ev)
+    return weak if weak else (None, None)
 
 
 def lookup_ciks(names):
