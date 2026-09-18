@@ -24,13 +24,20 @@ ncusip_name_mismatch, whose CUSIP link is sound but whose identity is unadjudica
 This script NEVER writes a link, a permno or an inclusion decision; it only produces
 evidence for one.
 
-ONE ADDITION TO THE MATCH RULE, FLAGGED
----------------------------------------
-A line matches under Stage 2's normalisation, AND the shared token must not be an
-industry word alone. Without that, "Prime Communications" would verify against any line
-reading "<anything> Communications Inc." in Verizon's Exhibit 21 - the exact false
-positive that got 10 nominations reclassified. Every match records its shared tokens so
-the decision is auditable, and the condition can be dropped by deleting one clause.
+THE MATCH RULE
+--------------
+Exhibit 21 (a LIST): the line's token sequence must BEGIN WITH the firm's complete token
+sequence, every token of any length, after leading numbering or bullets are stripped and
+legal suffixes and stopwords (OF/AND/FOR) are dropped from both sides.
+
+Succession passages (PROSE): every token of the firm's name must appear somewhere in the
+passage, and the same passage must carry succession language.
+
+Neither rule uses token-overlap scoring. Run 1 accepted a single shared token and
+verified a surname (BROWN) and an industry word (POWER) as proof of corporate
+succession; run 3 accepted "all tokens of length >= 4" and verified Fox against
+"Fortune Star Entertainment (HK) Limited" on ENTERTAINMENT, because FOX is three
+characters and was therefore not required at all.
 
 WHERE THE PARENT CIK COMES FROM (never from name recognition)
 -------------------------------------------------------------
@@ -125,14 +132,22 @@ EX21_RE = re.compile(r"ex[-_ ]?21", re.I)
 # what the relationship IS, or any filing that merely mentions the other company verifies a
 # succession.
 #
-# "merger" and "merged" are deliberately NOT here. Merger language appears in ordinary 8-Ks
-# announcing acquisitions that create no successor-registrant relationship at all, so
-# accepting it would readmit exactly the 2026 filings that made run 1 invalid. A succession
-# is a specific act - one registrant standing in another's place - and it is described in
-# specific words.
+# Bare "successor" is NOT here, and neither is "merger". Run 3 verified Lennar on an
+# indenture notice reading "The Bank of New York Mellon (as successor trustee)" - trustee
+# succession, not corporate succession - and merger language appears in ordinary
+# acquisition 8-Ks that create no successor registrant at all. The phrase has to be about
+# one REGISTRANT standing in another's place.
 SUCCESSION_RE = re.compile(
-    r"successor|predecessor|holding\s+company\s+reorgani[sz]ation|"
-    r"rule\s*12\s*g-?\s*3|12\s*g-?\s*3", re.I)
+    r"successor\s+issuer|successor\s+registrant|predecessor\s+registrant|"
+    r"rule\s*12\s*g-?\s*3|holding\s+company\s+reorgani[sz]ation", re.I)
+
+# Dropped from both sides before comparing, on top of M212's legal-suffix tokens.
+STOPWORDS = {"OF", "AND", "FOR"}
+
+# Leading numbering or bullets on an Exhibit 21 line: "1.", "(12)", "-", "*". Deliberately
+# requires a digit to be followed by "." or ")" so that "21st Century Fox Film Corporation"
+# keeps its leading 21.
+LEAD_RE = re.compile(r"^\s*(?:[-–—•*·]+\s*|\(?\d{1,3}[.)]\s+)")
 
 TICKERS_URL = "https://www.sec.gov/files/company_tickers.json"
 CIK_IN_CAND = re.compile(r"cik\s+(\d+)", re.I)
@@ -381,35 +396,59 @@ def to_lines(raw):
     return out
 
 
-def line_names(name, line):
-    """Does this ONE line actually name `name`? -> (bool, evidence_tokens).
+def norm213(text):
+    """M212's normalisation plus stopword removal, for both sides of every comparison."""
+    return [t for t in M212.norm_tokens(text) if t not in STOPWORDS]
 
-    A line names the firm iff it contains EVERY significant token of the name, or its
-    space-stripped concatenation equals the name's. One shared token is never enough:
-    that standard verified "Brown, Lisle/Cummings, Inc." against a line reading
-    "Brown-Forman Corporation", and "Communications & Power Industries LLC" against
-    "AMERICAN ELECTRIC POWER COMPANY, INC.", on BROWN and POWER respectively.
+
+def line_names(name, line):
+    """Does this Exhibit 21 LINE name `name`? -> (bool, evidence). PREFIX rule.
+
+    An Exhibit 21 entry BEGINS with the subsidiary's name; anything after it is state of
+    incorporation or ownership percentage. So the line's token sequence must START WITH
+    the firm's complete token sequence - every token, of any length.
+
+    This replaces "contains all tokens of length >= 4", which failed twice in run 3:
+      - "Fox Entertainment Group" reduced to the single required token ENTERTAINMENT,
+        because FOX is three characters, and matched "Fortune Star Entertainment (HK)
+        Limited" - a different company entirely.
+      - "Xerox Corporation" reduced to {XEROX} and matched the exhibit's own heading,
+        "Subsidiaries of Xerox Holdings Corporation".
+    Under the prefix rule the first is rejected (FORTUNE != FOX) and so is the second
+    (SUBSIDIARIES != XEROX), while the genuine "Xerox Corporation ... New York" entry
+    still verifies - which is why lines naming the parent are NOT rejected outright.
     """
-    nt = M212.norm_tokens(name)
-    sig = {t for t in nt if len(t) >= M212.SIGNIFICANT_LEN}
-    lt = M212.norm_tokens(line)
-    # Some firms have NO token of significant length once legal suffixes are dropped:
-    # "Aon Corporation PLC" -> {AON}, "IBM" -> {IBM}, "EMC Corporation" -> {EMC}. For those
-    # the short tokens ARE the name, so require all of them instead of falling through to
-    # concatenation equality, which can never hold against a sentence. This does not
-    # loosen anything for ordinary names: whenever a significant token exists, only the
-    # significant tokens are required, exactly as before.
-    need = sig if sig else set(nt)
-    if need and need <= set(lt):
-        return True, "|".join(sorted(need))
-    ca, cb = "".join(nt), "".join(lt)
-    if ca and ca == cb:
+    nt = norm213(name)
+    if not nt:
+        return False, ""
+    lt = norm213(LEAD_RE.sub("", str(line)))
+    if lt[:len(nt)] == nt:
+        return True, " ".join(nt)
+    # Retained from the previous rule so a spaceless source name still matches its spaced
+    # listing ("TimeWarner" vs "Time Warner Inc."). Equality, not prefix.
+    ca = "".join(nt)
+    if ca and ca == "".join(lt):
         return True, ca
     return False, ""
 
 
+def passage_names(name, passage):
+    """Does this PASSAGE name `name`? -> (bool, evidence). ALL tokens, any length.
+
+    Prose is not a list, so nothing can be required to come first: a succession sentence
+    puts the predecessor mid-sentence. Every token must still be present, which is what
+    stops "Prime Communications" matching on COMMUNICATIONS alone.
+    """
+    nt = set(norm213(name))
+    if not nt:
+        return False, ""
+    if nt <= set(norm213(passage)):
+        return True, "|".join(sorted(nt))
+    return False, ""
+
+
 def match_line(name, lines):
-    """First line that NAMES `name`. -> (line, evidence_tokens)."""
+    """First line that NAMES `name` under the prefix rule. -> (line, evidence)."""
     for ln in lines:
         ok, ev = line_names(name, ln)
         if ok:
@@ -420,7 +459,7 @@ def match_line(name, lines):
 def match_passage(name, passages):
     """First passage naming `name` AND carrying succession language. -> (passage, ev)."""
     for p in passages:
-        ok, ev = line_names(name, p)
+        ok, ev = passage_names(name, p)
         if ok and SUCCESSION_RE.search(p):
             return p, ev
     return None, None

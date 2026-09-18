@@ -459,6 +459,19 @@ name_cases = [
      "space-stripped concatenation must VERIFY"),
     ("International Paper Company", "International Paper Company", True,
      "full-name listing must VERIFY"),
+    # run-3 false positives, using the exact lines run 3 accepted
+    ("Fox Entertainment Group", "Fortune Star Entertainment (HK) Limited", False,
+     "run-3 FP: FOX is 3 chars so only ENTERTAINMENT was required"),
+    ("Fox Entertainment Group", "FOX ENTERTAINMENT GROUP, INC.", True,
+     "the genuine News Corp Ex-21 entry must VERIFY"),
+    ("Xerox Corporation", "Subsidiaries of Xerox Holdings Corporation", False,
+     "run-3 FP: the exhibit's own HEADING must FAIL"),
+    ("Xerox Corporation", "Xerox Corporation                    New York", True,
+     "the genuine Xerox entry must VERIFY"),
+    ("Leidos, Inc.", "12. Leidos, Inc. — Delaware", True,
+     "leading numbering must be stripped"),
+    ("Fox Entertainment Group", "Fox Entertainment Group Holdings Inc. — Delaware", True,
+     "a longer entry starting with the name must VERIFY"),
 ]
 ev_ok = True
 for nm, line, want, why in name_cases:
@@ -477,19 +490,37 @@ MERGER_ONLY = ("Sinclair, Inc. completed its merger with Sinclair Broadcast Grou
                "and the merged entity will continue to operate the stations.")
 AON_STYLE = ("Aon plc is the successor issuer to Aon Corporation PLC pursuant to "
              "Rule 12g-3(a) under the Exchange Act.")
+# the two passages run 3 actually verified on, verbatim
+TRUSTEE = ("On October 25, 2023, Lennar Corporation (the “Company”) issued a "
+           "notice that pursuant to Section 2.02 of that certain Eleventh Supplemental "
+           "Indenture dated as of November 5, 2015 (the “Supplemental Indenture”) "
+           "among the Company, the guarantors named therein and The Bank of New York "
+           "Mellon (as successor trustee).")
+SINCLAIR_CREDIT = ("Seventh Amendment, dated as of February 12, 2025, to Seventh Amended "
+                   "and Restated Credit Agreement, by and among Sinclair Television "
+                   "Group, Inc., Sinclair Broadcast Group, LLC (formerly Sinclair "
+                   "Broadcast Group, Inc.), the guarantors party thereto, the lenders "
+                   "party thereto, JPMorgan Chase Bank, N.A.")
 p1, _ = m213.match_passage("Sinclair Broadcast Group, Inc.", [NAMED_NO_LANG])
 p2, ev2 = m213.match_passage("Sinclair Broadcast Group, Inc.", [NAMED_WITH_LANG])
 p3, _ = m213.match_passage("Sinclair Broadcast Group, Inc.", [LANG_NO_NAME])
 p4, _ = m213.match_passage("Sinclair Broadcast Group, Inc.", [MERGER_ONLY])
 p5, ev5 = m213.match_passage("Aon Corporation PLC", [AON_STYLE])
-succ_ok = all([p1 is None, p2 is not None, p3 is None, p4 is None, p5 is not None])
+p6, _ = m213.match_passage("Lennar Corporation", [TRUSTEE])
+p7, _ = m213.match_passage("Sinclair Broadcast Group, Inc.", [SINCLAIR_CREDIT])
+succ_ok = all([p1 is None, p2 is not None, p3 is None, p4 is None, p5 is not None,
+               p6 is None, p7 is None])
 print(f"  {'PASS' if p1 is None else 'FAIL'} | named, NO succession language -> {p1}")
 print(f"  {'PASS' if p2 else 'FAIL'} | named + succession language -> matched on {ev2}")
 print(f"  {'PASS' if p3 is None else 'FAIL'} | succession language, name absent -> {p3}")
 print(f"  {'PASS' if p4 is None else 'FAIL'} | named + MERGER language only -> {p4} "
       f"(merger is not succession)")
-print(f"  {'PASS' if p5 else 'FAIL'} | Aon-style 'successor issuer ... Rule 12g-3' -> "
+print(f"  {'PASS' if p5 else 'FAIL'} | 8-K12B 'successor issuer ... Rule 12g-3' -> "
       f"matched on {ev5}")
+print(f"  {'PASS' if p6 is None else 'FAIL'} | run-3 FP: 'successor TRUSTEE' indenture "
+      f"passage -> {p6}")
+print(f"  {'PASS' if p7 is None else 'FAIL'} | run-3 FP: Sinclair credit-agreement "
+      f"exhibit index -> {p7}")
 results.append(succ_ok)
 
 print(f"\n{'='*70}\nTEST: 213 exhibit selection (the Fox false negative)\n{'='*70}")
