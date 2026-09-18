@@ -172,3 +172,10 @@ outputs/essay3_q2/*_stdout.txt
 # Appended only; no existing rule is modified.
 # ==============================================================================
 !Data/edgar/ex21_cache_v4/**
+
+# REBUILD V4 output trees: these hold the .md deliverables the pipeline must leave behind
+# (211_pull_log.md, 216_access_probe.md, 211_aborted_runs.md, and the Stage 5/6 write-ups)
+# which the blanket "*.md" rule at line 79 would otherwise hide. Same shape as the
+# !docs/claude/** and !outputs/essay3_q2/** negations above. Appended only.
+!outputs/rebuild_v4/**
+!outputs/essay3_v4/**

@@ -85,6 +85,7 @@ outputs/rebuild_v4/.
 """
 import argparse
 import hashlib
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -143,7 +144,20 @@ def hit_rate_table():
         log(f"| {label} | {got:,} | {want:,} | {100 * rate:.1f}% |")
 
 
+def scrub(text):
+    """Never let a credential reach the log.
+
+    A driver-level exception can carry the connection string, and psycopg2 messages
+    are pasted verbatim into the abort record. Redact anything password-shaped before
+    it is written.
+    """
+    t = str(text)
+    t = re.sub(r"(?i)\b(password|pwd|passwd)\s*=\s*\S+", r"\1=***REDACTED***", t)
+    return t
+
+
 def abort(msg):
+    msg = scrub(msg)
     log("")
     log("## ABORTED")
     log("")
@@ -153,6 +167,22 @@ def abort(msg):
     hit_rate_table()
     print(flush_log())
     sys.exit(f"ABORT: {msg}")
+
+
+def safe_run_pull(db, ciks):
+    """run_pull, but ANY exception becomes an abort() so the log is always written.
+
+    Run 1 (2026-10) failed here: psycopg2 raised InsufficientPrivilege on
+    crsp.ccmxpf_lnkhist and the traceback bypassed abort() entirely, so no log was
+    produced and the only evidence was a half-written comp_company.csv. Anticipated
+    conditions are not the only way a pull dies.
+    """
+    try:
+        return run_pull(db, ciks)
+    except SystemExit:
+        raise                      # abort() already flushed the log
+    except BaseException as e:
+        abort(f"unhandled {type(e).__name__} during the pull: {scrub(e)}")
 
 
 def require_nonempty(df, label):
@@ -404,13 +434,19 @@ def main():
     log(f"- daily data from: {START_DATE}")
     log("")
 
-    db = wrds.Connection()
+    try:
+        db = wrds.Connection()
+    except SystemExit:
+        raise
+    except BaseException as e:
+        abort(f"WRDS connection failed: {type(e).__name__}: {scrub(e)}")
+
     try:
         user = (getattr(db, "_username", None) or getattr(db, "username", None)
                 or "(not reported)")
         log(f"- WRDS username: {user}   (no password is stored, printed, or logged)")
         log("")
-        files = run_pull(db, ciks)
+        files = safe_run_pull(db, ciks)
     finally:
         try:
             db.close()
