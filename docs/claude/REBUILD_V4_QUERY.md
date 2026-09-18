@@ -1,0 +1,227 @@
+# REBUILD V4 — Point-in-time CRSP relink, built in parallel to v3
+
+Branch `rebuild-v4`. Nothing is committed to `main` and nothing is merged without
+Tim's explicit instruction.
+
+## Why
+
+The stage-5 matcher (`scripts/155_rebuild_s5_outcomes.py:124–141`) maps CIK → ticker
+from *current* SEC ticker files. Firms since acquired, taken private, or reorganized
+fail at `155:125` and drop out. The manual ticker dictionary (`155:58–71`) repaired 24
+of 111 treated matches and 11 of 245 control matches, and `permno_match` records
+neither. CRSP retention is 111/118 treated against 245/371 control. v4 replaces the
+matcher with one point-in-time procedure applied identically to both groups.
+
+## Prime directive: v3 does not change
+
+1. **No existing file is edited, moved, renamed, or deleted.** The only exception is
+   appending new rules to `.gitattributes`. This covers `CANONICAL_V3`,
+   `constants_v3.json`, every Essay 1, 2, and 3 script and output, `run_all.py`, and
+   script 155.
+2. **New work lives only in new paths:** scripts numbered 210+, `Data/wrds_v4/`,
+   `Data/processed/rebuild_v4/`, `outputs/rebuild_v4/`, `outputs/essay3_v4/`,
+   `Data/edgar/ex21_cache_v4/`. To reuse existing logic, copy it into a new script.
+   Never import-and-patch.
+3. **Branch `rebuild-v4` only.** All commits go there. Stage files by explicit path;
+   never `git add -A` or `git add outputs/`, because `.gitignore:162` un-ignores
+   `outputs/essay3_q2/**` and would sweep in the untracked worksheets.
+4. **Leave the uncommitted `Data/enrichment/regulatory_enforcement.csv` change
+   untouched and unstaged.**
+5. **Do not run `run_all.py` or script 158.**
+6. **Every stage ends with the freeze check (script 210) passing.** If it fails, stop
+   and report. Do not repair.
+7. **Stop at every STOP.** Report and wait.
+
+---
+
+## Stage 0 — Safety net
+
+- Record `git status` and HEAD.
+- Create the annotated tag `v3-frozen` at HEAD and push the tag.
+- Create branch `rebuild-v4` from `v3-frozen`.
+- Write `scripts/210_verify_v3_frozen.py`. It writes
+  `outputs/rebuild_v4/V3_FREEZE_MANIFEST.csv` with the path, size, and sha256 of every
+  tracked file under `Data/`, `outputs/` (excluding `outputs/rebuild_v4/` and
+  `outputs/essay3_v4/`), `scripts/`, and `docs/`, plus `run_all.py` and
+  `.gitattributes`. On later runs it re-hashes and diffs against the manifest. The only
+  permitted difference is appended lines in `.gitattributes`. Exit nonzero on any other
+  difference.
+- **LFS capacity.** A prior commit (`5f5c950`, "quota exceeded") broke LFS. Before any
+  large file is added, report the total size of the LFS objects the new pulls will add,
+  and ask Tim to confirm available GitHub LFS storage and bandwidth. Do not push LFS
+  objects until Tim confirms.
+- Append `.gitattributes` rules covering `Data/wrds_v4/**` **before** any file is added
+  there. Verify with NUL-delimited `git check-attr -z` on a test path.
+
+**STOP.** Report the tag, branch, manifest file count, and LFS estimate.
+
+---
+
+## Stage 1 — WRDS pull (script 211; Tim runs it locally)
+
+Write `scripts/211_wrds_pull_v4.py` using the `wrds` Python package. Credentials come
+from Tim's local WRDS config or a prompt. Never write a password to disk, a log, or the
+repo.
+
+**CIK list:** every `final_cik` in `CANONICAL_V3` (489 events), plus every nominated
+parent CIK in `outputs/essay3_q2/crsp_drop_nominations.csv`.
+
+**Pulls,** each written to `Data/wrds_v4/`:
+
+1. `comp.company`, the whole table: gvkey, conm, cik, and any available date or status
+   fields.
+2. `crsp.ccmxpf_lnkhist`, the whole table: gvkey, lpermno, lpermco, linktype, linkprim,
+   linkdt, linkenddt.
+3. The WRDS SEC Analytics historical CIK–GVKEY link table, **if the subscription
+   includes it.** If it is unavailable, log that and continue.
+4. `crsp.stocknames` for every permno reached through steps 1–3: permno, namedt,
+   nameenddt, ticker, comnam, shrcd, exchcd.
+5. `crsp.dsf` for those permnos, from 2005-01-01 to the latest available date: permno,
+   date, ret, retx, prc, vol, shrout.
+6. `crsp.dsi` over the same range: date, vwretd, ewretd.
+
+Write `outputs/rebuild_v4/211_pull_log.md` with the pull timestamp, the WRDS username
+(not the password), row counts, date ranges, and the sha256 of each file.
+
+**Record the new CRSP end date.** If it extends past 2024-12-31, events previously lost
+to "past-extract" may enter; the Stage 5 ledger must show this.
+
+**STOP.** Tim runs 211 and returns the log.
+
+---
+
+## Stage 2 — Point-in-time linker (script 212)
+
+**Rule, applied identically to treated and control:**
+
+1. For each event, find `final_cik` → gvkey via `comp.company.cik`, then via the SEC
+   Analytics link table if it was pulled and the first step fails.
+2. Take the gvkey → permno link from `ccmxpf_lnkhist` where linktype ∈ {LU, LC},
+   linkprim ∈ {P, C}, and linkdt ≤ breach_date ≤ linkenddt. A missing linkenddt means
+   the link is ongoing.
+3. Require shrcd ∈ {10, 11} on breach_date in `stocknames`.
+4. Document the tie-break rule in the script header and the report.
+
+**Output fields:** permno, gvkey, `link_source` ∈ {auto_ccm, auto_seccik,
+manual_override}, link dates, and the comnam on breach_date.
+
+**Manual overrides.** Write `outputs/rebuild_v4/link_overrides.csv` with columns: cik,
+date range, permno, reason, and evidence (a citation). For each entry in the v3
+`MANUAL` dict (`155:58–71`), report whether the automated path now reproduces it.
+Entries it reproduces are dropped from the override file. Entries it doesn't carry
+forward with evidence. The same rule governs both arms.
+
+**Identity check (automated).** For every linked event, compare the CRSP comnam on
+breach_date with the org string and the resolved EDGAR name. Write every event whose
+names do not plausibly match to `outputs/rebuild_v4/212_identity_review.csv`. This
+catches CIK reuse across reverse mergers.
+
+**Regression tests, as assertions in the script:**
+
+- The recycled-ticker cases must not link to prior holders: Facebook → Metatec,
+  Motorola → Movie Star, DoorDash → Dash Industries.
+- **T-Mobile USA events dated before 2013-04-29 must not link to the MetroPCS permno.**
+  CIK 1283699 was MetroPCS's until then, and the old matcher dropped these six events
+  correctly. CCM will link them unless the rule prevents it.
+- Sprint must link to the permno(s) valid at each event date. v3 used 14040 and 39087
+  via the top-up file; report agreement.
+- CenturyLink and Lumen must link correctly across the rename; v3 used 60599.
+- DISH treatment-date handling is unchanged: excluded before July 1, 2020, treated
+  after.
+
+**v3 → v4 comparison** for all 489 events: permno unchanged, newly linked, lost, or
+changed. List every lost and changed event with its reason. Give counts by treated and
+control.
+
+**STOP.** Report the comparison, the override file, the identity-review list, and the
+test results.
+
+---
+
+## Stage 3 — Parent mapping (script 213; Tim runs it locally)
+
+EDGAR blocks the sandbox, so Tim runs this on his machine. The User-Agent comes from an
+environment variable Tim sets with his name and email, as SEC fair-access requires.
+Keep requests at or below 10 per second.
+
+- **Input:** `crsp_drop_nominations.csv`, plus any Stage 2 "lost" events whose CIK is a
+  subsidiary.
+- **Classification rule:** name knowledge may nominate a parent; only an Exhibit 21
+  match classifies. Fetch the nominated parent's 10-K Exhibit 21 filed within 18 months
+  of breach_date. Classify as listed-parent only if the subsidiary appears in that
+  exhibit. Record the accession and the matching line.
+- Cache every fetched exhibit to `Data/edgar/ex21_cache_v4/`, named by accession.
+- **A verified parent** gets its event re-parented in v4, then linked by the Stage 2
+  rule.
+- **An unverified row** keeps its v3 status.
+- **Log:** `outputs/rebuild_v4/213_reparent_log.csv`.
+
+Re-parented events have a new outcome CIK for Essay 3. List them for the Stage 6 filing
+fetch.
+
+**STOP.** Tim runs 213 and returns the log.
+
+---
+
+## Stage 4 — Known data corrections (script 214)
+
+Each correction is written to `outputs/rebuild_v4/214_corrections.csv` with the old
+value, the new value, and a verbatim source quote.
+
+- **Sprint Nextel, CIK 101830, breach_date 2012-08-01.** The source text places the
+  incident in December 2008 to January 2009. Correct breach_date from the PRC record's
+  own fields. Report its effect on `prior_breaches_1yr` for every Sprint event.
+- **The malformed `reported_date` "2020-03".** Use the full date if the PRC record gives
+  one. Otherwise set it to missing, and let the downstream requirement exclude the event
+  with a logged reason.
+- **Uber, CIK 1431473 (org "Uber," breach 2014-05-13).** It has no registration filings.
+  Report its EDGAR identity. If it is not Uber Technologies, mark it as a Gate 1
+  misresolution in the log. **Report only; do not change Gate 1 logic.**
+
+---
+
+## Stage 5 — CANONICAL_V4 and the v4 ledger (script 215)
+
+- Build `Data/processed/rebuild_v4/CANONICAL_V4.csv` from `CANONICAL_V3` plus the Stage
+  2–4 changes. Write it only to the new path.
+- Write `outputs/rebuild_v4/v4_ledger.csv` with the same steps as `e_ledger.csv`, adding
+  columns for the v3 value and the difference at every step, by treated and control.
+- **Symmetry table:** `link_source` counts by treated and control, and CRSP-step
+  retention by group, v3 against v4.
+- Run script 210. It must pass.
+
+**STOP.** Report the ledger, the symmetry table, and every event that entered or left
+relative to v3. **No essay reads v4 until Tim approves this stage.**
+
+---
+
+## Stage 6 — Essay 3 on v4 (after Tim approves Stage 5)
+
+- **Copy** scripts 195–204 to 220–229, pointing their inputs at `CANONICAL_V4` and their
+  outputs at `outputs/essay3_v4/`. The originals are not modified.
+- Fetch Item 5.02 filing text for any new outcome CIKs, including re-parented events.
+  Tim runs the fetch locally if EDGAR blocks the sandbox.
+- Emit `outputs/essay3_v4/constants_essay3_v4.json`.
+- Produce a side-by-side table of every constant, v3 against v4, and every verdict:
+  primary, placebo, sensitivities, BH, and leave-one-out sign flips.
+- **Clean-clone test** on `rebuild-v4`: fresh clone, `git lfs pull`, run 220–229, diff
+  every emitted file against the committed outputs. Write the exact commands to
+  `docs/claude/REPRODUCE_ESSAY3_V4.md`.
+- Run script 210. It must pass.
+
+**STOP.**
+
+---
+
+## Out of scope
+
+Essays 1 and 2 keep reading v3, untouched. Moving each to v4 is a separate later query,
+one essay at a time. That happens only after the pending items are done: retiring or
+relabeling script 158's volatility block, the 87-file LFS rule, the DISH wording, and
+the script 143 matcher review.
+
+## Report back after each stage
+
+Report what ran, what was written (paths and sha256), the script 210 result, and
+anything that surprised you. Quote numbers only from emitted files, with the file and
+line.

@@ -13,3 +13,11 @@ Data/wrds/ticker_permno_mapping.csv filter=lfs diff=lfs merge=lfs -text
 Data/processed/DATA_DICTIONARY_ENRICHED.csv filter=lfs diff=lfs merge=lfs -text
 # Frozen classifier (6f7be7a): keep LF on every checkout so its logged sha256 (42a64e12…) reproduces on Windows
 scripts/195_essay3_q2_classifier_v2.py text eol=lf
+
+# ==============================================================================
+# REBUILD V4 (branch rebuild-v4) — added at Stage 0, before any file exists under
+# Data/wrds_v4/. Point-in-time CRSP/Compustat pulls are large binaries-by-size;
+# they must be LFS-tracked from the first add so no raw blob ever enters history.
+# Appended only; no existing rule above is modified.
+# ==============================================================================
+Data/wrds_v4/** filter=lfs diff=lfs merge=lfs -text
