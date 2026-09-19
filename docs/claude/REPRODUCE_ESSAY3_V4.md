@@ -88,42 +88,51 @@ drops those columns and re-attaches v4's own. `scripts/217` asserts that none of
 
 ## Clean-clone check
 
-`scripts/217` covers the offline logic. For the data chain, the check is to rerun the
-offline stages in a fresh worktree from HEAD and diff the outputs against the committed
-ones:
+A **worktree is not a clean-clone test.** It shares `.git` and the LFS object store, so
+it cannot catch a missing LFS object or a missing ref — two of the failures that
+actually occur. Test from a real clone:
 
 ```
-git worktree add /tmp/v4check HEAD
-cd /tmp/v4check
+git clone --branch rebuild-v4 <repo URL> v4clone
+cd v4clone
+git lfs pull                                   # ALL of it, not a subset
+git fetch origin refs/tags/v3-frozen:refs/tags/v3-frozen   # if the clone is shallow
 python scripts/235_fetch_completeness_v4.py
 python scripts/232_censoring_report_v4.py
 python scripts/224_essay3_v4_sample_e.py
-# then diff outputs/essay3_v4/e_analysis_sample.csv against the committed copy
+python scripts/239_v3_vs_v4_sidebyside.py
+python scripts/217_v4_offline_tests.py
+python scripts/210_verify_v3_frozen.py
 ```
+
+Two things a shallow clone breaks, both of which look like code failures and are not:
+
+- **A partial `git lfs pull` leaves `Data/edgar/cik-lookup-data.txt` a pointer**, and the
+  two SEC name-index tests fail. Pull everything.
+- **`--depth 1` has no `v3-frozen` tag**, so `scripts/210` cannot resolve its baseline and
+  `scripts/237` cannot define the validation pool. Fetch the tag explicitly.
+
+### Result (2026-09-19, HEAD f1c0ee0, fresh clone from GitHub)
+
+`CANONICAL_V4.csv` byte-identical to the source tree, and every regenerated output
+byte-identical to its committed copy:
+
+`b_scope_events.csv`, `b_scope_filings.csv`, `b_event_filing_pairs.csv`,
+`232_censoring.csv`, `e_analysis_sample.csv`, `e_ledger.csv`,
+`239_v3_overlap_sensitivity.csv`, `239_v3_vs_v4_constants.csv` — **8/8 identical.**
+
+`scripts/217` 62/62, `scripts/210` PASS.
+
+**What made this possible.** Before the `-text` rules, `core.autocrlf` rewrote CRLF to LF
+on commit for every pandas-written CSV, so the on-disk bytes of 20+ v4 CSVs — including
+`CANONICAL_V4.csv` — differed from their own blobs. A clone received different *input*
+bytes than the tree the outputs were produced in, and byte comparison could never
+succeed. `.gitattributes` now carries `-text` for `outputs/essay3_v4/**/*.csv`,
+`outputs/rebuild_v4/**/*.csv` and `Data/processed/rebuild_v4/**/*.csv`, scoped to v4
+because v3 blobs must not be renormalised — `scripts/210` compares them byte for byte.
 
 `220` and `227` are slow (the classifier reads ~1,500 filings; the bootstrap draws
 99,999 times) and are verified by their own internal assertions instead: `227` writes
 `constants_essay3_v4.json` on its first run and **asserts against it** on every later
 run, and `229` independently recomputes the HC3/CV1/CV3 SEs and coefficients and checks
 them against the committed `f1_ladder.csv`.
-
-### Result of that check (2026-09-19, HEAD 99ceb43)
-
-Ran in a detached worktree at HEAD, offline:
-
-| output | result |
-|---|---|
-| `e_analysis_sample.csv` | byte-identical |
-| `e_ledger.csv` | byte-identical |
-| `232_censoring.csv` | byte-identical |
-| `239_v3_overlap_sensitivity.csv` | byte-identical |
-| `b_scope_events.csv` | **data-identical**, bytes differ |
-
-The one byte difference is carriage returns inside a quoted multi-line free-text
-field (`incident_details`, which carries pasted breach narratives). Comparing the two
-files as data — same shape (412 x 53), same columns, every column equal once CR is
-stripped — they match exactly.
-
-**Do not byte-compare `b_scope_events.csv` across checkouts.** A tracked CSV with
-embedded newlines inside quoted fields is not byte-stable under git's line-ending
-handling. Compare it as a dataframe, as above.
