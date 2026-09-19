@@ -38,6 +38,7 @@ false. They are marked `not_computable_until_stage6` and carry the v3 figure for
 reference only.
 """
 import importlib.util
+import json
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -51,6 +52,12 @@ CANON_V4 = Path("Data/processed/rebuild_v4/CANONICAL_V4.csv")
 LINKS = Path("outputs/rebuild_v4/v4_212_links.csv")
 STOCKNAMES = ("crsp_stocknames.csv", "crsp_stocknames_topup_*.csv")
 OUT_LOST = Path("outputs/rebuild_v4/215_lost_events.csv")
+OUT_S3B = Path("outputs/rebuild_v4/stage3b_candidates.csv")
+TICKERS_JSON = Path("Data/edgar/company_tickers.json")
+
+# The two causes a top-up could in principle fix. A share-code exclusion cannot be fixed
+# by pulling more data, and a 2025 event with no usable returns has nothing to pull.
+TOPUPABLE = ("absent from the CUSIP-filtered pull", "no Compustat gvkey")
 E_LEDGER = Path("outputs/essay3_q2/e_ledger.csv")
 DSF = (Path("Data/wrds_v4/crsp_dsf.csv"),)
 DSF_GLOB = "crsp_dsf_topup_*.csv"
@@ -69,6 +76,18 @@ LOG = []
 def log(m=""):
     print(m, flush=True)
     LOG.append(str(m))
+
+
+def m212_for_lookup():
+    """213's SEC name-index lookup, loaded without issuing any request."""
+    p = Path("scripts/213_stage3_verify.py")
+    if not p.exists():
+        return None
+    spec = importlib.util.spec_from_file_location("m213_for_215", str(p))
+    m = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    m.fetch = lambda url: None          # Stage 5 never reaches the network
+    return m
 
 
 def load_212():
@@ -270,6 +289,80 @@ def categorise_lost(ev4, links, nam, names_match):
     return pd.DataFrame(rows)
 
 
+def ticker_title_map(norm):
+    """normalised company title -> {CIKs}, from the LOCAL company_tickers.json.
+
+    A second, independent nomination source. company_tickers.json lists only CURRENTLY
+    registered filers, so a firm whose historical name is ambiguous in the full SEC name
+    index can still resolve here - and a unique hit is by construction a live registrant,
+    which is what a successor looks like. Stage 5 issues no request; the file is local.
+    """
+    if not TICKERS_JSON.exists():
+        return {}
+    j = json.loads(TICKERS_JSON.read_text(encoding="utf-8", errors="replace"))
+    out = {}
+    for v in (j.values() if isinstance(j, dict) else j):
+        title = str(v.get("title", "")).strip()
+        if not title:
+            continue
+        out.setdefault(tuple(norm(title)), set()).add(int(v["cik_str"]))
+    return out
+
+
+def build_stage3b(lost, m213):
+    """A Stage 3b worklist for losses a top-up could fix. One row per event.
+
+    v3's permno is NOT carried over. v3 reached it through a CIK->ticker match that this
+    rebuild exists to replace, so importing it would reintroduce exactly the thing under
+    test. Instead each event gets a NOMINATED successor or parent CIK, to be verified
+    against a filing under the same evidence rules as Stage 3 - and where no unique
+    candidate exists, the row is emitted with the candidate blank and the reason
+    recorded, rather than an invented target.
+    """
+    c = lost[lost["category"] == "c_v4_gap"]
+    c = c[c["sub_cause"].str.contains("|".join(TOPUPABLE), regex=True)]
+    if not len(c):
+        return pd.DataFrame()
+    names = sorted({str(x) for x in c["org_name"]})
+    found = m213.lookup_ciks(set(names)) if hasattr(m213, "lookup_ciks") else {}
+    titles = ticker_title_map(m213.norm213) if hasattr(m213, "norm213") else {}
+    rows = []
+    for _, r in c.iterrows():
+        org, cik = str(r["org_name"]), int(r["orig_cik"])
+        cand, basis = found.get(org, (None, "not looked up"))
+        if cand and int(cand) == cik:
+            cand, basis = None, (f"the only same-name filer IS the event CIK "
+                                 f"({cik}); no successor identified")
+        if not cand and titles:
+            # Second source: a unique CURRENT registrant with the same normalised title.
+            # `titles` is empty when the caller cannot normalise, so this degrades to
+            # "no ticker fallback" rather than failing.
+            alt = {x for x in titles.get(tuple(m213.norm213(org)), set()) if x != cik}
+            if len(alt) == 1:
+                cand = alt.pop()
+                basis = (f"company_tickers.json: unique current registrant titled "
+                         f"{org!r} ({basis})")
+            elif len(alt) > 1:
+                basis = (f"{basis}; company_tickers.json also ambiguous "
+                         f"({len(alt)} current registrants)")
+        ctype = ("a_subsidiary" if "no Compustat gvkey" not in str(r["sub_cause"])
+                 else "b_successor_cik")
+        rows.append({
+            "candidate_type": ctype,
+            "cik": cik,
+            "org": org,
+            "breach_date": r["breach_date"],
+            "crsp_permno": "",
+            "comnam_at_breach": "",
+            "candidate": (f"CIK {int(cand)}" if cand else ""),
+            "confidence": "unverified" if cand else "no candidate",
+            "shared_tokens": "",
+            "generic_only": False,
+            "reason": (f"Stage 3b: v4 lost this event ({r['sub_cause']}); "
+                       f"nomination basis: {basis}")})
+    return pd.DataFrame(rows)
+
+
 def build_ledger(ev4, links, e_ledger):
     """The v3 ledger's steps, with v4 values where Stage 5 can honestly compute them."""
     grp = group_of(ev4).fillna("(unknown)")
@@ -391,7 +484,22 @@ def main():
     log("")
 
     OUT_LEDGER.parent.mkdir(parents=True, exist_ok=True)
-    for path, df in ((OUT_LEDGER, ledger), (OUT_SYMMETRY, sym), (OUT_LOST, lost)):
+    s3b = build_stage3b(lost, m212_for_lookup())
+    log("## Stage 3b worklist")
+    log("")
+    if len(s3b):
+        log(f"{len(s3b)} event(s) whose loss a top-up could in principle fix, written to "
+            f"`{OUT_S3B.as_posix()}`. v3's permno is deliberately NOT carried over: v3 "
+            f"reached it through the CIK->ticker match this rebuild replaces.")
+        log("")
+        log(md_table(s3b[["candidate_type", "cik", "org", "breach_date", "candidate",
+                          "confidence"]]))
+    else:
+        log("No event's loss is fixable by a top-up.")
+    log("")
+
+    for path, df in ((OUT_LEDGER, ledger), (OUT_SYMMETRY, sym), (OUT_LOST, lost),
+                     (OUT_S3B, s3b)):
         text = df.to_csv(index=False)
         bad = common.assert_no_timestamp(path, text)
         if bad:

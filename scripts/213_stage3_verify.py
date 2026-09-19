@@ -61,6 +61,7 @@ OUTPUTS (writes nothing else, touches no v3 path)
     outputs/rebuild_v4/213_extra_ciks.txt        verified CIKs not among the 185 already
                                                  pulled, ready for 211 --extra-ciks
 """
+import argparse
 import html
 import hashlib
 import importlib.util
@@ -78,7 +79,12 @@ from urllib.request import Request, urlopen
 
 import pandas as pd
 
+# Set from the command line. 213 runs once per worklist: Stage 3 against
+# stage3_candidates.csv, and Stage 3b against stage3b_candidates.csv. A non-default
+# --out-prefix keeps the second run's outputs beside the first rather than over them,
+# because the Stage 3 log is the evidence the re-parenting already rests on.
 S3 = Path("outputs/rebuild_v4/stage3_candidates.csv")
+PREFIX = ""
 NOMS = Path("outputs/rebuild_v4/inputs/crsp_drop_nominations.csv")
 W = Path("Data/wrds_v4")
 CACHE = Path("Data/edgar/ex21_cache_v4")
@@ -863,22 +869,42 @@ def permno_to_cik():
 def resolve_parent(row, noms, pn2cik, tick2cik, name2cik=None):
     """-> (parent_cik or None, parent_name, how)."""
     ct = row["candidate_type"]
+    # A blank candidate round-trips through CSV as a float NaN, and str(NaN) is the
+    # literal "nan". Left alone that travels into the verification log and gets matched
+    # against filings as if it were a company name - it cannot produce a false VERIFIED,
+    # but it writes nonsense evidence for every unnominated Stage 3b row.
+    raw_cand = row.get("candidate", "")
+    cand_str = ("" if raw_cand is None
+                or (isinstance(raw_cand, float) and pd.isna(raw_cand))
+                or str(raw_cand).strip().lower() in ("", "nan")
+                else str(raw_cand))
     if ct == "b_successor_cik":
-        m = CIK_IN_CAND.search(str(row.get("candidate", "")))
-        return (int(m.group(1)) if m else None, str(row.get("candidate", "")),
+        m = CIK_IN_CAND.search(cand_str)
+        return (int(m.group(1)) if m else None, cand_str,
                 "parsed from the Stage 2 candidate string")
     if ct == "a_subsidiary":
-        hit = noms[noms["cik"] == row["cik"]]
-        pname = str(row.get("candidate", ""))
-        pc = pd.to_numeric(hit["parent_cik"], errors="coerce").dropna()
+        hit = noms[noms["cik"] == row["cik"]] if "cik" in noms.columns else noms.iloc[0:0]
+        pname = cand_str
+        # Guard every optional column, not just some. The function already tolerates a
+        # missing `basis` and `ticker`; raising KeyError on `parent_cik` alone is an
+        # inconsistency, and a malformed nomination file should be caught by an explicit
+        # input check rather than by an incidental error deep inside the row loop.
+        pc = (pd.to_numeric(hit["parent_cik"], errors="coerce").dropna()
+              if ("parent_cik" in hit.columns and len(hit)) else pd.Series(dtype=float))
         if len(pc):
             return int(pc.iloc[0]), pname, "nomination file parent_cik"
         # Name knowledge may NOMINATE a parent, never verify one. The ticker comes from
         # the nomination file and the CIK from SEC's own table, so no CIK originates in
         # anybody's memory - and the Exhibit 21 still decides. Volkswagen (VWAGY) and
         # Activision (ATVI) reach a parent CIK only by this route.
-        nb = str(hit["basis"].iloc[0]) if "basis" in hit.columns else ""
-        tick = hit["ticker"].dropna().astype(str).str.strip().str.upper()
+        # `hit` is EMPTY whenever this CIK has no row in the nomination file, which is the
+        # normal case for a Stage 3b worklist - those rows were built from lost events,
+        # not from the nominations. Guarding on the column alone was not enough: .iloc[0]
+        # on an empty frame raises IndexError and would abort the run on the first such
+        # row (all nine Stage 3b a_subsidiary rows are of this kind).
+        nb = str(hit["basis"].iloc[0]) if ("basis" in hit.columns and len(hit)) else ""
+        tick = (hit["ticker"].dropna().astype(str).str.strip().str.upper()
+                if ("ticker" in hit.columns and len(hit)) else pd.Series(dtype=str))
         if len(tick) and tick.iloc[0] in tick2cik:
             return (tick2cik[tick.iloc[0]], pname,
                     f"NOMINATED: ticker {tick.iloc[0]} -> CIK via SEC "
@@ -1027,4 +1053,16 @@ def safe_main(runner=None):
 
 
 if __name__ == "__main__":
+    ap = argparse.ArgumentParser(description="REBUILD V4 Stage 3 EDGAR verification")
+    ap.add_argument("--worklist", default=str(S3),
+                    help="candidate worklist to verify (default: stage3_candidates.csv)")
+    ap.add_argument("--out-prefix", default="",
+                    help="prefix for every output file, so a Stage 3b run does not "
+                         "overwrite Stage 3 (e.g. stage3b_)")
+    args = ap.parse_args()
+    S3 = Path(args.worklist)
+    PREFIX = args.out_prefix
+    OUT_LOG = OUT_LOG.with_name(PREFIX + OUT_LOG.name)
+    OUT_CIKS = OUT_CIKS.with_name(PREFIX + OUT_CIKS.name)
+    RUN_LOG = RUN_LOG.with_name(PREFIX + RUN_LOG.name)
     sys.exit(safe_main())

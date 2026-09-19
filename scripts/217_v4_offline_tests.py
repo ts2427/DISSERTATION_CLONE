@@ -1260,6 +1260,136 @@ c_h = lost_t.loc[lost_t.org_name == "Essex Property Trust, Inc.",
 print(f"  {'PASS' if c_h else 'FAIL'} | v3 name that MATCHES the org is not miscalled (b)")
 results.append(all([c_a, c_b, c_c, c_d, c_e, c_f, c_h]))
 
+print(f"\n{'='*70}\nTEST: 212 admitted share codes\n{'='*70}")
+s_ok = m212.SHRCD_OK == {10, 11, 12, 18}
+s_bad = not ({31, 14, 89, 30, 73} & m212.SHRCD_OK)
+print(f"  {'PASS' if s_ok else 'FAIL'} | SHRCD_OK == {sorted(m212.SHRCD_OK)} "
+      f"(12 = non-US ordinary, 18 = REIT)")
+print(f"  {'PASS' if s_bad else 'FAIL'} | ADRs (3x) and fund codes stay excluded")
+results.append(s_ok and s_bad)
+
+print(f"\n{'='*70}\nTEST: 213 worklist / output prefixing\n{'='*70}")
+p_ok = hasattr(m213, "PREFIX") and m213.PREFIX == ""
+base = Path("outputs/rebuild_v4/213_verification_log.csv")
+pre = base.with_name("stage3b_" + base.name)
+q_ok = pre.name == "stage3b_213_verification_log.csv"
+d_ok = m213.S3.name == "stage3_candidates.csv"
+print(f"  {'PASS' if p_ok else 'FAIL'} | PREFIX defaults to empty (Stage 3 filenames "
+      f"unchanged)")
+print(f"  {'PASS' if d_ok else 'FAIL'} | default worklist is still stage3_candidates.csv")
+print(f"  {'PASS' if q_ok else 'FAIL'} | a stage3b_ prefix yields {pre.name}")
+
+# A Stage 3b worklist is built from LOST EVENTS, not from the nomination file, so its
+# CIKs are normally absent there and `hit` comes back empty. .iloc[0] on an empty frame
+# raises, which would abort the run on the first such row - all nine Stage 3b
+# a_subsidiary rows are of this kind.
+_empty_noms = pd.DataFrame({"cik": [], "parent_cik": [], "ticker": [], "basis": []})
+_bare_noms = pd.DataFrame({"cik": []})
+rp_ok, rp_leak = True, False
+for _noms in (_empty_noms, _bare_noms):
+    for _cand in (float("nan"), "", "nan", "CIK 1744489"):
+        for _ct in ("b_successor_cik", "a_subsidiary"):
+            _row = pd.Series({"candidate_type": _ct, "cik": 813828,
+                              "candidate": _cand, "org": "Paramount"})
+            try:
+                _cik, _pname, _how = m213.resolve_parent(_row, _noms, {}, {}, {})
+                rp_leak |= (_pname == "nan")
+            except Exception:
+                rp_ok = False
+print(f"  {'PASS' if rp_ok else 'FAIL'} | resolve_parent survives an empty/short "
+      f"nomination frame (the Stage 3b case)")
+print(f"  {'PASS' if not rp_leak else 'FAIL'} | a blank candidate never becomes the "
+      f"literal name 'nan'")
+results.append(p_ok and q_ok and d_ok and rp_ok and not rp_leak)
+
+print(f"\n{'='*70}\nTEST: 215 Stage 3b worklist construction\n{'='*70}")
+
+
+class FakeLookup:
+    def lookup_ciks(self, names):
+        return {"The Walt Disney Company": (1744489, "SEC cik-lookup exact unique match"),
+                "Honeywell International Inc.": (773840, "SEC cik-lookup exact unique match"),
+                "Paramount": (None, "no exact name match in cik-lookup-data.txt")}
+
+    @staticmethod
+    def norm213(text):
+        return m213.norm213(text)
+
+
+lost_in = pd.DataFrame([
+    {"category": "c_v4_gap", "sub_cause": "v3 permno absent from the CUSIP-filtered pull",
+     "org_name": "Honeywell International Inc.", "orig_cik": 773840,
+     "breach_date": "2021-02-16"},
+    {"category": "c_v4_gap", "sub_cause": "the CIK has no Compustat gvkey, so the chain cannot start",
+     "org_name": "The Walt Disney Company", "orig_cik": 926480, "breach_date": "2008-07-29"},
+    {"category": "c_v4_gap", "sub_cause": "the CIK has no Compustat gvkey, so the chain cannot start",
+     "org_name": "Paramount", "orig_cik": 813828, "breach_date": "2023-01-01"},
+    {"category": "c_v4_gap", "sub_cause": "excluded by share code: shrcd not in {10,11} ([18])",
+     "org_name": "CyrusOne, Inc.", "orig_cik": 1553023, "breach_date": "2017-10-18"},
+    {"category": "a_no_usable_returns_in_v3", "sub_cause": "v3 flagged has_crsp_data False",
+     "org_name": "Zscaler Inc.", "orig_cik": 1713683, "breach_date": "2025-08-08"}])
+s3b = m215.build_stage3b(lost_in, FakeLookup())
+b1 = len(s3b) == 3
+b2 = set(s3b["org"]) == {"Honeywell International Inc.", "The Walt Disney Company",
+                         "Paramount"}
+b3 = (s3b.loc[s3b.org == "The Walt Disney Company", "candidate_type"].iloc[0]
+      == "b_successor_cik")
+b4 = (s3b.loc[s3b.org == "Honeywell International Inc.", "candidate_type"].iloc[0]
+      == "a_subsidiary")
+b5 = all(str(x) == "" for x in s3b["crsp_permno"])
+hw = s3b.loc[s3b.org == "Honeywell International Inc."].iloc[0]
+b6 = hw["candidate"] == "" and "IS the event CIK" in hw["reason"]
+pm = s3b.loc[s3b.org == "Paramount"].iloc[0]
+b7 = pm["candidate"] == "" and pm["confidence"] == "no candidate"
+dz = s3b.loc[s3b.org == "The Walt Disney Company"].iloc[0]
+b8 = dz["candidate"] == "CIK 1744489" and "cik-lookup" in dz["reason"]
+print(f"  {'PASS' if b1 and b2 else 'FAIL'} | only the 3 top-up-able losses are listed "
+      f"(share-code and 2025 rows excluded) -> {len(s3b)}")
+print(f"  {'PASS' if b3 and b4 else 'FAIL'} | no-gvkey -> b_successor_cik, "
+      f"pull-absent -> a_subsidiary")
+print(f"  {'PASS' if b5 else 'FAIL'} | v3 permno is NOT carried over")
+print(f"  {'PASS' if b6 else 'FAIL'} | a self-match yields a blank candidate, reason "
+      f"records why")
+print(f"  {'PASS' if b7 else 'FAIL'} | no same-name candidate -> blank, 'no candidate'")
+print(f"  {'PASS' if b8 else 'FAIL'} | a genuine successor is nominated with its basis")
+
+# the company_tickers.json title fallback, used when the SEC name index is ambiguous
+_tj = m215.TICKERS_JSON
+tj = TMP / "company_tickers.json"
+tj.write_text(json.dumps({
+    "0": {"cik_str": 1744489, "ticker": "DIS", "title": "Walt Disney Co"},
+    "1": {"cik_str": 320193, "ticker": "AAPL", "title": "Apple Inc."},
+    "2": {"cik_str": 111, "ticker": "AMB1", "title": "Ambiguous Co"},
+    "3": {"cik_str": 222, "ticker": "AMB2", "title": "Ambiguous Co"}}), encoding="utf-8")
+m215.TICKERS_JSON = tj
+
+
+class AmbiguousLookup:
+    def lookup_ciks(self, names):
+        return {n: (None, "ambiguous in cik-lookup-data.txt: 3 CIKs match") for n in names}
+
+    @staticmethod
+    def norm213(text):
+        return m213.norm213(text)
+
+
+lost_tj = pd.DataFrame([
+    {"category": "c_v4_gap", "sub_cause": "the CIK has no Compustat gvkey, so the chain cannot start",
+     "org_name": "The Walt Disney Company", "orig_cik": 926480, "breach_date": "2008-07-29"},
+    {"category": "c_v4_gap", "sub_cause": "the CIK has no Compustat gvkey, so the chain cannot start",
+     "org_name": "Ambiguous Co", "orig_cik": 999, "breach_date": "2010-01-01"}])
+s3c = m215.build_stage3b(lost_tj, AmbiguousLookup())
+dis = s3c.loc[s3c.org == "The Walt Disney Company"].iloc[0]
+amb = s3c.loc[s3c.org == "Ambiguous Co"].iloc[0]
+b9 = dis["candidate"] == "CIK 1744489" and "company_tickers.json" in dis["reason"]
+b10 = amb["candidate"] == "" and "also ambiguous" in amb["reason"]
+m215.TICKERS_JSON = _tj
+print(f"  {'PASS' if b9 else 'FAIL'} | ticker-title fallback resolves a name the SEC "
+      f"index could not -> {dis['candidate'] or '(none)'}")
+print(f"  {'PASS' if b10 else 'FAIL'} | two current registrants with the same title stay "
+      f"unnominated, and say so")
+results.append(all([b1, b2, b3, b4, b5, b6, b7, b8, b9, b10]))
+
 print(f"\n{'='*70}")
 print(f"RESULT: {sum(results)}/{len(results)} tests passed")
 print("=" * 70)

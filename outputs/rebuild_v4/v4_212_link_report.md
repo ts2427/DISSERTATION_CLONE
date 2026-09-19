@@ -3,7 +3,7 @@
 - crsp_stocknames: 615 rows from 2 file(s) (crsp_stocknames.csv, crsp_stocknames_topup_20260919T000910Z.csv)
 # REBUILD V4 — Stage 2 point-in-time linker (CUSIP route)
 
-- run (UTC): 2026-09-19T00:36:09+00:00
+- run (UTC): 2026-09-19T00:58:55+00:00
 - events 489 | comp.company 149 | comp.security 309 | stocknames 615
 - rule: all US common issues (tpci=0, excntry=USA), ncusip-first, header fallback behind the identity gate
 
@@ -42,16 +42,16 @@
 | group | events | v3 linked | v4 linked | delta |
 |---|---|---|---|---|
 | treated | 118 | 111 | 111 | 0 |
-| control | 371 | 250 | 282 | 32 |
-| ALL | 489 | 361 | 393 | 32 |
+| control | 371 | 250 | 292 | 42 |
+| ALL | 489 | 361 | 403 | 42 |
 
 link_source:
 
 | link_source | control | treated |
 |---|---|---|
-| (unlinked) | 89 | 7 |
-| cusip_header | 28 | 7 |
-| cusip_ncusip | 254 | 104 |
+| (unlinked) | 79 | 7 |
+| cusip_header | 31 | 7 |
+| cusip_ncusip | 261 | 104 |
 
 Tie-break usage: {'priusa': 18, 'shrcd': 0, 'namedt': 0} (priusa resolves the dual-class pairs; the shrcd and namedt rules are reported if they ever fire).
 
@@ -63,15 +63,13 @@ Tie-break usage: {'priusa': 18, 'shrcd': 0, 'namedt': 0} (priusa resolves the du
 | no US common issue | 3 | 0 | 3 |
 | no gvkey | 23 | 0 | 23 |
 | no names row valid on breach_date | 51 | 1 | 52 |
-| shrcd not in {10,11} ([12]) | 8 | 0 | 8 |
-| shrcd not in {10,11} ([18]) | 2 | 0 | 2 |
-| All | 89 | 7 | 96 |
+| All | 79 | 7 | 86 |
 
 ## Identity gate (header links only)
 
 | outcome | treated | control | total |
 |---|---|---|---|
-| accepted | 7 | 28 | 35 |
+| accepted | 7 | 31 | 38 |
 | excluded | 6 | 2 | 8 |
 
 ### Every header accept, for audit of the normalisation
@@ -87,6 +85,7 @@ Tie-break usage: {'priusa': 18, 'shrcd': 0, 'namedt': 0} (priusa resolves the du
 | 1051470 | Crown Castle | CROWN CASTLE INTERNATIONAL CORP | 2013-10-31 | 86339.0 |
 | 1091667 | Charter Communications, Inc. | CHARTER COMMUNICATIONS INC | 2013-04-26 | 12308.0 |
 | 1105705 | Time Warner Inc. | TIME WARNER INC NEW | 2006-12-01 | 77418.0 |
+| 1137789 | Seagate US LLC | SEAGATE TECHNOLOGY PLC | 2016-02-29 | 89641.0 |
 
 ### Every gate exclusion
 
@@ -103,7 +102,7 @@ Tie-break usage: {'priusa': 18, 'shrcd': 0, 'namedt': 0} (priusa resolves the du
 
 ## Report-only: ncusip links whose CRSP name matches neither org nor EDGAR
 
-37 of 358 ncusip links. **None is excluded** — the CUSIP is authoritative here; a name mismatch means the name differs, not that the security is wrong.
+37 of 365 ncusip links. **None is excluded** — the CUSIP is authoritative here; a name mismatch means the name differs, not that the security is wrong.
 
 | final_cik | org_name | comnam | permno | documented | final_evidence |
 |---|---|---|---|---|---|
@@ -135,7 +134,7 @@ Tie-break usage: {'priusa': 18, 'shrcd': 0, 'namedt': 0} (priusa resolves the du
 | group | v3 linked | both | same permno | different |
 |---|---|---|---|---|
 | treated | 111 | 111 | 111 | 0 |
-| control | 250 | 225 | 221 | 4 |
+| control | 250 | 231 | 227 | 4 |
 
 ### Every disagreement (4)
 
@@ -146,15 +145,13 @@ Tie-break usage: {'priusa': 18, 'shrcd': 0, 'namedt': 0} (priusa resolves the du
 | 1652044 | Google Inc. | 2016-08-10 | 14542.0 | 90319.0 | ALPHABET INC | cusip_ncusip |
 | 1652044 | Google, Inc. | 2017-06-29 | 14542.0 | 90319.0 | ALPHABET INC | cusip_ncusip |
 
-- v3 linked, v4 not: **25** (treated 0, control 25)
-- v4 linked, v3 not: **57** (treated 0, control 57)
+- v3 linked, v4 not: **19** (treated 0, control 19)
+- v4 linked, v3 not: **61** (treated 0, control 61)
 
 | reason | events |
 |---|---|
 | no names row valid on breach_date | 15 |
-| shrcd not in {10,11} ([12]) | 4 |
 | no gvkey | 4 |
-| shrcd not in {10,11} ([18]) | 2 |
 
 ## CIKs with no gvkey, classified
 
@@ -207,6 +204,7 @@ The rule accepts a match on ONE shared token of length >= 4. That is fine for `C
 | 1051470 | Crown Castle | CROWN CASTLE INTERNATIONAL CORP | CASTLE|CROWN | org | False |
 | 1091667 | Charter Communications, Inc. | CHARTER COMMUNICATIONS INC | CHARTER|COMMUNICATIONS | org | False |
 | 1105705 | Time Warner Inc. | TIME WARNER INC NEW | TIME|WARNER | org | False |
+| 1137789 | Seagate US LLC | SEAGATE TECHNOLOGY PLC | SEAGATE | org | False |
 
 ### b_successor_cik nominations that survive
 

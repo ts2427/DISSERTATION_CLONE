@@ -101,7 +101,16 @@ NOMS = Path("outputs/rebuild_v4/inputs/crsp_drop_nominations.csv")
 TMOBILE_CIK, TMOBILE_CUTOFF = 1283699, pd.Timestamp("2013-04-29")
 SPRINT_CIK, SPRINT_CUTOFF = 101830, pd.Timestamp("2013-07-12")
 SPRINT_V3_PERMNOS = {14040, 39087}
-SHRCD_OK = {10, 11}
+# Admitted share codes. 10 and 11 are ordinary common stock; 12 is common stock of a
+# company incorporated outside the US but trading as an ordinary share (Aon plc, Seagate
+# plc), and 18 is a REIT (Essex, CyrusOne). All four are ordinary equity with real daily
+# returns, and v3 used them, so excluding them lost six control events for no reason
+# beyond the share code.
+#
+# Everything else stays excluded: 3x are ADRs and ADSs (Nokia is 31), which are a claim
+# on a foreign security rather than the security itself, and 14/89 and the fund codes are
+# not ordinary equity at all.
+SHRCD_OK = {10, 11, 12, 18}
 GATE_REASON = ("CRSP name at breach_date does not match the breached organization; "
                "parent relationship unverified")
 
