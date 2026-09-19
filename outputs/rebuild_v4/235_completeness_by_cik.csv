@@ -1,0 +1,122 @@
+outcome_cik,expected,on_disk,missing,org_name,submissions_cached
+4904,2,2,0,American Electric Power,1
+8670,11,11,0,"Automatic Data Processing, Inc.",1
+12927,9,9,0,The Boeing Company,1
+14693,8,8,0,Brown-Forman Corporation,1
+18926,19,19,0,CenturyLink,1
+20520,11,11,0,Frontier Communications,1
+27904,7,7,0,"Delta Air Lines, Inc.",1
+27996,7,7,0,Deluxe Corporation,1
+33185,10,10,0,"Equifax, Inc.",1
+40704,5,5,0,"General Mills, Inc.",1
+43196,8,8,0,"Gray Television, Inc.",1
+47111,1,1,0,The Hershey Company,1
+47217,19,19,0,Hewlett-Packard Company,1
+51143,10,10,0,IBM,1
+51434,7,7,0,International Paper Company,1
+62709,8,8,0,"Marsh & McLennan Companies, Inc.",1
+68505,30,30,0,"Motorola, Inc.",1
+73309,8,8,0,Nucor Corporation,1
+73756,8,8,0,"Oceaneering International, Inc.",1
+75362,6,6,0,PACCAR,1
+76334,10,10,0,Parker-Hannifin Corporation,1
+77476,7,7,0,"PepsiCo, Inc.",1
+78003,12,12,0,Pfizer Inc,1
+91419,6,6,0,The J.M. Smucker Company,1
+91440,2,2,0,Snap-on Incorporated,1
+92380,5,5,0,Southwest Airlines Co.,1
+96021,17,17,0,Sysco Corporation,1
+101830,64,64,0,Sprint Nextel,1
+277135,7,7,0,"W.W. Grainger, Inc.",1
+315293,15,15,0,Aon Corporation,1
+318154,8,8,0,Amgen Inc.,1
+319687,8,8,0,United Airlines,1
+320193,21,21,0,Apple Inc.,1
+354190,2,2,0,Gallagher NAC,1
+354950,7,7,0,The Home Depot,1
+708818,7,7,0,"NextGen Healthcare, Inc.",1
+718877,23,23,0,"Activision Publishing, Inc.",1
+723254,3,3,0,Cintas Corporation,1
+728535,8,8,0,"J.B. Hunt Transport, Inc.",1
+731766,7,7,0,Change Healthcare Inc.,1
+732712,59,59,0,Verizon,1
+732717,50,50,0,AT&T,1
+764180,4,4,0,"Altria Group, Inc.",1
+771497,14,14,0,ABM Industries Incorporated,1
+773840,20,20,0,Honeywell International Inc.,1
+789019,11,11,0,Microsoft Corporation,1
+789570,11,11,0,MGM Resorts International,1
+790070,6,6,0,EMC Corporation,1
+796343,20,20,0,Adobe Systems Incorporated,1
+798354,26,26,0,"Fiserv, Inc.",1
+813828,5,5,0,Paramount,1
+815097,7,7,0,Carnival Corporation,1
+823768,6,6,0,"USA Waste-Management Resources, LLC",1
+831259,6,6,0,Freeport-McMoRan Inc.,1
+858877,8,8,0,"Cisco Systems, Inc.",1
+872589,2,2,0,"Regeneron Pharmaceuticals, Inc.",1
+877890,36,36,0,Citrix Systems Inc.,1
+892553,4,4,0,"Chart Industries, Inc.",1
+896878,46,46,0,"Intuit, Inc.",1
+908937,14,14,0,Sirius XM Radio Inc.,1
+912752,5,5,0,"Sinclair Broadcast Group, Inc.",1
+920522,9,9,0,"Essex Property Trust, Inc.",1
+920760,8,8,0,Lennar Corporation,1
+943452,13,13,0,Wabtec Corporation,1
+1000228,8,8,0,"Henry Schein, Inc.",1
+1001039,6,6,0,The Walt Disney Company,1
+1001082,8,8,0,"DISH Network, LLC",1
+1001250,8,8,0,The EstÃ©e Lauder Companies Inc.,1
+1002517,15,15,0,"Nuance Communications, Inc.",1
+1041061,6,6,0,"Yum! Brands, Inc.",1
+1048911,5,5,0,"FedEx Ground Package System, Inc.",1
+1051470,5,5,0,Crown Castle,1
+1058290,11,11,0,Cognizant Technology Solutions Corporation,1
+1060391,26,26,0,Republic Services,1
+1067837,9,9,0,Entercom Communications Corp.,1
+1091667,36,36,0,"Charter Communications, Inc.",1
+1105705,12,12,0,Time Warner Inc.,1
+1108524,13,13,0,Salesforce.com,1
+1113169,10,10,0,"T. Rowe Price Retirement Plan Services, Inc.",1
+1123360,3,3,0,"Global Payments, Inc.",1
+1124610,9,9,0,"VMware, Inc.",1
+1133421,13,13,0,Northrop Grumman Systems Corporation,1
+1136893,28,28,0,"Fidelity National Information Services, Inc.",1
+1137789,21,16,5,Seagate US LLC,1
+1140859,13,13,0,"Cencora, Inc.",1
+1166691,29,29,0,Comcast,1
+1180262,7,7,0,"Herbalife International of America, Inc.",1
+1283699,49,49,0,"T-Mobile USA, Inc.",1
+1288776,7,7,0,"Google, Inc.",1
+1319161,6,6,0,Warner Music Group,1
+1326160,32,32,0,Duke Energy Corporation,1
+1326801,14,14,0,Facebook,1
+1336920,7,7,0,"Leidos, Inc.",1
+1341439,2,2,0,Oracle Corporation,1
+1373715,8,8,0,ServiceNow Inc.,1
+1387467,8,8,0,Alpha & Omega Semiconductor,1
+1397911,7,7,0,LPL Financial LLC,1
+1400891,6,6,0,"iHeartMedia + Entertainment, Inc.",1
+1428439,7,7,0,Roku Inc.,1
+1447669,19,19,0,Twilio,1
+1472787,5,5,0,First American Financial Corporation,1
+1501585,13,13,0,"Huntington Ingalls Industries, Inc.",1
+1510295,9,9,0,Marathon Petroleum Company LP,1
+1512673,14,14,0,"Block and Company, Inc.",1
+1535527,13,13,0,"CrowdStrike Holdings, Inc.",1
+1543151,14,14,0,"Uber Technologies, Inc.",1
+1553023,4,4,0,"CyrusOne, Inc.",1
+1564408,6,6,0,Snap Inc.,1
+1590895,6,6,0,"Caesars Entertainment, Inc.",1
+1609711,24,24,0,GoDaddy.com LLC,1
+1632127,9,9,0,"Cable One, Inc.",1
+1640147,6,6,0,Snowflake Inc.,1
+1645590,16,16,0,Hewlett Packard Enterprise Company,1
+1647088,8,8,0,WillScot Mobile Mini Holdings Corp.,1
+1652044,6,6,0,Google Inc.,1
+1660134,9,9,0,"Okta, Inc.",1
+1669779,12,12,0,CWGS Group,1
+1702780,22,22,0,"Altice USA, Inc.",1
+1713683,2,2,0,"Zscaler, Inc.",1
+1770450,15,15,0,Xerox Corporation,1
+1889539,8,8,0,"Corebridge Financial, Inc.",1

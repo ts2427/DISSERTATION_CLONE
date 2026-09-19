@@ -1976,6 +1976,10 @@ q12 = _m231.NEW_VALIDATION_SEED == 20260919 and _m231.NEW_VALIDATION_MAX == 30
 q13 = len(_m231.draw_validation(_pool[:5] + _pool[:5])) == 5
 
 # --- a missing input ABORTS, writing a PARTIAL log that names the phase ---
+# Snapshot the REAL log's mtime: asserting it is absent is wrong once 231 has
+# legitimately been run, so assert the abort did not TOUCH it instead.
+_real231 = Path("outputs/rebuild_v4/231_fetch_log.md")
+_real231_before = _real231.stat().st_mtime_ns if _real231.exists() else None
 _m231.ROWS.clear()
 _m231.ROWS.append(dict(phase="documents", cik=1, status="fetched"))
 _m231.PHASE["name"] = "documents"
@@ -1989,8 +1993,34 @@ _lg = (TMP / "231_fetch_log.md")
 _txt = _lg.read_text(encoding="utf-8") if _lg.exists() else ""
 q15 = "ABORTED" in _txt and "documents" in _txt and "CIK 1 (1/9)" in _txt
 q16 = (TMP / "231_fetch_rows.csv").exists()             # partial rows written
-q17 = not (Path("outputs/rebuild_v4") / "231_fetch_log.md").exists()
+q17 = ((_real231.stat().st_mtime_ns if _real231.exists() else None)
+       == _real231_before)
 _m231.ROWS.clear()
+
+# --- 235: a CIK that already holds SOME documents must still be checked ---
+# (Seagate held 16 v3 documents, so 230's CIK-level needs_fetch was 0 and 5 filings
+# inside v4's wider window were never fetched. 231 now scopes on in_scope, and 235
+# is the check that would catch any recurrence.)
+_m235 = load(Path("scripts/235_fetch_completeness_v4.py"), "m235")
+_m235.OUT = TMP
+_m235.TXT = TMP / "item5_02_text"
+(_m235.TXT / "777").mkdir(parents=True, exist_ok=True)
+(_m235.TXT / "777" / "a1_d1.htm").write_bytes(b"x")     # one of two on disk
+_gapf = pd.DataFrame([dict(final_cik=777, outcome_cik=777, org_name="Partial Inc",
+                           breach_date="2016-02-29", treated=0, in_scope=1,
+                           win_lo="2014-03-01", win_hi="2016-09-05")])
+_pg = [{"form": ["8-K", "8-K"], "filingDate": ["2015-05-01", "2015-06-01"],
+        "items": ["5.02", "5.02"], "accessionNumber": ["a1", "a2"],
+        "primaryDocument": ["d1.htm", "d2.htm"]}]
+_cmp = _m235.build(_gapf, lambda c: _pg, _m231.item502_filings)
+q18 = len(_cmp) == 2 and int(_cmp["on_disk"].sum()) == 1
+q19 = set(_cmp.loc[_cmp["on_disk"] == 0, "accession"]) == {"a2"}
+# a genuine zero: the index lists nothing in-window
+_cmp2 = _m235.build(_gapf, lambda c: [{"form": ["10-K"], "filingDate": ["2015-05-01"],
+                                       "items": [""], "accessionNumber": ["z1"],
+                                       "primaryDocument": ["z.htm"]}],
+                    _m231.item502_filings)
+q20 = len(_cmp2) == 1 and _cmp2.iloc[0]["accession"] == ""
 
 for _f, _lab in [(q1, "submissions assemble as [recent, *shards]"),
                  (q2, "both pages preserved in order"),
@@ -2008,10 +2038,13 @@ for _f, _lab in [(q1, "submissions assemble as [recent, *shards]"),
                  (q14, "a missing input ABORTS"),
                  (q15, "the partial log names the phase and the last item"),
                  (q16, "partial fetch rows are written on abort"),
-                 (q17, "the abort wrote nothing into the repository")]:
+                 (q17, "the abort did not touch the real run log in the repository"),
+                 (q18, "a partly-fetched CIK still reports its missing document"),
+                 (q19, "the missing accession is named"),
+                 (q20, "an index with no 5.02 in-window is a genuine zero")]:
     print(f"  {'PASS' if _f else 'FAIL'} | {_lab}")
 results.append(all([q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14,
-                    q15, q16, q17]))
+                    q15, q16, q17, q18, q19, q20]))
 
 print(f"\n{'='*70}")
 print(f"RESULT: {sum(results)}/{len(results)} tests passed")

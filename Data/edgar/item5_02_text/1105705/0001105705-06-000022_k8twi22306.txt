@@ -1,0 +1,188 @@
+<DOCUMENT>
+<TYPE>8-K
+<SEQUENCE>1
+<FILENAME>k8twi22306.txt
+<DESCRIPTION>TIME WARNER INC. 8-K 2/23/2006
+<TEXT>
+
+
+
+===============================================================================
+
+                                  UNITED STATES
+                       SECURITIES AND EXCHANGE COMMISSION
+
+                             WASHINGTON, D.C. 20549
+
+                                ----------------
+
+
+                                    FORM 8-K
+
+                                 CURRENT REPORT
+                     Pursuant to Section 13 or 15(d) of the
+
+                         Securities Exchange Act of 1934
+
+       Date of Report (Date of Earliest Event Reported): February 23, 2006
+
+                                TIME WARNER INC.
+
+             (Exact Name of Registrant as Specified in its Charter)
+
+    Delaware                         1-15062                  13-4099534
+ ----------------               ----------------            --------------
+(State or Other Jurisdiction  (Commission File Number)      (IRS Employer
+    of Incorporation)                                     Identification No.)
+
+                One Time Warner Center, New York, New York 10019
+                  ---------------------------------------------
+               (Address of Principal Executive Offices) (Zip Code)
+
+                                  212-484-8000
+                            ------------------------
+              (Registrant's Telephone Number, Including Area Code)
+
+                                 Not Applicable
+                                ----------------
+
+          (Former Name or Former Address, if Changed Since Last Report)
+
+Check  the  appropriate  box  below  if the  Form  8-K  filing  is  intended  to
+simultaneously  satisfy the filing obligation of the registrant under any of the
+following provisions (see General Instruction A.2 below):
+
+[ ] Written communications pursuant to Rule 425 under the Securities
+    Act (17 CFR 230.425)
+
+[ ] Soliciting material pursuant to Rule 14a-12 under the Exchange
+    Act (17 CFR 240.14a-12)
+
+[ ] Pre-commencement communications pursuant to Rule 14d-2(b) under the
+    Exchange Act (17 CFR 240.14d-2(b))
+
+[ ] Pre-commencement communications pursuant to Rule 13e-4(c) under the
+    Exchange Act (17 CFR 240.13e-4(c))
+
+===============================================================================
+
+
+<PAGE>
+
+
+
+
+
+Item 5.02.  Departure of Directors.
+
+On February 23, 2006,  R.E.  "Ted" Turner  notified the Board of Directors  (the
+"Board") of Time Warner Inc.  ("Time  Warner" or the  "Company") of his decision
+not to stand for  re-election  to the Board at the Company's  annual  meeting of
+stockholders  in 2006.  Mr.  Turner will continue to serve as a director of Time
+Warner  until  the 2006  annual  meeting  of  stockholders,  which is  currently
+expected to be held in May 2006.
+
+In addition,  in accordance with Time Warner's corporate  governance policy, Ms.
+Carla A. Hills will retire  from the Board at the  Company's  annual  meeting of
+stockholders  in 2006.  Ms.  Hills will  continue to serve as a director of Time
+Warner until the 2006 annual meeting of stockholders.
+
+The press release issued by Time Warner Inc. on February 24, 2006 announcing Mr.
+Turner's  decision and Ms.  Hills'  retirement  is filed as Exhibit 99.1 to this
+Report.
+
+Item 5.03.  Amendments to Articles of Incorporation or Bylaws; Change in Fiscal
+Year.
+
+On February 23, 2006, the Board adopted an amendment to Section 2 of Article III
+of its By-laws, which became effective immediately, to establish a procedure for
+the Board to follow in the event a nominee  for  election  as a  director  at an
+uncontested  election  receives  more  "withhold"  votes  than "for"  votes.  An
+uncontested  election  is one in which the number of  individuals  who have been
+nominated  for  election as a director is equal to, or less than,  the number of
+authorized directors on the Board.
+
+Under the new  procedure,  if a nominee in an  uncontested  election  receives a
+"majority-withheld"  vote,  he or she must  submit an offer to  resign  from the
+Board no later  than two weeks  after the  certification  by the  Company of the
+voting  results.  The Board will then  consider  the  resignation  offer and may
+either  accept the offer or decide to reject the  resignation  offer and seek to
+address the underlying  cause(s) of the withhold votes. The Board is required to
+make  its  determination  within  90 days  following  the  certification  of the
+stockholder  vote and make a public  announcement  of its decision,  including a
+statement  regarding  the  reasons  for its  decision  if the Board  rejects the
+resignation offer.
+
+The new  procedure  also  provides  that  the  Chairman  of the  Nominating  and
+Governance  Committee  has the  authority  to manage the  Board's  review of the
+resignation offer, except in the circumstance in which it is the Chairman of the
+Nominating and Governance Committee who has received the majority-withheld vote.
+In such a circumstance,  the remaining independent directors who did not receive
+a majority-withheld vote would select a director to manage the process.
+
+Time  Warner's  By-laws,  as amended  through  February 23,  2006,  are filed as
+Exhibit 3.2 to this Report.
+
+
+
+
+
+
+
+                                       2
+<PAGE>
+
+
+
+Item 9.01. Financial Statements and Exhibits.
+
+Exhibit 3.2   By-laws of Time Warner Inc., as amended through February 23, 2006.
+
+Exhibit 99.1  Press Release dated February 24, 2006 issued by Time Warner Inc.
+
+
+
+
+
+
+                                       3
+<PAGE>
+
+
+
+                                    SIGNATURE
+
+    Pursuant to the requirements of the Securities Exchange Act of 1934, as
+amended, the registrant has duly caused this report to be signed on its behalf
+by the undersigned hereunto duly authorized.
+
+                                        TIME WARNER INC.
+
+                                        By: /s/ Wayne H. Pace
+                                           ----------------------------
+                                           Name:  Wayne H. Pace
+                                           Title: Executive Vice President and
+                                                   Chief Financial Officer
+
+Date:  February 24, 2006
+
+
+
+
+                                       4
+<PAGE>
+
+
+                                  EXHIBIT INDEX
+
+Exhibit       Description
+
+ 3.2          By-laws of Time Warner Inc., as amended through February 23, 2006
+99.1          Press release dated February 24, 2006 issued by Time Warner Inc.
+
+
+
+
+                                       5
+</TEXT>
+</DOCUMENT>

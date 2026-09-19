@@ -1,0 +1,254 @@
+<DOCUMENT>
+<TYPE>8-K
+<SEQUENCE>1
+<FILENAME>f07-01_258k.txt
+<DESCRIPTION>FORM 8-K
+<TEXT>
+
+                                  UNITED STATES
+                       SECURITIES AND EXCHANGE COMMISSION
+
+                             WASHINGTON, D.C. 20549
+
+                                ----------------
+
+
+                                    FORM 8-K
+
+                                 CURRENT REPORT
+
+                     Pursuant to Section 13 or 15(d) of the
+                         Securities Exchange Act of 1934
+
+       Date of Report (Date of Earliest Event Reported): January 24, 2007
+
+                                TIME WARNER INC.
+
+             (Exact Name of Registrant as Specified in its Charter)
+
+
+          Delaware                     1-15062                       13-4099534
+          --------                     -------                       ----------
+(State or Other Jurisdiction     (Commission File Number)          (IRS Employer
+of Incorporation)                                             dentification No.)
+
+                One Time Warner Center, New York, New York 10019
+                ------------------------------------------------
+               (Address of Principal Executive Offices) (Zip Code)
+
+                                  212-484-8000
+                                  -------------
+              (Registrant's Telephone Number, Including Area Code)
+
+                                 Not Applicable
+                                 --------------
+          (Former Name or Former Address, if Changed Since Last Report)
+
+
+Check  the  appropriate  box  below  if the  Form  8-K  filing  is  intended  to
+simultaneously  satisfy the filing obligation of the registrant under any of the
+following provisions (see General Instruction A.2 below):
+
+[ ] Written communications pursuant to Rule 425 under the Securities Act (17 CFR
+    230.425)
+
+[ ] Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR
+    240.14a-12)
+
+[ ] Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange
+    Act (17 CFR 240.14d-2(b))
+
+[ ] Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange
+    Act (17 CFR 240.13e-4(c))
+
+
+<PAGE>
+
+
+Item 2.03 Creation of a Direct  Financial  Obligation or an Obligation  under an
+Off-Balance Sheet Arrangement of a Registrant.
+
+On January  25,  2007,  Time  Warner  Inc.  (the  "Company"  or "Time  Warner"),
+established a new  unsecured  commercial  paper  program (the "New  Program") to
+replace  its  existing  $5.0  billion   commercial  paper  program  (the  "Prior
+Program").  The New Program  provides  for the issuance of up to $7.0 billion of
+commercial paper  outstanding at any time, and the Company's  obligations  under
+the New Program are fully, irrevocably and unconditionally  guaranteed by TW AOL
+Holdings Inc. ("TW AOL") and Historic TW Inc. ("Historic TW"). In addition, Time
+Warner Companies,  Inc. and Turner Broadcasting System, Inc. fully,  irrevocably
+and  unconditionally  guarantee  the  obligations  of  Historic TW under the New
+Program.  The  guarantee  structure  of the  New  Program  is  identical  to the
+guarantee  structure of the  Company's  senior  unsecured  notes and  debentures
+issued on  November 13, 2006 and  substantially identical  to that of the Prior
+Program,  except that the New Program includes a guarantee by TW AOL rather than
+the guarantee by AOL LLC that exists under the Prior  Program.  Unlike the Prior
+Program, which included a $2.0 billion sub-limit for the issuance by the Company
+of European  commercial paper, the New Program does not contemplate the issuance
+by the Company of European commercial paper, and the Company no longer maintains
+a European  commercial paper program.  Commercial  paper borrowings  outstanding
+under the Prior  Program and to be issued under the New Program are supported by
+the unused  committed  capacity of the Company's $7.0 billion  senior  unsecured
+five-year revolving credit facility that matures on February 17, 2011.
+
+No new commercial paper will be issued under the Prior Program after January 25,
+2007.  Amounts  currently  outstanding  under  the Prior  Program  have not been
+modified by the changes  reflected  in the New Program and will be repaid on the
+original maturity dates.  Once all outstanding  commercial paper under the Prior
+Program has been repaid, the Prior Program will terminate.  Until all commercial
+paper outstanding under the Prior Program has been repaid,  the aggregate amount
+of commercial paper outstanding under the Prior Program and the New Program will
+not exceed $7.0 billion at any time.
+
+Item 5.02  Departure of Directors or Certain  Officers;  Election of  Directors;
+Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.
+
+Election of New Directors
+
+On January 25, 2007, the Board of Directors (the "Board") of Time Warner elected
+Jeffrey L.  Bewkes and Edward J. Zander to the Board,  effective  on January 25,
+2007. Mr. Bewkes is President and Chief  Operating  Officer of the Company.  Mr.
+Zander is Chairman of the Board and Chief  Executive  Officer of Motorola,  Inc.
+The  election of Messrs.  Bewkes and Zander as  directors  of the Company  fills
+newly-created  positions on the Board. The Board has not yet determined on which
+Board committee or committees, if any, Mr. Zander will serve. Because Mr. Bewkes
+is an executive officer of the Company and thus is not an independent  director,
+he will not serve on any standing Board committee.
+
+Effective on January 25, 2007, Mr. Zander became  eligible to participate in the
+Time  Warner  Inc.  1988  Restricted  Stock and  Restricted  Stock Unit Plan for
+Non-Employee Directors, the Time Warner Inc. 1999 Stock Plan and the Time Warner
+Inc.  Non-Employee  Directors'  Deferred  Compensation Plan  (collectively,  the
+"Directors'  Plans"),  which are  described  under the caption  "Compensation  -
+Director   Compensation"  in  the  Company's  Proxy  Statement  filed  with  the
+Securities and Exchange  Commission on April 4, 2006. Upon Mr. Zander's election
+to the Board,  he  received  a cash  retainer  of $31,230 (representing a
+pro-rated portion of the $100,000 annual cash retainer for non-employee
+directors for the period until the 2007 annual meeting of stockholders) and an
+award of stock options to purchase 10,500 shares of Time Warner common stock
+under the Time Warner Inc. 1999 Stock Plan.  Because Mr. Bewkes is an employee
+of the Company, he will not receive any additional cash compensation or equity
+awards for serving as a director.
+
+A copy of the press  release  issued by the Company to announce  the election of
+Messrs.  Bewkes and Zander as  directors  is  included  as Exhibit  99.1 to this
+Current Report on Form 8-K.
+
+New Performance Stock Units Program
+
+As  previously  disclosed,  in 2006,  the  Compensation  and  Human  Development
+Committee  (the  "Committee")  of the Board of Time Warner  adopted a new policy
+pursuant  to  which,  beginning  with  awards  in  2007,  at  least  50%  of the
+"full-value  stock awards" (e.g.,  restricted  stock or restricted  stock units)
+made to senior  executives of Time Warner
+
+
+<PAGE>
+
+
+will be  performance-based,  such that the  achievement of performance  measures
+will  determine  the size of the award  and/or how much of or whether  the award
+vests.  Pursuant to this policy,  on January 24, 2007, the Committee adopted and
+approved the principal terms of a new performance  stock units program (the "PSU
+Program"). Time Warner's senior executive officers and certain senior executives
+at  Time  Warner's  subsidiaries  will be  eligible  to  participate  in the PSU
+Program.
+
+Under the PSU  Program,  participants  will be awarded  performance  stock units
+designated  as a  target  number  of units  that may be paid out in a number  of
+shares of Time Warner  common  stock based on the  Company's  total  stockholder
+return  ("TSR")  relative  to the TSR of other  companies  in the S&P 500  Index
+(subject to certain adjustments) over a three-year performance period. Depending
+on the Company's TSR ranking  relative to the TSR of the other  companies in the
+S&P  500  Index,  a  participant  will  receive  between  0%  and  200%  of  the
+participant's  target award following the three-year  performance period (with a
+0% payout if the Company's TSR ranking is below the 25th  percentile and 200% if
+the Company's TSR is at the 100th percentile).  Holders of unvested  performance
+stock units will not be entitled to receive or accrue  dividend  equivalents  on
+the awards based on the Company's regular quarterly cash dividends.
+
+If a participant's employment is terminated by the Company or its affiliates for
+any reason  other  than for Cause (as  defined in the  Performance  Stock  Units
+Agreement),  or if the participant  terminates his or her employment due to Good
+Reason,  Retirement or Disability (as such terms are defined in the  Performance
+Stock Units Agreement), and he or she holds outstanding performance stock units,
+the participant will receive a payment of Time Warner common stock following the
+end  of  the  applicable  performance  period  based  on  the  Company's  actual
+performance  pro-rated  based  on the  amount  of time  the  participant  was an
+employee  during  the  performance  period.  If a  participant's  employment  is
+terminated  due  to  voluntary   termination  or  for  Cause,   any  outstanding
+performance stock units will be forfeited by the participant.  Upon the death of
+a  participant,  the Company will pay a pro-rated  amount of Time Warner  common
+stock based on the Company's actual performance (or target performance,  if less
+than one year) through the date of the  participant's  death. Upon any Change in
+Control  of the  Company  or a  Division  Change in  Control  (as such terms are
+defined in the Performance Stock Units Agreement),  any outstanding  performance
+stock  units  will be  accelerated  and paid  out in Time  Warner  common  stock
+immediately  following the Change in Control or Division Change in Control.  The
+amount paid out will be based on (i) the Company's  actual  performance from the
+beginning  of the  applicable  performance  cycle to the date of the  Change  in
+Control or Division  Change in Control and (ii) a deemed  performance  at target
+from the date of the Change in Control or Division  Change in Control to the end
+of the performance period.
+
+The Committee also approved the percentages of the target performance stock unit
+award that will vest and be paid out based on the Company's TSR ranking at the
+end of the 2007-2009 performance period, as set forth in the Notice of Grant of
+Performance Stock Units. The forms of the Notice of Grant of Performance Stock
+Units and the Performance Stock Units Agreement are filed as Exhibits 99.2 and
+99.3 to this Current Report on Form 8-K and are hereby incorporated by
+reference.
+
+
+Item 9.01     Financial Statements and Exhibits.
+
+Exhibit        Description
+-------        -----------
+
+99.1           Press Release, dated January 25, 2007, issued by Time Warner Inc.
+
+99.2           Form of Notice of Grant of Performance Stock Units
+
+99.3           Form of Performance Stock Units Agreement
+
+
+<PAGE>
+
+
+                                    SIGNATURE
+
+
+     Pursuant to the  requirements  of the Securities  Exchange Act of 1934, the
+registrant  has duly  caused  this  report  to be  signed  on its  behalf by the
+undersigned hereunto duly authorized.
+
+
+
+                                               TIME WARNER INC.
+
+
+                                            By: /s/ Wayne H. Pace
+                                             -----------------------------------
+                                             Name:  Wayne H. Pace
+                                             Title: Executive Vice President and
+                                                    Chief Financial Officer
+
+
+  Date:  January 26, 2007
+
+
+<PAGE>
+
+
+                                  EXHIBIT INDEX
+
+
+Exhibit        Description
+------         -----------
+
+99.1           Press Release, dated January 25, 2007, issued by Time Warner Inc.
+
+99.2           Form of Notice of Grant of Performance Stock Units
+
+99.3           Form of Performance Stock Units Agreement
+</TEXT>
+</DOCUMENT>

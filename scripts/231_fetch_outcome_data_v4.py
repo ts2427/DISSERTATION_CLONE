@@ -299,10 +299,16 @@ def phase_documents():
     m = load_213()
     m.user_agent()
     gap = pd.read_csv(require(GAP), low_memory=False)
-    need = gap[(gap["in_scope"] == 1) & (gap["needs_fetch"] == 1)].copy()
-    need = need[need["outcome_cik"].notna()]
+    # EVERY in-scope event with a resolved outcome_cik, not just needs_fetch == 1.
+    # needs_fetch is CIK-level ("this CIK holds no documents at all"), so keying the
+    # fetch on it silently skips any CIK v3 already covered in part: Seagate held 16
+    # v3 documents, so needs_fetch was 0, and 5 filings inside v4's wider windows were
+    # never fetched. A missing Item 5.02 document reads downstream as "no departure",
+    # so that shortfall is invisible. Per-accession skipping below keeps this
+    # idempotent and cheap on a re-run.
+    need = gap[(gap["in_scope"] == 1) & gap["outcome_cik"].notna()].copy()
     if not len(need):
-        abort("no needs_fetch rows with a resolved outcome_cik - run --submissions "
+        abort("no in-scope events with a resolved outcome_cik - run --submissions "
               "first, or there is nothing to fetch")
     log("scope events to fetch for: " + str(len(need))
         + " (distinct outcome CIKs " + str(need["outcome_cik"].nunique()) + ")")
