@@ -19,7 +19,17 @@ check  -> the ledger closes step to step; treated + control == N at every step;
           any FAIL.
 
 lint   -> flags, with line numbers, the phrasings that have been wrong before, and
-          EVERY number in the draft that does not appear in METHODS_FACTS.md.
+          every number in the draft that is not sourced.
+
+          A number counts as sourced if it matches a METHODS_FACTS value exactly, or
+          if a fact ROUNDS to it at the draft's own precision (0.038 from 0.0383,
+          24.7% from the proportion 0.2466), with or without a leading zero.
+          --verbose reports which key each accepted number rounded from.
+
+          A short declared list of non-result identifiers never flags as a number
+          (Item 5.02, Form 8-K, Form 499, 47 CFR 64.2011, 95% CI, and the rule
+          parameters 730/181/365/150/550). The list is printed in lint's header, and
+          the PHRASE rules still apply to those tokens.
 """
 import argparse
 import json
@@ -512,22 +522,101 @@ def read_draft(path):
     return p.read_text(encoding="utf-8", errors="replace").splitlines()
 
 
-def known_numbers():
+# Identifiers that are never results. Each is declared here, printed in lint's header,
+# and suppressed ONLY as a NUMBER flag - the phrase rules (5.02(b), 64.2011 near
+# "deadline") still apply, because those are about wording, not about sourcing.
+# Some carry a context condition so the bare digits stay flagged elsewhere.
+SAFE_IDS = [
+    ("5.02", None, "Item 5.02"),
+    ("8", "8-K", "Form 8-K"),
+    ("499", None, "FCC Form 499"),
+    ("64.2011", None, "47 CFR 64.2011"),
+    ("47", "47 CFR", "47 CFR (only in '47 CFR')"),
+    ("95", "95% CI", "95% CI (only before '% CI')"),
+    ("730", None, "rule parameter: baseline window start, t0-730d"),
+    ("181", None, "rule parameter: baseline window end, t0-181d"),
+    ("365", None, "rule parameter: prior 12-month return"),
+    ("150", None, "rule parameter: minimum daily returns"),
+    ("550", None, "rule parameter: covariate staleness limit"),
+]
+PCT_AFTER = re.compile(r"^\s*(%|percent|percentage point|pp\b)", re.I)
+
+
+def safe_identifier(tok, line, start, end):
+    """-> the declared reason this token is a non-result identifier, or None."""
+    for val, ctx, why in SAFE_IDS:
+        if tok != val:
+            continue
+        if ctx is None:
+            return why
+        # context condition: the identifier must appear as that literal, at this spot
+        window = line[max(0, start - len(ctx)):end + len(ctx)]
+        if ctx.lower() in window.lower():
+            # and this occurrence must be the one inside the context string
+            tail = line[start:start + len(ctx)]
+            head = line[max(0, end - len(ctx)):end]
+            if ctx.lower() in tail.lower() or ctx.lower() in head.lower():
+                return why
+    return None
+
+
+def facts_index():
+    """-> (exact string forms, [(key, float value), ...]) from METHODS_FACTS.csv."""
     if not (METH / "METHODS_FACTS.csv").exists():
         abort("run `facts` first: " + str(METH / "METHODS_FACTS.csv") + " is missing")
     fdf = pd.read_csv(METH / "METHODS_FACTS.csv")
-    out = set()
-    for v in fdf["value"].astype(str):
+    exact, numeric = set(), []
+    for _, r in fdf.iterrows():
+        v = str(r["value"])
         for m in NUM_RE.finditer(v):
-            out.add(m.group(1))
-            out.add(m.group(1).replace(",", ""))
-            out.add(m.group(1).lstrip("0") or "0")
-    return out
+            tok = m.group(1)
+            exact.add(tok)
+            exact.add(tok.replace(",", ""))
+            exact.add(tok.lstrip("0") or "0")
+            try:
+                numeric.append((str(r["key"]), float(tok.replace(",", ""))))
+            except ValueError:
+                pass
+    return exact, numeric
 
 
-def run_lint(path):
+def decimals_of(tok):
+    return len(tok.split(".", 1)[1]) if "." in tok else 0
+
+
+def rounded_source(tok, numeric, as_pct):
+    """A draft number is sourced if a fact ROUNDS to it at the draft's own precision.
+
+    The essay reports 0.038 where the artefact holds 0.0383, and 24.7% where it holds
+    0.2466. Demanding string equality would flag both, which trains the reader to
+    ignore the linter - the failure mode that matters most for a checking tool.
+    """
+    d = decimals_of(tok)
+    try:
+        want = float(tok.replace(",", ""))
+    except ValueError:
+        return None
+    target = "%.*f" % (d, want)
+    for key, val in numeric:
+        if ("%.*f" % (d, val)) == target:
+            return key
+        if as_pct and ("%.*f" % (d, val * 100.0)) == target:
+            return key + " (as a percentage)"
+    return None
+
+
+def run_lint(path, verbose=False):
     lines = read_draft(path)
-    known = known_numbers()
+    known, numeric = facts_index()
+    print("lint: numbers are matched against METHODS_FACTS.md exactly, or after "
+          "rounding a fact to the draft's own decimal places (a percentage of a "
+          "proportion counts).")
+    print("lint: declared non-result identifiers, never flagged as numbers:")
+    for val, ctx, why in SAFE_IDS:
+        print("        %-8s %s%s" % (val, why,
+                                     "" if ctx is None else "  [context: '%s']" % ctx))
+    print("      the PHRASE rules still apply to these (e.g. 5.02(b), 64.2011 near "
+          "'deadline').")
     hits = []
     for i, ln in enumerate(lines, 1):
         low = ln.lower()
@@ -555,22 +644,39 @@ def run_lint(path):
             tok = m.group(1)
             if tok in known or tok.replace(",", "") in known:
                 continue
-            if re.fullmatch(r"(19|20)\d{2}", tok):      # plain years
+            if re.fullmatch(r"(19|20)[0-9]{2}", tok):      # plain years
                 continue
             if tok in {"30", "90", "180", "1", "2", "3", "4", "5"}:   # windows, small ordinals
+                continue
+            why = safe_identifier(tok, ln, m.start(1), m.end(1))
+            if why:
+                if verbose:
+                    hits.append((i, "OK", "'%s' declared identifier: %s" % (tok, why),
+                                 ln.strip()[:110]))
+                continue
+            as_pct = bool(PCT_AFTER.match(ln[m.end(1):]))
+            src = rounded_source(tok, numeric, as_pct)
+            if src:
+                if verbose:
+                    hits.append((i, "OK", "'%s' rounded from %s" % (tok, src),
+                                 ln.strip()[:110]))
                 continue
             hits.append((i, "NUMBER", "'%s' is not in METHODS_FACTS.md" % tok,
                          ln.strip()[:110]))
     print("linted %s (%d lines)" % (path, len(lines)))
+    real = [h for h in hits if h[1] != "OK"]
     if not hits:
         print("  no flags")
         return 0
     for i, kind, lab, ctx in hits:
         print("  line %-5d %-6s %s" % (i, kind, lab))
         print("        %s" % ctx)
-    print("\n%d flag(s): %d phrase, %d number"
-          % (len(hits), sum(1 for h in hits if h[1] == "PHRASE"),
-             sum(1 for h in hits if h[1] == "NUMBER")))
+    print("")
+    print("%d flag(s): %d phrase, %d number%s"
+          % (len(real), sum(1 for h in real if h[1] == "PHRASE"),
+             sum(1 for h in real if h[1] == "NUMBER"),
+             ("; %d accepted (shown by --verbose)" % sum(1 for h in hits if h[1] == "OK"))
+             if verbose else ""))
     return 0
 
 
@@ -581,13 +687,16 @@ def main():
     sub.add_parser("check")
     lp = sub.add_parser("lint")
     lp.add_argument("draft")
+    lp.add_argument("--verbose", action="store_true",
+                    help="also show accepted numbers and why (rounded from <key>, or a "
+                         "declared identifier)")
     a = ap.parse_args()
     if a.cmd == "facts":
         build_facts()
         return 0
     if a.cmd == "check":
         return run_check()
-    return run_lint(a.draft)
+    return run_lint(a.draft, verbose=getattr(a, "verbose", False))
 
 
 if __name__ == "__main__":

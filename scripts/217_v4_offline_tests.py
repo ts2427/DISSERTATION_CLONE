@@ -2589,6 +2589,103 @@ for _f, _lab in [(v1, "p-values print without a leading zero"),
 results.append(all([v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14,
                     v15, v16, v17, v18, v19, v20]))
 
+
+print("\n" + "=" * 70)
+print("TEST: 240 lint - rounding match and declared identifiers")
+print("=" * 70)
+_m24 = load(Path("scripts/240_methods_toolkit_v4.py"), "m24lint")
+
+# --- rounding: a fact rounds to the draft's own precision ---
+_num = [("F1 180d / coefficient", 0.0383),
+        ("F1 180d / control base rate", 0.2466),
+        ("analysis sample / N", 405.0)]
+w1 = _m24.rounded_source("0.038", _num, False) == "F1 180d / coefficient"
+w2 = _m24.rounded_source(".038", _num, False) == "F1 180d / coefficient"   # no leading zero
+w3 = _m24.rounded_source("0.04", _num, False) == "F1 180d / coefficient"   # coarser precision
+w4 = _m24.rounded_source("0.039", _num, False) is None                      # genuinely different
+# a proportion quoted as a percentage, only where a % context was detected
+w5 = _m24.rounded_source("24.7", _num, True) == "F1 180d / control base rate (as a percentage)"
+w6 = _m24.rounded_source("24.7", _num, False) is None
+w7 = _m24.rounded_source("405", _num, False) == "analysis sample / N"
+w8 = _m24.decimals_of("0.0383") == 4 and _m24.decimals_of("405") == 0
+# the percentage context regex
+w9 = (bool(_m24.PCT_AFTER.match("% of events"))
+      and bool(_m24.PCT_AFTER.match(" percentage points"))
+      and not bool(_m24.PCT_AFTER.match(" firms")))
+
+# --- declared identifiers, with their context conditions ---
+def _si(tok, line):
+    i = line.index(tok)
+    return _m24.safe_identifier(tok, line, i, i + len(tok))
+
+
+w10 = _si("5.02", "Reported under Item 5.02 of the form.") is not None
+w11 = _si("499", "Carriers file Form 499 annually.") is not None
+w12 = _si("64.2011", "See 47 CFR 64.2011 here.") is not None
+w13 = _si("47", "See 47 CFR 64.2011 here.") is not None          # in context
+w14 = _si("47", "The firm reported 47 incidents.") is None        # bare -> NOT declared
+w15 = _si("95", "Recall 0.84, 95% CI [0.6, 0.9].") is not None    # before '% CI'
+w16 = _si("95", "We observed 95 events.") is None                 # bare -> NOT declared
+w17 = _si("8", "Filed on Form 8-K yesterday.") is not None        # 8-K
+w18 = all(_si(t, "Window runs 730 to 181 days; 150 returns in 365; 550 days stale.")
+          is not None for t in ("730", "181", "150", "365", "550"))
+w19 = {v for v, _c, _w in _m24.SAFE_IDS} == {"5.02", "8", "499", "64.2011", "47", "95",
+                                             "730", "181", "365", "150", "550"}
+
+# --- end to end: header lists the identifiers; verbose attributes; bad numbers flag ---
+import io as _io24, contextlib as _ctx24
+_d = TMP / "lint_round.md"
+_d.write_text(chr(10).join([
+    "The coefficient is 0.038 and the base rate is 24.7%.",
+    "Reported under Item 5.02 of Form 8-K by Form 499 filers under 47 CFR 64.2011.",
+    "Recall 0.84, 95% CI shown; window 730 to 181 days, 150 returns in 365, 550 stale.",
+    "The effect is 8.88 points across 7777 firms.",
+]) + chr(10), encoding="utf-8")
+_b1 = _io24.StringIO()
+with _ctx24.redirect_stdout(_b1):
+    _m24.run_lint(str(_d))
+_t1 = _b1.getvalue()
+w20 = "declared non-result identifiers" in _t1
+w21 = all(("%-8s" % v).strip() in _t1 for v in ("5.02", "64.2011", "730", "550"))
+w22 = "'8.88' is not in METHODS_FACTS" in _t1 and "'7777' is not in METHODS_FACTS" in _t1
+w23 = ("'0.038'" not in _t1.split("linted")[1]) and ("'24.7'" not in _t1.split("linted")[1])
+_b2 = _io24.StringIO()
+with _ctx24.redirect_stdout(_b2):
+    _m24.run_lint(str(_d), verbose=True)
+_t2 = _b2.getvalue()
+w24 = "rounded from" in _t2 and "declared identifier" in _t2
+# the flag count must exclude the accepted ones
+w25 = "2 flag(s): 0 phrase, 2 number" in _t2 and "2 flag(s): 0 phrase, 2 number" in _t1
+
+for _f, _lab in [(w1, "0.038 accepted, rounded from 0.0383"),
+                 (w2, ".038 accepted without a leading zero"),
+                 (w3, "0.04 accepted at coarser precision"),
+                 (w4, "0.039 still flags - rounding is not a wildcard"),
+                 (w5, "24.7% accepted as a percentage of the proportion"),
+                 (w6, "24.7 without a % context is NOT auto-accepted"),
+                 (w7, "an integer count matches exactly"),
+                 (w8, "decimal places are read off the draft token"),
+                 (w9, "the percentage context matches %, 'percentage points', not 'firms'"),
+                 (w10, "Item 5.02 declared"),
+                 (w11, "Form 499 declared"),
+                 (w12, "64.2011 declared"),
+                 (w13, "47 declared inside '47 CFR'"),
+                 (w14, "bare 47 is NOT declared"),
+                 (w15, "95 declared before '% CI'"),
+                 (w16, "bare 95 is NOT declared"),
+                 (w17, "the 8 of 'Form 8-K' declared"),
+                 (w18, "the five rule parameters declared"),
+                 (w19, "the declared list is exactly the agreed eleven"),
+                 (w20, "lint's header announces the identifier list"),
+                 (w21, "the header prints each identifier"),
+                 (w22, "unsourced numbers still flag"),
+                 (w23, "rounded and declared numbers do not appear as flags"),
+                 (w24, "--verbose reports 'rounded from' and 'declared identifier'"),
+                 (w25, "the flag count excludes accepted numbers")]:
+    print(f"  {'PASS' if _f else 'FAIL'} | {_lab}")
+results.append(all([w1, w2, w3, w4, w5, w6, w7, w8, w9, w10, w11, w12, w13, w14, w15,
+                    w16, w17, w18, w19, w20, w21, w22, w23, w24, w25]))
+
 print(f"\n{'='*70}")
 print(f"RESULT: {sum(results)}/{len(results)} tests passed")
 print("=" * 70)
