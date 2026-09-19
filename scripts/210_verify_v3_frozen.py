@@ -59,7 +59,7 @@ V4 ALLOWLIST (exact)
 Directories, matched at a path boundary only:
     Data/wrds_v4/, Data/processed/rebuild_v4/, Data/edgar/ex21_cache_v4/,
     outputs/rebuild_v4/, outputs/essay3_v4/
-Scripts, by parsed leading number only, 210 <= n <= 229:  scripts/<n>_*.py
+Scripts, by parsed leading number only, 210 <= n <= 239:  scripts/<n>_*.py
 Documents, by exact path:
     docs/claude/REBUILD_V4_QUERY.md, docs/claude/REPRODUCE_ESSAY3_V4.md
 Prefix matching is deliberately NOT used for scripts: "scripts/21" would also admit
@@ -94,7 +94,7 @@ V4_DOCS = (
     "docs/claude/REPRODUCE_ESSAY3_V4.md",
 )
 SCRIPT_RE = re.compile(r"^scripts/(\d+)_[^/]*\.py$")
-SCRIPT_LO, SCRIPT_HI = 210, 229
+SCRIPT_LO, SCRIPT_HI = 210, 239
 
 
 def git(*args, binary=False):

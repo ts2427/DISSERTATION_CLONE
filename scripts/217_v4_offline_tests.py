@@ -1533,6 +1533,197 @@ print(f"  {'PASS' if f7 else 'FAIL'} | shrcd 72 (paired/stapled shares) links ->
       f"{_L.loc['Paired Cruise Corp', 'permno']}")
 results.append(all([f1, f2, f3, f4, f5, f6, f7]))
 
+
+# =====================================================================================
+# Stage 6 - scripts 210 (allowlist), 219 (funda), 230 (outcome gap), 233 (reconcile)
+# =====================================================================================
+print("\n" + "=" * 70)
+print("TEST: 210 script allowlist spans 210-239 and stays exact")
+print("=" * 70)
+_m210 = load(Path("scripts/210_verify_v3_frozen.py"), "m210")
+_a = [
+    ("scripts/210_verify_v3_frozen.py", True, "lower bound"),
+    ("scripts/229_essay3_copy.py", True, "old upper bound still in"),
+    ("scripts/230_outcome_gap_v4.py", True, "230 now allowed"),
+    ("scripts/239_last.py", True, "new upper bound"),
+    ("scripts/240_future.py", False, "240 is outside"),
+    ("scripts/209_old.py", False, "209 is outside"),
+    ("scripts/219b_foo.py", False, "219b-style name is not <digits>_"),
+    ("scripts/2199_foo.py", False, "2199 must not be read as a prefix"),
+    ("scripts/21_foo.py", False, "21 must not be read as a prefix"),
+]
+_ok = []
+for _p, _want, _why in _a:
+    _got = bool(_m210.is_v4_allowed(_p))
+    _ok.append(_got == _want)
+    print(f"  {'PASS' if _got == _want else 'FAIL'} | {_p:<34} -> {_got!s:<5} ({_why})")
+results.append(all(_ok))
+
+print("\n" + "=" * 70)
+print("TEST: 219 reproduces scripts/156's fiscal-year rule exactly")
+print("=" * 70)
+_m219 = load(Path("scripts/219_wrds_funda_v4.py"), "m219")
+
+
+def _fr(dates, **kw):
+    base = dict(at=100.0, lt=40.0, ni=5.0, sale=200.0, cogs=120.0, xsga=30.0)
+    base.update(kw)
+    return pd.DataFrame([dict(gvkey="001234", tic="AAA",
+                              datadate=pd.Timestamp(d), **base) for d in dates])
+
+
+_g = _fr(["2018-12-31", "2019-12-31", "2020-12-31"]).sort_values("datadate")
+_c = _m219.covars(_g, pd.Timestamp("2020-06-01"))
+b1 = _c.get("firm_size_log") == round(__import__("numpy").log(100.0), 4)
+b2 = _c.get("leverage") == 0.4 and _c.get("roa") == 0.05
+b3 = _c.get("op_margin") == 0.25
+# strictly before: a datadate ON the breach date is excluded
+b4 = _m219.covars(_fr(["2020-06-01"]).sort_values("datadate"),
+                  pd.Timestamp("2020-06-01")) == {}
+# 550-day staleness boundary
+_d0 = pd.Timestamp("2019-01-01")
+b5 = _m219.covars(_fr([_d0]), _d0 + pd.Timedelta(550, unit="D")) != {}
+b6 = _m219.covars(_fr([_d0]), _d0 + pd.Timedelta(551, unit="D")) == {}
+# at <= 0 gates size/leverage/roa but NOT op_margin (156 computes it separately)
+_c0 = _m219.covars(_fr(["2019-12-31"], at=0.0), pd.Timestamp("2020-06-01"))
+b7 = ("firm_size_log" not in _c0 and "leverage" not in _c0 and "roa" not in _c0
+      and _c0.get("op_margin") == 0.25)
+# missing xsga coerced to 0
+_c1 = _m219.covars(_fr(["2019-12-31"], xsga=float("nan")), pd.Timestamp("2020-06-01"))
+b8 = _c1.get("op_margin") == 0.4
+# picks the LATEST qualifying datadate, not the first
+_c2 = _m219.covars(_fr(["2019-06-30"]).assign(at=999.0)._append(
+    _fr(["2019-12-31"]), ignore_index=True).sort_values("datadate"),
+    pd.Timestamp("2020-03-01"))
+b9 = _c2.get("firm_size_log") == round(__import__("numpy").log(100.0), 4)
+for _f, _lab in [(b1, "firm_size_log = ln(at), 4dp"),
+                 (b2, "leverage = lt/at, roa = ni/at"),
+                 (b3, "op_margin = (sale-cogs-xsga)/sale"),
+                 (b4, "datadate ON breach_date is excluded (strictly before)"),
+                 (b5, "550 days stale is INCLUDED"),
+                 (b6, "551 days stale is EXCLUDED"),
+                 (b7, "at=0 gates size/leverage/roa, op_margin survives"),
+                 (b8, "missing xsga coerced to 0"),
+                 (b9, "latest qualifying datadate wins")]:
+    print(f"  {'PASS' if _f else 'FAIL'} | {_lab}")
+results.append(all([b1, b2, b3, b4, b5, b6, b7, b8, b9]))
+
+print("\n" + "=" * 70)
+print("TEST: 219 joins Compustat by GVKEY, with the ticker arm kept separate")
+print("=" * 70)
+_canon = pd.DataFrame([dict(final_cik=111, breach_date="2020-06-01", org_name="Acme",
+                            fcc_form499=0, matched_ticker="ZZZ", firm_size_log=1.0,
+                            leverage=0.9, roa=0.9, op_margin=0.9)])
+_links = pd.DataFrame([dict(final_cik=111, breach_date="2020-06-01", gvkey="001234")])
+_funda = pd.concat([
+    _fr(["2019-12-31"]),                                     # gvkey 001234, tic AAA
+    _fr(["2019-12-31"], at=1000.0).assign(gvkey="005678", tic="ZZZ"),
+], ignore_index=True)
+_cov = _m219.build_covariates(_canon, _links, _funda)
+import numpy as _np
+c1 = _cov.loc[0, "firm_size_log"] == round(_np.log(100.0), 4)      # gvkey arm
+c2 = _cov.loc[0, "firm_size_log_tic"] == round(_np.log(1000.0), 4)  # ticker arm differs
+c3 = _cov.loc[0, "firm_size_log_v3"] == 1.0                         # v3 value preserved
+_ag = _m219.agreement_table(_cov)
+c4 = int(_ag.loc[_ag["variable"] == "firm_size_log", "differ"].iloc[0]) == 1
+_dl = _m219.delta_table(_cov)
+c5 = (_dl[(_dl["variable"] == "firm_size_log")]["change"] == "changed").all()
+print(f"  {'PASS' if c1 else 'FAIL'} | gvkey arm uses the linked gvkey (001234), not the ticker")
+print(f"  {'PASS' if c2 else 'FAIL'} | ticker arm uses matched_ticker (ZZZ) and differs")
+print(f"  {'PASS' if c3 else 'FAIL'} | v3-inherited value preserved for the delta table")
+print(f"  {'PASS' if c4 else 'FAIL'} | agreement table counts the disagreement")
+print(f"  {'PASS' if c5 else 'FAIL'} | delta table marks it 'changed'")
+results.append(all([c1, c2, c3, c4, c5]))
+
+print("\n" + "=" * 70)
+print("TEST: 230 scopes on v4_linked, never on CANONICAL_V4's inherited has_crsp_data")
+print("=" * 70)
+_m230 = load(Path("scripts/230_outcome_gap_v4.py"), "m230")
+_gc = pd.DataFrame([
+    # linked in v4, covariates present, nothing cached -> needs a fetch
+    dict(final_cik=111, breach_date="2020-06-01", reported_date="2020-07-01",
+         org_name="Acme", fcc_form499=0, has_crsp_data=1),
+    # v3 says has_crsp_data 1, but v4 did NOT link it -> out of scope
+    dict(final_cik=222, breach_date="2021-01-01", reported_date="2021-02-01",
+         org_name="Beta", fcc_form499=1, has_crsp_data=1),
+    # linked, but reported_date missing -> window runs off breach_date
+    dict(final_cik=333, breach_date="2019-03-01", reported_date=None,
+         org_name="Gamma", fcc_form499=1, has_crsp_data=0),
+])
+_gl = pd.DataFrame([
+    dict(final_cik=111, breach_date="2020-06-01", v4_linked=1, permno=10001),
+    dict(final_cik=222, breach_date="2021-01-01", v4_linked=0, permno=None),
+    dict(final_cik=333, breach_date="2019-03-01", v4_linked=1, permno=10003),
+])
+_gv = pd.DataFrame([
+    dict(final_cik=111, breach_date="2020-06-01", firm_size_log=1.0, leverage=0.1, roa=0.1),
+    dict(final_cik=222, breach_date="2021-01-01", firm_size_log=1.0, leverage=0.1, roa=0.1),
+    dict(final_cik=333, breach_date="2019-03-01", firm_size_log=1.0, leverage=0.1, roa=0.1),
+])
+_gap = _m230.build_gap(_gc, _gl, _gv, None, {333: 4})
+_r = _gap.set_index("final_cik")
+d1 = int(_r.loc[111, "in_scope"]) == 1 and int(_r.loc[111, "needs_fetch"]) == 1
+d2 = int(_r.loc[222, "in_scope"]) == 0        # inherited has_crsp_data must not rescue it
+d3 = int(_r.loc[333, "in_scope"]) == 1 and int(_r.loc[333, "needs_fetch"]) == 0
+d4 = _r.loc[333, "win_lo"] == "2017-03-01" and _r.loc[333, "win_hi"] == "2019-08-28"
+d5 = int(_r.loc[333, "rd_missing"]) == 1
+d6 = _r.loc[111, "win_lo"] == "2018-06-02"    # 730d before the EARLIER anchor
+#    2018-06-02, not 06-01: 2020 is a leap year, so 730 calendar days back from
+#    2020-06-01 crosses 2020-02-29. The window is days, never "two years".
+try:
+    _m230.require(Path("scripts/__nope__.csv"))
+    d7 = False
+except SystemExit:
+    d7 = True
+print(f"  {'PASS' if d1 else 'FAIL'} | linked + covariates + no cache -> needs_fetch")
+print(f"  {'PASS' if d2 else 'FAIL'} | v3 has_crsp_data=1 but v4_linked=0 -> OUT of scope")
+print(f"  {'PASS' if d3 else 'FAIL'} | already-cached CIK is in scope but needs no fetch")
+print(f"  {'PASS' if d4 else 'FAIL'} | missing reported_date -> window runs off breach_date")
+print(f"  {'PASS' if d5 else 'FAIL'} | missing reported_date is flagged")
+print(f"  {'PASS' if d6 else 'FAIL'} | pre-window is 730d off the earlier anchor")
+print(f"  {'PASS' if d7 else 'FAIL'} | a missing input ABORTS (no graceful fallback)")
+results.append(all([d1, d2, d3, d4, d5, d6, d7]))
+
+print("\n" + "=" * 70)
+print("TEST: 233 reconciles RESOLVE against v4 re-parenting")
+print("=" * 70)
+_m233 = load(Path("scripts/233_resolve_reconciliation.py"), "m233")
+_src = TMP / "fake199.py"
+_src.write_text(
+    "RESOLVE = {900: ('EXCLUDE', None, 'no 8-K filer'),\n"
+    "           901: ('FIX', 700, 'files under 700'),\n"
+    "           902: ('FIX', 800, 'files under 800'),\n"
+    "           903: ('FIX', 999, 'no such event')}\n", encoding="utf-8")
+_rs = _m233.parse_resolve(_src)
+e0 = _rs[901][1] == 700 and _rs[900][0] == "EXCLUDE"
+_rc = pd.DataFrame([
+    dict(final_cik=900, orig_cik=900, link_basis="direct", org_name="Nokia-like",
+         breach_date="2013-07-22", fcc_form499=0),
+    dict(final_cik=700, orig_cik=901, link_basis="successor_filing", org_name="Aon-like",
+         breach_date="2020-12-29", fcc_form499=0),
+    dict(final_cik=555, orig_cik=902, link_basis="successor_filing", org_name="Disney-like",
+         breach_date="2008-07-29", fcc_form499=0),
+])
+_ln = {(900, "2013-07-22"): pd.Series(dict(v4_linked=0, permno=None)),
+       (700, "2020-12-29"): pd.Series(dict(v4_linked=1, permno=61735)),
+       (555, "2008-07-29"): pd.Series(dict(v4_linked=1, permno=26403))}
+_out = _m233.reconcile(_rs, _rc, _ln).set_index("resolve_cik")
+e1 = _out.loc[900, "verdict"] == "agree"     # EXCLUDE + not linked
+e2 = _out.loc[901, "verdict"] == "agree"     # v4 reached the same CIK
+e3 = _out.loc[902, "verdict"] == "disagree"  # v4 re-parented elsewhere
+e4 = _out.loc[903, "verdict"] == "disagree"  # RESOLVE names an event v4 does not have
+# an EXCLUDE that v4 DOES link must flip to disagree
+_ln2 = dict(_ln); _ln2[(900, "2013-07-22")] = pd.Series(dict(v4_linked=1, permno=87128))
+e5 = _m233.reconcile({900: _rs[900]}, _rc, _ln2).iloc[0]["verdict"] == "disagree"
+for _f, _lab in [(e0, "RESOLVE parsed from source without importing 199"),
+                 (e1, "EXCLUDE + v4 does not link -> agree"),
+                 (e2, "v4 re-parented to the same CIK -> agree"),
+                 (e3, "v4 re-parented elsewhere -> disagree"),
+                 (e4, "RESOLVE names an event v4 does not carry -> disagree"),
+                 (e5, "EXCLUDE but v4 links it -> disagree")]:
+    print(f"  {'PASS' if _f else 'FAIL'} | {_lab}")
+results.append(all([e0, e1, e2, e3, e4, e5]))
+
 print(f"\n{'='*70}")
 print(f"RESULT: {sum(results)}/{len(results)} tests passed")
 print("=" * 70)
