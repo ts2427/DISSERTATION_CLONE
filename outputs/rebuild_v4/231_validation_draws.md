@@ -52,3 +52,21 @@ be mistaken later for the operative sample.
   documents, so git history fixes the order rather than an assertion about it.
   No 220 output existed on disk for any of these documents when the codes were written.
 - sheet_id to cik/accession mapping: `outputs/essay3_v4/validation_ids_v4.csv`
+
+## Verification pass (still blind to scripts/220)
+
+- `outputs/essay3_v4/VALIDATION_REFERENCE_CODES_V4_VERIFIED.psv` — sha256 `c269548f8d78b6ca3870f374ec5ece40bc53ff47cb9030b6e859ec5a2fb35263`
+- change log: `outputs/essay3_v4/VALIDATION_VERIFICATION_LOG_V4.csv`
+- the blind file `VALIDATION_REFERENCE_CODES_V4.psv` is UNCHANGED and keeps its own
+  sha256 above; the verified file is a separate artefact
+- run before any execution of scripts/220 on these documents
+- six rows checked (5, 8, 12, 13, 21, 28) against reachable non-SEC sources; SEC is
+  blocked from this environment
+- **no code changed.** The flag set moved: 12 and 13 resolved, 5 and 8 newly flagged
+  because executive-officer status of the registrant could not be confirmed, following
+  the round-1 sheet 57 precedent
+- flagged before: 12, 13, 21, 28 -> flagged after: 5, 8, 21, 28
+
+PRIMARY for scoring = the verified codes. SECONDARY = the raw blind codes. For each
+still-flagged row, accuracy is reported twice, with the row coded Y and coded N, as
+bounds.
