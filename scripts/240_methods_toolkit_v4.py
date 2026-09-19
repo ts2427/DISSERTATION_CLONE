@@ -197,15 +197,45 @@ def build_facts():
                         "window == %d, %s" % (w, col))
 
     # ---- validation: v3 rounds, the recall audit, and the v4 round ----
-    def val_rows(path, tag):
+    # A validation key must name the ROUND, the CLASSIFIER VERSION, the SUBSET, the
+    # VARIANT (A = any departure, B = new only) and, for the stratified audit, the
+    # STRATUM. Without all five the keys collide across rounds - "exec departure /
+    # recall" alone describes four different numbers - and a collision in a fact sheet
+    # is worse than a missing row, because it silently resolves to whichever was written
+    # last.
+    def variant_of(row, field):
+        v = str(row.get("variant", "") or "").strip()
+        if v:
+            return "variant " + v
+        if re.search(r"\(A[:)]", field):
+            return "variant A (any departure)"
+        if re.search(r"\(B[:)]", field):
+            return "variant B (new only)"
+        return "variant n/a"
+
+    def val_rows(path, rnd, clf_version, default_subset):
         p = Path(path)
         if not p.exists():
             return
         t = pd.read_csv(p)
         for _, r in t.iterrows():
-            field = str(r.get("field", r.get("stratum", "")))
-            scope = str(r.get("scoring", "")) or str(r.get("stratum", ""))
-            lab = (tag + " / " + field + (" / " + scope if scope else "")).strip()
+            field = str(r.get("field", "") or "")
+            # the v4 file embeds the scoring in the field: "PRIMARY (verified) | ..."
+            scoring = str(r.get("scoring", "") or "")
+            if "|" in field and not scoring:
+                scoring, field = [x.strip() for x in field.split("|", 1)]
+            subset = str(r.get("sample", "") or "") or default_subset
+            stratum = str(r.get("stratum", "") or "") or "combined"
+            parts = ["validation", rnd, "classifier " + clf_version, "subset " + subset,
+                     variant_of(r, field), "stratum " + stratum]
+            if scoring:
+                parts.append(scoring)
+            parts.append(field if field else "(all fields)")
+            lab = " / ".join(x for x in parts if x)
+            src_row = ("round=" + rnd + "; classifier=" + clf_version + "; subset="
+                       + subset + "; stratum=" + stratum
+                       + ("; scoring=" + scoring if scoring else "")
+                       + "; field=" + field)
             for col, sub, f in (("n", "n", fmt_n),
                                 ("agreement", "agreement", lambda v: fmt_f(v, 4)),
                                 ("kappa", "kappa", lambda v: fmt_f(v, 4)),
@@ -216,18 +246,20 @@ def build_facts():
                                 ("precision", "precision", lambda v: fmt_f(v, 4)),
                                 ("recall", "recall", lambda v: fmt_f(v, 4))):
                 if col in t.columns and pd.notna(r.get(col)):
-                    add(lab + " / " + sub, f(r[col]), p.name,
-                        "row '" + lab + "', " + col)
+                    add(lab + " / " + sub, f(r[col]), p.name, src_row + "; " + col)
             for col, sub in (("precision_ci95", "precision 95% CI"),
                              ("recall_ci95", "recall 95% CI")):
                 if col in t.columns and pd.notna(r.get(col)):
                     add(lab + " / " + sub + " (Clopper-Pearson)", str(r[col]),
-                        p.name, "row '" + lab + "', " + col)
+                        p.name, src_row + "; " + col)
 
-    val_rows(V3 / "d3_agreement.csv", "validation v3 round 1")
-    val_rows(V3 / "d3_r2_agreement.csv", "validation v3 round 2")
-    val_rows(V3 / "d3_audit_recall_by_stratum.csv", "validation v3 recall audit")
-    val_rows(OUT / "238_new_document_agreement.csv", "validation v4 new documents")
+    val_rows(V3 / "d3_agreement.csv", "v3 round 1", "v1 (d39bc6d)",
+             "calibration 50 + random 30")
+    val_rows(V3 / "d3_r2_agreement.csv", "v3 round 2", "v2 (6f7be7a)", "random 30")
+    val_rows(V3 / "d3_audit_recall_by_stratum.csv", "v3 recall audit", "v2 (6f7be7a)",
+             "stratified 80")
+    val_rows(OUT / "238_new_document_agreement.csv", "v4 new documents", "v2 (6f7be7a)",
+             "random 30 of 450 v4-added")
 
     # ---- covariates: definitions and coverage ----
     DEFS = {"firm_size_log": "ln(at)", "leverage": "lt / at", "roa": "ni / at",
@@ -245,6 +277,105 @@ def build_facts():
         "latest datadate strictly before breach_date, at most 550 days stale",
         "scripts/219_wrds_funda_v4.py", "covars(), STALE_DAYS")
 
+    # ---- Gate 1: records lost, by reason ----
+    g1 = Path("outputs/rebuild/GATE1_APPLIED_LEDGER.csv")
+    if g1.exists():
+        G1 = pd.read_csv(g1, low_memory=False)
+        by = G1.groupby("final_grade")["n"].sum().sort_values(ascending=False)
+        add("Gate 1 / records considered", fmt_n(int(G1["n"].sum())),
+            g1.name, "sum of n")
+        for grade, n in by.items():
+            add("Gate 1 / records by grade / " + str(grade), fmt_n(n), g1.name,
+                "final_grade == '" + str(grade) + "', sum of n")
+        lost = by[[str(i).startswith(("EXCLUDED", "AMBIGUOUS")) for i in by.index]]
+        add("Gate 1 / records lost (EXCLUDED or AMBIGUOUS)", fmt_n(int(lost.sum())),
+            g1.name, "sum of n over EXCLUDED*/AMBIGUOUS grades")
+
+    # ---- Gate 2: the adjacency-collapse rule AS CODED ----
+    g2 = Path("outputs/rebuild/GATE2_ADJACENCY_SHEET.csv")
+    if g2.exists():
+        G2 = pd.read_csv(g2, low_memory=False)
+        if "rule" in G2.columns:
+            main_rule = G2["rule"].value_counts().idxmax()
+            add("Gate 2 / adjacency-collapse rule as coded", str(main_rule), g2.name,
+                "modal value of the rule column")
+            for rule, n in G2["rule"].value_counts().items():
+                add("Gate 2 / chains under rule / " + str(rule)[:60],
+                    fmt_n(n), g2.name, "rule == that text")
+        if "PROPOSED" in G2.columns:
+            for k, n in G2["PROPOSED"].value_counts().items():
+                add("Gate 2 / chains by disposition / " + str(k), fmt_n(n), g2.name,
+                    "PROPOSED == '" + str(k) + "'")
+        add("Gate 2 / adjacency chains examined", fmt_n(len(G2)), g2.name, "row count")
+
+    # ---- CRSP step: events lost, by reason and group ----
+    le = OUT.parent / "rebuild_v4" / "215_lost_events.csv"
+    if le.exists():
+        LE = pd.read_csv(le, low_memory=False)
+        add("CRSP step / events lost (v3 linked, v4 not)", fmt_n(len(LE)),
+            le.name, "row count")
+        for cat, g in LE.groupby("category"):
+            add("CRSP step / lost by reason / " + str(cat), fmt_n(len(g)), le.name,
+                "category == '" + str(cat) + "'")
+            if "group" in g.columns:
+                for grp, gg in g.groupby(g["group"].fillna("(unstated)")):
+                    add("CRSP step / lost by reason / " + str(cat) + " / " + str(grp),
+                        fmt_n(len(gg)), le.name,
+                        "category == '" + str(cat) + "', group == '" + str(grp) + "'")
+        if "sub_cause" in LE.columns:
+            for sc, g in LE.groupby(LE["sub_cause"].fillna("(unstated)")):
+                add("CRSP step / lost by sub-cause / " + str(sc), fmt_n(len(g)),
+                    le.name, "sub_cause == '" + str(sc) + "'")
+
+    # ---- identity gate: T-Mobile exclusions ----
+    lk = OUT.parent / "rebuild_v4" / "v4_212_links.csv"
+    if lk.exists():
+        LK = pd.read_csv(lk, low_memory=False)
+        if "gate_excluded" in LK.columns:
+            ge = LK[LK["gate_excluded"].astype(str).str.lower() == "true"]
+            add("identity gate / events excluded (all firms)", fmt_n(len(ge)),
+                lk.name, "gate_excluded is True")
+            tm = ge[ge["final_cik"] == 1283699]
+            add("identity gate / T-Mobile events excluded", fmt_n(len(tm)),
+                lk.name, "gate_excluded is True, final_cik == 1283699")
+            for cik, g in ge.groupby("final_cik"):
+                add("identity gate / events excluded / CIK " + str(int(cik)),
+                    fmt_n(len(g)), lk.name,
+                    "gate_excluded is True, final_cik == " + str(int(cik)))
+
+    # ---- outcome_cik divergence ----
+    oc = OUT.parent / "rebuild_v4" / "234_outcome_cik.csv"
+    if oc.exists():
+        OC = pd.read_csv(oc, low_memory=False)
+        if "differs_from_final" in OC.columns:
+            add("outcome_cik / events where outcome_cik differs from final_cik",
+                fmt_n(int(OC["differs_from_final"].sum())), oc.name,
+                "sum of differs_from_final")
+        if "outcome_rule" in OC.columns:
+            for rule, g in OC.groupby(OC["outcome_rule"].fillna("(none)")):
+                add("outcome_cik / events resolved by rule / " + str(rule),
+                    fmt_n(len(g)), oc.name, "outcome_rule == '" + str(rule) + "'")
+
+    # ---- breach-type composition on the ANALYSIS sample (405), not only scope (412) ----
+    if "breach_type" in ev.columns:
+        key = ["final_cik", "breach_date"]
+        _ev = ev.copy()
+        _ev["breach_date"] = _ev["breach_date"].astype(str).str[:10]
+        _a = a.copy()
+        _a["breach_date"] = _a["breach_date"].astype(str).str[:10]
+        bt = _a.set_index(key).index.map(
+            _ev.drop_duplicates(key).set_index(key)["breach_type"])
+        _a = _a.assign(_bt=[str(x) if pd.notna(x) else "(missing)" for x in bt])
+        for b, g in _a.groupby("_bt"):
+            add("breach type (analysis sample) / " + str(b) + " / events",
+                fmt_n(len(g)), "e_analysis_sample.csv + b_scope_events.csv",
+                "in_analysis_sample == 1, breach_type == '" + str(b) + "'")
+            add("breach type (analysis sample) / " + str(b) + " / treated",
+                fmt_n(int(g["fcc_form499"].sum())),
+                "e_analysis_sample.csv + b_scope_events.csv",
+                "in_analysis_sample == 1, breach_type == '" + str(b)
+                + "', fcc_form499 == 1")
+
     # ---- test counts by family ----
     it = pd.read_csv(require(OUT / "i_tests.csv"))
     for fam, g in it.groupby("family"):
@@ -253,6 +384,14 @@ def build_facts():
     add("tests / total", fmt_n(len(it)), "i_tests.csv", "row count")
 
     df = pd.DataFrame(ROWS, columns=["key", "value", "source_file", "source_field"])
+    # A duplicate key silently resolves to whichever row was written last, so refuse to
+    # emit the sheet at all rather than publish an ambiguous one.
+    dup = df[df.duplicated("key", keep=False)].sort_values("key")
+    if len(dup):
+        for _, r in dup.head(20).iterrows():
+            print("  DUPLICATE KEY: %s  <- %s" % (r["key"], r["source_file"]))
+        abort("%d duplicate fact key(s) across %d distinct keys; every key must be unique"
+              % (len(dup), dup["key"].nunique()))
     df.to_csv(METH / "METHODS_FACTS.csv", index=False)
     lines = ["# Essay 3 v4 — methods facts", "",
              "Generated by `scripts/240_methods_toolkit_v4.py facts`. Every value is read",
@@ -334,6 +473,14 @@ def run_check():
             "%d without a source" % len(miss))
     else:
         rec("METHODS_FACTS.csv exists (run `facts` first)", False, str(FACTS))
+
+    # every fact key unique
+    if (METH / "METHODS_FACTS.csv").exists():
+        fdf2 = pd.read_csv(METH / "METHODS_FACTS.csv")
+        d2 = fdf2[fdf2.duplicated("key", keep=False)]
+        rec("every methods fact key is unique", len(d2) == 0,
+            "%d duplicated row(s): %s" % (len(d2),
+                                          "; ".join(d2["key"].unique()[:3])))
 
     failed = [n for n, ok, _ in results if not ok]
     print("\n%d check(s), %d failed" % (len(results), len(failed)))
