@@ -3,7 +3,7 @@
 - crsp_stocknames: 615 rows from 2 file(s) (crsp_stocknames.csv, crsp_stocknames_topup_20260919T000910Z.csv)
 # REBUILD V4 — Stage 2 point-in-time linker (CUSIP route)
 
-- run (UTC): 2026-09-19T00:58:55+00:00
+- run (UTC): 2026-09-19T13:40:55+00:00
 - events 489 | comp.company 149 | comp.security 309 | stocknames 615
 - rule: all US common issues (tpci=0, excntry=USA), ncusip-first, header fallback behind the identity gate
 
@@ -42,15 +42,16 @@
 | group | events | v3 linked | v4 linked | delta |
 |---|---|---|---|---|
 | treated | 118 | 111 | 111 | 0 |
-| control | 371 | 250 | 292 | 42 |
-| ALL | 489 | 361 | 403 | 42 |
+| control | 371 | 250 | 293 | 43 |
+| ALL | 489 | 361 | 404 | 43 |
 
 link_source:
 
 | link_source | control | treated |
 |---|---|---|
-| (unlinked) | 79 | 7 |
+| (unlinked) | 78 | 7 |
 | cusip_header | 31 | 7 |
+| cusip_issuer | 1 | 0 |
 | cusip_ncusip | 261 | 104 |
 
 Tie-break usage: {'priusa': 18, 'shrcd': 0, 'namedt': 0} (priusa resolves the dual-class pairs; the shrcd and namedt rules are reported if they ever fire).
@@ -62,8 +63,9 @@ Tie-break usage: {'priusa': 18, 'shrcd': 0, 'namedt': 0} (priusa resolves the du
 | CRSP name at breach_date does not match the breached organization; parent relationship unverified | 2 | 6 | 8 |
 | no US common issue | 3 | 0 | 3 |
 | no gvkey | 23 | 0 | 23 |
-| no names row valid on breach_date | 51 | 1 | 52 |
-| All | 79 | 7 | 86 |
+| no names row valid on breach_date | 49 | 1 | 50 |
+| shrcd not in [10, 11, 12, 18] ([31]) | 1 | 0 | 1 |
+| All | 78 | 7 | 85 |
 
 ## Identity gate (header links only)
 
@@ -146,12 +148,13 @@ Tie-break usage: {'priusa': 18, 'shrcd': 0, 'namedt': 0} (priusa resolves the du
 | 1652044 | Google, Inc. | 2017-06-29 | 14542.0 | 90319.0 | ALPHABET INC | cusip_ncusip |
 
 - v3 linked, v4 not: **19** (treated 0, control 19)
-- v4 linked, v3 not: **61** (treated 0, control 61)
+- v4 linked, v3 not: **62** (treated 0, control 62)
 
 | reason | events |
 |---|---|
-| no names row valid on breach_date | 15 |
+| no names row valid on breach_date | 14 |
 | no gvkey | 4 |
+| shrcd not in [10, 11, 12, 18] ([31]) | 1 |
 
 ## CIKs with no gvkey, classified
 

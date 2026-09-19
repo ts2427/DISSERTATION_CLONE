@@ -78,7 +78,7 @@ final_cik,org_name,edgar,final_evidence,breach_date,grp,v3_permno,gvkey,permno,c
 315293,Aon Corporation,,"Gate1-A (plain-name record, pre-redomiciliation registrant)",2020-12-17,control,61735.0,3221.0,61735.0,G0403H10,cusip_ncusip,AON PLC NEW,12.0,2020-04-01,2024-06-25,,True,AON,org,False,1.0,,,,,True,True
 318154,Amgen Inc.,AMGEN INC,EDGAR name: AMGEN INC,2021-04-21,control,14008.0,1602.0,14008.0,03116210,cusip_ncusip,AMGEN INC,11.0,1986-04-01,2024-12-31,,True,AMGEN,org,False,1.0,,,,,True,True
 318154,Amgen Inc.,AMGEN INC,EDGAR name: AMGEN INC,2023-08-16,control,14008.0,1602.0,14008.0,03116210,cusip_ncusip,AMGEN INC,11.0,1986-04-01,2024-12-31,,True,AMGEN,org,False,1.0,,,,,True,True
-319687,United Airlines,CONTINENTAL AIRLINES INC /DE/,EDGAR name: CONTINENTAL AIRLINES INC /DE/,2013-01-01,control,,10484.0,,,,,,,,,,,,,,no names row valid on breach_date,,,,False,False
+319687,United Airlines,CONTINENTAL AIRLINES INC /DE/,EDGAR name: CONTINENTAL AIRLINES INC /DE/,2013-01-01,control,,10484.0,91103.0,91004710,cusip_issuer,UNITED CONTINENTAL HOLDINGS INC,11.0,2010-10-01,2018-09-06,,True,UNITED,org,True,,,91004710,,,True,False
 320193,Apple Inc.,APPLE COMPUTER INC,EDGAR name: APPLE COMPUTER INC,2010-06-01,control,14593.0,1690.0,14593.0,03783310,cusip_ncusip,APPLE INC,11.0,2007-01-11,2024-12-31,,True,APPLE,org,False,1.0,,,,,True,True
 320193,Apple Inc.,APPLE COMPUTER INC,EDGAR name: APPLE COMPUTER INC,2013-07-18,control,14593.0,1690.0,14593.0,03783310,cusip_ncusip,APPLE INC,11.0,2007-01-11,2024-12-31,,True,APPLE,org,False,1.0,,,,,True,True
 320193,Apple Inc.,APPLE COMPUTER INC,EDGAR name: APPLE COMPUTER INC,2014-08-31,control,14593.0,1690.0,14593.0,03783310,cusip_ncusip,APPLE INC,11.0,2007-01-11,2024-12-31,,True,APPLE,org,False,1.0,,,,,True,True
@@ -264,7 +264,7 @@ final_cik,org_name,edgar,final_evidence,breach_date,grp,v3_permno,gvkey,permno,c
 1971213,"Sinclair Broadcast Group, Inc.",SINCLAIR BROADCAST GROUP INC,EDGAR name: SINCLAIR BROADCAST GROUP INC,2021-06-23,control,,60800.0,81740.0,82924210,cusip_header,SINCLAIR BROADCAST GROUP INC,11.0,1995-06-07,2023-05-31,,True,BROADCAST|SINCLAIR,org,False,,,82922610,,,True,False
 1971213,"Sinclair Broadcast Group, Inc.",SINCLAIR BROADCAST GROUP INC,EDGAR name: SINCLAIR BROADCAST GROUP INC,2021-12-16,control,,60800.0,81740.0,82924210,cusip_header,SINCLAIR BROADCAST GROUP INC,11.0,1995-06-07,2023-05-31,,True,BROADCAST|SINCLAIR,org,False,,,82922610,,,True,False
 920522,"Essex Property Trust, Inc.",ESSEX PORTFOLIO LP,EDGAR name: ESSEX PORTFOLIO LP,2013-08-13,control,80681.0,30293.0,80681.0,29717810,cusip_ncusip,ESSEX PROPERTY TRUST INC,18.0,1994-06-07,2024-12-31,,True,ESSEX|PROPERTY,org,False,1.0,,,,,True,True
-924613,Nokia Inc.,NOKIA CORP,EDGAR name: NOKIA CORP,2013-07-22,control,87128.0,23671.0,,,,,,,,,,,,,,no names row valid on breach_date,,,,False,True
+924613,Nokia Inc.,NOKIA CORP,EDGAR name: NOKIA CORP,2013-07-22,control,87128.0,23671.0,,,,,,,,,,,,,,"shrcd not in [10, 11, 12, 18] ([31])",,,,False,True
 926480,The Walt Disney Company,,Gate1-B: pre-2019-reorg registrant,2008-07-29,control,26403.0,,,,,,,,,,,,,,,no gvkey,,,,False,True
 943452,Wabtec Corporation,WABTEC CORP,EDGAR name: WABTEC CORP,2022-03-15,control,81677.0,60979.0,81677.0,92974010,cusip_ncusip,WABTEC CORP,11.0,2000-05-02,2024-12-31,,True,WABTEC,org,False,1.0,,,,,True,True
 1000228,"Henry Schein, Inc.",HENRY SCHEIN INC,EDGAR name: HENRY SCHEIN INC,2023-09-27,control,82581.0,61494.0,82581.0,80640710,cusip_ncusip,SCHEIN HENRY INC,11.0,2001-08-24,2024-12-31,,True,HENRY|SCHEIN,org,False,1.0,,,,,True,True

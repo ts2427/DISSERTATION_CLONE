@@ -1444,6 +1444,77 @@ print(f"  {'PASS' if k5 else 'FAIL'} | no logs at all -> nothing re-parented")
 m214.VERIFY_LOGS = _vl
 results.append(all([k1, k2, k3, k4, k5]))
 
+print(f"\n{'='*70}\nTEST: 212 issuer and permco fallbacks (end to end)\n{'='*70}")
+import contextlib as _ctx
+import io as _io
+
+_fbT = TMP / "fb212"
+_fbW, _fbO = _fbT / "wrds", _fbT / "out"
+_fbW.mkdir(parents=True, exist_ok=True)
+_fbO.mkdir(parents=True, exist_ok=True)
+_EV = [(900001, "Acme Widgets Inc.", "2021-02-16", 0, "EDGAR name: ACME WIDGETS INC"),
+       (900002, "Beta Media Inc.", "2014-12-01", 0, "EDGAR name: BETA MEDIA INC"),
+       (900003, "Gamma Foods Inc.", "2015-01-01", 0, "EDGAR name: GAMMA FOODS INC"),
+       (1283699, "T-Mobile", "2012-05-08", 1, "EDGAR name: T-MOBILE US INC"),
+       (101830, "Sprint Nextel", "2009-02-01", 1, "EDGAR name: SPRINT NEXTEL CORP")]
+pd.DataFrame([{"final_cik": c, "org_name": o, "breach_date": b, "fcc_form499": f,
+               "final_evidence": e, "permno": None} for c, o, b, f, e in _EV]
+             ).to_csv(_fbT / "canon.csv", index=False)
+pd.DataFrame({"cik": [], "parent": [], "basis": [], "parent_cik": [], "ticker": []}
+             ).to_csv(_fbT / "noms.csv", index=False)
+pd.DataFrame([{"cik": f"{c:010d}", "gvkey": i + 1, "conm": o.upper(), "priusa": "01"}
+              for i, (c, o, _, _, _) in enumerate(_EV)]
+             ).to_csv(_fbW / "comp_company.csv", index=False)
+pd.DataFrame([{"gvkey": g, "iid": "01", "cusip": u, "tpci": "0", "excntry": "USA",
+               "exchg": 11, "secstat": "A", "tic": "X"}
+              for g, u in [(1, "438516205"), (2, "021346101"), (3, "111111203"),
+                           (4, "872590105"), (5, "852061100")]]
+             ).to_csv(_fbW / "comp_security.csv", index=False)
+pd.DataFrame([{"permno": p, "permco": pc, "comnam": n, "ncusip": nc, "cusip": hc,
+               "shrcd": s, "namedt": a, "nameenddt": z, "ticker": "T", "exchcd": 1}
+              for p, pc, n, nc, hc, s, a, z in [
+                  (10145, 500, "ACME WIDGETS INC", "43851610", "43851610", 11,
+                   "2000-01-01", "2030-01-01"),
+                  (16752, 600, "BETA SUCCESSOR INC", "02134610", "02134610", 11,
+                   "2017-06-19", "2019-10-02"),
+                  (83435, 600, "BETA MEDIA INC", "09999910", "09999910", 11,
+                   "2005-01-01", "2016-12-31"),
+                  (70001, 700, "DELTA MINING CORP", "11111130", "11111130", 11,
+                   "2000-01-01", "2030-01-01"),
+                  (91937, 800, "METROPCS COMMUNICATIONS INC", "59188310", "87259010", 11,
+                   "2007-04-19", "2013-04-30"),
+                  (39087, 900, "SPRINT NEXTEL CORP", "85206110", "85206110", 11,
+                   "2005-08-15", "2013-07-10")]]
+             ).to_csv(_fbW / "crsp_stocknames.csv", index=False)
+_sv212 = (m212.CANON, m212.NOMS, m212.W, m212.OUT, m212.PREFIX)
+m212.CANON, m212.NOMS, m212.W, m212.OUT, m212.PREFIX = (
+    _fbT / "canon.csv", _fbT / "noms.csv", _fbW, _fbO, "t_")
+m212.LOG.clear()
+with _ctx.redirect_stdout(_io.StringIO()):
+    _rc = m212.main()
+m212.CANON, m212.NOMS, m212.W, m212.OUT, m212.PREFIX = _sv212
+_L = pd.read_csv(_fbO / "t_212_links.csv").set_index("org_name")
+f1 = (_L.loc["Acme Widgets Inc.", "link_source"] == "cusip_issuer"
+      and int(_L.loc["Acme Widgets Inc.", "permno"]) == 10145)
+f2 = (_L.loc["Beta Media Inc.", "link_source"] == "crsp_permco"
+      and int(_L.loc["Beta Media Inc.", "permno"]) == 83435)
+f3 = (_L.loc["Gamma Foods Inc.", "gate_excluded"] is True
+      or str(_L.loc["Gamma Foods Inc.", "gate_excluded"]) == "True") and pd.isna(
+          _L.loc["Gamma Foods Inc.", "permno"])
+f4 = str(_L.loc["T-Mobile", "gate_excluded"]) == "True" and pd.isna(
+    _L.loc["T-Mobile", "permno"])
+f5 = _rc == 0
+print(f"  {'PASS' if f1 else 'FAIL'} | 8-char miss, 6-char issuer hit -> cusip_issuer "
+      f"permno {_L.loc['Acme Widgets Inc.', 'permno']}")
+print(f"  {'PASS' if f2 else 'FAIL'} | successor postdates the event -> crsp_permco finds "
+      f"the PREDECESSOR permno {_L.loc['Beta Media Inc.', 'permno']} (not 16752)")
+print(f"  {'PASS' if f3 else 'FAIL'} | same issuer, different company -> gate excludes it")
+print(f"  {'PASS' if f4 else 'FAIL'} | T-Mobile/MetroPCS still gate-excluded "
+      f"(fallbacks do not rescue it)")
+print(f"  {'PASS' if f5 else 'FAIL'} | both in-script regressions PASS (main returned "
+      f"{_rc})")
+results.append(all([f1, f2, f3, f4, f5]))
+
 print(f"\n{'='*70}")
 print(f"RESULT: {sum(results)}/{len(results)} tests passed")
 print("=" * 70)

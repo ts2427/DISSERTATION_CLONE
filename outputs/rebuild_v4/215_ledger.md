@@ -1,6 +1,6 @@
 # REBUILD V4 — Stage 5 ledger
 
-- run (UTC): 2026-09-19T13:32:02+00:00
+- run (UTC): 2026-09-19T13:45:20+00:00
 - CANONICAL_V4: 489 rows | 212 links: 489 rows (positional join asserted)
 - CRSP daily extract reaches 2024-12-31; v3 was built on 2024-12-31
 
@@ -13,7 +13,7 @@
 | Stage 3: CIK+date firm-day events | upstream_of_v4 | 524 | 524 |  |  |  |  |
 | Gate 2 adjacency collapse | upstream_of_v4 | 491 | 491 |  |  |  |  |
 | Stage 4/5 canonical events (CANONICAL_V3) | computed | 489 | 489 | 118.0 | 118 | 371.0 | 371 |
-| CRSP data (has_crsp_data) | computed | 356 | 403 | 111.0 | 111 | 245.0 | 292 |
+| CRSP data (has_crsp_data) | computed | 356 | 404 | 111.0 | 111 | 245.0 | 293 |
 | Compustat covariates (size, leverage, ROA) = Query 2 scope | not_computable_until_stage6 | 341 |  | 107.0 |  | 234.0 |  |
 | Outcome-data requirement (>=1 8-K in [t0-730d, t0+180d], outcome CIK) | not_computable_until_stage6 | 340 |  | 107.0 |  | 233.0 |  |
 | Prior 12-month market-adjusted return available (>=150 daily returns) | not_computable_until_stage6 | 338 |  | 107.0 |  | 231.0 |  |
@@ -22,12 +22,13 @@
 
 | measure | value | treated | control | total |
 |---|---|---|---|---|
-| link_source | (unlinked) | 7 | 79 | 86 |
+| link_source | (unlinked) | 7 | 78 | 85 |
 | link_source | cusip_header | 7 | 31 | 38 |
+| link_source | cusip_issuer | 0 | 1 | 1 |
 | link_source | cusip_ncusip | 104 | 261 | 365 |
 | crsp_retention | v3 linked | 111 | 250 | 361 |
-| crsp_retention | v4 linked | 111 | 292 | 403 |
-| crsp_retention | delta v4-v3 | 0 | 42 | 42 |
+| crsp_retention | v4 linked | 111 | 293 | 404 |
+| crsp_retention | delta v4-v3 | 0 | 43 | 43 |
 
 ## Attribution of the CRSP-step gain
 
@@ -35,13 +36,13 @@ The pulled `crsp.dsf` reaches 2024-12-31, which does NOT extend past the 2024-12
 
 | cause | treated | control | total |
 |---|---|---|---|
-| recovered by relinking | 0 | 60 | 60 |
+| recovered by relinking | 0 | 61 | 61 |
 | added by the longer extract | 0 | 0 | 0 |
 | gained but window past the extract, not covered | 0 | 1 | 1 |
 | overlap (counted under relinking only) | 0 | 0 | 0 |
-| GAINED: linked in v4, not in v3 | 0 | 61 | 61 |
+| GAINED: linked in v4, not in v3 | 0 | 62 | 62 |
 | LOST: linked in v3, not in v4 | 0 | 19 | 19 |
-| NET change (gained - lost) | 0 | 42 | 42 |
+| NET change (gained - lost) | 0 | 43 | 43 |
 
 ## Events linked in v3 but not in v4
 
@@ -61,7 +62,7 @@ The pulled `crsp.dsf` reaches 2024-12-31, which does NOT extend past the 2024-12
 | c_v4_gap | Carnival Corporation | 815097 | 815097 | 2020-12-25 | control | 75154.0 | (permno absent from the CUSIP-filtered pull) | no names row valid on breach_date |
 | c_v4_gap | Carnival Corporation | 815097 | 815097 | 2021-03-19 | control | 75154.0 | (permno absent from the CUSIP-filtered pull) | no names row valid on breach_date |
 | a_no_usable_returns_in_v3 | Intuit Inc. | 896878 | 896878 | 2025-01-21 | control | 78975.0 | (no CRSP name row valid at breach_date) | no names row valid on breach_date |
-| c_v4_gap | Nokia Inc. | 924613 | 924613 | 2013-07-22 | control | 87128.0 | NOKIA CORP | no names row valid on breach_date |
+| c_v4_gap | Nokia Inc. | 924613 | 924613 | 2013-07-22 | control | 87128.0 | NOKIA CORP | shrcd not in [10, 11, 12, 18] ([31]) |
 | c_v4_gap | The Walt Disney Company | 926480 | 926480 | 2008-07-29 | control | 26403.0 | (permno absent from the CUSIP-filtered pull) | no gvkey |
 | c_v4_gap | Yahoo! Voices | 1011006 | 1011006 | 2012-07-11 | control | 83435.0 | (permno absent from the CUSIP-filtered pull) | no names row valid on breach_date |
 | c_v4_gap | Yahoo! Inc. | 1011006 | 1011006 | 2013-08-01 | control | 83435.0 | (permno absent from the CUSIP-filtered pull) | no names row valid on breach_date |
@@ -77,7 +78,7 @@ Sub-causes within each category:
 | category | sub_cause | events |
 |---|---|---|
 | a_no_usable_returns_in_v3 | v3 flagged has_crsp_data False | 5 |
-| c_v4_gap | no names row valid on breach_date | 1 |
+| c_v4_gap | excluded by share code: shrcd not in [10, 11, 12, 18] ([31]) | 1 |
 | c_v4_gap | the CIK has no Compustat gvkey, so the chain cannot start | 4 |
 | c_v4_gap | v3 permno absent from the CUSIP-filtered pull | 9 |
 

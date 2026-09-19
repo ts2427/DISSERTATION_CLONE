@@ -1,0 +1,5 @@
+# REBUILD V4 Stage 3 - verified CIKs not among the 185 already pulled
+# generated 2026-09-19T13:35:12+00:00 by scripts/213_stage3_verify.py
+# feed to: python scripts/211_wrds_pull_v4.py --extra-ciks outputs/rebuild_v4/stage3b_213_extra_ciks.txt
+1744489
+2041610

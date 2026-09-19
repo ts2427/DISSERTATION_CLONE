@@ -388,6 +388,98 @@ def run_pull(db, ciks):
     return files
 
 
+def issuer_codes():
+    """6-char CUSIP issuer codes from every comp.security pulled so far.
+
+    Compustat's security-level CUSIP names a specific ISSUE; CRSP's ncusip names the
+    issue its permno carries. They share the 6-char issuer stem but often differ in the
+    issue digits - Carnival's comp.security cusip is 143658938 while CRSP carries
+    14365830 for the same company - so an 8-char match misses where a 6-char one hits.
+    """
+    paths = ([OUT_DATA / "comp_security.csv"]
+             + sorted(OUT_DATA.glob("comp_security_topup_*.csv")))
+    frames = [pd.read_csv(x, low_memory=False) for x in paths if x.exists()]
+    if not frames:
+        abort("no comp_security file found; run the base pull before the issuer top-up")
+    sec = pd.concat(frames, ignore_index=True)
+    if not {"tpci", "excntry", "cusip"} <= set(sec.columns):
+        abort("comp_security lacks tpci/excntry/cusip; cannot derive issuer codes")
+    us = sec[(sec["tpci"].astype(str) == "0") & (sec["excntry"] == "USA")]
+    codes = sorted({str(x).strip().upper()[:6] for x in us["cusip"].dropna()
+                    if len(str(x).strip()) >= 6})
+    if not codes:
+        abort("no US-common issuer codes derived from comp.security")
+    return codes
+
+
+NAMES_COLS = ("select permno, permco, namedt, nameenddt, ncusip, cusip, ticker, "
+              "comnam, shrcd, exchcd from crsp.stocknames ")
+
+
+def run_issuer_permco_pull(db):
+    """Stocknames by 6-char issuer code, then by every permco reached, then dsf.
+
+    permco is selected HERE and not in the base pull, so the permco fallback is
+    impossible until this runs.
+    """
+    files = []
+    log("")
+    log("## ISSUER / PERMCO TOP-UP")
+    codes = issuer_codes()
+    log(f"  6-char issuer codes from comp.security (US common): {len(codes)}")
+    names = fetch_chunked(
+        db,
+        NAMES_COLS + "where substr(ncusip,1,6) in ({values}) "
+                     "or substr(cusip,1,6) in ({values})",
+        codes, quote_list)
+    require_nonempty(names, "crsp.stocknames (issuer codes)")
+    if "permco" not in names.columns:
+        abort("crsp.stocknames returned no permco column; the permco fallback needs it")
+    permcos = sorted({int(x) for x in names["permco"].dropna()})
+    log(f"  issuer pass: rows {len(names):,}  permnos {names['permno'].nunique()}  "
+        f"permcos {len(permcos)}")
+    more = fetch_chunked(db, NAMES_COLS + "where permco in ({values})",
+                         permcos, int_list)
+    require_nonempty(more, "crsp.stocknames (permco expansion)")
+    allnames = pd.concat([names, more], ignore_index=True).drop_duplicates()
+    log(f"  after permco expansion: rows {len(allnames):,}  "
+        f"permnos {allnames['permno'].nunique()}")
+    files.append(write(allnames, "crsp_stocknames.csv"))
+
+    pulled = set()
+    for x in [OUT_DATA / "crsp_dsf.csv"] + sorted(OUT_DATA.glob("crsp_dsf_topup_*.csv")):
+        if x.exists():
+            pulled |= {int(v) for v in
+                       pd.read_csv(x, usecols=["permno"])["permno"].dropna()}
+    reached = {int(v) for v in allnames["permno"].dropna()}
+    new = sorted(reached - pulled)
+    log(f"  permnos already pulled: {len(pulled)}   newly reached: {len(new)}")
+    if new:
+        dsf = fetch_chunked(
+            db,
+            "select permno, date, ret, retx, prc, vol, shrout from crsp.dsf "
+            f"where date >= '{START_DATE}' and permno in ({{values}})",
+            new, int_list)
+        require_nonempty(dsf, "crsp.dsf (new permnos)")
+        log(f"  daily rows: {len(dsf):,}   range: {date_range(dsf)}")
+        check_hit_rate("new permno -> daily returns", dsf["permno"].nunique(), len(new))
+        files.append(write(dsf, "crsp_dsf.csv"))
+    else:
+        log("  no new permnos; crsp.dsf not re-pulled")
+    return files
+
+
+def safe_run_issuer_permco(db):
+    """Any exception becomes an abort(), so the log is always written."""
+    try:
+        return run_issuer_permco_pull(db)
+    except SystemExit:
+        raise
+    except BaseException as exc:
+        abort(f"unhandled {type(exc).__name__} during the issuer/permco pull: "
+              f"{scrub(exc)}")
+
+
 def load_base_ciks():
     """CANONICAL_V3 CIKs plus nominated parent CIKs -> (ciks, n_canon, n_nom).
 
@@ -413,9 +505,15 @@ def main():
                          "parent_cik/outcome_cik column. Pulls ONLY these CIKs and writes "
                          "new files suffixed _topup_<stamp>; the first pull is never "
                          "overwritten.")
+    ap.add_argument("--issuer-permco", action="store_true",
+                    help="ISSUER/PERMCO TOP-UP. Pulls crsp.stocknames by the 6-char CUSIP "
+                         "issuer code (Compustat's issue CUSIP and CRSP's often differ in "
+                         "the issue digits), then by every permco reached, then crsp.dsf "
+                         "for any new permno. Selects permco, which the base pull does "
+                         "not. Combine with --extra-ciks to do both in one run.")
     args = ap.parse_args()
 
-    topup = bool(args.extra_ciks)
+    topup = bool(args.extra_ciks) or bool(args.issuer_permco)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     reset_state(suffix=f"_topup_{stamp}" if topup else "", topup=topup)
 
@@ -425,11 +523,12 @@ def main():
         sys.exit("The `wrds` package is not installed. pip install wrds")
 
     n_canon = n_nom = 0
-    if topup:
+    ciks = []
+    if args.extra_ciks:
         ciks = read_extra_ciks(args.extra_ciks)
         if not ciks:
             sys.exit("--extra-ciks resolved to an empty CIK list")
-    else:
+    elif not args.issuer_permco:
         ciks, n_canon, n_nom = load_base_ciks()
     ciks = sorted(ciks)
 
@@ -437,7 +536,8 @@ def main():
     if topup:
         log(f"\n---\n\n# REBUILD V4 — Stage 1 TOP-UP pull, CUSIP route ({stamp})")
         log("")
-        log(f"- top-up source: `{args.extra_ciks}`")
+        log(f"- top-up source: `{args.extra_ciks or '(issuer/permco pull; no CIK list)'}`")
+        log(f"- issuer/permco pull: {bool(args.issuer_permco)}")
         log(f"- CIK filter list: {len(ciks)} CIKs (top-up only; the first pull is untouched)")
         log(f"- output suffix: `{SUFFIX}`")
     else:
@@ -462,7 +562,14 @@ def main():
                 or "(not reported)")
         log(f"- WRDS username: {user}   (no password is stored, printed, or logged)")
         log("")
-        files = safe_run_pull(db, ciks)
+        files = []
+        if ciks:
+            files += safe_run_pull(db, ciks)
+        if args.issuer_permco:
+            files += safe_run_issuer_permco(db)
+        if not files:
+            abort("nothing to pull: give --extra-ciks, --issuer-permco, or neither "
+                  "(for the full base pull)")
     finally:
         try:
             db.close()

@@ -8,7 +8,7 @@ c_v4_gap,"the CIK has no Compustat gvkey, so the chain cannot start",Paramount G
 c_v4_gap,v3 permno absent from the CUSIP-filtered pull,Carnival Corporation,815097,815097,2020-12-25,control,75154.0,(permno absent from the CUSIP-filtered pull),no names row valid on breach_date
 c_v4_gap,v3 permno absent from the CUSIP-filtered pull,Carnival Corporation,815097,815097,2021-03-19,control,75154.0,(permno absent from the CUSIP-filtered pull),no names row valid on breach_date
 a_no_usable_returns_in_v3,v3 flagged has_crsp_data False,Intuit Inc.,896878,896878,2025-01-21,control,78975.0,(no CRSP name row valid at breach_date),no names row valid on breach_date
-c_v4_gap,no names row valid on breach_date,Nokia Inc.,924613,924613,2013-07-22,control,87128.0,NOKIA CORP,no names row valid on breach_date
+c_v4_gap,"excluded by share code: shrcd not in [10, 11, 12, 18] ([31])",Nokia Inc.,924613,924613,2013-07-22,control,87128.0,NOKIA CORP,"shrcd not in [10, 11, 12, 18] ([31])"
 c_v4_gap,"the CIK has no Compustat gvkey, so the chain cannot start",The Walt Disney Company,926480,926480,2008-07-29,control,26403.0,(permno absent from the CUSIP-filtered pull),no gvkey
 c_v4_gap,v3 permno absent from the CUSIP-filtered pull,Yahoo! Voices,1011006,1011006,2012-07-11,control,83435.0,(permno absent from the CUSIP-filtered pull),no names row valid on breach_date
 c_v4_gap,v3 permno absent from the CUSIP-filtered pull,Yahoo! Inc.,1011006,1011006,2013-08-01,control,83435.0,(permno absent from the CUSIP-filtered pull),no names row valid on breach_date

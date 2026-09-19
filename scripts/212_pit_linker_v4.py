@@ -331,7 +331,29 @@ def main():
             return dict(gvkey=gv, note="no US common issue")
         b = e["bdt"]
         dated = nam[(nam["namedt"] <= b) & (b <= nam["nameenddt"])]
-        # --- ncusip pass (no gate) ---
+
+        def gated(r, tb, source, cusip_val):
+            """The identity gate, MANDATORY for every route except exact ncusip.
+
+            An 8-char historical CUSIP IS the security, so a match there needs no name
+            check. Everything looser - the back-filled header CUSIP, a 6-char issuer
+            stem, a shared permco - can land on a different company of the same issuer
+            or family, which is precisely what MetroPCS/T-Mobile was.
+            """
+            nm_ok, shared, side = best_overlap(r["comnam"], e["org_name"], e["edgar"])
+            base = dict(gvkey=gv, cusip8=cusip_val, comnam=r["comnam"],
+                        shrcd=int(r["shrcd"]), namedt=r["namedt"],
+                        nameenddt=r["nameenddt"], tie_break=tb, name_ok=nm_ok,
+                        ncusip_on_row=r["ncusip"],
+                        shared_tokens="|".join(sorted(shared)), matched_against=side,
+                        generic_only=generic_only(shared))
+            if nm_ok:
+                return {**base, "permno": int(r["permno"]), "link_source": source,
+                        "note": ""}
+            return {**base, "permno_rejected": int(r["permno"]), "gate_excluded": True,
+                    "note": GATE_REASON}
+
+        # --- 1. exact 8-char ncusip (no gate) ---
         c = dated[dated["ncusip"].isin(cus)]
         c_ok = c[c["shrcd"].isin(SHRCD_OK)]
         if len(c_ok):
@@ -339,29 +361,51 @@ def main():
             nm_ok, shared, side = best_overlap(r["comnam"], e["org_name"], e["edgar"])
             return dict(gvkey=gv, permno=int(r["permno"]), cusip8=r["ncusip"],
                         link_source="cusip_ncusip", comnam=r["comnam"],
-                        shrcd=int(r["shrcd"]), namedt=r["namedt"], nameenddt=r["nameenddt"],
-                        tie_break=tb, name_ok=nm_ok, shared_tokens="|".join(sorted(shared)),
-                        matched_against=side, generic_only=generic_only(shared),
+                        shrcd=int(r["shrcd"]), namedt=r["namedt"],
+                        nameenddt=r["nameenddt"], tie_break=tb, name_ok=nm_ok,
+                        shared_tokens="|".join(sorted(shared)), matched_against=side,
+                        generic_only=generic_only(shared),
                         n_valid=c_ok["permno"].nunique(), note="")
-        # --- header pass (gate applies) ---
+
+        # --- 2. header CUSIP (gate) ---
         h = dated[dated["cusip"].isin(cus)]
         h_ok = h[h["shrcd"].isin(SHRCD_OK)]
         if len(h_ok):
             r, tb = pick(h_ok, gv)
-            nm_ok, shared, side = best_overlap(r["comnam"], e["org_name"], e["edgar"])
-            base = dict(gvkey=gv, cusip8=r["cusip"], comnam=r["comnam"],
-                        shrcd=int(r["shrcd"]), namedt=r["namedt"], nameenddt=r["nameenddt"],
-                        tie_break=tb, name_ok=nm_ok, ncusip_on_row=r["ncusip"],
-                        shared_tokens="|".join(sorted(shared)), matched_against=side,
-                        generic_only=generic_only(shared))
-            if nm_ok:
-                return {**base, "permno": int(r["permno"]), "link_source": "cusip_header",
-                        "note": ""}
-            return {**base, "permno_rejected": int(r["permno"]), "gate_excluded": True,
-                    "note": GATE_REASON}
-        if len(c) or len(h):
-            bad = sorted(set(pd.concat([c, h])["shrcd"].dropna().astype(int)))
-            return dict(gvkey=gv, note=f"shrcd not in {{10,11}} ({bad})")
+            return gated(r, tb, "cusip_header", r["cusip"])
+
+        # --- 3. FALLBACK a: 6-char issuer code (gate) ---
+        # Compustat's issue CUSIP and CRSP's differ in the issue digits for the same
+        # company (Carnival 143658938 vs 14365830; Honeywell 438516205 vs 438516106),
+        # so the issuer stem finds what the 8-char match cannot.
+        iss = {u[:6] for u in cus if len(u) >= 6}
+        ci = dated[dated["ncusip"].str[:6].isin(iss) | dated["cusip"].str[:6].isin(iss)]
+        ci_ok = ci[ci["shrcd"].isin(SHRCD_OK)]
+        if len(ci_ok):
+            r, tb = pick(ci_ok, gv)
+            return gated(r, tb, "cusip_issuer", r["ncusip"])
+
+        # --- 4. FALLBACK b: shared permco (gate) ---
+        # The permnos this gvkey's CUSIPs reach may all post-date the event (Yahoo's CIK
+        # resolves to Altaba, whose security begins in 2017). Other permnos under the
+        # same CRSP permco are the same company earlier in its life.
+        if "permco" in nam.columns:
+            touched = set(nam.loc[nam["ncusip"].isin(cus) | nam["cusip"].isin(cus)
+                                  | nam["ncusip"].str[:6].isin(iss)
+                                  | nam["cusip"].str[:6].isin(iss), "permno"].dropna())
+            if touched:
+                pcs = set(nam.loc[nam["permno"].isin(touched), "permco"].dropna())
+                cp = dated[dated["permco"].isin(pcs)]
+                cp_ok = cp[cp["shrcd"].isin(SHRCD_OK)]
+                if len(cp_ok):
+                    r, tb = pick(cp_ok, gv)
+                    return gated(r, tb, "crsp_permco", r["ncusip"])
+
+        seen = [d for d in (c, h, ci) if len(d)]
+        if seen:
+            bad = sorted(set(pd.concat(seen)["shrcd"].dropna().astype(int)))
+            return dict(gvkey=gv,
+                        note=f"shrcd not in {sorted(SHRCD_OK)} ({bad})")
         return dict(gvkey=gv, note="no names row valid on breach_date")
 
     rows = []
@@ -567,9 +611,17 @@ def main():
         return (("c_no_compustat", "", "", "", False, "") if not par
                 else ("d_other", par, "", "", False, ""))
 
-    nog[["candidate_type", "candidate", "confidence", "shared_tokens", "generic_only",
-         "note"]] = nog.apply(
-        lambda r: pd.Series(classify(r["final_cik"], r["org"], r["edgar"])), axis=1)
+    S3B_COLS = ["candidate_type", "candidate", "confidence", "shared_tokens",
+                "generic_only", "note"]
+    if len(nog):
+        nog[S3B_COLS] = nog.apply(
+            lambda r: pd.Series(classify(r["final_cik"], r["org"], r["edgar"])), axis=1)
+    else:
+        # .apply on an EMPTY frame returns no columns, so assigning six names raises
+        # "Columns must be same length as key". Zero no-gvkey CIKs is the goal state as
+        # coverage improves, so this has to be the quiet path, not a crash.
+        for _c in S3B_COLS:
+            nog[_c] = pd.Series(dtype=object)
     log(md(nog["candidate_type"].value_counts().rename_axis("type").reset_index(name="CIKs")))
     log("")
     log(md(nog[["final_cik", "org", "grp", "events", "candidate_type", "candidate",
