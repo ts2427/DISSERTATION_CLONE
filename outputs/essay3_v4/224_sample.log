@@ -1,0 +1,57 @@
+
+====================================================================================================
+E1 — helper validation: rebuild every T-Mobile outcome and compare with v2's committed outcomes
+====================================================================================================
+T-Mobile events 26; columns compared 56; mismatching columns: none
+
+====================================================================================================
+E1 — outcome CIK: resolved upstream, NOT re-applied here
+====================================================================================================
+scripts/233: 4 reconciled row(s), all "agree" — RESOLVE is not re-applied
+events whose outcome_cik differs from final_cik, or is unresolved: 7
+ final_cik                       org_name breach_date       reported_date  treated action  outcome_cik                        reason
+   2041610                      Paramount  2023-01-01 2023-09-11 00:00:00        0   RULE     813828.0    scripts/234 rule: orig_cik
+   2041610               Paramount Global  2023-08-10 2023-08-10 00:00:00        0   RULE     813828.0    scripts/234 rule: orig_cik
+   1971213 Sinclair Broadcast Group, Inc.  2020-05-01 2020-10-05 00:00:00        0   RULE     912752.0    scripts/234 rule: orig_cik
+   1971213 Sinclair Broadcast Group, Inc.  2021-06-23 2022-03-24 00:00:00        0   RULE     912752.0    scripts/234 rule: orig_cik
+   1971213 Sinclair Broadcast Group, Inc.  2021-12-16 2021-12-16 00:00:00        0   RULE     912752.0    scripts/234 rule: orig_cik
+   1744489        The Walt Disney Company  2008-07-29 2008-07-29 00:00:00        0   RULE    1001039.0 scripts/234 rule: predecessor
+   1652044                   Google, Inc.  2008-06-27 2008-06-27 00:00:00        0   RULE    1288776.0    scripts/234 rule: orig_cik
+
+====================================================================================================
+E1 — prior 12-month market-adjusted return (CRSP daily; VW index)
+====================================================================================================
+prior-return available (rd anchor): 405 of 412; (bd anchor): 405
+count    405.0000
+mean       0.0121
+std        0.2727
+min       -0.8046
+25%       -0.1471
+50%        0.0292
+75%        0.1641
+max        1.2169
+
+====================================================================================================
+E2 — ATTRITION LEDGER (1,054 records -> Essay 3 analysis sample)
+====================================================================================================
+                                                                 step    N                                                                                                                           note  treated  control  treated_parent_ciks  treated_corporate_families  pre_rule_treated  pre_rule_control
+                PRC notification records (master_breach_dataset.xlsx) 1054                                                                                                   records; treatment undefined      NaN      NaN                  NaN                         NaN               NaN               NaN
+                                            Gate 1: signed parent CIK  758                                                                                                                        records      NaN      NaN                  NaN                         NaN               NaN               NaN
+                                    Stage 3: CIK+date firm-day events  524                                                                                                                         events      NaN      NaN                  NaN                         NaN               NaN               NaN
+                                            Gate 2 adjacency collapse  491                                                                                                                         events      NaN      NaN                  NaN                         NaN               NaN               NaN
+                            Stage 4/5 canonical events (CANONICAL_V4)  489                                                                                           equity re-parenting re-collapse (-2)    118.0    371.0                 14.0                        13.0               0.0               7.0
+                                            CRSP data (has_crsp_data)  414                                                                                                                                   111.0    303.0                 13.0                        12.0               0.0               7.0
+           Compustat covariates (size, leverage, ROA) = Query 2 scope  412                                            Query 1 sample was 411; +1: Sprint Nextel 2009-01-01 (immediate_disclosure missing)    109.0    303.0                 13.0                        12.0               0.0               7.0
+Outcome-data requirement (>=1 8-K in [t0-730d, t0+180d], outcome CIK)  412 outcome_cik resolved by rule (scripts/234); 7 events use a CIK other than final_cik: Disney, Google, Paramount x2, Sinclair x3    109.0    303.0                 13.0                        12.0               0.0               7.0
+Prior 12-month market-adjusted return available (>=150 daily returns)  405                                                                                                                ANALYSIS SAMPLE    109.0    296.0                 13.0                        12.0               0.0               7.0
+
+Outcome-data requirement removes 0 (treated 0, control 0): 
+Prior-return requirement removes 7 (treated 0): Warner Music Group 2020-09-04 (65 days); Warner Music Group 2020-09-09 (67 days); Block and Company, Inc. 2016-03-31 (88 days); Block and Company, Inc. 2016-03-31 (88 days); Block and Company, Inc. 2016-05-13 (119 days); Uber Technologies, Inc. 2019-10-28 (117 days); Zscaler, Inc. 2018-10-10 (143 days)
+
+====================================================================================================
+E3 — anchor diagnostic: breach-anchored 180-day window ends before reported_date
+====================================================================================================
+  treated: 13/109 = 0.119
+  control: 44/296 = 0.149
+
+Written e_analysis_sample.csv: 412 scope events, 405 in the analysis sample

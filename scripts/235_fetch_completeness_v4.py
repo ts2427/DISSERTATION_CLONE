@@ -227,11 +227,15 @@ def main():
     _canon["breach_date"] = _canon["breach_date"].astype(str).str[:10]
     _cx = _canon.drop_duplicates(["final_cik", "breach_date"]).set_index(
         ["final_cik", "breach_date"])
-    ev_scope = (df[["final_cik", "breach_date", "org_name", "treated", "outcome_cik",
-                    "win_lo", "win_hi"]].drop_duplicates(["final_cik", "breach_date"]))
-    _idx = ev_scope.set_index(["final_cik", "breach_date"]).index
-    ev_scope["reported_date"] = _idx.map(_cx["reported_date"])
-    ev_scope["fcc_form499"] = ev_scope["treated"]
+    # scripts/187 wrote the FULL canonical event row here, and 220/224 read many of
+    # those columns (permno, immediate_disclosure, the covariates, prior_breaches_1yr,
+    # health_breach). Reproduce that contract: the whole loader row for every in-scope
+    # event, plus v4's outcome_cik and the event's own window.
+    # outcome_cik is dropped here: the loader row already carries it, and keeping both
+    # would make the merge emit outcome_cik_x / outcome_cik_y and leave 224 without it.
+    _keys = df[["final_cik", "breach_date", "treated", "win_lo",
+                "win_hi"]].drop_duplicates(["final_cik", "breach_date"])
+    ev_scope = _canon.merge(_keys, on=["final_cik", "breach_date"], how="inner")
     ev_scope.to_csv(E3 / "b_scope_events.csv", index=False)
     log("")
     log("## Scope files for scripts/220 and 224")

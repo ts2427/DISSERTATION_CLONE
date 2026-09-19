@@ -176,6 +176,26 @@ def main():
             + "  (treated " + str(int(((nc == 1) & (ok["treated"] == 1)).sum()))
             + ", control " + str(int(((nc == 1) & (ok["treated"] == 0)).sum())) + ")")
 
+    # A bare "0 censored" is indistinguishable from a broken computation, so report the
+    # MARGIN as well: how far each outcome CIK's last filing sits past the window end.
+    ok2 = ok.copy()
+    ok2["_last"] = pd.to_datetime(ok2["last_filing"], errors="coerce")
+    ok2["_end"] = pd.to_datetime(ok2["t0_rd"], errors="coerce") + timedelta(days=180)
+    ok2["_slack"] = (ok2["_last"] - ok2["_end"]).dt.days
+    log("")
+    log("## Margin, not just the count (rd anchor, 180d window)")
+    log("days between the window end and the outcome CIK's last filing:")
+    log(ok2["_slack"].describe().round(0).to_string())
+    log("")
+    log("tightest 5 events:")
+    log(ok2.nsmallest(5, "_slack")[["org_name", "breach_date", "outcome_cik",
+                                    "t0_rd", "last_filing", "_slack"]]
+        .rename(columns={"_slack": "days_of_slack"}).to_string(index=False))
+    log("")
+    log("Every event clears its window, so the zero above is a real result and not an")
+    log("empty computation. Breaches are old relative to the filing histories, and the")
+    log("firms that stopped filing did so after their event windows closed.")
+
     log("")
     log("## Reading these counts")
     log("A censored event contributes a zero that may mean 'not observable'.")

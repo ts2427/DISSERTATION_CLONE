@@ -340,7 +340,7 @@ led = [dict(step='PRC notification records (master_breach_dataset.xlsx)', N=1054
            f'Query 1 sample was {len(q1)}; +{len(extra)}: ' + '; '.join(
                f"{r['org_name']} {r['breach_date']} (immediate_disclosure missing)" for _, r in extra.iterrows())),
        lvl('Outcome-data requirement (>=1 8-K in [t0-730d, t0+180d], outcome CIK)', A1,
-           'Nokia excluded (no 8-K filer); Disney, Aon x2 fixed to correct filer CIK'),
+           'outcome_cik resolved by rule (scripts/234); 7 events use a CIK other than final_cik: Disney, Google, Paramount x2, Sinclair x3'),
        lvl('Prior 12-month market-adjusted return available (>=150 daily returns)', A2, 'ANALYSIS SAMPLE')]
 LED = pd.DataFrame(led)
 LED.to_csv(OUT / 'e_ledger.csv', index=False)
