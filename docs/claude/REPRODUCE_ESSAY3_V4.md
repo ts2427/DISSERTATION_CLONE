@@ -106,3 +106,24 @@ python scripts/224_essay3_v4_sample_e.py
 `constants_essay3_v4.json` on its first run and **asserts against it** on every later
 run, and `229` independently recomputes the HC3/CV1/CV3 SEs and coefficients and checks
 them against the committed `f1_ladder.csv`.
+
+### Result of that check (2026-09-19, HEAD 99ceb43)
+
+Ran in a detached worktree at HEAD, offline:
+
+| output | result |
+|---|---|
+| `e_analysis_sample.csv` | byte-identical |
+| `e_ledger.csv` | byte-identical |
+| `232_censoring.csv` | byte-identical |
+| `239_v3_overlap_sensitivity.csv` | byte-identical |
+| `b_scope_events.csv` | **data-identical**, bytes differ |
+
+The one byte difference is carriage returns inside a quoted multi-line free-text
+field (`incident_details`, which carries pasted breach narratives). Comparing the two
+files as data — same shape (412 x 53), same columns, every column equal once CR is
+stripped — they match exactly.
+
+**Do not byte-compare `b_scope_events.csv` across checkouts.** A tracked CSV with
+embedded newlines inside quoted fields is not byte-stable under git's line-ending
+handling. Compare it as a dataframe, as above.
