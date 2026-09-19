@@ -1,6 +1,6 @@
 # REBUILD V4 — Stage 5 ledger
 
-- run (UTC): 2026-09-19T14:02:43+00:00
+- run (UTC): 2026-09-19T14:08:37+00:00
 - CANONICAL_V4: 489 rows | 212 links: 489 rows (positional join asserted)
 - CRSP daily extract reaches 2024-12-31; v3 was built on 2024-12-31
 
@@ -51,6 +51,10 @@ Residual losses that are accounted for by name. None is a candidate for a furthe
 - **Yahoo (CIK 1011006, 4 events, 2012-2016)** — comp.company maps this CIK to gvkey 62634 ALTABA INC - the post-2017 rump, a registered closed-end fund (shrcd 14), whose only security runs 2017-06-19 onward. Its CRSP permco differs from the pre-2017 Yahoo! Inc. permno 83435, so neither the issuer nor the permco fallback reaches the security that existed at any of the four breach dates.
 - **Nokia (CIK 924613, 2013-07-22)** — the security CRSP carries is an ADR (shrcd 31), a claim on a foreign share rather than the share itself. ADRs are excluded by rule, not by accident.
 - **Audacy / Entercom (2019)** — the only match is a header-CUSIP hit against the former name ENTERCOM, which the identity gate rejects. That is by rule indistinguishable from the MetroPCS/T-Mobile case the gate exists to catch: CRSP back-fills the header CUSIP and keeps one permno across the rename. v3 did not link it either, so no comparison is lost.
+
+## Documented identifications
+
+- **Paramount (CIK 2041610, 2 events, 2023)** — v4 links permno 75104 on the Class A CUSIP 92556H10 - the only share class on the successor's comp.security record - selected by the exact 8-char ncusip match, which runs before any fallback. v3 used permno 76226 (92556H20, the other class). Both are Paramount Global; the difference is which class the identifier resolves to, not which company.
 
 ## Events linked in v3 but not in v4
 

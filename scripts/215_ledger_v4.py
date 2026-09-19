@@ -74,6 +74,16 @@ STAGE3B_TICKER = {1288776: "GOOGL", 813828: "PSKY"}
 # Exclusions that are DOCUMENTED rather than unexplained: each has been traced to a
 # specific, named cause, and none is a candidate for a further top-up. They are printed
 # in the Stage 5 report so the ledger's residual losses are accounted for by name.
+# Link choices worth recording because a reader would otherwise have to re-derive them.
+DOCUMENTED_IDENTIFICATIONS = [
+    ("Paramount (CIK 2041610, 2 events, 2023)",
+     "v4 links permno 75104 on the Class A CUSIP 92556H10 - the only share class on the "
+     "successor's comp.security record - selected by the exact 8-char ncusip match, "
+     "which runs before any fallback. v3 used permno 76226 (92556H20, the other class). "
+     "Both are Paramount Global; the difference is which class the identifier resolves "
+     "to, not which company."),
+]
+
 DOCUMENTED_EXCLUSIONS = [
     ("Yahoo (CIK 1011006, 4 events, 2012-2016)",
      "comp.company maps this CIK to gvkey 62634 ALTABA INC - the post-2017 rump, a "
@@ -527,6 +537,11 @@ def main():
         "further top-up.")
     log("")
     for _name, _why in DOCUMENTED_EXCLUSIONS:
+        log(f"- **{_name}** — {_why}")
+    log("")
+    log("## Documented identifications")
+    log("")
+    for _name, _why in DOCUMENTED_IDENTIFICATIONS:
         log(f"- **{_name}** — {_why}")
     log("")
     log("## Events linked in v3 but not in v4")
