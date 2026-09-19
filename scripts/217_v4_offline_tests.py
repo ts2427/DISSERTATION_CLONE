@@ -1032,6 +1032,123 @@ print(f"  {'PASS' if d7 else 'FAIL'} | writing to a v3 path is refused | {msg7[:
 print(f"  {'PASS' if d8 else 'FAIL'} | v4 paths are accepted")
 results.append(all([d1, d2, d3, d4, d5, d6, d7, d8]))
 
+# --------------------- 214 imputed-day detection (the Carnival ruling) ---------------
+print(f"\n{'='*70}\nTEST: 214 imputed day vs reported day\n{'='*70}")
+maine = pd.Series({"org_name": "Carnival Corporation & PLC", "breach_date": "2019-04-01",
+                   "reported_date": "2020-03-01", "end_breach_date": "2019-07",
+                   "incident_details": "notifications were sent in the week of March 2, 2020."})
+wash = pd.Series({"org_name": "Carnival Corporation & PLC", "breach_date": "2019-04-11",
+                  "reported_date": "2020-03-02", "end_breach_date": "2019-07-23",
+                  "incident_details": "On March 2, 2020, the Washington State AG reported"})
+i1 = m214.day_is_imputed("2020-03", "2020-03-01", maine) is True
+i2 = m214.day_is_imputed("2020-03", "2020-03-02", wash) is False
+i3 = m214.day_is_imputed("2020-03", "2020-03-17", maine) is False
+i4 = m214.day_is_imputed("2020-03", "2020-03-01", None) is False
+print(f"  {'PASS' if i1 else 'FAIL'} | '-01' + a month-truncated sibling ('2019-07') -> imputed")
+print(f"  {'PASS' if i2 else 'FAIL'} | full-precision row -> NOT imputed")
+print(f"  {'PASS' if i3 else 'FAIL'} | a real day that is not the 1st -> NOT imputed")
+print(f"  {'PASS' if i4 else 'FAIL'} | no upstream row -> NOT imputed")
+
+_sv2 = m214.SOURCES
+srcA = TMP / "srcA.csv"
+pd.DataFrame([dict(maine), dict(wash)]).to_csv(srcA, index=False)
+m214.SOURCES = (srcA,)
+bad2 = pd.DataFrame({"final_cik": [1125259], "org_name": ["Carnival Corporation & PLC"],
+                     "breach_date": ["2019-04-01"], "reported_date": ["2020-03"]})
+r6 = []
+out2 = m214.fix_reported_dates(bad2.copy(), r6)
+i5 = pd.isna(out2["reported_date"].iloc[0])
+i6 = any(x["kind"] == "reported_date_excluded" and "week of March 2, 2020" in str(x["evidence"])
+         for x in r6)
+print(f"  {'PASS' if i5 else 'FAIL'} | Carnival reported_date -> missing (not 2020-03-01)")
+print(f"  {'PASS' if i6 else 'FAIL'} | exclusion logged with the verbatim narrative")
+
+srcB = TMP / "srcB.csv"
+pd.DataFrame([{"org_name": "Acme Inc", "breach_date": "2021-05-04",
+               "reported_date": "2021-06-17", "end_breach_date": "2021-05-09"}]).to_csv(srcB, index=False)
+m214.SOURCES = (srcB,)
+bad3 = pd.DataFrame({"final_cik": [7], "org_name": ["Acme Inc"],
+                     "breach_date": ["2021-05-04"], "reported_date": ["2021-06"]})
+r7 = []
+out3 = m214.fix_reported_dates(bad3.copy(), r7)
+i7 = out3["reported_date"].iloc[0] == "2021-06-17"
+m214.SOURCES = _sv2
+print(f"  {'PASS' if i7 else 'FAIL'} | a genuine full upstream date is still restored "
+      f"-> {out3['reported_date'].iloc[0]}")
+results.append(all([i1, i2, i3, i4, i5, i6, i7]))
+
+# ------------------------- 218 volatile lines / no timestamps ------------------------
+m218 = load("scripts/218_v4_common.py", "m218")
+print(f"\n{'='*70}\nTEST: 218 volatile-line patterns\n{'='*70}")
+vol = ["- run (UTC): 2026-09-19T00:10:45+00:00",
+       "- finished (UTC): 2026-09-19T00:00:00+00:00",
+       "- pull finished (UTC): 2026-09-19T00:09:33+00:00",
+       "# generated 2026-09-18T23:48:23+00:00 by scripts/213"]
+notvol = ["- CANONICAL_V4: 489 rows", "| treated | 111 |",
+          "  run (UTC) mentioned mid-line", "- input: CANONICAL_V3.csv (489 rows)"]
+w1 = all(m218.is_volatile(x) for x in vol)
+w2 = not any(m218.is_volatile(x) for x in notvol)
+print(f"  {'PASS' if w1 else 'FAIL'} | all {len(vol)} declared header forms are volatile")
+print(f"  {'PASS' if w2 else 'FAIL'} | result lines are NOT volatile (incl. a mid-line "
+      f"'run (UTC)')")
+doc = "\n".join([vol[0], "- CANONICAL_V4: 489 rows", vol[2]])
+w3 = m218.strip_volatile(doc) == "- CANONICAL_V4: 489 rows"
+print(f"  {'PASS' if w3 else 'FAIL'} | strip_volatile removes exactly the header lines")
+w4 = m218.assert_no_timestamp("outputs/x/v4_ledger.csv", vol[0] + "\na,b\n") == [vol[0]]
+w5 = m218.assert_no_timestamp("outputs/x/run.md", vol[0]) == []
+print(f"  {'PASS' if w4 else 'FAIL'} | a timestamp in a .csv is flagged")
+print(f"  {'PASS' if w5 else 'FAIL'} | a timestamp in a .md is allowed")
+results.append(all([w1, w2, w3, w4, w5]))
+
+# ------------------------------ 215 ledger attribution -------------------------------
+m215 = load("scripts/215_ledger_v4.py", "m215")
+print(f"\n{'='*70}\nTEST: 215 attribution of the CRSP-step gain\n{'='*70}")
+ev = pd.DataFrame({"fcc_form499": [1, 0, 0], "breach_date": ["2020-01-01", "2020-01-01",
+                                                             "2024-12-01"]})
+lk = pd.DataFrame({"permno": [1.0, 2.0, 3.0], "v3_permno": [float("nan")] * 3,
+                   "grp": ["treated", "control", "control"]})
+a_no, ext_no = m215.attribution(ev, lk, pd.Timestamp("2024-12-31"))
+g1 = (int(a_no.loc[a_no.cause == "added by the longer extract", "total"].iloc[0]) == 0)
+g2 = (int(a_no.loc[a_no.cause == "recovered by relinking", "total"].iloc[0]) == 2)
+g3 = (int(a_no.loc[a_no.cause.str.startswith("gained but"), "total"].iloc[0]) == 1)
+print(f"  {'PASS' if g1 else 'FAIL'} | extract NOT past 2024-12-31 -> longer-extract line is 0")
+print(f"  {'PASS' if g2 else 'FAIL'} | 2 events recovered by relinking (windows inside v3)")
+print(f"  {'PASS' if g3 else 'FAIL'} | 1 event whose window runs past the extract is NOT "
+      f"credited to either cause")
+a_yes, ext_yes = m215.attribution(ev, lk, pd.Timestamp("2025-06-30"))
+g4 = (int(a_yes.loc[a_yes.cause == "added by the longer extract", "total"].iloc[0]) == 1
+      and ext_yes)
+print(f"  {'PASS' if g4 else 'FAIL'} | a genuinely longer extract credits that event to "
+      f"the extract, not to relinking")
+# gained - lost must reconcile with the net change the symmetry table reports
+lk2 = pd.DataFrame({"permno": [1.0, 2.0, float("nan"), 4.0],
+                    "v3_permno": [float("nan"), 9.0, 8.0, float("nan")],
+                    "grp": ["treated", "control", "control", "control"],
+                    # symmetry() needs link_source; the unlinked row carries None so the
+                    # "(unlinked)" branch is exercised too
+                    "link_source": ["cusip_ncusip", "cusip_header", None,
+                                    "cusip_ncusip"]})
+ev2 = pd.DataFrame({"fcc_form499": [1, 0, 0, 0],
+                    "breach_date": ["2020-01-01"] * 4})
+a2, _ = m215.attribution(ev2, lk2, pd.Timestamp("2024-12-31"))
+gv = int(a2.loc[a2.cause.str.startswith("GAINED"), "total"].iloc[0])
+lv = int(a2.loc[a2.cause.str.startswith("LOST"), "total"].iloc[0])
+nv = int(a2.loc[a2.cause.str.startswith("NET"), "total"].iloc[0])
+s2 = m215.symmetry(lk2)
+sd = int(s2.loc[s2.value == "delta v4-v3", "total"].iloc[0])
+g7 = (gv == 2 and lv == 1 and nv == 1 and sd == nv)
+print(f"  {'PASS' if g7 else 'FAIL'} | gained {gv} - lost {lv} = net {nv}, and the "
+      f"symmetry delta agrees ({sd})")
+
+led = m215.build_ledger(ev.assign(breach_date=["2020-01-01"] * 3),
+                        lk, pd.read_csv("outputs/essay3_q2/e_ledger.csv"))
+g5 = (led.loc[led.step.str.startswith("Compustat covariates"), "status"].iloc[0]
+      == "not_computable_until_stage6")
+g6 = pd.isna(led.loc[led.step.str.startswith("Compustat covariates"), "N_v4"].iloc[0])
+print(f"  {'PASS' if g5 and g6 else 'FAIL'} | downstream steps marked "
+      f"not_computable_until_stage6 with no fabricated v4 N")
+results.append(all([g1, g2, g3, g4, g5, g6, g7]))
+
 print(f"\n{'='*70}")
 print(f"RESULT: {sum(results)}/{len(results)} tests passed")
 print("=" * 70)

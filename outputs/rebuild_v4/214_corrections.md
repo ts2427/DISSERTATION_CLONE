@@ -1,6 +1,6 @@
 # REBUILD V4 — Stage 4 corrections
 
-- run (UTC): 2026-09-19T00:10:45+00:00
+- run (UTC): 2026-09-19T00:22:40+00:00
 - input: `Data/processed/rebuild/CANONICAL_V3.csv` (489 rows, read-only)
 - Stage 4 issues no SEC request; the EDGAR cache is read, never written.
 
@@ -14,7 +14,7 @@
 |---|---|---|---|---|---|---|
 | breach_date | 101830 | Sprint Nextel | 2012-08-01 | 2012-08-01 | 2009-01-01 | YES |
 | prior_breaches_1yr | 101830 | Sprint | 2009-02-01 | 0 | 1 | YES |
-| reported_date | 1125259 | Carnival Corporation & PLC | 2019-04-01 | 2020-03 | 2020-03-01 | YES |
+| reported_date_excluded | 1125259 | Carnival Corporation & PLC | 2019-04-01 | 2020-03 | (missing) | YES |
 | final_cik | 1283246 | International Paper Company | 2023-05-30 | 1283246 | 51434 | YES |
 | final_cik | 58696 | Lennar Corporation | 2023-07-20 | 58696 | 920760 | YES |
 

@@ -183,7 +183,7 @@ def fix_reported_dates(ev, rows):
     srcs = [(p, pd.read_csv(p, low_memory=False)) for p in SOURCES if p.exists()]
     for idx, r in bad.iterrows():
         old = str(r["reported_date"])
-        found, evid = None, "no upstream record matched on org_name AND breach_date"
+        found, srow, evid = None, None, "no upstream record matched on org_name AND breach_date"
         for path, d in srcs:
             if not {"org_name", "breach_date", "reported_date"} <= set(d.columns):
                 continue
@@ -195,16 +195,63 @@ def fix_reported_dates(ev, rows):
                     if FULL_DATE_RE.match(str(v))}
             if len(vals) == 1:
                 found = vals.pop()
+                srow = hit.iloc[0]
                 evid = (f"{path.as_posix()}: org_name={r['org_name']!r}, "
-                        f"breach_date={str(r['breach_date'])[:10]}, reported_date={found}")
+                        f"breach_date={str(r['breach_date'])[:10]}, "
+                        f"reported_date={found!r}")
                 break
             if len(vals) > 1:
                 evid = f"{path.as_posix()}: ambiguous upstream dates {sorted(vals)}"
+
+        if found and day_is_imputed(old, found, srow):
+            trunc = [f"{c}={str(srow[c]).strip()!r}" for c in TRUNC_CHECK_COLS
+                     if c in srow.index and MONTH_ONLY_RE.fullmatch(str(srow[c]).strip())]
+            detail = str(srow.get("incident_details", ""))[:200]
+            ev.loc[idx, "reported_date"] = pd.NA
+            record(rows, "reported_date_excluded", r["final_cik"], r["org_name"],
+                   str(r["breach_date"])[:10], "reported_date", old, "(missing)", True,
+                   f"upstream day NOT reported, imputed: {evid}; the same upstream row is "
+                   f"still month-truncated at {', '.join(trunc)}, so the record carries "
+                   f"month precision and the '-01' was supplied by the pipeline; "
+                   f'incident_details="{detail}"')
+            continue
+
         ev.loc[idx, "reported_date"] = found if found else pd.NA
         record(rows, "reported_date", r["final_cik"], r["org_name"],
                str(r["breach_date"])[:10], "reported_date", old,
                found if found else "(missing)", True, evid)
     return ev
+
+
+MONTH_ONLY_RE = re.compile(r"\d{4}-\d{2}")
+TRUNC_CHECK_COLS = ("end_breach_date", "breach_date", "reported_date")
+
+
+def day_is_imputed(malformed, candidate, srow):
+    """Was the upstream day REPORTED, or manufactured from a month-precision record?
+
+    An upstream value that is exactly the truncated value plus "-01" is suspicious but
+    not damning - some breaches really are reported on the first. What settles it is a
+    SIBLING date in the same upstream row that is still month-truncated: a record whose
+    end_breach_date reads "2019-07" carries month precision throughout, so the "-01" on
+    its other dates came from a pipeline, not from the notification.
+
+    Carnival is the case: the Maine AG record reads breach_date 2019-04-01,
+    reported_date 2020-03-01, end_breach_date 2019-07, while its own narrative says the
+    breach ran April 11 to July 23 and notifications went out "in the week of March 2,
+    2020" - no day is reported at all. The sibling Washington record, which does carry
+    day precision, reads 2019-04-11 / 2020-03-02 / 2019-07-23.
+    """
+    if srow is None:
+        return False
+    if not str(candidate).startswith(str(malformed).strip()[:7]):
+        return False
+    if not str(candidate).endswith("-01"):
+        return False
+    for c in TRUNC_CHECK_COLS:
+        if c in srow.index and MONTH_ONLY_RE.fullmatch(str(srow[c]).strip()):
+            return True
+    return False
 
 
 def fix_cik(ev, rows, old_cik, new_cik, evidence, label):
