@@ -160,7 +160,8 @@ SUCCESSION_RE = re.compile(
 # "holding company reorganization" at passage 83 and "became the successor issuer to SBG
 # ... pursuant to Exchange Act Rule 12g-3(a)" at passage 106; the second is the evidence.
 STRONG_SUCCESSION_RE = re.compile(
-    r"successor\s+issuer|successor\s+registrant|rule\s*12\s*g-?\s*3", re.I)
+    r"successor\s+issuer|successor\s+registrant|predecessor\s+registrant|"
+    r"rule\s*12\s*g-?\s*3", re.I)
 
 # Dropped from both sides before comparing, on top of M212's legal-suffix tokens.
 STOPWORDS = {"OF", "AND", "FOR"}

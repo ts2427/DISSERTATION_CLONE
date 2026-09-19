@@ -250,10 +250,18 @@ def read_extra_ciks(path):
                 return {int(c) for c in pd.to_numeric(df[col], errors="coerce").dropna()}
         sys.exit(f"--extra-ciks CSV has no cik/final_cik/parent_cik/outcome_cik column: {p}")
     out = set()
-    for line in p.read_text(encoding="utf-8").splitlines():
-        line = line.strip()
-        if line and not line.startswith("#"):
+    for raw in p.read_text(encoding="utf-8").splitlines():
+        # Strip INLINE comments as well as whole-line ones. 213 writes a commented header
+        # and one CIK per line, but a CIK annotated with its company name -
+        # "718877   # Activision Blizzard, Inc." - used to raise ValueError and kill the
+        # pull, which is a poor reward for documenting the file.
+        line = raw.split("#", 1)[0].strip()
+        if not line:
+            continue
+        try:
             out.add(int(line))
+        except ValueError:
+            sys.exit(f"--extra-ciks: cannot read a CIK from line {raw!r} in {p}")
     return out
 
 

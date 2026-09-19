@@ -547,6 +547,33 @@ print(f"  {'PASS' if p7 is None else 'FAIL'} | run-3 FP: Sinclair credit-agreeme
       f"exhibit index -> {p7}")
 results.append(succ_ok)
 
+print(f"\n{'='*70}\nTEST: 211 --extra-ciks reader (213's output format)\n{'='*70}")
+_x = TMP / "extra_ciks.txt"
+_x.write_bytes(("# REBUILD V4 Stage 3 - verified CIKs not among the 185 already pulled\r\n"
+                "# generated 2026-09-18T23:48:23Z by scripts/213_stage3_verify.py\r\n"
+                "\r\n"
+                "718877   # Activision Blizzard, Inc.\r\n"
+                "51434\t# International Paper Co /NEW/\r\n"
+                "  920760  \r\n").encode())
+got = m.read_extra_ciks(str(_x))
+x1 = got == {718877, 51434, 920760}
+print(f"  {'PASS' if x1 else 'FAIL'} | header + inline comments + CRLF + blank + padding "
+      f"-> {sorted(got)}")
+_y = TMP / "extra_bad.txt"
+_y.write_text("718877\nnot-a-cik\n", encoding="utf-8")
+x2, msg = expect_abort(lambda: m.read_extra_ciks(str(_y)), "cannot read a CIK")
+print(f"  {'PASS' if x2 else 'FAIL'} | unparseable line aborts loudly | {msg[:60]}")
+# the real file 213 writes must parse to exactly its CIKs
+_real = Path("outputs/rebuild_v4/213_extra_ciks.txt")
+if _real.exists():
+    rg = m.read_extra_ciks(str(_real))
+    x3 = rg == {718877}
+    print(f"  {'PASS' if x3 else 'FAIL'} | the real 213_extra_ciks.txt -> {sorted(rg)}")
+else:
+    x3 = True
+    print("  SKIP | 213_extra_ciks.txt not present")
+results.append(x1 and x2 and x3)
+
 print(f"\n{'='*70}\nTEST: 213 defined-term aliases (the Sinclair split)\n{'='*70}")
 SBG_DEF = ('As previously disclosed, on April 3, 2023, the company formerly known as '
            'Sinclair Broadcast Group, Inc., a Maryland corporation (“ SBG ”), entered '
@@ -898,6 +925,112 @@ if _ua_prev is None:
     _os2.environ.pop(m213.UA_ENV, None)
 else:
     _os2.environ[m213.UA_ENV] = _ua_prev
+
+# ------------------------------ 214 Stage 4 corrections ------------------------------
+m214 = load("scripts/214_corrections_v4.py", "m214")
+
+print(f"\n{'='*70}\nTEST: 214 prior_breaches_1yr and the Sprint correction\n{'='*70}")
+p1 = m214.prior_1yr([pd.Timestamp("2009-01-01"), pd.Timestamp("2009-02-01"),
+                     pd.Timestamp("2011-01-01")])
+c1 = p1 == [0, 1, 0]
+print(f"  {'PASS' if c1 else 'FAIL'} | prior_1yr counts only earlier events within 365d "
+      f"-> {p1}")
+
+
+def sprint_frame(stored):
+    return pd.DataFrame({
+        "final_cik": [101830, 101830, 101830],
+        "org_name": ["Sprint Nextel", "Sprint Nextel", "Sprint"],
+        "breach_date": ["2009-02-01", "2012-08-01", "2015-08-17"],
+        "reported_date": ["2009-06-12", "2009-03-30", "2020-04-09"],
+        "end_breach_date": ["2009-02-01", "2009-01-01", "2015-08-17"],
+        "incident_details": ["", "NH DOJ reported ... on March 30, 2009.", ""],
+        "prior_breaches_1yr": stored})
+
+
+rws = []
+fixed, tbl = m214.fix_sprint(sprint_frame([0, 0, 0]), rws)
+moved = fixed.loc[fixed["end_breach_date"] == "2009-01-01", "breach_date"].iloc[0]
+c2 = (moved == "2009-01-01")
+c3 = (list(fixed.sort_values("breach_date")["prior_breaches_1yr"]) == [0, 1, 0])
+c4 = any(r["field"] == "breach_date" and r["old_value"] == "2012-08-01"
+         and r["new_value"] == "2009-01-01" and r["applied"] == "YES" for r in rws)
+c5 = any("March 30, 2009" in str(r["evidence"]) for r in rws)
+print(f"  {'PASS' if c2 else 'FAIL'} | breach_date 2012-08-01 -> {moved}")
+print(f"  {'PASS' if c3 else 'FAIL'} | prior_breaches_1yr recomputed -> "
+      f"{list(fixed.sort_values('breach_date')['prior_breaches_1yr'])} (2009-02-01 gains 1)")
+print(f"  {'PASS' if c4 and c5 else 'FAIL'} | correction records old, new and verbatim "
+      f"evidence")
+
+# the self-check must ABORT when the recomputation disagrees with the stored column
+c6, msg6 = expect_abort(lambda: m214.fix_sprint(sprint_frame([7, 7, 7]), []),
+                        "does not reproduce the stored column")
+print(f"  {'PASS' if c6 else 'FAIL'} | stored column that the rule cannot reproduce "
+      f"aborts | {msg6[:56]}")
+results.append(all([c1, c2, c3, c4, c5, c6]))
+
+print(f"\n{'='*70}\nTEST: 214 malformed reported_date, CIK swaps, v4 path guard\n{'='*70}")
+_src = m214.SOURCES
+_tmpsrc = TMP / "src.csv"
+pd.DataFrame({"org_name": ["Carnival Corporation & PLC", "Carnival Corporation & PLC"],
+              "breach_date": ["2019-04-01", "2019-04-11"],
+              "reported_date": ["2020-03-01", "2020-03-02"]}).to_csv(_tmpsrc, index=False)
+m214.SOURCES = (_tmpsrc,)
+bad = pd.DataFrame({"final_cik": [1125259, 999], "org_name": ["Carnival Corporation & PLC", "Nope Inc"],
+                    "breach_date": ["2019-04-01", "2001-01-01"],
+                    "reported_date": ["2020-03", "1999-13"]})
+rws2 = []
+out = m214.fix_reported_dates(bad.copy(), rws2)
+d1 = out["reported_date"].iloc[0] == "2020-03-01"
+d2 = pd.isna(out["reported_date"].iloc[1])
+m214.SOURCES = _src
+print(f"  {'PASS' if d1 else 'FAIL'} | '2020-03' -> {out['reported_date'].iloc[0]} "
+      f"(matched on breach_date, NOT the 2019-04-11 sibling)")
+print(f"  {'PASS' if d2 else 'FAIL'} | no upstream match -> missing")
+
+ip = pd.DataFrame({"final_cik": [1283246, 5], "org_name": ["International Paper Company", "x"],
+                   "breach_date": ["2023-05-30", "2020-01-01"]})
+rws3 = []
+ipo = m214.fix_cik(ip.copy(), rws3, 1283246, 51434, "cited", "International Paper")
+d3 = list(ipo["final_cik"]) == [51434, 5]
+print(f"  {'PASS' if d3 else 'FAIL'} | International Paper CIK swap -> "
+      f"{list(ipo['final_cik'])}")
+
+
+class FakeM213:
+    def __init__(self, mapping):
+        self.mapping = mapping
+
+    def submissions(self, cik):
+        return self.mapping.get(cik, pd.DataFrame())
+
+
+def tenk(dates):
+    return pd.DataFrame({"form": ["10-K"] * len(dates),
+                         "accessionNumber": [f"000-{i}" for i in range(len(dates))],
+                         "fdate": pd.to_datetime(dates)})
+
+
+len_df = pd.DataFrame({"final_cik": [58696], "org_name": ["Lennar Corporation"],
+                       "breach_date": ["2023-07-20"]})
+yes = FakeM213({920760: tenk(["2024-01-26"]), 58696: tenk(["1999-03-01"])})
+no = FakeM213({920760: tenk(["2024-01-26"]), 58696: tenk(["2024-01-20"])})
+r4, r5 = [], []
+d4 = m214.fix_lennar(len_df.copy(), r4, yes)["final_cik"].iloc[0] == 920760
+d5 = m214.fix_lennar(len_df.copy(), r5, no)["final_cik"].iloc[0] == 58696
+print(f"  {'PASS' if d4 else 'FAIL'} | Lennar swap APPLIED when only 920760 filed the "
+      f"breach-year 10-K")
+print(f"  {'PASS' if d5 else 'FAIL'} | Lennar swap WITHHELD when 58696 also filed one")
+d6 = any(r["applied"] == "NO" and "condition NOT met" in str(r["evidence"]) for r in r5)
+print(f"  {'PASS' if d6 else 'FAIL'} | withheld correction is still recorded with its "
+      f"evidence")
+
+d7, msg7 = expect_abort(lambda: m214.assert_v4("Data/processed/rebuild/CANONICAL_V3.csv"),
+                        "refusing to write outside a v4 path")
+d8 = m214.assert_v4("outputs/rebuild_v4/x.csv", "Data/processed/rebuild_v4/y.csv") is None
+print(f"  {'PASS' if d7 else 'FAIL'} | writing to a v3 path is refused | {msg7[:52]}")
+print(f"  {'PASS' if d8 else 'FAIL'} | v4 paths are accepted")
+results.append(all([d1, d2, d3, d4, d5, d6, d7, d8]))
 
 print(f"\n{'='*70}")
 print(f"RESULT: {sum(results)}/{len(results)} tests passed")
