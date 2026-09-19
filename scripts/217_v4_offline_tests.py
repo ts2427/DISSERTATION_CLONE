@@ -1546,7 +1546,9 @@ _a = [
     ("scripts/229_essay3_copy.py", True, "old upper bound still in"),
     ("scripts/230_outcome_gap_v4.py", True, "230 now allowed"),
     ("scripts/239_last.py", True, "new upper bound"),
-    ("scripts/240_future.py", False, "240 is outside"),
+    ("scripts/240_methods_toolkit_v4.py", True, "240 now allowed"),
+    ("scripts/249_last.py", True, "new upper bound"),
+    ("scripts/250_future.py", False, "250 is outside"),
     ("scripts/209_old.py", False, "209 is outside"),
     ("scripts/219b_foo.py", False, "219b-style name is not <digits>_"),
     ("scripts/2199_foo.py", False, "2199 must not be read as a prefix"),
@@ -1561,6 +1563,7 @@ _a = [
     ("docs/claude/ESSAY3_V4_STATE.md", True, "the v4 settled-state doc"),
     ("docs/claude/ESSAY3_POST_RERUN_STATE.md", False, "v3's state doc stays frozen"),
     ("docs/claude/ESSAY3_HANDOFF.md", False, "other v3 docs stay frozen"),
+    ("docs/claude/POST_DEFENSE.md", True, "the post-freeze rule doc"),
 ]
 _ok = []
 for _p, _want, _why in _a:
@@ -2450,6 +2453,141 @@ else:
     print(f"  {'PASS' if z3 else 'FAIL'} | each line's 'full' equals that window's ladder coef")
     print(f"  {'PASS' if z4 else 'FAIL'} | the 90d flip is NOT T-Mobile (it is {_tm90.group(1) if _tm90 else '?'})")
     results.append(all([z0, z1, z2, z3, z4]))
+
+
+print("\n" + "=" * 70)
+print("TEST: 240 methods toolkit - facts, check, lint")
+print("=" * 70)
+_m240 = load(Path("scripts/240_methods_toolkit_v4.py"), "m240")
+
+# --- prose formatting: the rules the methods section is written under ---
+v1 = _m240.fmt_p(0.047) == "p = .047"          # no leading zero
+v2 = _m240.fmt_p(0.0005) == "p < .001"         # never a silent 0.000
+v3 = _m240.fmt_p(0.9272) == "p = .927"
+v4 = _m240.fmt_p(None) == "n/a" and _m240.fmt_p(float("nan")) == "n/a"
+v5 = _m240.fmt_n(1054) == "1,054" and _m240.fmt_n(405) == "405"
+v6 = _m240.fmt_f(0.03827, 4) == "0.0383"
+v7 = _m240.fmt_pct(0.2466, 1) == "24.7%"
+
+# --- facts: built from committed outputs, every row carrying a source ---
+_mf = Path("outputs/essay3_v4/methods/METHODS_FACTS.csv")
+if _mf.exists():
+    _F = pd.read_csv(_mf)
+    v8 = len(_F) > 100
+    v9 = set(_F.columns) == {"key", "value", "source_file", "source_field"}
+    v10 = not _F["source_file"].isna().any() and not (_F["source_file"] == "").any()
+    v11 = not _F["source_field"].isna().any()
+    # no p-value in the table carries a leading zero
+    _ps = _F.loc[_F["value"].astype(str).str.startswith("p = "), "value"].astype(str)
+    v12 = len(_ps) > 0 and not _ps.str.contains(r"p = 0\.").any()
+    # the ledger, the ladder and the test counts all made it in
+    _k = _F["key"].astype(str)
+    v13 = (_k.str.startswith("ledger / ").any() and _k.str.startswith("F1 ").any()
+           and _k.str.startswith("tests / ").any()
+           and _k.str.startswith("validation ").any()
+           and _k.str.startswith("covariate / ").any()
+           and _k.str.startswith("censoring / ").any())
+else:
+    v8 = v9 = v10 = v11 = v12 = v13 = False
+
+# --- check: returns 0 on the committed outputs, and FAILS on a broken ledger ---
+import io as _io240, contextlib as _ctx240
+_buf = _io240.StringIO()
+with _ctx240.redirect_stdout(_buf):
+    _rc_ok = _m240.run_check()
+v14 = _rc_ok == 0
+_out240 = _buf.getvalue()
+v15 = "FAIL" not in _out240
+
+# a ledger whose treated+control does not equal N must FAIL
+_tmpled = TMP / "ledger_broken"
+_tmpled.mkdir(parents=True, exist_ok=True)
+_real_out = _m240.OUT
+import shutil as _sh240
+for _f in ("e_ledger.csv", "e_analysis_sample.csv", "f1_ladder.csv", "i_tests.csv",
+           "f1_se_diagnostics.csv"):
+    _src = Path("outputs/essay3_v4") / _f
+    if _src.exists():
+        _sh240.copy(_src, _tmpled / _f)
+_bl = pd.read_csv(_tmpled / "e_ledger.csv")
+_bl.loc[_bl["treated"].notna(), "treated"] = _bl.loc[_bl["treated"].notna(), "treated"] + 1
+_bl.to_csv(_tmpled / "e_ledger.csv", index=False)
+_m240.OUT = _tmpled
+_m240.METH = _tmpled
+_m240.FACTS = _tmpled / "METHODS_FACTS.md"
+_buf2 = _io240.StringIO()
+with _ctx240.redirect_stdout(_buf2):
+    _rc_bad = _m240.run_check()
+v16 = _rc_bad != 0 and "FAIL" in _buf2.getvalue()
+_m240.OUT = _real_out
+_m240.METH = Path("outputs/essay3_v4/methods")
+_m240.FACTS = _m240.METH / "METHODS_FACTS.md"
+
+# --- lint: every listed phrasing is flagged, and the safe variants are not ---
+_dr = TMP / "lint_probe.md"
+_dr.write_text(chr(10).join([
+    "The FCC adopted Rule 37.3 in 2007.",                       # 1 phrase
+    "Effective September 28, 2007 for carriers.",               # 2 phrase
+    "The order was released June 8, 2007 and applied later.",   # 3 phrase (no 'published')
+    "It was published June 8, 2007 in the Federal Register.",   # 4 SAFE
+    "We study 1,054 breaches.",                                 # 5 phrase
+    "Executive turnover follows disclosure.",                   # 6 phrase
+    "A natural experiment identifies the effect.",              # 7 phrase
+    "We estimate the causal impact.",                           # 8 phrase
+    "Section 64.2011 imposes a deadline on carriers.",          # 9 phrase (proximity)
+    "Reported under Item 5.02(b).",                             # 10 phrase
+    "Tenure came from BoardEx.",                                # 11 phrase
+    "The HC3 interval shows significance.",                     # 12 phrase
+    "HC3 is disqualified; CV3 and WCR govern.",                 # 13 SAFE
+    "The effect is 8.88 points across 7777 firms.",             # 14 two unsourced numbers
+]) + chr(10), encoding="utf-8")
+_buf3 = _io240.StringIO()
+with _ctx240.redirect_stdout(_buf3):
+    _m240.run_lint(str(_dr))
+_lt = _buf3.getvalue()
+
+
+def _flagged(line_no):
+    return _re_l.search(r"line %d\b" % line_no, _lt) is not None
+
+
+import re as _re_l
+_want = [1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12, 14]
+_safe = [4, 13]
+v17 = all(_flagged(n) for n in _want)
+v18 = not any(_flagged(n) for n in _safe)
+v19 = "'8.88' is not in METHODS_FACTS" in _lt and "'7777' is not in METHODS_FACTS" in _lt
+# a number that IS sourced must not be flagged
+_dr2 = TMP / "lint_ok.md"
+_dr2.write_text("The coefficient is 0.0383 across 119 clusters in 2024.\n", encoding="utf-8")
+_buf4 = _io240.StringIO()
+with _ctx240.redirect_stdout(_buf4):
+    _m240.run_lint(str(_dr2))
+v20 = "no flags" in _buf4.getvalue()
+
+for _f, _lab in [(v1, "p-values print without a leading zero"),
+                 (v2, "a tiny p prints as 'p < .001', never 0.000"),
+                 (v3, "p = .927 rounds to three decimals"),
+                 (v4, "missing p prints n/a"),
+                 (v5, "counts carry thousands commas"),
+                 (v6, "coefficients print to 4dp"),
+                 (v7, "rates print as percentages"),
+                 (v8, "facts table is populated"),
+                 (v9, "columns are key/value/source_file/source_field"),
+                 (v10, "every fact names a source FILE"),
+                 (v11, "every fact names a source FIELD/ROW"),
+                 (v12, "no p-value in the table has a leading zero"),
+                 (v13, "ledger, ladder, tests, validation, covariates, censoring all present"),
+                 (v14, "check returns 0 on the committed outputs"),
+                 (v15, "check reports no FAIL on the committed outputs"),
+                 (v16, "a broken ledger (treated+control != N) FAILS and exits nonzero"),
+                 (v17, "every listed phrasing is flagged"),
+                 (v18, "'published June 8, 2007' and a disqualified-HC3 line are NOT flagged"),
+                 (v19, "unsourced numbers are named"),
+                 (v20, "a number that IS in METHODS_FACTS is not flagged")]:
+    print(f"  {'PASS' if _f else 'FAIL'} | {_lab}")
+results.append(all([v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14,
+                    v15, v16, v17, v18, v19, v20]))
 
 print(f"\n{'='*70}")
 print(f"RESULT: {sum(results)}/{len(results)} tests passed")

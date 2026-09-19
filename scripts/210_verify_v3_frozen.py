@@ -63,7 +63,7 @@ Directories, matched at a path boundary only:
 Data/edgar/item5_02_text/ is shared with v3: v4 adds documents alongside v3's.
 Only ADDITIONS are admitted - any change to a baseline file there still fails on
 the sha256/blob comparison, which does not consult this list.
-Scripts, by parsed leading number only, 210 <= n <= 239:  scripts/<n>_*.py
+Scripts, by parsed leading number only, 210 <= n <= 249:  scripts/<n>_*.py
 Documents, by exact path:
     docs/claude/REBUILD_V4_QUERY.md, docs/claude/REPRODUCE_ESSAY3_V4.md
 Prefix matching is deliberately NOT used for scripts: "scripts/21" would also admit
@@ -109,9 +109,11 @@ V4_DOCS = (
     # The v4 settled-state document. v3's ESSAY3_POST_RERUN_STATE.md is NOT listed and
     # must stay frozen: this file supersedes parts of it by pointer, never by edit.
     "docs/claude/ESSAY3_V4_STATE.md",
+    # The post-freeze change rule. Tagged essay3-v4-final.
+    "docs/claude/POST_DEFENSE.md",
 )
 SCRIPT_RE = re.compile(r"^scripts/(\d+)_[^/]*\.py$")
-SCRIPT_LO, SCRIPT_HI = 210, 239
+SCRIPT_LO, SCRIPT_HI = 210, 249
 
 
 def git(*args, binary=False):
