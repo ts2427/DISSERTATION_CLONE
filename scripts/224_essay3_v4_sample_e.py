@@ -316,7 +316,27 @@ q1 = crsp.dropna(subset=['fcc_form499', 'immediate_disclosure', 'prior_breaches_
                          'firm_size_log', 'leverage', 'roa'])
 extra = cov[~cov.set_index(KEY).index.isin(q1.set_index(KEY).index)]
 A1 = OUTC[OUTC['has_8k_activity'] == 1]
-A2 = A1.dropna(subset=['prior12m_mktadj_ret_rd'])
+
+# ---- pre-specified censoring rule (Tim's ruling): restrict to events whose outcome
+# window is FULLY OBSERVED, i.e. the outcome CIK was still filing at the window end.
+# scripts/232 measures this; it must run before this script.
+_cp = OUT / '232_censoring.csv'
+if not _cp.exists():
+    sys.exit(f'224 is offline; missing cached input {_cp}  '
+             '(run: python scripts/232_censoring_report_v4.py first)')
+_CEN = pd.read_csv(_cp, low_memory=False)
+_cens_keys = {(int(r['final_cik']), str(r['breach_date'])[:10])
+              for _, r in _CEN.iterrows() if int(r.get('censored_180_rd', 0) or 0) == 1}
+A1C = A1[~A1.set_index(KEY).index.map(lambda k: (int(k[0]), str(k[1])[:10]) in _cens_keys)]
+_slack = (pd.to_datetime(_CEN['last_filing'], errors='coerce')
+          - (pd.to_datetime(_CEN['t0_rd'], errors='coerce') + timedelta(days=180))).dt.days
+CENS_NOTE = (f'removes {len(A1) - len(A1C)}; margin: min {int(_slack.min())} days, '
+             f'median {int(_slack.median())} days between the 180d window end and the '
+             f'outcome CIK last filing (tightest: NextGen Healthcare 2023-03-29)')
+log('')
+log(f'Censoring rule (pre-specified): fully observed 180d outcome window '
+    f'removes {len(A1) - len(A1C)} event(s). {CENS_NOTE}')
+A2 = A1C.dropna(subset=['prior12m_mktadj_ret_rd'])
 FAM = {101830: 1283699}
 
 
@@ -339,6 +359,7 @@ led = [dict(step='PRC notification records (master_breach_dataset.xlsx)', N=1054
        lvl('Compustat covariates (size, leverage, ROA) = Query 2 scope', cov,
            f'Query 1 sample was {len(q1)}; +{len(extra)}: ' + '; '.join(
                f"{r['org_name']} {r['breach_date']} (immediate_disclosure missing)" for _, r in extra.iterrows())),
+       lvl('Fully observed outcome window (pre-specified censoring rule)', A1C, CENS_NOTE),
        lvl('Outcome-data requirement (>=1 8-K in [t0-730d, t0+180d], outcome CIK)', A1,
            'outcome_cik resolved by rule (scripts/234); 7 events use a CIK other than final_cik: Disney, Google, Paramount x2, Sinclair x3'),
        lvl('Prior 12-month market-adjusted return available (>=150 daily returns)', A2, 'ANALYSIS SAMPLE')]
@@ -349,7 +370,7 @@ assert len(A2) == LED.iloc[-1]['N']
 drop8k = OUTC[OUTC['has_8k_activity'] == 0]
 log(f"\nOutcome-data requirement removes {len(drop8k)} (treated {int(drop8k['fcc_form499'].sum())}, control "
     f"{int((drop8k['fcc_form499'] == 0).sum())}): " + '; '.join(f"{r['org_name']} {r['breach_date']}" for _, r in drop8k.iterrows()))
-dropr = A1[A1['prior12m_mktadj_ret_rd'].isna()]
+dropr = A1C[A1C['prior12m_mktadj_ret_rd'].isna()]
 log(f"Prior-return requirement removes {len(dropr)} (treated {int(dropr['fcc_form499'].sum())}): " +
     '; '.join(f"{r['org_name']} {r['reported_date'][:10]} ({int(r['prior12m_ndays_rd'])} days)" for _, r in dropr.iterrows()))
 

@@ -70,3 +70,9 @@ be mistaken later for the operative sample.
 PRIMARY for scoring = the verified codes. SECONDARY = the raw blind codes. For each
 still-flagged row, accuracy is reported twice, with the row coded Y and coded N, as
 bounds.
+
+## Pre-specified analysis plan
+
+- `outputs/essay3_v4/ANALYSIS_PLAN_V4.md` — sha256 `c9dbe88910669c7720a937b0119d906a312f08bd26349bc174ccf04e16f8afe0`
+- committed BEFORE scripts/227 was run on the v4 sample. No specification change is
+  permitted after that commit.
