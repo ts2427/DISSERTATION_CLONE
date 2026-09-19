@@ -5,7 +5,7 @@ Stage 3: CIK+date firm-day events,524,events,,,,,,
 Gate 2 adjacency collapse,491,events,,,,,,
 Stage 4/5 canonical events (CANONICAL_V4),489,equity re-parenting re-collapse (-2),118.0,371.0,14.0,13.0,0.0,7.0
 CRSP data (has_crsp_data),414,,111.0,303.0,13.0,12.0,0.0,7.0
-"Compustat covariates (size, leverage, ROA) = Query 2 scope",412,"loses 2 of 414 CRSP-linked events (2 treated, 0 control); treated losses: T-Mobile 2013-11-01; T-Mobile USA, Inc. 2013-11-26",109.0,303.0,13.0,12.0,0.0,7.0
+"Compustat covariates (size, leverage, ROA) = Query 2 scope",412,"loses 2 of 414 CRSP-linked events (2 treated, 0 control); treated losses: T-Mobile 2013-11-01; T-Mobile USA, Inc. 2013-11-26; no fiscal year ending before the breach describes the post-merger registrant (MetroPCS's pre-May-2013 financials would describe a different, smaller firm)",109.0,303.0,13.0,12.0,0.0,7.0
 Fully observed outcome window (pre-specified censoring rule),412,"removes 0; margin: min 26 days, median 2718 days between the 180d window end and the outcome CIK last filing (tightest: NextGen Healthcare, Inc. 2023-03-29)",109.0,303.0,13.0,12.0,0.0,7.0
 "Outcome-data requirement (>=1 8-K in [t0-730d, t0+180d], outcome CIK)",412,"outcome_cik resolved by rule (scripts/234); 7 event(s) use a CIK other than final_cik: Google, Inc. (1652044->1288776); Paramount (2041610->813828); Paramount Global (2041610->813828); Sinclair Broadcast Group, Inc. (1971213->912752); The Walt Disney Company (1744489->1001039)",109.0,303.0,13.0,12.0,0.0,7.0
 Prior 12-month market-adjusted return available (>=150 daily returns),405,ANALYSIS SAMPLE,109.0,296.0,13.0,12.0,0.0,7.0

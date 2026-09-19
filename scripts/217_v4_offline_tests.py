@@ -1558,6 +1558,9 @@ _a = [
     ("Data/edgar/rebuild_submissions_cache/123.json", False, "v3 cache stays frozen"),
     ("Data/edgar/item5_02_text_other/x.htm", False, "path boundary, not a prefix"),
     ("Data/wrds/compustat_annual.csv", False, "v3 WRDS stays frozen"),
+    ("docs/claude/ESSAY3_V4_STATE.md", True, "the v4 settled-state doc"),
+    ("docs/claude/ESSAY3_POST_RERUN_STATE.md", False, "v3's state doc stays frozen"),
+    ("docs/claude/ESSAY3_HANDOFF.md", False, "other v3 docs stay frozen"),
 ]
 _ok = []
 for _p, _want, _why in _a:
@@ -2425,6 +2428,13 @@ else:
         if _FL.get(_w) != _full:
             _bad.append("%dd quotes full %+.4f, ladder says %+.4f"
                         % (_w, _full, _FL.get(_w, float("nan"))))
+    # No LOCO or top-five line may appear WITHOUT a window prefix. An unprefixed line
+    # is exactly what made the original log misreadable: it inherits whatever header it
+    # happens to sit under.
+    _unpref = [ln.strip() for ln in _txt9.splitlines()
+               if ("leave-one-cluster-out" in ln or "top five contributors" in ln)
+               and not _re9.search("[0-9]+d (leave-one-cluster-out|top five contributors)", ln)]
+    z0 = not _unpref
     z1 = set(_seen) == {30, 90, 180}
     z2 = not _bad
     z3 = all(_seen[w] == _FL[w] for w in _seen)
@@ -2432,12 +2442,14 @@ else:
     # previous window, which is how "T-Mobile flips at 90d" was reported when it does not.
     _tm90 = _re9.search(r"90d leave-one-cluster-out.*?sign flips 1/\d+: (\d+)", _txt9)
     z4 = bool(_tm90) and _tm90.group(1) != "1283699"
+    print(f"  {'PASS' if z0 else 'FAIL'} | no LOCO/top-five line lacks a window prefix"
+          + ("" if z0 else f" -> {_unpref[0][:90]}"))
     print(f"  {'PASS' if z1 else 'FAIL'} | a LOCO line is present for all three windows ({sorted(_seen)})")
     print(f"  {'PASS' if z2 else 'FAIL'} | every LOCO line sits under its own window header"
           + ("" if z2 else " -> " + "; ".join(_bad[:3])))
     print(f"  {'PASS' if z3 else 'FAIL'} | each line's 'full' equals that window's ladder coef")
     print(f"  {'PASS' if z4 else 'FAIL'} | the 90d flip is NOT T-Mobile (it is {_tm90.group(1) if _tm90 else '?'})")
-    results.append(all([z1, z2, z3, z4]))
+    results.append(all([z0, z1, z2, z3, z4]))
 
 print(f"\n{'='*70}")
 print(f"RESULT: {sum(results)}/{len(results)} tests passed")

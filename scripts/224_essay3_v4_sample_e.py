@@ -356,10 +356,17 @@ def lvl(name, d, note=''):
 # stale the moment the data moves, and the ledger is the artefact a reader trusts.
 _lost = crsp[crsp[['firm_size_log', 'leverage', 'roa']].isna().any(axis=1)]
 _lost_t = _lost[_lost['fcc_form499'] == 1]
+# The treated losses are T-Mobile's 2013 events. This is not a coverage gap to fix:
+# gvkey 017874's first fiscal year ends 2013-12-31, after both breach dates, and no
+# fiscal year ending before the breach describes the post-merger registrant (MetroPCS's
+# pre-May-2013 financials would describe a different, smaller firm).
+_MPCS = ("no fiscal year ending before the breach describes the post-merger registrant "
+         "(MetroPCS's pre-May-2013 financials would describe a different, smaller firm)")
 COV_NOTE = (f"loses {len(_lost)} of {len(crsp)} CRSP-linked events "
             f"({len(_lost_t)} treated, {len(_lost) - len(_lost_t)} control)"
             + ("; treated losses: " + '; '.join(
                 f"{r['org_name']} {str(r['breach_date'])[:10]}" for _, r in _lost_t.iterrows())
+               + "; " + _MPCS
                if len(_lost_t) else ""))
 
 _oc_diff = sc[sc['outcome_cik'].notna()

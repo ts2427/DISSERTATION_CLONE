@@ -106,6 +106,9 @@ V4_DIRS = (
 V4_DOCS = (
     "docs/claude/REBUILD_V4_QUERY.md",
     "docs/claude/REPRODUCE_ESSAY3_V4.md",
+    # The v4 settled-state document. v3's ESSAY3_POST_RERUN_STATE.md is NOT listed and
+    # must stay frozen: this file supersedes parts of it by pointer, never by edit.
+    "docs/claude/ESSAY3_V4_STATE.md",
 )
 SCRIPT_RE = re.compile(r"^scripts/(\d+)_[^/]*\.py$")
 SCRIPT_LO, SCRIPT_HI = 210, 239
