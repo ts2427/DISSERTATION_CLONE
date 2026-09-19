@@ -1,6 +1,6 @@
 # REBUILD V4 — Stage 4 corrections
 
-- run (UTC): 2026-09-19T13:26:39+00:00
+- run (UTC): 2026-09-19T13:53:37+00:00
 - input: `Data/processed/rebuild/CANONICAL_V3.csv` (489 rows, read-only)
 - Stage 4 issues no SEC request; the EDGAR cache is read, never written.
 
@@ -9,8 +9,8 @@
 - Sprint: recomputation reproduces the stored prior_breaches_1yr exactly (12 rows) under the original dates, so the rule matches v3's.
 - International Paper: CIK 1283246 -> 51434 on 1 row(s).
 - Lennar: CIK 58696 -> 920760 on 1 row(s).
-- Stage 3: read 40 verdict row(s) from 213_verification_log.csv.
-- Stage 3: 21 event(s) re-parented, 4 verified without a CIK change (the verified registrant was already the event CIK); 15 UNVERIFIED row(s) left untouched and excluded.
+- Stage 3: read 44 verdict row(s) from 213_verification_log.csv, stage3b_213_verification_log.csv.
+- Stage 3: 25 event(s) re-parented, 4 verified without a CIK change (the verified registrant was already the event CIK); 15 UNVERIFIED row(s) left untouched and excluded.
 
 | kind | cik | org_name | breach_date | old_value | new_value | applied |
 |---|---|---|---|---|---|---|
@@ -22,12 +22,16 @@
 | stage3_a_subsidiary | 72945 | Northrop Grumman Systems Corporation | 2016-04-18 | 72945 | 1133421 | YES |
 | stage3_a_subsidiary | 108772 | Xerox Corporation | 2023-12-10 | 108772 | 1770450 | YES |
 | stage3_a_subsidiary | 353394 | Leidos, Inc. | 2022-09-30 | 353394 | 1336920 | YES |
+| stage3_b_successor_cik | 813828 | Paramount | 2023-01-01 | 813828 | 2041610 | YES |
+| stage3_b_successor_cik | 813828 | Paramount Global | 2023-08-10 | 813828 | 2041610 | YES |
 | stage3_b_successor_cik | 912752 | Sinclair Broadcast Group, Inc. | 2020-05-01 | 912752 | 1971213 | YES |
 | stage3_b_successor_cik | 912752 | Sinclair Broadcast Group, Inc. | 2021-06-23 | 912752 | 1971213 | YES |
 | stage3_b_successor_cik | 912752 | Sinclair Broadcast Group, Inc. | 2021-12-16 | 912752 | 1971213 | YES |
+| stage3_b_successor_cik | 926480 | The Walt Disney Company | 2008-07-29 | 926480 | 1744489 | YES |
 | stage3_a_subsidiary | 1137785 | Seagate US LLC | 2016-02-29 | 1137785 | 1137789 | YES |
 | stage3_a_subsidiary | 1137785 | Seagate US LLC | 2016-03-14 | 1137785 | 1137789 | YES |
 | stage3_a_subsidiary | 1205274 | Herbalife International of America, Inc. | 2022-02-01 | 1205274 | 1180262 | YES |
+| stage3_b_successor_cik | 1288776 | Google, Inc. | 2008-06-27 | 1288776 | 1652044 | YES |
 | stage3_a_subsidiary | 1387793 | T. Rowe Price Retirement Plan Services, Inc. | 2007-12-24 | 1387793 | 1113169 | YES |
 | stage3_a_subsidiary | 1387793 | T. Rowe Price Retirement Plan Services, Inc. | 2023-05-29 | 1387793 | 1113169 | YES |
 | stage3_a_subsidiary | 1457738 | iHeartMedia + Entertainment, Inc. | 2024-12-24 | 1457738 | 1400891 | YES |
@@ -64,5 +68,5 @@
 - **Warn Industries, Inc.** (CIK 1984463): Dover Corporation's Exhibit 21 (CIK 29905, accession 0000029905-18-000019, selected by document type EX-21) contains exactly one line matching WARN: 'Warn Automotive, LLC'. 'Warn Industries, Inc.' is not listed. Documented exclusion, not a matcher failure.
 - **Uber** (CIK 1431473): Stage 2 nominated UBER TECHNOLOGIES INC (cik 1543151) on the shared token UBER. No Exhibit 21 or succession filing has been produced for the identity, so the row stays excluded and the CIK is left as recorded.
 
-Rows differing from CANONICAL_V3 on final_cik or breach_date: 24
+Rows differing from CANONICAL_V3 on final_cik or breach_date: 28
 

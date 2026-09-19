@@ -70,6 +70,27 @@ STAGE3B_DEFERRED = {773840: "Honeywell - chain break, pending ruling",
 # Tim's ruling names the TICKER; the CIK still comes from SEC's own company_tickers.json,
 # so no identifier originates in anybody's memory. 213 still decides on the filing.
 STAGE3B_TICKER = {1288776: "GOOGL", 813828: "PSKY"}
+
+# Exclusions that are DOCUMENTED rather than unexplained: each has been traced to a
+# specific, named cause, and none is a candidate for a further top-up. They are printed
+# in the Stage 5 report so the ledger's residual losses are accounted for by name.
+DOCUMENTED_EXCLUSIONS = [
+    ("Yahoo (CIK 1011006, 4 events, 2012-2016)",
+     "comp.company maps this CIK to gvkey 62634 ALTABA INC - the post-2017 rump, a "
+     "registered closed-end fund (shrcd 14), whose only security runs 2017-06-19 "
+     "onward. Its CRSP permco differs from the pre-2017 Yahoo! Inc. permno 83435, so "
+     "neither the issuer nor the permco fallback reaches the security that existed at "
+     "any of the four breach dates."),
+    ("Nokia (CIK 924613, 2013-07-22)",
+     "the security CRSP carries is an ADR (shrcd 31), a claim on a foreign share rather "
+     "than the share itself. ADRs are excluded by rule, not by accident."),
+    ("Audacy / Entercom (2019)",
+     "the only match is a header-CUSIP hit against the former name ENTERCOM, which the "
+     "identity gate rejects. That is by rule indistinguishable from the "
+     "MetroPCS/T-Mobile case the gate exists to catch: CRSP back-fills the header CUSIP "
+     "and keeps one permno across the rename. v3 did not link it either, so no "
+     "comparison is lost."),
+]
 E_LEDGER = Path("outputs/essay3_q2/e_ledger.csv")
 DSF = (Path("Data/wrds_v4/crsp_dsf.csv"),)
 DSF_GLOB = "crsp_dsf_topup_*.csv"
@@ -500,6 +521,14 @@ def main():
 
     m212 = load_212()
     lost = categorise_lost(ev4, links, read_stocknames(), m212.names_match)
+    log("## Documented exclusions")
+    log("")
+    log("Residual losses that are accounted for by name. None is a candidate for a "
+        "further top-up.")
+    log("")
+    for _name, _why in DOCUMENTED_EXCLUSIONS:
+        log(f"- **{_name}** — {_why}")
+    log("")
     log("## Events linked in v3 but not in v4")
     log("")
     if len(lost):

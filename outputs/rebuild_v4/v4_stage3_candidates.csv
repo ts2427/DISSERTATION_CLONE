@@ -1,4 +1,5 @@
 candidate_type,cik,org,breach_date,crsp_permno,comnam_at_breach,candidate,confidence,reason,shared_tokens,generic_only
+gate_exclusion,1067837,"Audacy, Inc",2019-08-04,86560.0,ENTERCOM COMMUNICATIONS CORP,,,CRSP name at breach_date does not match the breached organization; parent relationship unverified,,
 gate_exclusion,1283699,"T-Mobile USA, Inc.",2009-09-03,91937.0,METROPCS COMMUNICATIONS INC,,,CRSP name at breach_date does not match the breached organization; parent relationship unverified,,
 gate_exclusion,1283699,"T-Mobile USA, Inc.",2009-10-05,91937.0,METROPCS COMMUNICATIONS INC,,,CRSP name at breach_date does not match the breached organization; parent relationship unverified,,
 gate_exclusion,1283699,T-Mobile,2009-10-08,91937.0,METROPCS COMMUNICATIONS INC,,,CRSP name at breach_date does not match the breached organization; parent relationship unverified,,

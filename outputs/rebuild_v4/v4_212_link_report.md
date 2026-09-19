@@ -1,10 +1,10 @@
-- comp_company: 149 rows from 2 file(s) (comp_company.csv, comp_company_topup_20260919T000910Z.csv)
-- comp_security: 309 rows from 2 file(s) (comp_security.csv, comp_security_topup_20260919T000910Z.csv)
-- crsp_stocknames: 615 rows from 2 file(s) (crsp_stocknames.csv, crsp_stocknames_topup_20260919T000910Z.csv)
+- comp_company: 151 rows from 3 file(s) (comp_company.csv, comp_company_topup_20260919T000910Z.csv, comp_company_topup_20260919T135055Z.csv)
+- comp_security: 316 rows from 3 file(s) (comp_security.csv, comp_security_topup_20260919T000910Z.csv, comp_security_topup_20260919T135055Z.csv)
+- crsp_stocknames: 1,308 rows from 4 file(s) (crsp_stocknames.csv, crsp_stocknames_topup_20260919T000910Z.csv, crsp_stocknames_topup_20260919T135055Z.csv, crsp_stocknames_topup_20260919T135055Z_issuer.csv)
 # REBUILD V4 — Stage 2 point-in-time linker (CUSIP route)
 
-- run (UTC): 2026-09-19T13:40:55+00:00
-- events 489 | comp.company 149 | comp.security 309 | stocknames 615
+- run (UTC): 2026-09-19T14:00:59+00:00
+- events 489 | comp.company 151 | comp.security 316 | stocknames 1308
 - rule: all US common issues (tpci=0, excntry=USA), ncusip-first, header fallback behind the identity gate
 
 ## Regression tests
@@ -42,17 +42,17 @@
 | group | events | v3 linked | v4 linked | delta |
 |---|---|---|---|---|
 | treated | 118 | 111 | 111 | 0 |
-| control | 371 | 250 | 293 | 43 |
-| ALL | 489 | 361 | 404 | 43 |
+| control | 371 | 250 | 303 | 53 |
+| ALL | 489 | 361 | 414 | 53 |
 
 link_source:
 
 | link_source | control | treated |
 |---|---|---|
-| (unlinked) | 78 | 7 |
-| cusip_header | 31 | 7 |
-| cusip_issuer | 1 | 0 |
-| cusip_ncusip | 261 | 104 |
+| (unlinked) | 68 | 7 |
+| cusip_header | 32 | 7 |
+| cusip_issuer | 7 | 0 |
+| cusip_ncusip | 264 | 104 |
 
 Tie-break usage: {'priusa': 18, 'shrcd': 0, 'namedt': 0} (priusa resolves the dual-class pairs; the shrcd and namedt rules are reported if they ever fire).
 
@@ -60,19 +60,19 @@ Tie-break usage: {'priusa': 18, 'shrcd': 0, 'namedt': 0} (priusa resolves the du
 
 | reason | control | treated | All |
 |---|---|---|---|
-| CRSP name at breach_date does not match the breached organization; parent relationship unverified | 2 | 6 | 8 |
+| CRSP name at breach_date does not match the breached organization; parent relationship unverified | 3 | 6 | 9 |
 | no US common issue | 3 | 0 | 3 |
-| no gvkey | 23 | 0 | 23 |
-| no names row valid on breach_date | 49 | 1 | 50 |
-| shrcd not in [10, 11, 12, 18] ([31]) | 1 | 0 | 1 |
-| All | 78 | 7 | 85 |
+| no gvkey | 19 | 0 | 19 |
+| no names row valid on breach_date | 42 | 1 | 43 |
+| shrcd not in [10, 11, 12, 18, 72] ([31]) | 1 | 0 | 1 |
+| All | 68 | 7 | 75 |
 
 ## Identity gate (header links only)
 
 | outcome | treated | control | total |
 |---|---|---|---|
-| accepted | 7 | 31 | 38 |
-| excluded | 6 | 2 | 8 |
+| accepted | 7 | 32 | 39 |
+| excluded | 6 | 3 | 9 |
 
 ### Every header accept, for audit of the normalisation
 
@@ -88,11 +88,13 @@ Tie-break usage: {'priusa': 18, 'shrcd': 0, 'namedt': 0} (priusa resolves the du
 | 1091667 | Charter Communications, Inc. | CHARTER COMMUNICATIONS INC | 2013-04-26 | 12308.0 |
 | 1105705 | Time Warner Inc. | TIME WARNER INC NEW | 2006-12-01 | 77418.0 |
 | 1137789 | Seagate US LLC | SEAGATE TECHNOLOGY PLC | 2016-02-29 | 89641.0 |
+| 1652044 | Google, Inc. | GOOGLE INC | 2008-06-27 | 90319.0 |
 
 ### Every gate exclusion
 
 | final_cik | org_name | comnam | breach_date | permno_rejected |
 |---|---|---|---|---|
+| 1067837 | Audacy, Inc | ENTERCOM COMMUNICATIONS CORP | 2019-08-04 | 86560.0 |
 | 1283699 | T-Mobile USA, Inc. | METROPCS COMMUNICATIONS INC | 2009-09-03 | 91937.0 |
 | 1283699 | T-Mobile USA, Inc. | METROPCS COMMUNICATIONS INC | 2009-10-05 | 91937.0 |
 | 1283699 | T-Mobile | METROPCS COMMUNICATIONS INC | 2009-10-08 | 91937.0 |
@@ -104,7 +106,7 @@ Tie-break usage: {'priusa': 18, 'shrcd': 0, 'namedt': 0} (priusa resolves the du
 
 ## Report-only: ncusip links whose CRSP name matches neither org nor EDGAR
 
-37 of 365 ncusip links. **None is excluded** — the CUSIP is authoritative here; a name mismatch means the name differs, not that the security is wrong.
+37 of 368 ncusip links. **None is excluded** — the CUSIP is authoritative here; a name mismatch means the name differs, not that the security is wrong.
 
 | final_cik | org_name | comnam | permno | documented | final_evidence |
 |---|---|---|---|---|---|
@@ -136,31 +138,32 @@ Tie-break usage: {'priusa': 18, 'shrcd': 0, 'namedt': 0} (priusa resolves the du
 | group | v3 linked | both | same permno | different |
 |---|---|---|---|---|
 | treated | 111 | 111 | 111 | 0 |
-| control | 250 | 231 | 227 | 4 |
+| control | 250 | 240 | 234 | 6 |
 
-### Every disagreement (4)
+### Every disagreement (6)
 
 | final_cik | org_name | breach_date | v3_permno | permno | comnam | link_source |
 |---|---|---|---|---|---|---|
+| 2041610 | Paramount | 2023-01-01 | 76226.0 | 75104.0 | PARAMOUNT GLOBAL | cusip_ncusip |
+| 2041610 | Paramount Global | 2023-08-10 | 76226.0 | 75104.0 | PARAMOUNT GLOBAL | cusip_ncusip |
 | 1652044 | Google Inc. | 2016-03-29 | 14542.0 | 90319.0 | ALPHABET INC | cusip_ncusip |
 | 1652044 | Google Inc. | 2016-05-06 | 14542.0 | 90319.0 | ALPHABET INC | cusip_ncusip |
 | 1652044 | Google Inc. | 2016-08-10 | 14542.0 | 90319.0 | ALPHABET INC | cusip_ncusip |
 | 1652044 | Google, Inc. | 2017-06-29 | 14542.0 | 90319.0 | ALPHABET INC | cusip_ncusip |
 
-- v3 linked, v4 not: **19** (treated 0, control 19)
-- v4 linked, v3 not: **62** (treated 0, control 62)
+- v3 linked, v4 not: **10** (treated 0, control 10)
+- v4 linked, v3 not: **63** (treated 0, control 63)
 
 | reason | events |
 |---|---|
-| no names row valid on breach_date | 14 |
-| no gvkey | 4 |
-| shrcd not in [10, 11, 12, 18] ([31]) | 1 |
+| no names row valid on breach_date | 9 |
+| shrcd not in [10, 11, 12, 18, 72] ([31]) | 1 |
 
 ## CIKs with no gvkey, classified
 
 | type | CIKs |
 |---|---|
-| c_no_compustat | 11 |
+| c_no_compustat | 8 |
 | b_successor_cik | 4 |
 | d_other | 4 |
 | a_subsidiary | 3 |
@@ -168,15 +171,12 @@ Tie-break usage: {'priusa': 18, 'shrcd': 0, 'namedt': 0} (priusa resolves the du
 | final_cik | org | grp | events | candidate_type | candidate | confidence | shared_tokens |
 |---|---|---|---|---|---|---|---|
 | 14745 | Brown, Lisle/Cummings, Inc. | control | 1 | b_successor_cik | BROWN FORMAN CORP (gvkey 2435, cik 14693) | unverified | BROWN |
-| 813828 | Paramount | control | 2 | c_no_compustat |  |  |  |
 | 826083 | Dell Inc. | control | 1 | b_successor_cik | DELL TECHNOLOGIES INC (gvkey 14489, cik 1571996) | unverified | DELL |
-| 926480 | The Walt Disney Company | control | 1 | c_no_compustat |  |  |  |
 | 1000564 | Communications & Power Industries LLC | control | 1 | b_successor_cik | AMERICAN ELECTRIC POWER CO (gvkey 1440, cik 4904) | unverified | POWER |
 | 1091411 | Sony Corporation of America | control | 1 | a_subsidiary | Sony Group Corporation |  |  |
 | 1145813 | Fox Group | control | 1 | d_other |  |  |  |
 | 1168812 | HBP, Inc. | control | 1 | d_other |  |  |  |
 | 1260451 | Vulcan Industries | control | 1 | c_no_compustat |  |  | INDUSTRIES |
-| 1288776 | Google, Inc. | control | 1 | c_no_compustat |  |  |  |
 | 1396897 | NCO Financial Systems, Inc. | control | 1 | c_no_compustat |  |  | SYSTEMS |
 | 1431473 | Uber | control | 1 | b_successor_cik | UBER TECHNOLOGIES INC (gvkey 35077, cik 1543151) | unverified | UBER |
 | 1497060 | Capital Integration Systems LLC | control | 1 | c_no_compustat |  |  | SYSTEMS |
@@ -208,6 +208,7 @@ The rule accepts a match on ONE shared token of length >= 4. That is fine for `C
 | 1091667 | Charter Communications, Inc. | CHARTER COMMUNICATIONS INC | CHARTER|COMMUNICATIONS | org | False |
 | 1105705 | Time Warner Inc. | TIME WARNER INC NEW | TIME|WARNER | org | False |
 | 1137789 | Seagate US LLC | SEAGATE TECHNOLOGY PLC | SEAGATE | org | False |
+| 1652044 | Google, Inc. | GOOGLE INC | GOOGLE | org | False |
 
 ### b_successor_cik nominations that survive
 
@@ -239,7 +240,7 @@ None: every header accept shares a real identity token.
 
 ## Unmatched tpci=0 / USA CUSIPs
 
-71 US common issues have no CRSP names row.
+73 US common issues have no CRSP names row.
 
 | gvkey | conm | cusip8 | exchg | secstat |
 |---|---|---|---|---|
@@ -295,6 +296,8 @@ None: every header accept shares a real identity token.
 | 30736 | OKTA INC | 67999I93 | 1 | A |
 | 12485 | OPTIMUM COMMUNICATIONS INC | 02199N93 | 1 | A |
 | 12485 | OPTIMUM COMMUNICATIONS INC | 12686C01 | 1 | I |
+| 13714 | PARAMOUNT SKYDANCE CORP | 69999R93 | 1 | A |
+| 13714 | PARAMOUNT SKYDANCE CORP | 69932A20 | 14 | A |
 | 23812 | REGENERON PHARMACEUTICALS | 75886F93 | 1 | A |
 | 112168 | REPUBLIC SERVICES INC | 76075993 | 1 | I |
 | 32382 | ROKU INC | 77543R01 | 1 | A |
@@ -303,8 +306,8 @@ None: every header accept shares a real identity token.
 | 30091 | SNAP INC | 83304A02 | 1 | A |
 | 339965 | SNOWFLAKE INC | 83399I93 | 1 | I |
 | 9818 | SONY GROUP CORPORATION | J7637910 | 19 | A |
-| 10984 | SPRINT CORP | 85206198 | 1 | I |
 | 10984 | SPRINT CORP | 85206199 | 1 | I |
+| 10984 | SPRINT CORP | 85206198 | 1 | I |
 | 25056 | TIME WARNER INC | 88731799 | 1 | I |
 | 27364 | TWILIO INC | 90138F01 | 1 | I |
 | 10484 | UNITED AIRLINES INC | 91004700 | 0 | A |
@@ -317,11 +320,11 @@ None: every header accept shares a real identity token.
 
 ## Stage 3 candidates
 
-17 rows written to `outputs/rebuild_v4/stage3_candidates.csv`.
+18 rows written to `outputs/rebuild_v4/stage3_candidates.csv`.
 
 | type | rows |
 |---|---|
-| gate_exclusion | 8 |
+| gate_exclusion | 9 |
 | b_successor_cik | 4 |
 | a_subsidiary | 3 |
 | ncusip_name_mismatch | 2 |

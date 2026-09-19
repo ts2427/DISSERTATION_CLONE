@@ -1,5 +1,1 @@
-candidate_type,cik,org,breach_date,crsp_permno,comnam_at_breach,candidate,confidence,shared_tokens,generic_only,reason
-b_successor_cik,813828,Paramount,2023-01-01,,,CIK 2041610,unverified,,False,"Stage 3b: v4 lost this event (the CIK has no Compustat gvkey, so the chain cannot start); nomination basis: ticker PSKY -> CIK 2041610 ('Paramount Skydance Corp') via company_tickers.json, per ruling"
-b_successor_cik,813828,Paramount Global,2023-08-10,,,CIK 2041610,unverified,,False,"Stage 3b: v4 lost this event (the CIK has no Compustat gvkey, so the chain cannot start); nomination basis: ticker PSKY -> CIK 2041610 ('Paramount Skydance Corp') via company_tickers.json, per ruling"
-b_successor_cik,926480,The Walt Disney Company,2008-07-29,,,CIK 1744489,unverified,,False,"Stage 3b: v4 lost this event (the CIK has no Compustat gvkey, so the chain cannot start); nomination basis: company_tickers.json: unique current registrant titled 'The Walt Disney Company' (ambiguous in cik-lookup-data.txt: 3 CIKs match)"
-b_successor_cik,1288776,"Google, Inc.",2008-06-27,,,CIK 1652044,unverified,,False,"Stage 3b: v4 lost this event (the CIK has no Compustat gvkey, so the chain cannot start); nomination basis: ticker GOOGL -> CIK 1652044 ('Alphabet Inc.') via company_tickers.json, per ruling"
+

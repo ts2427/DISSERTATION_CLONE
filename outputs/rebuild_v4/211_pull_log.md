@@ -168,3 +168,88 @@ stable result across two sessions on the one query where that is testable.
 
 The other four files differ from the first pull's, as they must: each is filtered to the
 single top-up CIK (718877) rather than the 185 of the first pull.
+
+---
+
+# REBUILD V4 — Stage 1 TOP-UP pull, CUSIP route (20260919T135055Z)
+
+- top-up source: `outputs/rebuild_v4/stage3b_213_extra_ciks.txt`
+- issuer/permco pull: True
+- CIK filter list: 2 CIKs (top-up only; the first pull is untouched)
+- output suffix: `_topup_20260919T135055Z`
+- route: CIK -> gvkey -> CUSIP(8) -> permno   (CCM is blocked; see scripts/216)
+- pull started (UTC): 2026-09-19T13:50:56+00:00
+- daily data from: 2005-01-01
+
+- WRDS username: tispivey   (no password is stored, printed, or logged)
+
+## 1. comp.company (filtered by CIK)  ->  gvkey
+  CIK literal form that matched: zero-padded 10-char
+  priusa column present: True
+  CIK -> gvkey: 2 / 2 = 100.0%
+  gvkeys reached: 2
+  wrote Data\wrds_v4\comp_company_topup_20260919T135055Z.csv  rows=2  0.0 MB  sha256=710ed40be03f751a6f42d842987051d2483fd7ffe0603952db48ed0fde78e966
+
+## 2. comp.security (filtered by gvkey)  ->  CUSIP
+  security rows: 7   raw cusip lengths: [9] -> trimmed to 8
+  trim sample: [['254687106', '25468710'], ['25472W105', '25472W10'], ['92556H107', '92556H10']]
+  gvkey -> CUSIP: 2 / 2 = 100.0%
+  distinct 8-char CUSIPs reached: 7
+  wrote Data\wrds_v4\comp_security_topup_20260919T135055Z.csv  rows=7  0.0 MB  sha256=28a8a7739a3b67593811d0e0a0faebb0e9a8284d27b32bd6ab3233dfe089104f
+
+## 3. crsp.stocknames (filtered by 8-char CUSIP, ncusip OR cusip)  ->  permno
+  name rows: 20   matched via ncusip: 2, via header cusip: 2
+  CUSIP -> permno: 2 / 7 = 28.6%
+  permnos reached: 2
+  wrote Data\wrds_v4\crsp_stocknames_topup_20260919T135055Z.csv  rows=20  0.0 MB  sha256=8d0b98991639d575b9cb73d45ded02e79f4b0e957e24b33a17ef88cbc79d623e
+
+## 4. crsp.dsf (filtered by permno; the dominant payload)
+  daily rows: 10,066   range: 2005-01-03 .. 2024-12-31
+  permno -> daily returns: 2 / 2 = 100.0%
+  wrote Data\wrds_v4\crsp_dsf_topup_20260919T135055Z.csv  rows=10,066  0.6 MB  sha256=326c79b93d597b8147d048797f437e936c398b4d927e080a7708274570393d77
+
+## 5. crsp.dsi (market index, date range only)
+  index rows: 5,033   range: 2005-01-03 .. 2024-12-31
+  wrote Data\wrds_v4\crsp_dsi_topup_20260919T135055Z.csv  rows=5,033  0.2 MB  sha256=71555c4aee3db70cbfe5e38ae25ea726acffbfd904c9977677d5b4f0a3562e6e
+
+## CRSP coverage end date
+- max(crsp.dsf.date) = 2024-12-31
+- v3 committed extract ended 2024-12-31
+- does not extend past v3; the past-extract exclusions stand
+
+## ISSUER / PERMCO TOP-UP
+  output suffix: `_topup_20260919T135055Z_issuer`
+  6-char issuer codes from comp.security (US common): 178
+  issuer pass: rows 668  permnos 174  permcos 151
+  after permco expansion: rows 673  permnos 176
+  wrote Data\wrds_v4\crsp_stocknames_topup_20260919T135055Z_issuer.csv  rows=673  0.1 MB  sha256=6a56453c60941783b5563763ed422e6403dbf3392cb5eefe0563e233c1df5b77
+  permnos already pulled: 153   newly reached: 25
+  daily rows: 20,199   range: 2005-01-03 .. 2024-12-31
+  new permno -> daily returns: 5 / 25 = 20.0%
+  wrote Data\wrds_v4\crsp_dsf_topup_20260919T135055Z_issuer.csv  rows=20,199  1.2 MB  sha256=f359f5d0be70e4284f9044fe4e4b585e373bee86d19b3c5ace3fe82ac2a07351
+
+## Files written
+
+| file | rows | MB | sha256 |
+|---|---:|---:|---|
+| `Data\wrds_v4\comp_company_topup_20260919T135055Z.csv` | 2 | 0.0 | `710ed40be03f751a6f42d842987051d2483fd7ffe0603952db48ed0fde78e966` |
+| `Data\wrds_v4\comp_security_topup_20260919T135055Z.csv` | 7 | 0.0 | `28a8a7739a3b67593811d0e0a0faebb0e9a8284d27b32bd6ab3233dfe089104f` |
+| `Data\wrds_v4\crsp_stocknames_topup_20260919T135055Z.csv` | 20 | 0.0 | `8d0b98991639d575b9cb73d45ded02e79f4b0e957e24b33a17ef88cbc79d623e` |
+| `Data\wrds_v4\crsp_dsf_topup_20260919T135055Z.csv` | 10,066 | 0.6 | `326c79b93d597b8147d048797f437e936c398b4d927e080a7708274570393d77` |
+| `Data\wrds_v4\crsp_dsi_topup_20260919T135055Z.csv` | 5,033 | 0.2 | `71555c4aee3db70cbfe5e38ae25ea726acffbfd904c9977677d5b4f0a3562e6e` |
+| `Data\wrds_v4\crsp_stocknames_topup_20260919T135055Z_issuer.csv` | 673 | 0.1 | `6a56453c60941783b5563763ed422e6403dbf3392cb5eefe0563e233c1df5b77` |
+| `Data\wrds_v4\crsp_dsf_topup_20260919T135055Z_issuer.csv` | 20,199 | 1.2 | `f359f5d0be70e4284f9044fe4e4b585e373bee86d19b3c5ace3fe82ac2a07351` |
+
+- total written: 2.1 MB
+
+## Hit rates (distinct keys reached, never row counts)
+
+| step | reached | requested | rate |
+|---|---:|---:|---:|
+| CIK -> gvkey | 2 | 2 | 100.0% |
+| gvkey -> CUSIP | 2 | 2 | 100.0% |
+| CUSIP -> permno | 2 | 7 | 28.6% |
+| permno -> daily returns | 2 | 2 | 100.0% |
+| new permno -> daily returns | 5 | 25 | 20.0% |
+
+- pull finished (UTC): 2026-09-19T13:51:12+00:00

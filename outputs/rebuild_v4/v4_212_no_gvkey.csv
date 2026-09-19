@@ -1,14 +1,11 @@
 final_cik,org,edgar,events,grp,candidate_type,candidate,confidence,shared_tokens,generic_only,note
 14745,"Brown, Lisle/Cummings, Inc.","BROWN, LISLE/CUMMINGS, INC.",1,control,b_successor_cik,"BROWN FORMAN CORP (gvkey 2435, cik 14693)",unverified,BROWN,False,
-813828,Paramount,,2,control,c_no_compustat,,,,False,
 826083,Dell Inc.,DELL COMPUTER CORP,1,control,b_successor_cik,"DELL TECHNOLOGIES INC (gvkey 14489, cik 1571996)",unverified,DELL,False,
-926480,The Walt Disney Company,,1,control,c_no_compustat,,,,False,
 1000564,Communications & Power Industries LLC,COMMUNICATIONS & POWER INDUSTRIES INC,1,control,b_successor_cik,"AMERICAN ELECTRIC POWER CO (gvkey 1440, cik 4904)",unverified,POWER,False,
 1091411,Sony Corporation of America,SONY CORP OF AMERICA,1,control,a_subsidiary,Sony Group Corporation,,,False,
 1145813,Fox Group,FOX GROUP INC,1,control,d_other,,,,False,
 1168812,"HBP, Inc.",HBP INC,1,control,d_other,,,,False,
 1260451,Vulcan Industries,VULCAN INDUSTRIES INC,1,control,c_no_compustat,,,INDUSTRIES,True,"nomination rested only on an industry word: rejected ABM INDUSTRIES INC (gvkey 1410, cik 771497) on INDUSTRIES"
-1288776,"Google, Inc.",,1,control,c_no_compustat,,,,False,
 1396897,"NCO Financial Systems, Inc.","NCO FINANCIAL SYSTEMS, INC.",1,control,c_no_compustat,,,SYSTEMS,True,"nomination rested only on an industry word: rejected CISCO SYSTEMS INC (gvkey 20779, cik 858877) on SYSTEMS"
 1431473,Uber,UBER INC,1,control,b_successor_cik,"UBER TECHNOLOGIES INC (gvkey 35077, cik 1543151)",unverified,UBER,False,
 1497060,Capital Integration Systems LLC,CAPITAL INTEGRATION SYSTEMS LLC,1,control,c_no_compustat,,,SYSTEMS,True,"nomination rested only on an industry word: rejected CISCO SYSTEMS INC (gvkey 20779, cik 858877) on SYSTEMS"

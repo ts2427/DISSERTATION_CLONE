@@ -1261,10 +1261,10 @@ print(f"  {'PASS' if c_h else 'FAIL'} | v3 name that MATCHES the org is not misc
 results.append(all([c_a, c_b, c_c, c_d, c_e, c_f, c_h]))
 
 print(f"\n{'='*70}\nTEST: 212 admitted share codes\n{'='*70}")
-s_ok = m212.SHRCD_OK == {10, 11, 12, 18}
+s_ok = m212.SHRCD_OK == {10, 11, 12, 18, 72}
 s_bad = not ({31, 14, 89, 30, 73} & m212.SHRCD_OK)
 print(f"  {'PASS' if s_ok else 'FAIL'} | SHRCD_OK == {sorted(m212.SHRCD_OK)} "
-      f"(12 = non-US ordinary, 18 = REIT)")
+      f"(12 non-US ordinary, 18 REIT, 72 paired/stapled)")
 print(f"  {'PASS' if s_bad else 'FAIL'} | ADRs (3x) and fund codes stay excluded")
 results.append(s_ok and s_bad)
 
@@ -1456,7 +1456,8 @@ _EV = [(900001, "Acme Widgets Inc.", "2021-02-16", 0, "EDGAR name: ACME WIDGETS 
        (900002, "Beta Media Inc.", "2014-12-01", 0, "EDGAR name: BETA MEDIA INC"),
        (900003, "Gamma Foods Inc.", "2015-01-01", 0, "EDGAR name: GAMMA FOODS INC"),
        (1283699, "T-Mobile", "2012-05-08", 1, "EDGAR name: T-MOBILE US INC"),
-       (101830, "Sprint Nextel", "2009-02-01", 1, "EDGAR name: SPRINT NEXTEL CORP")]
+       (101830, "Sprint Nextel", "2009-02-01", 1, "EDGAR name: SPRINT NEXTEL CORP"),
+       (900004, "Paired Cruise Corp", "2019-01-01", 0, "EDGAR name: PAIRED CRUISE CORP")]
 pd.DataFrame([{"final_cik": c, "org_name": o, "breach_date": b, "fcc_form499": f,
                "final_evidence": e, "permno": None} for c, o, b, f, e in _EV]
              ).to_csv(_fbT / "canon.csv", index=False)
@@ -1468,7 +1469,8 @@ pd.DataFrame([{"cik": f"{c:010d}", "gvkey": i + 1, "conm": o.upper(), "priusa": 
 pd.DataFrame([{"gvkey": g, "iid": "01", "cusip": u, "tpci": "0", "excntry": "USA",
                "exchg": 11, "secstat": "A", "tic": "X"}
               for g, u in [(1, "438516205"), (2, "021346101"), (3, "111111203"),
-                           (4, "872590105"), (5, "852061100")]]
+                           (4, "872590105"), (5, "852061100"),
+                           (6, "143658938")]]
              ).to_csv(_fbW / "comp_security.csv", index=False)
 pd.DataFrame([{"permno": p, "permco": pc, "comnam": n, "ncusip": nc, "cusip": hc,
                "shrcd": s, "namedt": a, "nameenddt": z, "ticker": "T", "exchcd": 1}
@@ -1484,7 +1486,15 @@ pd.DataFrame([{"permno": p, "permco": pc, "comnam": n, "ncusip": nc, "cusip": hc
                   (91937, 800, "METROPCS COMMUNICATIONS INC", "59188310", "87259010", 11,
                    "2007-04-19", "2013-04-30"),
                   (39087, 900, "SPRINT NEXTEL CORP", "85206110", "85206110", 11,
-                   "2005-08-15", "2013-07-10")]]
+                   "2005-08-15", "2013-07-10"),
+                  # same permno as the Acme row above but WITHOUT permco: what a merge of
+                  # a base pull and an issuer pull produces. Not an exact duplicate, so
+                  # dedup cannot remove it - the distinct-permno tie rule must.
+                  (10145, None, "ACME WIDGETS INC", "43851610", "43851610", 11,
+                   "2000-01-01", "2030-01-01"),
+                  # shrcd 72, paired/stapled shares (the Carnival case)
+                  (75154, 20394, "PAIRED CRUISE CORP", "14365830", "14365830", 72,
+                   "2003-04-21", "2024-12-31")]]
              ).to_csv(_fbW / "crsp_stocknames.csv", index=False)
 _sv212 = (m212.CANON, m212.NOMS, m212.W, m212.OUT, m212.PREFIX)
 m212.CANON, m212.NOMS, m212.W, m212.OUT, m212.PREFIX = (
@@ -1504,6 +1514,10 @@ f3 = (_L.loc["Gamma Foods Inc.", "gate_excluded"] is True
 f4 = str(_L.loc["T-Mobile", "gate_excluded"]) == "True" and pd.isna(
     _L.loc["T-Mobile", "permno"])
 f5 = _rc == 0
+f6 = pd.isna(_L.loc["Acme Widgets Inc.", "tie_break"])
+f7 = (_L.loc["Paired Cruise Corp", "link_source"] == "cusip_issuer"
+      and int(_L.loc["Paired Cruise Corp", "permno"]) == 75154
+      and int(_L.loc["Paired Cruise Corp", "shrcd"]) == 72)
 print(f"  {'PASS' if f1 else 'FAIL'} | 8-char miss, 6-char issuer hit -> cusip_issuer "
       f"permno {_L.loc['Acme Widgets Inc.', 'permno']}")
 print(f"  {'PASS' if f2 else 'FAIL'} | successor postdates the event -> crsp_permco finds "
@@ -1513,7 +1527,11 @@ print(f"  {'PASS' if f4 else 'FAIL'} | T-Mobile/MetroPCS still gate-excluded "
       f"(fallbacks do not rescue it)")
 print(f"  {'PASS' if f5 else 'FAIL'} | both in-script regressions PASS (main returned "
       f"{_rc})")
-results.append(all([f1, f2, f3, f4, f5]))
+print(f"  {'PASS' if f6 else 'FAIL'} | one permno on two rows (permco present vs not) "
+      f"is NOT counted as a tie -> tie_break {_L.loc['Acme Widgets Inc.', 'tie_break']!r}")
+print(f"  {'PASS' if f7 else 'FAIL'} | shrcd 72 (paired/stapled shares) links -> permno "
+      f"{_L.loc['Paired Cruise Corp', 'permno']}")
+results.append(all([f1, f2, f3, f4, f5, f6, f7]))
 
 print(f"\n{'='*70}")
 print(f"RESULT: {sum(results)}/{len(results)} tests passed")

@@ -1,8 +1,8 @@
 measure,value,treated,control,total
-link_source,(unlinked),7,78,85
-link_source,cusip_header,7,31,38
-link_source,cusip_issuer,0,1,1
-link_source,cusip_ncusip,104,261,365
+link_source,(unlinked),7,68,75
+link_source,cusip_header,7,32,39
+link_source,cusip_issuer,0,7,7
+link_source,cusip_ncusip,104,264,368
 crsp_retention,v3 linked,111,250,361
-crsp_retention,v4 linked,111,293,404
-crsp_retention,delta v4-v3,0,43,43
+crsp_retention,v4 linked,111,303,414
+crsp_retention,delta v4-v3,0,53,53

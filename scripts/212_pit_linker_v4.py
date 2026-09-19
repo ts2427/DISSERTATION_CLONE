@@ -110,7 +110,12 @@ SPRINT_V3_PERMNOS = {14040, 39087}
 # Everything else stays excluded: 3x are ADRs and ADSs (Nokia is 31), which are a claim
 # on a foreign security rather than the security itself, and 14/89 and the fund codes are
 # not ordinary equity at all.
-SHRCD_OK = {10, 11, 12, 18}
+# 72 is CRSP's code for PAIRED / STAPLED common shares - two legally separate companies
+# whose shares trade as a unit. Carnival Corporation & plc is the dual-listed case:
+# permno 75154 CARNIVAL CORP carries shrcd 72 throughout, and it is the ONLY shrcd-72
+# security any event's chain reaches (checked against the merged stocknames: 3 rows, 1
+# permno). It is ordinary equity with real daily returns and v3 used it.
+SHRCD_OK = {10, 11, 12, 18, 72}
 GATE_REASON = ("CRSP name at breach_date does not match the breached organization; "
                "parent relationship unverified")
 
@@ -254,6 +259,12 @@ def read_wrds(stem):
         sys.exit(f"missing input: {W / (stem + '.csv')}")
     frames = [pd.read_csv(p, low_memory=False) for p in have]
     df = pd.concat(frames, ignore_index=True) if len(frames) > 1 else frames[0]
+    # The base pull and a top-up can return the same row; drop exact duplicates so a
+    # repeated row cannot masquerade as a second candidate security.
+    before = len(df)
+    df = df.drop_duplicates().reset_index(drop=True)
+    if before != len(df):
+        log(f"- {stem}: dropped {before - len(df):,} exact duplicate row(s) after merging")
     log(f"- {stem}: {len(df):,} rows from {len(have)} file(s) "
         f"({', '.join(p.name for p in have)})")
     return df
@@ -301,9 +312,16 @@ def main():
     tie_counts = {"priusa": 0, "shrcd": 0, "namedt": 0}
 
     def pick(cand, gv):
-        """Tie-break: priusa issue, then shrcd 11>10, then later namedt."""
-        if len(cand) == 1:
-            return cand.iloc[0], None
+        """Tie-break: priusa issue, then shrcd 11>10, then later namedt.
+
+        A tie is only a tie when more than one DISTINCT PERMNO is valid. The same permno
+        legitimately appears on several rows - once per CRSP name period, and once more
+        where one pull selected permco and another did not (Paramount's 75104 appears
+        twice, identical but for permco). Counting those inflated the tie count while no
+        choice was actually being made: the link is the same security either way.
+        """
+        if cand["permno"].nunique() <= 1:
+            return cand.sort_values("namedt", ascending=False).iloc[0], None
         pri = gv2pri.get(gv, set())
         c = cand.copy()
         c["_pri"] = (~(c["ncusip"].isin(pri) | c["cusip"].isin(pri))).astype(int)
