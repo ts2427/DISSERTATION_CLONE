@@ -40,3 +40,15 @@ be mistaken later for the operative sample.
   of them in scope
 - same fixed seed (20260919), size min(30, pool) = 30
 - this is the only draw used for new-document accuracy
+
+## Reference codes for the operative draw
+
+- `outputs/essay3_v4/VALIDATION_REFERENCE_CODES_V4.psv`
+- sha256 `1b6dda546c4f37f0c52a9492a91ba2a78a00d7bd95c5843109e464c11892804b`
+- coded BLIND by Claude (Claude Opus 5, this session), disclosed as the v3 rounds
+  disclosed their LLM coder; provenance and the rules applied are in
+  `VALIDATION_REFERENCE_CODES_V4_README.txt`
+- committed BEFORE the first run of the frozen classifier (scripts/220) on these
+  documents, so git history fixes the order rather than an assertion about it.
+  No 220 output existed on disk for any of these documents when the codes were written.
+- sheet_id to cik/accession mapping: `outputs/essay3_v4/validation_ids_v4.csv`
