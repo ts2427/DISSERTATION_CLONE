@@ -25,4 +25,10 @@ Missing accessions:
 
 fetch failures: 0; genuine zeros: 1
 
-written 235_completeness.csv, 235_completeness_by_cik.csv
+## Scope files for scripts/220 and 224
+b_scope_filings.csv    : 1517 filings
+b_event_filing_pairs.csv: 3276 event x filing pairs
+b_scope_events.csv     : 412 events
+WARNING: 5 listed filing(s) are NOT on disk. 220 would classify a short document set. Re-run 231 --documents.
+
+written 235_completeness.csv, 235_completeness_by_cik.csv, and the b_* scope files

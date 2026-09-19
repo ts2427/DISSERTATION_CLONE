@@ -1551,6 +1551,13 @@ _a = [
     ("scripts/219b_foo.py", False, "219b-style name is not <digits>_"),
     ("scripts/2199_foo.py", False, "2199 must not be read as a prefix"),
     ("scripts/21_foo.py", False, "21 must not be read as a prefix"),
+    ("Data/edgar/submissions_cache_v4/123.json", True, "v4 submissions cache"),
+    # Shared with v3 by ruling: v4 adds documents alongside v3's. Only ADDITIONS
+    # pass here; a change to a baseline file is caught by the sha/blob comparison.
+    ("Data/edgar/item5_02_text/1002517/x.htm", True, "v4 documents interleave"),
+    ("Data/edgar/rebuild_submissions_cache/123.json", False, "v3 cache stays frozen"),
+    ("Data/edgar/item5_02_text_other/x.htm", False, "path boundary, not a prefix"),
+    ("Data/wrds/compustat_annual.csv", False, "v3 WRDS stays frozen"),
 ]
 _ok = []
 for _p, _want, _why in _a:
@@ -2045,6 +2052,148 @@ for _f, _lab in [(q1, "submissions assemble as [recent, *shards]"),
     print(f"  {'PASS' if _f else 'FAIL'} | {_lab}")
 results.append(all([q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14,
                     q15, q16, q17, q18, q19, q20]))
+
+
+print("\n" + "=" * 70)
+print("TEST: 236 loader drops v3's inherited columns and re-attaches v4's")
+print("=" * 70)
+_m236 = load(Path("scripts/236_essay3_v4_loader.py"), "m236")
+_d = TMP / "v4load"
+_d.mkdir(parents=True, exist_ok=True)
+# CANONICAL_V4 carries v3's values: Nokia-like row says linked with a permno,
+# and the covariates are the stale ticker-joined ones.
+pd.DataFrame([
+    dict(final_cik=924613, breach_date="2013-07-22", org_name="Nokia-like",
+         fcc_form499=0, reported_date="2013-07-22", has_crsp_data=1, permno=87128,
+         firm_size_log=9.99, leverage=0.99, roa=0.99, op_margin=0.99),
+    dict(final_cik=111, breach_date="2020-06-01", org_name="Acme", fcc_form499=1,
+         reported_date="2020-07-01", has_crsp_data=1, permno=10001,
+         firm_size_log=9.99, leverage=0.99, roa=0.99, op_margin=0.99),
+]).to_csv(_d / "canon.csv", index=False)
+pd.DataFrame([
+    dict(final_cik=924613, breach_date="2013-07-22", v4_linked=0, permno=87128),
+    dict(final_cik=111, breach_date="2020-06-01", v4_linked=1, permno=10001),
+]).to_csv(_d / "links.csv", index=False)
+pd.DataFrame([
+    dict(final_cik=924613, breach_date="2013-07-22", firm_size_log=None,
+         leverage=None, roa=None, op_margin=None),
+    dict(final_cik=111, breach_date="2020-06-01", firm_size_log=4.6052,
+         leverage=0.4, roa=0.05, op_margin=0.25),
+]).to_csv(_d / "cov.csv", index=False)
+pd.DataFrame([
+    dict(final_cik=924613, breach_date="2013-07-22", outcome_cik=None,
+         outcome_rule="none"),
+    dict(final_cik=111, breach_date="2020-06-01", outcome_cik=111,
+         outcome_rule="final_cik"),
+]).to_csv(_d / "outcome.csv", index=False)
+_m236.CANON, _m236.LINKS = _d / "canon.csv", _d / "links.csv"
+_m236.COVAR, _m236.OUTCOME = _d / "cov.csv", _d / "outcome.csv"
+_ev = _m236.load_canonical().set_index("final_cik")
+r1 = int(_ev.loc[924613, "has_crsp_data"]) == 0        # v4 does NOT link Nokia
+r2 = pd.isna(_ev.loc[924613, "permno"])                # and its v3 permno is dropped
+r3 = int(_ev.loc[111, "has_crsp_data"]) == 1 and int(_ev.loc[111, "permno"]) == 10001
+r4 = _ev.loc[111, "firm_size_log"] == 4.6052           # refreshed, not the 9.99 stub
+r5 = pd.isna(_ev.loc[924613, "firm_size_log"])
+r6 = int(_ev.loc[111, "outcome_cik"]) == 111 and pd.isna(_ev.loc[924613, "outcome_cik"])
+
+# --- RESOLVE must be settled before anything downstream runs ---
+_rc = _d / "recon.csv"
+pd.DataFrame([dict(resolve_cik=1, org_name="x", breach_date="2020-01-01",
+                   v4_final_cik=111, verdict="agree")]).to_csv(_rc, index=False)
+_m236.RECON = _rc
+r7 = _m236.require_resolve_settled() == {(111, "2020-01-01")}
+for _bad in ("disagree", "pending"):
+    pd.DataFrame([dict(resolve_cik=1, org_name="x", breach_date="2020-01-01",
+                       v4_final_cik=111, verdict=_bad)]).to_csv(_rc, index=False)
+    try:
+        _m236.require_resolve_settled()
+        globals()["r8_" + _bad] = False
+    except SystemExit:
+        globals()["r8_" + _bad] = True
+r8 = r8_disagree and r8_pending
+
+for _f, _lab in [(r1, "v3 has_crsp_data=1 is replaced by v4_linked=0"),
+                 (r2, "the v3 permno is dropped when v4 did not link"),
+                 (r3, "a genuinely linked event keeps v4's permno"),
+                 (r4, "covariates come from 219, not the inherited column"),
+                 (r5, "an event 219 could not cover has no covariates"),
+                 (r6, "outcome_cik is merged from 234"),
+                 (r7, "a settled reconciliation returns the agreed keys"),
+                 (r8, "a 'disagree' or 'pending' row ABORTS")]:
+    print(f"  {'PASS' if _f else 'FAIL'} | {_lab}")
+results.append(all([r1, r2, r3, r4, r5, r6, r7, r8]))
+
+print("\n" + "=" * 70)
+print("TEST: 220-229 and 232 never read CANONICAL_V4 directly")
+print("=" * 70)
+_v4scripts = sorted(Path("scripts").glob("22[0-9]_essay3_v4_*.py")) + \
+             [Path("scripts/232_censoring_report_v4.py")]
+s1 = len(_v4scripts) == 11
+_offenders = []
+for _p in _v4scripts:
+    _hits = _m236.assert_no_direct_canonical_read(_p)
+    if _hits:
+        _offenders.append((_p.name, _hits[0]))
+s2 = not _offenders
+# the guard must actually catch an offender
+_bad_py = TMP / "bad_script.py"
+_bad_py.write_text("import pandas as pd\n"
+                   "ev = pd.read_csv('Data/processed/rebuild_v4/CANONICAL_V4.csv')\n",
+                   encoding="utf-8")
+s3 = len(_m236.assert_no_direct_canonical_read(_bad_py)) == 1
+# a comment naming the file is allowed
+_ok_py = TMP / "ok_script.py"
+_ok_py.write_text("# CANONICAL_V4.csv is loaded through scripts/236\n", encoding="utf-8")
+s4 = _m236.assert_no_direct_canonical_read(_ok_py) == []
+# the v3 originals must be untouched by all of this
+s5 = all(Path("scripts", n).exists() for n in
+         ("195_essay3_q2_classifier_v2.py", "199_essay3_q2_sample_e.py",
+          "202_essay3_q2_estimation.py", "204_essay3_q2_se_diagnostics.py"))
+# 224 must not carry v3's RESOLVE patch list any more
+_t224 = Path("scripts/224_essay3_v4_sample_e.py").read_text(encoding="utf-8")
+s6 = "RESOLVE = {924613" not in _t224 and "V4.require_resolve_settled()" in _t224
+s7 = "outputs/essay3_q2" not in _t224
+print(f"  {'PASS' if s1 else 'FAIL'} | all 11 v4 Essay 3 scripts present ({len(_v4scripts)})")
+print(f"  {'PASS' if s2 else 'FAIL'} | none reads CANONICAL_V4 directly"
+      + ("" if s2 else f" -> {_offenders[:2]}"))
+print(f"  {'PASS' if s3 else 'FAIL'} | the guard catches a direct read")
+print(f"  {'PASS' if s4 else 'FAIL'} | a comment naming the file is allowed")
+print(f"  {'PASS' if s5 else 'FAIL'} | the v3 originals 195-204 are untouched")
+print(f"  {'PASS' if s6 else 'FAIL'} | 224 drops RESOLVE and requires 233 settled")
+print(f"  {'PASS' if s7 else 'FAIL'} | 224 writes to essay3_v4, not essay3_q2")
+results.append(all([s1, s2, s3, s4, s5, s6, s7]))
+
+print("\n" + "=" * 70)
+print("TEST: 232 censoring - window past the outcome CIK's last filing")
+print("=" * 70)
+_m232 = load(Path("scripts/232_censoring_report_v4.py"), "m232")
+_m232.OUT = TMP
+_pgs = {555: [{"form": ["10-K"], "filingDate": ["2020-08-01"]}],      # alive to Aug 2020
+        556: [{"form": ["10-K"], "filingDate": ["2019-01-01"]}]}      # dead before t0
+_evc = pd.DataFrame([
+    dict(final_cik=555, breach_date="2020-06-01", reported_date="2020-06-01",
+         org_name="Censored Co", fcc_form499=0, outcome_cik=555),
+    dict(final_cik=556, breach_date="2020-06-01", reported_date="2020-06-01",
+         org_name="Dead Co", fcc_form499=1, outcome_cik=556),
+    dict(final_cik=557, breach_date="2020-06-01", reported_date="2020-06-01",
+         org_name="No CIK", fcc_form499=0, outcome_cik=None),
+])
+_cen = _m232.build(_evc, lambda c: _pgs.get(int(c))).set_index("final_cik")
+# 2020-06-01 +30d = 2020-07-01 <= 2020-08-01 -> covered; +90d = 2020-08-30 -> censored
+t1 = int(_cen.loc[555, "censored_30_rd"]) == 0
+t2 = int(_cen.loc[555, "censored_90_rd"]) == 1 and int(_cen.loc[555, "censored_180_rd"]) == 1
+t3 = int(_cen.loc[555, "days_uncovered_90_rd"]) == 29
+t4 = int(_cen.loc[556, "never_covered_rd"]) == 1 and int(_cen.loc[555, "never_covered_rd"]) == 0
+t5 = _cen.loc[557, "status"] == "no_outcome_cik"
+t6 = _cen.loc[555, "last_filing"] == "2020-08-01"
+for _f, _lab in [(t1, "a window ending before the last filing is NOT censored"),
+                 (t2, "90d and 180d windows past the last filing ARE censored"),
+                 (t3, "the uncovered days are counted (2020-08-30 - 2020-08-01)"),
+                 (t4, "a CIK whose filings stop before t0 is 'never covered'"),
+                 (t5, "an event with no outcome_cik is flagged, not silently dropped"),
+                 (t6, "the last filing of ANY form is used, not just 8-Ks")]:
+    print(f"  {'PASS' if _f else 'FAIL'} | {_lab}")
+results.append(all([t1, t2, t3, t4, t5, t6]))
 
 print(f"\n{'='*70}")
 print(f"RESULT: {sum(results)}/{len(results)} tests passed")

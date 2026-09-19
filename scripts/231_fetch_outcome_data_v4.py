@@ -290,6 +290,8 @@ def item502_filings(pages, lo, hi):
             if pd.isna(d) or not (lo <= d <= hi):
                 continue
             out.append(dict(accession=str(accs[i]), filing_date=str(dates[i]),
+                            form=str(f),
+                            items=str(items[i] if i < len(items) else ""),
                             primary_doc=str(docs[i] if i < len(docs) else "")))
     return out
 

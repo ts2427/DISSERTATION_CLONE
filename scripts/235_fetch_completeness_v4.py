@@ -98,6 +98,7 @@ def build(gap, load_pages, item502):
                              breach_date=r["breach_date"],
                              treated=int(r.get("treated", 0) or 0),
                              accession=f["accession"], filing_date=f["filing_date"],
+                             form=f.get("form", ""), items=f.get("items", ""),
                              primary_doc=f["primary_doc"],
                              on_disk=int(f["accession"] in have),
                              win_lo=r["win_lo"], win_hi=r["win_hi"],
@@ -107,7 +108,8 @@ def build(gap, load_pages, item502):
                              org_name=r.get("org_name", ""),
                              breach_date=r["breach_date"],
                              treated=int(r.get("treated", 0) or 0),
-                             accession="", filing_date="", primary_doc="",
+                             accession="", filing_date="", form="", items="",
+                             primary_doc="",
                              on_disk=0, win_lo=r["win_lo"], win_hi=r["win_hi"],
                              submissions_cached=int(pages is not None)))
     return pd.DataFrame(rows)
@@ -196,8 +198,41 @@ def main():
     else:
         log("NONE - every outcome CIK holds at least one document.")
 
+    # ---- the b_* scope files scripts/220 and 224 read ----
+    # scripts/187 produced these for v3 from its own scope; v4's equivalent is this
+    # table, which is already (event x accession) keyed on outcome_cik. Without them
+    # 220 has no filing list and cannot run.
+    E3 = Path("outputs/essay3_v4")
+    E3.mkdir(parents=True, exist_ok=True)
+    fil = exp.copy()
+    fil["cik"] = fil["outcome_cik"]
+    fil["local_file"] = [str(TXT / str(int(c)) / (a + "_" + d))
+                         for c, a, d in zip(fil["cik"], fil["accession"],
+                                            fil["primary_doc"])]
+    scope_filings = (fil[["cik", "form", "filing_date", "items", "accession",
+                          "primary_doc", "local_file", "on_disk"]]
+                     .drop_duplicates(["cik", "accession"])
+                     .sort_values(["cik", "filing_date"]))
+    scope_filings.to_csv(E3 / "b_scope_filings.csv", index=False)
+    pairs = fil[["final_cik", "breach_date", "treated", "outcome_cik", "accession",
+                 "filing_date", "win_lo", "win_hi"]].copy()
+    pairs.to_csv(E3 / "b_event_filing_pairs.csv", index=False)
+    ev_scope = (df[["final_cik", "breach_date", "org_name", "treated", "outcome_cik",
+                    "win_lo", "win_hi"]].drop_duplicates(["final_cik", "breach_date"]))
+    ev_scope.to_csv(E3 / "b_scope_events.csv", index=False)
     log("")
-    log("written 235_completeness.csv, 235_completeness_by_cik.csv")
+    log("## Scope files for scripts/220 and 224")
+    log("b_scope_filings.csv    : " + str(len(scope_filings)) + " filings")
+    log("b_event_filing_pairs.csv: " + str(len(pairs)) + " event x filing pairs")
+    log("b_scope_events.csv     : " + str(len(ev_scope)) + " events")
+    missing_docs = int((scope_filings["on_disk"] == 0).sum())
+    if missing_docs:
+        log("WARNING: " + str(missing_docs) + " listed filing(s) are NOT on disk. "
+            "220 would classify a short document set. Re-run 231 --documents.")
+
+    log("")
+    log("written 235_completeness.csv, 235_completeness_by_cik.csv, and the b_* "
+        "scope files")
     flush()
 
 

@@ -58,7 +58,11 @@ V4 ALLOWLIST (exact)
 --------------------
 Directories, matched at a path boundary only:
     Data/wrds_v4/, Data/processed/rebuild_v4/, Data/edgar/ex21_cache_v4/,
+    Data/edgar/submissions_cache_v4/, Data/edgar/item5_02_text/,
     outputs/rebuild_v4/, outputs/essay3_v4/
+Data/edgar/item5_02_text/ is shared with v3: v4 adds documents alongside v3's.
+Only ADDITIONS are admitted - any change to a baseline file there still fails on
+the sha256/blob comparison, which does not consult this list.
 Scripts, by parsed leading number only, 210 <= n <= 239:  scripts/<n>_*.py
 Documents, by exact path:
     docs/claude/REBUILD_V4_QUERY.md, docs/claude/REPRODUCE_ESSAY3_V4.md
@@ -86,6 +90,16 @@ V4_DIRS = (
     "Data/wrds_v4/",
     "Data/processed/rebuild_v4/",
     "Data/edgar/ex21_cache_v4/",
+    "Data/edgar/submissions_cache_v4/",
+    # SHARED with v3, and admitted deliberately. Tim ruled that scripts/231 writes
+    # the v4 Item 5.02 documents into the EXISTING layout (187's convention) so the
+    # two vintages interleave, which means v4 ADDS files to a v3 directory.
+    #
+    # This weakens nothing that matters. The allowlist governs only NEWLY TRACKED
+    # files; modification or deletion of a file already in the baseline is caught by
+    # the sha256/blob comparison, which the allowlist never consults. So v3's own
+    # documents here remain as frozen as before - only additions alongside them pass.
+    "Data/edgar/item5_02_text/",
     "outputs/rebuild_v4/",
     "outputs/essay3_v4/",
 )
