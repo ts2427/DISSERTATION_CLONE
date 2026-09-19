@@ -60,6 +60,12 @@ Copied from scripts/195_essay3_q2_classifier_v2.py. Only the data sources move; 
   filings       -> outcome_cik from outputs/rebuild_v4/234_outcome_cik.csv
   CRSP          -> Data/wrds_v4/
   outputs       -> outputs/essay3_v4/
+
+ADAPTATIONS ON FIRST EXECUTION (input-reading only; no computation changed):
+  1. the filing-to-event join uses outcome_cik, not final_cik. v3 had one CIK per
+     event; v4 separates the equity link from the filing entity, and they differ
+     for 7 events (Disney, Google, Paramount x2, Sinclair x3). Joining on
+     final_cik would find no filings for those events and score them as zeros.
 """
 
 import re
@@ -587,7 +593,12 @@ if __name__ == '__main__':
     by_cik = {c: g for c, g in F.groupby('cik')}
     out = []
     for _, e in ev.iterrows():
-        g = by_cik.get(e['final_cik'], F.iloc[0:0])
+        # ADAPTATION (v4, input-reading only): filings are keyed on outcome_cik,
+        # not final_cik. v3 had one CIK per event; v4 separates the equity link
+        # (final_cik) from the filing entity (outcome_cik), and they differ for 7
+        # events. Joining on final_cik would find NO filings for those events and
+        # score them as silent zeros. No computation is changed.
+        g = by_cik.get(e['outcome_cik'], F.iloc[0:0])
         rec = dict(final_cik=e['final_cik'], breach_date=e['breach_date'], reported_date=e['reported_date'],
                    fcc_form499=e['fcc_form499'])
         for anc, t0 in [('rd', e['rdt']), ('bd', e['bdt'])]:
@@ -662,7 +673,7 @@ if __name__ == '__main__':
     by_cik_E = {c: g for c, g in E.groupby('cik')}
     add = []
     for _, e in ev.iterrows():
-        g = by_cik_E.get(e['final_cik'], E.iloc[0:0])
+        g = by_cik_E.get(e['outcome_cik'], E.iloc[0:0])   # same adaptation as above
         ex = g[g['grp'] == 'exec']
         dr = g[(g['grp'] == 'director') & (g['director_only'] == 1)]
         rec = {}

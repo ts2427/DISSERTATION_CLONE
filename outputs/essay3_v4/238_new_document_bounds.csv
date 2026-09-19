@@ -1,0 +1,7 @@
+field,n,agreement,kappa,ref_positives,clf_positives,tp,fp,fn,precision,precision_ci95,recall,recall_ci95
+flagged forced Y | exec departure (A: any),30,0.9667,0.8696,5,4,4,0,1,1.0,"[0.3976, 1.0]",0.8,"[0.2836, 0.9949]"
+flagged forced Y | exec departure (B: new only),30,0.9667,0.8696,5,4,4,0,1,1.0,"[0.3976, 1.0]",0.8,"[0.2836, 0.9949]"
+flagged forced Y | director-only departure,30,0.9667,0.7826,3,2,2,0,1,1.0,"[0.1581, 1.0]",0.6667,"[0.0943, 0.9916]"
+flagged forced N | exec departure (A: any),30,0.9333,0.6341,2,4,2,2,0,0.5,"[0.0676, 0.9324]",1.0,"[0.1581, 1.0]"
+flagged forced N | exec departure (B: new only),30,0.9333,0.6341,2,4,2,2,0,0.5,"[0.0676, 0.9324]",1.0,"[0.1581, 1.0]"
+flagged forced N | director-only departure,30,1.0,1.0,2,2,2,0,0,1.0,"[0.1581, 1.0]",1.0,"[0.1581, 1.0]"

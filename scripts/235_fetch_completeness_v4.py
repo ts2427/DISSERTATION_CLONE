@@ -217,8 +217,21 @@ def main():
     pairs = fil[["final_cik", "breach_date", "treated", "outcome_cik", "accession",
                  "filing_date", "win_lo", "win_hi"]].copy()
     pairs.to_csv(E3 / "b_event_filing_pairs.csv", index=False)
+    # scripts/220 and 224 read reported_date and fcc_form499 off this file (v3's 187
+    # wrote the full event row here), so carry them from the canonical loader.
+    import importlib.util as _ilu
+    _sp = _ilu.spec_from_file_location("v4loader_235", "scripts/236_essay3_v4_loader.py")
+    _V4 = _ilu.module_from_spec(_sp)
+    _sp.loader.exec_module(_V4)
+    _canon = _V4.load_canonical()
+    _canon["breach_date"] = _canon["breach_date"].astype(str).str[:10]
+    _cx = _canon.drop_duplicates(["final_cik", "breach_date"]).set_index(
+        ["final_cik", "breach_date"])
     ev_scope = (df[["final_cik", "breach_date", "org_name", "treated", "outcome_cik",
                     "win_lo", "win_hi"]].drop_duplicates(["final_cik", "breach_date"]))
+    _idx = ev_scope.set_index(["final_cik", "breach_date"]).index
+    ev_scope["reported_date"] = _idx.map(_cx["reported_date"])
+    ev_scope["fcc_form499"] = ev_scope["treated"]
     ev_scope.to_csv(E3 / "b_scope_events.csv", index=False)
     log("")
     log("## Scope files for scripts/220 and 224")
