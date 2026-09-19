@@ -313,7 +313,11 @@ def fix_lennar(ev, rows, m213):
     return ev
 
 
-VERIFY_LOG = Path("outputs/rebuild_v4/213_verification_log.csv")
+# BOTH verification logs. Stage 3b runs with --out-prefix stage3b_, so its verdicts land
+# in a separate file; reading only the first would silently discard every Stage 3b result
+# while still reporting success.
+VERIFY_LOGS = (Path("outputs/rebuild_v4/213_verification_log.csv"),
+               Path("outputs/rebuild_v4/stage3b_213_verification_log.csv"))
 BASIS_BY_TYPE = {"a_subsidiary": "exhibit21_parent",
                  "gate_exclusion": "exhibit21_parent",
                  "ncusip_name_mismatch": "exhibit21_parent",
@@ -334,10 +338,14 @@ def apply_stage3(ev, rows, v3_cik, v3_breach):
     Matching uses the ORIGINAL CIK and breach_date, because Stage 4's own corrections may
     already have moved either one.
     """
-    if not VERIFY_LOG.exists():
-        log(f"- Stage 3: {VERIFY_LOG} not present; no re-parenting applied.")
+    present = [p for p in VERIFY_LOGS if p.exists()]
+    if not present:
+        log(f"- Stage 3: none of {[p.name for p in VERIFY_LOGS]} present; "
+            f"no re-parenting applied.")
         return ev
-    v = pd.read_csv(VERIFY_LOG, low_memory=False)
+    v = pd.concat([pd.read_csv(p, low_memory=False) for p in present], ignore_index=True)
+    log(f"- Stage 3: read {len(v)} verdict row(s) from "
+        f"{', '.join(p.name for p in present)}.")
     ver = v[v["verdict"] == "VERIFIED"]
     key = {}
     for _, r in ver.iterrows():

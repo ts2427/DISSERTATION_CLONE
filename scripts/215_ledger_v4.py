@@ -58,6 +58,18 @@ TICKERS_JSON = Path("Data/edgar/company_tickers.json")
 # The two causes a top-up could in principle fix. A share-code exclusion cannot be fixed
 # by pulling more data, and a 2025 event with no usable returns has nothing to pull.
 TOPUPABLE = ("absent from the CUSIP-filtered pull", "no Compustat gvkey")
+
+# Deferred pending Tim's ruling: Honeywell and Yahoo are self-CIK cases whose chain breaks
+# for reasons a successor nomination cannot fix (see the 215 report), and Carnival is a
+# Stage 4 CIK-correction candidate rather than a Stage 3b one. They stay OUT of the
+# worklist until ruled on, rather than being sent to 213 to fail.
+STAGE3B_DEFERRED = {773840: "Honeywell - chain break, pending ruling",
+                    1011006: "Yahoo - CIK resolves to the successor entity, pending ruling",
+                    815097: "Carnival - Stage 4 CIK-correction candidate, pending ruling"}
+
+# Tim's ruling names the TICKER; the CIK still comes from SEC's own company_tickers.json,
+# so no identifier originates in anybody's memory. 213 still decides on the filing.
+STAGE3B_TICKER = {1288776: "GOOGL", 813828: "PSKY"}
 E_LEDGER = Path("outputs/essay3_q2/e_ledger.csv")
 DSF = (Path("Data/wrds_v4/crsp_dsf.csv"),)
 DSF_GLOB = "crsp_dsf_topup_*.csv"
@@ -289,6 +301,19 @@ def categorise_lost(ev4, links, nam, names_match):
     return pd.DataFrame(rows)
 
 
+def ticker_cik_map():
+    """ticker -> CIK from the LOCAL company_tickers.json."""
+    if not TICKERS_JSON.exists():
+        return {}
+    j = json.loads(TICKERS_JSON.read_text(encoding="utf-8", errors="replace"))
+    out = {}
+    for v in (j.values() if isinstance(j, dict) else j):
+        t = str(v.get("ticker", "")).strip().upper()
+        if t:
+            out.setdefault(t, (int(v["cik_str"]), str(v.get("title", ""))))
+    return out
+
+
 def ticker_title_map(norm):
     """normalised company title -> {CIKs}, from the LOCAL company_tickers.json.
 
@@ -326,10 +351,20 @@ def build_stage3b(lost, m213):
     names = sorted({str(x) for x in c["org_name"]})
     found = m213.lookup_ciks(set(names)) if hasattr(m213, "lookup_ciks") else {}
     titles = ticker_title_map(m213.norm213) if hasattr(m213, "norm213") else {}
+    by_ticker = ticker_cik_map()
     rows = []
     for _, r in c.iterrows():
         org, cik = str(r["org_name"]), int(r["orig_cik"])
+        if cik in STAGE3B_DEFERRED:
+            continue
         cand, basis = found.get(org, (None, "not looked up"))
+        tk = STAGE3B_TICKER.get(cik)
+        if tk and tk in by_ticker:
+            tcik, ttitle = by_ticker[tk]
+            if tcik != cik:
+                cand = tcik
+                basis = (f"ticker {tk} -> CIK {tcik} ({ttitle!r}) via "
+                         f"company_tickers.json, per ruling")
         if cand and int(cand) == cik:
             cand, basis = None, (f"the only same-name filer IS the event CIK "
                                  f"({cik}); no successor identified")

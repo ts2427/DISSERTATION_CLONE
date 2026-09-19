@@ -1,6 +1,6 @@
 # REBUILD V4 — Stage 5 ledger
 
-- run (UTC): 2026-09-19T01:02:19+00:00
+- run (UTC): 2026-09-19T13:32:02+00:00
 - CANONICAL_V4: 489 rows | 212 links: 489 rows (positional join asserted)
 - CRSP daily extract reaches 2024-12-31; v3 was built on 2024-12-31
 
@@ -83,21 +83,12 @@ Sub-causes within each category:
 
 ## Stage 3b worklist
 
-13 event(s) whose loss a top-up could in principle fix, written to `outputs/rebuild_v4/stage3b_candidates.csv`. v3's permno is deliberately NOT carried over: v3 reached it through the CIK->ticker match this rebuild replaces.
+4 event(s) whose loss a top-up could in principle fix, written to `outputs/rebuild_v4/stage3b_candidates.csv`. v3's permno is deliberately NOT carried over: v3 reached it through the CIK->ticker match this rebuild replaces.
 
 | candidate_type | cik | org | breach_date | candidate | confidence |
 |---|---|---|---|---|---|
-| a_subsidiary | 773840 | Honeywell International Inc. | 2021-02-16 |  | no candidate |
-| a_subsidiary | 773840 | Honeywell International, Inc. | 2023-05-27 |  | no candidate |
-| a_subsidiary | 773840 | Honeywell International Inc. | 2023-06-03 |  | no candidate |
-| b_successor_cik | 813828 | Paramount | 2023-01-01 |  | no candidate |
-| b_successor_cik | 813828 | Paramount Global | 2023-08-10 |  | no candidate |
-| a_subsidiary | 815097 | Carnival Corporation | 2020-12-25 |  | no candidate |
-| a_subsidiary | 815097 | Carnival Corporation | 2021-03-19 |  | no candidate |
+| b_successor_cik | 813828 | Paramount | 2023-01-01 | CIK 2041610 | unverified |
+| b_successor_cik | 813828 | Paramount Global | 2023-08-10 | CIK 2041610 | unverified |
 | b_successor_cik | 926480 | The Walt Disney Company | 2008-07-29 | CIK 1744489 | unverified |
-| a_subsidiary | 1011006 | Yahoo! Voices | 2012-07-11 |  | no candidate |
-| a_subsidiary | 1011006 | Yahoo! Inc. | 2013-08-01 |  | no candidate |
-| a_subsidiary | 1011006 | Yahoo | 2014-12-01 |  | no candidate |
-| a_subsidiary | 1011006 | Yahoo Inc. | 2016-08-13 |  | no candidate |
-| b_successor_cik | 1288776 | Google, Inc. | 2008-06-27 |  | no candidate |
+| b_successor_cik | 1288776 | Google, Inc. | 2008-06-27 | CIK 1652044 | unverified |
 

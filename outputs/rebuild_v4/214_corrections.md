@@ -1,6 +1,6 @@
 # REBUILD V4 — Stage 4 corrections
 
-- run (UTC): 2026-09-19T00:36:07+00:00
+- run (UTC): 2026-09-19T13:26:39+00:00
 - input: `Data/processed/rebuild/CANONICAL_V3.csv` (489 rows, read-only)
 - Stage 4 issues no SEC request; the EDGAR cache is read, never written.
 
@@ -9,6 +9,7 @@
 - Sprint: recomputation reproduces the stored prior_breaches_1yr exactly (12 rows) under the original dates, so the rule matches v3's.
 - International Paper: CIK 1283246 -> 51434 on 1 row(s).
 - Lennar: CIK 58696 -> 920760 on 1 row(s).
+- Stage 3: read 40 verdict row(s) from 213_verification_log.csv.
 - Stage 3: 21 event(s) re-parented, 4 verified without a CIK change (the verified registrant was already the event CIK); 15 UNVERIFIED row(s) left untouched and excluded.
 
 | kind | cik | org_name | breach_date | old_value | new_value | applied |

@@ -1178,7 +1178,7 @@ m212.W, m212.PREFIX = _wsave, _psave
 results.append(all([t1, t2, t3, t4, t5]))
 
 print(f"\n{'='*70}\nTEST: 214 Stage 3 re-parenting (VERIFIED only)\n{'='*70}")
-_vsave = m214.VERIFY_LOG
+_vsave = m214.VERIFY_LOGS
 vlog = TMP / "vlog.csv"
 pd.DataFrame([
     {"candidate_type": "a_subsidiary", "cik": 72945, "org": "Northrop Grumman Systems",
@@ -1193,7 +1193,7 @@ pd.DataFrame([
     {"candidate_type": "a_subsidiary", "cik": 999999, "org": "Never Verified",
      "breach_date": "2020-01-01", "parent_cik": 111111, "verdict": "UNVERIFIED",
      "accession": "", "matching_line": ""}]).to_csv(vlog, index=False)
-m214.VERIFY_LOG = vlog
+m214.VERIFY_LOGS = (vlog,)
 ev3 = pd.DataFrame({
     "final_cik": [72945, 912752, 1308161, 999999],
     "org_name": ["Northrop Grumman Systems", "Sinclair", "Fox", "Never Verified"],
@@ -1212,7 +1212,7 @@ print(f"  {'PASS' if u1 else 'FAIL'} | VERIFIED rows re-parented, UNVERIFIED unt
 print(f"  {'PASS' if u2 else 'FAIL'} | link_basis {list(out3['link_basis'])}")
 print(f"  {'PASS' if u3 else 'FAIL'} | orig_cik preserved on every row")
 print(f"  {'PASS' if u4 else 'FAIL'} | the accession is recorded as evidence")
-m214.VERIFY_LOG = _vsave
+m214.VERIFY_LOGS = _vsave
 results.append(all([u1, u2, u3, u4]))
 
 print(f"\n{'='*70}\nTEST: 215 categorising events lost relative to v3\n{'='*70}")
@@ -1308,7 +1308,8 @@ print(f"\n{'='*70}\nTEST: 215 Stage 3b worklist construction\n{'='*70}")
 class FakeLookup:
     def lookup_ciks(self, names):
         return {"The Walt Disney Company": (1744489, "SEC cik-lookup exact unique match"),
-                "Honeywell International Inc.": (773840, "SEC cik-lookup exact unique match"),
+                "Acme Self Corp": (999001, "SEC cik-lookup exact unique match"),
+                "Nomatch Industries": (None, "no exact name match in cik-lookup-data.txt"),
                 "Paramount": (None, "no exact name match in cik-lookup-data.txt")}
 
     @staticmethod
@@ -1316,35 +1317,43 @@ class FakeLookup:
         return m213.norm213(text)
 
 
+PULL_ABSENT = "v3 permno absent from the CUSIP-filtered pull"
+NO_GVKEY = "the CIK has no Compustat gvkey, so the chain cannot start"
 lost_in = pd.DataFrame([
-    {"category": "c_v4_gap", "sub_cause": "v3 permno absent from the CUSIP-filtered pull",
+    {"category": "c_v4_gap", "sub_cause": PULL_ABSENT,
+     "org_name": "Acme Self Corp", "orig_cik": 999001, "breach_date": "2021-02-16"},
+    {"category": "c_v4_gap", "sub_cause": NO_GVKEY,
+     "org_name": "The Walt Disney Company", "orig_cik": 926480, "breach_date": "2008-07-29"},
+    {"category": "c_v4_gap", "sub_cause": NO_GVKEY,
+     "org_name": "Nomatch Industries", "orig_cik": 999002, "breach_date": "2019-01-01"},
+    {"category": "c_v4_gap", "sub_cause": NO_GVKEY,
+     "org_name": "Paramount", "orig_cik": 813828, "breach_date": "2023-01-01"},
+    {"category": "c_v4_gap", "sub_cause": PULL_ABSENT,
      "org_name": "Honeywell International Inc.", "orig_cik": 773840,
      "breach_date": "2021-02-16"},
-    {"category": "c_v4_gap", "sub_cause": "the CIK has no Compustat gvkey, so the chain cannot start",
-     "org_name": "The Walt Disney Company", "orig_cik": 926480, "breach_date": "2008-07-29"},
-    {"category": "c_v4_gap", "sub_cause": "the CIK has no Compustat gvkey, so the chain cannot start",
-     "org_name": "Paramount", "orig_cik": 813828, "breach_date": "2023-01-01"},
     {"category": "c_v4_gap", "sub_cause": "excluded by share code: shrcd not in {10,11} ([18])",
      "org_name": "CyrusOne, Inc.", "orig_cik": 1553023, "breach_date": "2017-10-18"},
     {"category": "a_no_usable_returns_in_v3", "sub_cause": "v3 flagged has_crsp_data False",
      "org_name": "Zscaler Inc.", "orig_cik": 1713683, "breach_date": "2025-08-08"}])
 s3b = m215.build_stage3b(lost_in, FakeLookup())
-b1 = len(s3b) == 3
-b2 = set(s3b["org"]) == {"Honeywell International Inc.", "The Walt Disney Company",
-                         "Paramount"}
+b1 = len(s3b) == 4
+b2 = set(s3b["org"]) == {"Acme Self Corp", "The Walt Disney Company",
+                         "Nomatch Industries", "Paramount"}
 b3 = (s3b.loc[s3b.org == "The Walt Disney Company", "candidate_type"].iloc[0]
       == "b_successor_cik")
-b4 = (s3b.loc[s3b.org == "Honeywell International Inc.", "candidate_type"].iloc[0]
-      == "a_subsidiary")
+b4 = s3b.loc[s3b.org == "Acme Self Corp", "candidate_type"].iloc[0] == "a_subsidiary"
 b5 = all(str(x) == "" for x in s3b["crsp_permno"])
-hw = s3b.loc[s3b.org == "Honeywell International Inc."].iloc[0]
+hw = s3b.loc[s3b.org == "Acme Self Corp"].iloc[0]
 b6 = hw["candidate"] == "" and "IS the event CIK" in hw["reason"]
-pm = s3b.loc[s3b.org == "Paramount"].iloc[0]
+pm = s3b.loc[s3b.org == "Nomatch Industries"].iloc[0]
 b7 = pm["candidate"] == "" and pm["confidence"] == "no candidate"
 dz = s3b.loc[s3b.org == "The Walt Disney Company"].iloc[0]
 b8 = dz["candidate"] == "CIK 1744489" and "cik-lookup" in dz["reason"]
-print(f"  {'PASS' if b1 and b2 else 'FAIL'} | only the 3 top-up-able losses are listed "
-      f"(share-code and 2025 rows excluded) -> {len(s3b)}")
+b11 = "Honeywell International Inc." not in set(s3b["org"])
+pr = s3b.loc[s3b.org == "Paramount"].iloc[0]
+b12 = str(pr["candidate"]).startswith("CIK ") and "ticker PSKY" in pr["reason"]
+print(f"  {'PASS' if b1 and b2 else 'FAIL'} | only the 4 live top-up-able losses listed "
+      f"(share-code, 2025 and deferred rows excluded) -> {len(s3b)}")
 print(f"  {'PASS' if b3 and b4 else 'FAIL'} | no-gvkey -> b_successor_cik, "
       f"pull-absent -> a_subsidiary")
 print(f"  {'PASS' if b5 else 'FAIL'} | v3 permno is NOT carried over")
@@ -1352,6 +1361,10 @@ print(f"  {'PASS' if b6 else 'FAIL'} | a self-match yields a blank candidate, re
       f"records why")
 print(f"  {'PASS' if b7 else 'FAIL'} | no same-name candidate -> blank, 'no candidate'")
 print(f"  {'PASS' if b8 else 'FAIL'} | a genuine successor is nominated with its basis")
+print(f"  {'PASS' if b11 else 'FAIL'} | a DEFERRED CIK (Honeywell) is excluded pending "
+      f"a ruling")
+print(f"  {'PASS' if b12 else 'FAIL'} | a ruled ticker nomination is applied -> "
+      f"{pr['candidate']}")
 
 # the company_tickers.json title fallback, used when the SEC name index is ambiguous
 _tj = m215.TICKERS_JSON
@@ -1388,7 +1401,48 @@ print(f"  {'PASS' if b9 else 'FAIL'} | ticker-title fallback resolves a name the
       f"index could not -> {dis['candidate'] or '(none)'}")
 print(f"  {'PASS' if b10 else 'FAIL'} | two current registrants with the same title stay "
       f"unnominated, and say so")
-results.append(all([b1, b2, b3, b4, b5, b6, b7, b8, b9, b10]))
+results.append(all([b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12]))
+
+print(f"\n{'='*70}\nTEST: 214 reads BOTH verification logs\n{'='*70}")
+_vl = m214.VERIFY_LOGS
+la, lb = TMP / "log_a.csv", TMP / "log_b.csv"
+pd.DataFrame([{"candidate_type": "a_subsidiary", "cik": 72945, "org": "Northrop",
+               "breach_date": "2016-04-18", "parent_cik": 1133421, "verdict": "VERIFIED",
+               "accession": "ACC-A", "matching_line": "Northrop Grumman Systems Corp"}]
+             ).to_csv(la, index=False)
+pd.DataFrame([{"candidate_type": "b_successor_cik", "cik": 1288776, "org": "Google",
+               "breach_date": "2008-06-27", "parent_cik": 1652044, "verdict": "VERIFIED",
+               "accession": "ACC-B", "matching_line": "successor issuer"},
+              {"candidate_type": "a_subsidiary", "cik": 555, "org": "Nope",
+               "breach_date": "2020-01-01", "parent_cik": 999, "verdict": "UNVERIFIED",
+               "accession": "", "matching_line": ""}]).to_csv(lb, index=False)
+_evb = pd.DataFrame({"final_cik": [72945, 1288776, 555],
+                     "org_name": ["Northrop", "Google", "Nope"],
+                     "breach_date": ["2016-04-18", "2008-06-27", "2020-01-01"]})
+_evb["orig_cik"] = _evb["final_cik"]
+_evb["link_basis"] = "direct"
+m214.VERIFY_LOGS = (la, lb)
+_rb = []
+_ob = m214.apply_stage3(_evb.copy(), _rb, _evb["final_cik"].copy(), _evb["breach_date"].copy())
+k1 = list(_ob["final_cik"]) == [1133421, 1652044, 555]
+k2 = list(_ob["link_basis"]) == ["exhibit21_parent", "successor_filing", "direct"]
+k3 = (any("ACC-A" in str(x["evidence"]) for x in _rb)
+      and any("ACC-B" in str(x["evidence"]) for x in _rb))
+print(f"  {'PASS' if k1 else 'FAIL'} | verdicts from BOTH logs applied -> {list(_ob['final_cik'])}")
+print(f"  {'PASS' if k2 else 'FAIL'} | link_basis from both -> {list(_ob['link_basis'])}")
+print(f"  {'PASS' if k3 else 'FAIL'} | evidence cites both accessions")
+m214.VERIFY_LOGS = (la, TMP / "missing.csv")
+_rc = []
+_oc = m214.apply_stage3(_evb.copy(), _rc, _evb["final_cik"].copy(), _evb["breach_date"].copy())
+k4 = list(_oc["final_cik"]) == [1133421, 1288776, 555]
+print(f"  {'PASS' if k4 else 'FAIL'} | a missing second log is skipped, the first still applies")
+m214.VERIFY_LOGS = (TMP / "none1.csv", TMP / "none2.csv")
+_rd = []
+_od = m214.apply_stage3(_evb.copy(), _rd, _evb["final_cik"].copy(), _evb["breach_date"].copy())
+k5 = list(_od["final_cik"]) == [72945, 1288776, 555] and not _rd
+print(f"  {'PASS' if k5 else 'FAIL'} | no logs at all -> nothing re-parented")
+m214.VERIFY_LOGS = _vl
+results.append(all([k1, k2, k3, k4, k5]))
 
 print(f"\n{'='*70}")
 print(f"RESULT: {sum(results)}/{len(results)} tests passed")
