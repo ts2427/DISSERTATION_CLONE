@@ -1,0 +1,26 @@
+category,sub_cause,org_name,orig_cik,final_cik,breach_date,group,v3_permno,v3_comnam_at_breach,v4_reason
+a_no_usable_returns_in_v3,v3 flagged has_crsp_data False,Nucor Corporation,73309,73309,2025-05-03,control,34817.0,(no CRSP name row valid at breach_date),no names row valid on breach_date
+c_v4_gap,"excluded by share code: shrcd not in {10,11} ([12])",Aon Corporation,315293,315293,2020-12-17,control,61735.0,AON PLC NEW,"shrcd not in {10,11} ([12])"
+c_v4_gap,v3 permno absent from the CUSIP-filtered pull,Honeywell International Inc.,773840,773840,2021-02-16,control,10145.0,(permno absent from the CUSIP-filtered pull),no names row valid on breach_date
+c_v4_gap,v3 permno absent from the CUSIP-filtered pull,"Honeywell International, Inc.",773840,773840,2023-05-27,control,10145.0,(permno absent from the CUSIP-filtered pull),no names row valid on breach_date
+c_v4_gap,v3 permno absent from the CUSIP-filtered pull,Honeywell International Inc.,773840,773840,2023-06-03,control,10145.0,(permno absent from the CUSIP-filtered pull),no names row valid on breach_date
+c_v4_gap,"the CIK has no Compustat gvkey, so the chain cannot start",Paramount,813828,813828,2023-01-01,control,76226.0,(permno absent from the CUSIP-filtered pull),no gvkey
+c_v4_gap,"the CIK has no Compustat gvkey, so the chain cannot start",Paramount Global,813828,813828,2023-08-10,control,76226.0,(permno absent from the CUSIP-filtered pull),no gvkey
+c_v4_gap,v3 permno absent from the CUSIP-filtered pull,Carnival Corporation,815097,815097,2020-12-25,control,75154.0,(permno absent from the CUSIP-filtered pull),no names row valid on breach_date
+c_v4_gap,v3 permno absent from the CUSIP-filtered pull,Carnival Corporation,815097,815097,2021-03-19,control,75154.0,(permno absent from the CUSIP-filtered pull),no names row valid on breach_date
+a_no_usable_returns_in_v3,v3 flagged has_crsp_data False,Intuit Inc.,896878,896878,2025-01-21,control,78975.0,(no CRSP name row valid at breach_date),no names row valid on breach_date
+c_v4_gap,"excluded by share code: shrcd not in {10,11} ([18])","Essex Property Trust, Inc.",920522,920522,2013-08-13,control,80681.0,ESSEX PROPERTY TRUST INC,"shrcd not in {10,11} ([18])"
+c_v4_gap,no names row valid on breach_date,Nokia Inc.,924613,924613,2013-07-22,control,87128.0,NOKIA CORP,no names row valid on breach_date
+c_v4_gap,"the CIK has no Compustat gvkey, so the chain cannot start",The Walt Disney Company,926480,926480,2008-07-29,control,26403.0,(permno absent from the CUSIP-filtered pull),no gvkey
+c_v4_gap,v3 permno absent from the CUSIP-filtered pull,Yahoo! Voices,1011006,1011006,2012-07-11,control,83435.0,(permno absent from the CUSIP-filtered pull),no names row valid on breach_date
+c_v4_gap,v3 permno absent from the CUSIP-filtered pull,Yahoo! Inc.,1011006,1011006,2013-08-01,control,83435.0,(permno absent from the CUSIP-filtered pull),no names row valid on breach_date
+c_v4_gap,v3 permno absent from the CUSIP-filtered pull,Yahoo,1011006,1011006,2014-12-01,control,83435.0,(permno absent from the CUSIP-filtered pull),no names row valid on breach_date
+c_v4_gap,v3 permno absent from the CUSIP-filtered pull,Yahoo Inc.,1011006,1011006,2016-08-13,control,83435.0,(permno absent from the CUSIP-filtered pull),no names row valid on breach_date
+c_v4_gap,"excluded by share code: shrcd not in {10,11} ([12])",Seagate Technology LLC,1137789,1137789,2017-07-08,control,89641.0,SEAGATE TECHNOLOGY PLC,"shrcd not in {10,11} ([12])"
+c_v4_gap,"the CIK has no Compustat gvkey, so the chain cannot start","Google, Inc.",1288776,1288776,2008-06-27,control,90319.0,GOOGLE INC,no gvkey
+a_no_usable_returns_in_v3,v3 flagged has_crsp_data False,Workday Inc.,1327811,1327811,2025-08-06,control,13628.0,(no CRSP name row valid at breach_date),no names row valid on breach_date
+c_v4_gap,"excluded by share code: shrcd not in {10,11} ([18])","CyrusOne, Inc.",1553023,1553023,2017-10-18,control,13752.0,CYRUSONE INC,"shrcd not in {10,11} ([18])"
+a_no_usable_returns_in_v3,v3 flagged has_crsp_data False,Hewlett Packard Enterprise Company,1645590,1645590,2025-02-05,control,15707.0,(no CRSP name row valid at breach_date),no names row valid on breach_date
+a_no_usable_returns_in_v3,v3 flagged has_crsp_data False,Zscaler Inc.,1713683,1713683,2025-08-08,control,17341.0,(no CRSP name row valid at breach_date),no names row valid on breach_date
+c_v4_gap,"excluded by share code: shrcd not in {10,11} ([12])",Aon Corporation PLC,1808065,315293,2020-12-29,control,61735.0,AON PLC NEW,"shrcd not in {10,11} ([12])"
+c_v4_gap,"excluded by share code: shrcd not in {10,11} ([12])",Aon PLC,1808065,315293,2022-02-25,control,61735.0,AON PLC NEW,"shrcd not in {10,11} ([12])"

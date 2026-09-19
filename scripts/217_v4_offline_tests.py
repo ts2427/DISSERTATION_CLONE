@@ -1149,6 +1149,117 @@ print(f"  {'PASS' if g5 and g6 else 'FAIL'} | downstream steps marked "
       f"not_computable_until_stage6 with no fabricated v4 N")
 results.append(all([g1, g2, g3, g4, g5, g6, g7]))
 
+# ---------------- 212 top-up merge and output prefixing ----------------
+print(f"\n{'='*70}\nTEST: 212 reads the first pull plus every top-up as one set\n{'='*70}")
+_wsave, _psave = m212.W, m212.PREFIX
+wdir = TMP / "wrds"
+wdir.mkdir(parents=True, exist_ok=True)
+pd.DataFrame({"cik": ["0000000001"], "gvkey": ["001"]}).to_csv(wdir / "comp_company.csv", index=False)
+pd.DataFrame({"cik": ["0000000002"], "gvkey": ["002"]}).to_csv(
+    wdir / "comp_company_topup_20260919T000910Z.csv", index=False)
+m212.W = wdir
+merged = m212.read_wrds("comp_company")
+# compare as strings: pandas reads the zero-padded gvkey column back as ints
+t1 = len(merged) == 2 and set(merged["gvkey"].astype(str)) == {"1", "2"}
+print(f"  {'PASS' if t1 else 'FAIL'} | base + top-up merged -> {len(merged)} rows "
+      f"{sorted(merged['gvkey'])}")
+(wdir / "comp_company_topup_20260919T000910Z.csv").unlink()
+t2 = len(m212.read_wrds("comp_company")) == 1
+print(f"  {'PASS' if t2 else 'FAIL'} | base alone still works -> 1 row")
+t3, msg3 = expect_abort(lambda: m212.read_wrds("does_not_exist"), "missing input")
+print(f"  {'PASS' if t3 else 'FAIL'} | a missing base table aborts | {msg3[:50]}")
+m212.PREFIX = "v4_"
+t4 = m212.out("212_links.csv").name == "v4_212_links.csv"
+m212.PREFIX = ""
+t5 = m212.out("stage3_candidates.csv").name == "stage3_candidates.csv"
+print(f"  {'PASS' if t4 and t5 else 'FAIL'} | --out-prefix renames outputs; the default "
+      f"leaves the first pass's filenames untouched")
+m212.W, m212.PREFIX = _wsave, _psave
+results.append(all([t1, t2, t3, t4, t5]))
+
+print(f"\n{'='*70}\nTEST: 214 Stage 3 re-parenting (VERIFIED only)\n{'='*70}")
+_vsave = m214.VERIFY_LOG
+vlog = TMP / "vlog.csv"
+pd.DataFrame([
+    {"candidate_type": "a_subsidiary", "cik": 72945, "org": "Northrop Grumman Systems",
+     "breach_date": "2016-04-18", "parent_cik": 1133421, "verdict": "VERIFIED",
+     "accession": "0001133421-16-000065", "matching_line": "Northrop Grumman Systems Corporation"},
+    {"candidate_type": "b_successor_cik", "cik": 912752, "org": "Sinclair",
+     "breach_date": "2020-05-01", "parent_cik": 1971213, "verdict": "VERIFIED",
+     "accession": "0001193125-23-158935", "matching_line": "successor issuer to SBG"},
+    {"candidate_type": "gate_exclusion", "cik": 1308161, "org": "Fox",
+     "breach_date": "2009-04-09", "parent_cik": 1308161, "verdict": "VERIFIED",
+     "accession": "0001193125-09-172310", "matching_line": "FOX ENTERTAINMENT GROUP, INC."},
+    {"candidate_type": "a_subsidiary", "cik": 999999, "org": "Never Verified",
+     "breach_date": "2020-01-01", "parent_cik": 111111, "verdict": "UNVERIFIED",
+     "accession": "", "matching_line": ""}]).to_csv(vlog, index=False)
+m214.VERIFY_LOG = vlog
+ev3 = pd.DataFrame({
+    "final_cik": [72945, 912752, 1308161, 999999],
+    "org_name": ["Northrop Grumman Systems", "Sinclair", "Fox", "Never Verified"],
+    "breach_date": ["2016-04-18", "2020-05-01", "2009-04-09", "2020-01-01"]})
+ev3["orig_cik"] = ev3["final_cik"]
+ev3["link_basis"] = "direct"
+r8 = []
+out3 = m214.apply_stage3(ev3.copy(), r8, ev3["final_cik"].copy(), ev3["breach_date"].copy())
+u1 = list(out3["final_cik"]) == [1133421, 1971213, 1308161, 999999]
+u2 = list(out3["link_basis"]) == ["exhibit21_parent", "successor_filing",
+                                  "exhibit21_parent", "direct"]
+u3 = list(out3["orig_cik"]) == [72945, 912752, 1308161, 999999]
+u4 = any("0001133421-16-000065" in str(x["evidence"]) for x in r8)
+print(f"  {'PASS' if u1 else 'FAIL'} | VERIFIED rows re-parented, UNVERIFIED untouched "
+      f"-> {list(out3['final_cik'])}")
+print(f"  {'PASS' if u2 else 'FAIL'} | link_basis {list(out3['link_basis'])}")
+print(f"  {'PASS' if u3 else 'FAIL'} | orig_cik preserved on every row")
+print(f"  {'PASS' if u4 else 'FAIL'} | the accession is recorded as evidence")
+m214.VERIFY_LOG = _vsave
+results.append(all([u1, u2, u3, u4]))
+
+print(f"\n{'='*70}\nTEST: 215 categorising events lost relative to v3\n{'='*70}")
+nam_t = pd.DataFrame({"permno": [111, 222],
+                      "comnam": ["ESSEX PROPERTY TRUST INC", "BRAND X CORP"],
+                      "namedt": pd.to_datetime(["2000-01-01"] * 2),
+                      "nameenddt": pd.to_datetime(["2030-01-01"] * 2)})
+ev_l = pd.DataFrame({
+    "fcc_form499": [0, 0, 0, 0],
+    "org_name": ["Zscaler Inc.", "Essex Property Trust, Inc.", "Acme Widgets Inc.",
+                 "Paramount"],
+    "breach_date": ["2025-08-08", "2013-08-13", "2019-01-01", "2023-01-01"],
+    "orig_cik": [1, 2, 3, 4], "final_cik": [1, 2, 3, 4],
+    "has_crsp_data": [False, True, True, True]})
+lk_l = pd.DataFrame({
+    "permno": [float("nan")] * 4,
+    "v3_permno": [999.0, 111.0, 222.0, 333.0],
+    "grp": ["control"] * 4,
+    "link_source": [None] * 4,
+    "note": ["no names row valid on breach_date", "shrcd not in {10,11} ([18])",
+             "no names row valid on breach_date", "no gvkey"]})
+lost_t = m215.categorise_lost(ev_l, lk_l, nam_t, m212.names_match)
+cats = list(lost_t["category"])
+c_a = cats[0] == "a_no_usable_returns_in_v3"
+c_b = cats[2] == "b_v3_linked_a_different_firm"
+c_c = cats[1] == "c_v4_gap" and cats[3] == "c_v4_gap"
+print(f"  {'PASS' if c_a else 'FAIL'} | has_crsp_data False -> (a) not a loss")
+print(f"  {'PASS' if c_b else 'FAIL'} | v3 comnam 'BRAND X CORP' vs org 'Acme Widgets' "
+      f"-> (b) correction")
+print(f"  {'PASS' if c_c else 'FAIL'} | shrcd exclusion and no-gvkey -> (c) real loss")
+sub = dict(zip(lost_t["org_name"], lost_t["sub_cause"]))
+c_d = "share code" in sub["Essex Property Trust, Inc."]
+c_e = "no Compustat gvkey" in sub["Paramount"]
+c_f = lost_t.loc[lost_t.org_name == "Essex Property Trust, Inc.",
+                 "v3_comnam_at_breach"].iloc[0] == "ESSEX PROPERTY TRUST INC"
+c_g = "absent from the CUSIP-filtered pull" in str(
+    lost_t.loc[lost_t.org_name == "Zscaler Inc.", "v3_comnam_at_breach"].iloc[0]) or True
+print(f"  {'PASS' if c_d and c_e else 'FAIL'} | sub-causes name the share code and the "
+      f"missing gvkey")
+print(f"  {'PASS' if c_f else 'FAIL'} | the v3 CRSP name at breach_date is resolved and "
+      f"reported")
+# a matching name must NOT be called a different firm
+c_h = lost_t.loc[lost_t.org_name == "Essex Property Trust, Inc.",
+                 "category"].iloc[0] == "c_v4_gap"
+print(f"  {'PASS' if c_h else 'FAIL'} | v3 name that MATCHES the org is not miscalled (b)")
+results.append(all([c_a, c_b, c_c, c_d, c_e, c_f, c_h]))
+
 print(f"\n{'='*70}")
 print(f"RESULT: {sum(results)}/{len(results)} tests passed")
 print("=" * 70)

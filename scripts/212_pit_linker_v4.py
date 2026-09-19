@@ -76,6 +76,7 @@ file aborts, so a clean clone either reproduces this exactly or fails loudly.
 Writes only outputs/rebuild_v4/212_*.csv, stage3_candidates.csv, 212_link_report.md.
 Touches no v3 path.
 """
+import argparse
 import re
 import sys
 from datetime import datetime, timezone
@@ -85,7 +86,14 @@ import pandas as pd
 
 W = Path("Data/wrds_v4")
 OUT = Path("outputs/rebuild_v4")
+
+# Set from the command line. The linker runs TWICE in the pipeline: once against
+# CANONICAL_V3 to produce the Stage 3 worklist, and again against CANONICAL_V4 after
+# Stage 3 verification and Stage 4 corrections have re-parented the events. The second
+# pass must not overwrite the first: stage3_candidates.csv is the evidence 213 was built
+# on, so a non-default --out-prefix keeps the two sets side by side.
 CANON = Path("Data/processed/rebuild/CANONICAL_V3.csv")
+PREFIX = ""
 # The committed copy, not outputs/essay3_q2/. The essay3_q2 original stays untracked, so
 # a clean clone could not reproduce the no-gvkey classification from it. Missing ABORTS.
 NOMS = Path("outputs/rebuild_v4/inputs/crsp_drop_nominations.csv")
@@ -224,6 +232,28 @@ def documented_identity(evidence):
     return bool(GATE_RE.search(e)) or "EDGAR" in e
 
 
+def read_wrds(stem):
+    """The first pull plus every top-up, as one set.
+
+    A top-up pulls the same five tables for CIKs the first pull missed, so reading only
+    the base file silently drops them - and a CIK that was topped up is by definition one
+    the linker previously failed on, which is exactly the row that would go unnoticed.
+    """
+    paths = [W / f"{stem}.csv"] + sorted(W.glob(f"{stem}_topup_*.csv"))
+    have = [p for p in paths if p.exists()]
+    if not have:
+        sys.exit(f"missing input: {W / (stem + '.csv')}")
+    frames = [pd.read_csv(p, low_memory=False) for p in have]
+    df = pd.concat(frames, ignore_index=True) if len(frames) > 1 else frames[0]
+    log(f"- {stem}: {len(df):,} rows from {len(have)} file(s) "
+        f"({', '.join(p.name for p in have)})")
+    return df
+
+
+def out(name):
+    return OUT / f"{PREFIX}{name}"
+
+
 def main():
     missing = [str(p) for p in (CANON, NOMS,
                                 W / "comp_company.csv", W / "comp_security.csv",
@@ -238,9 +268,9 @@ def main():
     ev["edgar"] = ev["final_evidence"].astype(str).str.extract(
         r"EDGAR name:\s*(.+?)(?:\s*\||$)")[0]
 
-    comp = pd.read_csv(W / "comp_company.csv", low_memory=False)
-    sec = pd.read_csv(W / "comp_security.csv", low_memory=False)
-    nam = pd.read_csv(W / "crsp_stocknames.csv", low_memory=False)
+    comp = read_wrds("comp_company")
+    sec = read_wrds("comp_security")
+    nam = read_wrds("crsp_stocknames")
 
     nz = lambda s: s.astype(str).str.strip().str.upper().str.lstrip("0").replace("", "0")
     comp["cik_int"] = pd.to_numeric(comp["cik"], errors="coerce")
@@ -625,18 +655,27 @@ def main():
     log("")
 
     OUT.mkdir(parents=True, exist_ok=True)
-    L.to_csv(OUT / "212_links.csv", index=False)
-    dis.to_csv(OUT / "212_v3_disagreements.csv", index=False)
+    L.to_csv(out("212_links.csv"), index=False)
+    dis.to_csv(out("212_v3_disagreements.csv"), index=False)
     exc[["final_cik", "org_name", "edgar", "comnam", "cusip8", "ncusip_on_row",
          "breach_date", "namedt", "nameenddt", "permno_rejected", "note"]].to_csv(
-        OUT / "212_identity_review.csv", index=False)
-    nog.to_csv(OUT / "212_no_gvkey.csv", index=False)
-    um.to_csv(OUT / "212_unmatched_cusips.csv", index=False)
-    S3.to_csv(OUT / "stage3_candidates.csv", index=False)
-    (OUT / "212_link_report.md").write_text("\n".join(LOG) + "\n", encoding="utf-8")
+        out("212_identity_review.csv"), index=False)
+    nog.to_csv(out("212_no_gvkey.csv"), index=False)
+    um.to_csv(out("212_unmatched_cusips.csv"), index=False)
+    S3.to_csv(out("stage3_candidates.csv"), index=False)
+    out("212_link_report.md").write_text("\n".join(LOG) + "\n", encoding="utf-8")
     print(f"\nWROTE {OUT/'212_link_report.md'} + 6 CSVs")
     return 0 if (TM_PASS and SP_PASS) else 1
 
 
 if __name__ == "__main__":
+    ap = argparse.ArgumentParser(description="REBUILD V4 Stage 2 point-in-time linker")
+    ap.add_argument("--canonical", default=str(CANON),
+                    help="canonical event file to link (default: CANONICAL_V3)")
+    ap.add_argument("--out-prefix", default="",
+                    help="prefix for every output file, so a second pass does not "
+                         "overwrite the first (e.g. v4_)")
+    args = ap.parse_args()
+    CANON = Path(args.canonical)
+    PREFIX = args.out_prefix
     sys.exit(main())

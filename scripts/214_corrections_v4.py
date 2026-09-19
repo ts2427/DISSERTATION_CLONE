@@ -262,6 +262,9 @@ def fix_cik(ev, rows, old_cik, new_cik, evidence, label):
         return ev
     org = str(ev.loc[sel, "org_name"].iloc[0])
     ev.loc[sel, "final_cik"] = new_cik
+    # Guarded: the offline tests exercise fix_cik on bare frames that carry no link_basis.
+    if "link_basis" in ev.columns:
+        ev.loc[sel, "link_basis"] = "cik_correction"
     for bd in ev.loc[sel, "breach_date"]:
         record(rows, "final_cik", old_cik, org, str(bd)[:10], "final_cik",
                old_cik, new_cik, True, evidence)
@@ -310,6 +313,64 @@ def fix_lennar(ev, rows, m213):
     return ev
 
 
+VERIFY_LOG = Path("outputs/rebuild_v4/213_verification_log.csv")
+BASIS_BY_TYPE = {"a_subsidiary": "exhibit21_parent",
+                 "gate_exclusion": "exhibit21_parent",
+                 "ncusip_name_mismatch": "exhibit21_parent",
+                 "b_successor_cik": "successor_filing"}
+
+
+def apply_stage3(ev, rows, v3_cik, v3_breach):
+    """Re-parent every VERIFIED Stage 3 event; leave every UNVERIFIED one alone.
+
+    A subsidiary's own CIK has no Compustat gvkey, so the linker could never reach a
+    permno through it. Stage 3 established, against an Exhibit 21 or a succession filing,
+    which registrant the event belongs to; this points the event at that registrant so
+    the second linker pass can find it.
+
+    UNVERIFIED rows are NOT re-parented. They stay on their original CIK and stay
+    excluded, which is the whole point of having required evidence.
+
+    Matching uses the ORIGINAL CIK and breach_date, because Stage 4's own corrections may
+    already have moved either one.
+    """
+    if not VERIFY_LOG.exists():
+        log(f"- Stage 3: {VERIFY_LOG} not present; no re-parenting applied.")
+        return ev
+    v = pd.read_csv(VERIFY_LOG, low_memory=False)
+    ver = v[v["verdict"] == "VERIFIED"]
+    key = {}
+    for _, r in ver.iterrows():
+        pc = pd.to_numeric(pd.Series([r.get("parent_cik")]), errors="coerce").iloc[0]
+        if pd.isna(pc):
+            continue
+        key[(int(r["cik"]), str(r["breach_date"])[:10])] = (
+            int(pc), str(r["candidate_type"]), str(r.get("accession", "")),
+            str(r.get("matching_line", ""))[:120])
+    changed = basis_only = 0
+    for i in ev.index:
+        k = (int(v3_cik[i]), str(v3_breach[i])[:10])
+        if k not in key:
+            continue
+        new_cik, ctype, acc, line = key[k]
+        basis = BASIS_BY_TYPE.get(ctype, "direct")
+        ev.at[i, "link_basis"] = basis
+        old = int(ev.at[i, "final_cik"])
+        if new_cik != old:
+            ev.at[i, "final_cik"] = new_cik
+            changed += 1
+            record(rows, f"stage3_{ctype}", old, ev.at[i, "org_name"],
+                   str(ev.at[i, "breach_date"])[:10], "final_cik", old, new_cik, True,
+                   f"Stage 3 VERIFIED ({ctype}); accession {acc}; "
+                   f"matching line/passage: {line!r}")
+        else:
+            basis_only += 1
+    log(f"- Stage 3: {changed} event(s) re-parented, {basis_only} verified without a CIK "
+        f"change (the verified registrant was already the event CIK); "
+        f"{len(v) - len(ver)} UNVERIFIED row(s) left untouched and excluded.")
+    return ev
+
+
 REPORT_ONLY = [
     ("Dell Inc.", 826083,
      "EDGAR registrant DELL INC; 533 filings within +/-2 years of the 2013-02-26 breach; "
@@ -335,6 +396,13 @@ def main():
     m213 = load_m213()
     ev = pd.read_csv(CANON_V3, low_memory=False)
     before = ev.copy()
+    # Captured BEFORE any correction. Stage 3's worklist is keyed to the v3 CIK and
+    # breach_date, and Stage 4 moves both - International Paper's and Lennar's CIK, and
+    # Sprint's date - so matching on the corrected values would miss those rows.
+    v3_cik = ev["final_cik"].copy()
+    v3_breach = ev["breach_date"].copy()
+    ev["orig_cik"] = v3_cik
+    ev["link_basis"] = "direct"
     rows = []
 
     log("# REBUILD V4 — Stage 4 corrections")
@@ -355,6 +423,7 @@ def main():
                  "/NEW/) is the only other filer with the same normalised name and is "
                  "active across the window (365 filings)", "International Paper")
     ev = fix_lennar(ev, rows, m213)
+    ev = apply_stage3(ev, rows, v3_cik, v3_breach)
 
     C = pd.DataFrame(rows)
     log("")

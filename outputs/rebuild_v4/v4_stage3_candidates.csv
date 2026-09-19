@@ -1,0 +1,18 @@
+candidate_type,cik,org,breach_date,crsp_permno,comnam_at_breach,candidate,confidence,reason,shared_tokens,generic_only
+gate_exclusion,1283699,"T-Mobile USA, Inc.",2009-09-03,91937.0,METROPCS COMMUNICATIONS INC,,,CRSP name at breach_date does not match the breached organization; parent relationship unverified,,
+gate_exclusion,1283699,"T-Mobile USA, Inc.",2009-10-05,91937.0,METROPCS COMMUNICATIONS INC,,,CRSP name at breach_date does not match the breached organization; parent relationship unverified,,
+gate_exclusion,1283699,T-Mobile,2009-10-08,91937.0,METROPCS COMMUNICATIONS INC,,,CRSP name at breach_date does not match the breached organization; parent relationship unverified,,
+gate_exclusion,1283699,T-Mobile USA Inc.,2011-10-21,91937.0,METROPCS COMMUNICATIONS INC,,,CRSP name at breach_date does not match the breached organization; parent relationship unverified,,
+gate_exclusion,1283699,T-Mobile,2012-05-08,91937.0,METROPCS COMMUNICATIONS INC,,,CRSP name at breach_date does not match the breached organization; parent relationship unverified,,
+gate_exclusion,1283699,T-Mobile,2012-08-28,91937.0,METROPCS COMMUNICATIONS INC,,,CRSP name at breach_date does not match the breached organization; parent relationship unverified,,
+gate_exclusion,1308161,Fox Entertainment Group,2009-04-09,90441.0,NEWS CORP,,,CRSP name at breach_date does not match the breached organization; parent relationship unverified,,
+gate_exclusion,1308161,Fox Entertainment Group Inc.,2009-04-15,90441.0,NEWS CORP,,,CRSP name at breach_date does not match the breached organization; parent relationship unverified,,
+b_successor_cik,14745,"Brown, Lisle/Cummings, Inc.",2018-04-15,,,"BROWN FORMAN CORP (gvkey 2435, cik 14693)",unverified,no gvkey in Compustat for this CIK,BROWN,False
+b_successor_cik,826083,Dell Inc.,2013-02-26,,,"DELL TECHNOLOGIES INC (gvkey 14489, cik 1571996)",unverified,no gvkey in Compustat for this CIK,DELL,False
+b_successor_cik,1000564,Communications & Power Industries LLC,2020-01-18,,,"AMERICAN ELECTRIC POWER CO (gvkey 1440, cik 4904)",unverified,no gvkey in Compustat for this CIK,POWER,False
+a_subsidiary,1091411,Sony Corporation of America,2009-06-02,,,Sony Group Corporation,,no gvkey in Compustat for this CIK,,False
+b_successor_cik,1431473,Uber,2014-05-13,,,"UBER TECHNOLOGIES INC (gvkey 35077, cik 1543151)",unverified,no gvkey in Compustat for this CIK,UBER,False
+a_subsidiary,1834695,"Volkswagen Group of America, Inc.",2019-08-01,,,Volkswagen AG,,no gvkey in Compustat for this CIK,,False
+a_subsidiary,1984463,"Warn Industries, Inc.",2018-02-28,,,Dover Corporation,,no gvkey in Compustat for this CIK,,False
+ncusip_name_mismatch,732717,Cricket Wireless LLC,2018-08-17,66093.0,A T & T INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and final_evidence carries no Gate 1 / Gate 2 verdict and no EDGAR confirmation",,False
+ncusip_name_mismatch,732717,Cricket Wireless LLC,2018-08-21,66093.0,A T & T INC,,,"ncusip link accepted; CRSP name matches neither the org string nor the EDGAR name, and final_evidence carries no Gate 1 / Gate 2 verdict and no EDGAR confirmation",,False

@@ -45,7 +45,12 @@ from pathlib import Path
 import pandas as pd
 
 CANON_V4 = Path("Data/processed/rebuild_v4/CANONICAL_V4.csv")
-LINKS = Path("outputs/rebuild_v4/212_links.csv")
+# The SECOND linker pass, run against CANONICAL_V4 after Stage 3 verification and Stage 4
+# corrections re-parented the events. The first pass (212_links.csv, keyed to
+# CANONICAL_V3) produced the Stage 3 worklist and is kept as evidence, not used here.
+LINKS = Path("outputs/rebuild_v4/v4_212_links.csv")
+STOCKNAMES = ("crsp_stocknames.csv", "crsp_stocknames_topup_*.csv")
+OUT_LOST = Path("outputs/rebuild_v4/215_lost_events.csv")
 E_LEDGER = Path("outputs/essay3_q2/e_ledger.csv")
 DSF = (Path("Data/wrds_v4/crsp_dsf.csv"),)
 DSF_GLOB = "crsp_dsf_topup_*.csv"
@@ -64,6 +69,17 @@ LOG = []
 def log(m=""):
     print(m, flush=True)
     LOG.append(str(m))
+
+
+def load_212():
+    """212's name rules, so 'same firm?' is decided identically in both scripts."""
+    p = Path("scripts/212_pit_linker_v4.py")
+    if not p.exists():
+        sys.exit(f"missing input: {p}")
+    spec = importlib.util.spec_from_file_location("m212_for_215", str(p))
+    m = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    return m
 
 
 def load_common():
@@ -180,6 +196,80 @@ def attribution(ev4, links, crsp_max, horizon=OUTCOME_HORIZON_DAYS):
     return pd.DataFrame(rows), extends
 
 
+def read_stocknames():
+    """CRSP names, first pull plus every top-up, as one set."""
+    paths = [Path("Data/wrds_v4") / STOCKNAMES[0]] + sorted(
+        Path("Data/wrds_v4").glob(STOCKNAMES[1]))
+    frames = [pd.read_csv(p, low_memory=False) for p in paths if p.exists()]
+    if not frames:
+        return pd.DataFrame(columns=["permno", "comnam", "namedt", "nameenddt"])
+    nam = pd.concat(frames, ignore_index=True)
+    nam["namedt"] = pd.to_datetime(nam["namedt"], errors="coerce")
+    nam["nameenddt"] = pd.to_datetime(nam["nameenddt"], errors="coerce")
+    return nam
+
+
+def comnam_at(nam, permno, when):
+    """CRSP's name for this permno on this date. -> (comnam, note)."""
+    if pd.isna(permno):
+        return "", "no v3 permno"
+    pn = int(permno)
+    if pn not in set(nam["permno"].dropna().astype(int)):
+        return "", "permno absent from the CUSIP-filtered pull"
+    s = nam[(nam["permno"] == pn) & (nam["namedt"] <= when) & (when <= nam["nameenddt"])]
+    if not len(s):
+        return "", "no CRSP name row valid at breach_date"
+    return str(s["comnam"].iloc[0]), ""
+
+
+def lost_subcause(note, resolvable):
+    n = str(note)
+    if n.startswith("shrcd"):
+        return f"excluded by share code: {n}"
+    if n == "no gvkey":
+        return "the CIK has no Compustat gvkey, so the chain cannot start"
+    if not resolvable:
+        return "v3 permno absent from the CUSIP-filtered pull"
+    return n
+
+
+def categorise_lost(ev4, links, nam, names_match):
+    """Every event linked in v3 but not in v4, with its cause.
+
+    (a) is not a loss: v3 recorded a permno but its own pipeline found no usable returns,
+        so nothing was actually available to lose.
+    (b) is a correction: v3 pointed at a different firm than the breached organisation.
+    (c) is a real loss, and its sub-cause matters - a share-code exclusion is a policy
+        choice, while a permno missing from the pull is a coverage gap in our own data.
+    """
+    lost = links["v3_permno"].notna().values & ~links["permno"].notna().values
+    grp = group_of(ev4).fillna("(unknown)")
+    rows = []
+    for i in ev4.index[lost]:
+        bd = pd.to_datetime(ev4.at[i, "breach_date"], errors="coerce")
+        v3p = links.at[i, "v3_permno"]
+        cn, cn_note = comnam_at(nam, v3p, bd)
+        note = str(links.at[i, "note"])
+        usable = bool(ev4.at[i, "has_crsp_data"]) if "has_crsp_data" in ev4.columns else True
+        org = str(ev4.at[i, "org_name"])
+        if not usable:
+            cat, sub = "a_no_usable_returns_in_v3", "v3 flagged has_crsp_data False"
+        elif cn and not names_match(cn, org):
+            cat, sub = "b_v3_linked_a_different_firm", f"v3 CRSP name {cn!r} vs org {org!r}"
+        else:
+            cat, sub = "c_v4_gap", lost_subcause(note, bool(cn) or not cn_note)
+        rows.append({"category": cat, "sub_cause": sub,
+                     "org_name": org,
+                     "orig_cik": ev4.at[i, "orig_cik"] if "orig_cik" in ev4.columns else "",
+                     "final_cik": ev4.at[i, "final_cik"],
+                     "breach_date": str(ev4.at[i, "breach_date"])[:10],
+                     "group": grp.at[i],
+                     "v3_permno": v3p,
+                     "v3_comnam_at_breach": cn or f"({cn_note})",
+                     "v4_reason": note})
+    return pd.DataFrame(rows)
+
+
 def build_ledger(ev4, links, e_ledger):
     """The v3 ledger's steps, with v4 values where Stage 5 can honestly compute them."""
     grp = group_of(ev4).fillna("(unknown)")
@@ -280,8 +370,28 @@ def main():
     log(md_table(attr))
     log("")
 
+    m212 = load_212()
+    lost = categorise_lost(ev4, links, read_stocknames(), m212.names_match)
+    log("## Events linked in v3 but not in v4")
+    log("")
+    if len(lost):
+        counts = (lost.groupby(["category", "group"]).size().unstack(fill_value=0)
+                  .reset_index())
+        log(md_table(counts))
+        log("")
+        log(md_table(lost[["category", "org_name", "orig_cik", "final_cik", "breach_date",
+                           "group", "v3_permno", "v3_comnam_at_breach", "v4_reason"]]))
+        log("")
+        log("Sub-causes within each category:")
+        log("")
+        log(md_table(lost.groupby(["category", "sub_cause"]).size()
+                     .reset_index(name="events")))
+    else:
+        log("None.")
+    log("")
+
     OUT_LEDGER.parent.mkdir(parents=True, exist_ok=True)
-    for path, df in ((OUT_LEDGER, ledger), (OUT_SYMMETRY, sym)):
+    for path, df in ((OUT_LEDGER, ledger), (OUT_SYMMETRY, sym), (OUT_LOST, lost)):
         text = df.to_csv(index=False)
         bad = common.assert_no_timestamp(path, text)
         if bad:
