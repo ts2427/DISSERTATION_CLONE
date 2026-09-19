@@ -1,6 +1,6 @@
 # REBUILD V4 — Stage 4 corrections
 
-- run (UTC): 2026-09-18T23:59:48+00:00
+- run (UTC): 2026-09-19T00:10:45+00:00
 - input: `Data/processed/rebuild/CANONICAL_V3.csv` (489 rows, read-only)
 - Stage 4 issues no SEC request; the EDGAR cache is read, never written.
 

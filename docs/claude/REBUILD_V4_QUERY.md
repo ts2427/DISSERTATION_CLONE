@@ -296,6 +296,16 @@ relative to v3. **No essay reads v4 until Tim approves this stage.**
 - Emit `outputs/essay3_v4/constants_essay3_v4.json`.
 - Produce a side-by-side table of every constant, v3 against v4, and every verdict:
   primary, placebo, sensitivities, BH, and leave-one-out sign flips.
+- **Outcome-window censoring.** An executive-departure outcome measured over a window
+  that extends past the last date the outcome CIK filed anything is not a null — it is an
+  unobserved window, and counting it as "no departure" manufactures a zero. For every
+  event, record the outcome CIK's last filing date on EDGAR, and count the events whose
+  30-, 90- and 180-day windows extend past it, broken out by treated and control. The
+  rerun must then EITHER restrict to fully observed windows OR report both the restricted
+  and unrestricted results side by side; it may not quietly use the unrestricted set.
+  Report the counts before choosing, since an asymmetry between treated and control is
+  itself a finding — treated firms that were acquired or went private stop filing, and
+  that is correlated with treatment.
 - **Clean-clone test** on `rebuild-v4`: fresh clone, `git lfs pull`, run 220–229, diff
   every emitted file against the committed outputs. Write the exact commands to
   `docs/claude/REPRODUCE_ESSAY3_V4.md`.
