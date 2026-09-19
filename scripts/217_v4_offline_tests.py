@@ -1670,18 +1670,22 @@ d5 = int(_r.loc[333, "rd_missing"]) == 1
 d6 = _r.loc[111, "win_lo"] == "2018-06-02"    # 730d before the EARLIER anchor
 #    2018-06-02, not 06-01: 2020 is a leap year, so 730 calendar days back from
 #    2020-06-01 crosses 2020-02-29. The window is days, never "two years".
+# abort() flushes its log to module OUT; point it at the temp dir so the suite
+# never writes into the repository (it did, once - outputs/rebuild_v4/230_outcome_gap.md).
+_m230.OUT = TMP
 try:
     _m230.require(Path("scripts/__nope__.csv"))
     d7 = False
 except SystemExit:
     d7 = True
+d7 = d7 and not (Path("outputs/rebuild_v4") / "230_outcome_gap.md").exists()
 print(f"  {'PASS' if d1 else 'FAIL'} | linked + covariates + no cache -> needs_fetch")
 print(f"  {'PASS' if d2 else 'FAIL'} | v3 has_crsp_data=1 but v4_linked=0 -> OUT of scope")
 print(f"  {'PASS' if d3 else 'FAIL'} | already-cached CIK is in scope but needs no fetch")
 print(f"  {'PASS' if d4 else 'FAIL'} | missing reported_date -> window runs off breach_date")
 print(f"  {'PASS' if d5 else 'FAIL'} | missing reported_date is flagged")
 print(f"  {'PASS' if d6 else 'FAIL'} | pre-window is 730d off the earlier anchor")
-print(f"  {'PASS' if d7 else 'FAIL'} | a missing input ABORTS (no graceful fallback)")
+print(f"  {'PASS' if d7 else 'FAIL'} | a missing input ABORTS, writing nothing into the repo")
 results.append(all([d1, d2, d3, d4, d5, d6, d7]))
 
 print("\n" + "=" * 70)
