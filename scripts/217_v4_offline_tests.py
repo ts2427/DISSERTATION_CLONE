@@ -1728,6 +1728,56 @@ for _f, _lab in [(e0, "RESOLVE parsed from source without importing 199"),
     print(f"  {'PASS' if _f else 'FAIL'} | {_lab}")
 results.append(all([e0, e1, e2, e3, e4, e5]))
 
+
+print("\n" + "=" * 70)
+print("TEST: 219 sends gvkeys as 6-char zero-padded strings (run-1 abort)")
+print("=" * 70)
+_m219b = load(Path("scripts/219_wrds_funda_v4.py"), "m219b")
+_m219b.OUT = TMP          # abort() flushes its log; keep it out of the repository
+g1 = _m219b.norm_gvkey(1300.0) == "001300"
+g2 = _m219b.norm_gvkey(_np.float64(1440.0)) == "001440"
+g3 = _m219b.norm_gvkey("001300") == "001300"
+g4 = _m219b.norm_gvkey(17874.0) == "017874"      # T-Mobile
+g5 = _m219b.norm_gvkey(9899.0) == "009899"       # AT&T
+g6 = _m219b.norm_gvkey(10984.0) == "010984"      # Sprint
+g7 = _m219b.norm_gvkey(float("nan")) == "" and _m219b.norm_gvkey("") == ""
+g8 = _m219b.sql_values(["001300"]) == "'001300'"
+# the exact defect: zfill on a float's repr is a no-op because it is already 6 chars
+g9 = str(1440.0).zfill(6) == "1440.0" and _m219b.norm_gvkey(1440.0) == "001440"
+_sl = pd.DataFrame([
+    dict(final_cik=1283699, gvkey=17874.0), dict(final_cik=732717, gvkey=9899.0),
+    dict(final_cik=101830, gvkey=10984.0), dict(final_cik=999, gvkey=1440.0)])
+_sg = _m219b.sentinel_gvkeys(_sl)
+g10 = (_sg["T-Mobile"] == {"017874"} and _sg["AT&T"] == {"009899"}
+       and _sg["Sprint"] == {"010984"})
+try:
+    _m219b.sentinel_gvkeys(_sl[_sl["final_cik"] != 101830])
+    g11 = False
+except SystemExit:
+    g11 = True
+# a float-keyed links file must still join to a string-keyed funda file
+_fl = pd.DataFrame([dict(final_cik=111, breach_date="2020-06-01", gvkey=1234.0)])
+_ff = _fr(["2019-12-31"])                       # funda gvkey is the string "001234"
+_fc = pd.DataFrame([dict(final_cik=111, breach_date="2020-06-01", org_name="Acme",
+                         fcc_form499=0, matched_ticker="", firm_size_log=None,
+                         leverage=None, roa=None, op_margin=None)])
+g12 = _m219b.build_covariates(_fc, _fl, _ff).loc[0, "firm_size_log"] == round(
+    _np.log(100.0), 4)
+for _f, _lab in [(g1, "float 1300.0 -> '001300'"),
+                 (g2, "numpy float64 1440.0 -> '001440'"),
+                 (g3, "an already-padded string is unchanged"),
+                 (g4, "T-Mobile 17874.0 -> '017874'"),
+                 (g5, "AT&T 9899.0 -> '009899'"),
+                 (g6, "Sprint 10984.0 -> '010984'"),
+                 (g7, "NaN and empty become '' (dropped, never sent)"),
+                 (g8, "the SQL literal is quoted as '001300'"),
+                 (g9, "regression: str(1440.0).zfill(6) is a no-op, norm_gvkey is not"),
+                 (g10, "sentinel CIKs resolve to their gvkeys"),
+                 (g11, "a sentinel with no gvkey ABORTS naming the step"),
+                 (g12, "float-keyed links join to string-keyed funda")]:
+    print(f"  {'PASS' if _f else 'FAIL'} | {_lab}")
+results.append(all([g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11, g12]))
+
 print(f"\n{'='*70}")
 print(f"RESULT: {sum(results)}/{len(results)} tests passed")
 print("=" * 70)

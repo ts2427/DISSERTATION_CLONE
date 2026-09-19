@@ -40,6 +40,23 @@ Missing input ABORTS - no graceful fallback.  An empty query result ABORTS.  The
 script refuses to overwrite an existing pull file.  Any unhandled exception
 becomes an abort() so the log is always written.
 
+THE TRAP THIS SCRIPT IS BUILT AROUND
+------------------------------------
+comp.funda.gvkey is a 6-character ZERO-PADDED STRING; v4_212_links.csv stores
+gvkey as float64.  str(1440.0).zfill(6) == '1440.0' - already six characters, so
+zfill does nothing and the literal matches no row.  Run 1 died exactly there:
+140 gvkeys sent, 0 rows back, which reads identically to "Compustat has no
+fundamentals for these firms".  Three guards now separate those cases:
+
+  * every gvkey goes through int(float(.)) and is formatted %06d;
+  * the first three literals actually sent are logged, so a format regression is
+    visible in the log rather than looking like empty coverage;
+  * the sentinels (T-Mobile, AT&T, Sprint) must each return comp.funda rows, so
+    a partial result from other gvkeys cannot mask a broken chain;
+  * on zero rows, ONE unfiltered probe runs to say whether the failure is the key
+    format or the filter values.  Probe rows are counted and discarded - never
+    kept, since indfmt/datafmt/popsrc/consol define the covariates.
+
 OUTPUTS
 -------
     Data/wrds_v4/comp_funda.csv                       raw pull, all years
@@ -67,6 +84,8 @@ STALE_DAYS = 550              # scripts/156, verbatim
 COVARS = ["firm_size_log", "leverage", "roa", "op_margin"]
 CHUNK = 500
 MIN_HIT_RATE = 0.50
+# Same three firms scripts/211 uses. Each must run CIK -> gvkey -> comp.funda.
+SENTINEL_CIKS = {1283699: "T-Mobile", 732717: "AT&T", 101830: "Sprint"}
 
 L = []
 
@@ -96,7 +115,18 @@ def require(path):
 
 
 def norm_gvkey(v):
-    return str(v).strip().zfill(6)
+    """comp.funda.gvkey is a 6-character ZERO-PADDED STRING.  v4_212_links.csv stores
+    gvkey as float64, so str(1440.0).zfill(6) yields '1440.0' - already 6 characters,
+    so zfill does nothing, and the literal matches no row.  Run 1 of this script died
+    exactly that way: 140 gvkeys sent, 0 rows back, indistinguishable at a glance from
+    "Compustat has no fundamentals for these firms".  Always go through int(float(.))."""
+    s = str(v).strip()
+    if s == "" or s.lower() == "nan":
+        return ""
+    try:
+        return "{:06d}".format(int(float(s)))
+    except (TypeError, ValueError):
+        return s.zfill(6)
 
 
 # --------------------------------------------------------------- 156's rule, verbatim
@@ -129,6 +159,22 @@ def sql_values(batch):
 
 
 # --------------------------------------------------------------- WRDS pull
+def sentinel_gvkeys(links):
+    """The sentinels run the whole CIK -> gvkey -> funda chain, as in scripts/211.
+    Checking only the row count would let a key-format failure through whenever some
+    OTHER gvkey happened to return rows."""
+    out = {}
+    for cik, name in SENTINEL_CIKS.items():
+        got = {norm_gvkey(x) for x in links.loc[links["final_cik"] == cik,
+                                                "gvkey"].dropna().unique()}
+        got = {g for g in got if g}
+        if not got:
+            abort("sentinel " + name + " (CIK " + str(cik) + ") reached no gvkey in "
+                  + str(LINKS) + " - the CIK -> gvkey step broke")
+        out[name] = got
+    return out
+
+
 def run_pull():
     import wrds
     if FUNDA.exists():
@@ -138,9 +184,17 @@ def run_pull():
         abort(str(LINKS) + " has no gvkey column")
     gvkeys = sorted({norm_gvkey(g) for g in links["gvkey"].dropna()
                      if str(g).strip() not in ("", "nan")})
+    gvkeys = [g for g in gvkeys if g]
     if not gvkeys:
         abort("no gvkeys reached in v4 - nothing to pull")
+    sent = sentinel_gvkeys(links)
     log("gvkeys to pull: " + str(len(gvkeys)))
+    # The exact literal form matters more than the count - log it, so a future
+    # format regression is visible in the log instead of looking like empty coverage.
+    log("first 3 gvkey literals sent: "
+        + ", ".join(repr(g) for g in gvkeys[:3]))
+    log("sentinel gvkeys: "
+        + "; ".join(n + " " + ", ".join(sorted(g)) for n, g in sorted(sent.items())))
 
     db = wrds.Connection()
     try:
@@ -155,16 +209,40 @@ def run_pull():
             log("  chunk " + str(i // CHUNK + 1) + ": gvkeys " + str(len(batch))
                 + ", rows " + str(len(frames[-1])))
         df = pd.concat(frames, ignore_index=True).drop_duplicates()
+
+        if not len(df):
+            # Zero rows has two very different causes and the abort must name which.
+            # Probe ONCE without the filters; the probe rows are counted and thrown
+            # away - they are never kept, since indfmt/datafmt/popsrc/consol define
+            # the covariates.
+            log("")
+            log("comp.funda returned 0 rows with the standard filters - "
+                "running one unfiltered diagnostic probe")
+            probe = db.raw_sql("select gvkey, datadate from comp.funda where gvkey in ("
+                               + sql_values(gvkeys[:CHUNK]) + ") limit 100")
+            log("  unfiltered probe rows: " + str(len(probe)) + " (discarded)")
+            if len(probe):
+                abort("the gvkey literals DO match comp.funda, but "
+                      "indfmt='INDL'/datafmt='STD'/popsrc='D'/consol='C' returned "
+                      "nothing - a FILTER-VALUE failure, not a key-format failure")
+            abort("comp.funda returned no rows even unfiltered - a KEY-FORMAT "
+                  "failure; literals sent were "
+                  + ", ".join(repr(g) for g in gvkeys[:3]))
     finally:
         db.close()
 
-    if not len(df):
-        abort("comp.funda returned no rows")
     df["gvkey"] = df["gvkey"].map(norm_gvkey)
-    reached = df["gvkey"].nunique()
-    rate = reached / len(gvkeys)
+    reached = set(df["gvkey"])
+    missing = sorted(n for n, gs in sent.items() if not (gs & reached))
+    if missing:
+        abort("sentinel gvkeys returned no comp.funda rows: " + ", ".join(missing)
+              + " - the gvkey -> funda step broke (a partial result from other "
+                "gvkeys is not evidence the chain works)")
+    rate = len(reached) / len(gvkeys)
     log("comp.funda: " + str(len(df)) + " rows; gvkeys reached "
-        + str(reached) + "/" + str(len(gvkeys)) + " = " + format(100 * rate, ".1f") + "%")
+        + str(len(reached)) + "/" + str(len(gvkeys)) + " = "
+        + format(100 * rate, ".1f") + "%")
+    log("sentinels reached funda: " + ", ".join(sorted(sent)))
     if rate < MIN_HIT_RATE:
         abort("gvkey hit rate " + format(100 * rate, ".1f") + "% is below the 50% floor")
     OUT_DATA.mkdir(parents=True, exist_ok=True)
