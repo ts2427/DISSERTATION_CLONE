@@ -1908,6 +1908,111 @@ for _f, _lab in [(k1, "outcome_cik == RESOLVE target -> agree"),
     print(f"  {'PASS' if _f else 'FAIL'} | {_lab}")
 results.append(all([k1, k2, k3, k4]))
 
+
+print("\n" + "=" * 70)
+print("TEST: 231 SEC fetch - submissions shape, 5.02 selection, frozen draw")
+print("=" * 70)
+_m231 = load(Path("scripts/231_fetch_outcome_data_v4.py"), "m231")
+_m231.OUT = TMP          # abort()/write_log() must never touch the repository
+
+
+class _FakeSEC:
+    """Mocked EDGAR. Records every URL so the request pattern is assertable."""
+
+    def __init__(self, bodies):
+        self.bodies, self.urls = bodies, []
+
+    def fetch(self, url):
+        self.urls.append(url)
+        return self.bodies.get(url)
+
+
+_main = ("https://data.sec.gov/submissions/CIK0000123456.json")
+_shard = "https://data.sec.gov/submissions/CIK0000123456-submissions-001.json"
+_sec = _FakeSEC({
+    _main: json.dumps({"filings": {
+        "recent": {"form": ["8-K"], "filingDate": ["2020-01-01"],
+                   "items": ["5.02"], "accessionNumber": ["0000-01"],
+                   "primaryDocument": ["a.htm"]},
+        "files": [{"name": "CIK0000123456-submissions-001.json"}]}}).encode(),
+    _shard: json.dumps({"form": ["10-K"], "filingDate": ["2019-01-01"],
+                        "items": [""], "accessionNumber": ["0000-02"],
+                        "primaryDocument": ["b.htm"]}).encode(),
+})
+_pages = _m231.submission_pages(123456, _sec)
+q1 = isinstance(_pages, list) and len(_pages) == 2
+q2 = _pages[0]["form"] == ["8-K"] and _pages[1]["form"] == ["10-K"]
+q3 = _sec.urls == [_main, _shard]                      # zero-padded CIK, shard followed
+q4 = _m231.submission_pages(999, _FakeSEC({})) is None  # absent -> None, not a crash
+# the written shape must be the one 234 reads
+_m234b = load(Path("scripts/234_outcome_cik_v4.py"), "m234b")
+q5 = _m234b.count_8k(_pages, pd.Timestamp("2019-12-31"), pd.Timestamp("2020-12-31")) == 1
+
+# --- Item 5.02 selection ---
+_p502 = [{"form": ["8-K", "8-K", "8-K/A", "10-K", "8-K"],
+          "filingDate": ["2020-01-15", "2020-02-01", "2020-02-10", "2020-03-01",
+                         "2018-01-01"],
+          "items": ["5.02", "2.02,7.01", "5.02,8.01", "5.02", "5.02"],
+          "accessionNumber": ["a1", "a2", "a3", "a4", "a5"],
+          "primaryDocument": ["d1.htm", "d2.htm", "d3.htm", "d4.htm", "d5.htm"]}]
+_got = _m231.item502_filings(_p502, pd.Timestamp("2020-01-01"),
+                             pd.Timestamp("2020-12-31"))
+_accs = sorted(f["accession"] for f in _got)
+q6 = _accs == ["a1", "a3"]      # a2 no 5.02, a4 is a 10-K, a5 outside the window
+q7 = _m231.item502_filings([], pd.Timestamp("2020-01-01"),
+                           pd.Timestamp("2020-12-31")) == []
+
+# --- the validation draw is frozen and deterministic ---
+_pool = [dict(cik=100 + i, accession="acc%02d" % i, filing_date="2020-01-01",
+              primary_doc="d.htm", local_file="f") for i in range(50)]
+_d1 = _m231.draw_validation(_pool)
+_d2 = _m231.draw_validation(list(reversed(_pool)))
+q8 = len(_d1) == 30                                     # min(30, 50)
+q9 = [x["accession"] for x in _d1] == [x["accession"] for x in _d2]   # input order irrelevant
+q10 = len(_m231.draw_validation(_pool[:7])) == 7        # min(30, 7)
+q11 = _m231.draw_validation([]) == []
+q12 = _m231.NEW_VALIDATION_SEED == 20260919 and _m231.NEW_VALIDATION_MAX == 30
+# duplicates collapse, so one filing cannot be drawn twice
+q13 = len(_m231.draw_validation(_pool[:5] + _pool[:5])) == 5
+
+# --- a missing input ABORTS, writing a PARTIAL log that names the phase ---
+_m231.ROWS.clear()
+_m231.ROWS.append(dict(phase="documents", cik=1, status="fetched"))
+_m231.PHASE["name"] = "documents"
+_m231.PHASE["detail"] = "CIK 1 (1/9)"
+try:
+    _m231.require(Path("scripts/__nope__.csv"))
+    q14 = False
+except SystemExit:
+    q14 = True
+_lg = (TMP / "231_fetch_log.md")
+_txt = _lg.read_text(encoding="utf-8") if _lg.exists() else ""
+q15 = "ABORTED" in _txt and "documents" in _txt and "CIK 1 (1/9)" in _txt
+q16 = (TMP / "231_fetch_rows.csv").exists()             # partial rows written
+q17 = not (Path("outputs/rebuild_v4") / "231_fetch_log.md").exists()
+_m231.ROWS.clear()
+
+for _f, _lab in [(q1, "submissions assemble as [recent, *shards]"),
+                 (q2, "both pages preserved in order"),
+                 (q3, "CIK zero-padded to 10 chars; shard fetched after the index"),
+                 (q4, "an absent CIK returns None, not a crash"),
+                 (q5, "the written shape is the one 234 reads"),
+                 (q6, "only 8-K* filings listing 5.02 inside the window"),
+                 (q7, "no pages -> no filings"),
+                 (q8, "draw size = min(30, new documents)"),
+                 (q9, "draw is deterministic, independent of input order"),
+                 (q10, "fewer than 30 new documents -> draw them all"),
+                 (q11, "no new documents -> empty draw"),
+                 (q12, "seed and cap are fixed constants in the script"),
+                 (q13, "a duplicated filing cannot be drawn twice"),
+                 (q14, "a missing input ABORTS"),
+                 (q15, "the partial log names the phase and the last item"),
+                 (q16, "partial fetch rows are written on abort"),
+                 (q17, "the abort wrote nothing into the repository")]:
+    print(f"  {'PASS' if _f else 'FAIL'} | {_lab}")
+results.append(all([q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14,
+                    q15, q16, q17]))
+
 print(f"\n{'='*70}")
 print(f"RESULT: {sum(results)}/{len(results)} tests passed")
 print("=" * 70)
