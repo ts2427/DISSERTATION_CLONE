@@ -117,12 +117,10 @@ for w in (30, 90, 180):
     shares.append(jk)
     top = jk.sort_values('share', ascending=False).head(5)
     flips = jk[jk['sign_flip'] == 1]
-    log(f"     leave-one-cluster-out range [{jk['coef_without'].min():+.4f}, {jk['coef_without'].max():+.4f}] "
-        f"(full {full['coef']:+.4f}); sign flips {len(flips)}/{len(jk)}: " + '; '.join(
-            f"{int(t.final_cik)} {t['name']} ({'treated' if t.treated_cluster else 'control'}, {int(t.n_events)} events, "
-            f"b_-g {t.coef_without:+.4f})" for _, t in flips.iterrows()))
-    log('     treatment status of the top five: ' + '; '.join(
-        f"{int(t.final_cik)} {'treated' if t.treated_cluster else 'control'} ({int(t.n_events)} events)" for _, t in top.iterrows()))
+    # NOTE: these lines used to be logged HERE, before this window's header, so each
+    # window's LOCO summary printed under the PREVIOUS window's heading and was read as
+    # belonging to it. Every line below is emitted after the header AND carries its own
+    # window prefix, so a line can never be attributed to the wrong window.
     ev = {g: (int(d0.loc[d0[TREAT] == g, y].sum()), int((d0[TREAT] == g).sum())) for g in (1, 0)}
     rows.append(dict(window=w, coef=round(full['coef'], 4), se_hc3=round(full['se_hc3'], 4), se_cv1=round(full['se_cv1'], 4),
                      se_cv3=round(full['se_cv3'], 4), wcr_ci_lo=c['ci_wcr_lo'], wcr_ci_hi=c['ci_wcr_hi'],
@@ -138,12 +136,18 @@ for w in (30, 90, 180):
     log(f"     outcome mean {r['y_mean']:.4f}, variance {r['y_var']:.4f} | CV3/HC3 {r['cv3_over_hc3']:.3f} | MDE80 {r['mde80']:.4f}")
     log(f"     T-Mobile deleted (N {r['n_noTM']}, G {r['G_noTM']}): coef {r['coef_noTM']:+.4f}, CV3 SE {r['se_cv3_noTM']:.4f}, "
         f"MDE80 {r['mde80_noTM']:.4f} | T-Mobile's share of the CV3 jackknife variance {r['share_TM']:.4f}")
-    log('     top five contributors to the CV3 jackknife variance: ' + '; '.join(
-        f"{int(t.final_cik)} {t['name'] if isinstance(t['name'], str) else ''} (b_-g {t.coef_without:+.4f}, share {t.share:.3f})"
-        for _, t in top.iterrows()))
     log(f"     base rates (notification anchor): treated {r['treated_events']}/{r['treated_n']} = "
         f"{r['treated_events'] / r['treated_n']:.4f}; control {r['control_events']}/{r['control_n']} = "
         f"{r['control_events'] / r['control_n']:.4f}")
+    log(f"     {w}d leave-one-cluster-out range [{jk['coef_without'].min():+.4f}, "
+        f"{jk['coef_without'].max():+.4f}] (full {full['coef']:+.4f}); sign flips "
+        f"{len(flips)}/{len(jk)}: " + '; '.join(
+            f"{int(t.final_cik)} {t['name']} ({'treated' if t.treated_cluster else 'control'}, "
+            f"{int(t.n_events)} events, b_-g {t.coef_without:+.4f})" for _, t in flips.iterrows()))
+    log(f"     {w}d top five contributors to the CV3 jackknife variance: " + '; '.join(
+        f"{int(t.final_cik)} {t['name'] if isinstance(t['name'], str) else ''} "
+        f"({'treated' if t.treated_cluster else 'control'}, {int(t.n_events)} events, "
+        f"b_-g {t.coef_without:+.4f}, share {t.share:.3f})" for _, t in top.iterrows()))
 pd.DataFrame(rows).to_csv(OUT / 'f1_se_diagnostics.csv', index=False)
 pd.concat(shares)[['window', 'final_cik', 'name', 'treated_cluster', 'n_events', 'coef_without', 'share', 'sign_flip']].round(4).to_csv(
     OUT / 'f1_cv3_variance_shares.csv', index=False)

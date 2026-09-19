@@ -26,3 +26,19 @@ Data/wrds_v4/** filter=lfs diff=lfs merge=lfs -text
 # CRLF on checkout, flipping the disk sha to 0d8e556c… and forcing scripts/210 to pass it
 # through the eol-artifact branch. Same pattern as scripts/195 above.
 scripts/204_essay3_q2_se_diagnostics.py text eol=lf
+
+# ==============================================================================
+# REBUILD V4 — byte-stability for generated CSVs (appended; nothing above changed).
+# pandas writes CRLF on Windows, and core.autocrlf normalises it to LF on commit, so
+# the on-disk bytes of every generated CSV differed from its own blob. A clean clone
+# therefore got different INPUT bytes than the tree they were produced in, and the
+# clean-clone check compared files that could never match. Worse, these CSVs carry
+# embedded newlines inside quoted free-text fields (incident_details), where the
+# rewrite is not a harmless line-ending change.
+#
+# Scoped to v4 paths ONLY. v3 blobs must not be renormalised: scripts/210 compares
+# them byte for byte.
+# ==============================================================================
+outputs/essay3_v4/**/*.csv -text
+outputs/rebuild_v4/**/*.csv -text
+Data/processed/rebuild_v4/**/*.csv -text

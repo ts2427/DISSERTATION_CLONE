@@ -2393,6 +2393,52 @@ for _f, _lab in [(y1, "pool = (on disk - v3-frozen) AND in scope"),
     print(f"  {'PASS' if _f else 'FAIL'} | {_lab}")
 results.append(all([y1, y2, y3, y4, y5, y6, y7, y8, y9, y10, y11, y12, y13, y14, y15]))
 
+
+print("\n" + "=" * 70)
+print("TEST: 229's LOCO lines belong to the window they are printed under")
+print("=" * 70)
+import re as _re9
+_log229 = Path("outputs/essay3_v4/229_se_diagnostics.log")
+_lad = Path("outputs/essay3_v4/f1_ladder.csv")
+if not (_log229.exists() and _lad.exists()):
+    print("  SKIP | 229 has not been run in this tree")
+    results.append(True)
+else:
+    _FL = pd.read_csv(_lad).set_index("window")["coef"].round(4).to_dict()
+    _txt9 = _log229.read_text(encoding="utf-8", errors="replace")
+    # walk the log, tracking the most recent "<w>d:" header
+    _cur, _seen, _bad = None, {}, []
+    for _ln in _txt9.splitlines():
+        _h = _re9.match(r"^(\d+)d:", _ln.strip())
+        if _h:
+            _cur = int(_h.group(1))
+            continue
+        _m = _re9.search(r"(\d+)d leave-one-cluster-out .*?\(full ([+-][\d.]+)\)", _ln)
+        if not _m:
+            continue
+        _w, _full = int(_m.group(1)), round(float(_m.group(2)), 4)
+        _seen[_w] = _full
+        # the line's own window prefix must match the header it sits under ...
+        if _cur != _w:
+            _bad.append("line says %dd but sits under %sd header" % (_w, _cur))
+        # ... and the "full" it quotes must be THAT window's coefficient
+        if _FL.get(_w) != _full:
+            _bad.append("%dd quotes full %+.4f, ladder says %+.4f"
+                        % (_w, _full, _FL.get(_w, float("nan"))))
+    z1 = set(_seen) == {30, 90, 180}
+    z2 = not _bad
+    z3 = all(_seen[w] == _FL[w] for w in _seen)
+    # the defect this pins: a LOCO line printed BEFORE its header is attributed to the
+    # previous window, which is how "T-Mobile flips at 90d" was reported when it does not.
+    _tm90 = _re9.search(r"90d leave-one-cluster-out.*?sign flips 1/\d+: (\d+)", _txt9)
+    z4 = bool(_tm90) and _tm90.group(1) != "1283699"
+    print(f"  {'PASS' if z1 else 'FAIL'} | a LOCO line is present for all three windows ({sorted(_seen)})")
+    print(f"  {'PASS' if z2 else 'FAIL'} | every LOCO line sits under its own window header"
+          + ("" if z2 else " -> " + "; ".join(_bad[:3])))
+    print(f"  {'PASS' if z3 else 'FAIL'} | each line's 'full' equals that window's ladder coef")
+    print(f"  {'PASS' if z4 else 'FAIL'} | the 90d flip is NOT T-Mobile (it is {_tm90.group(1) if _tm90 else '?'})")
+    results.append(all([z1, z2, z3, z4]))
+
 print(f"\n{'='*70}")
 print(f"RESULT: {sum(results)}/{len(results)} tests passed")
 print("=" * 70)

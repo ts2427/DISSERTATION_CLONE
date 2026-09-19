@@ -330,9 +330,11 @@ _cens_keys = {(int(r['final_cik']), str(r['breach_date'])[:10])
 A1C = A1[~A1.set_index(KEY).index.map(lambda k: (int(k[0]), str(k[1])[:10]) in _cens_keys)]
 _slack = (pd.to_datetime(_CEN['last_filing'], errors='coerce')
           - (pd.to_datetime(_CEN['t0_rd'], errors='coerce') + timedelta(days=180))).dt.days
+_ti = _CEN.loc[_slack.idxmin()]
+_TIGHT = f"{_ti['org_name']} {str(_ti['breach_date'])[:10]}"
 CENS_NOTE = (f'removes {len(A1) - len(A1C)}; margin: min {int(_slack.min())} days, '
              f'median {int(_slack.median())} days between the 180d window end and the '
-             f'outcome CIK last filing (tightest: NextGen Healthcare 2023-03-29)')
+             f'outcome CIK last filing (tightest: {_TIGHT})')
 log('')
 log(f'Censoring rule (pre-specified): fully observed 180d outcome window '
     f'removes {len(A1) - len(A1C)} event(s). {CENS_NOTE}')
@@ -350,18 +352,32 @@ def lvl(name, d, note=''):
                 note=note)
 
 
+# Ledger notes are COMPUTED, never literal: a hand-written count or name silently goes
+# stale the moment the data moves, and the ledger is the artefact a reader trusts.
+_lost = crsp[crsp[['firm_size_log', 'leverage', 'roa']].isna().any(axis=1)]
+_lost_t = _lost[_lost['fcc_form499'] == 1]
+COV_NOTE = (f"loses {len(_lost)} of {len(crsp)} CRSP-linked events "
+            f"({len(_lost_t)} treated, {len(_lost) - len(_lost_t)} control)"
+            + ("; treated losses: " + '; '.join(
+                f"{r['org_name']} {str(r['breach_date'])[:10]}" for _, r in _lost_t.iterrows())
+               if len(_lost_t) else ""))
+
+_oc_diff = sc[sc['outcome_cik'].notna()
+              & (sc['outcome_cik'].astype('Int64') != sc['final_cik'].astype('Int64'))]
+_oc_names = sorted({f"{r['org_name']} ({int(r['final_cik'])}->{int(r['outcome_cik'])})"
+                    for _, r in _oc_diff.iterrows()})
+OC_NOTE = (f"outcome_cik resolved by rule (scripts/234); {len(_oc_diff)} event(s) use a "
+           f"CIK other than final_cik: " + '; '.join(_oc_names)) if len(_oc_diff) else     "outcome_cik resolved by rule (scripts/234); no event uses a CIK other than final_cik"
+
 led = [dict(step='PRC notification records (master_breach_dataset.xlsx)', N=1054, note='records; treatment undefined'),
        dict(step='Gate 1: signed parent CIK', N=758, note='records'),
        dict(step='Stage 3: CIK+date firm-day events', N=s3n, note='events'),
        dict(step='Gate 2 adjacency collapse', N=s4n, note='events'),
        lvl('Stage 4/5 canonical events (CANONICAL_V4)', ev, 'equity re-parenting re-collapse (-2)'),
        lvl('CRSP data (has_crsp_data)', crsp),
-       lvl('Compustat covariates (size, leverage, ROA) = Query 2 scope', cov,
-           f'Query 1 sample was {len(q1)}; +{len(extra)}: ' + '; '.join(
-               f"{r['org_name']} {r['breach_date']} (immediate_disclosure missing)" for _, r in extra.iterrows())),
+       lvl('Compustat covariates (size, leverage, ROA) = Query 2 scope', cov, COV_NOTE),
        lvl('Fully observed outcome window (pre-specified censoring rule)', A1C, CENS_NOTE),
-       lvl('Outcome-data requirement (>=1 8-K in [t0-730d, t0+180d], outcome CIK)', A1,
-           'outcome_cik resolved by rule (scripts/234); 7 events use a CIK other than final_cik: Disney, Google, Paramount x2, Sinclair x3'),
+       lvl('Outcome-data requirement (>=1 8-K in [t0-730d, t0+180d], outcome CIK)', A1, OC_NOTE),
        lvl('Prior 12-month market-adjusted return available (>=150 daily returns)', A2, 'ANALYSIS SAMPLE')]
 LED = pd.DataFrame(led)
 LED.to_csv(OUT / 'e_ledger.csv', index=False)
