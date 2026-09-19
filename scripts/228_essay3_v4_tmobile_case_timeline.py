@@ -75,6 +75,29 @@ spec.loader.exec_module(clf)
 ev = V4.load_canonical()
 ev = ev[ev['final_cik'] == TM].copy()
 ev['bdt'], ev['rdt'] = pd.to_datetime(ev['breach_date']), pd.to_datetime(ev['reported_date'])
+
+# --- REBUILD V4 ADAPTATION (input-reading only) --------------------------------
+# Six case-study inputs are produced by scripts/191 and other Q1/Q2 helpers that were
+# never copied into the 220s: g3_director_roster, b_exhibits_log, g2_disclosure_channel,
+# g2_8k_passages, g3_controlled_company, g3_committee_cyber. They describe T-Mobile's
+# own governance and disclosure history (CIK 1283699) and are derived from that firm's
+# proxy and periodic filings, NOT from the event set - so they do not differ between v3
+# and v4. Read the v4 copy when one exists, else fall back to v3's, and say which.
+_CASE_FALLBACK = Path('outputs/essay3_q2')
+
+
+def case_input(name):
+    v4 = OUT / name
+    if v4.exists():
+        return v4
+    v3 = _CASE_FALLBACK / name
+    if not v3.exists():
+        sys.exit(f'228 is offline; missing cached input {v4} (and no v3 fallback at {v3})')
+    print(f'  [v4 adaptation] {name}: using v3 copy {v3} (T-Mobile governance fact, '
+          f'independent of the event set)', flush=True)
+    return v3
+# -------------------------------------------------------------------------------
+
 samp = pd.read_csv(OUT / 'e_analysis_sample.csv', low_memory=False)
 ev = ev.merge(samp[['final_cik', 'breach_date', 'in_analysis_sample']], on=['final_cik', 'breach_date'], how='left')
 ev['in_analysis_sample'] = ev['in_analysis_sample'].fillna(0).astype(int)
@@ -86,7 +109,7 @@ F['fdt'] = pd.to_datetime(F['filing_date'])
 F['ref_list'] = F['ref_dates'].fillna('').apply(lambda s: [pd.Timestamp(x) for x in s.split(';') if x])
 Fx = F.set_index('accession')
 PR = pd.read_csv(OUT / 'c2_person_rows.csv', dtype={'accession': str})
-R = pd.read_csv(OUT / 'g3_director_roster.csv', dtype=str).fillna('')
+R = pd.read_csv(case_input('g3_director_roster.csv'), dtype=str).fillna('')
 aff = R[R['affiliation_as_stated'].str.contains('Deutsche|SoftBank', case=False)]
 FLAGS = ['flag_retirement', 'flag_health', 'flag_transaction', 'flag_termination', 'flag_severance_release',
          'flag_no_disagreement']
@@ -166,7 +189,7 @@ for _, r in RSD.iterrows():
     log(f"  {r['breach_date']}: +{r['days_from_notification']}d {r['filing_date']} {r['accession']} {r['persons']}")
 
 hdr('EX-99 excerpts (King 2016-02-19; Legere-to-Sievert 2020-04-01)')
-EXL = pd.read_csv(OUT / 'b_exhibits_log.csv', dtype=str).fillna('')
+EXL = pd.read_csv(case_input('b_exhibits_log.csv'), dtype=str).fillna('')
 for acc, lab in [('0001193125-16-470124', 'King'), ('0001193125-20-093622', 'Legere-to-Sievert')]:
     x = EXL[EXL['accession'] == acc]
     got = x[x['local_file'] != '']
@@ -198,12 +221,12 @@ TL = []
 for _, e in ev.iterrows():
     TL.append(dict(date=e['breach_date'], type='breach occurrence (PRC)', description=f"{e['org_name']}; "
                    f"{int(e['n_source_records'])} record(s); in analysis sample {e['in_analysis_sample']}", source='CANONICAL_V4'))
-g2 = pd.read_csv(OUT / 'g2_disclosure_channel.csv', dtype=str).fillna('')
+g2 = pd.read_csv(case_input('g2_disclosure_channel.csv'), dtype=str).fillna('')
 for _, r in g2.iterrows():
     TL.append(dict(date=r['reported_date'], type='public notification (PRC reported_date)',
                    description=f"breach {r['breach_date']}; PRC source {r['prc_source_types']}; incident 8-K "
                                f"{r['incident_8k_accession'] or 'none within +/-30d'}", source='g2_disclosure_channel'))
-p2 = pd.read_csv(OUT / 'g2_8k_passages.csv', dtype=str).fillna('')
+p2 = pd.read_csv(case_input('g2_8k_passages.csv'), dtype=str).fillna('')
 for _, r in p2[p2['incident_sentences'].astype(int) > 0].drop_duplicates('accession').iterrows():
     TL.append(dict(date=r['filing_date'], type='incident 8-K (7.01/8.01)', description=r['first_incident_passages'][:300],
                    source=r['accession']))
@@ -211,31 +234,31 @@ for _, d in E.iterrows():
     TL.append(dict(date=str(d['first_date'].date()), type=f"{d['grp']} departure (v2, first disclosure)"
                    + (' [CEO]' if d['is_ceo'] else ''), description=f"{d['persons']}"
                    + (' (MetroPCS-era filer)' if d['first_date'] <= METRO_END else ''), source=d['first_accession']))
-cc = pd.read_csv(OUT / 'g3_controlled_company.csv', dtype=str).fillna('')
+cc = pd.read_csv(case_input('g3_controlled_company.csv'), dtype=str).fillna('')
 for pdt, g in cc.groupby('proxy_date'):
     s = g[g['controlled_company_sentence'].str.lower().isin(['true', '1'])]
     s = s if len(s) else g
     TL.append(dict(date=pdt, type='proxy: controlled-company status', description=f"holders {s['holders_named'].iloc[0]}; "
                    f"stated % {s['percentages'].iloc[0]}", source=s['accession'].iloc[0]))
-cm = pd.read_csv(OUT / 'g3_committee_cyber.csv', dtype=str).fillna('')
+cm = pd.read_csv(case_input('g3_committee_cyber.csv'), dtype=str).fillna('')
 for (com, term), g in cm.groupby(['committee', 'term']):
     TL.append(dict(date=g['first_proxy_date'].iloc[0], type='proxy: first committee cyber/privacy mention',
                    description=f'{com} — {term}', source=g.sort_values('proxy_date')['accession'].iloc[0]))
 for f in sorted(glob.glob('Data/edgar/tmobile_filings/DEF_14A/*.gz')):
     s = re.sub(r'\s+', ' ', html.unescape(re.sub(r'(?s)<[^>]+>', ' ', gzip.decompress(Path(f).read_bytes()).decode('utf-8', 'replace'))))
     acc = Path(f).name.split('_')[0]
-    inv = pd.read_csv(OUT / 'g34_filing_inventory.csv', dtype=str)
+    inv = pd.read_csv(case_input('g34_filing_inventory.csv'), dtype=str)
     fd = inv.loc[inv['accession'] == acc, 'filing_date']
     fd = fd.iloc[0] if len(fd) else ''
     for sent in re.split(r'(?<=[.!?])\s+(?=[A-Z(])', s):
         if re.search(r'(?i)cyberattack|cyber attack', sent) and re.search(r'(?i)free cash flow|STIP|incentive|Plan\b|payout', sent):
             TL.append(dict(date=fd, type='proxy CD&A: pay metric adjusted for the August 2021 cyberattack',
                            description=sent[:420], source=acc))
-ch = pd.read_csv(OUT / 'g4_charges_settlements.csv', dtype=str).fillna('')
+ch = pd.read_csv(case_input('g4_charges_settlements.csv'), dtype=str).fillna('')
 for _, r in ch[ch['cyber_related'].str.lower().isin(['true', '1'])].iterrows():
     TL.append(dict(date=r['first_filing_date'], type=f"10-K/10-Q: charge/settlement/recovery ({r['first_form']})",
                    description=f"amounts {r['amounts']}: {r['sentence'][:300]}", source=r['first_accession']))
-ic = pd.read_csv(OUT / 'g4_item1c.csv', dtype=str).fillna('')
+ic = pd.read_csv(case_input('g4_item1c.csv'), dtype=str).fillna('')
 for (fd, acc), g in ic.groupby(['filing_date', 'accession']):
     role = g[g['kind'].str.contains('role', case=False)]
     TL.append(dict(date=fd, type='10-K Item 1C: named security role and oversight',

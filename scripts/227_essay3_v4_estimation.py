@@ -231,7 +231,12 @@ F2.to_csv(OUT / 'f2_baseline.csv', index=False)
 log(F2.to_string(index=False))
 
 hdr('F3 — SENSITIVITIES (one row per window; CV3 inference, WCR p with B = 9,999)')
-RS = pd.read_csv(OUT / 'd3_audit_recall_by_stratum.csv')
+# ADAPTATION (v4, input-reading only; declared in ANALYSIS_PLAN_V4.md before this
+# script was run): v4 has no recall audit of its own, and scripts/220 is
+# byte-identical to v3's scripts/195, so measured recall is a property of the frozen
+# classifier. The limitation - it was measured on v3-era documents and is assumed to
+# transfer - is recorded in the plan. No computation is changed.
+RS = pd.read_csv(Path('outputs/essay3_q2/d3_audit_recall_by_stratum.csv'))
 rr = RS[(RS['field'] == 'exec departure (A)') & (RS['scoring'] == 'PRIMARY (verified)')].set_index('stratum')
 
 
