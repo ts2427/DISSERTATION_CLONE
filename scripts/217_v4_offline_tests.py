@@ -1969,18 +1969,9 @@ q6 = _accs == ["a1", "a3"]      # a2 no 5.02, a4 is a 10-K, a5 outside the windo
 q7 = _m231.item502_filings([], pd.Timestamp("2020-01-01"),
                            pd.Timestamp("2020-12-31")) == []
 
-# --- the validation draw is frozen and deterministic ---
-_pool = [dict(cik=100 + i, accession="acc%02d" % i, filing_date="2020-01-01",
-              primary_doc="d.htm", local_file="f") for i in range(50)]
-_d1 = _m231.draw_validation(_pool)
-_d2 = _m231.draw_validation(list(reversed(_pool)))
-q8 = len(_d1) == 30                                     # min(30, 50)
-q9 = [x["accession"] for x in _d1] == [x["accession"] for x in _d2]   # input order irrelevant
-q10 = len(_m231.draw_validation(_pool[:7])) == 7        # min(30, 7)
-q11 = _m231.draw_validation([]) == []
-q12 = _m231.NEW_VALIDATION_SEED == 20260919 and _m231.NEW_VALIDATION_MAX == 30
-# duplicates collapse, so one filing cannot be drawn twice
-q13 = len(_m231.draw_validation(_pool[:5] + _pool[:5])) == 5
+# The validation draw moved to scripts/237: its pool must be "every document v4
+# added", which 231 cannot know - it only knows what it fetched. Covered by the
+# 237 test block below.
 
 # --- a missing input ABORTS, writing a PARTIAL log that names the phase ---
 # Snapshot the REAL log's mtime: asserting it is absent is wrong once 231 has
@@ -2036,12 +2027,6 @@ for _f, _lab in [(q1, "submissions assemble as [recent, *shards]"),
                  (q5, "the written shape is the one 234 reads"),
                  (q6, "only 8-K* filings listing 5.02 inside the window"),
                  (q7, "no pages -> no filings"),
-                 (q8, "draw size = min(30, new documents)"),
-                 (q9, "draw is deterministic, independent of input order"),
-                 (q10, "fewer than 30 new documents -> draw them all"),
-                 (q11, "no new documents -> empty draw"),
-                 (q12, "seed and cap are fixed constants in the script"),
-                 (q13, "a duplicated filing cannot be drawn twice"),
                  (q14, "a missing input ABORTS"),
                  (q15, "the partial log names the phase and the last item"),
                  (q16, "partial fetch rows are written on abort"),
@@ -2050,7 +2035,7 @@ for _f, _lab in [(q1, "submissions assemble as [recent, *shards]"),
                  (q19, "the missing accession is named"),
                  (q20, "an index with no 5.02 in-window is a genuine zero")]:
     print(f"  {'PASS' if _f else 'FAIL'} | {_lab}")
-results.append(all([q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14,
+results.append(all([q1, q2, q3, q4, q5, q6, q7, q14,
                     q15, q16, q17, q18, q19, q20]))
 
 
@@ -2328,6 +2313,85 @@ for _f, _lab in [(x1, "no requests import and no requests.get"),
 if _msg:
     print(f"         abort message: {_msg[:110]}")
 results.append(all([x1, x2, x3, x4, x5, x6, x7, x8]))
+
+
+print("\n" + "=" * 70)
+print("TEST: 237 pool is defined by what v4 ADDED, not by fetch history")
+print("=" * 70)
+_m237 = load(Path("scripts/237_validation_draw_v4.py"), "m237")
+_m237.OUT = TMP
+
+_frozen = {"Data/edgar/item5_02_text/1/v3_a.htm",
+           "Data/edgar/item5_02_text/1/v3_b.htm"}
+_scope = {"Data/edgar/item5_02_text/1/v3_a.htm",
+          "Data/edgar/item5_02_text/1/v3_b.htm",
+          "Data/edgar/item5_02_text/1/v4_a.htm",
+          "Data/edgar/item5_02_text/2/v4_b.htm",
+          "Data/edgar/item5_02_text/2/v4_c.htm"}
+_disk_all = _frozen | {"Data/edgar/item5_02_text/1/v4_a.htm",
+                       "Data/edgar/item5_02_text/2/v4_b.htm",
+                       "Data/edgar/item5_02_text/2/v4_c.htm",
+                       "Data/edgar/item5_02_text/3/v4_out_of_scope.htm"}
+_expected = ["Data/edgar/item5_02_text/1/v4_a.htm",
+             "Data/edgar/item5_02_text/2/v4_b.htm",
+             "Data/edgar/item5_02_text/2/v4_c.htm"]
+
+# The whole point: the SAME end state must give the same pool however it was
+# reached. One big fetch, or three small ones, or a re-run that fetched nothing.
+y1 = _m237.build_pool(_disk_all, _frozen, _scope) == _expected
+_after_first = _frozen | {"Data/edgar/item5_02_text/1/v4_a.htm"}
+_after_second = _after_first | {"Data/edgar/item5_02_text/2/v4_b.htm"}
+y2 = _m237.build_pool(_after_second, _frozen, _scope) == _expected[:2]
+y3 = _m237.build_pool(_disk_all, _frozen, _scope) == \
+     _m237.build_pool(set(reversed(sorted(_disk_all))), _frozen, _scope)
+# a re-run that fetched nothing new must not empty the pool (the defect being fixed)
+y4 = len(_m237.build_pool(_disk_all, _frozen, _scope)) == 3
+# v3's own documents are never in the pool
+y5 = not (set(_m237.build_pool(_disk_all, _frozen, _scope)) & _frozen)
+# a v4 document outside b_scope_filings is excluded
+y6 = "Data/edgar/item5_02_text/3/v4_out_of_scope.htm" not in \
+     _m237.build_pool(_disk_all, _frozen, _scope)
+
+# the draw is deterministic on the pool and capped at 30
+_pool50 = ["Data/edgar/item5_02_text/9/d%02d.htm" % i for i in range(50)]
+y7 = len(_m237.draw(_pool50)) == 30
+y8 = _m237.draw(_pool50) == _m237.draw(list(reversed(_pool50)))
+y9 = _m237.draw(_pool50[:7]) == sorted(_pool50[:7]) and _m237.draw([]) == []
+y10 = _m237.SEED == 20260919 and _m237.MAX_DRAW == 30
+# path normalisation: git's forward slashes must match local separators
+y11 = _m237.norm("Data\\edgar\\item5_02_text\\1\\a.htm") == \
+      "Data/edgar/item5_02_text/1/a.htm"
+# an empty frozen listing must ABORT rather than call every document v4's
+try:
+    _m237.frozen_paths(ref="refs/definitely-no-such-ref")
+    y12 = False
+except SystemExit:
+    y12 = True
+# the committed draw really is the 450-document pool, not the 5-document one
+_drawn = pd.read_csv("outputs/rebuild_v4/237_validation_new_ids.csv")
+y13 = len(_drawn) == 30 and _drawn["local_file"].nunique() == 30
+y14 = not Path("outputs/rebuild_v4/231_validation_new_ids.csv").exists()
+# and 231 no longer draws at all
+_t231b = Path("scripts/231_fetch_outcome_data_v4.py").read_text(encoding="utf-8")
+y15 = "draw_validation" not in _t231b and "NEW_VALIDATION_SEED" not in _t231b
+
+for _f, _lab in [(y1, "pool = (on disk - v3-frozen) AND in scope"),
+                 (y2, "a partial fetch gives the pool for THAT state, not a batch"),
+                 (y3, "pool is order-independent"),
+                 (y4, "a re-run that fetched nothing still sees the full pool"),
+                 (y5, "v3's frozen documents are never in the pool"),
+                 (y6, "a v4 document outside b_scope_filings is excluded"),
+                 (y7, "draw is capped at 30"),
+                 (y8, "draw is deterministic, order-independent"),
+                 (y9, "a small pool is drawn whole; an empty pool draws nothing"),
+                 (y10, "seed 20260919 and cap 30 are fixed in the script"),
+                 (y11, "Windows separators normalise to git's POSIX paths"),
+                 (y12, "an unreadable v3-frozen ref ABORTS"),
+                 (y13, "the operative draw has 30 distinct documents"),
+                 (y14, "the 5-document draw is no longer the operative file"),
+                 (y15, "231 no longer draws")]:
+    print(f"  {'PASS' if _f else 'FAIL'} | {_lab}")
+results.append(all([y1, y2, y3, y4, y5, y6, y7, y8, y9, y10, y11, y12, y13, y14, y15]))
 
 print(f"\n{'='*70}")
 print(f"RESULT: {sum(results)}/{len(results)} tests passed")

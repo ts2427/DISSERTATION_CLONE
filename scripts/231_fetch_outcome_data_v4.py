@@ -24,12 +24,9 @@ Two modes, run in this order:
     existing Data/edgar/item5_02_text/{cik}/{accession}_{primaryDocument}
     layout (scripts/187's convention, so the two vintages interleave).
 
-    It then draws the fresh OUT-OF-SAMPLE validation sample from the NEW
-    documents only.  The seed is fixed in this file, below, before any
-    classification exists for these documents.  This script NEVER classifies and
-    never reads classifier output - that separation is the whole point of the
-    firewall, and per Tim's ruling the v3-era draws and the v2 classifier are
-    frozen, with no retuning permitted under any result.
+    It does NOT draw the validation sample. That pool is "every document v4
+    added", a property of the repository rather than of one fetch, so it lives in
+    scripts/237. This script never classifies and never reads classifier output.
 
 NETWORK BEHAVIOUR is scripts/213's, reused rather than reimplemented: declared
 User-Agent from SEC_EDGAR_USER_AGENT, MIN_INTERVAL 0.20s (5 req/s), retry with
@@ -50,12 +47,10 @@ OUTPUTS
     Data/edgar/item5_02_text/{cik}/{acc}_{doc}     (--documents; the ONLY copy -
                                                    the ex21 cache is bypassed)
     outputs/rebuild_v4/231_fetch_rows.csv          one row per item attempted
-    outputs/rebuild_v4/231_validation_new_ids.csv  (--documents) the fresh draw
     outputs/rebuild_v4/231_fetch_log.md
 """
 import argparse
 import json
-import random
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -63,12 +58,8 @@ from pathlib import Path
 
 import pandas as pd
 
-# The validation seed is FIXED HERE, before any classification of the new
-# documents is run or inspected. Changing it after seeing any result would
-# destroy the firewall the v3 rounds established.
-NEW_VALIDATION_SEED = 20260919
-NEW_VALIDATION_MAX = 30
-
+# The validation draw lives in scripts/237, not here: its pool is "every document
+# v4 added", which this script cannot know - it only knows what it fetched.
 NEEDED = Path("outputs/rebuild_v4/234_submissions_needed.txt")
 GAP = Path("outputs/rebuild_v4/230_outcome_cik_gap.csv")
 SUBS_V4 = Path("Data/edgar/submissions_cache_v4")
@@ -380,34 +371,15 @@ def phase_documents():
                                      primary_doc=f["primary_doc"],
                                      local_file=str(dest)))
 
-    PHASE["name"] = "validation draw"
-    PHASE["detail"] = ""
-    draw = draw_validation(new_docs)
     log("")
-    log("## Fresh out-of-sample validation draw (new documents only)")
-    log("new documents fetched : " + str(len(new_docs)))
-    log("seed                  : " + str(NEW_VALIDATION_SEED) + " (fixed in the script)")
-    log("drawn                 : " + str(len(draw))
-        + " = min(" + str(NEW_VALIDATION_MAX) + ", new documents)")
-    if len(draw):
-        pd.DataFrame(draw).to_csv(OUT / "231_validation_new_ids.csv", index=False)
-        log("written " + str(OUT / "231_validation_new_ids.csv"))
-    log("")
-    log("The v3-era draws and the v2 classifier are FROZEN. These documents are "
-        "reference-coded and disclosed exactly as the v3 rounds were, and no "
-        "retuning follows from any result. This script does not classify.")
-
-
-def draw_validation(new_docs):
-    """Deterministic draw from the NEW documents only."""
-    pool = sorted({(d["cik"], d["accession"]): d for d in new_docs}.values(),
-                  key=lambda d: (int(d["cik"]), str(d["accession"])))
-    k = min(NEW_VALIDATION_MAX, len(pool))
-    if k == 0:
-        return []
-    rng = random.Random(NEW_VALIDATION_SEED)
-    return sorted(rng.sample(pool, k),
-                  key=lambda d: (int(d["cik"]), str(d["accession"])))
+    log("## Validation draw")
+    log("The draw is NOT made here. Its pool must be every document v4 ADDED, which")
+    log("is a property of the repository, not of which documents this particular run")
+    log("happened to fetch - a resumed or repeated fetch would otherwise redefine it.")
+    log("Run scripts/237_validation_draw_v4.py (offline) after scripts/235 reports a")
+    log("zero shortfall.")
+    log("new documents written by THIS run: " + str(len(new_docs))
+        + " (recorded only; not a pool)")
 
 
 def main():

@@ -82,7 +82,7 @@ outcome_cik,expected,on_disk,missing,org_name,submissions_cached
 1124610,9,9,0,"VMware, Inc.",1
 1133421,13,13,0,Northrop Grumman Systems Corporation,1
 1136893,28,28,0,"Fidelity National Information Services, Inc.",1
-1137789,21,16,5,Seagate US LLC,1
+1137789,21,21,0,Seagate US LLC,1
 1140859,13,13,0,"Cencora, Inc.",1
 1166691,29,29,0,Comcast,1
 1180262,7,7,0,"Herbalife International of America, Inc.",1

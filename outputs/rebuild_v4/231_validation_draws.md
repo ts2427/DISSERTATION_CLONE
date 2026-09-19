@@ -17,10 +17,26 @@ be mistaken later for the operative sample.
   rounds established is intact.
 - retained only as a record. It must not be used for scoring.
 
-## OPERATIVE — `231_validation_new_ids.csv`
+## SUPERSEDED — `231_validation_new_ids_SUPERSEDED_fetch_run_pool.csv`
 
-- drawn after `scripts/231 --documents` was re-run on the corrected scope and
-  `scripts/235` reported a zero shortfall
-- same fixed seed (20260919) and the same size rule, min(30, new documents),
-  over the completed pool
+- drawn after the corrected re-run, from a pool of **5** documents, seed 20260919
+- superseded because `scripts/231` defined the pool as "the documents THIS run
+  fetched" rather than "the documents v4 added". The re-run had only 5 filings
+  outstanding (Seagate), so the pool was 5 though v4 had added 450. A pool that
+  moves with fetch history is not a sampling frame: the same end state reached by
+  one fetch or by three would give different draws.
+- **No coding and no classification had occurred against this draw.**
+- retained only as a record. It must not be used for scoring.
+
+## OPERATIVE — `237_validation_new_ids.csv`
+
+- drawn by `scripts/237_validation_draw_v4.py`, offline, after `scripts/235`
+  reported a zero shortfall (1517/1517)
+- pool = files under `Data/edgar/item5_02_text/` that are NOT in
+  `git ls-tree -r v3-frozen`, intersected with the documents named in
+  `b_scope_filings.csv`. Nothing in that definition depends on when, or in how
+  many batches, the documents arrived.
+- measured pool: 1576 on disk - 1126 frozen in v3 = **450** added by v4, all 450
+  of them in scope
+- same fixed seed (20260919), size min(30, pool) = 30
 - this is the only draw used for new-document accuracy
