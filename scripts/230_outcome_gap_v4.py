@@ -33,10 +33,14 @@ from submissions METADATA, not fetched text, so it needs no document.
 
 OUTCOME CIK
 -----------
-The outcome CIK is v4's final_cik (post re-parenting).  Where scripts/233 marks
-the event contested between v3's RESOLVE dict and v4's re-parenting, the row
-carries resolve_contested = 1 and BOTH candidate CIKs; 231 fetches for both so
-no ruling is foreclosed by what has been downloaded.
+The outcome CIK comes from scripts/234 and is NEVER final_cik.  final_cik is the
+equity link and may be a successor that filed nothing in the event's window
+(Disney 1744489 for a 2008 event); the filings belong to whichever candidate the
+234 rule selected.  An event whose outcome_cik is still unresolved counts as
+needing a fetch, so it is never silently dropped.  Where scripts/233 marks the
+event contested against v3's RESOLVE dict, the row carries resolve_contested = 1
+and BOTH candidate CIKs; 231 fetches for both so no ruling is foreclosed by what
+has been downloaded.
 
 FAILS LOUDLY
 ------------
@@ -97,7 +101,8 @@ def cached_ciks(root):
     return out
 
 
-def build_gap(canon, links, cov, recon, cache):
+def build_gap(canon, links, cov, recon, cache, outcome=None):
+    outcome = outcome or {}
     canon = canon.copy()
     canon["breach_date"] = canon["breach_date"].astype(str).str[:10]
     key = ["final_cik", "breach_date"]
@@ -137,19 +142,25 @@ def build_gap(canon, links, cov, recon, cache):
                         and all(pd.notna(crow.get(c)) for c in SCOPE_COVARS))
         in_scope = int(is_linked == 1 and have_cov)
 
-        oc = int(e["final_cik"])
+        # The FILING entity, from scripts/234 - never final_cik, which is the
+        # equity link and may be a successor that filed nothing in the window.
+        oc_rec = outcome.get(k)
+        oc = None if oc_rec is None else oc_rec.get("outcome_cik")
+        oc = None if (oc is None or pd.isna(oc)) else int(oc)
+        oc_rule = "" if oc_rec is None else oc_rec.get("outcome_rule", "")
+        oc_why = "" if oc_rec is None else oc_rec.get("unresolved_reason", "")
         alt = contested.get(k, "")
-        n_cached = cache.get(oc, 0)
+        n_cached = 0 if oc is None else cache.get(oc, 0)
         rows.append(dict(
             final_cik=e["final_cik"], breach_date=e["breach_date"],
             org_name=e.get("org_name", ""),
             treated=int(e.get("fcc_form499", 0) or 0),
-            outcome_cik=oc,
+            outcome_cik=oc, outcome_rule=oc_rule, outcome_unresolved=oc_why,
             resolve_contested=int(alt != "" and pd.notna(alt)),
             resolve_alt_cik=alt,
             v4_linked=is_linked, covariates_present=int(have_cov), in_scope=in_scope,
             cached=int(n_cached > 0), n_cached_docs=n_cached,
-            needs_fetch=int(in_scope == 1 and n_cached == 0),
+            needs_fetch=int(in_scope == 1 and (oc is None or n_cached == 0)),
             rd_missing=int(pd.isna(rdt)),
             win_lo=lo.date().isoformat(), win_hi=hi.date().isoformat()))
     return pd.DataFrame(rows)
@@ -160,6 +171,13 @@ def main():
     links = pd.read_csv(require(LINKS), low_memory=False)
     cov = pd.read_csv(require(COVAR), low_memory=False)
     recon = pd.read_csv(RECON, low_memory=False) if RECON.exists() else None
+    ocp = Path("outputs/rebuild_v4/234_outcome_cik.csv")
+    if not ocp.exists():
+        abort("missing input: " + str(ocp) + " - run scripts/234 first; without "
+              "outcome_cik this list would be keyed on the equity link")
+    ocd = pd.read_csv(ocp, low_memory=False)
+    outcome = {(r["final_cik"], str(r["breach_date"])[:10]): r
+               for _, r in ocd.iterrows()}
     if recon is None:
         log("NOTE: " + str(RECON) + " absent - contested outcome CIKs not flagged. "
             "Run scripts/233 first if that matters.")
@@ -170,7 +188,7 @@ def main():
     log("Item 5.02 cache on disk: " + str(len(cache)) + " CIK directories, "
         + str(sum(cache.values())) + " documents")
 
-    gap = build_gap(canon, links, cov, recon, cache)
+    gap = build_gap(canon, links, cov, recon, cache, outcome)
     OUT.mkdir(parents=True, exist_ok=True)
     gap.to_csv(OUT / "230_outcome_cik_gap.csv", index=False)
 
@@ -198,8 +216,8 @@ def main():
     log("distinct outcome CIKs to fetch       : " + str(len(newc)))
     if len(need):
         log("")
-        cols = ["outcome_cik", "org_name", "breach_date", "treated",
-                "resolve_contested", "win_lo", "win_hi"]
+        cols = ["outcome_cik", "outcome_rule", "org_name", "breach_date", "treated",
+                "resolve_contested", "win_lo", "win_hi", "outcome_unresolved"]
         log(need[cols].sort_values(["outcome_cik", "breach_date"]).to_string(index=False))
 
     cont = gap[gap["resolve_contested"] == 1]

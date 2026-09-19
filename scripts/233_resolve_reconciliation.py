@@ -63,9 +63,17 @@ def parse_resolve(path):
     abort("no RESOLVE assignment found in " + str(path))
 
 
-def reconcile(resolve, canon, linked):
+def reconcile(resolve, canon, linked, outcome=None):
     """Pure. resolve: {cik: (action, target, reason)}; canon: CANONICAL_V4 frame;
-    linked: {(final_cik, breach_date): row-like with v4_linked / permno}."""
+    linked: {(final_cik, breach_date): row-like with v4_linked / permno};
+    outcome: {(final_cik, breach_date): outcome_cik or None} from scripts/234.
+
+    RESOLVE fixes the CIK whose FILINGS are read, so it is reconciled against
+    outcome_cik, not final_cik.  An event whose outcome_cik is not yet resolved
+    (its submissions are not cached) is 'pending', never agree and never
+    disagree - 224 blocks on both pending and disagree.
+    """
+    outcome = outcome or {}
     rows = []
     for cik, (action, target, reason) in sorted(resolve.items()):
         # v3 matched an event on final_cik == cik. After v4's re-parenting that
@@ -91,21 +99,24 @@ def reconcile(resolve, canon, linked):
                 else:
                     verdict = "agree"
                     detail = "RESOLVE excludes it and v4 does not link it"
-            elif e["final_cik"] == target:
-                verdict = "agree"
-                detail = ("v4 re-parented to " + str(target) + " upstream via "
-                          + str(basis) + "; RESOLVE would reach the same CIK - "
-                          "224 must not re-apply it")
-            elif e["final_cik"] == e["orig_cik"]:
-                verdict = "disagree"
-                detail = ("RESOLVE fixes the outcome CIK to " + str(target)
-                          + "; v4 left the event at " + str(e["final_cik"])
-                          + " (link_basis " + str(basis) + ")")
             else:
-                verdict = "disagree"
-                detail = ("RESOLVE fixes the outcome CIK to " + str(target)
-                          + "; v4 re-parented to " + str(e["final_cik"])
-                          + " via " + str(basis) + " - different answers")
+                oc = outcome.get(key, "__absent__")
+                if oc == "__absent__":
+                    verdict = "pending"
+                    detail = ("scripts/234 has not been run - no outcome_cik to "
+                              "reconcile against")
+                elif oc is None or (isinstance(oc, float) and pd.isna(oc)):
+                    verdict = "pending"
+                    detail = ("outcome_cik unresolved (submissions not cached); "
+                              "resolve after the 231 fetch, then re-run 233")
+                elif int(oc) == int(target):
+                    verdict = "agree"
+                    detail = ("v4's outcome_cik rule reaches " + str(target)
+                              + " independently - RESOLVE must not be re-applied")
+                else:
+                    verdict = "disagree"
+                    detail = ("RESOLVE fixes the outcome CIK to " + str(target)
+                              + "; v4's rule reaches " + str(int(oc)))
             rows.append(dict(zip(COLS, [
                 cik, action, target, e.get("org_name", ""),
                 str(e["breach_date"])[:10], int(e.get("fcc_form499", 0) or 0),
@@ -130,10 +141,22 @@ def main():
         for _, r in links.iterrows():
             linked[(r["final_cik"], str(r["breach_date"])[:10])] = r
 
-    out = reconcile(resolve, canon, linked)
+    outcome = {}
+    ocp = Path("outputs/rebuild_v4/234_outcome_cik.csv")
+    if ocp.exists():
+        oc = pd.read_csv(ocp, low_memory=False)
+        for _, r in oc.iterrows():
+            outcome[(r["final_cik"], str(r["breach_date"])[:10])] = (
+                None if pd.isna(r["outcome_cik"]) else int(r["outcome_cik"]))
+    else:
+        print("NOTE: " + str(ocp) + " absent - run scripts/234 first; "
+              "every FIX row will read as pending.")
+
+    out = reconcile(resolve, canon, linked, outcome)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     out.to_csv(OUT, index=False)
     n_dis = int((out["verdict"] == "disagree").sum())
+    n_pend = int((out["verdict"] == "pending").sum())
     print("=" * 78)
     print("RESOLVE vs v4 RE-PARENTING - scripts/233")
     print("=" * 78)
@@ -146,8 +169,13 @@ def main():
               + " " + str(r["breach_date"]))
         print("           " + str(r["detail"]))
     print()
-    print("rows " + str(len(out)) + "; agree " + str(len(out) - n_dis)
-          + "; disagree " + str(n_dis))
+    print("rows " + str(len(out)) + "; agree "
+          + str(len(out) - n_dis - n_pend) + "; disagree " + str(n_dis)
+          + "; pending " + str(n_pend))
+    for _, r in out[out["verdict"] == "pending"].iterrows():
+        print("  PENDING  " + str(r["resolve_cik"]) + " " + str(r["org_name"])
+              + " " + str(r["breach_date"]))
+        print("           " + str(r["detail"]))
     print("written " + str(OUT))
     print("Each disagreement needs a ruling in outputs/rebuild_v4/resolve_rulings.csv "
           "before 224 can run.")

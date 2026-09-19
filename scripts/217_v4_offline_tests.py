@@ -1660,7 +1660,12 @@ _gv = pd.DataFrame([
     dict(final_cik=222, breach_date="2021-01-01", firm_size_log=1.0, leverage=0.1, roa=0.1),
     dict(final_cik=333, breach_date="2019-03-01", firm_size_log=1.0, leverage=0.1, roa=0.1),
 ])
-_gap = _m230.build_gap(_gc, _gl, _gv, None, {333: 4})
+# build_gap now takes outcome_cik from scripts/234; without it every event
+# reads as "outcome unresolved" and therefore as needing a fetch.
+_go = {(111, "2020-06-01"): {"outcome_cik": 111, "outcome_rule": "final_cik"},
+       (222, "2021-01-01"): {"outcome_cik": 222, "outcome_rule": "final_cik"},
+       (333, "2019-03-01"): {"outcome_cik": 333, "outcome_rule": "final_cik"}}
+_gap = _m230.build_gap(_gc, _gl, _gv, None, {333: 4}, _go)
 _r = _gap.set_index("final_cik")
 d1 = int(_r.loc[111, "in_scope"]) == 1 and int(_r.loc[111, "needs_fetch"]) == 1
 d2 = int(_r.loc[222, "in_scope"]) == 0        # inherited has_crsp_data must not rescue it
@@ -1671,14 +1676,16 @@ d6 = _r.loc[111, "win_lo"] == "2018-06-02"    # 730d before the EARLIER anchor
 #    2018-06-02, not 06-01: 2020 is a leap year, so 730 calendar days back from
 #    2020-06-01 crosses 2020-02-29. The window is days, never "two years".
 # abort() flushes its log to module OUT; point it at the temp dir so the suite
-# never writes into the repository (it did, once - outputs/rebuild_v4/230_outcome_gap.md).
+# never writes into the repository (it did, once).
 _m230.OUT = TMP
 try:
     _m230.require(Path("scripts/__nope__.csv"))
     d7 = False
 except SystemExit:
     d7 = True
-d7 = d7 and not (Path("outputs/rebuild_v4") / "230_outcome_gap.md").exists()
+# Assert the abort log landed in the TEMP dir. Checking that the repo copy is
+# ABSENT is wrong: 230 has legitimately run, so that file exists on purpose.
+d7 = d7 and (TMP / "230_outcome_gap.md").exists()
 print(f"  {'PASS' if d1 else 'FAIL'} | linked + covariates + no cache -> needs_fetch")
 print(f"  {'PASS' if d2 else 'FAIL'} | v3 has_crsp_data=1 but v4_linked=0 -> OUT of scope")
 print(f"  {'PASS' if d3 else 'FAIL'} | already-cached CIK is in scope but needs no fetch")
@@ -1711,14 +1718,15 @@ _rc = pd.DataFrame([
 _ln = {(900, "2013-07-22"): pd.Series(dict(v4_linked=0, permno=None)),
        (700, "2020-12-29"): pd.Series(dict(v4_linked=1, permno=61735)),
        (555, "2008-07-29"): pd.Series(dict(v4_linked=1, permno=26403))}
-_out = _m233.reconcile(_rs, _rc, _ln).set_index("resolve_cik")
+_oc = {(700, "2020-12-29"): 700, (555, "2008-07-29"): 555}
+_out = _m233.reconcile(_rs, _rc, _ln, _oc).set_index("resolve_cik")
 e1 = _out.loc[900, "verdict"] == "agree"     # EXCLUDE + not linked
 e2 = _out.loc[901, "verdict"] == "agree"     # v4 reached the same CIK
 e3 = _out.loc[902, "verdict"] == "disagree"  # v4 re-parented elsewhere
 e4 = _out.loc[903, "verdict"] == "disagree"  # RESOLVE names an event v4 does not have
 # an EXCLUDE that v4 DOES link must flip to disagree
 _ln2 = dict(_ln); _ln2[(900, "2013-07-22")] = pd.Series(dict(v4_linked=1, permno=87128))
-e5 = _m233.reconcile({900: _rs[900]}, _rc, _ln2).iloc[0]["verdict"] == "disagree"
+e5 = _m233.reconcile({900: _rs[900]}, _rc, _ln2, _oc).iloc[0]["verdict"] == "disagree"
 for _f, _lab in [(e0, "RESOLVE parsed from source without importing 199"),
                  (e1, "EXCLUDE + v4 does not link -> agree"),
                  (e2, "v4 re-parented to the same CIK -> agree"),
@@ -1777,6 +1785,128 @@ for _f, _lab in [(g1, "float 1300.0 -> '001300'"),
                  (g12, "float-keyed links join to string-keyed funda")]:
     print(f"  {'PASS' if _f else 'FAIL'} | {_lab}")
 results.append(all([g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11, g12]))
+
+
+print("\n" + "=" * 70)
+print("TEST: 234 outcome_cik rule (window, predecessor, 8-K counts, fall-through)")
+print("=" * 70)
+_m234 = load(Path("scripts/234_outcome_cik_v4.py"), "m234")
+_m234.OUT = TMP
+
+# --- fetch window: 730d off the EARLIER anchor, 180d off the LATER ---
+_lo, _hi = _m234.fetch_window("2020-06-01", "2020-07-01")
+h1 = _lo.date().isoformat() == "2018-06-02" and _hi.date().isoformat() == "2020-12-28"
+# breach AFTER reported (v3's recoded / wrong-field delays) -> post-window off breach
+_lo2, _hi2 = _m234.fetch_window("2021-03-01", "2020-12-01")
+h2 = _lo2.date().isoformat() == "2018-12-02" and _hi2.date().isoformat() == "2021-08-28"
+# missing reported_date -> rd_eff = breach_date
+_lo3, _hi3 = _m234.fetch_window("2019-03-01", None)
+h3 = _lo3.date().isoformat() == "2017-03-01" and _hi3.date().isoformat() == "2019-08-28"
+
+# --- predecessor term must be cut at 'pursuant' (the run-1 defect) ---
+h4 = _m234.predecessor_term(
+    "establishing Disney as the successor issuer to Old Disney pursuant to Rule "
+    "12g-3(a) under the Securities Exchange Act of 1934") == "Old Disney"
+h5 = _m234.predecessor_term(
+    "Alphabet, a Delaware corporation, became the successor issuer to Google, a "
+    "Delaware corporation.") == "Google"
+h6 = _m234.predecessor_term("no succession language here") == ""
+
+# --- defined term -> legal name ---
+_disney = ('among Twenty-First Century Fox, Inc. (“ 21CF ”), TWDC Enterprises '
+           '18 Corp. (formerly known as The Walt Disney Company) (“ Old Disney ”), '
+           'The Walt Disney Company')
+h7 = _m234.resolve_definition(_disney, "Old Disney") == "TWDC Enterprises 18 Corp."
+_sbg = ('the company formerly known as Sinclair Broadcast Group, Inc., a Maryland '
+        'corporation (“ SBG ”)')
+h8 = _m234.resolve_definition(_sbg, "SBG") == "Sinclair Broadcast Group, Inc."
+h9 = _m234.resolve_definition(_disney, "Nonexistent Term") == ""
+
+# --- 8-K counting ---
+_pages = [{"form": ["8-K", "8-K/A", "8-K12B", "10-K", "8-K"],
+           "filingDate": ["2020-01-15", "2020-02-01", "2020-03-01", "2020-04-01",
+                          "2019-01-01"]}]
+_lo4, _hi4 = pd.Timestamp("2020-01-01"), pd.Timestamp("2020-03-31")
+h10 = _m234.count_8k(_pages, _lo4, _hi4) == 3          # 10-K excluded, 2019 outside
+h11 = _m234.count_8k(_pages, pd.Timestamp("2020-01-15"),
+                     pd.Timestamp("2020-01-15")) == 1   # boundaries inclusive
+h12 = _m234.count_8k(None, _lo4, _hi4) == 0
+
+# --- the fall-through rule: an UNCACHED higher rank blocks, a definite 0 does not ---
+_ev = dict(final_cik=1744489, orig_cik=926480, breach_date="2008-07-29",
+           reported_date="2008-07-29", org_name="Disney-like", fcc_form499=0,
+           link_basis="successor_filing")
+_mk = lambda d: [{"form": ["8-K"] * len(d), "filingDate": d}]
+
+
+def _pages_uncached_final(cik):
+    return None if int(cik) == 1744489 else _mk(["2008-01-02"])
+
+
+def _pages_zero_final(cik):
+    return _mk([]) if int(cik) == 1744489 else _mk(["2008-01-02"])
+
+
+_r1, _e1, _n1 = _m234.resolve_event(pd.Series(_ev), {}, _pages_uncached_final, {},
+                                    lambda b: [], {})
+h13 = _r1["outcome_cik"] is None and "submissions_not_cached" in _r1["unresolved_reason"]
+h14 = 1744489 in _n1
+_r2, _e2, _n2 = _m234.resolve_event(pd.Series(_ev), {}, _pages_zero_final, {},
+                                    lambda b: [], {})
+h15 = _r2["outcome_cik"] == 926480 and _r2["outcome_rule"] == "orig_cik"
+h16 = int(_r2["differs_from_final"]) == 1
+
+# --- name index: unique only ---
+_idx = {"TWDC ENTERPRISES 18 CORP.": {1001039}, "GOOGLE INC": {1302837, 1136101}}
+h17 = _m234.name_to_cik(_idx, "TWDC Enterprises 18 Corp.")[0] == 1001039
+h18 = _m234.name_to_cik(_idx, "Google Inc")[0] is None      # ambiguous -> refuse
+h19 = _m234.name_to_cik(_idx, "")[0] is None
+
+for _f, _lab in [(h1, "window: 730d before the earlier anchor (leap-year exact)"),
+                 (h2, "window: breach after reported -> post-window off breach"),
+                 (h3, "window: missing reported_date -> rd_eff = breach_date"),
+                 (h4, "predecessor term cut at 'pursuant' -> 'Old Disney'"),
+                 (h5, "predecessor term stops at the comma -> 'Google'"),
+                 (h6, "no succession language -> no term"),
+                 (h7, "'Old Disney' -> 'TWDC Enterprises 18 Corp.'"),
+                 (h8, "'SBG' -> 'Sinclair Broadcast Group, Inc.'"),
+                 (h9, "an undefined term resolves to nothing"),
+                 (h10, "8-K/8-K/A/8-K12B counted, 10-K not, outside window not"),
+                 (h11, "window boundaries are inclusive"),
+                 (h12, "uncached submissions count as 0 rows, not a crash"),
+                 (h13, "UNCACHED higher rank BLOCKS - no fall-through"),
+                 (h14, "the uncached CIK is added to the 231 fetch list"),
+                 (h15, "a DEFINITE zero falls through to orig_cik"),
+                 (h16, "and is flagged as differing from final_cik"),
+                 (h17, "unique name -> CIK"),
+                 (h18, "ambiguous name -> refused, never guessed"),
+                 (h19, "empty name -> refused")]:
+    print(f"  {'PASS' if _f else 'FAIL'} | {_lab}")
+results.append(all([h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14,
+                    h15, h16, h17, h18, h19]))
+
+print("\n" + "=" * 70)
+print("TEST: 233 reconciles against outcome_cik, pending when unresolved")
+print("=" * 70)
+_m233b = load(Path("scripts/233_resolve_reconciliation.py"), "m233b")
+_rc2 = pd.DataFrame([
+    dict(final_cik=1744489, orig_cik=926480, link_basis="successor_filing",
+         org_name="Disney-like", breach_date="2008-07-29", fcc_form499=0)])
+_ln3 = {(1744489, "2008-07-29"): pd.Series(dict(v4_linked=1, permno=26403))}
+_rv = {926480: ("FIX", 1001039, "files under 1001039")}
+k1 = _m233b.reconcile(_rv, _rc2, _ln3, {(1744489, "2008-07-29"): 1001039}
+                      ).iloc[0]["verdict"] == "agree"
+k2 = _m233b.reconcile(_rv, _rc2, _ln3, {(1744489, "2008-07-29"): None}
+                      ).iloc[0]["verdict"] == "pending"
+k3 = _m233b.reconcile(_rv, _rc2, _ln3, {(1744489, "2008-07-29"): 999999}
+                      ).iloc[0]["verdict"] == "disagree"
+k4 = _m233b.reconcile(_rv, _rc2, _ln3, {}).iloc[0]["verdict"] == "pending"
+for _f, _lab in [(k1, "outcome_cik == RESOLVE target -> agree"),
+                 (k2, "outcome_cik unresolved -> pending, never agree"),
+                 (k3, "outcome_cik != RESOLVE target -> disagree"),
+                 (k4, "234 not run -> pending")]:
+    print(f"  {'PASS' if _f else 'FAIL'} | {_lab}")
+results.append(all([k1, k2, k3, k4]))
 
 print(f"\n{'='*70}")
 print(f"RESULT: {sum(results)}/{len(results)} tests passed")
