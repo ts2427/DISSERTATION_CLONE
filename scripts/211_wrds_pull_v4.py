@@ -422,9 +422,15 @@ def run_issuer_permco_pull(db):
     permco is selected HERE and not in the base pull, so the permco fallback is
     impossible until this runs.
     """
+    global SUFFIX
+    # Distinct from the CIK top-up's suffix: when both run in one invocation they would
+    # otherwise write the same filenames and the no-clobber guard would abort halfway.
+    # The name still matches 212's *_topup_*.csv glob, so both sets are read as one.
+    SUFFIX = f"{SUFFIX}_issuer" if SUFFIX else "_issuer"
     files = []
     log("")
     log("## ISSUER / PERMCO TOP-UP")
+    log(f"  output suffix: `{SUFFIX}`")
     codes = issuer_codes()
     log(f"  6-char issuer codes from comp.security (US common): {len(codes)}")
     names = fetch_chunked(
