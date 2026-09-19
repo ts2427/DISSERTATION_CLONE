@@ -40,7 +40,6 @@ from datetime import timedelta
 from pathlib import Path
 import numpy as np
 import pandas as pd
-import requests
 
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 OUT = Path('outputs/essay3_v4')
@@ -60,7 +59,7 @@ _spec_v4.loader.exec_module(V4)
 TXT = Path('Data/edgar/item5_02_text')
 OCC = Path('Data/edgar/essay3_v4_outcome_cik_cache')
 OCC.mkdir(parents=True, exist_ok=True)
-H = {'User-Agent': 'Academic Research (University of South Alabama) timothy.spivey@southalabama.edu'}
+SUBS_V4 = Path('Data/edgar/submissions_cache_v4')
 RULE = pd.Timestamp('2007-12-08')
 L = []
 
@@ -93,22 +92,20 @@ KEY = ['final_cik', 'breach_date']
 
 # ------------------------------------------------------------------ submissions + 8-K lists
 def pages_for(cik):
-    fp = Path(f'Data/edgar/rebuild_submissions_cache/{cik}.json')
-    if fp.exists():
-        return json.loads(fp.read_text())
-    fp = OCC / f'{cik}.json'
-    if not fp.exists():
-        pages = []
-        r = requests.get(f'https://data.sec.gov/submissions/CIK{int(cik):010d}.json', headers=H, timeout=30)
-        time.sleep(0.2)
-        d = r.json()
-        pages.append(d['filings']['recent'])
-        for extra in d['filings'].get('files', []):
-            r2 = requests.get(f'https://data.sec.gov/submissions/{extra["name"]}', headers=H, timeout=30)
-            time.sleep(0.2)
-            pages.append(r2.json())
-        fp.write_text(json.dumps(pages))
-    return json.loads(fp.read_text())
+    """Submissions for one CIK, from cache only.
+
+    v3 fetched here on a miss. This script is OFFLINE: everything it needs was
+    fetched by scripts/231, and a silent mid-analysis download would make the
+    sample depend on when it was run. A miss aborts and names the file to fetch.
+    """
+    for root in (SUBS_V4, Path('Data/edgar/rebuild_submissions_cache'), OCC):
+        fp = Path(root) / f'{cik}.json'
+        if fp.exists():
+            return json.loads(fp.read_text())
+    raise SystemExit(
+        f'224 is offline; missing cached input '
+        f'{Path(SUBS_V4) / f"{cik}.json"}  '
+        f'(run: python scripts/231_fetch_outcome_data_v4.py --submissions)')
 
 
 def filings_df(cik):

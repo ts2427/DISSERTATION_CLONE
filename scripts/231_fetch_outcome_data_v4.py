@@ -47,7 +47,8 @@ running and what had completed, then exits nonzero (cf. 211/213).
 OUTPUTS
 -------
     Data/edgar/submissions_cache_v4/{cik}.json     (--submissions)
-    Data/edgar/item5_02_text/{cik}/{acc}_{doc}     (--documents)
+    Data/edgar/item5_02_text/{cik}/{acc}_{doc}     (--documents; the ONLY copy -
+                                                   the ex21 cache is bypassed)
     outputs/rebuild_v4/231_fetch_rows.csv          one row per item attempted
     outputs/rebuild_v4/231_validation_new_ids.csv  (--documents) the fresh draw
     outputs/rebuild_v4/231_fetch_log.md
@@ -359,7 +360,9 @@ def phase_documents():
                 continue
             url = ("https://www.sec.gov/Archives/edgar/data/" + str(cik) + "/"
                    + f["accession"].replace("-", "") + "/" + f["primary_doc"])
-            data = m.fetch(url)
+            # cache=False: the document's home is item5_02_text/. Caching it in
+            # ex21_cache_v4/ as well stored 40 MB of exact duplicates.
+            data = m.fetch(url, cache=False)
             if data is None:
                 ROWS.append(dict(phase="documents", cik=cik,
                                  breach_date=r["breach_date"],

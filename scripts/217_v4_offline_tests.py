@@ -2195,6 +2195,140 @@ for _f, _lab in [(t1, "a window ending before the last filing is NOT censored"),
     print(f"  {'PASS' if _f else 'FAIL'} | {_lab}")
 results.append(all([t1, t2, t3, t4, t5, t6]))
 
+
+print("\n" + "=" * 70)
+print("TEST: 213 fetch(cache=False) bypasses ex21_cache_v4 entirely")
+print("=" * 70)
+import os as _os3
+_m213c = load(Path("scripts/213_stage3_verify.py"), "m213_cache")
+_os3.environ[_m213c.UA_ENV] = "Offline Test test@example.edu"
+_m213c.CACHE = TMP / "ex21cache"
+_m213c.CACHE.mkdir(parents=True, exist_ok=True)
+_m213c.MIN_INTERVAL = 0.0
+
+
+class _FakeResp:
+    def __init__(self, data):
+        self.data, self.status = data, 200
+
+    def read(self):
+        return self.data
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *a):
+        return False
+
+
+_hits = []
+
+
+def _fake_urlopen(req, timeout=None):
+    _hits.append(getattr(req, "full_url", str(req)))
+    return _FakeResp(b"<html><body>a filing document</body></html>")
+
+
+_m213c.urlopen = _fake_urlopen
+_u1 = "https://www.sec.gov/Archives/edgar/data/1/1/doc_nocache.htm"
+_u2 = "https://www.sec.gov/Archives/edgar/data/1/1/doc_cached.htm"
+_d1 = _m213c.fetch(_u1, cache=False)
+_d2 = _m213c.fetch(_u2, cache=True)
+w1 = _d1 == b"<html><body>a filing document</body></html>"
+w2 = not _m213c.cache_path(_u1).exists()      # nothing written
+w3 = _m213c.cache_path(_u2).exists()          # default behaviour unchanged
+# a cached copy must not even be READ when cache=False
+_m213c.cache_path(_u1).write_bytes(b"STALE")
+_before = len(_hits)
+_d3 = _m213c.fetch(_u1, cache=False)
+w4 = _d3 != b"STALE" and len(_hits) == _before + 1
+_m213c.cache_path(_u1).unlink()
+# and IS read when cache=True
+_before2 = len(_hits)
+_d4 = _m213c.fetch(_u2, cache=True)
+w5 = _d4 == _d2 and len(_hits) == _before2    # served from disk, no request
+# 231 must actually pass cache=False for documents
+_t231 = Path("scripts/231_fetch_outcome_data_v4.py").read_text(encoding="utf-8")
+w6 = "m.fetch(url, cache=False)" in _t231
+for _f, _lab in [(w1, "cache=False still returns the bytes"),
+                 (w2, "cache=False writes nothing to ex21_cache_v4"),
+                 (w3, "cache=True still writes (default unchanged)"),
+                 (w4, "cache=False does not READ a stale cached copy"),
+                 (w5, "cache=True still serves from disk without a request"),
+                 (w6, "231 fetches documents with cache=False")]:
+    print(f"  {'PASS' if _f else 'FAIL'} | {_lab}")
+results.append(all([w1, w2, w3, w4, w5, w6]))
+
+print("\n" + "=" * 70)
+print("TEST: 224 is fully offline")
+print("=" * 70)
+_src224 = Path("scripts/224_essay3_v4_sample_e.py").read_text(encoding="utf-8")
+x1 = "import requests" not in _src224 and "requests.get" not in _src224
+x2 = "urlopen" not in _src224
+x3 = "User-Agent" not in _src224 and "southalabama.edu" not in _src224
+x4 = "224 is offline; missing cached input" in _src224
+# AST: no call to a network entry point survives anywhere in the file
+import ast as _ast3
+_tree224 = _ast3.parse(_src224)
+# Precise: a bare .get( is dict.get / Series.get, which is everywhere. Only a call
+# ON a network module, or a bare network entry point, counts.
+_NET_MODULES = {"requests", "urllib", "httpx", "http", "urllib3", "aiohttp"}
+_NET_NAMES = {"urlopen", "urlretrieve", "Request"}
+_net_calls = []
+for _n in _ast3.walk(_tree224):
+    if not isinstance(_n, _ast3.Call):
+        continue
+    _f = _n.func
+    if isinstance(_f, _ast3.Attribute) and isinstance(_f.value, _ast3.Name)             and _f.value.id in _NET_MODULES:
+        _net_calls.append(_f.value.id + "." + _f.attr)
+    elif isinstance(_f, _ast3.Name) and _f.id in _NET_NAMES:
+        _net_calls.append(_f.id)
+# and no network module may even be imported
+for _n in _ast3.walk(_tree224):
+    if isinstance(_n, _ast3.Import):
+        _net_calls += [a.name for a in _n.names if a.name.split(".")[0] in _NET_MODULES]
+    elif isinstance(_n, _ast3.ImportFrom) and (_n.module or "").split(".")[0] in _NET_MODULES:
+        _net_calls.append(_n.module)
+x5 = not _net_calls
+
+# functional: run pages_for in isolation (224 has no main guard, so it cannot be
+# imported without executing the whole analysis)
+_fn = None
+for _n in _tree224.body:
+    if isinstance(_n, _ast3.FunctionDef) and _n.name == "pages_for":
+        _fn = _ast3.get_source_segment(_src224, _n)
+x6 = _fn is not None
+if x6:
+    _ns = {"Path": Path, "json": json, "SUBS_V4": TMP / "subs_v4",
+           "OCC": TMP / "occ", "SystemExit": SystemExit}
+    exec(_fn, _ns)
+    try:
+        _ns["pages_for"](999999)
+        x7 = False
+        _msg = ""
+    except SystemExit as e:
+        _msg = str(e)
+        x7 = "224 is offline; missing cached input" in _msg
+    (TMP / "subs_v4").mkdir(parents=True, exist_ok=True)
+    (TMP / "subs_v4" / "424242.json").write_text(json.dumps([{"form": ["8-K"]}]),
+                                                 encoding="utf-8")
+    x8 = _ns["pages_for"](424242) == [{"form": ["8-K"]}]
+else:
+    x7 = x8 = False
+    _msg = ""
+for _f, _lab in [(x1, "no requests import and no requests.get"),
+                 (x2, "no urlopen"),
+                 (x3, "the hard-coded User-Agent is gone"),
+                 (x4, "the offline abort message is present"),
+                 (x5, "no network module imported and no network call in the AST"),
+                 (x6, "pages_for is isolatable for testing"),
+                 (x7, "a cache miss ABORTS naming the missing file"),
+                 (x8, "a cache hit still returns the pages")]:
+    print(f"  {'PASS' if _f else 'FAIL'} | {_lab}")
+if _msg:
+    print(f"         abort message: {_msg[:110]}")
+results.append(all([x1, x2, x3, x4, x5, x6, x7, x8]))
+
 print(f"\n{'='*70}")
 print(f"RESULT: {sum(results)}/{len(results)} tests passed")
 print("=" * 70)

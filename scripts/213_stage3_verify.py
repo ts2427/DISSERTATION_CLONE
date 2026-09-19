@@ -284,8 +284,12 @@ def _throttle():
     _last_call[0] = time.time()
 
 
-def fetch(url):
+def fetch(url, cache=True):
     """Cached, rate-limited, retrying GET. -> bytes, or None if the document is absent.
+
+    cache=False bypasses Data/edgar/ex21_cache_v4/ entirely - neither read nor written.
+    scripts/231 uses it for Item 5.02 documents, which have their own home under
+    Data/edgar/item5_02_text/; caching them here too stored 40 MB of duplicates.
 
     Run 2 died on a bare HTTP 503 out of urlopen; run 3 died on a read TimeoutError out of
     r.read(). Both mean "try again", not "no such document", so both are retried with
@@ -299,7 +303,7 @@ def fetch(url):
     and retried five times.
     """
     p = cache_path(url)
-    if p.exists():
+    if cache and p.exists():
         return p.read_bytes()
     last = ""
     for attempt in range(1, MAX_ATTEMPTS + 1):
@@ -336,8 +340,9 @@ def fetch(url):
                 last = "HTTP 200 carrying an SEC error/throttle page"
                 wait = BACKOFF_BASE ** attempt
             else:
-                CACHE.mkdir(parents=True, exist_ok=True)
-                p.write_bytes(data)
+                if cache:
+                    CACHE.mkdir(parents=True, exist_ok=True)
+                    p.write_bytes(data)
                 return data
         if attempt >= MAX_ATTEMPTS:
             break
