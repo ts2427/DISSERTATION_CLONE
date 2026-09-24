@@ -4,7 +4,7 @@ primary H6,F1 exec departure 90d,0.7603,0.7017,0.9272
 primary H6,F1 exec departure 180d,0.7026,0.6616,0.9272
 placebo,F4 pre-notification exec departure,0.3191,0.2388,0.3191
 sensitivities,F3 year FE (reported year) 30d,0.8648,0.8339,0.9912
-sensitivities,F3 two-digit SIC FE 30d,0.2677,0.1742,0.9912
+sensitivities,F3 two-digit SIC FE 30d,0.2677,0.1749,0.9912
 sensitivities,F3 breach_date anchor 30d,0.6324,0.5949,0.9912
 sensitivities,F3 excluding pre-announced departures 30d,0.5941,0.5506,0.9912
 sensitivities,F3 excluding the F2 baseline control 30d,0.9254,0.915,0.9912
@@ -13,7 +13,7 @@ sensitivities,"F3 recall-corrected, audit point estimates (r_T=0.842, r_C=0.750)
 sensitivities,"F3 recall-corrected, treated recall at CI low / control at CI high (r_T=0.604, r_C=0.927) 30d",0.6281,0.5918,0.9912
 sensitivities,"F3 recall-corrected, treated recall at CI high / control at CI low (r_T=0.966, r_C=0.476) 30d",0.6586,0.6092,0.9912
 sensitivities,F3 year FE (reported year) 90d,0.977,0.9691,0.9912
-sensitivities,F3 two-digit SIC FE 90d,0.5062,0.3898,0.9912
+sensitivities,F3 two-digit SIC FE 90d,0.5062,0.3878,0.9912
 sensitivities,F3 breach_date anchor 90d,0.3233,0.2494,0.9912
 sensitivities,F3 excluding pre-announced departures 90d,0.8909,0.8645,0.9912
 sensitivities,F3 excluding the F2 baseline control 90d,0.7845,0.7539,0.9912
@@ -22,7 +22,7 @@ sensitivities,"F3 recall-corrected, audit point estimates (r_T=0.842, r_C=0.750)
 sensitivities,"F3 recall-corrected, treated recall at CI low / control at CI high (r_T=0.604, r_C=0.927) 90d",0.7407,0.6789,0.9912
 sensitivities,"F3 recall-corrected, treated recall at CI high / control at CI low (r_T=0.966, r_C=0.476) 90d",0.2866,0.1736,0.9912
 sensitivities,F3 year FE (reported year) 180d,0.3986,0.3375,0.9912
-sensitivities,F3 two-digit SIC FE 180d,0.277,0.2563,0.9912
+sensitivities,F3 two-digit SIC FE 180d,0.277,0.2658,0.9912
 sensitivities,F3 breach_date anchor 180d,0.6859,0.6506,0.9912
 sensitivities,F3 excluding pre-announced departures 180d,0.4751,0.445,0.9912
 sensitivities,F3 excluding the F2 baseline control 180d,0.6982,0.6692,0.9912
