@@ -71,6 +71,21 @@ preference that costs more than it is worth.
 6. Append to the log below and re-tag with a new suffixed tag. **Do not move
    `essay3-v4-final`** — the tag is the evidence of what was frozen and when.
 
+## Exception 2026-09-24 — what was decided before touching code
+
+- **Source.** `Data/wrds_v4/comp_funda.csv` carries **no `sich`** (the 219 pull requested
+  only `at, lt, ni, sale, cogs, xsga` plus keys), so the point-in-time Compustat SIC is
+  not available without a new WRDS pull. The header SIC already on disk is used instead:
+  **`Data/wrds_v4/comp_company.csv`, column `sic`**, keyed on `final_cik`.
+- **Coverage.** 400 of the 405 analysis events have one. The 5 without (all control) get
+  their own `sic2 = 'unclassified'` cell. **No fallback to the inherited `sic`.**
+- **Known limitation, recorded now rather than discovered later.** A header SIC is
+  current-state, not point-in-time, so a firm that changed industry classification after
+  its breach is labelled by its later industry. That is a weaker instrument than `sich`
+  would be, and it is accepted here rather than triggering a new pull.
+- **`scripts/199` is NOT edited.** It is v3 and outside `scripts/210`'s allowlist; the v3
+  vintage keeps the inherited-SIC behaviour it always had.
+
 ## Where to read things instead of changing them
 
 | Question | File |
@@ -87,3 +102,4 @@ preference that costs more than it is worth.
 
 | Date | Reason (1 or 2) | Essay text moved | Commit |
 |---|---|---|---|
+| 2026-09-24 | **1** | The methods section claims *industry fixed effects*. The SIC-FE sensitivity did not implement them: it grouped on the PRC extract's **inherited** `sic`, taken as the mode per parent CIK. That column disagrees with the resolved parent's actual industry for **87 of 405** analysis events, and every one of those 87 is a **control** event (all 109 treated events agree). The inherited values are visibly placeholders — 3400, 6200, 2000, 5000, 1000 recur across unrelated firms — and several trace to the ticker-sink mis-assignments already documented (Oceaneering carrying `AIG`/6200 against a true SIC of 13; Brown-Forman carrying `BRO`/6200 against 20; EMC carrying `AES`/4900 against 35; Nuance and Microsoft carrying `SBAC`/6500 against 73). Since treatment is identified almost entirely off one SIC cell's controls, a control-side industry mislabel changes which controls sit in the treated firms' comparison cell, so the sentence "industry fixed effects" is not supported by what the code did. **Scope: the SIC-FE sensitivity only.** The primary specification, the placebo and the other 24 sensitivity rows do not read `sic2` and are not re-estimated; their outputs must remain byte-identical. | (documented before the code change; see the following commit) |
