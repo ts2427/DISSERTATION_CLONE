@@ -31,6 +31,8 @@ min       -0.8046
 75%        0.1641
 max        1.2169
 
+SIC2 source: Compustat header SIC (comp_company.csv) by final_cik; 407 of 412 classified, 5 in the 'unclassified' cell
+
 ====================================================================================================
 E2 — ATTRITION LEDGER (1,054 records -> Essay 3 analysis sample)
 ====================================================================================================

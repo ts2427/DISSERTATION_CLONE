@@ -299,10 +299,29 @@ log(f"prior-return available (rd anchor): {int(OUTC['prior12m_mktadj_ret_rd'].no
 log(OUTC['prior12m_mktadj_ret_rd'].describe().round(4).to_string())
 
 # SIC2 and year (for F3)
-s2 = pd.read_csv('Data/processed/rebuild/stage2_signed.csv', low_memory=False)
-sic = (s2.dropna(subset=['final_cik']).assign(sic=lambda x: pd.to_numeric(x['sic'], errors='coerce'))
-       .dropna(subset=['sic']).groupby('final_cik')['sic'].agg(lambda s: s.mode().iloc[0]))
-OUTC['sic2'] = (OUTC['final_cik'].map(sic) // 100)
+# FREEZE EXCEPTION 2026-09-24 (reason 1; logged in docs/claude/POST_DEFENSE.md BEFORE
+# this change). This used to take the mode of the PRC extract's INHERITED sic per
+# parent CIK. That column disagrees with the resolved parent's actual industry for 87
+# of the 405 analysis events, ALL of them control - the inherited values are visibly
+# placeholders (3400, 6200, 2000, 5000, 1000 recur across unrelated firms) and several
+# come from the ticker-sink mis-assignments (Oceaneering carrying AIG/6200 against a
+# true SIC of 13). Grouping on it is not an industry fixed effect.
+#
+# Now: Compustat's header SIC for the RESOLVED parent. comp_funda.csv carries no sich,
+# so the point-in-time SIC would need a new WRDS pull; the header SIC is current-state,
+# which is recorded as a limitation in POST_DEFENSE.md. Events with no Compustat SIC
+# form their own 'unclassified' cell - there is NO fallback to the inherited sic.
+_cc = pd.read_csv('Data/wrds_v4/comp_company.csv', low_memory=False)
+_cc['_cik'] = pd.to_numeric(_cc['cik'], errors='coerce')
+_cc['_sic'] = pd.to_numeric(_cc['sic'], errors='coerce')
+_sic = (_cc.dropna(subset=['_cik', '_sic']).drop_duplicates('_cik')
+        .set_index('_cik')['_sic'])
+_s2 = OUTC['final_cik'].map(_sic)
+OUTC['sic2'] = [('unclassified' if pd.isna(v) else str(int(v // 100))) for v in _s2]
+log("")
+log(f"SIC2 source: Compustat header SIC (comp_company.csv) by final_cik; "
+    f"{int(_s2.notna().sum())} of {len(OUTC)} classified, "
+    f"{int(_s2.isna().sum())} in the 'unclassified' cell")
 OUTC['reported_year'] = OUTC['rdt'].dt.year
 OUTC['breach_year'] = OUTC['bdt'].dt.year
 
