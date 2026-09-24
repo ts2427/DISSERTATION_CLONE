@@ -86,6 +86,38 @@ preference that costs more than it is worth.
 - **`scripts/199` is NOT edited.** It is v3 and outside `scripts/210`'s allowlist; the v3
   vintage keeps the inherited-SIC behaviour it always had.
 
+## Exception 2026-09-24 (second) — the Gate-2 notification anchor
+
+**Defect origin: `scripts/153:59` — v3, frozen, and left unchanged.** Gate 2 collapses
+adjacent firm-day events by sorting on breach date and keeping `m.index[0]`; it rewrites
+`name_variants`, `n_source_records`, `breach_type`, `multi_type`, `total_affected_max`,
+`multi_filing` and `chain_note` on the surviving row, but **not `reported_date`**. So the
+kept event inherits the notification date of the earliest-*breach* component rather than
+the chain minimum — inconsistent with Stage 3, where `152:91` takes
+`g['reported_date'].min()`.
+
+`scripts/153` and its outputs (`stage4_input.csv`, `CANONICAL_V3.csv`) are in the v3
+freeze manifest and outside `scripts/210`'s allowlist. Editing or re-running it would
+change v3's canonical event table, which no Essay 3 v4 exception authorises. **The v3
+vintage therefore keeps its original anchor**, consistent with exception 1 leaving
+`scripts/199` on the inherited SIC.
+
+**Fix site: `scripts/214`**, as correction-ledger entries with old/new/evidence for each
+of the 12 events, alongside the Sprint, Carnival and CIK corrections already there. The
+correction becomes visible in `214_corrections.csv` rather than silent inside a v3
+collapse.
+
+**Reason 1.** Essay text moved: the methods define the notification date as the earliest
+reported date among an event's records. 12 analysis events (3 treated, 9 control) are
+anchored later than their earliest notification, every one of them Gate-2 chained, with
+gaps from 1 to 1,109 days. Two treated outcomes depend on it — **DISH Network 90d** and
+**GoDaddy 180d** — and in both the later anchor is the one that records a departure, so
+the defect runs in the direction of finding more treated turnover.
+
+**Scope.** `reported_date` feeds the outcome windows, so everything downstream of it is
+re-run: 234 (outcome_cik windows), 233, 230, 235, 232, 224, 227. Constants are updated
+only through 227's own write.
+
 ## Where to read things instead of changing them
 
 | Question | File |
@@ -102,4 +134,5 @@ preference that costs more than it is worth.
 
 | Date | Reason (1 or 2) | Essay text moved | Commit |
 |---|---|---|---|
+| 2026-09-24 | **1** | The methods define the notification date as the earliest reported date among an event's records. Gate 2 (`153:59`, v3, frozen) instead keeps the earliest-*breach* component's `reported_date`, unlike Stage 3 (`152:91`, which takes the minimum). 12 analysis events (3 treated, 9 control) are anchored later than their earliest notification, gaps 1 to 1,109 days, all Gate-2 chained. Two treated outcomes turn on it — DISH 90d and GoDaddy 180d — both in the direction of recording a departure. Fixed in `scripts/214` as ledger entries; v3 left frozen. | (logged before the code change; see the following commit) |
 | 2026-09-24 | **1** | The methods section claims *industry fixed effects*. The SIC-FE sensitivity did not implement them: it grouped on the PRC extract's **inherited** `sic`, taken as the mode per parent CIK. That column disagrees with the resolved parent's actual industry for **87 of 405** analysis events, and every one of those 87 is a **control** event (all 109 treated events agree). The inherited values are visibly placeholders — 3400, 6200, 2000, 5000, 1000 recur across unrelated firms — and several trace to the ticker-sink mis-assignments already documented (Oceaneering carrying `AIG`/6200 against a true SIC of 13; Brown-Forman carrying `BRO`/6200 against 20; EMC carrying `AES`/4900 against 35; Nuance and Microsoft carrying `SBAC`/6500 against 73). Since treatment is identified almost entirely off one SIC cell's controls, a control-side industry mislabel changes which controls sit in the treated firms' comparison cell, so the sentence "industry fixed effects" is not supported by what the code did. **Scope: the SIC-FE sensitivity only.** The primary specification, the placebo and the other 24 sensitivity rows do not read `sic2` and are not re-estimated; their outputs must remain byte-identical. | `2d0ee01` (log), `7d78990` (change). **`scripts/227` was subsequently re-run WHOLE** so the three SIC-FE WCR p-values come from the canonical seeded bootstrap stream rather than a restarted one; only those three `p_wcr` values moved, by thousandths (30d .1742->.1749, 90d .3898->.3878, 180d .2563->.2658). Coefficients, CV3 p and BH p are unchanged, and the 24 non-SIC sensitivity rows plus f1_ladder, f4_placebo, f1_cluster_diagnostics, f3_loco, f5_ceo and constants_essay3_v4.json are all byte-identical to the pre-exception commit `fe486f0`. |
