@@ -2,22 +2,22 @@
 ====================================================================================================
 F1 — PRIMARY: LPM, notification anchor (N=405; treated 109; parent CIKs 119, treated parent CIKs 13)
 ====================================================================================================
-  30d: coef +0.0031 | HC3 p 0.9041 | CV1 p 0.9019 | CV3 SE 0.0338 p 0.9272 CI [-0.0639, +0.0701] | WCR p 0.9143 CI [-0.0571, +0.0575] | G 119 G1 13 G* 24.5 CV 2.328 | MDE80 0.0956 | means T 0.037 C 0.044
-  90d: coef -0.0252 | HC3 p 0.5718 | CV1 p 0.6419 | CV3 SE 0.0824 p 0.7603 CI [-0.1884, +0.1380] | WCR p 0.7017 CI [-0.1496, +0.1054] | G 119 G1 13 G* 24.5 CV 2.328 | MDE80 0.2328 | means T 0.110 C 0.145
-  180d: coef +0.0383 | HC3 p 0.5374 | CV1 p 0.6257 | CV3 SE 0.1000 p 0.7026 CI [-0.1598, +0.2364] | WCR p 0.6616 CI [-0.1451, +0.2159] | G 119 G1 13 G* 24.5 CV 2.328 | MDE80 0.2826 | means T 0.312 C 0.247
-  Logit AME (cluster-robust, corroboration): 30d +0.0041 (SE 0.0304, p 0.8928); 90d -0.0281 (SE 0.0525, p 0.5928); 180d +0.0347 (SE 0.0784, p 0.6580)
+  30d: coef +0.0032 | HC3 p 0.9011 | CV1 p 0.8987 | CV3 SE 0.0340 p 0.9252 CI [-0.0641, +0.0705] | WCR p 0.9113 CI [-0.0571, +0.0583] | G 119 G1 13 G* 24.5 CV 2.328 | MDE80 0.0960 | means T 0.037 C 0.044
+  90d: coef -0.0390 | HC3 p 0.3698 | CV1 p 0.4406 | CV3 SE 0.0799 p 0.6263 CI [-0.1971, +0.1192] | WCR p 0.5395 CI [-0.1588, +0.0844] | G 119 G1 13 G* 24.5 CV 2.328 | MDE80 0.2256 | means T 0.101 C 0.145
+  180d: coef +0.0227 | HC3 p 0.7094 | CV1 p 0.7731 | CV3 SE 0.1001 p 0.8211 CI [-0.1756, +0.2210] | WCR p 0.7950 CI [-0.1589, +0.2009] | G 119 G1 13 G* 24.5 CV 2.328 | MDE80 0.2829 | means T 0.303 C 0.247
+  Logit AME (cluster-robust, corroboration): 30d +0.0043 (SE 0.0307, p 0.8889); 90d -0.0405 (SE 0.0476, p 0.3946); 180d +0.0189 (SE 0.0777, p 0.8079)
 
 ====================================================================================================
 F4 — PLACEBO: executive departure in (t0 - 180d, t0], primary specification
 ====================================================================================================
-  coef -0.0833 | HC3 p 0.1383 | CV3 p 0.3191 CI [-0.2482, +0.0816] | WCR p 0.2388 CI [-0.2251, +0.0591] | means T 0.229 C 0.236
+  coef -0.0837 | HC3 p 0.1370 | CV3 p 0.3257 CI [-0.2518, +0.0843] | WCR p 0.2444 CI [-0.2271, +0.0613] | means T 0.229 C 0.236
 
 ====================================================================================================
 F2 — baseline executive-departure rate [t0 - 730d, t0 - 181d], per year
 ====================================================================================================
   group   n  mean_rate_py     sd  median    p75    max  share_zero  mean_count
-treated 109        0.9985 0.8831  0.6636 1.3273 3.9818      0.2477       1.505
-control 296        0.9327 1.0563  0.6636 1.3273 6.6364      0.3581       1.405
+treated 109        1.0228 0.8919  0.6636 1.3273 3.9818      0.2385       1.541
+control 296        0.9349 1.0550  0.6636 1.3273 6.6364      0.3547       1.409
 
 ====================================================================================================
 F3 — SENSITIVITIES (one row per window; CV3 inference, WCR p with B = 9,999)
@@ -25,46 +25,46 @@ F3 — SENSITIVITIES (one row per window; CV3 inference, WCR p with B = 9,999)
   Audit recall (exec, primary): treated 0.842 [0.604, 0.966], control 0.750 [0.476, 0.927]
   SIC2 cells containing treated events: SIC 48: 104 treated / 40 control; SIC 73: 5 treated / 141 control
  window                                                                            sensitivity   n    coef  se_cv3  p_cv3  ci_cv3_lo  ci_cv3_hi  p_wcr
-     30                                                                year FE (reported year) 405  0.0052  0.0303 0.8648    -0.0548     0.0651 0.8339
-     30                                                                       two-digit SIC FE 405  0.0379  0.0340 0.2677    -0.0295     0.1053 0.1749
+     30                                                                year FE (reported year) 405  0.0061  0.0306 0.8418    -0.0544     0.0666 0.8045
+     30                                                                       two-digit SIC FE 405  0.0382  0.0343 0.2675    -0.0297     0.1062 0.1682
      30                                                                     breach_date anchor 405 -0.0188  0.0392 0.6324    -0.0963     0.0588 0.5949
-     30                                                     excluding pre-announced departures 405  0.0165  0.0308 0.5941    -0.0446     0.0775 0.5506
-     30                                                      excluding the F2 baseline control 405  0.0030  0.0322 0.9254    -0.0608     0.0669 0.9150
-     30                                                         restatement-dated outcome (rs) 405  0.0337  0.0597 0.5729    -0.0845     0.1520 0.6815
-     30                         recall-corrected, audit point estimates (r_T=0.842, r_C=0.750) 405 -0.0005  0.0435 0.9912    -0.0866     0.0856 0.9886
-     30 recall-corrected, treated recall at CI low / control at CI high (r_T=0.604, r_C=0.927) 405  0.0216  0.0445 0.6281    -0.0664     0.1096 0.5918
-     30 recall-corrected, treated recall at CI high / control at CI low (r_T=0.966, r_C=0.476) 405 -0.0272  0.0614 0.6586    -0.1488     0.0944 0.6092
-     90                                                                year FE (reported year) 405 -0.0022  0.0754 0.9770    -0.1515     0.1471 0.9691
-     90                                                                       two-digit SIC FE 405  0.0539  0.0808 0.5062    -0.1061     0.2138 0.3878
+     30                                                     excluding pre-announced departures 405  0.0167  0.0308 0.5889    -0.0442     0.0776 0.5436
+     30                                                      excluding the F2 baseline control 405  0.0030  0.0322 0.9252    -0.0608     0.0668 0.9152
+     30                                                         restatement-dated outcome (rs) 405  0.0337  0.0596 0.5729    -0.0843     0.1517 0.6770
+     30                         recall-corrected, audit point estimates (r_T=0.842, r_C=0.750) 405 -0.0003  0.0437 0.9942    -0.0869     0.0863 0.9931
+     30 recall-corrected, treated recall at CI low / control at CI high (r_T=0.604, r_C=0.927) 405  0.0216  0.0444 0.6276    -0.0664     0.1096 0.5893
+     30 recall-corrected, treated recall at CI high / control at CI low (r_T=0.966, r_C=0.476) 405 -0.0268  0.0621 0.6667    -0.1498     0.0961 0.6139
+     90                                                                year FE (reported year) 405 -0.0164  0.0712 0.8180    -0.1575     0.1246 0.7497
+     90                                                                       two-digit SIC FE 405  0.0404  0.0789 0.6101    -0.1160     0.1967 0.5000
      90                                                                     breach_date anchor 405 -0.0677  0.0683 0.3233    -0.2030     0.0675 0.2494
-     90                                                     excluding pre-announced departures 405  0.0097  0.0707 0.8909    -0.1303     0.1497 0.8645
-     90                                                      excluding the F2 baseline control 405 -0.0229  0.0835 0.7845    -0.1883     0.1425 0.7539
-     90                                                         restatement-dated outcome (rs) 405  0.0055  0.0997 0.9565    -0.1921     0.2030 0.9503
-     90                         recall-corrected, audit point estimates (r_T=0.842, r_C=0.750) 405 -0.0492  0.1069 0.6461    -0.2608     0.1624 0.5606
-     90 recall-corrected, treated recall at CI low / control at CI high (r_T=0.604, r_C=0.927) 405  0.0345  0.1042 0.7407    -0.1717     0.2408 0.6789
-     90 recall-corrected, treated recall at CI high / control at CI low (r_T=0.966, r_C=0.476) 405 -0.1670  0.1560 0.2866    -0.4758     0.1419 0.1736
-    180                                                                year FE (reported year) 405  0.0690  0.0815 0.3986    -0.0923     0.2303 0.3375
-    180                                                                       two-digit SIC FE 405  0.1430  0.1310 0.2770    -0.1163     0.4024 0.2658
+     90                                                     excluding pre-announced departures 405 -0.0036  0.0673 0.9576    -0.1368     0.1297 0.9457
+     90                                                      excluding the F2 baseline control 405 -0.0351  0.0808 0.6653    -0.1952     0.1250 0.6309
+     90                                                         restatement-dated outcome (rs) 405 -0.0085  0.0975 0.9308    -0.2016     0.1846 0.9164
+     90                         recall-corrected, audit point estimates (r_T=0.842, r_C=0.750) 405 -0.0657  0.1044 0.5306    -0.2725     0.1411 0.4314
+     90 recall-corrected, treated recall at CI low / control at CI high (r_T=0.604, r_C=0.927) 405  0.0121  0.0971 0.9008    -0.1802     0.2044 0.8777
+     90 recall-corrected, treated recall at CI high / control at CI low (r_T=0.966, r_C=0.476) 405 -0.1820  0.1566 0.2476    -0.4922     0.1282 0.1372
+    180                                                                year FE (reported year) 405  0.0534  0.0856 0.5340    -0.1161     0.2229 0.4739
+    180                                                                       two-digit SIC FE 405  0.1082  0.1388 0.4372    -0.1667     0.3831 0.4059
     180                                                                     breach_date anchor 405 -0.0430  0.1060 0.6859    -0.2528     0.1669 0.6506
-    180                                                     excluding pre-announced departures 405  0.0723  0.1009 0.4751    -0.1275     0.2722 0.4450
-    180                                                      excluding the F2 baseline control 405  0.0378  0.0973 0.6982    -0.1548     0.2304 0.6692
-    180                                                         restatement-dated outcome (rs) 405  0.0193  0.1479 0.8962    -0.2736     0.3123 0.8762
-    180                         recall-corrected, audit point estimates (r_T=0.842, r_C=0.750) 405  0.0075  0.1256 0.9523    -0.2412     0.2563 0.9434
-    180 recall-corrected, treated recall at CI low / control at CI high (r_T=0.604, r_C=0.927) 405  0.2135  0.1420 0.1353    -0.0677     0.4946 0.1186
-    180 recall-corrected, treated recall at CI high / control at CI low (r_T=0.966, r_C=0.476) 405 -0.2376  0.1601 0.1404    -0.5547     0.0794 0.0911
-  row_type: 6 rows are BOUNDING EXERCISES (recall at opposite CI endpoints), not estimates. hc3_status: HC3 is DISQUALIFIED in every row (e.g. the 180d treated-low/control-high bound has p_hc3 0.016; its CV3 p is the valid one).
+    180                                                     excluding pre-announced departures 405  0.0568  0.1010 0.5746    -0.1431     0.2568 0.5419
+    180                                                      excluding the F2 baseline control 405  0.0220  0.0980 0.8224    -0.1720     0.2161 0.8063
+    180                                                         restatement-dated outcome (rs) 405  0.0025  0.1488 0.9867    -0.2922     0.2972 0.9857
+    180                         recall-corrected, audit point estimates (r_T=0.842, r_C=0.750) 405 -0.0108  0.1257 0.9314    -0.2597     0.2380 0.9245
+    180 recall-corrected, treated recall at CI low / control at CI high (r_T=0.604, r_C=0.927) 405  0.1871  0.1427 0.1923    -0.0954     0.4696 0.1727
+    180 recall-corrected, treated recall at CI high / control at CI low (r_T=0.966, r_C=0.476) 405 -0.2527  0.1600 0.1170    -0.5696     0.0642 0.0747
+  row_type: 6 rows are BOUNDING EXERCISES (recall at opposite CI endpoints), not estimates. hc3_status: HC3 is DISQUALIFIED in every row (e.g. the 180d treated-low/control-high bound has p_hc3 0.030; its CV3 p is the valid one).
 
   Leave-one-parent-CIK-out (from the CV3 jackknife):
-  30d: full +0.0031; range [-0.0180, +0.0188]; sign flips 4/119; without T-Mobile -0.0180; without Sprint -0.0035; largest move: deleting 1283699 -> -0.0180
-  90d: full -0.0252; range [-0.0529, +0.0363]; sign flips 1/119; without T-Mobile -0.0529; without Sprint -0.0258; largest move: deleting 1136893 -> +0.0363
-  180d: full +0.0383; range [-0.0191, +0.0789]; sign flips 1/119; without T-Mobile -0.0191; without Sprint +0.0328; largest move: deleting 1283699 -> -0.0191
+  30d: full +0.0032; range [-0.0176, +0.0194]; sign flips 4/119; without T-Mobile -0.0176; without Sprint -0.0034; largest move: deleting 1283699 -> -0.0176
+  90d: full -0.0390; range [-0.0670, +0.0230]; sign flips 1/119; without T-Mobile -0.0670; without Sprint -0.0405; largest move: deleting 1136893 -> +0.0230
+  180d: full +0.0227; range [-0.0363, +0.0622]; sign flips 1/119; without T-Mobile -0.0363; without Sprint +0.0159; largest move: deleting 1283699 -> -0.0363
 
 ====================================================================================================
 F5 — CEO-only departures; F6 — director-only departures (counts)
 ====================================================================================================
  window  treated_events  control_events  treated_n  control_n  estimated                                                          reason
      30               0               1        109        296      False fewer than 10 CEO departures in at least one group; counts only
-     90               4               8        109        296      False fewer than 10 CEO departures in at least one group; counts only
+     90               3               8        109        296      False fewer than 10 CEO departures in at least one group; counts only
     180               8              24        109        296      False fewer than 10 CEO departures in at least one group; counts only
  window  treated_events  control_events
      30               8               4
@@ -76,10 +76,10 @@ I — TEST LEDGER and Benjamini-Hochberg within families (CV3 p-values)
 ====================================================================================================
 Hypothesis tests in the new Essay 3 code: 31 (sensitivities 27, primary H6 3, placebo 1). Descriptive/corroborating, not counted: logit AMEs (3), F2 distribution, F5/F6 counts, leave-one-out.
     family                               test      p  p_wcr   p_bh
-primary H6              F1 exec departure 30d 0.9272 0.9143 0.9272
-primary H6              F1 exec departure 90d 0.7603 0.7017 0.9272
-primary H6             F1 exec departure 180d 0.7026 0.6616 0.9272
-   placebo F4 pre-notification exec departure 0.3191 0.2388 0.3191
-Sensitivity family: min raw CV3 p 0.1353; min BH-adjusted 0.9912
+primary H6              F1 exec departure 30d 0.9252 0.9113 0.9252
+primary H6              F1 exec departure 90d 0.6263 0.5395 0.9252
+primary H6             F1 exec departure 180d 0.8211 0.7950 0.9252
+   placebo F4 pre-notification exec departure 0.3257 0.2444 0.3257
+Sensitivity family: min raw CV3 p 0.1170; min BH-adjusted 0.9942
 
-Assertion check vs constants_essay3_v4.json: PASS
+Baseline constants_essay3_v4.json WRITTEN (later runs assert against it)

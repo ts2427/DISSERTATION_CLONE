@@ -108,7 +108,7 @@ outcome_cik,expected,on_disk,missing,org_name,submissions_cached
 1553023,4,4,0,"CyrusOne, Inc.",1
 1564408,6,6,0,Snap Inc.,1
 1590895,6,6,0,"Caesars Entertainment, Inc.",1
-1609711,24,24,0,GoDaddy.com LLC,1
+1609711,21,21,0,GoDaddy.com LLC,1
 1632127,9,9,0,"Cable One, Inc.",1
 1640147,6,6,0,Snowflake Inc.,1
 1645590,16,16,0,Hewlett Packard Enterprise Company,1

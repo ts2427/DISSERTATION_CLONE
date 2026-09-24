@@ -1,6 +1,6 @@
 # REBUILD V4 — Stage 4 corrections
 
-- run (UTC): 2026-09-19T13:53:37+00:00
+- run (UTC): 2026-09-24T16:22:34+00:00
 - input: `Data/processed/rebuild/CANONICAL_V3.csv` (489 rows, read-only)
 - Stage 4 issues no SEC request; the EDGAR cache is read, never written.
 
@@ -9,6 +9,7 @@
 - Sprint: recomputation reproduces the stored prior_breaches_1yr exactly (12 rows) under the original dates, so the rule matches v3's.
 - International Paper: CIK 1283246 -> 51434 on 1 row(s).
 - Lennar: CIK 58696 -> 920760 on 1 row(s).
+- Gate-2 anchor: 14 event(s) moved to the chain-minimum reported_date.
 - Stage 3: read 44 verdict row(s) from 213_verification_log.csv, stage3b_213_verification_log.csv.
 - Stage 3: 25 event(s) re-parented, 4 verified without a CIK change (the verified registrant was already the event CIK); 15 UNVERIFIED row(s) left untouched and excluded.
 
@@ -19,6 +20,20 @@
 | reported_date_excluded | 1125259 | Carnival Corporation & PLC | 2019-04-01 | 2020-03 | (missing) | YES |
 | final_cik | 1283246 | International Paper Company | 2023-05-30 | 1283246 | 51434 | YES |
 | final_cik | 58696 | Lennar Corporation | 2023-07-20 | 58696 | 920760 | YES |
+| reported_date_gate2_anchor | 20520 | Frontier Communications Parent, Inc. | 2024-04-13 | 2024-06-06 | 2024-06-05 | YES |
+| reported_date_gate2_anchor | 43196 | Gray Television | 2016-08-08 | 2016-08-31 | 2016-08-30 | YES |
+| reported_date_gate2_anchor | 90143 | Sierra Pacific Industries | 2022-06-10 | 2023-01-11 | 2022-08-09 | YES |
+| reported_date_gate2_anchor | 896878 | Intuit Inc | 2016-02-29 | 2016-03-16 | 2016-03-03 | YES |
+| reported_date_gate2_anchor | 896878 | Intuit, Inc. | 2016-03-07 | 2016-04-01 | 2016-03-08 | YES |
+| reported_date_gate2_anchor | 896878 | Intuit Inc | 2016-03-29 | 2016-10-17 | 2016-06-13 | YES |
+| reported_date_gate2_anchor | 896878 | Intuit Inc. | 2017-02-28 | 2017-03-17 | 2017-03-02 | YES |
+| reported_date_gate2_anchor | 896878 | Intuit, Inc. | 2017-04-02 | 2017-04-17 | 2017-04-04 | YES |
+| reported_date_gate2_anchor | 896878 | Intuit, Inc. | 2017-07-30 | 2017-08-15 | 2017-08-01 | YES |
+| reported_date_gate2_anchor | 896878 | Intuit, Inc. | 2019-02-21 | 2019-03-12 | 2019-02-22 | YES |
+| reported_date_gate2_anchor | 1001082 | DISH Network, LLC | 2023-02-22 | 2023-05-15 | 2023-02-23 | YES |
+| reported_date_gate2_anchor | 1136893 | Fidelity National Information Services, Inc. | 2023-05-27 | 2023-08-11 | 2023-08-10 | YES |
+| reported_date_gate2_anchor | 1609711 | GoDaddy.com LLC | 2019-10-16 | 2023-05-17 | 2020-05-03 | YES |
+| reported_date_gate2_anchor | 1673769 | IMA Financial Group, Inc. | 2022-10-18 | 2023-07-06 | 2023-04-22 | YES |
 | stage3_a_subsidiary | 72945 | Northrop Grumman Systems Corporation | 2016-04-18 | 72945 | 1133421 | YES |
 | stage3_a_subsidiary | 108772 | Xerox Corporation | 2023-12-10 | 108772 | 1770450 | YES |
 | stage3_a_subsidiary | 353394 | Leidos, Inc. | 2022-09-30 | 353394 | 1336920 | YES |

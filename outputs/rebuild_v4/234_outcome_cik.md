@@ -35,7 +35,7 @@ CIKs needing a submissions fetch: 0
      88128                                CSX Transportation  2013-09-06        0 no candidate filed a Form 8-K in [2011-09-07, 2014-04-01] - fails the outcome-data requirement
      88128                                CSX Transportation  2013-10-07        0 no candidate filed a Form 8-K in [2011-10-08, 2014-04-05] - fails the outcome-data requirement
      88128                          CSX Transportation, Inc.  2020-12-25        0 no candidate filed a Form 8-K in [2018-12-26, 2021-09-12] - fails the outcome-data requirement
-     90143                         Sierra Pacific Industries  2022-06-10        0 no candidate filed a Form 8-K in [2020-06-10, 2023-07-10] - fails the outcome-data requirement
+     90143                         Sierra Pacific Industries  2022-06-10        0 no candidate filed a Form 8-K in [2020-06-10, 2023-02-05] - fails the outcome-data requirement
     905036                      Marriott International, Inc.  2020-01-01        0 no candidate filed a Form 8-K in [2018-01-01, 2020-09-27] - fails the outcome-data requirement
     911167                                 Ariel Corporation  2024-06-20        0 no candidate filed a Form 8-K in [2022-06-21, 2025-06-01] - fails the outcome-data requirement
     924613                                        Nokia Inc.  2013-07-22        0 no candidate filed a Form 8-K in [2011-07-23, 2014-01-18] - fails the outcome-data requirement
@@ -66,7 +66,7 @@ CIKs needing a submissions fetch: 0
    1560142                                         EatStreet  2019-05-03        0 no candidate filed a Form 8-K in [2017-05-03, 2019-12-11] - fails the outcome-data requirement
    1567336                       Mediant Communications Inc.  2019-04-01        0 no candidate filed a Form 8-K in [2017-04-01, 2019-11-24] - fails the outcome-data requirement
    1570434                              Prime Communications  2019-12-11        0 no candidate filed a Form 8-K in [2017-12-11, 2020-11-14] - fails the outcome-data requirement
-   1673769                         IMA Financial Group, Inc.  2022-10-18        0 no candidate filed a Form 8-K in [2020-10-18, 2024-01-02] - fails the outcome-data requirement
+   1673769                         IMA Financial Group, Inc.  2022-10-18        0 no candidate filed a Form 8-K in [2020-10-18, 2023-10-19] - fails the outcome-data requirement
    1691249            The iRemedy Healthcare Companies, Inc.  2017-10-01        0 no candidate filed a Form 8-K in [2015-10-02, 2019-01-05] - fails the outcome-data requirement
    1792789                                     DoorDash Inc.  2019-05-04        0 no candidate filed a Form 8-K in [2017-05-04, 2020-03-24] - fails the outcome-data requirement
    1826210                            KeraLink International  2017-04-06        0 no candidate filed a Form 8-K in [2015-04-07, 2017-10-22] - fails the outcome-data requirement

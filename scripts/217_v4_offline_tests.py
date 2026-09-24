@@ -2558,8 +2558,13 @@ v17 = all(_flagged(n) for n in _want)
 v18 = not any(_flagged(n) for n in _safe)
 v19 = "'8.88' is not in METHODS_FACTS" in _lt and "'7777' is not in METHODS_FACTS" in _lt
 # a number that IS sourced must not be flagged
+# Pull a value that is ACTUALLY in METHODS_FACTS rather than hard-coding one: these
+# numbers move under freeze exceptions, and a literal goes stale the moment they do
+# (it did - 0.0383 was the 180d coefficient before exception 2).
+_facts_now = pd.read_csv("outputs/essay3_v4/methods/METHODS_FACTS.csv")
+_srcd = _facts_now.loc[_facts_now["key"] == "F1 180d / coefficient", "value"].iloc[0]
 _dr2 = TMP / "lint_ok.md"
-_dr2.write_text("The coefficient is 0.0383 across 119 clusters in 2024.\n", encoding="utf-8")
+_dr2.write_text("The coefficient is %s in 2024." % _srcd + chr(10), encoding="utf-8")
 _buf4 = _io240.StringIO()
 with _ctx240.redirect_stdout(_buf4):
     _m240.run_lint(str(_dr2))
@@ -2634,9 +2639,10 @@ w19 = {v for v, _c, _w in _m24.SAFE_IDS} == {"5.02", "8", "499", "64.2011", "47"
 
 # --- end to end: header lists the identifiers; verbose attributes; bad numbers flag ---
 import io as _io24, contextlib as _ctx24
+_srcd_r = _srcd
 _d = TMP / "lint_round.md"
 _d.write_text(chr(10).join([
-    "The coefficient is 0.038 and the base rate is 24.7%.",
+    "The coefficient is %s in 2024." % _srcd_r,
     "Reported under Item 5.02 of Form 8-K by Form 499 filers under 47 CFR 64.2011.",
     "Recall 0.84, 95% CI shown; window 730 to 181 days, 150 returns in 365, 550 stale.",
     "The effect is 8.88 points across 7777 firms.",

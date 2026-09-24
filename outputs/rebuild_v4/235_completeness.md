@@ -3,9 +3,9 @@
 ## Expected vs on disk
 in-scope events with a resolved outcome_cik : 412
 distinct outcome CIKs                       : 122
-event x accession pairs expected            : 3276
-distinct accessions expected                : 1517
-of those, on disk                           : 1517
+event x accession pairs expected            : 3262
+distinct accessions expected                : 1514
+of those, on disk                           : 1514
 
 ## Shortfall by CIK (a shortfall is a silent 'no departure')
 NONE - every expected Item 5.02 filing is on disk.
@@ -17,8 +17,8 @@ NONE - every expected Item 5.02 filing is on disk.
 fetch failures: 0; genuine zeros: 1
 
 ## Scope files for scripts/220 and 224
-b_scope_filings.csv    : 1517 filings
-b_event_filing_pairs.csv: 3276 event x filing pairs
+b_scope_filings.csv    : 1514 filings
+b_event_filing_pairs.csv: 3262 event x filing pairs
 b_scope_events.csv     : 412 events
 
 written 235_completeness.csv, 235_completeness_by_cik.csv, and the b_* scope files

@@ -169,6 +169,39 @@ def main():
                                    ("v3 only" if b is None else "DIFFERS")))))
     C = pd.DataFrame(crows)
     C.to_csv(OUT / "239_v3_vs_v4_constants.csv", index=False)
+
+    # The verdict table used to be produced by hand outside any script, so it went stale
+    # the moment the estimates moved and nothing regenerated it. It is built here now,
+    # from the same constants, with the verdict COMPUTED rather than asserted.
+    def _verdict(pv):
+        if pv is None or (isinstance(pv, float) and pd.isna(pv)):
+            return "n/a"
+        return "NULL (fail to reject at .05)" if float(pv) >= 0.05 else "REJECT at .05"
+
+    vrows = []
+    for w in (30, 90, 180):
+        for tag, src in (("v3", v3c), ("v4", v4c)):
+            vrows.append(dict(test="H6 exec departure %dd" % w, vintage=tag,
+                              n=src.get("F1_%d_n" % w), coef=src.get("F1_%d_coef" % w),
+                              p_cv3=src.get("F1_%d_p_cv3" % w),
+                              p_wcr=src.get("F1_%d_p_wcr" % w),
+                              mde80=src.get("F1_%d_mde80_cv3" % w),
+                              verdict=_verdict(src.get("F1_%d_p_cv3" % w))))
+    for tag, src in (("v3", v3c), ("v4", v4c)):
+        vrows.append(dict(test="F4 placebo (pre-notification)", vintage=tag,
+                          n=src.get("F4_n"), coef=src.get("F4_coef"),
+                          p_cv3=src.get("F4_p_cv3"), p_wcr=src.get("F4_p_wcr"),
+                          mde80=src.get("F4_mde80_cv3"),
+                          verdict=_verdict(src.get("F4_p_cv3"))))
+    V = pd.DataFrame(vrows)
+    V.to_csv(OUT / "239_verdict_table.csv", index=False)
+    piv = V.pivot(index="test", columns="vintage", values="verdict")
+    piv["verdict_changed"] = piv["v3"] != piv["v4"]
+    log("")
+    log("## Verdicts, v3 vs v4")
+    log(V.to_string(index=False))
+    log("")
+    log("verdicts that differ between v3 and v4: %d" % int(piv["verdict_changed"].sum()))
     log("")
     log("## Constants, v3 vs v4")
     log(C.to_string(index=False))

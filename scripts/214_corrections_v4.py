@@ -324,6 +324,77 @@ BASIS_BY_TYPE = {"a_subsidiary": "exhibit21_parent",
                  "b_successor_cik": "successor_filing"}
 
 
+
+# ------------------------------------------------------------------ Gate-2 anchor
+# FREEZE EXCEPTION 2026-09-24 (second), reason 1, logged in docs/claude/POST_DEFENSE.md
+# BEFORE this change.
+#
+# Defect origin: scripts/153:59, which is v3 and FROZEN. Gate 2 collapses adjacent
+# firm-day events by sorting on breach date and keeping m.index[0]. It rewrites
+# name_variants, n_source_records, breach_type, multi_type, total_affected_max,
+# multi_filing and chain_note on the surviving row - but NOT reported_date. The kept
+# event therefore inherits the notification date of the earliest-BREACH component
+# rather than the chain minimum, unlike Stage 3, where 152:91 takes
+# g['reported_date'].min().
+#
+# scripts/153 and its outputs are in the v3 freeze manifest, so the defect is repaired
+# HERE instead, as ordinary correction-ledger entries. The v3 vintage keeps its
+# original anchor.
+#
+# The chain minimum is computed from the PRC records themselves, via the lineage the
+# event already carries: name_variants names the org names it collapsed, and
+# chain_note names the firm-day dates. Sprint is the one event whose breach_date this
+# script also moves, so its pre-correction date is used to find its records.
+CHAIN_DATES_RE = re.compile(r"\[([^\]]+)\]")
+
+
+def fix_gate2_anchor(ev, rows, v3_breach):
+    """reported_date := min(reported_date) across every source record of the chain."""
+    s2p = Path("Data/processed/rebuild/stage2_signed.csv")
+    if not s2p.exists():
+        log("- Gate-2 anchor: stage2_signed.csv absent; correction NOT applied.")
+        return ev
+    s2 = pd.read_csv(s2p, low_memory=False)
+    s2["_rd"] = pd.to_datetime(s2["reported_date"], errors="coerce")
+    s2["_bd"] = s2["breach_date"].astype(str).str[:10]
+    by_name = {n: g for n, g in s2.groupby(s2["org_name"].astype(str))}
+
+    n_moved = 0
+    for i, r in ev.iterrows():
+        note = str(r.get("chain_note", "") or "")
+        if not note:
+            continue                      # only Gate-2 chained events can be affected
+        names = {x.strip() for x in str(r.get("name_variants", "")).split("|") if x.strip()}
+        dates = {str(r["breach_date"])[:10], str(v3_breach.iloc[i])[:10]}
+        m = CHAIN_DATES_RE.search(note)
+        if m:
+            dates |= {d.strip() for d in m.group(1).split(",")}
+        recs = [by_name[n] for n in names if n in by_name]
+        if not recs:
+            continue
+        recs = pd.concat(recs)
+        recs = recs[recs["_bd"].isin(dates)]
+        rd = recs["_rd"].dropna()
+        if not len(rd):
+            continue
+        cur = pd.to_datetime(r["reported_date"], errors="coerce")
+        lo = rd.min()
+        if pd.isna(cur) or lo >= cur:
+            continue
+        ev.at[i, "reported_date"] = str(lo)
+        n_moved += 1
+        record(rows, "reported_date_gate2_anchor", r["final_cik"], r["org_name"],
+               str(r["breach_date"])[:10], "reported_date",
+               str(cur)[:10], str(lo)[:10], True,
+               f"Gate-2 chain collapsed {len(recs)} source record(s); scripts/153:59 kept "
+               f"the earliest-breach component's notification date, not the chain "
+               f"minimum. Stage 3 (152:91) takes the minimum, so this restores the "
+               f"documented definition. Gap {int((cur - lo).days)} day(s). "
+               f"v3 is frozen and keeps the original anchor.")
+    log(f"- Gate-2 anchor: {n_moved} event(s) moved to the chain-minimum reported_date.")
+    return ev
+
+
 def apply_stage3(ev, rows, v3_cik, v3_breach):
     """Re-parent every VERIFIED Stage 3 event; leave every UNVERIFIED one alone.
 
@@ -431,6 +502,7 @@ def main():
                  "/NEW/) is the only other filer with the same normalised name and is "
                  "active across the window (365 filings)", "International Paper")
     ev = fix_lennar(ev, rows, m213)
+    ev = fix_gate2_anchor(ev, rows, v3_breach)
     ev = apply_stage3(ev, rows, v3_cik, v3_breach)
 
     C = pd.DataFrame(rows)

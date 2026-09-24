@@ -24,12 +24,12 @@ entire window uncovered (last filing on or before t0): 0  (treated 0, control 0)
 ## Margin, not just the count (rd anchor, 180d window)
 days between the window end and the outcome CIK's last filing:
 count     412.0
-mean     2689.0
-std      1636.0
+mean     2693.0
+std      1634.0
 min        26.0
-25%      1129.0
+25%      1172.0
 50%      2718.0
-75%      3608.0
+75%      3612.0
 max      6961.0
 
 tightest 5 events:

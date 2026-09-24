@@ -23,11 +23,11 @@ E1 — prior 12-month market-adjusted return (CRSP daily; VW index)
 ====================================================================================================
 prior-return available (rd anchor): 405 of 412; (bd anchor): 405
 count    405.0000
-mean       0.0121
-std        0.2727
+mean       0.0120
+std        0.2710
 min       -0.8046
 25%       -0.1471
-50%        0.0292
+50%        0.0282
 75%        0.1641
 max        1.2169
 
@@ -57,6 +57,6 @@ Prior-return requirement removes 7 (treated 0): Warner Music Group 2020-09-04 (6
 E3 — anchor diagnostic: breach-anchored 180-day window ends before reported_date
 ====================================================================================================
   treated: 13/109 = 0.119
-  control: 44/296 = 0.149
+  control: 43/296 = 0.145
 
 Written e_analysis_sample.csv: 412 scope events, 405 in the analysis sample

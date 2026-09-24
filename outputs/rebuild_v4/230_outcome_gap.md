@@ -1,6 +1,6 @@
 # REBUILD V4 - outcome-CIK gap (scripts/230)
 
-Item 5.02 cache on disk: 121 CIK directories, 1534 documents
+Item 5.02 cache on disk: 121 CIK directories, 1539 documents
 
 ## Scope
 events in CANONICAL_V4        : 489

@@ -12,7 +12,7 @@ final_cik,breach_date,org_name,treated,orig_cik,link_basis,outcome_cik,outcome_r
 18926,2022-03-15,Centurylink Communications,1,18926,direct,18926.0,final_cik,59,,,,,,,0,2020-03-15,2022-10-18,
 20520,2022-02-24,Frontier Communications,1,20520,direct,20520.0,final_cik,61,,,,,,,0,2020-02-25,2022-10-31,
 20520,2023-12-18,"Frontier Communications Parent, Inc.",1,20520,direct,20520.0,final_cik,37,,,,,,,0,2021-12-18,2024-12-09,
-20520,2024-04-13,"Frontier Communications Parent, Inc.",1,20520,direct,20520.0,final_cik,36,,,,,,,0,2022-04-14,2024-12-03,
+20520,2024-04-13,"Frontier Communications Parent, Inc.",1,20520,direct,20520.0,final_cik,36,,,,,,,0,2022-04-14,2024-12-02,
 20520,2024-06-10,"Frontier Communications Parent, Inc.",1,20520,direct,20520.0,final_cik,32,,,,,,,0,2022-06-11,2024-12-07,
 23632,2023-05-29,Consolidated Edison Company of New York LLC,0,23632,direct,23632.0,final_cik,24,,,,,,,0,2021-05-29,2024-01-31,
 27904,2017-09-01,"Delta Air Lines, Inc.",0,27904,direct,27904.0,final_cik,76,,,,,,,0,2015-09-02,2018-10-10,
@@ -25,7 +25,7 @@ final_cik,breach_date,org_name,treated,orig_cik,link_basis,outcome_cik,outcome_r
 37743,2023-01-25,Fluke Corporation,0,37743,direct,,none,0,,,,,,,0,2021-01-25,2025-03-30,"no candidate filed a Form 8-K in [2021-01-25, 2025-03-30] - fails the outcome-data requirement"
 40704,2022-11-18,"General Mills, Inc.",0,40704,direct,40704.0,final_cik,31,,,,,,,0,2020-11-18,2023-07-11,
 43196,2016-02-16,"Gray Television, Inc.",0,43196,direct,43196.0,final_cik,50,,,,,,,0,2014-02-16,2017-02-27,
-43196,2016-08-08,Gray Television,0,43196,direct,43196.0,final_cik,42,,,,,,,0,2014-08-09,2017-02-27,
+43196,2016-08-08,Gray Television,0,43196,direct,43196.0,final_cik,42,,,,,,,0,2014-08-09,2017-02-26,
 43196,2021-09-01,"Gray Television, Inc.",0,43196,direct,43196.0,final_cik,46,,,,,,,0,2019-09-02,2022-08-20,
 47111,2023-09-03,The Hershey Company,0,47111,direct,47111.0,final_cik,29,,,,,,,0,2021-09-03,2024-06-04,
 47217,2007-07-01,Hewlett-Packard Company,0,47217,direct,47217.0,final_cik,43,,,,,,,0,2005-07-01,2008-02-12,
@@ -54,7 +54,7 @@ final_cik,breach_date,org_name,treated,orig_cik,link_basis,outcome_cik,outcome_r
 88128,2013-09-06,CSX Transportation,0,88128,direct,,none,0,,,,,,,0,2011-09-07,2014-04-01,"no candidate filed a Form 8-K in [2011-09-07, 2014-04-01] - fails the outcome-data requirement"
 88128,2013-10-07,CSX Transportation,0,88128,direct,,none,0,,,,,,,0,2011-10-08,2014-04-05,"no candidate filed a Form 8-K in [2011-10-08, 2014-04-05] - fails the outcome-data requirement"
 88128,2020-12-25,"CSX Transportation, Inc.",0,88128,direct,,none,0,,,,,,,0,2018-12-26,2021-09-12,"no candidate filed a Form 8-K in [2018-12-26, 2021-09-12] - fails the outcome-data requirement"
-90143,2022-06-10,Sierra Pacific Industries,0,90143,direct,,none,0,,,,,,,0,2020-06-10,2023-07-10,"no candidate filed a Form 8-K in [2020-06-10, 2023-07-10] - fails the outcome-data requirement"
+90143,2022-06-10,Sierra Pacific Industries,0,90143,direct,,none,0,,,,,,,0,2020-06-10,2023-02-05,"no candidate filed a Form 8-K in [2020-06-10, 2023-02-05] - fails the outcome-data requirement"
 91419,2010-04-05,The J.M. Smucker Company,0,91419,direct,91419.0,final_cik,33,,,,,,,0,2008-04-05,2010-10-26,
 91440,2022-03-01,Snap-on Incorporated,0,91440,direct,91440.0,final_cik,16,,,,,,,0,2020-03-01,2022-10-04,
 92380,2017-10-01,Southwest Airlines Co.,0,92380,direct,92380.0,final_cik,76,,,,,,,0,2015-10-02,2018-10-17,
@@ -180,11 +180,11 @@ final_cik,breach_date,org_name,treated,orig_cik,link_basis,outcome_cik,outcome_r
 896878,2016-01-21,Intuit Inc.,0,896878,direct,896878.0,final_cik,21,,,,,,,0,2014-01-21,2016-08-07,
 896878,2016-02-04,Intuit,0,896878,direct,896878.0,final_cik,22,,,,,,,0,2014-02-04,2016-08-29,
 896878,2016-02-24,Intuit,0,896878,direct,896878.0,final_cik,20,,,,,,,0,2014-02-24,2016-09-10,
-896878,2016-02-29,Intuit Inc,0,896878,direct,896878.0,final_cik,20,,,,,,,0,2014-03-01,2016-09-12,
-896878,2016-03-07,"Intuit, Inc.",0,896878,direct,896878.0,final_cik,20,,,,,,,0,2014-03-08,2016-09-28,
+896878,2016-02-29,Intuit Inc,0,896878,direct,896878.0,final_cik,20,,,,,,,0,2014-03-01,2016-08-30,
+896878,2016-03-07,"Intuit, Inc.",0,896878,direct,896878.0,final_cik,20,,,,,,,0,2014-03-08,2016-09-04,
 896878,2016-03-17,Intuit,0,896878,direct,896878.0,final_cik,20,,,,,,,0,2014-03-18,2016-09-13,
 896878,2016-03-22,Intuit Inc.,0,896878,direct,896878.0,final_cik,20,,,,,,,0,2014-03-23,2016-10-25,
-896878,2016-03-29,Intuit Inc,0,896878,direct,896878.0,final_cik,24,,,,,,,0,2014-03-30,2017-04-15,
+896878,2016-03-29,Intuit Inc,0,896878,direct,896878.0,final_cik,21,,,,,,,0,2014-03-30,2016-12-10,
 896878,2016-04-06,Intuit,0,896878,direct,896878.0,final_cik,20,,,,,,,0,2014-04-07,2016-11-05,
 896878,2016-04-14,Intuit Inc.,0,896878,direct,896878.0,final_cik,20,,,,,,,0,2014-04-15,2016-10-11,
 896878,2016-04-29,Intuit,0,896878,direct,896878.0,final_cik,20,,,,,,,0,2014-04-30,2016-10-26,
@@ -207,14 +207,14 @@ final_cik,breach_date,org_name,treated,orig_cik,link_basis,outcome_cik,outcome_r
 896878,2017-01-27,Intuit,0,896878,direct,896878.0,final_cik,21,,,,,,,0,2015-01-28,2017-07-26,
 896878,2017-02-13,"Intuit, Inc.",0,896878,direct,896878.0,final_cik,20,,,,,,,0,2015-02-14,2017-08-20,
 896878,2017-02-20,Intuit Inc.,0,896878,direct,896878.0,final_cik,20,,,,,,,0,2015-02-21,2017-09-06,
-896878,2017-02-28,Intuit Inc.,0,896878,direct,896878.0,final_cik,20,,,,,,,0,2015-03-01,2017-09-13,
+896878,2017-02-28,Intuit Inc.,0,896878,direct,896878.0,final_cik,20,,,,,,,0,2015-03-01,2017-08-29,
 896878,2017-03-12,Intuit Inc.,0,896878,direct,896878.0,final_cik,20,,,,,,,0,2015-03-13,2017-09-25,
-896878,2017-04-02,"Intuit, Inc.",0,896878,direct,896878.0,final_cik,20,,,,,,,0,2015-04-03,2017-10-14,
+896878,2017-04-02,"Intuit, Inc.",0,896878,direct,896878.0,final_cik,20,,,,,,,0,2015-04-03,2017-10-01,
 896878,2017-04-17,Intuit Inc,0,896878,direct,896878.0,final_cik,21,,,,,,,0,2015-04-18,2017-11-01,
 896878,2017-04-30,Intuit Inc,0,896878,direct,896878.0,final_cik,21,,,,,,,0,2015-05-01,2017-11-13,
 896878,2017-06-01,Intuit Inc.,0,896878,direct,896878.0,final_cik,22,,,,,,,0,2015-06-02,2018-01-17,
 896878,2017-06-14,"Intuit, Inc.",0,896878,direct,896878.0,final_cik,21,,,,,,,0,2015-06-15,2017-12-11,
-896878,2017-07-30,"Intuit, Inc.",0,896878,direct,896878.0,final_cik,24,,,,,,,0,2015-07-31,2018-02-11,
+896878,2017-07-30,"Intuit, Inc.",0,896878,direct,896878.0,final_cik,23,,,,,,,0,2015-07-31,2018-01-28,
 896878,2017-08-08,Intuit Inc.,0,896878,direct,896878.0,final_cik,23,,,,,,,0,2015-08-09,2018-02-04,
 896878,2017-08-16,Intuit Inc.,0,896878,direct,896878.0,final_cik,24,,,,,,,0,2015-08-17,2018-02-12,
 896878,2017-08-25,Intuit Inc.,0,896878,direct,896878.0,final_cik,23,,,,,,,0,2015-08-26,2018-02-21,
@@ -226,7 +226,7 @@ final_cik,breach_date,org_name,treated,orig_cik,link_basis,outcome_cik,outcome_r
 896878,2018-05-16,Intuit,0,896878,direct,896878.0,final_cik,22,,,,,,,0,2016-05-16,2018-11-12,
 896878,2018-06-15,Intuit Inc,0,896878,direct,896878.0,final_cik,22,,,,,,,0,2016-06-15,2018-12-12,
 896878,2019-01-29,"Intuit, Inc.",0,896878,direct,896878.0,final_cik,24,,,,,,,0,2017-01-29,2019-08-25,
-896878,2019-02-21,"Intuit, Inc.",0,896878,direct,896878.0,final_cik,23,,,,,,,0,2017-02-21,2019-09-08,
+896878,2019-02-21,"Intuit, Inc.",0,896878,direct,896878.0,final_cik,22,,,,,,,0,2017-02-21,2019-08-21,
 896878,2019-03-21,Intuit Inc.,0,896878,direct,896878.0,final_cik,23,,,,,,,0,2017-03-21,2020-01-22,
 896878,2019-03-26,"Intuit, Inc.",0,896878,direct,896878.0,final_cik,22,,,,,,,0,2017-03-26,2019-09-22,
 896878,2019-04-07,Intuit Inc.,0,896878,direct,896878.0,final_cik,22,,,,,,,0,2017-04-07,2019-10-13,
@@ -269,7 +269,7 @@ final_cik,breach_date,org_name,treated,orig_cik,link_basis,outcome_cik,outcome_r
 943452,2022-03-15,Wabtec Corporation,0,943452,direct,943452.0,final_cik,43,,,,,,,0,2020-03-15,2023-06-28,
 1000228,2023-09-27,"Henry Schein, Inc.",0,1000228,direct,1000228.0,final_cik,27,,,,,,,0,2021-09-27,2024-06-03,
 1000564,2020-01-18,Communications & Power Industries LLC,0,1000564,direct,,none,0,,,,,,,0,2018-01-18,2020-10-21,"no candidate filed a Form 8-K in [2018-01-18, 2020-10-21] - fails the outcome-data requirement"
-1001082,2023-02-22,"DISH Network, LLC",1,1001082,direct,1001082.0,final_cik,29,,,,,,,0,2021-02-22,2023-11-11,
+1001082,2023-02-22,"DISH Network, LLC",1,1001082,direct,1001082.0,final_cik,25,,,,,,,0,2021-02-22,2023-08-22,
 1001082,2023-05-17,"DISH Network, LLC",1,1001082,direct,1001082.0,final_cik,27,,,,,,,0,2021-05-17,2023-11-13,
 1001250,2023-05-01,The EstÃ©e Lauder Companies Inc.,0,1001250,direct,1001250.0,final_cik,29,,,,,,,0,2021-05-01,2024-04-16,
 1001250,2023-05-30,The EstÃ©e Lauder Companies Inc.,0,1001250,direct,1001250.0,final_cik,28,,,,,,,0,2021-05-30,2024-04-15,
@@ -321,7 +321,7 @@ final_cik,breach_date,org_name,treated,orig_cik,link_basis,outcome_cik,outcome_r
 1125259,2020-08-15,Carnival Corporation & plc,0,1125259,direct,1125259.0,final_cik,51,,,,,,,0,2018-08-16,2021-04-18,
 1136893,2007-09-24,"Fidelity National Information Services, Inc.",0,1136893,direct,1136893.0,final_cik,39,,,,,,,0,2005-09-24,2008-03-25,
 1136893,2023-05-01,"Fidelity National Information Services, Inc.",0,1136893,direct,1136893.0,final_cik,45,,,,,,,0,2021-05-01,2024-04-01,
-1136893,2023-05-27,"Fidelity National Information Services, Inc.",0,1136893,direct,1136893.0,final_cik,37,,,,,,,0,2021-05-27,2024-02-07,
+1136893,2023-05-27,"Fidelity National Information Services, Inc.",0,1136893,direct,1136893.0,final_cik,37,,,,,,,0,2021-05-27,2024-02-06,
 1136893,2023-06-21,"Fidelity National Information Services, Inc.",0,1136893,direct,1136893.0,final_cik,34,,,,,,,0,2021-06-21,2023-12-18,
 1136893,2023-06-26,"Fidelity National Information Services, Inc.",0,1136893,direct,1136893.0,final_cik,34,,,,,,,0,2021-06-26,2023-12-23,
 1136893,2023-07-17,"Fidelity National Information Services, Inc.",0,1136893,direct,1136893.0,final_cik,34,,,,,,,0,2021-07-17,2024-01-13,
@@ -455,7 +455,7 @@ final_cik,breach_date,org_name,treated,orig_cik,link_basis,outcome_cik,outcome_r
 1567336,2019-04-01,Mediant Communications Inc.,0,1567336,direct,,none,0,,,,,,,0,2017-04-01,2019-11-24,"no candidate filed a Form 8-K in [2017-04-01, 2019-11-24] - fails the outcome-data requirement"
 1570434,2019-12-11,Prime Communications,0,1570434,direct,,none,0,,,,,,,0,2017-12-11,2020-11-14,"no candidate filed a Form 8-K in [2017-12-11, 2020-11-14] - fails the outcome-data requirement"
 1590895,2023-08-23,"Caesars Entertainment, Inc.",0,1590895,direct,1590895.0,final_cik,38,,,,,,,0,2021-08-23,2024-04-03,
-1609711,2019-10-16,GoDaddy.com LLC,1,1609711,direct,1609711.0,final_cik,80,,,,,,,0,2017-10-16,2023-11-13,
+1609711,2019-10-16,GoDaddy.com LLC,1,1609711,direct,1609711.0,final_cik,44,,,,,,,0,2017-10-16,2020-10-30,
 1609711,2021-09-06,"GoDaddy.com, LLC",1,1609711,direct,1609711.0,final_cik,33,,,,,,,0,2019-09-07,2022-05-06,
 1609711,2022-03-14,"GoDaddy.com, LLC",1,1609711,direct,1609711.0,final_cik,35,,,,,,,0,2020-03-14,2022-11-28,
 1632127,2019-03-01,"Cable One, Inc.",1,1632127,direct,1632127.0,final_cik,38,,,,,,,0,2017-03-01,2020-02-04,
@@ -473,7 +473,7 @@ final_cik,breach_date,org_name,treated,orig_cik,link_basis,outcome_cik,outcome_r
 1660134,2023-11-02,Okta Inc,0,1660134,direct,1660134.0,final_cik,21,,,,,,,0,2021-11-02,2024-04-30,
 1660134,2023-11-07,"Okta, Inc.",0,1660134,direct,1660134.0,final_cik,21,,,,,,,0,2021-11-07,2024-05-05,
 1669779,2022-01-14,CWGS Group,0,1669779,direct,1669779.0,final_cik,35,,,,,,,0,2020-01-15,2023-05-02,
-1673769,2022-10-18,"IMA Financial Group, Inc.",0,1673769,direct,,none,0,,,,,,,0,2020-10-18,2024-01-02,"no candidate filed a Form 8-K in [2020-10-18, 2024-01-02] - fails the outcome-data requirement"
+1673769,2022-10-18,"IMA Financial Group, Inc.",0,1673769,direct,,none,0,,,,,,,0,2020-10-18,2023-10-19,"no candidate filed a Form 8-K in [2020-10-18, 2023-10-19] - fails the outcome-data requirement"
 1691249,2017-10-01,"The iRemedy Healthcare Companies, Inc.",0,1691249,direct,,none,0,,,,,,,0,2015-10-02,2019-01-05,"no candidate filed a Form 8-K in [2015-10-02, 2019-01-05] - fails the outcome-data requirement"
 1702780,2019-11-04,"Altice USA, Inc.",1,1702780,direct,1702780.0,final_cik,60,,,,,,,0,2017-11-04,2020-08-04,
 1702780,2024-02-29,Altice USA,1,1702780,direct,1702780.0,final_cik,28,,,,,,,0,2022-03-01,2024-08-27,
