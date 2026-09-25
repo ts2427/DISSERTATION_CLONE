@@ -188,6 +188,15 @@ v3 rule, applied to more records rather than to one — and it does not bite in 
 (`158:287`); Essay 2 uses it as a control in ten scripts. Both sit outside the Essay 3
 freeze and outside this exception. Flagged, not measured, not changed.
 
+## Silent degradation, found 2026-09-25 (Query 4 Part C) — the 30-day logit
+
+Silent degradation, found 2026-09-25 (Query 4 Part C): the 30-day logit in
+`scripts/227:198` did not converge (35 iterations, ConvergenceWarning). `disp=0`
+suppressed the warning and the `try`/`except` does not catch warnings, so
+`f1_logit_ame.csv`'s 30-day row came from a failed optimization. Logit is corroboration
+only; no verdict depends on it. Not refit. `scripts/227` not edited. Results reports the
+30-day AME as "did not converge."
+
 ## Where to read things instead of changing them
 
 | Question | File |
