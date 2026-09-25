@@ -17,6 +17,7 @@ and MDEs in percentage points to two decimals, rates in percent to one decimal, 
 with thousands separators, U+2212 for minus.
 
 Reads  : outputs/essay3_q4/*.csv, outputs/essay3_q3/*.csv,
+         outputs/essay3_appendix/descriptive_counts.csv (scripts/246),
          outputs/essay3_q4/tmobile_502_text.md,
          Data/processed/rebuild/stage2_signed.csv (Table 1 Panel B grades)
 Writes : outputs/essay3_appendix/ESSAY3_APPENDIX_TABLES.md
@@ -98,6 +99,16 @@ def f2(x, nd=2):
     return m(("%." + str(nd) + "f") % float(x))
 
 
+def pct_from(num, den, nd=1):
+    """Percent computed from the COUNT and its DENOMINATOR, never from a stored,
+    already-rounded proportion. table04/table06 store proportions to 4 dp, and
+    re-rounding those to 1 dp loses the third digit (0.2905 -> 29.0, where the raw
+    86/296 = 29.0541 -> 29.1). Counts are exact, so this reproduces the Results text."""
+    if num is None or den in (None, 0) or pd.isna(num) or pd.isna(den):
+        return ""
+    return m(("%." + str(nd) + "f") % (100.0 * float(num) / float(den)))
+
+
 def ci_pp(lo, hi):
     if pd.isna(lo) or pd.isna(hi):
         return ""
@@ -133,6 +144,7 @@ CLG = pd.read_csv(need(Q4 / "c_logit_diagnostics.csv"))
 LAD = pd.read_csv(need("outputs/essay3_v4/f1_ladder.csv"))
 S2 = pd.read_csv(need("Data/processed/rebuild/stage2_signed.csv"), low_memory=False)
 ATTR = pd.read_csv(need(Q3 / "attrition.csv"))
+DC = pd.read_csv(need(OUT / "descriptive_counts.csv")).set_index("key")["value"].to_dict()
 SUB = ATTR[ATTR["step"].str.strip().str.startswith("of which", na=False)].rename(
     columns={"treated": "treated_events", "control": "control_events"})
 TMTXT = re.sub(r"\s+", " ", need(Q4 / "tmobile_502_text.md").read_text(encoding="utf-8"))
@@ -190,12 +202,16 @@ add(1, "Sample Construction From Notification Records to the Analysis Sample",
     [("Panel A: Attrition ledger", T1A), ("Panel B: Record resolution grades", T1B)],
     "*Note.* Panel A rows above the canonical-event line are at the RECORD level, where "
     "treatment is undefined; rows from the canonical event set down are at the EVENT level. "
-    "Parent CIKs are the clustering unit. Records per event have a mean of 1.55 and a "
-    "maximum of 31 (Cencora, Inc., February 2024). Pre-rule is defined relative to the "
+    "Parent CIKs are the clustering unit. Records per event have a mean of "
+    + DC["records_per_event_mean"] + " and a "
+    "maximum of %s (%s, %s). Pre-rule is defined relative to the "
+    % (DC["records_per_event_max"], DC["records_per_event_max_org"],
+       DC["records_per_event_max_date"]) +
     "December 8, 2007 effective date of 47 CFR 64.2011. The two indented sub-rows decompose "
     "the 75 events lost at the security-link step. Sources: outputs/essay3_q4/table01.csv "
     "(Panel A, from outputs/essay3_v4/e_ledger.csv and outputs/rebuild_v4/"
-    "v4_212_identity_review.csv); Data/processed/rebuild/stage2_signed.csv (Panel B).")
+    "v4_212_identity_review.csv); Data/processed/rebuild/stage2_signed.csv (Panel B); "
+    "outputs/essay3_appendix/descriptive_counts.csv (records per event).")
 
 # =============================================================== TABLE 2
 t2 = T02.sort_values("treated_events", ascending=False)
@@ -214,16 +230,15 @@ lad30 = LAD[LAD["window"] == 30].iloc[0]
 mixed = t2[t2["control_events_same_cik"] > 0]["org_name"].tolist()
 tm = int(t2[t2["final_cik"] == 1283699]["treated_events"].iloc[0])
 sp = int(t2[t2["final_cik"] == 101830]["treated_events"].iloc[0])
-notreg("Table 2, Panel B", "singleton-cluster count (61), largest-cluster event count "
-                           "(Intuit, 78) and its share (19.3%): reported in the Query 3 "
-                           "report but emitted by no committed CSV. Cells left blank.")
 T2B = pd.DataFrame([
     ["Parent CIKs (G)", n0(lad30["G"])],
     ["Treated clusters (G1)", n0(lad30["G1"])],
     ["Effective clusters (G*)", f2(lad30["G_star"], 1)],
     ["Cluster-size coefficient of variation", f2(lad30["cluster_size_cv"], 3)],
-    ["Singleton clusters", ""],
-    ["Largest cluster", ""],
+    ["Singleton clusters", DC["singleton_clusters"]],
+    ["Largest cluster", "%s (CIK %s): %s events (%s%%)"
+     % (DC["largest_cluster_name"], DC["largest_cluster_cik"],
+        DC["largest_cluster_events"], DC["largest_cluster_share"])],
     ["Mixed clusters (hold treated and control events)", "; ".join(mixed)],
     ["T-Mobile share of treated events", "%s of %s (%s%%)" % (tm, 109, pct(tm / 109))],
     ["T-Mobile and Sprint share of treated events",
@@ -240,7 +255,8 @@ add(2, "Treated Parent CIKs and Cluster Structure",
     "GoDaddy enter by direct registry match, not by the network-operator criterion. Both "
     "DISH events postdate July 1, 2020, the Boost Mobile divestiture that the date-conditional "
     "rule turns on. G* is the effective number of clusters. Sources: "
-    "outputs/essay3_q4/table02.csv; outputs/essay3_v4/f1_ladder.csv.")
+    "outputs/essay3_q4/table02.csv; outputs/essay3_v4/f1_ladder.csv; "
+    "outputs/essay3_appendix/descriptive_counts.csv (singleton and largest-cluster rows).")
 
 # =============================================================== TABLE 3
 BT = {"HACK": "Hacking or malware", "INSD": "Insider", "PHYS": "Physical records",
@@ -248,8 +264,10 @@ BT = {"HACK": "Hacking or malware", "INSD": "Insider", "PHYS": "Physical records
       "HACK+INSD": "Hacking and insider", "HACK+PORT": "Hacking and portable device",
       "DISC+HACK": "Unintended disclosure and hacking"}
 t3 = T03.sort_values("treated_events", ascending=False)
-T3 = pd.DataFrame([[str(r["breach_type"]), n0(r["treated_events"]), pct(r["treated_share"]),
-                    n0(r["control_events"]), pct(r["control_share"])] for _, r in t3.iterrows()]
+_t3T, _t3C = t3["treated_events"].sum(), t3["control_events"].sum()
+T3 = pd.DataFrame([[str(r["breach_type"]), n0(r["treated_events"]),
+                    pct_from(r["treated_events"], _t3T), n0(r["control_events"]),
+                    pct_from(r["control_events"], _t3C)] for _, r in t3.iterrows()]
                   + [["Total", n0(t3["treated_events"].sum()), "100.0",
                       n0(t3["control_events"].sum()), "100.0"]],
                   columns=["PRC breach type", "Treated n", "Treated %", "Control n", "Control %"])
@@ -283,23 +301,27 @@ fc = c3[(c3["variable"] == "firm_size_log") & (c3["group"] == "control")].iloc[0
 T4B = pd.DataFrame([
     ["Treated range", "[%s, %s]" % (f2(ft["min"], 4), f2(ft["max"], 4))],
     ["Control range", "[%s, %s]" % (f2(fc["min"], 4), f2(fc["max"], 4))],
-    ["Control events inside the treated range", ""],
-    ["Treated events inside the control range", ""]],
+    ["Control events inside the treated range",
+     "%s of %s (%s%%)" % (DC["control_in_treated_range_n"],
+                          DC["control_in_treated_range_denom"],
+                          DC["control_in_treated_range_pct"])],
+    ["Treated events inside the control range",
+     "%s of %s (%s%%)" % (DC["treated_in_control_range_n"],
+                          DC["treated_in_control_range_denom"],
+                          DC["treated_in_control_range_pct"])]],
     columns=["Common support, log total assets", "Value"])
-notreg("Table 4, Panel B", "share of control events inside the treated range (97.0%) and share "
-                           "of treated events inside the treated range (85.3%): reported in the "
-                           "Query 4 errata (Part D3) but emitted by no committed CSV. Cells left blank.")
 c2 = T04[T04["part"] == "C2"]
 ct, cc = c2[c2["group"] == "treated"].iloc[0], c2[c2["group"] == "control"].iloc[0]
 T4C = pd.DataFrame([
-    ["Breach date equals notification date", "%s%% (%s)" % (pct(ct["same_day_share"]), n0(ct["same_day"])),
-     "%s%% (%s)" % (pct(cc["same_day_share"]), n0(cc["same_day"]))],
+    ["Breach date equals notification date",
+     "%s%% (%s)" % (pct_from(ct["same_day"], ct["n"]), n0(ct["same_day"])),
+     "%s%% (%s)" % (pct_from(cc["same_day"], cc["n"]), n0(cc["same_day"]))],
     ["Notification lag, median days", n0(ct["lag_median"]), n0(cc["lag_median"])],
     ["Notification lag, IQR days", "[%s, %s]" % (n0(ct["lag_q25"]), n0(ct["lag_q75"])),
      "[%s, %s]" % (n0(cc["lag_q25"]), n0(cc["lag_q75"]))],
     ["Breach-anchored 180-day window closes before notification",
-     "%s%% (%s)" % (pct(ct["bd180_share"]), n0(ct["bd180_before_rd"])),
-     "%s%% (%s)" % (pct(cc["bd180_share"]), n0(cc["bd180_before_rd"]))]],
+     "%s%% (%s)" % (pct_from(ct["bd180_before_rd"], ct["n"]), n0(ct["bd180_before_rd"])),
+     "%s%% (%s)" % (pct_from(cc["bd180_before_rd"], cc["n"]), n0(cc["bd180_before_rd"]))]],
     columns=["Anchor statistic", "Treated", "Control"])
 add(4, "Covariate Balance, Common Support, and Date Anchors",
     [("Panel A: Covariates", T4A), ("Panel B: Common support", T4B),
@@ -307,9 +329,10 @@ add(4, "Covariate Balance, Common Support, and Date Anchors",
     "*Note.* Sample level is EVENTS (109 treated, 296 control). The standardized difference is "
     "the treated mean minus the control mean divided by the pooled standard deviation; the 0.1 "
     "benchmark follows Austin (2009). No balance tests are reported, because they would add "
-    "unplanned hypothesis tests to the ledger. Panel B's two overlap shares are NOT REGENERABLE "
-    "from a committed CSV and are left blank. Sources: outputs/essay3_q4/table04.csv, from "
-    "outputs/essay3_q3/descriptives.csv.")
+    "unplanned hypothesis tests to the ledger. Panel B shows that common support is "
+    "substantial: the imbalance in firm size is a shift in means, not a failure of overlap. "
+    "Sources: outputs/essay3_q4/table04.csv, from outputs/essay3_q3/descriptives.csv; "
+    "outputs/essay3_appendix/descriptive_counts.csv (Panel B).")
 
 # =============================================================== TABLE 5
 FLD = {"exec_departure": "Executive departure", "exec departure (A)": "Executive departure",
@@ -367,10 +390,10 @@ for w in (30, 90, 180):
     for grp in ("treated", "control"):
         r = T06[(T06["window"] == w) & (T06["group"] == grp)].iloc[0]
         rows.append([n0(w), grp.title(), n0(r["n"]),
-                     "%s (%s%%)" % (n0(r["any_502"]), pct(r["any_502_rate"])),
-                     "%s (%s%%)" % (n0(r["exec_departure"]), pct(r["exec_rate"])),
-                     "%s (%s%%)" % (n0(r["ceo_departure"]), pct(r["ceo_rate"])),
-                     "%s (%s%%)" % (n0(r["director_only"]), pct(r["director_rate"]))])
+                     "%s (%s%%)" % (n0(r["any_502"]), pct_from(r["any_502"], r["n"])),
+                     "%s (%s%%)" % (n0(r["exec_departure"]), pct_from(r["exec_departure"], r["n"])),
+                     "%s (%s%%)" % (n0(r["ceo_departure"]), pct_from(r["ceo_departure"], r["n"])),
+                     "%s (%s%%)" % (n0(r["director_only"]), pct_from(r["director_only"], r["n"]))])
 T6A = pd.DataFrame(rows, columns=["Window (days)", "Group", "N", "Any Item 5.02 filing",
                                   "Executive departure", "Chief executive departure",
                                   "Director-only departure"])
@@ -380,9 +403,9 @@ for w in (30, 90, 180):
         r = T06[(T06["window"] == w) & (T06["group"] == grp)].iloc[0]
         rows.append([n0(w), "Pooled" if grp == "POOLED" else grp.title(),
                      n0(r["filing_no_exec"]),
-                     "%s%% (%s of %s)" % (pct(r["filing_no_exec_over_all_events"]),
+                     "%s%% (%s of %s)" % (pct_from(r["filing_no_exec"], r["n"]),
                                           n0(r["filing_no_exec"]), n0(r["n"])),
-                     "%s%% (%s of %s)" % (pct(r["filing_no_exec_over_filers"]),
+                     "%s%% (%s of %s)" % (pct_from(r["filing_no_exec"], r["any_502"]),
                                           n0(r["filing_no_exec"]), n0(r["any_502"]))])
 T6B = pd.DataFrame(rows, columns=["Window (days)", "Group", "Filing, no executive departure",
                                   "Over all events", "Over events with a filing"])
@@ -469,8 +492,9 @@ rows = [["HC3 (disqualified; reported per the analysis plan)", pp(pl["coef"]), p
          ci_pp(pl["ci_wcr_lo"], pl["ci_wcr_hi"])]]
 for grp in ("treated", "control"):
     r = T08[(T08["panel"] == "placebo window rate") & (T08["group"] == grp)].iloc[0]
-    rows.append(["%s departure rate in the placebo window" % grp.title(), pct(r["rate"]),
-                 "", "", "%s of %s events" % (n0(r["events_with_departure"]), n0(r["n"]))])
+    rows.append(["%s departure rate in the placebo window" % grp.title(),
+                 pct_from(r["events_with_departure"], r["n"]), "", "",
+                 "%s of %s events" % (n0(r["events_with_departure"]), n0(r["n"]))])
 T8 = pd.DataFrame(rows, columns=["Estimator", "β (pp) or rate (%)", "SE (pp)", "p", "95% CI (pp) / n"])
 add(8, "Pre-Disclosure Placebo",
     [("", T8)],
@@ -696,8 +720,10 @@ fig("7", 1, "A", "table01.csv 412 minus 405 at the 150-return step",
     n0(int(L1("Outcome-data")["N"]) - int(fin["N"])))
 fig("0", 1, "A", "table01.csv final step -> pre_rule_treated", n0(fin["pre_rule_treated"]))
 fig("7", 1, "A", "table01.csv final step -> pre_rule_control", n0(fin["pre_rule_control"]))
-fig("1.55", 1, "Note", "no committed CSV carries mean n_source_records", "NOT REGENERABLE")
-fig("31", 1, "Note", "no committed CSV carries max n_source_records", "NOT REGENERABLE")
+fig("1.55", 1, "Note", "descriptive_counts.csv records_per_event_mean",
+    DC["records_per_event_mean"])
+fig("31", 1, "Note", "descriptive_counts.csv records_per_event_max",
+    DC["records_per_event_max"])
 
 # ---- treated firms ----
 fig("70", 2, "A", "table02.csv sum treated_events_clause1", n0(t2["treated_events_clause1"].sum()))
@@ -713,32 +739,38 @@ fig("10", 2, "A", "table02.csv CIK 732712 -> treated_events",
 fig("5", 2, "A", "table02.csv CIK 1447669 + 1609711 -> treated_events",
     n0(t2[t2["final_cik"].isin([1447669, 1609711])]["treated_events"].sum()))
 fig("24.5", 2, "B", "f1_ladder.csv 30d -> G_star", f2(lad30["G_star"], 1))
-fig("61", 2, "B", "no committed CSV carries the singleton-cluster count", "NOT REGENERABLE")
-fig("78", 2, "B", "no committed CSV carries the Intuit event count", "NOT REGENERABLE")
-fig("19.3", 2, "B", "no committed CSV carries the Intuit share", "NOT REGENERABLE")
+fig("61", 2, "B", "descriptive_counts.csv singleton_clusters", DC["singleton_clusters"])
+fig("78", 2, "B", "descriptive_counts.csv largest_cluster_events", DC["largest_cluster_events"])
+fig("19.3", 2, "B", "descriptive_counts.csv largest_cluster_share", DC["largest_cluster_share"])
 
 # ---- composition ----
 for code, tv, cvv in [("HACK", "58.7", "76.0"), ("INSD", "20.2", "8.5"), ("PHYS", "11.0", "1.4")]:
     r = T03[T03["breach_type"] == code].iloc[0]
-    fig(tv, 3, "", "table03.csv " + code + " -> treated_share", pct(r["treated_share"]))
-    fig(cvv, 3, "", "table03.csv " + code + " -> control_share", pct(r["control_share"]))
+    fig(tv, 3, "", "table03.csv " + code + " treated_events / 109",
+        pct_from(r["treated_events"], _t3T))
+    fig(cvv, 3, "", "table03.csv " + code + " control_events / 296",
+        pct_from(r["control_events"], _t3C))
 fig("11.58", 4, "A", "table04.csv firm_size_log treated mean", f2(CV("firm_size_log", "treated", "mean")))
 fig("9.69", 4, "A", "table04.csv firm_size_log control mean", f2(CV("firm_size_log", "control", "mean")))
 fig("1.45", 4, "A", "table04.csv firm_size_log std_diff", f2(CV("firm_size_log", "treated", "std_diff")))
-fig("97.0", 4, "B", "no committed CSV carries this overlap share", "NOT REGENERABLE")
-fig("85.3", 4, "B", "no committed CSV carries this overlap share", "NOT REGENERABLE")
+fig("97.0", 4, "B", "descriptive_counts.csv control_in_treated_range_pct",
+    DC["control_in_treated_range_pct"])
+fig("85.3", 4, "B", "descriptive_counts.csv treated_in_control_range_pct",
+    DC["treated_in_control_range_pct"])
 fig("0.49", 4, "A", "table04.csv leverage std_diff", f2(CV("leverage", "treated", "std_diff")))
 fig("−0.56", 4, "A", "table04.csv roa std_diff", f2(CV("roa", "treated", "std_diff")))
 fig("1.66", 4, "A", "table04.csv prior_breaches_1yr treated mean", f2(CV("prior_breaches_1yr", "treated", "mean")))
 fig("4.16", 4, "A", "table04.csv prior_breaches_1yr control mean", f2(CV("prior_breaches_1yr", "control", "mean")))
 fig("2", 4, "A", "table04.csv health_breach treated mean x 109",
     n0(round(float(CV("health_breach", "treated", "mean")) * 109)))
-fig("38.5", 4, "C", "table04.csv C2 treated same_day_share", pct(ct["same_day_share"]))
-fig("29.1", 4, "C", "table04.csv C2 control same_day_share", pct(cc["same_day_share"]))
+fig("38.5", 4, "C", "table04.csv C2 treated same_day / n", pct_from(ct["same_day"], ct["n"]))
+fig("29.1", 4, "C", "table04.csv C2 control same_day / n", pct_from(cc["same_day"], cc["n"]))
 fig("22", 4, "C", "table04.csv C2 treated lag_median", n0(ct["lag_median"]))
 fig("27", 4, "C", "table04.csv C2 control lag_median", n0(cc["lag_median"]))
-fig("11.9", 4, "C", "table04.csv C2 treated bd180_share", pct(ct["bd180_share"]))
-fig("14.5", 4, "C", "table04.csv C2 control bd180_share", pct(cc["bd180_share"]))
+fig("11.9", 4, "C", "table04.csv C2 treated bd180_before_rd / n",
+    pct_from(ct["bd180_before_rd"], ct["n"]))
+fig("14.5", 4, "C", "table04.csv C2 control bd180_before_rd / n",
+    pct_from(cc["bd180_before_rd"], cc["n"]))
 
 # ---- validation ----
 aud = F5("exec departure (A)", scoring="PRIMARY (verified)")
@@ -774,19 +806,23 @@ dir_a = F5("director-only departure", scoring="PRIMARY (verified)")
 fig(".746", 5, "A", "table05.csv audit director-only kappa", k3(dir_a["kappa"]))
 
 # ---- outcomes ----
-fig("75.2", 6, "A", "table06.csv 180d treated any_502_rate", pct(L6(180, "treated", "any_502_rate")))
-fig("66.6", 6, "A", "table06.csv 180d control any_502_rate", pct(L6(180, "control", "any_502_rate")))
+fig("75.2", 6, "A", "table06.csv 180d treated any_502 / n",
+    pct_from(L6(180, "treated", "any_502"), L6(180, "treated", "n")))
+fig("66.6", 6, "A", "table06.csv 180d control any_502 / n",
+    pct_from(L6(180, "control", "any_502"), L6(180, "control", "n")))
 for w, tv, cvv in [(30, "3.7", "4.4"), (90, "10.1", "14.5"), (180, "30.3", "24.7")]:
-    fig(tv, 6, "A", "table06.csv %dd treated exec_rate" % w, pct(L6(w, "treated", "exec_rate")))
-    fig(cvv, 6, "A", "table06.csv %dd control exec_rate" % w, pct(L6(w, "control", "exec_rate")))
+    fig(tv, 6, "A", "table06.csv %dd treated exec_departure / n" % w,
+        pct_from(L6(w, "treated", "exec_departure"), L6(w, "treated", "n")))
+    fig(cvv, 6, "A", "table06.csv %dd control exec_departure / n" % w,
+        pct_from(L6(w, "control", "exec_departure"), L6(w, "control", "n")))
 fig("49 of 82", 6, "B", "table06.csv 180d treated filing_no_exec of any_502",
     n0(L6(180, "treated", "filing_no_exec")) + " of " + n0(L6(180, "treated", "any_502")))
 fig("124 of 197", 6, "B", "table06.csv 180d control filing_no_exec of any_502",
     n0(L6(180, "control", "filing_no_exec")) + " of " + n0(L6(180, "control", "any_502")))
 fig("173 of 279", 6, "B", "table06.csv 180d pooled filing_no_exec of any_502",
     n0(L6(180, "POOLED", "filing_no_exec")) + " of " + n0(L6(180, "POOLED", "any_502")))
-fig("62.0", 6, "B", "table06.csv 180d pooled filing_no_exec_over_filers",
-    pct(L6(180, "POOLED", "filing_no_exec_over_filers")))
+fig("62.0", 6, "B", "table06.csv 180d pooled filing_no_exec / any_502",
+    pct_from(L6(180, "POOLED", "filing_no_exec"), L6(180, "POOLED", "any_502")))
 for w, tv, cvv in [(30, "0", "1"), (90, "3", "8"), (180, "8", "24")]:
     fig(tv, 6, "A", "table06.csv %dd treated ceo_departure" % w, n0(L6(w, "treated", "ceo_departure")))
     fig(cvv, 6, "A", "table06.csv %dd control ceo_departure" % w, n0(L6(w, "control", "ceo_departure")))
@@ -822,8 +858,10 @@ fig("17", 7, "B", "table06.csv 30d pooled exec_departure", n0(L6(30, "POOLED", "
 # ---- placebo ----
 prt = T08[(T08["panel"] == "placebo window rate") & (T08["group"] == "treated")].iloc[0]
 prc = T08[(T08["panel"] == "placebo window rate") & (T08["group"] == "control")].iloc[0]
-fig("22.9", 8, "", "table08.csv placebo treated rate -> percent", pct(prt["rate"]))
-fig("23.6", 8, "", "table08.csv placebo control rate -> percent", pct(prc["rate"]))
+fig("22.9", 8, "", "table08.csv placebo treated events_with_departure / n",
+    pct_from(prt["events_with_departure"], prt["n"]))
+fig("23.6", 8, "", "table08.csv placebo control events_with_departure / n",
+    pct_from(prc["events_with_departure"], prc["n"]))
 fig("−8.62", 8, "", "table08.csv placebo coef -> pp", pp(pl["coef"]))
 fig(".312", 8, "", "table08.csv placebo p_cv3", p3(pl["p_cv3"]))
 fig(".231", 8, "", "table08.csv placebo p_wcr", p3(pl["p_wcr"]))

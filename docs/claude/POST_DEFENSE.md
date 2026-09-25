@@ -224,6 +224,27 @@ freeze nothing.
 after staging the Query 3/4 commit, so the gate was not re-checked against the 27 new
 paths. It was found by the Part H reproduction run from a fresh GitHub clone.
 
+## Gate widening 2026-09-25 (second) — `scripts/210` allowlist, for the rendered appendix
+
+**Not a pipeline change and not a freeze exception**, on the same reasoning as the first
+widening above: `scripts/210` is a gate, not a stage, and no estimate, output or verdict is
+affected.
+
+Committing the rendered appendix added `outputs/essay3_appendix/`, a directory no allowlist
+entry covered, so the gate reported `FAIL - v3 baseline changed` while its own breakdown read
+`SHA256 CHANGED (real content) : 0`, `BLOB ID CHANGED (git object) : 0`, `DELETED / UNTRACKED
+: 0` and `ADDED outside v4 allowlist : 3`.
+
+**Change, authorised 2026-09-25, allowlist only (4 insertions, 0 deletions):**
+
+- `V4_DIRS` += `outputs/essay3_appendix/`
+
+`scripts/245` formats the committed Query 3/4 table CSVs and `scripts/246` computes the
+descriptive counts those tables cite; both read the v4 artefacts and write only into this
+directory.
+
+**After: `RESULT: PASS - v3 baseline intact`**, with `ADDED outside v4 allowlist : 0`.
+
 ## Where to read things instead of changing them
 
 | Question | File |

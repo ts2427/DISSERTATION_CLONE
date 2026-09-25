@@ -1,0 +1,22 @@
+key,label,value,results_text,assertion,source_file,source_field
+records_per_event_mean,"Records per canonical event, mean",1.55,1.55,MATCH,Data/processed/rebuild_v4/CANONICAL_V4.csv,n_source_records
+records_per_event_max,"Records per canonical event, maximum",31,31,MATCH,Data/processed/rebuild_v4/CANONICAL_V4.csv,n_source_records
+records_per_event_max_org,Organisation of the maximum event,"Cencora, Inc.","Cencora, Inc.",MATCH,Data/processed/rebuild_v4/CANONICAL_V4.csv,org_name
+records_per_event_max_date,Breach month of the maximum event,February 2024,February 2024,MATCH,Data/processed/rebuild_v4/CANONICAL_V4.csv,breach_date
+records_per_event_max_breach_date,Breach date of the maximum event,2024-02-21,,,Data/processed/rebuild_v4/CANONICAL_V4.csv,breach_date
+singleton_clusters,Clusters holding exactly one analysis event,61,61,MATCH,outputs/essay3_v4/e_analysis_sample.csv,final_cik
+largest_cluster_name,"Largest cluster, name","Intuit, Inc.","Intuit, Inc.",MATCH,outputs/essay3_v4/e_analysis_sample.csv,org_name
+largest_cluster_events,"Largest cluster, events",78,78,MATCH,outputs/essay3_v4/e_analysis_sample.csv,final_cik
+largest_cluster_share,"Largest cluster, share of the 405",19.3,19.3,MATCH,outputs/essay3_v4/e_analysis_sample.csv,final_cik
+largest_cluster_cik,"Largest cluster, CIK",896878,,,outputs/essay3_v4/e_analysis_sample.csv,final_cik
+clusters_total,Parent CIKs in the analysis sample (G),119,,,outputs/essay3_v4/e_analysis_sample.csv,final_cik
+support_treated_min,"firm_size_log, treated minimum",7.7421,,,outputs/essay3_v4/e_analysis_sample.csv,firm_size_log
+support_treated_max,"firm_size_log, treated maximum",13.2206,,,outputs/essay3_v4/e_analysis_sample.csv,firm_size_log
+support_control_min,"firm_size_log, control minimum",6.4420,,,outputs/essay3_v4/e_analysis_sample.csv,firm_size_log
+support_control_max,"firm_size_log, control maximum",12.8096,,,outputs/essay3_v4/e_analysis_sample.csv,firm_size_log
+control_in_treated_range_n,"Control events inside the treated range, count",287,287,MATCH,outputs/essay3_v4/e_analysis_sample.csv,firm_size_log
+control_in_treated_range_denom,"Control events, total",296,296,MATCH,outputs/essay3_v4/e_analysis_sample.csv,fcc_form499
+control_in_treated_range_pct,"Control events inside the treated range, percent",97.0,97.0,MATCH,outputs/essay3_v4/e_analysis_sample.csv,firm_size_log
+treated_in_control_range_n,"Treated events inside the control range, count",93,93,MATCH,outputs/essay3_v4/e_analysis_sample.csv,firm_size_log
+treated_in_control_range_denom,"Treated events, total",109,109,MATCH,outputs/essay3_v4/e_analysis_sample.csv,fcc_form499
+treated_in_control_range_pct,"Treated events inside the control range, percent",85.3,85.3,MATCH,outputs/essay3_v4/e_analysis_sample.csv,firm_size_log

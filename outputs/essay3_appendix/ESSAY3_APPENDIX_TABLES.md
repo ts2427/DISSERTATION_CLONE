@@ -43,7 +43,7 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 | Pre-IPO | 2 |
 | Total | 1,054 |
 
-*Note.* Panel A rows above the canonical-event line are at the RECORD level, where treatment is undefined; rows from the canonical event set down are at the EVENT level. Parent CIKs are the clustering unit. Records per event have a mean of 1.55 and a maximum of 31 (Cencora, Inc., February 2024). Pre-rule is defined relative to the December 8, 2007 effective date of 47 CFR 64.2011. The two indented sub-rows decompose the 75 events lost at the security-link step. Sources: outputs/essay3_q4/table01.csv (Panel A, from outputs/essay3_v4/e_ledger.csv and outputs/rebuild_v4/v4_212_identity_review.csv); Data/processed/rebuild/stage2_signed.csv (Panel B).
+*Note.* Panel A rows above the canonical-event line are at the RECORD level, where treatment is undefined; rows from the canonical event set down are at the EVENT level. Parent CIKs are the clustering unit. Records per event have a mean of 1.55 and a maximum of 31 (Cencora, Inc., February 2024). Pre-rule is defined relative to the December 8, 2007 effective date of 47 CFR 64.2011. The two indented sub-rows decompose the 75 events lost at the security-link step. Sources: outputs/essay3_q4/table01.csv (Panel A, from outputs/essay3_v4/e_ledger.csv and outputs/rebuild_v4/v4_212_identity_review.csv); Data/processed/rebuild/stage2_signed.csv (Panel B); outputs/essay3_appendix/descriptive_counts.csv (records per event).
 
 **Table 2**
 
@@ -76,13 +76,13 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 | Treated clusters (G1) | 13 |
 | Effective clusters (G*) | 24.5 |
 | Cluster-size coefficient of variation | 2.328 |
-| Singleton clusters |  |
-| Largest cluster |  |
+| Singleton clusters | 61 |
+| Largest cluster | Intuit, Inc. (CIK 896878): 78 events (19.3%) |
 | Mixed clusters (hold treated and control events) | AT&T; Verizon; Comcast Cable Communications LLC |
 | T-Mobile share of treated events | 26 of 109 (23.9%) |
 | T-Mobile and Sprint share of treated events | 38 of 109 (34.9%) |
 
-*Note.* Sample level is EVENTS within parent CIKs; inference clusters on parent CIK. Clause 1 is a direct Form 499 registry match; clause 2 is an adjudicated holding or parent-brand relationship. Eight CIKs carry clause 1 events and eight carry clause 2 events; three carry both (AT&T, Sprint, Comcast), so the two counts reconcile to 13 CIKs. T-Mobile (1283699) and Sprint (101830) are SEPARATE parent CIKs and are clustered separately; they are one corporate family only in the entity count (12). Twilio and GoDaddy enter by direct registry match, not by the network-operator criterion. Both DISH events postdate July 1, 2020, the Boost Mobile divestiture that the date-conditional rule turns on. G* is the effective number of clusters. Sources: outputs/essay3_q4/table02.csv; outputs/essay3_v4/f1_ladder.csv.
+*Note.* Sample level is EVENTS within parent CIKs; inference clusters on parent CIK. Clause 1 is a direct Form 499 registry match; clause 2 is an adjudicated holding or parent-brand relationship. Eight CIKs carry clause 1 events and eight carry clause 2 events; three carry both (AT&T, Sprint, Comcast), so the two counts reconcile to 13 CIKs. T-Mobile (1283699) and Sprint (101830) are SEPARATE parent CIKs and are clustered separately; they are one corporate family only in the entity count (12). Twilio and GoDaddy enter by direct registry match, not by the network-operator criterion. Both DISH events postdate July 1, 2020, the Boost Mobile divestiture that the date-conditional rule turns on. G* is the effective number of clusters. Sources: outputs/essay3_q4/table02.csv; outputs/essay3_v4/f1_ladder.csv; outputs/essay3_appendix/descriptive_counts.csv (singleton and largest-cluster rows).
 
 **Table 3**
 
@@ -91,7 +91,7 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 | PRC breach type | Treated n | Treated % | Control n | Control % |
 |---|---|---|---|---|
 | HACK | 64 | 58.7 | 225 | 76.0 |
-| INSD | 22 | 20.2 | 25 | 8.5 |
+| INSD | 22 | 20.2 | 25 | 8.4 |
 | PHYS | 12 | 11.0 | 4 | 1.4 |
 | PORT | 5 | 4.6 | 21 | 7.1 |
 | HACK+INSD | 3 | 2.8 | 2 | 0.7 |
@@ -124,19 +124,19 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 |---|---|
 | Treated range | [7.7421, 13.2206] |
 | Control range | [6.4420, 12.8096] |
-| Control events inside the treated range |  |
-| Treated events inside the control range |  |
+| Control events inside the treated range | 287 of 296 (97.0%) |
+| Treated events inside the control range | 93 of 109 (85.3%) |
 
 **Panel C: Date anchors**
 
 | Anchor statistic | Treated | Control |
 |---|---|---|
-| Breach date equals notification date | 38.5% (42) | 29.0% (86) |
+| Breach date equals notification date | 38.5% (42) | 29.1% (86) |
 | Notification lag, median days | 22 | 27 |
 | Notification lag, IQR days | [0, 94] | [0, 102] |
 | Breach-anchored 180-day window closes before notification | 11.9% (13) | 14.5% (43) |
 
-*Note.* Sample level is EVENTS (109 treated, 296 control). The standardized difference is the treated mean minus the control mean divided by the pooled standard deviation; the 0.1 benchmark follows Austin (2009). No balance tests are reported, because they would add unplanned hypothesis tests to the ledger. Panel B's two overlap shares are NOT REGENERABLE from a committed CSV and are left blank. Sources: outputs/essay3_q4/table04.csv, from outputs/essay3_q3/descriptives.csv.
+*Note.* Sample level is EVENTS (109 treated, 296 control). The standardized difference is the treated mean minus the control mean divided by the pooled standard deviation; the 0.1 benchmark follows Austin (2009). No balance tests are reported, because they would add unplanned hypothesis tests to the ledger. Panel B shows that common support is substantial: the imbalance in firm size is a shift in means, not a failure of overlap. Sources: outputs/essay3_q4/table04.csv, from outputs/essay3_q3/descriptives.csv; outputs/essay3_appendix/descriptive_counts.csv (Panel B).
 
 ## MEASUREMENT
 
@@ -180,12 +180,12 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 
 | Window (days) | Group | N | Any Item 5.02 filing | Executive departure | Chief executive departure | Director-only departure |
 |---|---|---|---|---|---|---|
-| 30 | Treated | 109 | 26 (23.8%) | 4 (3.7%) | 0 (0.0%) | 8 (7.3%) |
+| 30 | Treated | 109 | 26 (23.9%) | 4 (3.7%) | 0 (0.0%) | 8 (7.3%) |
 | 30 | Control | 296 | 40 (13.5%) | 13 (4.4%) | 1 (0.3%) | 4 (1.4%) |
 | 90 | Treated | 109 | 56 (51.4%) | 11 (10.1%) | 3 (2.8%) | 18 (16.5%) |
-| 90 | Control | 296 | 123 (41.5%) | 43 (14.5%) | 8 (2.7%) | 20 (6.8%) |
+| 90 | Control | 296 | 123 (41.6%) | 43 (14.5%) | 8 (2.7%) | 20 (6.8%) |
 | 180 | Treated | 109 | 82 (75.2%) | 33 (30.3%) | 8 (7.3%) | 21 (19.3%) |
-| 180 | Control | 296 | 197 (66.5%) | 73 (24.7%) | 24 (8.1%) | 56 (18.9%) |
+| 180 | Control | 296 | 197 (66.6%) | 73 (24.7%) | 24 (8.1%) | 56 (18.9%) |
 
 **Panel B: Crosswalk**
 
@@ -473,22 +473,13 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 
 ## NOT REGENERABLE
 
-- **Table 2, Panel B** singleton-cluster count (61), largest-cluster event count (Intuit, 78) and its share (19.3%): reported in the Query 3 report but emitted by no committed CSV. Cells left blank.
-- **Table 4, Panel B** share of control events inside the treated range (97.0%) and share of treated events inside the treated range (85.3%): reported in the Query 4 errata (Part D3) but emitted by no committed CSV. Cells left blank.
+- none
 
 ## TEXT-TO-TABLE CHECK
 
-163 figures checked; 9 MISMATCH. Full listing in `text_figures_check.csv`.
+163 figures checked; 1 MISMATCH. Full listing in `text_figures_check.csv`.
 
 | Figure as written | Table | Panel | Source cell | Value after formatting |
 |---|---|---|---|---|
-| 1.55 | 1 | Note | no committed CSV carries mean n_source_records | NOT REGENERABLE |
-| 31 | 1 | Note | no committed CSV carries max n_source_records | NOT REGENERABLE |
-| 61 | 2 | B | no committed CSV carries the singleton-cluster count | NOT REGENERABLE |
-| 78 | 2 | B | no committed CSV carries the Intuit event count | NOT REGENERABLE |
-| 19.3 | 2 | B | no committed CSV carries the Intuit share | NOT REGENERABLE |
-| 97.0 | 4 | B | no committed CSV carries this overlap share | NOT REGENERABLE |
-| 85.3 | 4 | B | no committed CSV carries this overlap share | NOT REGENERABLE |
-| 29.1 | 4 | C | table04.csv C2 control same_day_share | 29.0 |
-| 66.6 | 6 | A | table06.csv 180d control any_502_rate | 66.5 |
+| 8.5 | 3 |  | table03.csv INSD control_events / 296 | 8.4 |
 

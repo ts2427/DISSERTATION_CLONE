@@ -108,6 +108,10 @@ V4_DIRS = (
     # this gate with 27 additions and zero content or blob changes.
     "outputs/essay3_q3/",
     "outputs/essay3_q4/",
+    # The rendered appendix (scripts/245-246). Formatting and descriptive counts read
+    # from the q3/q4 CSVs; nothing here is estimated and no v3 path is touched.
+    # Added 2026-09-25.
+    "outputs/essay3_appendix/",
 )
 V4_DOCS = (
     "docs/claude/REBUILD_V4_QUERY.md",
