@@ -197,6 +197,33 @@ suppressed the warning and the `try`/`except` does not catch warnings, so
 only; no verdict depends on it. Not refit. `scripts/227` not edited. Results reports the
 30-day AME as "did not converge."
 
+## Gate widening 2026-09-25 — `scripts/210` allowlist, for the Query 3/4 outputs
+
+**Not a pipeline change and not a freeze exception.** No estimate, output or verdict is
+affected; `scripts/210` is a gate, not a stage.
+
+The Query 3/4 commit (`8912caf`) added 27 files that no entry in `scripts/210`'s allowlist
+covered, so the gate reported `FAIL - v3 baseline changed` while its own breakdown read
+`SHA256 CHANGED (real content) : 0` and `BLOB ID CHANGED (git object) : 0`. v3 was intact;
+the allowlist simply did not know the new paths.
+
+**Change, authorised 2026-09-25, allowlist only (9 insertions, 0 deletions):**
+
+- `V4_DIRS` += `outputs/essay3_q3/`, `outputs/essay3_q4/`
+- `V4_DOCS` += `outputs/ESSAY3_QUERY3_REPORT.md`, `outputs/ESSAY3_QUERY4_REPORT.md`
+
+Nothing else in `scripts/210` was touched — no threshold, no comparison, no script range.
+The allowlist governs only NEWLY TRACKED files; modification or deletion of a baseline file
+is caught by the sha256/blob comparison, which never consults it. `scripts/242`-`244` read
+the v4 artefacts and write only into these two directories, so admitting them costs the
+freeze nothing.
+
+**After: `RESULT: PASS - v3 baseline intact`**, with `ADDED outside v4 allowlist : 0`.
+
+**How it was missed.** `scripts/210` was run after staging for freeze exception 3, but not
+after staging the Query 3/4 commit, so the gate was not re-checked against the 27 new
+paths. It was found by the Part H reproduction run from a fresh GitHub clone.
+
 ## Where to read things instead of changing them
 
 | Question | File |

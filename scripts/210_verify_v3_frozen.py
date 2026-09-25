@@ -102,6 +102,12 @@ V4_DIRS = (
     "Data/edgar/item5_02_text/",
     "outputs/rebuild_v4/",
     "outputs/essay3_v4/",
+    # Essay 3 Query 3 and Query 4 read-and-print outputs (scripts/242-244). They read
+    # the v4 artefacts and write only here; they touch no v3 path, so admitting them
+    # costs the freeze nothing. Added 2026-09-25 after the Query 3/4 commit tripped
+    # this gate with 27 additions and zero content or blob changes.
+    "outputs/essay3_q3/",
+    "outputs/essay3_q4/",
 )
 V4_DOCS = (
     "docs/claude/REBUILD_V4_QUERY.md",
@@ -111,6 +117,9 @@ V4_DOCS = (
     "docs/claude/ESSAY3_V4_STATE.md",
     # The post-freeze change rule. Tagged essay3-v4-final.
     "docs/claude/POST_DEFENSE.md",
+    # The Query 3 and Query 4 reports. Force-added (.gitignore:79 is *.md).
+    "outputs/ESSAY3_QUERY3_REPORT.md",
+    "outputs/ESSAY3_QUERY4_REPORT.md",
 )
 SCRIPT_RE = re.compile(r"^scripts/(\d+)_[^/]*\.py$")
 SCRIPT_LO, SCRIPT_HI = 210, 249
