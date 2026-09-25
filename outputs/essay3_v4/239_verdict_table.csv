@@ -1,9 +1,9 @@
 test,vintage,n,coef,p_cv3,p_wcr,mde80,verdict
 H6 exec departure 30d,v3,338,0.0168,0.6118,0.4924,0.0934,NULL (fail to reject at .05)
-H6 exec departure 30d,v4,405,0.0032,0.9252,0.9113,0.096,NULL (fail to reject at .05)
+H6 exec departure 30d,v4,405,0.004,0.9061,0.8889,0.0944,NULL (fail to reject at .05)
 H6 exec departure 90d,v3,338,-0.0169,0.8701,0.8154,0.2918,NULL (fail to reject at .05)
-H6 exec departure 90d,v4,405,-0.039,0.6263,0.5395,0.2256,NULL (fail to reject at .05)
+H6 exec departure 90d,v4,405,-0.041,0.6053,0.5136,0.2234,NULL (fail to reject at .05)
 H6 exec departure 180d,v3,338,0.0434,0.7052,0.6474,0.3245,NULL (fail to reject at .05)
-H6 exec departure 180d,v4,405,0.0227,0.8211,0.795,0.2829,NULL (fail to reject at .05)
+H6 exec departure 180d,v4,405,0.0233,0.8159,0.7901,0.2815,NULL (fail to reject at .05)
 F4 placebo (pre-notification),v3,338,-0.0658,0.5281,0.406,0.2945,NULL (fail to reject at .05)
-F4 placebo (pre-notification),v4,405,-0.0837,0.3257,0.2444,0.2397,NULL (fail to reject at .05)
+F4 placebo (pre-notification),v4,405,-0.0862,0.3116,0.2308,0.2397,NULL (fail to reject at .05)

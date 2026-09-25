@@ -2,25 +2,25 @@
 F1 SE DIAGNOSTICS (NEW, scripts/204) — N=405; treated 109; parent CIKs 119; T-Mobile events in sample 26
 ====================================================================================================
 
-30d: coef +0.0032 | SE: HC3 0.0257, CV1 0.0251, CV3 0.0340, WCR (no SE; CI [-0.0571, +0.0583], implied SE 0.0291) | G* 24.5
-     outcome mean 0.0420, variance 0.0403 | CV3/HC3 1.321 | MDE80 0.0960
-     T-Mobile deleted (N 379, G 118): coef -0.0176, CV3 SE 0.0348, MDE80 0.0984 | T-Mobile's share of the CV3 jackknife variance 0.3731
+30d: coef +0.0040 | SE: HC3 0.0254, CV1 0.0247, CV3 0.0334, WCR (no SE; CI [-0.0553, +0.0578], implied SE 0.0286) | G* 24.5
+     outcome mean 0.0420, variance 0.0403 | CV3/HC3 1.318 | MDE80 0.0944
+     T-Mobile deleted (N 379, G 118): coef -0.0164, CV3 SE 0.0343, MDE80 0.0969 | T-Mobile's share of the CV3 jackknife variance 0.3692
      base rates (notification anchor): treated 4/109 = 0.0367; control 13/296 = 0.0439
-     30d leave-one-cluster-out range [-0.0176, +0.0194] (full +0.0032); sign flips 4/119: 101830 Sprint Nextel (treated, 12 events, b_-g -0.0034); 908937 Sirius XM Radio Inc. (control, 15 events, b_-g -0.0022); 1108524 Salesforce.com (control, 1 events, b_-g -0.0003); 1283699 T-Mobile USA, Inc. (treated, 26 events, b_-g -0.0176)
-     30d top five contributors to the CV3 jackknife variance: 1283699 T-Mobile USA, Inc. (treated, 26 events, b_-g -0.0176, share 0.373); 1136893 Fidelity National Information Services, Inc. (control, 12 events, b_-g +0.0194, share 0.225); 1889539 Corebridge Financial, Inc. (control, 1 events, b_-g +0.0179, share 0.184); 732717 AT&T (treated, 26 events, b_-g +0.0101, share 0.040); 101830 Sprint Nextel (treated, 12 events, b_-g -0.0034, share 0.038)
+     30d leave-one-cluster-out range [-0.0164, +0.0200] (full +0.0040); sign flips 3/119: 101830 Sprint Nextel (treated, 12 events, b_-g -0.0025); 908937 Sirius XM Radio Inc. (control, 15 events, b_-g -0.0013); 1283699 T-Mobile USA, Inc. (treated, 26 events, b_-g -0.0164)
+     30d top five contributors to the CV3 jackknife variance: 1283699 T-Mobile USA, Inc. (treated, 26 events, b_-g -0.0164, share 0.369); 1136893 Fidelity National Information Services, Inc. (control, 12 events, b_-g +0.0200, share 0.227); 1889539 Corebridge Financial, Inc. (control, 1 events, b_-g +0.0183, share 0.183); 732717 AT&T (treated, 26 events, b_-g +0.0109, share 0.042); 101830 Sprint Nextel (treated, 12 events, b_-g -0.0025, share 0.037)
 
-90d: coef -0.0390 | SE: HC3 0.0434, CV1 0.0504, CV3 0.0799, WCR (no SE; CI [-0.1588, +0.0844], implied SE 0.0614) | G* 24.5
-     outcome mean 0.1333, variance 0.1158 | CV3/HC3 1.839 | MDE80 0.2256
-     T-Mobile deleted (N 379, G 118): coef -0.0670, CV3 SE 0.0872, MDE80 0.2463 | T-Mobile's share of the CV3 jackknife variance 0.1240
+90d: coef -0.0410 | SE: HC3 0.0433, CV1 0.0499, CV3 0.0791, WCR (no SE; CI [-0.1596, +0.0805], implied SE 0.0606) | G* 24.5
+     outcome mean 0.1333, variance 0.1158 | CV3/HC3 1.827 | MDE80 0.2234
+     T-Mobile deleted (N 379, G 118): coef -0.0687, CV3 SE 0.0864, MDE80 0.2440 | T-Mobile's share of the CV3 jackknife variance 0.1235
      base rates (notification anchor): treated 11/109 = 0.1009; control 43/296 = 0.1453
-     90d leave-one-cluster-out range [-0.0670, +0.0230] (full -0.0390); sign flips 1/119: 1136893 Fidelity National Information Services, Inc. (control, 12 events, b_-g +0.0230)
-     90d top five contributors to the CV3 jackknife variance: 1136893 Fidelity National Information Services, Inc. (control, 12 events, b_-g +0.0230, share 0.593); 1283699 T-Mobile USA, Inc. (treated, 26 events, b_-g -0.0670, share 0.124); 732717 AT&T (treated, 26 events, b_-g -0.0193, share 0.059); 908937 Sirius XM Radio Inc. (control, 15 events, b_-g -0.0552, share 0.042); 1889539 Corebridge Financial, Inc. (control, 1 events, b_-g -0.0262, share 0.025)
+     90d leave-one-cluster-out range [-0.0687, +0.0204] (full -0.0410); sign flips 1/119: 1136893 Fidelity National Information Services, Inc. (control, 12 events, b_-g +0.0204)
+     90d top five contributors to the CV3 jackknife variance: 1136893 Fidelity National Information Services, Inc. (control, 12 events, b_-g +0.0204, share 0.592); 1283699 T-Mobile USA, Inc. (treated, 26 events, b_-g -0.0687, share 0.124); 732717 AT&T (treated, 26 events, b_-g -0.0215, share 0.059); 908937 Sirius XM Radio Inc. (control, 15 events, b_-g -0.0568, share 0.041); 1889539 Corebridge Financial, Inc. (control, 1 events, b_-g -0.0285, share 0.024)
 
-180d: coef +0.0227 | SE: HC3 0.0608, CV1 0.0785, CV3 0.1001, WCR (no SE; CI [-0.1589, +0.2009], implied SE 0.0908) | G* 24.5
-     outcome mean 0.2617, variance 0.1937 | CV3/HC3 1.646 | MDE80 0.2829
-     T-Mobile deleted (N 379, G 118): coef -0.0363, CV3 SE 0.0948, MDE80 0.2679 | T-Mobile's share of the CV3 jackknife variance 0.3452
+180d: coef +0.0233 | SE: HC3 0.0610, CV1 0.0782, CV3 0.0996, WCR (no SE; CI [-0.1576, +0.2011], implied SE 0.0906) | G* 24.5
+     outcome mean 0.2617, variance 0.1937 | CV3/HC3 1.633 | MDE80 0.2815
+     T-Mobile deleted (N 379, G 118): coef -0.0349, CV3 SE 0.0946, MDE80 0.2673 | T-Mobile's share of the CV3 jackknife variance 0.3388
      base rates (notification anchor): treated 33/109 = 0.3028; control 73/296 = 0.2466
-     180d leave-one-cluster-out range [-0.0363, +0.0622] (full +0.0227); sign flips 1/119: 1283699 T-Mobile USA, Inc. (treated, 26 events, b_-g -0.0363)
-     180d top five contributors to the CV3 jackknife variance: 1283699 T-Mobile USA, Inc. (treated, 26 events, b_-g -0.0363, share 0.345); 1166691 Comcast (treated, 12 events, b_-g +0.0622, share 0.154); 1136893 Fidelity National Information Services, Inc. (control, 12 events, b_-g +0.0545, share 0.100); 732717 AT&T (treated, 26 events, b_-g +0.0536, share 0.094); 908937 Sirius XM Radio Inc. (control, 15 events, b_-g +0.0019, share 0.043)
+     180d leave-one-cluster-out range [-0.0349, +0.0623] (full +0.0233); sign flips 1/119: 1283699 T-Mobile USA, Inc. (treated, 26 events, b_-g -0.0349)
+     180d top five contributors to the CV3 jackknife variance: 1283699 T-Mobile USA, Inc. (treated, 26 events, b_-g -0.0349, share 0.339); 1166691 Comcast (treated, 12 events, b_-g +0.0623, share 0.152); 1136893 Fidelity National Information Services, Inc. (control, 12 events, b_-g +0.0547, share 0.098); 732717 AT&T (treated, 26 events, b_-g +0.0541, share 0.094); 1001082 DISH Network, LLC (treated, 2 events, b_-g +0.0025, share 0.043)
 
 Recomputed HC3/CV1/CV3 SEs and coefficients equal committed f1_ladder.csv at all three windows: PASS

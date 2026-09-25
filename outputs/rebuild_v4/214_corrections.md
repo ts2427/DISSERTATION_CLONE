@@ -1,6 +1,6 @@
 # REBUILD V4 — Stage 4 corrections
 
-- run (UTC): 2026-09-24T16:22:34+00:00
+- run (UTC): 2026-09-25T17:16:39+00:00
 - input: `Data/processed/rebuild/CANONICAL_V3.csv` (489 rows, read-only)
 - Stage 4 issues no SEC request; the EDGAR cache is read, never written.
 
@@ -10,6 +10,7 @@
 - International Paper: CIK 1283246 -> 51434 on 1 row(s).
 - Lennar: CIK 58696 -> 920760 on 1 row(s).
 - Gate-2 anchor: 14 event(s) moved to the chain-minimum reported_date.
+- health indicator: 6 event(s) raised 0 -> 1 on the any-record rule (0 without resolvable lineage).
 - Stage 3: read 44 verdict row(s) from 213_verification_log.csv, stage3b_213_verification_log.csv.
 - Stage 3: 25 event(s) re-parented, 4 verified without a CIK change (the verified registrant was already the event CIK); 15 UNVERIFIED row(s) left untouched and excluded.
 
@@ -34,6 +35,12 @@
 | reported_date_gate2_anchor | 1136893 | Fidelity National Information Services, Inc. | 2023-05-27 | 2023-08-11 | 2023-08-10 | YES |
 | reported_date_gate2_anchor | 1609711 | GoDaddy.com LLC | 2019-10-16 | 2023-05-17 | 2020-05-03 | YES |
 | reported_date_gate2_anchor | 1673769 | IMA Financial Group, Inc. | 2022-10-18 | 2023-07-06 | 2023-04-22 | YES |
+| health_breach_any_record | 771497 | ABM Industries Incorporated | 2018-01-08 | 0 | 1 | YES |
+| health_breach_any_record | 943452 | Wabtec Corporation | 2022-03-15 | 0 | 1 | YES |
+| health_breach_any_record | 1001082 | DISH Network, LLC | 2023-02-22 | 0 | 1 | YES |
+| health_breach_any_record | 1660134 | Okta, Inc. | 2023-09-23 | 0 | 1 | YES |
+| health_breach_any_record | 1673769 | IMA Financial Group, Inc. | 2022-10-18 | 0 | 1 | YES |
+| health_breach_any_record | 1702780 | Altice USA | 2024-02-29 | 0 | 1 | YES |
 | stage3_a_subsidiary | 72945 | Northrop Grumman Systems Corporation | 2016-04-18 | 72945 | 1133421 | YES |
 | stage3_a_subsidiary | 108772 | Xerox Corporation | 2023-12-10 | 108772 | 1770450 | YES |
 | stage3_a_subsidiary | 353394 | Leidos, Inc. | 2022-09-30 | 353394 | 1336920 | YES |

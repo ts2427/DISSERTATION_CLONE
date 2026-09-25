@@ -395,6 +395,85 @@ def fix_gate2_anchor(ev, rows, v3_breach):
     return ev
 
 
+
+# ------------------------------------------------------------------ health indicator
+# FREEZE EXCEPTION 2026-09-25 (third), reason 1, logged in docs/claude/POST_DEFENSE.md
+# BEFORE this change.
+#
+# Defect origin: scripts/152:93 and scripts/153:62-71, both v3 and FROZEN.
+# health_breach (scripts/156:144-146) tests ONE information_affected per event. Stage 3
+# picks that one at 152:93 as the source record with the LONGEST string
+#   g.loc[g['information_affected'].astype(str).str.len().idxmax(), ...]
+# rather than as a union over the firm-day's records, and Gate 2 rewrites seven fields on
+# the surviving row at 153:62-71 but NOT information_affected. So an event whose health
+# mention sits in a shorter record of the same firm-day, or in another chain component,
+# is coded 0.
+#
+# The methods define the indicator as ANY record describing health data, so the rule is
+# restored HERE, over every source record of the event, as ordinary correction-ledger
+# entries. scripts/152 and scripts/153 are in the v3 freeze manifest; the v3 vintage
+# keeps its original values.
+#
+# Direction: this only ever RAISES 0 -> 1. The stored information_affected is itself one
+# of the event's records, so a flagged event always has a matching record; the function
+# asserts that and never lowers a flag.
+HEALTH_RE = re.compile(r"medical|health", re.I)
+
+
+def fix_health_any_record(ev, rows, v3_breach):
+    """health_breach := 1 if ANY source record's information_affected matches."""
+    s2p = Path("Data/processed/rebuild/stage2_signed.csv")
+    if not s2p.exists():
+        log("- health indicator: stage2_signed.csv absent; correction NOT applied.")
+        return ev
+    s2 = pd.read_csv(s2p, low_memory=False)
+    s2["_bd"] = s2["breach_date"].astype(str).str[:10]
+    s2["_ia"] = s2["information_affected"].astype(str)
+    s2["_h"] = s2["_ia"].str.contains(HEALTH_RE, na=False)
+    by_name = {n: g for n, g in s2.groupby(s2["org_name"].astype(str))}
+
+    n_raised = n_nolineage = 0
+    for i, r in ev.iterrows():
+        names = {x.strip() for x in str(r.get("name_variants", "")).split("|") if x.strip()}
+        names.add(str(r["org_name"]))
+        dates = {str(r["breach_date"])[:10], str(v3_breach.iloc[i])[:10]}
+        m = CHAIN_DATES_RE.search(str(r.get("chain_note", "") or ""))
+        if m:
+            dates |= {d.strip() for d in m.group(1).split(",")}
+        recs = [by_name[n] for n in names if n in by_name]
+        if not recs:
+            n_nolineage += 1
+            continue
+        recs = pd.concat(recs)
+        recs = recs[recs["_bd"].isin(dates)]
+        if not len(recs):
+            n_nolineage += 1
+            continue
+        hits = recs[recs["_h"]]
+        cur = int(r["health_breach"])
+        if cur == 1 and not len(hits):
+            # the stored value is one of these records, so this cannot happen
+            sys.exit("ABORT 214: health_breach=1 with no matching source record for "
+                     + str(r["org_name"]) + " " + str(r["breach_date"])[:10])
+        if cur == 1 or not len(hits):
+            continue
+        ev.at[i, "health_breach"] = 1
+        n_raised += 1
+        where = "; ".join(sorted({str(x["_bd"]) + " / " + str(x["org_name"]) for _, x in hits.iterrows()}))
+        chained = "Gate-2 chained (" + str(m.group(1)) + ")" if m else "single firm-day"
+        record(rows, "health_breach_any_record", r["final_cik"], r["org_name"],
+               str(r["breach_date"])[:10], "health_breach", "0", "1", True,
+               str(len(hits)) + " of " + str(len(recs)) + " source record(s) match "
+               "medical|health (case-insensitive) in information_affected: " + where
+               + ". " + chained + ". scripts/152:93 keeps only the longest-string record "
+               "and scripts/153:62-71 does not re-aggregate across chain components, so "
+               "the mention was dropped. The methods define the indicator as ANY record "
+               "describing health data. v3 is frozen and keeps the original value.")
+    log("- health indicator: " + str(n_raised) + " event(s) raised 0 -> 1 on the "
+        "any-record rule (" + str(n_nolineage) + " without resolvable lineage).")
+    return ev
+
+
 def apply_stage3(ev, rows, v3_cik, v3_breach):
     """Re-parent every VERIFIED Stage 3 event; leave every UNVERIFIED one alone.
 
@@ -503,6 +582,7 @@ def main():
                  "active across the window (365 filings)", "International Paper")
     ev = fix_lennar(ev, rows, m213)
     ev = fix_gate2_anchor(ev, rows, v3_breach)
+    ev = fix_health_any_record(ev, rows, v3_breach)
     ev = apply_stage3(ev, rows, v3_cik, v3_breach)
 
     C = pd.DataFrame(rows)
