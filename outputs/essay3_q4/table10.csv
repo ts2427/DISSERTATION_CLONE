@@ -1,0 +1,40 @@
+window,full_coef,loco_min,loco_max,sign_flips,of_G,largest_move_cik,largest_move_coef,without_TMobile,without_Sprint,panel,final_cik,name,treated_cluster,n_events,coef_without,share,sign_flip,sample,y,n,G,G1,coef,se_hc3,p_hc3,se_cv1,p_cv1,se_cv3,p_cv3,ci_cv3_lo,ci_cv3_hi,mde80_cv3,treated_mean,control_mean,p_wcr,B_wcr,ci_wcr_lo,ci_wcr_hi,G_star,cluster_size_cv,panel_note
+30,0.004,-0.0164,0.02,3.0,119.0,1283699.0,-0.0164,-0.0164,-0.0025,LOCO range,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+90,-0.041,-0.0687,0.0204,1.0,119.0,1136893.0,0.0204,-0.0687,-0.0424,LOCO range,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+180,0.0233,-0.0349,0.0623,1.0,119.0,1283699.0,-0.0349,-0.0349,0.0166,LOCO range,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+30,,,,,,,,,,top-ten variance shares,1283699.0,"T-Mobile USA, Inc.",1.0,26.0,-0.0164,0.3692,1.0,,,,,,,,,,,,,,,,,,,,,,,,
+30,,,,,,,,,,top-ten variance shares,1136893.0,"Fidelity National Information Services, Inc.",0.0,12.0,0.02,0.2266,0.0,,,,,,,,,,,,,,,,,,,,,,,,
+30,,,,,,,,,,top-ten variance shares,1889539.0,"Corebridge Financial, Inc.",0.0,1.0,0.0183,0.1832,0.0,,,,,,,,,,,,,,,,,,,,,,,,
+30,,,,,,,,,,top-ten variance shares,732717.0,AT&T,1.0,26.0,0.0109,0.0424,0.0,,,,,,,,,,,,,,,,,,,,,,,,
+30,,,,,,,,,,top-ten variance shares,101830.0,Sprint Nextel,1.0,12.0,-0.0025,0.0374,1.0,,,,,,,,,,,,,,,,,,,,,,,,
+30,,,,,,,,,,top-ten variance shares,908937.0,Sirius XM Radio Inc.,0.0,15.0,-0.0013,0.0243,1.0,,,,,,,,,,,,,,,,,,,,,,,,
+30,,,,,,,,,,top-ten variance shares,320193.0,Apple Inc.,0.0,7.0,0.009,0.0226,0.0,,,,,,,,,,,,,,,,,,,,,,,,
+30,,,,,,,,,,top-ten variance shares,1091667.0,"Charter Communications, Inc.",1.0,8.0,0.008,0.0142,0.0,,,,,,,,,,,,,,,,,,,,,,,,
+30,,,,,,,,,,top-ten variance shares,1108524.0,Salesforce.com,0.0,1.0,0.0004,0.0113,0.0,,,,,,,,,,,,,,,,,,,,,,,,
+30,,,,,,,,,,top-ten variance shares,1137789.0,Seagate US LLC,0.0,3.0,0.0073,0.0098,0.0,,,,,,,,,,,,,,,,,,,,,,,,
+90,,,,,,,,,,top-ten variance shares,1136893.0,"Fidelity National Information Services, Inc.",0.0,12.0,0.0204,0.5917,1.0,,,,,,,,,,,,,,,,,,,,,,,,
+90,,,,,,,,,,top-ten variance shares,1283699.0,"T-Mobile USA, Inc.",1.0,26.0,-0.0687,0.1235,0.0,,,,,,,,,,,,,,,,,,,,,,,,
+90,,,,,,,,,,top-ten variance shares,732717.0,AT&T,1.0,26.0,-0.0215,0.059,0.0,,,,,,,,,,,,,,,,,,,,,,,,
+90,,,,,,,,,,top-ten variance shares,908937.0,Sirius XM Radio Inc.,0.0,15.0,-0.0568,0.0411,0.0,,,,,,,,,,,,,,,,,,,,,,,,
+90,,,,,,,,,,top-ten variance shares,1889539.0,"Corebridge Financial, Inc.",0.0,1.0,-0.0285,0.0239,0.0,,,,,,,,,,,,,,,,,,,,,,,,
+90,,,,,,,,,,top-ten variance shares,20520.0,Frontier Communications,1.0,4.0,-0.0517,0.0191,0.0,,,,,,,,,,,,,,,,,,,,,,,,
+90,,,,,,,,,,top-ten variance shares,1001082.0,"DISH Network, LLC",1.0,2.0,-0.0511,0.0171,0.0,,,,,,,,,,,,,,,,,,,,,,,,
+90,,,,,,,,,,top-ten variance shares,1041061.0,"Yum! Brands, Inc.",0.0,1.0,-0.0318,0.0127,0.0,,,,,,,,,,,,,,,,,,,,,,,,
+90,,,,,,,,,,top-ten variance shares,789019.0,Microsoft Corporation,0.0,5.0,-0.0484,0.0093,0.0,,,,,,,,,,,,,,,,,,,,,,,,
+90,,,,,,,,,,top-ten variance shares,1609711.0,GoDaddy.com LLC,1.0,3.0,-0.0332,0.0091,0.0,,,,,,,,,,,,,,,,,,,,,,,,
+180,,,,,,,,,,top-ten variance shares,1283699.0,"T-Mobile USA, Inc.",1.0,26.0,-0.0349,0.3388,1.0,,,,,,,,,,,,,,,,,,,,,,,,
+180,,,,,,,,,,top-ten variance shares,1166691.0,Comcast,1.0,12.0,0.0623,0.1515,0.0,,,,,,,,,,,,,,,,,,,,,,,,
+180,,,,,,,,,,top-ten variance shares,1136893.0,"Fidelity National Information Services, Inc.",0.0,12.0,0.0547,0.0983,0.0,,,,,,,,,,,,,,,,,,,,,,,,
+180,,,,,,,,,,top-ten variance shares,732717.0,AT&T,1.0,26.0,0.0541,0.0945,0.0,,,,,,,,,,,,,,,,,,,,,,,,
+180,,,,,,,,,,top-ten variance shares,1001082.0,"DISH Network, LLC",1.0,2.0,0.0025,0.0435,0.0,,,,,,,,,,,,,,,,,,,,,,,,
+180,,,,,,,,,,top-ten variance shares,908937.0,Sirius XM Radio Inc.,0.0,15.0,0.0034,0.0398,0.0,,,,,,,,,,,,,,,,,,,,,,,,
+180,,,,,,,,,,top-ten variance shares,1105705.0,Time Warner Inc.,0.0,8.0,0.0068,0.0273,0.0,,,,,,,,,,,,,,,,,,,,,,,,
+180,,,,,,,,,,top-ten variance shares,1091667.0,"Charter Communications, Inc.",1.0,8.0,0.0386,0.0233,0.0,,,,,,,,,,,,,,,,,,,,,,,,
+180,,,,,,,,,,top-ten variance shares,732712.0,Verizon,1.0,11.0,0.0081,0.0231,0.0,,,,,,,,,,,,,,,,,,,,,,,,
+180,,,,,,,,,,top-ten variance shares,1543151.0,"Uber Technologies, Inc.",0.0,3.0,0.0363,0.0167,0.0,,,,,,,,,,,,,,,,,,,,,,,,
+30,,,,,,,,,,overlap restriction,,,,,,,,v3-overlap,exec_departure_30_rd,347.0,83.0,13.0,0.0177,0.0224,0.4306,0.0191,0.3573,0.0323,0.585,-0.0465,0.0819,0.0915,0.0367,0.042,0.4656,9999.0,-0.0312,0.0626,24.3,2.235,OVERLAP restriction: events also linked under v3. NOT a ticker match. All 58 dropped events are CONTROL; 0 treated.
+30,,,,,,,,,,overlap restriction,,,,,,,,full v4,,405.0,,,0.004,,0.8764,,,0.0334,0.9061,-0.0623,0.0702,,,,0.8889,,,,,,OVERLAP restriction: events also linked under v3. NOT a ticker match. All 58 dropped events are CONTROL; 0 treated.
+90,,,,,,,,,,overlap restriction,,,,,,,,v3-overlap,exec_departure_90_rd,347.0,83.0,13.0,-0.0345,0.0458,0.452,0.053,0.5176,0.1,0.7313,-0.2334,0.1645,0.2836,0.1009,0.1555,0.6213,9999.0,-0.1621,0.1022,24.3,2.235,OVERLAP restriction: events also linked under v3. NOT a ticker match. All 58 dropped events are CONTROL; 0 treated.
+90,,,,,,,,,,overlap restriction,,,,,,,,full v4,,405.0,,,-0.041,,0.3445,,,0.0791,0.6053,-0.1976,0.1156,,,,0.5136,,,,,,OVERLAP restriction: events also linked under v3. NOT a ticker match. All 58 dropped events are CONTROL; 0 treated.
+180,,,,,,,,,,overlap restriction,,,,,,,,v3-overlap,exec_departure_180_rd,347.0,83.0,13.0,0.0208,0.0654,0.7508,0.0816,0.7996,0.1111,0.8521,-0.2001,0.2417,0.3149,0.3028,0.2521,0.8181,9999.0,-0.1697,0.2119,24.3,2.235,OVERLAP restriction: events also linked under v3. NOT a ticker match. All 58 dropped events are CONTROL; 0 treated.
+180,,,,,,,,,,overlap restriction,,,,,,,,full v4,,405.0,,,0.0233,,0.7034,,,0.0996,0.8159,-0.174,0.2206,,,,0.7901,,,,,,OVERLAP restriction: events also linked under v3. NOT a ticker match. All 58 dropped events are CONTROL; 0 treated.

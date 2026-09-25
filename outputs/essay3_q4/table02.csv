@@ -1,0 +1,14 @@
+final_cik,org_name,treated_events,treated_events_clause1,treated_events_clause2,control_events_same_cik,name_variants,corporate_family_cik,corporate_family_name,clause2_rules,clause1_rules
+1283699,"T-Mobile USA, Inc.",26,26,0,0,7,1283699,"T-Mobile USA, Inc.",,"Clause (a) adjudicated 8/4: Sprint Spectrum LLC dba Sprint (499ID 811754, coverage 1997-20; Clause (a) adjudicated 8/4: active open registry record ""T-Mobile USA, Inc.- CONSOLIDATED"""
+732717,AT&T,24,15,9,2,7,732717,AT&T,Clause (b): AT&T Inc. filing family (7/28),"Clause (a) adjudicated: Cricket Communications FRN 0004321139; LLC variant missed by exact; Clause (a): registry match ""AT&T Inc"" [dba] -> AT&T Enterprises, LLC (FRN 0005937974, star; Clause (a): registry match ""AT&T Inc."" [dba] -> AT&T Enterprises, LLC (FRN 0005937974, sta; Clause (a): registry match ""AT&T"" [dba] -> AT&T Enterprises, LLC (FRN 0005937974, start 19; Clause (a): registry match ""AT&T, Inc."" [dba] -> AT&T Enterprises, LLC (FRN 0005937974, st"
+101830,Sprint Corporation,12,11,1,0,3,1283699,"T-Mobile USA, Inc. (Sprint folded in, scripts/224:361)",Clause (b): prepaid wireless brand of Sprint Spectrum LLC FRN 0006693022; subscriber-data ,"Clause (a) adjudicated 8/4: Sprint Spectrum LLC dba Sprint (499ID 811754, coverage 1997-20"
+732712,Verizon,10,10,0,1,3,732712,Verizon,,"Clause (a) adjudicated 8/4: Verizon carrier filer family (e.g., Verizon-NY FRN 0003469442 "
+1166691,Comcast Cable Communications LLC,9,1,8,3,4,1166691,Comcast Cable Communications LLC,Clause (b): parent brand of Comcast Telephony filers (7/28),"Clause (a) DOCUMENTED: direct registry filer NBCUniversal, LLC FRN 20940540 (8/4 adjudicat"
+1091667,"Charter Communications, Inc.",8,0,8,0,3,1091667,"Charter Communications, Inc.",Clause (b): parent brand of Charter Communications Operating LLC (7/28),
+18926,CenturyLink,5,0,5,0,3,18926,CenturyLink,Clause (b): CenturyLink/Lumen carrier family (Gate 1 rescue noted Form 499 relevance; regi,
+20520,"Frontier Communications Parent, Inc.",4,0,4,0,2,20520,"Frontier Communications Parent, Inc.",Clause (b): parent of regional Form 499 filer subsidiaries (7/28),
+1609711,"GoDaddy.com, LLC",3,3,0,0,2,1609711,"GoDaddy.com, LLC",,"Clause (a): registry match ""GoDaddy.com LLC"" [Legal_Name] -> GoDaddy.com LLC (FRN 00257306; Clause (a): registry match ""GoDaddy.com, LLC"" [Legal_Name] -> GoDaddy.com LLC (FRN 0025730"
+1001082,"DISH Network, LLC",2,0,2,0,1,1001082,"DISH Network, LLC",Clause (b) date-conditional (9/4): DISH is a facilities-based CMRS carrier from the 2020-0,
+1447669,Twilio,2,2,0,0,1,1447669,Twilio,,"Clause (a): registry match ""Twilio"" [Legal_Name] -> Twilio Inc (FRN 0020237343, start 2010"
+1632127,"Cable One, Inc.",2,2,0,0,1,1632127,"Cable One, Inc.",,"Clause (a): registry match ""Cable One, Inc."" [Legal_Name] -> Cable One Inc. (FRN 000347432"
+1702780,Altice USA,2,0,2,0,2,1702780,Altice USA,Clause (b): parent of Altice Wireless filer (7/28),

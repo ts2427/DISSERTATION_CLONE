@@ -1,0 +1,9 @@
+breach_type,control_events,treated_events,control_share,treated_share
+HACK,225,64,0.7601,0.5872
+INSD,25,22,0.0845,0.2018
+PHYS,4,12,0.0135,0.1101
+PORT,21,5,0.0709,0.0459
+HACK+INSD,2,3,0.0068,0.0275
+DISC,16,2,0.0541,0.0183
+HACK+PORT,1,1,0.0034,0.0092
+DISC+HACK,2,0,0.0068,0.0
