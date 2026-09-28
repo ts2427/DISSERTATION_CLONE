@@ -34,7 +34,7 @@ figure_as_written,table,panel,source_cell,value_after_formatting,result
 58.7,3,,table03.csv HACK treated_events / 109,58.7,MATCH
 76.0,3,,table03.csv HACK control_events / 296,76.0,MATCH
 20.2,3,,table03.csv INSD treated_events / 109,20.2,MATCH
-8.5,3,,table03.csv INSD control_events / 296,8.4,MISMATCH
+8.4,3,,table03.csv INSD control_events / 296,8.4,MATCH
 11.0,3,,table03.csv PHYS treated_events / 109,11.0,MATCH
 1.4,3,,table03.csv PHYS control_events / 296,1.4,MATCH
 11.58,4,A,table04.csv firm_size_log treated mean,11.58,MATCH

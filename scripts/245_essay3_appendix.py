@@ -149,6 +149,13 @@ SUB = ATTR[ATTR["step"].str.strip().str.startswith("of which", na=False)].rename
     columns={"treated": "treated_events", "control": "control_events"})
 TMTXT = re.sub(r"\s+", " ", need(Q4 / "tmobile_502_text.md").read_text(encoding="utf-8"))
 
+# Title abbreviations that must never appear in Table 11 Panel B. Built from an explicit
+# boundary class rather than a backslash escape: a "\b" written through a shell heredoc
+# once arrived as a literal backspace byte, which left this check inert.
+_ABBR = ("EVP", "SVP", "CFO", "CIO", "CEO", "VP", "Pres.")
+ABBREV_RE = re.compile("(?<![A-Za-z])(" + "|".join(re.escape(a) for a in _ABBR)
+                       + ")(?![A-Za-z])")
+
 TABLES = []          # (number, title, [(kind, payload)])
 
 
@@ -194,6 +201,17 @@ T1B = pd.DataFrame([[GRADE_LABEL.get(k, k), n0(v)]
                     for k, v in g.items()] + [["Total", n0(g.sum())]],
                    columns=["Final resolution grade", "Records"])
 check("T1 Panel B totals 1,054", int(g.sum()) == 1054, "got %d" % int(g.sum()))
+# Every label must be a GRADE_LABEL VALUE, never a raw final_grade code. The mapping is
+# GRADE_LABEL.get(k, k), so a case-folded or mistyped key falls through silently and
+# prints the code; that happened once and no count-based assertion caught it.
+_lab = [x for x in T1B["Final resolution grade"] if x != "Total"]
+_unmapped = [x for x in _lab if x not in set(GRADE_LABEL.values())]
+check("T1 Panel B every label is a GRADE_LABEL value", not _unmapped,
+      "unmapped: " + "; ".join(_unmapped))
+_rawcode = re.compile(r"^[A-Z0-9]+(-[A-Z0-9]+)+$")
+_raw = [x for x in _lab if _rawcode.match(str(x))]
+check("T1 Panel B no label is a raw final_grade code", not _raw,
+      "raw codes printed: " + "; ".join(_raw))
 ev = T01.dropna(subset=["treated_events"])
 ev = ev[~ev["step"].str.startswith("  of which", na=False)]
 check("T1 ledger closes (N never rises)",
@@ -635,12 +653,30 @@ def events_for(person_key, accession, which):
     return n
 
 
-rows = []
+rows, _bad_title, _abbrev = [], [], []
 for nm, key, ti, fd, acc, win in TITLES:
+    # character-for-character containment in the filing text (whitespace normalised only,
+    # because the source file wraps lines mid-title)
     if ti not in TMTXT:
-        notreg("Table 11, Panel B", "title for %s not found verbatim in tmobile_502_text.md" % nm)
+        _bad_title.append("%s: %r" % (nm, ti))
+    if ABBREV_RE.search(ti):
+        _abbrev.append("%s: %r" % (nm, ti))
     rows.append([nm, ti, fd, acc, win,
                  n0(events_for(key, acc, "outcome")), n0(events_for(key, acc, "placebo"))])
+check("T11 Panel B every title is verbatim in tmobile_502_text.md", not _bad_title,
+      "not found: " + "; ".join(_bad_title))
+check("T11 Panel B no title uses an abbreviation", not _abbrev,
+      "abbreviated: " + "; ".join(_abbrev))
+# the abbreviation check must itself be live, not vacuous
+check("T11 abbreviation regex is live (fires on 'EVP', quiet on the spelled-out title)",
+      bool(ABBREV_RE.search("EVP and Chief Financial Officer"))
+      and not ABBREV_RE.search("Executive Vice President and Chief Financial Officer"),
+      "ABBREV_RE = %r" % ABBREV_RE.pattern)
+# self-test: the containment check must have teeth. An abbreviated form of a real title
+# must NOT be found, or the assertion above would pass on anything.
+_probe = TITLES[0][2].replace("Executive Vice President", "EVP")
+check("T11 Panel B title check has teeth (an abbreviated title is rejected)",
+      _probe not in TMTXT, "probe %r was found in the filing text" % _probe)
 T11B = pd.DataFrame(rows, columns=["Name", "Title as stated in the filing", "Filing date",
                                    "Accession", "Window placement",
                                    "Outcome-window events (180 days)", "Placebo-window events"])
@@ -674,6 +710,17 @@ for t in TABLES:
                     bad.append("Table %d / %s / %s: %r" % (t["num"], lab, c, v))
 check("No cell contains inf, nan, or a hyphen used as a minus sign", not bad,
       "; ".join(bad[:5]))
+# Note text must carry no lowercase-damage artefact and no raw grade code. " se " and
+# "se and" caught the two notes where the caps pass lowercased SE; "47 CFR" / "47 cfr"
+# enforce the C.F.R. citation form; the GRADE_LABEL keys must never appear as prose.
+_NOTE_BAN = ["47 CFR", "47 cfr", " se ", "se and"] + list(GRADE_LABEL)
+_nb = []
+for t in TABLES:
+    for pat in _NOTE_BAN:
+        if pat in t["note"]:
+            _nb.append("Table %d: %r" % (t["num"], pat))
+check("Note text contains no banned string (47 CFR, bare 'se', or a grade code)", not _nb,
+      "; ".join(_nb))
 
 # =============================================================== PART C
 CHK = []
@@ -764,7 +811,10 @@ fig("78", 2, "B", "descriptive_counts.csv largest_cluster_events", DC["largest_c
 fig("19.3", 2, "B", "descriptive_counts.csv largest_cluster_share", DC["largest_cluster_share"])
 
 # ---- composition ----
-for code, tv, cvv in [("HACK", "58.7", "76.0"), ("INSD", "20.2", "8.5"), ("PHYS", "11.0", "1.4")]:
+# INSD control share: the exact count 25/296 = 8.4459% gives 8.4. The 8.5 previously
+# written in the Results text came from re-rounding the stored 0.0845, and the text is
+# being corrected to 8.4 rather than the table to 8.5.
+for code, tv, cvv in [("HACK", "58.7", "76.0"), ("INSD", "20.2", "8.4"), ("PHYS", "11.0", "1.4")]:
     r = T03[T03["breach_type"] == code].iloc[0]
     fig(tv, 3, "", "table03.csv " + code + " treated_events / 109",
         pct_from(r["treated_events"], _t3T))
