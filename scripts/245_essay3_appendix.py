@@ -175,17 +175,19 @@ for _, r in T01.iterrows():
 T1A = pd.DataFrame(rows1a, columns=["Step", "N", "Treated events", "Control events",
                                     "Treated parent CIKs", "Pre-rule treated",
                                     "Pre-rule control"])
+# Keys are the literal final_grade values in stage2_signed.csv and must match byte for
+# byte; they are DATA, not prose, and are never case-folded.
 GRADE_LABEL = {
-    "verified": "Verified",
-    "verified-GATE1": "Verified at Gate 1",
-    "verified-reasoning": "Verified by reasoning",
-    "adjudicated": "Adjudicated",
-    "ambiguous": "Unresolved ambiguity",
-    "excluded-unresolved": "No matching registrant or unresolved",
-    "excluded-private": "Private company",
-    "excluded-private-window": "Private during the breach window",
-    "excluded-pre-ipo": "Pre-ipo",
-    "excluded-no-US-listing": "No U.S. listing",
+    "VERIFIED": "Verified",
+    "VERIFIED-GATE1": "Verified at Gate 1",
+    "VERIFIED-REASONING": "Verified by reasoning",
+    "ADJUDICATED": "Adjudicated",
+    "AMBIGUOUS": "Unresolved ambiguity",
+    "EXCLUDED-UNRESOLVED": "No matching registrant or unresolved",
+    "EXCLUDED-PRIVATE": "Private company",
+    "EXCLUDED-PRIVATE-WINDOW": "Private during the breach window",
+    "EXCLUDED-PRE-IPO": "Pre-IPO",
+    "EXCLUDED-NO-US-LISTING": "No U.S. listing",
 }
 g = S2["final_grade"].value_counts()
 T1B = pd.DataFrame([[GRADE_LABEL.get(k, k), n0(v)]
@@ -207,7 +209,7 @@ add(1, "Sample Construction From Notification Records to the Analysis Sample",
     "maximum of %s (%s, %s). Pre-rule is defined relative to the "
     % (DC["records_per_event_max"], DC["records_per_event_max_org"],
        DC["records_per_event_max_date"]) +
-    "December 8, 2007 effective date of 47 cfr 64.2011. The two indented sub-rows decompose "
+    "December 8, 2007 effective date of 47 C.F.R. § 64.2011. The two indented sub-rows decompose "
     "the 75 events lost at the security-link step. Sources: outputs/essay3_q4/table01.csv "
     "(Panel A, from outputs/essay3_v4/e_ledger.csv and outputs/rebuild_v4/"
     "v4_212_identity_review.csv); Data/processed/rebuild/stage2_signed.csv (Panel B); "
@@ -501,7 +503,7 @@ add(8, "Pre-Disclosure Placebo",
     "*Note.* N = 405 events; G = 119 parent CIKs. The placebo outcome is an executive departure "
     "in (t0 − 180d, t0], the 180 days ending at notification. The interval is closed at t0, "
     "so a departure dated on the notification date falls in the placebo window and not in any "
-    "outcome window. β, se and CI are in percentage points. HC3 is disqualified as above. "
+    "outcome window. β, SE and CI are in percentage points. HC3 is disqualified as above. "
     "Sources: outputs/essay3_q4/table08.csv, from outputs/essay3_v4/f4_placebo.csv.")
 
 # =============================================================== TABLE 9
@@ -538,7 +540,7 @@ add(9, "Sensitivity Analyses",
     [("Panel A: All 27 sensitivity specifications", T9A),
      ("Panel B: Two-digit SIC cells", T9B)],
     "*Note.* Sample level is events; every row retains all N = 405, so no specification drops a "
-    "fixed-effect singleton or a missing SIC cell. β and se are in percentage points. "
+    "fixed-effect singleton or a missing SIC cell. β and SE are in percentage points. "
     "Benjamini-Hochberg is applied within the 27-test sensitivity family. HC3 does not appear: "
     "it is disqualified, and its standard error is not finite for the SIC fixed-effects rows, "
     "whose design is rank-deficient. The recall-corrected rows divide the outcome by the "

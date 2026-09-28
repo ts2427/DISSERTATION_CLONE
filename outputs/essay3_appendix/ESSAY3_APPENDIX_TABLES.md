@@ -31,19 +31,19 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 
 | Final resolution grade | Records |
 |---|---|
-| VERIFIED | 473 |
-| EXCLUDED-UNRESOLVED | 281 |
-| VERIFIED-GATE1 | 264 |
-| VERIFIED-REASONING | 19 |
-| EXCLUDED-PRIVATE | 5 |
-| EXCLUDED-PRIVATE-WINDOW | 4 |
-| ADJUDICATED | 2 |
-| EXCLUDED-NO-US-LISTING | 2 |
-| AMBIGUOUS | 2 |
-| EXCLUDED-PRE-IPO | 2 |
+| Verified | 473 |
+| No matching registrant or unresolved | 281 |
+| Verified at Gate 1 | 264 |
+| Verified by reasoning | 19 |
+| Private company | 5 |
+| Private during the breach window | 4 |
+| Adjudicated | 2 |
+| No U.S. listing | 2 |
+| Unresolved ambiguity | 2 |
+| Pre-IPO | 2 |
 | Total | 1,054 |
 
-*Note.* Panel A rows above the canonical-event line are at the record level, where treatment is undefined; rows from the canonical event set down are at the event level. Parent CIKs are the clustering unit. Records per event have a mean of 1.55 and a maximum of 31 (Cencora, Inc., February 2024). Pre-rule is defined relative to the December 8, 2007 effective date of 47 cfr 64.2011. The two indented sub-rows decompose the 75 events lost at the security-link step. Sources: outputs/essay3_q4/table01.csv (Panel A, from outputs/essay3_v4/e_ledger.csv and outputs/rebuild_v4/v4_212_identity_review.csv); Data/processed/rebuild/stage2_signed.csv (Panel B); outputs/essay3_appendix/descriptive_counts.csv (records per event).
+*Note.* Panel A rows above the canonical-event line are at the record level, where treatment is undefined; rows from the canonical event set down are at the event level. Parent CIKs are the clustering unit. Records per event have a mean of 1.55 and a maximum of 31 (Cencora, Inc., February 2024). Pre-rule is defined relative to the December 8, 2007 effective date of 47 C.F.R. § 64.2011. The two indented sub-rows decompose the 75 events lost at the security-link step. Sources: outputs/essay3_q4/table01.csv (Panel A, from outputs/essay3_v4/e_ledger.csv and outputs/rebuild_v4/v4_212_identity_review.csv); Data/processed/rebuild/stage2_signed.csv (Panel B); outputs/essay3_appendix/descriptive_counts.csv (records per event).
 
 **Table 2**
 
@@ -290,7 +290,7 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 | Treated departure rate in the placebo window | 22.9 |  |  | 25 of 109 events |
 | Control departure rate in the placebo window | 23.6 |  |  | 70 of 296 events |
 
-*Note.* N = 405 events; G = 119 parent CIKs. The placebo outcome is an executive departure in (t0 − 180d, t0], the 180 days ending at notification. The interval is closed at t0, so a departure dated on the notification date falls in the placebo window and not in any outcome window. β, se and CI are in percentage points. HC3 is disqualified as above. Sources: outputs/essay3_q4/table08.csv, from outputs/essay3_v4/f4_placebo.csv.
+*Note.* N = 405 events; G = 119 parent CIKs. The placebo outcome is an executive departure in (t0 − 180d, t0], the 180 days ending at notification. The interval is closed at t0, so a departure dated on the notification date falls in the placebo window and not in any outcome window. β, SE and CI are in percentage points. HC3 is disqualified as above. Sources: outputs/essay3_q4/table08.csv, from outputs/essay3_v4/f4_placebo.csv.
 
 **Table 9**
 
@@ -337,7 +337,7 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 | 34 cells, no treated events | 115 | 0 | 115 |
 | Total | 405 | 109 | 296 |
 
-*Note.* Sample level is events; every row retains all N = 405, so no specification drops a fixed-effect singleton or a missing SIC cell. β and se are in percentage points. Benjamini-Hochberg is applied within the 27-test sensitivity family. HC3 does not appear: it is disqualified, and its standard error is not finite for the SIC fixed-effects rows, whose design is rank-deficient. The recall-corrected rows divide the outcome by the measured stratum recall; that correction is uncapped and corrects missed departures only, with no adjustment for false positives, and the two CI-endpoint rows are bounding exercises rather than estimates. The complete test ledger is 31 tests (3 primary, 1 placebo, 27 sensitivities); the chief executive family contributes 0 tests because its 10-event gate failed at every window. The full 36-cell SIC list is in outputs/essay3_v4/f3_sic2_cells.csv. Sources: outputs/essay3_q4/table09.csv; outputs/essay3_v4/i_tests.csv.
+*Note.* Sample level is events; every row retains all N = 405, so no specification drops a fixed-effect singleton or a missing SIC cell. β and SE are in percentage points. Benjamini-Hochberg is applied within the 27-test sensitivity family. HC3 does not appear: it is disqualified, and its standard error is not finite for the SIC fixed-effects rows, whose design is rank-deficient. The recall-corrected rows divide the outcome by the measured stratum recall; that correction is uncapped and corrects missed departures only, with no adjustment for false positives, and the two CI-endpoint rows are bounding exercises rather than estimates. The complete test ledger is 31 tests (3 primary, 1 placebo, 27 sensitivities); the chief executive family contributes 0 tests because its 10-event gate failed at every window. The full 36-cell SIC list is in outputs/essay3_v4/f3_sic2_cells.csv. Sources: outputs/essay3_q4/table09.csv; outputs/essay3_v4/i_tests.csv.
 
 ## ROBUSTNESS
 
