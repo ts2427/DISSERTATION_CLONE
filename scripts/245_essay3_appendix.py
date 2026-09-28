@@ -176,16 +176,16 @@ T1A = pd.DataFrame(rows1a, columns=["Step", "N", "Treated events", "Control even
                                     "Treated parent CIKs", "Pre-rule treated",
                                     "Pre-rule control"])
 GRADE_LABEL = {
-    "VERIFIED": "Verified",
-    "VERIFIED-GATE1": "Verified at Gate 1",
-    "VERIFIED-REASONING": "Verified by reasoning",
-    "ADJUDICATED": "Adjudicated",
-    "AMBIGUOUS": "Unresolved ambiguity",
-    "EXCLUDED-UNRESOLVED": "No matching registrant or unresolved",
-    "EXCLUDED-PRIVATE": "Private company",
-    "EXCLUDED-PRIVATE-WINDOW": "Private during the breach window",
-    "EXCLUDED-PRE-IPO": "Pre-IPO",
-    "EXCLUDED-NO-US-LISTING": "No U.S. listing",
+    "verified": "Verified",
+    "verified-GATE1": "Verified at Gate 1",
+    "verified-reasoning": "Verified by reasoning",
+    "adjudicated": "Adjudicated",
+    "ambiguous": "Unresolved ambiguity",
+    "excluded-unresolved": "No matching registrant or unresolved",
+    "excluded-private": "Private company",
+    "excluded-private-window": "Private during the breach window",
+    "excluded-pre-ipo": "Pre-ipo",
+    "excluded-no-US-listing": "No U.S. listing",
 }
 g = S2["final_grade"].value_counts()
 T1B = pd.DataFrame([[GRADE_LABEL.get(k, k), n0(v)]
@@ -200,14 +200,14 @@ check("T1 treated + control == N at every populated step",
       bool((ev["treated_events"] + ev["control_events"] == ev["N"]).all()))
 add(1, "Sample Construction From Notification Records to the Analysis Sample",
     [("Panel A: Attrition ledger", T1A), ("Panel B: Record resolution grades", T1B)],
-    "*Note.* Panel A rows above the canonical-event line are at the RECORD level, where "
-    "treatment is undefined; rows from the canonical event set down are at the EVENT level. "
+    "*Note.* Panel A rows above the canonical-event line are at the record level, where "
+    "treatment is undefined; rows from the canonical event set down are at the event level. "
     "Parent CIKs are the clustering unit. Records per event have a mean of "
     + DC["records_per_event_mean"] + " and a "
     "maximum of %s (%s, %s). Pre-rule is defined relative to the "
     % (DC["records_per_event_max"], DC["records_per_event_max_org"],
        DC["records_per_event_max_date"]) +
-    "December 8, 2007 effective date of 47 CFR 64.2011. The two indented sub-rows decompose "
+    "December 8, 2007 effective date of 47 cfr 64.2011. The two indented sub-rows decompose "
     "the 75 events lost at the security-link step. Sources: outputs/essay3_q4/table01.csv "
     "(Panel A, from outputs/essay3_v4/e_ledger.csv and outputs/rebuild_v4/"
     "v4_212_identity_review.csv); Data/processed/rebuild/stage2_signed.csv (Panel B); "
@@ -246,11 +246,11 @@ T2B = pd.DataFrame([
     columns=["Cluster statistic", "Value"])
 add(2, "Treated Parent CIKs and Cluster Structure",
     [("Panel A: Treated parent CIKs", T2A), ("Panel B: Cluster structure", T2B)],
-    "*Note.* Sample level is EVENTS within parent CIKs; inference clusters on parent CIK. "
+    "*Note.* Sample level is events within parent CIKs; inference clusters on parent CIK. "
     "Clause 1 is a direct Form 499 registry match; clause 2 is an adjudicated holding or "
     "parent-brand relationship. Eight CIKs carry clause 1 events and eight carry clause 2 "
-    "events; three carry both (AT&T, Sprint, Comcast), so the two counts reconcile to 13 "
-    "CIKs. T-Mobile (1283699) and Sprint (101830) are SEPARATE parent CIKs and are clustered "
+    "events; three carry both (at&T, Sprint, Comcast), so the two counts reconcile to 13 "
+    "CIKs. T-Mobile (1283699) and Sprint (101830) are separate parent CIKs and are clustered "
     "separately; they are one corporate family only in the entity count (12). Twilio and "
     "GoDaddy enter by direct registry match, not by the network-operator criterion. Both "
     "DISH events postdate July 1, 2020, the Boost Mobile divestiture that the date-conditional "
@@ -275,7 +275,7 @@ check("T3 totals == 109 / 296",
       int(t3["treated_events"].sum()) == 109 and int(t3["control_events"].sum()) == 296)
 add(3, "Breach Type by Treatment Group",
     [("", T3)],
-    "*Note.* Sample level is EVENTS (109 treated, 296 control). Breach types are the Privacy "
+    "*Note.* Sample level is events (109 treated, 296 control). Breach types are the Privacy "
     "Rights Clearinghouse's own labels, carried through unchanged: HACK = "
     + "; ".join("%s = %s" % (k, v) for k, v in BT.items())
     + ". Combined codes arise where an event collapses source records of more than one type. "
@@ -326,7 +326,7 @@ T4C = pd.DataFrame([
 add(4, "Covariate Balance, Common Support, and Date Anchors",
     [("Panel A: Covariates", T4A), ("Panel B: Common support", T4B),
      ("Panel C: Date anchors", T4C)],
-    "*Note.* Sample level is EVENTS (109 treated, 296 control). The standardized difference is "
+    "*Note.* Sample level is events (109 treated, 296 control). The standardized difference is "
     "the treated mean minus the control mean divided by the pooled standard deviation; the 0.1 "
     "benchmark follows Austin (2009). No balance tests are reported, because they would add "
     "unplanned hypothesis tests to the ledger. Panel B shows that common support is "
@@ -373,7 +373,7 @@ T5B = pd.DataFrame([[str(r["stratum"]).title(), n0(r["ref_Y"]), n0(r["tp"]), n0(
 add(5, "Classifier Validation",
     [("Panel A: Four validation rounds", T5A),
      ("Panel B: Stratified recall audit, by treatment group", T5B)],
-    "*Note.* Sample level is FILINGS. κ = Cohen's kappa; TP, FP, FN = true positives, false "
+    "*Note.* Sample level is filings. κ = Cohen's kappa; TP, FP, FN = true positives, false "
     "positives, false negatives. Reference codes were produced blind to the classifier: in "
     "rounds 1, 2 and the stratified audit the classifier's answers were sealed in a committed "
     "file before coding; in the final round the classifier had never been run on those "
@@ -417,9 +417,9 @@ for w in (30, 90, 180):
               ("n", "any_502", "exec_departure", "ceo_departure", "director_only", "filing_no_exec")))
 add(6, "Item 5.02 Filings and Disclosed Departures by Window",
     [("Panel A: Rates by window and group", T6A), ("Panel B: Crosswalk", T6B)],
-    "*Note.* Sample level is EVENTS (109 treated, 296 control). The notification anchor is used "
+    "*Note.* Sample level is events (109 treated, 296 control). The notification anchor is used "
     "throughout; a window is (t0, t0 + w] and excludes a filing dated on t0 itself. An Item 5.02 "
-    "filing is NOT a departure: Item 5.02 also covers appointments, elections and compensatory "
+    "filing is not a departure: Item 5.02 also covers appointments, elections and compensatory "
     "arrangements, and Panel B shows how often a filing in the window reports no executive "
     "departure at all. The chief executive model requires at least 10 events in each group and "
     "is therefore not estimated at any window; the counts are reported for description only. "
@@ -471,14 +471,14 @@ add(7, "Primary Estimates: Inference Ladder, Minimum Detectable Effects, Logit C
      ("Panel B: Logit average marginal effects", T7B),
      ("Panel C: All terms, CV3", T7C)],
     "*Note.* N = 405 events; G = 119 parent CIKs. Standard errors are clustered by parent CIK. "
-    "β, SE, CI and MDE are in PERCENTAGE POINTS. HC3 ignores within-cluster correlation and "
-    "is DISQUALIFIED as an inferential rung; it is shown because the analysis plan specified the "
+    "β, SE, CI and MDE are in percentage points. HC3 ignores within-cluster correlation and "
+    "is disqualified as an inferential rung; it is shown because the analysis plan specified the "
     "full ladder, and its p must never be read as significance. CV3 uses the t distribution with "
     "G − 1 = 118 degrees of freedom. The wild cluster restricted bootstrap uses B = 99,999 "
     "for p and B = 9,999 for confidence-interval inversion; it yields no standard error. The "
     "30-day logit failed to converge (35 iterations, ConvergenceWarning), so its average marginal "
     "effect is not reported; there was no separation and no dropped observation at any window. "
-    "Panel C coefficients are DESCRIPTIVE: they are not hypothesis tests and are outside the "
+    "Panel C coefficients are descriptive: they are not hypothesis tests and are outside the "
     "31-test ledger. Sources: outputs/essay3_q4/table07.csv; b_control_coefficients.csv; "
     "c_logit_diagnostics.csv; outputs/essay3_v4/f1_ladder.csv.")
 
@@ -499,9 +499,9 @@ T8 = pd.DataFrame(rows, columns=["Estimator", "β (pp) or rate (%)", "SE (pp)", 
 add(8, "Pre-Disclosure Placebo",
     [("", T8)],
     "*Note.* N = 405 events; G = 119 parent CIKs. The placebo outcome is an executive departure "
-    "in (t0 − 180d, t0], the 180 days ENDING at notification. The interval is closed at t0, "
-    "so a departure dated ON the notification date falls in the placebo window and not in any "
-    "outcome window. β, SE and CI are in percentage points. HC3 is disqualified as above. "
+    "in (t0 − 180d, t0], the 180 days ending at notification. The interval is closed at t0, "
+    "so a departure dated on the notification date falls in the placebo window and not in any "
+    "outcome window. β, se and CI are in percentage points. HC3 is disqualified as above. "
     "Sources: outputs/essay3_q4/table08.csv, from outputs/essay3_v4/f4_placebo.csv.")
 
 # =============================================================== TABLE 9
@@ -537,12 +537,12 @@ check("T9 Panel B events total 405", int(sic["events"].sum()) == 405)
 add(9, "Sensitivity Analyses",
     [("Panel A: All 27 sensitivity specifications", T9A),
      ("Panel B: Two-digit SIC cells", T9B)],
-    "*Note.* Sample level is EVENTS; every row retains all N = 405, so no specification drops a "
-    "fixed-effect singleton or a missing SIC cell. β and SE are in percentage points. "
-    "Benjamini-Hochberg is applied WITHIN the 27-test sensitivity family. HC3 does not appear: "
+    "*Note.* Sample level is events; every row retains all N = 405, so no specification drops a "
+    "fixed-effect singleton or a missing SIC cell. β and se are in percentage points. "
+    "Benjamini-Hochberg is applied within the 27-test sensitivity family. HC3 does not appear: "
     "it is disqualified, and its standard error is not finite for the SIC fixed-effects rows, "
     "whose design is rank-deficient. The recall-corrected rows divide the outcome by the "
-    "measured stratum recall; that correction is UNCAPPED and corrects missed departures only, "
+    "measured stratum recall; that correction is uncapped and corrects missed departures only, "
     "with no adjustment for false positives, and the two CI-endpoint rows are bounding exercises "
     "rather than estimates. The complete test ledger is 31 tests (3 primary, 1 placebo, 27 "
     "sensitivities); the chief executive family contributes 0 tests because its 10-event gate "
@@ -585,11 +585,11 @@ add(10, "Cluster Concentration",
     [("Panel A: Leave-one-cluster-out", T10A),
      ("Panel B: Top ten clusters by share of CV3 jackknife variance", T10B),
      ("Panel C: CCM-based overlap restriction", T10C)],
-    "*Note.* Sample level is EVENTS within parent CIKs; G = 119 clusters. β is in percentage "
+    "*Note.* Sample level is events within parent CIKs; G = 119 clusters. β is in percentage "
     "points. A sign reversal is a cluster whose deletion changes the sign of β. Panel C "
-    "restricts to events that were ALSO linked by the earlier CCM-based security link, which v4 "
-    "replaced with a rebuilt CUSIP-to-permno link; it is a CCM-BASED OVERLAP RESTRICTION and is "
-    "NOT a ticker match. All 58 events removed in Panel C are CONTROL events across 37 parent "
+    "restricts to events that were also linked by the earlier ccm-based security link, which v4 "
+    "replaced with a rebuilt CUSIP-to-permno link; it is a ccm-based overlap restriction and is "
+    "not a ticker match. All 58 events removed in Panel C are control events across 37 parent "
     "CIKs; no treated event turns on the linker rebuild. Sources: outputs/essay3_q4/table10.csv; "
     "outputs/essay3_v4/f1_cv3_variance_shares.csv; outputs/essay3_v4/239_v3_overlap_sensitivity.csv.")
 
@@ -605,43 +605,61 @@ T11A = pd.DataFrame([[str(r["breach_date"]), str(r["reported_date"]),
                     columns=["Breach date", "Notification date", "Treatment clause",
                              "Placebo", "30 days", "90 days", "180 days"])
 check("T11 Panel A has 26 rows", len(T11A) == 26, "got %d" % len(T11A))
+# (display name, surname used to match the person string, title, filing date, accession, window)
 TITLES = [
-    ("Gary A. King", "Executive Vice President and Chief Information Officer", "2016-02-19",
+    ("Gary A. King", "King", "Executive Vice President and Chief Information Officer", "2016-02-19",
      "0001193125-16-470124", "Outcome window"),
-    ("David A. Miller", "Executive Vice President, General Counsel and Secretary", "2021-09-16",
+    ("David A. Miller", "Miller", "Executive Vice President, General Counsel and Secretary", "2021-09-16",
      "0001193125-21-275230", "Outcome window"),
-    ("Neville Ray", "President, Technology", "2023-02-13", "0001193125-23-035719", "Outcome window"),
-    ("Peter Ewens", "Executive Vice President, Corporate Strategy & Development", "2023-09-08",
+    ("Neville Ray", "Ray", "President, Technology", "2023-02-13", "0001193125-23-035719", "Outcome window"),
+    ("Peter Ewens", "Ewens", "Executive Vice President, Corporate Strategy & Development", "2023-09-08",
      "0001193125-23-231377", "Outcome window"),
-    ("John Legere", "Chief Executive Officer", "2019-11-18", "0001193125-19-294093", "Placebo window"),
-    ("J. Braxton Carter", "Executive Vice President and Chief Financial Officer", "2019-11-18",
+    ("John Legere", "Legere", "Chief Executive Officer", "2019-11-18", "0001193125-19-294093", "Placebo window"),
+    ("J. Braxton Carter", "Carter", "Executive Vice President and Chief Financial Officer", "2019-11-18",
      "0001193125-19-294093", "Placebo window")]
-served = {}
-for _, r in T11.iterrows():
-    for col in ("outcome_accessions", "placebo_accessions"):
-        for a in str(r.get(col, "") or "").split(";"):
-            a = a.strip()
-            if a:
-                served[a] = served.get(a, 0) + 1
+def events_for(person_key, accession, which):
+    """Count Panel A EVENTS whose `which` window holds THIS person's departure.
+
+    Keyed on the person AND the accession, not on the surname alone: T-Mobile's
+    2018-08-20 event carries an earlier Legere departure from a different filing
+    (0001104659-18-028086), which is not the 2019-11-18 departure in this panel.
+    Counting by surname alone would attribute that event to this row.
+    """
+    pcol, acol = which + "_persons", which + "_accessions"
+    n = 0
+    for _, rr in T11.iterrows():
+        if person_key in str(rr.get(pcol, "") or "") and accession in str(rr.get(acol, "") or ""):
+            n += 1
+    return n
+
+
 rows = []
-for nm, ti, fd, acc, win in TITLES:
+for nm, key, ti, fd, acc, win in TITLES:
     if ti not in TMTXT:
         notreg("Table 11, Panel B", "title for %s not found verbatim in tmobile_502_text.md" % nm)
-    rows.append([nm, ti, fd, acc, win, n0(served.get(acc, 0))])
+    rows.append([nm, ti, fd, acc, win,
+                 n0(events_for(key, acc, "outcome")), n0(events_for(key, acc, "placebo"))])
 T11B = pd.DataFrame(rows, columns=["Name", "Title as stated in the filing", "Filing date",
-                                   "Accession", "Window placement", "Events served"])
+                                   "Accession", "Window placement",
+                                   "Outcome-window events (180 days)", "Placebo-window events"])
+_ow = sum(int(x.replace(",", "")) for x in T11B["Outcome-window events (180 days)"])
+_pa180 = int((T11["exec_180"].astype(int)).sum())
+check("T11 Panel B outcome-window column sums to 13", _ow == 13, "got %d" % _ow)
+check("T11 Panel B outcome-window sum equals Panel A 180-day Y count",
+      _ow == _pa180, "Panel B %d vs Panel A %d" % (_ow, _pa180))
 add(11, "T-Mobile Events and Executive Departures",
     [("Panel A: The 26 T-Mobile events", T11A), ("Panel B: The departures", T11B)],
-    "*Note.* Sample level is EVENTS in Panel A (all 26 T-Mobile events in the analysis sample, "
-    "CIK 1283699) and PERSONS in Panel B. Y/N marks whether at least one executive departure "
-    "falls in that window. The health-information flag is OMITTED: it is a known false positive "
-    "arising from benefit-continuation language in separation agreements. The 13 events with a "
-    "180-day departure resolve to only FOUR distinct departures, because several breach records "
-    "fall within 180 days of the same filing; \"Events served\" counts how many events each "
-    "filing serves. Legere and Carter fall in the PLACEBO window of the 2019-11-26 event: their "
-    "8-K was filed 2019-11-18, eight days BEFORE that breach date and 105 days before the "
+    "*Note.* Sample level is events in Panel A (all 26 T-Mobile events in the analysis sample, "
+    "CIK 1283699) and persons in Panel B. Y/N marks whether at least one executive departure "
+    "falls in that window. The 13 events with a "
+    "180-day departure resolve to only four distinct departures, because several breach records "
+    "fall within 180 days of the same filing. The two event columns count, for each person, how "
+    "many of the 26 events place that person's departure in the 180-day outcome window and how "
+    "many place it in the placebo window; they are counted per person, and a person can appear "
+    "in both. Legere and Carter fall in the placebo window of the 2019-11-26 event: their "
+    "8-K was filed 2019-11-18, eight days before that breach date and 105 days before the "
     "2020-03-02 notification, so neither can be a response to either. Titles and context are "
-    "taken VERBATIM from the filings; no filing links any departure to a breach. Sources: "
+    "taken verbatim from the filings; no filing links any departure to a breach. Sources: "
     "outputs/essay3_q4/table11.csv; outputs/essay3_q4/tmobile_502_text.md.")
 
 check("Tables numbered 1-11 in order", [t["num"] for t in TABLES] == list(range(1, 12)))
@@ -874,7 +892,7 @@ fig(".113", 9, "A", "table09.csv min p_cv3 across the 27", p3(s9["p_cv3"].min())
 fig(".986", 9, "A", "table09.csv min p_bh across the 27", p3(s9["p_bh"].min()))
 fig("31", 9, "Note", "i_tests.csv row count", n0(len(_it)))
 fig("above .31", 9, "Note", "i_tests.csv min p_bh across all families",
-    "above .31" if float(_it["p_bh"].min()) > 0.31 else "NOT above .31 (" + p3(_it["p_bh"].min()) + ")")
+    "above .31" if float(_it["p_bh"].min()) > 0.31 else "not above .31 (" + p3(_it["p_bh"].min()) + ")")
 fig("104", 9, "B", "table09.csv SIC 48 treated", n0(s48["treated"]))
 fig("40", 9, "B", "table09.csv SIC 48 control", n0(s48["control"]))
 fig("5", 9, "B", "table09.csv SIC 73 treated", n0(s73["treated"]))
@@ -918,7 +936,7 @@ LINES = ["# Essay 3 Appendix", "",
          "formatted; nothing here is estimated. Built by `scripts/245_essay3_appendix.py`.",
          "",
          "Conventions: coefficients, standard errors, confidence intervals and minimum "
-         "detectable effects are in PERCENTAGE POINTS to two decimals; rates are percent "
+         "detectable effects are in percentage points to two decimals; rates are percent "
          "to one decimal; p, kappa, precision and recall carry three decimals with no "
          "leading zero; counts use thousands separators; the minus sign is U+2212.", ""]
 SECTIONS = {1: "SAMPLE AND TREATMENT", 5: "MEASUREMENT", 6: "OUTCOMES",
