@@ -1158,6 +1158,19 @@ Path('outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md').write_text(
     '\n'.join(LEDGER) + '\n', encoding='utf-8')
 Path('outputs/ESSAY2_APPENDIX_TABLES_FORM499.md').write_text(
     toprep() + '\n'.join(L) + '\n', encoding='utf-8')
+# I2 tripwire (2026-09-29): the canonical Essay 2 analysis sample. Every Essay 2 result
+# and the whole inference ladder in scripts/165 are computed on this frame, so its shape
+# is pinned here, at the point it is written. Recomputed from the committed data on the
+# day this was written. The FORENSIC legacy frames above are deliberately NOT guarded:
+# nothing cited depends on them (Part N2).
+A('canonical Essay 2 sample is N = 333', len(FIN) == 333, f'{len(FIN)}')
+A('104 treated events', int(FIN[TREAT].sum()) == 104, f'{int(FIN[TREAT].sum())}')
+A('82 clusters (parent filer entities)', FIN['final_cik'].nunique() == 82,
+  f"{FIN['final_cik'].nunique()}")
+A('12 treated parent filer entities',
+  FIN.loc[FIN[TREAT] == 1, 'final_cik'].nunique() == 12,
+  f"{FIN.loc[FIN[TREAT] == 1, 'final_cik'].nunique()}")
+
 FIN.to_csv(OUTDIR / 't1_final_sample.csv', index=False)
 print('\nSaved: outputs/ESSAY2_APPENDIX_TABLES_FORM499.md, '
       'outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md, outputs/tables/essay2_v2/*.csv')

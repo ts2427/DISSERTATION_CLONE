@@ -206,6 +206,18 @@ if len(tt):
             why = 'EXTRACT-GAP (security absent from committed WRDS extract — S/CTL era; NAMED DECISION: optional WRDS top-up pull would restore)'
         log(f'    {r["org_name"]} | {r["breach_date"]} | CIK {r["final_cik"]} | {why}')
 
+# I2 tripwire (2026-09-29): Stage 5 must carry every Gate-2 event through, and the
+# CRSP coverage it reports is what Stage 6 turns into has_crsp_data. Recomputed from the
+# committed data on the day this was written.
+_S5 = [('events out', len(out), 489),
+       ('events with car_30d', n_c, 356),
+       ('treated with CRSP data', n_t, 111)]
+_bad = ['%s: got %d, expected %d' % (w, g, e) for w, g, e in _S5 if g != e]
+assert not _bad, ('Stage 5 shape changed: ' + '; '.join(_bad) +
+                  '. If this is intended, update the expected values here and say so in '
+                  'outputs/RETIREMENT_LEDGER.md - do not delete the check.')
+log('Stage 5 tripwire: ' + ', '.join('%s %d' % (w, g) for w, g, _ in _S5))
+
 out.to_csv('Data/processed/rebuild/stage5_outcomes.csv', index=False)
 with open('outputs/rebuild/STAGE5_REPORT.md', 'w', encoding='utf-8') as f:
     f.write('# Stage 5 Report\n\n' + '\n'.join(L) + '\n')
