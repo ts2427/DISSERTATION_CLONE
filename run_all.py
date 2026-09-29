@@ -26,38 +26,50 @@ Dissertation: Data Breach Disclosure Timing and Market Reactions
 University of South Alabama
 Date: February 2026
 
-CRITICAL: DATA PIPELINE ROOT (FORM 499 CORRECTED)
-==================================================
-The current source of truth for this pipeline is:
-  → Data/processed/FINAL_DISSERTATION_DATASET_FORM499_CORRECTED.csv
+DATA PIPELINE ROOT
+==================
+  -> Data/processed/rebuild/CANONICAL_V3.csv, built by scripts/150-157.
 
-This dataset incorporates:
-  1. CIK audit (removed fuzzy-match duplicates, n=5)
-  2. Entity matching (two-clause rule for Form 499 filers)
-  3. Form 499 filer registry (authoritative regulatory classification)
+Treatment variable: fcc_form499 (Form 499 filer at breach date), which replaced the
+SIC-based fcc_reportable proxy. The 7/28/2026 membership adjudications still hold
+(Cricket treated, Boost treated, DISH untreated, Aero Charter excluded); the DISH
+adjudication was revisited 2026-09-04 and is date-conditional.
 
-Treatment variable: fcc_form499 (Form 499 filer at breach date)
-  - Replaces: fcc_reportable (SIC-based proxy)
-  - FINAL membership (7/28/2026 adjudications: Cricket treated, Boost treated,
-    DISH untreated, Aero Charter excluded): 118 treated / 37 firms in CRSP
-    sample; 115 treated in the H1-H4 regression sample (N=648)
+HISTORY, NOT CURRENT: this block previously named
+Data/processed/FINAL_DISSERTATION_DATASET_FORM499_CORRECTED.csv as the source of truth,
+with 118 treated / 37 firms in the CRSP sample and 115 treated in an N = 648 regression
+sample. Those are PRE-REBUILD figures, superseded by the v3 rebuild (1,054 notification
+records -> 758 -> 524 -> 489 events). The live sample sizes are not restated here, so
+that this docstring cannot go stale again: read them from
+outputs/rebuild/constants_v3.json (Essay 1) and outputs/tables/essay2_v2/ (Essay 2).
+Note that constants_v3.json is itself STALE against today's CANONICAL_V3 pending the
+rebaseline; scripts/247 prints both values and says so.
 
-This pipeline regenerates the corrected dataset from scratch via the chain:
-  46 (Item 5.02 extraction) -> 53 (enrichment merge) -> 99 (CPNI/HHI) ->
-  98 (governance) -> 121a-c (Form 499 matching) -> 122 (manual adjudications)
-Individual script runs may produce stale outputs. Always run the complete
-pipeline for final analysis numbers.
+The old regeneration chain named here was 46 -> 53 -> 99 -> 98 -> 121a-c -> 122.
+Scripts 46 and 99 were retired on 2026-09-29 (Part H): both read the pre-rebuild dataset
+and feed nothing cited. 53 still runs, merging 46's committed output.
 
-ESSAY 3 OUTCOME — CURRENT (Query 2 chain, 2026-09-11)
-=====================================================
+ESSAY 3 OUTCOME — CURRENT (v4 chain, 2026-09-29 ruling)
+=======================================================
+AUTHORITATIVE: the v4 chain, scripts 212-246, with its baseline in
+outputs/essay3_v4/constants_essay3_v4.json and its appendix in outputs/essay3_appendix/.
+v4 changes the SAMPLE, not the method: the classifier functions are byte-identical to
+scripts/195 by AST and the estimator is identical line for line, but the point-in-time
+CRSP relink moves the sample to N = 405 with 109 treated events across 13 parent CIKs
+(G = 119). Six steps in the chain assert against their own outputs.
+
+The Query 2 chain below is RETIRED (2026-09-29). It stays staged only because its
+outputs are the v3 side of the scripts/239 side-by-side. Its description follows.
+
 Executive departure reported under Item 5.02(b), coded from the filing text by the
 final deterministic classifier scripts/195 (v2, commit 6f7be7a; validated in two blind
 rounds + a stratified recall audit; stopping rule in outputs/ESSAY3_QUERY2_REPORT.md).
 Chain: 187 (text fetch, cached) -> 195 (classifier) -> 199 (sample) -> 202 (estimation,
 asserts vs outputs/essay3_q2/constants_essay3_q2.json) -> 190/191 (T-Mobile data) -> 203.
 RETIRED 2026-09-11: script 46's any-Item-5.02 flags as the Essay 3 outcome (Item 5.02
-covers appointments, elections and pay, not only departures). Script 46 itself stays in
-run_all for now because script 53 merges its committed output for legacy Essay 1/2 scripts.
+covers appointments, elections and pay, not only departures). Script 46 itself was
+retired 2026-09-29 (Part H); script 53 continues to merge its committed output,
+Data/enrichment/executive_changes.csv, which stays tracked.
 
 IF YOU ARE RUNNING THIS FOR THE FIRST TIME, READ THIS
 =====================================================
@@ -68,10 +80,12 @@ What the dissertation's current results are, and where they come from:
                                  -> outputs/rebuild/appendix_v3/ (16 tables; Word build scripts/160)
   Essay 2 (information asymmetry) canonical chain, scripts 163-182
                                  -> outputs/tables/essay2_v2/ and the outputs/ESSAY2_*.md reports
-  Essay 3 (governance response)  Query 2 chain, scripts 187/195/199/202/190/191/203/204
-                                 -> outputs/essay3_q2/ and outputs/ESSAY3_QUERY2_REPORT.md
-                                 -> its own baseline, outputs/essay3_q2/constants_essay3_q2.json.
-                                    Essay 3 results do NOT come from scripts/158 or constants_v3.json.
+  Essay 3 (governance response)  v4 chain, scripts 212-246 (AUTHORITATIVE, 2026-09-29)
+                                 -> outputs/essay3_v4/ and outputs/essay3_appendix/
+                                 -> its own baseline, outputs/essay3_v4/constants_essay3_v4.json.
+                                    Essay 3 results do NOT come from scripts/158 or constants_v3.json;
+                                    since 2026-09-29 scripts/158 writes no Essay 3 value at all.
+                                    The Query 2 chain (187/195/199/202/190/191/203/204) is RETIRED.
 
 All three essays report NULL results. The design is post-2007 cross-sectional: there are no treated
 events before the rule took effect, so nothing here supports a causal or natural-experiment claim.
@@ -80,10 +94,11 @@ only and is DISQUALIFIED as a significance test. Start from README.md and, for E
 outputs/essay3_q2/ESSAY3_STARTING_POINT.md.
 
 WHAT THIS PIPELINE DOES NOT REGENERATE (know this before trusting a clean run):
-  1. Git LFS. Many legacy files are committed as LFS pointers whose filter=lfs attribute was dropped
-     in 5f5c950, so a clean clone writes small placeholder files with NO error. The Essay 3 chain's
-     inputs are fine; several Essay 1/2 inputs and outputs are not. A placeholder begins
-     "version https://git-lfs.github.com/spec/v1". See README.md.
+  1. Git LFS. FIXED 2026-09-29 (Part I3): the filter=lfs attribute was dropped for 87 committed
+     pointer files in 5f5c950, so a clean clone wrote 130-byte placeholders with NO error and every
+     reader of them degraded silently. All 87 rules are restored in .gitattributes, and Part I1 adds
+     an executable guard that scans for placeholder content before any step runs and aborts. A
+     placeholder begins "version https://git-lfs.github.com/spec/v1"; the fix is `git lfs pull`.
   2. outputs/tables/essay2_appendix/*.csv (41 files) have NO committed generator. scripts/178 only
      renders them into ESSAY2_APPENDIX.docx (itself gitignored). They are committed artifacts only.
   3. Data/wrds/crsp_quotes_topup.csv is CRSP-licensed and gitignored, so scripts/167 (microstructure
@@ -102,8 +117,9 @@ See ESSAY_RESULTS_SUMMARY_CORRECTED.md for the authoritative figures.
 Summary: Essay 1 H1-H3 bounded nulls (TOST .045/.013/<.001 at +-2.10pp),
 H4 inconclusive; Essay 2 H5 bounded null (main +0.12pp p=.914, TOST .044),
 quartile pattern = noise. Essay 3: the 7/28-chain H6 figures are RETIRED
-(2026-09-11); current Essay 3 results are the Query 2 chain
-(outputs/ESSAY3_QUERY2_REPORT.md, outputs/essay3_q2/constants_essay3_q2.json).
+(2026-09-11), and the Query 2 chain that replaced them is retired in turn
+(2026-09-29); current Essay 3 results are the v4 chain
+(outputs/essay3_v4/constants_essay3_v4.json, outputs/essay3_appendix/).
 First stage 16.71pp: RETIRED (no computed source; outputs/ESSAY3_QUERY1_REPORT.md C1).
 Superseded values are listed in outputs/STALE_RESULTS_MANIFEST.txt.
 """
