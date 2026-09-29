@@ -156,6 +156,36 @@ _ABBR = ("EVP", "SVP", "CFO", "CIO", "CEO", "VP", "Pres.")
 ABBREV_RE = re.compile("(?<![A-Za-z])(" + "|".join(re.escape(a) for a in _ABBR)
                        + ")(?![A-Za-z])")
 
+# Proper nouns, acronyms and defined terms whose CASE is fixed. A broad
+# all-caps-to-normal-case pass over the note text once lowercased "AT&T" to "at&T" and
+# "CCM-based" to "ccm-based", which no count-based assertion could see. CASE_TERMS is
+# checked against the rendered .md and .docx, so a future editing pass cannot quietly
+# undo a proper noun.
+#
+# The boundary treats "_" as a word character, so a snake_case identifier printed as data
+# (has_crsp_data, sic2, prior12m_mktadj_ret_rd) is NOT read as damage to CRSP or SIC.
+CASE_TERMS = ("AT&T", "T-Mobile", "Sprint", "Verizon", "Comcast", "Charter", "CenturyLink",
+              "Frontier", "GoDaddy", "Twilio", "DISH", "Cable One", "Altice",
+              "Boost Mobile", "Intuit", "Corebridge", "Cencora", "MetroPCS", "FCC", "SEC",
+              "CRSP", "CUSIP", "CIK", "SIC", "PRC", "HIPAA", "IPO", "U.S.", "CCM", "HC3",
+              "CV1", "CV3", "MDE", "AME", "BH", "CEO", "CIO", "CFO", "CTO", "SE", "CI",
+              "Form 499", "Form 8-K", "Item 5.02")
+
+
+def case_damage(text):
+    """-> [(canonical, as_found, line_no, context)] for every wrong-case occurrence."""
+    out = []
+    rows = text.split(chr(10))
+    for term in CASE_TERMS:
+        rx = re.compile("(?<![A-Za-z0-9_])" + re.escape(term) + "(?![A-Za-z0-9_])", re.I)
+        for n, ln in enumerate(rows, 1):
+            for mm in rx.finditer(ln):
+                if mm.group(0) != term:
+                    out.append((term, mm.group(0), n,
+                                ln[max(0, mm.start() - 40):mm.end() + 30]))
+    return out
+
+
 TABLES = []          # (number, title, [(kind, payload)])
 
 
@@ -288,10 +318,10 @@ add(2, "Treated Parent CIKs and Cluster Structure",
     "*Note.* Sample level is events within parent CIKs; inference clusters on parent CIK. "
     "Clause 1 is a direct Form 499 registry match; clause 2 is an adjudicated holding or "
     "parent-brand relationship. Eight CIKs carry clause 1 events and eight carry clause 2 "
-    "events; three carry both (at&T, Sprint, Comcast), so the two counts reconcile to 13 "
+    "events; three carry both (AT&T, Sprint, Comcast), so the two counts reconcile to 13 "
     "CIKs. T-Mobile (1283699) and Sprint (101830) are separate parent CIKs and are clustered "
     "separately; they are one corporate family only in the entity count (12). Twilio and "
-    "GoDaddy enter by direct registry match, not by the network-operator criterion. Both "
+    "GoDaddy enter by direct registry match. Both "
     "DISH events postdate July 1, 2020, the Boost Mobile divestiture that the date-conditional "
     "rule turns on. G* is the effective number of clusters. Sources: "
     "outputs/essay3_q4/table02.csv; outputs/essay3_v4/f1_ladder.csv; "
@@ -626,8 +656,8 @@ add(10, "Cluster Concentration",
      ("Panel C: CCM-based overlap restriction", T10C)],
     "*Note.* Sample level is events within parent CIKs; G = 119 clusters. β is in percentage "
     "points. A sign reversal is a cluster whose deletion changes the sign of β. Panel C "
-    "restricts to events that were also linked by the earlier ccm-based security link, which v4 "
-    "replaced with a rebuilt CUSIP-to-permno link; it is a ccm-based overlap restriction and is "
+    "restricts to events that were also linked by the earlier CCM-based security link, which v4 "
+    "replaced with a rebuilt CUSIP-to-permno link; it is a CCM-based overlap restriction and is "
     "not a ticker match. All 58 events removed in Panel C are control events across 37 parent "
     "CIKs; no treated event turns on the linker rebuild. Sources: outputs/essay3_q4/table10.csv; "
     "outputs/essay3_v4/f1_cv3_variance_shares.csv; outputs/essay3_v4/239_v3_overlap_sensitivity.csv.")
@@ -1083,6 +1113,15 @@ _md_leak = [(w, sum(1 for ln in _md_txt.split(chr(10)) if w in ln)) for w in _PA
 check("Appendix .md contains no outputs/ or scripts/ path and no .csv name",
       all(c == 0 for _, c in _md_leak),
       "; ".join("%s x%d" % (w, c) for w, c in _md_leak if c))
+_cd_md = case_damage(_md_txt)
+check("Appendix .md has no case damage to a proper noun or acronym", not _cd_md,
+      "; ".join("%s -> %s (line %d)" % (t, f, n) for t, f, n, _ in _cd_md[:5]))
+# the check must be live, not vacuous: it has to see damage in a probe string and stay
+# quiet on the correct forms
+check("case-damage check is live (sees 'at&T'/'ccm', quiet on 'AT&T'/'CCM')",
+      bool(case_damage("at&T and ccm-based")) and not case_damage("AT&T and CCM-based")
+      and not case_damage("| CRSP data (has_crsp_data) |"),
+      "probe result: %r" % (case_damage("at&T and ccm-based"),))
 
 
 # =============================================================== WRITE .docx
@@ -1176,6 +1215,9 @@ try:
     check("Appendix .docx contains no outputs/ or scripts/ path and no .csv name",
           all(c == 0 for _, c in _dx_leak),
           "; ".join("%s x%d" % (w, c) for w, c in _dx_leak if c))
+    _cd_dx = case_damage(_dtxt)
+    check("Appendix .docx has no case damage to a proper noun or acronym", not _cd_dx,
+          "; ".join("%s -> %s" % (t, f) for t, f, _n, _c in _cd_dx[:5]))
 except Exception as exc:
     docx_ok = False
     print("DOCX FAILED: %s" % exc)

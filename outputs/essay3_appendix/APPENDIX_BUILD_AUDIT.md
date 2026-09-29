@@ -29,7 +29,7 @@ Produced by `scripts/245_essay3_appendix.py` alongside `ESSAY3_APPENDIX_TABLES.m
 - No cell contains inf, nan, or a hyphen used as a minus sign **PASS**
 - Note text contains no banned string (47 CFR, bare 'se', or a grade code) **PASS**
 
-29 assertion(s): 29 PASS, 0 FAIL.
+32 assertion(s): 32 PASS, 0 FAIL.
 
 ## TABLE SOURCES
 

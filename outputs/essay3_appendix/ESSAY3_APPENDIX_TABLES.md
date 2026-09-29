@@ -80,7 +80,7 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 | T-Mobile share of treated events | 26 of 109 (23.9%) |
 | T-Mobile and Sprint share of treated events | 38 of 109 (34.9%) |
 
-*Note.* Sample level is events within parent CIKs; inference clusters on parent CIK. Clause 1 is a direct Form 499 registry match; clause 2 is an adjudicated holding or parent-brand relationship. Eight CIKs carry clause 1 events and eight carry clause 2 events; three carry both (at&T, Sprint, Comcast), so the two counts reconcile to 13 CIKs. T-Mobile (1283699) and Sprint (101830) are separate parent CIKs and are clustered separately; they are one corporate family only in the entity count (12). Twilio and GoDaddy enter by direct registry match, not by the network-operator criterion. Both DISH events postdate July 1, 2020, the Boost Mobile divestiture that the date-conditional rule turns on. G* is the effective number of clusters.
+*Note.* Sample level is events within parent CIKs; inference clusters on parent CIK. Clause 1 is a direct Form 499 registry match; clause 2 is an adjudicated holding or parent-brand relationship. Eight CIKs carry clause 1 events and eight carry clause 2 events; three carry both (AT&T, Sprint, Comcast), so the two counts reconcile to 13 CIKs. T-Mobile (1283699) and Sprint (101830) are separate parent CIKs and are clustered separately; they are one corporate family only in the entity count (12). Twilio and GoDaddy enter by direct registry match. Both DISH events postdate July 1, 2020, the Boost Mobile divestiture that the date-conditional rule turns on. G* is the effective number of clusters.
 
 **Table 3**
 
@@ -389,7 +389,7 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 | 180 | CCM-based overlap restriction | 347 | 83 | 2.08 | .852 | .818 |
 | 180 | Full sample | 405 |  | 2.33 | .816 | .790 |
 
-*Note.* Sample level is events within parent CIKs; G = 119 clusters. β is in percentage points. A sign reversal is a cluster whose deletion changes the sign of β. Panel C restricts to events that were also linked by the earlier ccm-based security link, which v4 replaced with a rebuilt CUSIP-to-permno link; it is a ccm-based overlap restriction and is not a ticker match. All 58 events removed in Panel C are control events across 37 parent CIKs; no treated event turns on the linker rebuild.
+*Note.* Sample level is events within parent CIKs; G = 119 clusters. β is in percentage points. A sign reversal is a cluster whose deletion changes the sign of β. Panel C restricts to events that were also linked by the earlier CCM-based security link, which v4 replaced with a rebuilt CUSIP-to-permno link; it is a CCM-based overlap restriction and is not a ticker match. All 58 events removed in Panel C are control events across 37 parent CIKs; no treated event turns on the linker rebuild.
 
 **Table 11**
 
