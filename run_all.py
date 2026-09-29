@@ -521,6 +521,7 @@ Log file: {log_path}
                     ('scripts/157_rebuild_s7_verification.py', 'Stage 7: disclosure-date armor, OCR health check (bounded), CRSP-attrition balance'),
                     ('scripts/158_rebuild_s8_regenerate.py', 'Stage 8: all three essays + ROA amendment + appendix v3 + CONSTANTS BLOCK V3 (assertion baseline)'),
                     ('scripts/160_appendix_v3_to_word.py', 'Essay 1 appendix v3 -> Word: renders the 16 tables 158 writes (must follow 158)'),
+                    ('scripts/247_essay1_ledger_attrition_v3.py', 'Essay 1 attrition ledger, computed live from the v3 chain (10 assertions). EXITS NONZERO while constants_v3.json is stale against CANONICAL_V3 - that failure is the pending rebaseline, and the ledger is written either way'),
                 ]
             },
             {
