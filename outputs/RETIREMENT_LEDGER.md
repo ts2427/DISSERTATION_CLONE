@@ -130,3 +130,17 @@ so the Word appendix was only ever built by hand.
 | **Removed from** | `scripts/158_rebuild_s8_regenerate.py`, a 21-line block. Replaced by a comment block naming the removed keys and the reason, so the absence is legible rather than silent. |
 | **Where Essay 3 values live now** | `outputs/essay3_v4/constants_essay3_v4.json` only, written and asserted by `scripts/227`. Nothing in 158 may write an Essay 3 result again. |
 | **Effect on the file** | `constants_v3.json` on disk still carries the 13 keys until 158 is next run. **158 was not run** — the standing rule holds. The keys disappear at the next 158 run, which is the same run as the pending Essay 1 rebaseline. |
+
+## Part G2 — the HC3 status label may no longer read SIGNIFICANT
+
+`scripts/158` set two status strings by comparing an **HC3** p-value to .05 and writing
+`'SIGNIFICANT'`. HC3 is a **disqualified rung** on this project's inference ladder
+(`run_all.py:77-78`; the placebo rejects at 12.1% under CV1, and HC3 is more
+anticonservative still). A file consumed as the constants of record must not contain a
+significance verdict from a rung that has been ruled out.
+
+Both branches — the Essay 1 hypothesis loop and the H5 block — now read
+`'HC3-ONLY, NOT A VERDICT (disqualified rung; see scripts/165)'`. The `BOUNDED NULL` and
+`NULL-INCONCLUSIVE` branches are untouched: neither claims significance. A real verdict
+needs CV3 or the wild cluster bootstrap, which 158 does not compute; Essay 2's inferential
+frame is `scripts/165`.

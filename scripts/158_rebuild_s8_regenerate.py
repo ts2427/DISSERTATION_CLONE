@@ -88,7 +88,10 @@ for var, lab in labels.items():
     C[f'{lab}_ci'] = [round(ci[0], 4), round(ci[1], 4)]
     C[f'{lab}_mde80'] = round(2.8 * se, 4)
     C[f'{lab}_tost_p'] = round(tost, 4)
-    C[f'{lab}_status'] = 'BOUNDED NULL' if tost < .05 else ('NULL-INCONCLUSIVE' if p > .05 else 'SIGNIFICANT')
+    # G2 2026-09-29: same rule as H5 below - HC3 cannot carry a significance verdict.
+    C[f'{lab}_status'] = ('BOUNDED NULL' if tost < .05 else
+                          ('NULL-INCONCLUSIVE' if p > .05 else
+                           'HC3-ONLY, NOT A VERDICT (disqualified rung)'))
     log(f"  {lab}: {b:+.4f}pp p={p:.4f} | TOST(±2.10) p={tost:.4f} | MDE {2.8 * se:.2f} | {C[f'{lab}_status']}")
 C['ROA_coef'] = round(m.params['roa'], 4)
 C['ROA_p'] = round(m.pvalues['roa'], 4)
@@ -122,7 +125,13 @@ C['H5_coef'] = round(b, 4)
 C['H5_p'] = round(p, 4)
 C['H5_tost_p'] = round(tost2, 4)
 C['H5_mde80'] = round(2.8 * se, 4)
-C['H5_status'] = 'BOUNDED NULL' if tost2 < .05 else ('NULL-INCONCLUSIVE' if p > .05 else 'SIGNIFICANT')
+# G2 2026-09-29: HC3 is DISQUALIFIED as a significance test (run_all.py:77-78), so this
+# label may never read SIGNIFICANT. The third branch now names the rung instead of
+# asserting significance; a real verdict needs CV3 or the wild cluster bootstrap, which
+# this script does not compute. Essay 2's inferential frame is scripts/165.
+C['H5_status'] = ('BOUNDED NULL' if tost2 < .05 else
+                  ('NULL-INCONCLUSIVE' if p > .05 else
+                   'HC3-ONLY, NOT A VERDICT (disqualified rung; see scripts/165)'))
 C['H5_R2'] = round(m2.rsquared, 3)
 log(f"\nEssay 2 (H5, N={len(reg2)}, treated {int(reg2[TREAT].sum())}): FCC {b:+.4f} p={p:.4f} | "
     f"TOST p={tost2:.4f} | MDE {2.8 * se:.2f} | R2={m2.rsquared:.3f} | {C['H5_status']}")
