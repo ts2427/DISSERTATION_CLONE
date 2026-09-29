@@ -31,7 +31,7 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 |---|---|
 | Verified | 473 |
 | No matching registrant or unresolved | 281 |
-| Verified at the parent-CIK gate | 264 |
+| Verified at the review gate | 264 |
 | Verified by reasoning | 19 |
 | Private company | 5 |
 | Private during the breach window | 4 |
@@ -310,15 +310,15 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 | Restatement-dated outcome | 30 | 3.42 | 5.89 | .562 | .666 | .986 | 405 |
 | Restatement-dated outcome | 90 | −1.07 | 9.66 | .912 | .894 | .986 | 405 |
 | Restatement-dated outcome | 180 | 0.30 | 14.80 | .984 | .984 | .986 | 405 |
-| Recall-corrected (treated recall 0.842, control recall 0.750) | 30 | 0.07 | 4.30 | .986 | .984 | .986 | 405 |
-| Recall-corrected (treated recall 0.842, control recall 0.750) | 90 | −6.82 | 10.34 | .511 | .404 | .986 | 405 |
-| Recall-corrected (treated recall 0.842, control recall 0.750) | 180 | −1.03 | 12.49 | .935 | .927 | .986 | 405 |
-| Recall-corrected (treated recall 0.604, control recall 0.927) [bounding exercise] | 30 | 2.22 | 4.37 | .613 | .574 | .986 | 405 |
-| Recall-corrected (treated recall 0.966, control recall 0.476) [bounding exercise] | 30 | −2.48 | 6.11 | .685 | .633 | .986 | 405 |
-| Recall-corrected (treated recall 0.604, control recall 0.927) [bounding exercise] | 90 | 0.96 | 9.61 | .921 | .902 | .986 | 405 |
-| Recall-corrected (treated recall 0.966, control recall 0.476) [bounding exercise] | 90 | −18.54 | 15.52 | .235 | .125 | .986 | 405 |
-| Recall-corrected (treated recall 0.604, control recall 0.927) [bounding exercise] | 180 | 18.83 | 14.23 | .188 | .168 | .986 | 405 |
-| Recall-corrected (treated recall 0.966, control recall 0.476) [bounding exercise] | 180 | −25.27 | 15.84 | .113 | .071 | .986 | 405 |
+| Recall-corrected (treated recall .842, control recall .750) | 30 | 0.07 | 4.30 | .986 | .984 | .986 | 405 |
+| Recall-corrected (treated recall .842, control recall .750) | 90 | −6.82 | 10.34 | .511 | .404 | .986 | 405 |
+| Recall-corrected (treated recall .842, control recall .750) | 180 | −1.03 | 12.49 | .935 | .927 | .986 | 405 |
+| Recall-corrected (treated recall .604, control recall .927) [bounding exercise] | 30 | 2.22 | 4.37 | .613 | .574 | .986 | 405 |
+| Recall-corrected (treated recall .966, control recall .476) [bounding exercise] | 30 | −2.48 | 6.11 | .685 | .633 | .986 | 405 |
+| Recall-corrected (treated recall .604, control recall .927) [bounding exercise] | 90 | 0.96 | 9.61 | .921 | .902 | .986 | 405 |
+| Recall-corrected (treated recall .966, control recall .476) [bounding exercise] | 90 | −18.54 | 15.52 | .235 | .125 | .986 | 405 |
+| Recall-corrected (treated recall .604, control recall .927) [bounding exercise] | 180 | 18.83 | 14.23 | .188 | .168 | .986 | 405 |
+| Recall-corrected (treated recall .966, control recall .476) [bounding exercise] | 180 | −25.27 | 15.84 | .113 | .071 | .986 | 405 |
 
 **Panel B: Two-digit SIC cells**
 

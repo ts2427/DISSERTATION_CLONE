@@ -267,7 +267,7 @@ T1A = pd.DataFrame(rows1a, columns=["Step", "N", "Treated events", "Control even
 # byte; they are DATA, not prose, and are never case-folded.
 GRADE_LABEL = {
     "VERIFIED": "Verified",
-    "VERIFIED-GATE1": "Verified at the parent-CIK gate",
+    "VERIFIED-GATE1": "Verified at the review gate",
     "VERIFIED-REASONING": "Verified by reasoning",
     "ADJUDICATED": "Adjudicated",
     "AMBIGUOUS": "Unresolved ambiguity",
@@ -630,9 +630,10 @@ def sens_label(raw):
     if raw.startswith("recall-corrected"):
         t = re.search(r"r_T=([0-9.]+)", raw)
         c = re.search(r"r_C=([0-9.]+)", raw)
-        base = "Recall-corrected (treated recall %s, control recall %s)" % (
-            t.group(1) if t else "?", c.group(1) if c else "?")
-        return base
+        # recall is a proportion in [0, 1] and takes the same no-leading-zero form as
+        # p, kappa, precision and recall elsewhere in the appendix
+        return ("Recall-corrected (treated recall %s, control recall %s)"
+                % (p3(t.group(1)) if t else "?", p3(c.group(1)) if c else "?"))
     return raw
 
 
