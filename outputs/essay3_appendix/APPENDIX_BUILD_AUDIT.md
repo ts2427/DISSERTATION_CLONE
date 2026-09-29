@@ -29,7 +29,23 @@ Produced by `scripts/245_essay3_appendix.py` alongside `ESSAY3_APPENDIX_TABLES.m
 - No cell contains inf, nan, or a hyphen used as a minus sign **PASS**
 - Note text contains no banned string (47 CFR, bare 'se', or a grade code) **PASS**
 
-24 assertion(s): 24 PASS, 0 FAIL.
+29 assertion(s): 29 PASS, 0 FAIL.
+
+## TABLE SOURCES
+
+The provenance sentence that each table's note used to carry. The appendix itself states findings only; build information lives here.
+
+- **Table 1** outputs/essay3_q4/table01.csv (Panel A, from outputs/essay3_v4/e_ledger.csv and outputs/rebuild_v4/v4_212_identity_review.csv); Data/processed/rebuild/stage2_signed.csv (Panel B); outputs/essay3_appendix/descriptive_counts.csv (records per event)
+- **Table 2** outputs/essay3_q4/table02.csv; outputs/essay3_v4/f1_ladder.csv; outputs/essay3_appendix/descriptive_counts.csv (singleton and largest-cluster rows)
+- **Table 3** outputs/essay3_q4/table03.csv
+- **Table 4** outputs/essay3_q4/table04.csv, from outputs/essay3_q3/descriptives.csv; outputs/essay3_appendix/descriptive_counts.csv (Panel B)
+- **Table 5** outputs/essay3_q4/table05.csv; outputs/essay3_q2/d3_audit_recall_by_stratum.csv
+- **Table 6** outputs/essay3_q4/table06.csv; outputs/essay3_q4/_d5_crosswalk.csv
+- **Table 7** outputs/essay3_q4/table07.csv; b_control_coefficients.csv; c_logit_diagnostics.csv; outputs/essay3_v4/f1_ladder.csv
+- **Table 8** outputs/essay3_q4/table08.csv, from outputs/essay3_v4/f4_placebo.csv
+- **Table 9** outputs/essay3_q4/table09.csv; outputs/essay3_v4/i_tests.csv; The full 36-cell SIC list is in outputs/essay3_v4/f3_sic2_cells.csv
+- **Table 10** outputs/essay3_q4/table10.csv; outputs/essay3_v4/f1_cv3_variance_shares.csv; outputs/essay3_v4/239_v3_overlap_sensitivity.csv
+- **Table 11** outputs/essay3_q4/table11.csv; outputs/essay3_q4/tmobile_502_text.md
 
 ## NOT REGENERABLE
 

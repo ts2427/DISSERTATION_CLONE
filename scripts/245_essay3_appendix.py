@@ -160,7 +160,26 @@ TABLES = []          # (number, title, [(kind, payload)])
 
 
 def add(num, title, blocks, note):
-    TABLES.append(dict(num=num, title=title, blocks=blocks, note=note))
+    """Register one table. The note is SPLIT: the appendix keeps the substantive note,
+    and the trailing "Sources: ..." sentence is moved to APPENDIX_BUILD_AUDIT.md.
+
+    The provenance stays declared here, beside the table it describes, so it cannot drift
+    from the table; it simply renders somewhere else. The appendix is the document a
+    reader reads, and a file path is build information, not a finding.
+    """
+    body, sep, src = note.partition("Sources:")
+    if not sep:
+        body, sep, src = note.partition("Source:")
+    # any remaining sentence naming a repository path is build information too
+    keep, moved = [], [src.strip().rstrip(".")] if src.strip() else []
+    for sent in re.split(r"(?<=\.)\s+", body.strip()):
+        if re.search(r"outputs/|scripts/|Data/", sent) or ".csv" in sent:
+            moved.append(sent.strip().rstrip("."))
+        else:
+            keep.append(sent)
+    TABLES.append(dict(num=num, title=title, blocks=blocks,
+                       note=" ".join(x for x in keep if x).strip(),
+                       sources="; ".join(x for x in moved if x)))
 
 
 # =============================================================== TABLE 1
@@ -296,7 +315,7 @@ check("T3 totals == 109 / 296",
 add(3, "Breach Type by Treatment Group",
     [("", T3)],
     "*Note.* Sample level is events (109 treated, 296 control). Breach types are the Privacy "
-    "Rights Clearinghouse's own labels, carried through unchanged: HACK = "
+    "Rights Clearinghouse's own labels, carried through unchanged: "
     + "; ".join("%s = %s" % (k, v) for k, v in BT.items())
     + ". Combined codes arise where an event collapses source records of more than one type. "
       "Column percentages sum to 100 within group. No test is performed. Source: "
@@ -980,22 +999,16 @@ CK.to_csv(OUT / "text_figures_check.csv", index=False)
 MIS = CK[CK["result"] == "MISMATCH"]
 
 # =============================================================== WRITE .md
-LINES = ["# Essay 3 Appendix", "",
-         "Analysis sample N = 405 events (109 treated, 296 control; G = 119 parent CIKs, "
-         "G1 = 13 treated clusters, 12 treated parent entities). Tables are numbered in "
-         "the order the Results section first mentions them. Every cell is read from a "
-         "committed CSV under `outputs/essay3_q4/` or `outputs/essay3_q3/` and then "
-         "formatted; nothing here is estimated. Built by `scripts/245_essay3_appendix.py`.",
-         "",
-         "Conventions: coefficients, standard errors, confidence intervals and minimum "
-         "detectable effects are in percentage points to two decimals; rates are percent "
-         "to one decimal; p, kappa, precision and recall carry three decimals with no "
-         "leading zero; counts use thousands separators; the minus sign is U+2212.", ""]
-SECTIONS = {1: "SAMPLE AND TREATMENT", 5: "MEASUREMENT", 6: "OUTCOMES",
-            7: "ESTIMATES", 10: "ROBUSTNESS", 11: "CASE EVIDENCE"}
+PREAMBLE = ("Analysis sample N = 405 events (109 treated, 296 control; G = 119 parent "
+            "CIKs, G1 = 13 treated clusters, 12 treated parent entities). Tables are "
+            "numbered in the order the Results section first mentions them.")
+CONVENTIONS = ("Conventions: coefficients, standard errors, confidence intervals and "
+               "minimum detectable effects are in percentage points to two decimals; "
+               "rates are percent to one decimal; p, kappa, precision and recall carry "
+               "three decimals with no leading zero; counts use thousands separators; "
+               "the minus sign is U+2212.")
+LINES = ["# Essay 3 Appendix", "", PREAMBLE, "", CONVENTIONS, ""]
 for t in TABLES:
-    if t["num"] in SECTIONS:
-        LINES += ["## " + SECTIONS[t["num"]], ""]
     LINES += ["**Table %d**" % t["num"], "", "*%s*" % t["title"], ""]
     for lab, df in t["blocks"]:
         if lab:
@@ -1021,10 +1034,13 @@ AUD = ["# Essay 3 appendix - build audit", "",
 for nm, ok, det in ASSERT:
     AUD.append("- " + nm + " **" + ("PASS" if ok else "FAIL") + "**"
                + (("  " + det) if det and not ok else ""))
-AUD += ["", "%d assertion(s): %d PASS, %d FAIL."
-        % (len(ASSERT), sum(1 for _, o, _ in ASSERT if o),
-           sum(1 for _, o, _ in ASSERT if not o)), ""]
-AUD += ["## NOT REGENERABLE", ""]
+AUD += ["", "__TALLY__", ""]
+AUD += ["## TABLE SOURCES", "",
+        "The provenance sentence that each table's note used to carry. The appendix "
+        "itself states findings only; build information lives here.", ""]
+for t in TABLES:
+    AUD.append("- **Table %d** %s" % (t["num"], t["sources"] or "(none recorded)"))
+AUD += ["", "## NOT REGENERABLE", ""]
 AUD += (["- **" + w + "** " + x for w, x in NOTREG] or ["- none"])
 AUD += ["", "## TEXT-TO-TABLE CHECK", "",
         "%d figures checked; %d MISMATCH. Full listing in `text_figures_check.csv`."
@@ -1047,12 +1063,27 @@ _hits = [(n, ln) for n, ln in enumerate(_md_txt.split(chr(10)), 1)
          if any(ln.startswith(h) for h in _BANNED_H)]
 check("Appendix .md has no ASSERTIONS / NOT REGENERABLE / TEXT-TO-TABLE section",
       not _hits, "; ".join("line %d: %s" % (n, ln) for n, ln in _hits))
+# and no section heading of ANY kind: the appendix is the title, then Tables 1-11.
+# Checking only the three banned names would let a reintroduced group heading through.
+_h2 = [(n, ln) for n, ln in enumerate(_md_txt.split(chr(10)), 1) if ln.startswith("##")]
+check("Appendix .md has no section heading (only the title, then the tables)",
+      not _h2, "; ".join("line %d: %s" % (n, ln) for n, ln in _h2[:4]))
 # and the literals that only ever entered the appendix as assertion names must be gone
 _leak = [(w, sum(1 for ln in _md_txt.split(chr(10)) if w in ln))
          for w in ("FAIL", "47 CFR", "47 cfr", "EVP")]
 check("Appendix .md contains no FAIL / 47 CFR / 47 cfr / EVP",
       all(c == 0 for _, c in _leak),
       "; ".join("%s x%d" % (w, c) for w, c in _leak if c))
+
+# The appendix must read as a document, not a build artefact: no repository path and no
+# file name. Checked on the RENDERED text of both files - the .docx is read back from
+# disk, because what matters is what the reader opens, not what the builder intended.
+_PATHY = ("outputs/", "scripts/", ".csv")
+_md_leak = [(w, sum(1 for ln in _md_txt.split(chr(10)) if w in ln)) for w in _PATHY]
+check("Appendix .md contains no outputs/ or scripts/ path and no .csv name",
+      all(c == 0 for _, c in _md_leak),
+      "; ".join("%s x%d" % (w, c) for w, c in _md_leak if c))
+
 
 # =============================================================== WRITE .docx
 docx_ok = True
@@ -1085,10 +1116,8 @@ try:
         return p
 
     para("Essay 3 Appendix", bold=True, size=14, align=WD_ALIGN_PARAGRAPH.CENTER)
-    para("Tables 1 to 11, numbered in the order the Results section first mentions them. "
-         "Analysis sample N = 405 events (109 treated, 296 control; G = 119 parent CIKs). "
-         "Coefficients, standard errors, confidence intervals and minimum detectable "
-         "effects are in percentage points.", size=11)
+    para(PREAMBLE, size=11)
+    para(CONVENTIONS, size=11)
     WIDE = {7, 9, 10}
     for t in TABLES:
         if t["num"] in WIDE:
@@ -1136,9 +1165,29 @@ try:
         r1.font.name = "Times New Roman"
         p.paragraph_format.line_spacing = 1.0
     doc.save(str(OUT / "ESSAY3_APPENDIX_TABLES.docx"))
+    # read the saved .docx back and check its rendered text the same way
+    _d = Document(str(OUT / "ESSAY3_APPENDIX_TABLES.docx"))
+    _dt = [q.text for q in _d.paragraphs]
+    for _tb in _d.tables:
+        for _row in _tb.rows:
+            _dt += [c.text for c in _row.cells]
+    _dtxt = chr(10).join(_dt)
+    _dx_leak = [(w, _dtxt.count(w)) for w in _PATHY]
+    check("Appendix .docx contains no outputs/ or scripts/ path and no .csv name",
+          all(c == 0 for _, c in _dx_leak),
+          "; ".join("%s x%d" % (w, c) for w, c in _dx_leak if c))
 except Exception as exc:
     docx_ok = False
     print("DOCX FAILED: %s" % exc)
+
+# The tally is resolved LAST, after the .docx assertion has run, so the audit file
+# reports every assertion rather than only those raised before the .md was written.
+AUD_TALLY = ("%d assertion(s): %d PASS, %d FAIL."
+             % (len(ASSERT), sum(1 for _, o, _ in ASSERT if o),
+                sum(1 for _, o, _ in ASSERT if not o)))
+aud_path = OUT / "APPENDIX_BUILD_AUDIT.md"
+aud_path.write_text(aud_path.read_text(encoding="utf-8").replace("__TALLY__", AUD_TALLY),
+                    encoding="utf-8")
 
 print("=" * 96)
 print("PART B ASSERTIONS")

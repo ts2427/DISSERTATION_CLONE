@@ -1,12 +1,8 @@
 # Essay 3 Appendix
 
-## ASSERTIONS
-
-Analysis sample N = 405 events (109 treated, 296 control; G = 119 parent CIKs, G1 = 13 treated clusters, 12 treated parent entities). Tables are numbered in the order the Results section first mentions them. Every cell is read from a committed CSV under `outputs/essay3_q4/` or `outputs/essay3_q3/` and then formatted; nothing here is estimated. Built by `scripts/245_essay3_appendix.py`.
+Analysis sample N = 405 events (109 treated, 296 control; G = 119 parent CIKs, G1 = 13 treated clusters, 12 treated parent entities). Tables are numbered in the order the Results section first mentions them.
 
 Conventions: coefficients, standard errors, confidence intervals and minimum detectable effects are in percentage points to two decimals; rates are percent to one decimal; p, kappa, precision and recall carry three decimals with no leading zero; counts use thousands separators; the minus sign is U+2212.
-
-## SAMPLE AND TREATMENT
 
 **Table 1**
 
@@ -45,7 +41,7 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 | Pre-IPO | 2 |
 | Total | 1,054 |
 
-*Note.* Panel A rows above the canonical-event line are at the record level, where treatment is undefined; rows from the canonical event set down are at the event level. Parent CIKs are the clustering unit. Records per event have a mean of 1.55 and a maximum of 31 (Cencora, Inc., February 2024). Pre-rule is defined relative to the December 8, 2007 effective date of 47 C.F.R. § 64.2011. The two indented sub-rows decompose the 75 events lost at the security-link step. Sources: outputs/essay3_q4/table01.csv (Panel A, from outputs/essay3_v4/e_ledger.csv and outputs/rebuild_v4/v4_212_identity_review.csv); Data/processed/rebuild/stage2_signed.csv (Panel B); outputs/essay3_appendix/descriptive_counts.csv (records per event).
+*Note.* Panel A rows above the canonical-event line are at the record level, where treatment is undefined; rows from the canonical event set down are at the event level. Parent CIKs are the clustering unit. Records per event have a mean of 1.55 and a maximum of 31 (Cencora, Inc., February 2024). Pre-rule is defined relative to the December 8, 2007 effective date of 47 C.F.R. § 64.2011. The two indented sub-rows decompose the 75 events lost at the security-link step.
 
 **Table 2**
 
@@ -84,7 +80,7 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 | T-Mobile share of treated events | 26 of 109 (23.9%) |
 | T-Mobile and Sprint share of treated events | 38 of 109 (34.9%) |
 
-*Note.* Sample level is events within parent CIKs; inference clusters on parent CIK. Clause 1 is a direct Form 499 registry match; clause 2 is an adjudicated holding or parent-brand relationship. Eight CIKs carry clause 1 events and eight carry clause 2 events; three carry both (at&T, Sprint, Comcast), so the two counts reconcile to 13 CIKs. T-Mobile (1283699) and Sprint (101830) are separate parent CIKs and are clustered separately; they are one corporate family only in the entity count (12). Twilio and GoDaddy enter by direct registry match, not by the network-operator criterion. Both DISH events postdate July 1, 2020, the Boost Mobile divestiture that the date-conditional rule turns on. G* is the effective number of clusters. Sources: outputs/essay3_q4/table02.csv; outputs/essay3_v4/f1_ladder.csv; outputs/essay3_appendix/descriptive_counts.csv (singleton and largest-cluster rows).
+*Note.* Sample level is events within parent CIKs; inference clusters on parent CIK. Clause 1 is a direct Form 499 registry match; clause 2 is an adjudicated holding or parent-brand relationship. Eight CIKs carry clause 1 events and eight carry clause 2 events; three carry both (at&T, Sprint, Comcast), so the two counts reconcile to 13 CIKs. T-Mobile (1283699) and Sprint (101830) are separate parent CIKs and are clustered separately; they are one corporate family only in the entity count (12). Twilio and GoDaddy enter by direct registry match, not by the network-operator criterion. Both DISH events postdate July 1, 2020, the Boost Mobile divestiture that the date-conditional rule turns on. G* is the effective number of clusters.
 
 **Table 3**
 
@@ -102,7 +98,7 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 | DISC+HACK | 0 | 0.0 | 2 | 0.7 |
 | Total | 109 | 100.0 | 296 | 100.0 |
 
-*Note.* Sample level is events (109 treated, 296 control). Breach types are the Privacy Rights Clearinghouse's own labels, carried through unchanged: HACK = HACK = Hacking or malware; INSD = Insider; PHYS = Physical records; PORT = Portable device; DISC = Unintended disclosure; HACK+INSD = Hacking and insider; HACK+PORT = Hacking and portable device; DISC+HACK = Unintended disclosure and hacking. Combined codes arise where an event collapses source records of more than one type. Column percentages sum to 100 within group. No test is performed. Source: outputs/essay3_q4/table03.csv.
+*Note.* Sample level is events (109 treated, 296 control). Breach types are the Privacy Rights Clearinghouse's own labels, carried through unchanged: HACK = Hacking or malware; INSD = Insider; PHYS = Physical records; PORT = Portable device; DISC = Unintended disclosure; HACK+INSD = Hacking and insider; HACK+PORT = Hacking and portable device; DISC+HACK = Unintended disclosure and hacking. Combined codes arise where an event collapses source records of more than one type. Column percentages sum to 100 within group. No test is performed.
 
 **Table 4**
 
@@ -138,9 +134,7 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 | Notification lag, IQR days | [0, 94] | [0, 102] |
 | Breach-anchored 180-day window closes before notification | 11.9% (13) | 14.5% (43) |
 
-*Note.* Sample level is events (109 treated, 296 control). The standardized difference is the treated mean minus the control mean divided by the pooled standard deviation; the 0.1 benchmark follows Austin (2009). No balance tests are reported, because they would add unplanned hypothesis tests to the ledger. Panel B shows that common support is substantial: the imbalance in firm size is a shift in means, not a failure of overlap. Sources: outputs/essay3_q4/table04.csv, from outputs/essay3_q3/descriptives.csv; outputs/essay3_appendix/descriptive_counts.csv (Panel B).
-
-## MEASUREMENT
+*Note.* Sample level is events (109 treated, 296 control). The standardized difference is the treated mean minus the control mean divided by the pooled standard deviation; the 0.1 benchmark follows Austin (2009). No balance tests are reported, because they would add unplanned hypothesis tests to the ledger. Panel B shows that common support is substantial: the imbalance in firm size is a shift in means, not a failure of overlap.
 
 **Table 5**
 
@@ -170,9 +164,7 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 | Treated | 19 | 16 | 0 | 3 | 1.000 [.794, 1.000] | .842 [.604, .966] |
 | Control | 16 | 12 | 1 | 4 | .923 [.640, .998] | .750 [.476, .927] |
 
-*Note.* Sample level is filings. κ = Cohen's kappa; TP, FP, FN = true positives, false positives, false negatives. Reference codes were produced blind to the classifier: in rounds 1, 2 and the stratified audit the classifier's answers were sealed in a committed file before coding; in the final round the classifier had never been run on those documents and the reference codes were committed first. Round 1 scored an earlier classifier version. Confidence intervals are Clopper-Pearson. Unresolved rows are excluded under the primary scoring; the alternative scoring that forces them positive is in the source CSV. An empty cell means the field had no reference positives and no classifier positives, so the statistic is undefined. Sources: outputs/essay3_q4/table05.csv; outputs/essay3_q2/d3_audit_recall_by_stratum.csv.
-
-## OUTCOMES
+*Note.* Sample level is filings. κ = Cohen's kappa; TP, FP, FN = true positives, false positives, false negatives. Reference codes were produced blind to the classifier: in rounds 1, 2 and the stratified audit the classifier's answers were sealed in a committed file before coding; in the final round the classifier had never been run on those documents and the reference codes were committed first. Round 1 scored an earlier classifier version. Confidence intervals are Clopper-Pearson. Unresolved rows are excluded under the primary scoring; the alternative scoring that forces them positive is in the source CSV. An empty cell means the field had no reference positives and no classifier positives, so the statistic is undefined.
 
 **Table 6**
 
@@ -203,9 +195,7 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 | 180 | Control | 124 | 41.9% (124 of 296) | 62.9% (124 of 197) |
 | 180 | Pooled | 173 | 42.7% (173 of 405) | 62.0% (173 of 279) |
 
-*Note.* Sample level is events (109 treated, 296 control). The notification anchor is used throughout; a window is (t0, t0 + w] and excludes a filing dated on t0 itself. An Item 5.02 filing is not a departure: Item 5.02 also covers appointments, elections and compensatory arrangements, and Panel B shows how often a filing in the window reports no executive departure at all. The chief executive model requires at least 10 events in each group and is therefore not estimated at any window; the counts are reported for description only. Sources: outputs/essay3_q4/table06.csv; outputs/essay3_q4/_d5_crosswalk.csv.
-
-## ESTIMATES
+*Note.* Sample level is events (109 treated, 296 control). The notification anchor is used throughout; a window is (t0, t0 + w] and excludes a filing dated on t0 itself. An Item 5.02 filing is not a departure: Item 5.02 also covers appointments, elections and compensatory arrangements, and Panel B shows how often a filing in the window reports no executive departure at all. The chief executive model requires at least 10 events in each group and is therefore not estimated at any window; the counts are reported for description only.
 
 **Table 7**
 
@@ -277,7 +267,7 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 | 180 | Baseline departure rate (per year) | −0.60 | 4.14 | .884 |
 | 180 | Prior 12-month market-adjusted return | −10.14 | 10.69 | .345 |
 
-*Note.* N = 405 events; G = 119 parent CIKs. Standard errors are clustered by parent CIK. β, SE, CI and MDE are in percentage points. HC3 ignores within-cluster correlation and is disqualified as an inferential rung; it is shown because the analysis plan specified the full ladder, and its p must never be read as significance. CV3 uses the t distribution with G − 1 = 118 degrees of freedom. The wild cluster restricted bootstrap uses B = 99,999 for p and B = 9,999 for confidence-interval inversion; it yields no standard error. The 30-day logit failed to converge (35 iterations, ConvergenceWarning), so its average marginal effect is not reported; there was no separation and no dropped observation at any window. Panel C coefficients are descriptive: they are not hypothesis tests and are outside the 31-test ledger. Sources: outputs/essay3_q4/table07.csv; b_control_coefficients.csv; c_logit_diagnostics.csv; outputs/essay3_v4/f1_ladder.csv.
+*Note.* N = 405 events; G = 119 parent CIKs. Standard errors are clustered by parent CIK. β, SE, CI and MDE are in percentage points. HC3 ignores within-cluster correlation and is disqualified as an inferential rung; it is shown because the analysis plan specified the full ladder, and its p must never be read as significance. CV3 uses the t distribution with G − 1 = 118 degrees of freedom. The wild cluster restricted bootstrap uses B = 99,999 for p and B = 9,999 for confidence-interval inversion; it yields no standard error. The 30-day logit failed to converge (35 iterations, ConvergenceWarning), so its average marginal effect is not reported; there was no separation and no dropped observation at any window. Panel C coefficients are descriptive: they are not hypothesis tests and are outside the 31-test ledger.
 
 **Table 8**
 
@@ -292,7 +282,7 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 | Treated departure rate in the placebo window | 22.9 |  |  | 25 of 109 events |
 | Control departure rate in the placebo window | 23.6 |  |  | 70 of 296 events |
 
-*Note.* N = 405 events; G = 119 parent CIKs. The placebo outcome is an executive departure in (t0 − 180d, t0], the 180 days ending at notification. The interval is closed at t0, so a departure dated on the notification date falls in the placebo window and not in any outcome window. β, SE and CI are in percentage points. HC3 is disqualified as above. Sources: outputs/essay3_q4/table08.csv, from outputs/essay3_v4/f4_placebo.csv.
+*Note.* N = 405 events; G = 119 parent CIKs. The placebo outcome is an executive departure in (t0 − 180d, t0], the 180 days ending at notification. The interval is closed at t0, so a departure dated on the notification date falls in the placebo window and not in any outcome window. β, SE and CI are in percentage points. HC3 is disqualified as above.
 
 **Table 9**
 
@@ -339,9 +329,7 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 | 34 cells, no treated events | 115 | 0 | 115 |
 | Total | 405 | 109 | 296 |
 
-*Note.* Sample level is events; every row retains all N = 405, so no specification drops a fixed-effect singleton or a missing SIC cell. β and SE are in percentage points. Benjamini-Hochberg is applied within the 27-test sensitivity family. HC3 does not appear: it is disqualified, and its standard error is not finite for the SIC fixed-effects rows, whose design is rank-deficient. The recall-corrected rows divide the outcome by the measured stratum recall; that correction is uncapped and corrects missed departures only, with no adjustment for false positives, and the two CI-endpoint rows are bounding exercises rather than estimates. The complete test ledger is 31 tests (3 primary, 1 placebo, 27 sensitivities); the chief executive family contributes 0 tests because its 10-event gate failed at every window. The full 36-cell SIC list is in outputs/essay3_v4/f3_sic2_cells.csv. Sources: outputs/essay3_q4/table09.csv; outputs/essay3_v4/i_tests.csv.
-
-## ROBUSTNESS
+*Note.* Sample level is events; every row retains all N = 405, so no specification drops a fixed-effect singleton or a missing SIC cell. β and SE are in percentage points. Benjamini-Hochberg is applied within the 27-test sensitivity family. HC3 does not appear: it is disqualified, and its standard error is not finite for the SIC fixed-effects rows, whose design is rank-deficient. The recall-corrected rows divide the outcome by the measured stratum recall; that correction is uncapped and corrects missed departures only, with no adjustment for false positives, and the two CI-endpoint rows are bounding exercises rather than estimates. The complete test ledger is 31 tests (3 primary, 1 placebo, 27 sensitivities); the chief executive family contributes 0 tests because its 10-event gate failed at every window.
 
 **Table 10**
 
@@ -401,9 +389,7 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 | 180 | CCM-based overlap restriction | 347 | 83 | 2.08 | .852 | .818 |
 | 180 | Full sample | 405 |  | 2.33 | .816 | .790 |
 
-*Note.* Sample level is events within parent CIKs; G = 119 clusters. β is in percentage points. A sign reversal is a cluster whose deletion changes the sign of β. Panel C restricts to events that were also linked by the earlier ccm-based security link, which v4 replaced with a rebuilt CUSIP-to-permno link; it is a ccm-based overlap restriction and is not a ticker match. All 58 events removed in Panel C are control events across 37 parent CIKs; no treated event turns on the linker rebuild. Sources: outputs/essay3_q4/table10.csv; outputs/essay3_v4/f1_cv3_variance_shares.csv; outputs/essay3_v4/239_v3_overlap_sensitivity.csv.
-
-## CASE EVIDENCE
+*Note.* Sample level is events within parent CIKs; G = 119 clusters. β is in percentage points. A sign reversal is a cluster whose deletion changes the sign of β. Panel C restricts to events that were also linked by the earlier ccm-based security link, which v4 replaced with a rebuilt CUSIP-to-permno link; it is a ccm-based overlap restriction and is not a ticker match. All 58 events removed in Panel C are control events across 37 parent CIKs; no treated event turns on the linker rebuild.
 
 **Table 11**
 
@@ -451,5 +437,5 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 | John Legere | Chief Executive Officer | 2019-11-18 | 0001193125-19-294093 | Placebo window | 0 | 3 |
 | J. Braxton Carter | Executive Vice President and Chief Financial Officer | 2019-11-18 | 0001193125-19-294093 | Placebo window | 0 | 3 |
 
-*Note.* Sample level is events in Panel A (all 26 T-Mobile events in the analysis sample, CIK 1283699) and persons in Panel B. Y/N marks whether at least one executive departure falls in that window. The 13 events with a 180-day departure resolve to only four distinct departures, because several breach records fall within 180 days of the same filing. The two event columns count, for each person, how many of the 26 events place that person's departure in the 180-day outcome window and how many place it in the placebo window; they are counted per person, and a person can appear in both. Legere and Carter fall in the placebo window of the 2019-11-26 event: their 8-K was filed 2019-11-18, eight days before that breach date and 105 days before the 2020-03-02 notification, so neither can be a response to either. Titles and context are taken verbatim from the filings; no filing links any departure to a breach. Sources: outputs/essay3_q4/table11.csv; outputs/essay3_q4/tmobile_502_text.md.
+*Note.* Sample level is events in Panel A (all 26 T-Mobile events in the analysis sample, CIK 1283699) and persons in Panel B. Y/N marks whether at least one executive departure falls in that window. The 13 events with a 180-day departure resolve to only four distinct departures, because several breach records fall within 180 days of the same filing. The two event columns count, for each person, how many of the 26 events place that person's departure in the 180-day outcome window and how many place it in the placebo window; they are counted per person, and a person can appear in both. Legere and Carter fall in the placebo window of the 2019-11-26 event: their 8-K was filed 2019-11-18, eight days before that breach date and 105 days before the 2020-03-02 notification, so neither can be a response to either. Titles and context are taken verbatim from the filings; no filing links any departure to a breach.
 
