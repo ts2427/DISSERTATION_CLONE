@@ -72,3 +72,49 @@ The line `outputs/tables/appendix_v3/` names a directory that has never existed.
 - `scripts/141_essay1_appendix_tables_form499.py` no longer exists. The two documents that still described it as live — `docs/DATA_QUALITY_DOCUMENTATION.md` and `outputs/STALE_RESULTS_MANIFEST.txt` — now say so and name the current generator.
 
 None of these files is read by code: every reference is either the generator that writes it, a filename inside another script's printed output, or a line of banner text. None is a Git LFS pointer. The edits change documentation only.
+
+---
+
+# Addendum — 2026-09-29 (Run-All Follow-Up, Stage 2)
+
+Tim's ruling of 2026-09-29: **v4 is authoritative for Essay 3.** Each part below is its own
+commit. Nothing is deleted: every retired script and every output stays on disk and in git
+history. Neither `run_all.py` nor `scripts/158` was executed.
+
+## Part F1 — Essay 3 Query 2 retired; the v4 chain staged as authoritative
+
+**Retired: the Essay 3 Query 2 chain** (scripts 187 → 195 → 199 → 202 → 190/191 → 203).
+
+| | |
+|---|---|
+| **Reason** | Superseded. v4 changes the *sample*, not the method: the classifier functions are byte-identical by AST and the estimator is identical line for line, but v4 relinks CRSP point-in-time, which moves the sample from N = 338 / 107 treated / 12 parent CIKs to **N = 405 / 109 treated / 13 parent CIKs** (G = 119, G\* = 24.5). Two builds of the same hypothesis cannot both be citable. |
+| **Ruling** | Tim, 2026-09-29: "v4 is authoritative for Essay 3. Record q2 as retired in `outputs/RETIREMENT_LEDGER.md`; keep its outputs." |
+| **Last committed output** | `outputs/essay3_q2/` — kept, not deleted. It is the **v3 side of the `scripts/239` side-by-side**, which is why the category stays staged in `run_all.py` rather than being commented out. |
+| **Not authoritative** | `outputs/essay3_q2/constants_essay3_q2.json`. The authoritative constants file is `outputs/essay3_v4/constants_essay3_v4.json`, written and asserted by `scripts/227`. |
+| **Still names q2** | `docs/claude/ESSAY3_POST_RERUN_STATE.md` predates this ruling and still describes the q2 build as current. It is Tim's document; it is not edited here. |
+
+**Added: the `ESSAY 3 — v4 CHAIN` category**, 24 live steps in `REPRODUCE_ESSAY3_V4.md` order —
+212, 214, 215, 219, 234, 233, 230, 235, 237, 220, 238, 232, 224, 227, 229, 228, 239, 242,
+243, 244, 246, 245, 217, 210.
+
+The order is not numeric, deliberately, and two of the departures are load-bearing:
+
+- **232 before 224** — 224's ledger reads the censoring result.
+- **233 before 224** — 224 aborts unless every reconciliation row says `agree`.
+- **210 last** — the freeze gate cannot see newly added files until they are staged.
+
+**Does the chain assert against its own outputs?** Yes, at six points: `224` asserts its own
+ledger closes; `227` asserts every ladder value against `constants_essay3_v4.json`; `229`
+re-derives HC3, CV1 and CV3 and asserts equality with `f1_ladder.csv` at all three windows;
+`242` asserts t and p reproduce `f1_ladder.csv` within its stored precision; `243` asserts
+the control coefficients and the logit AMEs against `f1_ladder.csv` and `f1_logit_ame.csv`;
+`244` carries 24 assertions and `245` thirty-six.
+
+**Not staged, deliberately:** 211 and 216 (WRDS pulls, subscription), 213 and 231 (SEC
+fetches, network plus a declared User-Agent), 221–223 and 225–226 (one-off blind validation
+and audit draws), 236 and 218 (imported, not run), 241 (superseded by 227). Their outputs
+are committed and are treated as inputs.
+
+**Also added:** `scripts/160_appendix_v3_to_word.py` as a live step **immediately after
+158**. It renders the 16 Essay 1 appendix tables that 158 writes, and it was never staged,
+so the Word appendix was only ever built by hand.

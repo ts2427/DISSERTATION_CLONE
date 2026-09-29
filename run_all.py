@@ -383,10 +383,11 @@ Log file: {log_path}
                     ('scripts/156_rebuild_s6_assembly.py', 'Stage 6: keyed covariates (NO positional joins); Item 5.02 from live EDGAR (cached) → CANONICAL_V3.csv'),
                     ('scripts/157_rebuild_s7_verification.py', 'Stage 7: disclosure-date armor, OCR health check (bounded), CRSP-attrition balance'),
                     ('scripts/158_rebuild_s8_regenerate.py', 'Stage 8: all three essays + ROA amendment + appendix v3 + CONSTANTS BLOCK V3 (assertion baseline)'),
+                    ('scripts/160_appendix_v3_to_word.py', 'Essay 1 appendix v3 -> Word: renders the 16 tables 158 writes (must follow 158)'),
                 ]
             },
             {
-                'category': 'ESSAY 3 — QUERY 2 CHAIN (executive departure; CURRENT, 2026-09-11; results in a separate constants file)',
+                'category': 'ESSAY 3 — QUERY 2 CHAIN (RETIRED 2026-09-29; superseded by the v4 chain below. Kept staged because its outputs are the v3 side of the 239 side-by-side; its constants file is NOT authoritative)',
                 'scripts': [
                     ('scripts/187_essay3_q2_fetch_502_text.py', 'Essay 3 B: Item 5.02 filing text for the scope events (cached; asserts the fixed validation/dev draws reproduce)'),
                     ('scripts/195_essay3_q2_classifier_v2.py', 'Essay 3 C: FINAL classifier v2 (6f7be7a) -> c2_* codes, one-departure-per-person events, outcomes'),
@@ -401,6 +402,47 @@ Log file: {log_path}
                     #   200 (recall-audit sheet), 201 (recall-audit scoring).
                     # scripts/195 is FROZEN (commit 6f7be7a). Do not edit it: any revision invalidates the
                     # blind validation and requires a fresh round.
+                ]
+            },
+            {
+                'category': 'ESSAY 3 — v4 CHAIN (AUTHORITATIVE, 2026-09-29 ruling; point-in-time CRSP relink; '
+                            'constants in outputs/essay3_v4/constants_essay3_v4.json)',
+                'scripts': [
+                    # Order is REPRODUCE_ESSAY3_V4.md's, which diverges from numeric order in two
+                    # places: 232 must precede 224 (224's ledger reads the censoring result) and
+                    # 233 must precede 224 (224 aborts unless every reconciliation row says agree).
+                    ('scripts/212_pit_linker_v4.py', 'v4 Stage 2: point-in-time CIK->gvkey->CUSIP->permno linker with the identity gate, v3 pass -> Stage 3 worklist'),
+                    ('scripts/214_corrections_v4.py', 'v4 correction ledger -> CANONICAL_V4 (Sprint anchor, Carnival, CIK re-parenting, Gate-2 notification anchor, health indicator)'),
+                    ('scripts/215_ledger_v4.py', 'v4 linkage ledger and symmetry report'),
+                    ('scripts/219_wrds_funda_v4.py', 'v4 covariates from the committed Compustat pull (gvkey-joined; 550-day staleness rule verbatim from 156)'),
+                    ('scripts/234_outcome_cik_v4.py', 'v4 outcome filer resolved by rule (the CIK whose Form 8-K filings are read)'),
+                    ('scripts/233_resolve_reconciliation.py', 'PREREQUISITE of 224: reconciles outcome_cik against the v3 patch list; every row must say agree'),
+                    ('scripts/230_outcome_gap_v4.py', 'v4 outcome-CIK gap and the fetch window per event'),
+                    ('scripts/235_fetch_completeness_v4.py', 'v4 fetch completeness; also writes the b_* scope files 220 and 224 read'),
+                    ('scripts/237_validation_draw_v4.py', 'v4 out-of-sample validation draw (pool = documents v4 added, against the v3-frozen tree; seed 20260919)'),
+                    ('scripts/220_essay3_v4_classifier_v2.py', 'v4 classifier: byte-identical METHOD to scripts/195; only the data sources move. Slow (~1,500 filings)'),
+                    ('scripts/238_score_new_documents_v4.py', 'v4 new-document accuracy against the blind reference codes'),
+                    ('scripts/232_censoring_report_v4.py', 'MUST PRECEDE 224: censoring report on the outcome filer last filing'),
+                    ('scripts/224_essay3_v4_sample_e.py', 'v4 sample E: censoring rule, 8-K activity, 150-return rule, ledger (asserts its ledger closes)'),
+                    ('scripts/227_essay3_v4_estimation.py', 'v4 F/I: H6 ladder, placebo, 27 sensitivities, BH (ASSERTS against outputs/essay3_v4/constants_essay3_v4.json). Slow (B = 99,999)'),
+                    ('scripts/229_essay3_v4_se_diagnostics.py', 'v4 SE diagnostics (ASSERTS its recomputed HC3/CV1/CV3 equal f1_ladder.csv at all three windows)'),
+                    ('scripts/228_essay3_v4_tmobile_case_timeline.py', 'v4 T-Mobile case timeline'),
+                    ('scripts/239_v3_vs_v4_sidebyside.py', 'v3-overlap sensitivity and the v3-vs-v4 constants side-by-side'),
+                    ('scripts/242_essay3_q3_results_pull.py', 'Results-section pull (ASSERTS t and p reproduce f1_ladder.csv within its stored precision)'),
+                    ('scripts/243_essay3_q4_readouts.py', 'Control coefficients and logit diagnostics (ASSERTS both reproduce f1_ladder.csv and f1_logit_ame.csv)'),
+                    ('scripts/244_essay3_q4_tables.py', 'The eleven table CSVs (24 assertions: ledger closure, subgroup sums, 27 sensitivity rows, 26 T-Mobile events)'),
+                    ('scripts/246_essay3_descriptive_counts.py', 'Descriptive counts the appendix cites (ASSERTS all 14 against the Results figures)'),
+                    ('scripts/245_essay3_appendix.py', 'Renders the appendix, .md and .docx (36 assertions incl. label, title, note-text and case integrity)'),
+                    ('scripts/217_v4_offline_tests.py', 'v4 offline test suite; must be all-pass'),
+                    ('scripts/210_verify_v3_frozen.py', 'v3 freeze gate; must be PASS. Run it AFTER staging, or it cannot see newly added files'),
+                    # NOT STAGED, and deliberately so:
+                    #   211, 216 (WRDS pulls: subscription), 213, 231 (SEC fetches: network + declared
+                    #   User-Agent). Their outputs are committed and are treated as inputs.
+                    #   221, 222, 223, 225, 226 (one-off blind validation and audit draws; outputs
+                    #   committed under outputs/essay3_v4/).
+                    #   236 (loader) and 218 (common) are imported, not run.
+                    #   241 was a targeted re-estimation under freeze exception 1; 227 supersedes it.
+                    # scripts/220 is FROZEN and byte-identical in METHOD to scripts/195.
                 ]
             },
             {
