@@ -1006,24 +1006,53 @@ for t in TABLES:
             LINES.append("| " + " | ".join("" if pd.isna(v) else str(v) for v in rr) + " |")
         LINES.append("")
     LINES += [t["note"], ""]
-LINES += ["---", "", "## ASSERTIONS", ""]
-for nm, ok, det in ASSERT:
-    LINES.append("- " + nm + " **" + ("PASS" if ok else "FAIL") + "**"
-                 + (("  " + det) if det and not ok else ""))
-LINES += ["", "## NOT REGENERABLE", ""]
-LINES += (["- **" + w + "** " + x for w, x in NOTREG] or ["- none"])
-LINES += ["", "## TEXT-TO-TABLE CHECK", "",
-          "%d figures checked; %d MISMATCH. Full listing in `text_figures_check.csv`."
-          % (len(CK), len(MIS)), ""]
-if len(MIS):
-    LINES += ["| Figure as written | Table | Panel | Source cell | Value after formatting |",
-              "|---|---|---|---|---|"]
-    for _, rr in MIS.iterrows():
-        LINES.append("| %s | %s | %s | %s | %s |" % (rr["figure_as_written"], rr["table"],
-                                                     rr["panel"], rr["source_cell"],
-                                                     rr["value_after_formatting"]))
-    LINES.append("")
+# The appendix files carry ONLY the title, Tables 1-11 and their notes. The build audit
+# goes to its own file: printing the assertion list into the document it audits put the
+# banned literals ("47 CFR", "EVP") back into the appendix as assertion NAMES, so a grep
+# of the appendix could not distinguish a real occurrence from a check forbidding it.
 (OUT / "ESSAY3_APPENDIX_TABLES.md").write_text("\n".join(LINES) + "\n", encoding="utf-8")
+
+AUD = ["# Essay 3 appendix - build audit", "",
+       "Produced by `scripts/245_essay3_appendix.py` alongside "
+       "`ESSAY3_APPENDIX_TABLES.md` and `.docx`. Kept separate from the appendix so that "
+       "the appendix contains only the title, Tables 1-11 and their notes, and so that "
+       "grepping the appendix for a banned string cannot match an assertion name.", "",
+       "## ASSERTIONS", ""]
+for nm, ok, det in ASSERT:
+    AUD.append("- " + nm + " **" + ("PASS" if ok else "FAIL") + "**"
+               + (("  " + det) if det and not ok else ""))
+AUD += ["", "%d assertion(s): %d PASS, %d FAIL."
+        % (len(ASSERT), sum(1 for _, o, _ in ASSERT if o),
+           sum(1 for _, o, _ in ASSERT if not o)), ""]
+AUD += ["## NOT REGENERABLE", ""]
+AUD += (["- **" + w + "** " + x for w, x in NOTREG] or ["- none"])
+AUD += ["", "## TEXT-TO-TABLE CHECK", "",
+        "%d figures checked; %d MISMATCH. Full listing in `text_figures_check.csv`."
+        % (len(CK), len(MIS)), ""]
+if len(MIS):
+    AUD += ["| Figure as written | Table | Panel | Source cell | Value after formatting |",
+            "|---|---|---|---|---|"]
+    for _, rr in MIS.iterrows():
+        AUD.append("| %s | %s | %s | %s | %s |" % (rr["figure_as_written"], rr["table"],
+                                                   rr["panel"], rr["source_cell"],
+                                                   rr["value_after_formatting"]))
+    AUD.append("")
+(OUT / "APPENDIX_BUILD_AUDIT.md").write_text("\n".join(AUD) + "\n", encoding="utf-8")
+
+# The appendix must carry no audit section. This is checked against the file ON DISK,
+# after it is written, because that is the artefact a reader greps - not the LINES list.
+_md_txt = (OUT / "ESSAY3_APPENDIX_TABLES.md").read_text(encoding="utf-8")
+_BANNED_H = ("## ASSERTIONS", "## NOT REGENERABLE", "## TEXT-TO-TABLE")
+_hits = [(n, ln) for n, ln in enumerate(_md_txt.split(chr(10)), 1)
+         if any(ln.startswith(h) for h in _BANNED_H)]
+check("Appendix .md has no ASSERTIONS / NOT REGENERABLE / TEXT-TO-TABLE section",
+      not _hits, "; ".join("line %d: %s" % (n, ln) for n, ln in _hits))
+# and the literals that only ever entered the appendix as assertion names must be gone
+_leak = [(w, sum(1 for ln in _md_txt.split(chr(10)) if w in ln))
+         for w in ("FAIL", "47 CFR", "47 cfr", "EVP")]
+check("Appendix .md contains no FAIL / 47 CFR / 47 cfr / EVP",
+      all(c == 0 for _, c in _leak),
+      "; ".join("%s x%d" % (w, c) for w, c in _leak if c))
 
 # =============================================================== WRITE .docx
 docx_ok = True
