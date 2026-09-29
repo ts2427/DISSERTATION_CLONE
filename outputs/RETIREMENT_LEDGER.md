@@ -254,3 +254,21 @@ contain the strings — they are what the detectors search for.
 **Verified:** across the 77 live steps, excluding those three fixtures, the strings
 "Rule 37.3", "September 28, 2007", "September 28 2007", "January 1, 2007",
 "1,054 breaches" and "4813/4841/4899" now occur **zero** times.
+
+## Part J3 — six dead commented-out tuples deleted
+
+Six commented-out step tuples named script files that **no longer exist on disk**. A
+commented tuple naming a missing file is worse than nothing: it reads as "this step is
+temporarily off", when in fact the step cannot be restored without rewriting the script.
+They are deleted from `run_all.py`; their history remains in git.
+
+Five of the six had never been recorded as retired anywhere. They are recorded now.
+
+| Script | Reason it went | Last commit touching it | Recorded before? |
+|---|---|---|---|
+| `142_sample_attrition_ledger` | Superseded by the live ledgers: `outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md` (script 163, Phase A) and, for Essay 1, the Part K ledger. Its own note documented the retired rule date and treatment. | 0e75740 (2026-09-08), which deleted it | no — recorded here |
+| `83_fcc_causal_identification` | Pre-rebuild FCC identification on the SIC-era treatment. | 0e75740 (2026-09-08), which deleted it | no — recorded here |
+| `create_parallel_trends_figure` | Pre-rebuild parallel-trends figure on the retired sample. | 0e75740 (2026-09-08), which deleted it | no — recorded here |
+| `create_balance_test_table` | Pre-rebuild balance table on the retired sample. | 0e75740 (2026-09-08), which deleted it | no — recorded here |
+| `94_falsification_tests` | Pre-rebuild falsification tests; also a carrier of the retired rule date. | 0e75740 (2026-09-08), which deleted it | no — recorded here |
+| `141_essay1_appendix_tables_form499` | Superseded by `scripts/158` (tables) and `scripts/160` (Word). Already recorded in the 2026-09-11 addendum under "Stale pointers corrected". | 0e75740 (2026-09-08), which deleted it | yes |

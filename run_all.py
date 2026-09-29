@@ -499,11 +499,9 @@ Log file: {log_path}
                     # RETIRED 2026-08-30 (Query 5 Part F): 7/28-vintage chain superseded by appendix_v3 (scripts/158/160).
                     # The script itself was DELETED in 0e75740; the entry below is provenance only. The current
                     # Essay 1 appendix is outputs/rebuild/appendix_v3/ (scripts/158, Word build scripts/160).
-                    # ('scripts/141_essay1_appendix_tables_form499.py', 'Essay 1 Appendix Tables 1-14 (Form 499 corrected, all live-computed with canonical checks; replaces retired 7/24 rebuild whose Tables 8/10/11/12/13 were hardcoded placeholders) → outputs/tables/appendix_v2/ + outputs/ESSAY1_APPENDIX_TABLES_FORM499.md'),
                     # RETIRED 2026-08-30 (Query 5 Part F): 7/28-vintage chain; v3 ledger lives in CANONICAL_V3_LINEAGE.md + ESSAY2 ledgers.
                     # The script itself was DELETED in 0e75740; the entry below is provenance only. Do not revive it:
                     # outputs/SAMPLE_ATTRITION_LEDGER.md is now a TOMBSTONE and regenerating it would overwrite that.
-                    # ('scripts/142_sample_attrition_ledger.py', 'Sample Attrition Ledger (Methods source of truth: 1,054 documented / 784→779→672→648 computed live; rule-date anchor Dec 8, 2007 per 72 FR 31948 + FCC DA-08-1321; Sept 28 2007 retired) → outputs/SAMPLE_ATTRITION_LEDGER.md'),
                     ('scripts/143_essay1_results_supplements.py', 'Essay 1 Results Supplements (timing x FCC interaction, 5-day CAR, TOST min bounds, overlap share, 60/90d horizons under uniform convention; CONTAINS car_30d provenance finding - stored column inherits pre-audit computation) → outputs/ESSAY1_RESULTS_SUPPLEMENTS.md'),
                     ('scripts/144_residual_duplicate_audit.py', 'Residual-Duplicate Audit (name-variant twins defeating exact-key dedup: 26 groups/30 excess rows → 754-event candidate set; ±3-day adjacency candidates reported not collapsed; NOTHING canonical overwritten) → outputs/RESIDUAL_DUPLICATE_AUDIT.md + FINAL_DATASET_DEDUP_V2_CANDIDATE.csv'),
                 ]
@@ -524,7 +522,6 @@ Log file: {log_path}
                     # and feeds no constants key, appendix table, ledger or cited figure.
                     # ('scripts/82_clustered_vs_hc3_comparison.py', 'Standard Errors Robustness (TABLE B9: Clustered vs HC3 Comparison)'),
                     # RETIRED 2026-08-30 (Query 5 Part G): Rule-37.3/DiD-era content; no causal-identification claim survives zero treated pre-rule observations
-                    # ('scripts/83_fcc_causal_identification.py', 'FCC Causal ID Summary (Industry Fixed Effects, Size Sensitivity Analysis)'),
                     # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
                     # and feeds no constants key, appendix table, ledger or cited figure.
                     # ('scripts/90_essay2_volatility_regressions.py', 'Essay 2 Volatility Analysis (FCC effect on post-breach volatility, Tables 2-3) [COMPLETE]'),
@@ -552,8 +549,6 @@ Log file: {log_path}
                 'scripts': [
                     # ARCHIVED: Parallel trends and balance test used pre-2007/post-2007 comparison.
                     # Causal ID now uses Synthetic Control Matching. These run as archived checks only.
-                    # ('scripts/create_parallel_trends_figure.py', 'Create Parallel Trends Figure (FCC vs non-FCC CAR by year, 2004-2010)'),
-                    # ('scripts/create_balance_test_table.py', 'Create Balance Test Table (Pre-2007 firm characteristics parity)'),
                 ]
             },
             {
@@ -622,7 +617,6 @@ Log file: {log_path}
                     # and feeds no constants key, appendix table, ledger or cited figure.
                     # ('scripts/93_market_model_sensitivity.py', 'Event Window Sensitivity: Robustness across 5d, 10d, 30d, 60d, 90d CARs'),
                     # RETIRED 2026-08-30 (Query 5 Part G): Rule-37.3-era content
-                    # ('scripts/94_falsification_tests.py', 'Falsification Tests: Pre-breach validation & breach-specificity confirmation'),
                     # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
                     # and feeds no constants key, appendix table, ledger or cited figure.
                     # ('scripts/95_low_r2_sensitivity.py', 'Low R² Sensitivity: Model adequacy with alternative specifications'),
