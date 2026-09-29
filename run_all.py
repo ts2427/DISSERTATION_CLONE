@@ -207,23 +207,138 @@ def run_script(script_path, description, log_file):
         print_to_both(status, log_file)
         return False
 
+LFS_PLACEHOLDER_MAGIC = "version https://git-lfs"
+
+# Inputs no step can supply for itself. A missing one, or one that is still an LFS
+# placeholder, stops the pipeline before step 1 rather than degrading some regression
+# 40 minutes in. Each is annotated with what needs it, so the list can be maintained.
+REQUIRED_INPUTS = [
+    ("Data/processed/rebuild/CANONICAL_V3.csv",
+     "the canonical event table; 19 live steps read it, including 156-158 and the v4 chain"),
+    ("outputs/rebuild/constants_v3.json",
+     "the Essay 1 assertion baseline (158, 160, 163 and the Query 2 chain read it)"),
+    ("outputs/essay3_v4/constants_essay3_v4.json",
+     "the Essay 3 assertion baseline; scripts/227 asserts every ladder value against it"),
+    ("Data/processed/FINAL_DISSERTATION_DATASET_FORM499_CORRECTED.csv",
+     "pre-rebuild, but still read by 5 live steps: 122, 86c, 90b, 143, 144"),
+    ("Data/enrichment/executive_changes.csv",
+     "merged by scripts/53; its producer (46) was retired 2026-09-29"),
+    ("Data/wrds/crsp_daily_returns.csv", "returns for every market-model step"),
+    ("Data/wrds/market_indices.csv", "the market index for every market-model step"),
+]
+
+
+def _is_lfs_placeholder(path):
+    """True if the file on disk is a git-lfs pointer rather than its content.
+
+    A pointer is ~130 bytes of text beginning with the magic line. The size test keeps
+    this cheap enough to run over the whole tree.
+    """
+    try:
+        if path.stat().st_size > 1024:
+            return False
+        with open(path, "rb") as fh:
+            return fh.read(len(LFS_PLACEHOLDER_MAGIC)).decode("ascii", "ignore") == LFS_PLACEHOLDER_MAGIC
+    except OSError:
+        return False
+
+
+def _live_step_sources():
+    """The text of every step declared live in this file, for the reference check."""
+    import re
+    out = {}
+    for line in Path(__file__).read_text(encoding="utf-8", errors="replace").split("\n"):
+        if line.lstrip().startswith("#"):
+            continue
+        m = re.match(r"^\s*\(\s*'(scripts/[^']+\.py)'\s*,", line)
+        if m and Path(m.group(1)).exists():
+            out[m.group(1)] = Path(m.group(1)).read_text(encoding="utf-8", errors="replace")
+    return out
+
+
 def verify_data(log_file):
-    """Verify required data files exist"""
-    print_section("STEP 0: DATA VERIFICATION")
-    log_file.write("\n" + "=" * 80 + "\nSTEP 0: DATA VERIFICATION\n" + "=" * 80 + "\n\n")
+    """Fail loudly on a missing input, or on one that is still a Git LFS placeholder.
 
-    # Primary: Form 499 corrected dataset
-    data_file = Path('Data/processed/FINAL_DISSERTATION_DATASET_FORM499_CORRECTED.csv')
+    Added 2026-09-29 (Part I1). Until then this function checked a single pre-rebuild
+    file for existence. That was the wrong test twice over: it named a dataset the v3
+    rebuild had superseded, and existence says nothing about content. 87 committed files
+    lost their filter=lfs attribute in 5f5c950, so a clean clone wrote 130-byte
+    placeholders in their place with NO error, and every script that read one carried on
+    with a column of nonsense. Part I3 restored the attributes; this guard is what makes
+    the failure loud if it ever happens again - a placeholder here stops the run instead
+    of producing a plausible number.
+    """
+    print_section("STEP 0: DATA VERIFICATION AND LFS GUARD")
+    log_file.write("\n" + "=" * 80 + "\nSTEP 0: DATA VERIFICATION AND LFS GUARD\n" + "=" * 80 + "\n\n")
 
-    if data_file.exists():
-        file_size = data_file.stat().st_size / (1024 * 1024)
-        msg = f"  [OK] Form 499 corrected dataset found ({file_size:.1f} MB)\n  [OK] Ready to proceed\n"
+    missing, placeholder, ok = [], [], []
+    for rel, why in REQUIRED_INPUTS:
+        path = Path(rel)
+        if not path.exists():
+            missing.append((rel, why))
+        elif _is_lfs_placeholder(path):
+            placeholder.append((rel, why))
+        else:
+            ok.append((rel, path.stat().st_size / (1024 * 1024)))
+
+    msg = "Required inputs\n"
+    for rel, mb in ok:
+        msg += "  [OK]      %-62s %8.1f MB\n" % (rel, mb)
+    for rel, why in missing:
+        msg += "  [MISSING] %-62s %s\n" % (rel, why)
+    for rel, why in placeholder:
+        msg += "  [LFS]     %-62s %s\n" % (rel, why)
+    print_to_both(msg, log_file)
+
+    # Every other placeholder in the tree. Not fatal on its own - some belong to retired
+    # chains - but fatal if a live step names the file, which is the silent-degradation case.
+    others, sources = [], _live_step_sources()
+    for base in ("Data", "outputs"):
+        root = Path(base)
+        if not root.exists():
+            continue
+        for path in root.rglob("*"):
+            if not path.is_file() or any(r == str(path).replace("\\", "/") for r, _ in REQUIRED_INPUTS):
+                continue
+            if _is_lfs_placeholder(path):
+                others.append(path.as_posix())
+
+    read_by = {}
+    for rel in others:
+        name = rel.rsplit("/", 1)[-1]
+        users = sorted(step for step, text in sources.items() if name in text)
+        if users:
+            read_by[rel] = users
+
+    if others:
+        msg = "\nGit LFS placeholders elsewhere in the tree: %d\n" % len(others)
+        for rel in sorted(others)[:20]:
+            msg += "  [~] %s%s\n" % (rel, "   <- READ BY A LIVE STEP" if rel in read_by else "")
+        if len(others) > 20:
+            msg += "  ... and %d more\n" % (len(others) - 20)
+        msg += "  These are pointer text, not data. Fix with: git lfs pull\n"
         print_to_both(msg, log_file)
-        return True
-    else:
-        msg = f"  [ERROR] Required data file missing: {data_file}\n"
+
+    fatal = missing or placeholder or read_by
+    if fatal:
+        msg = "\n[FATAL] The pipeline will not start.\n"
+        if missing:
+            msg += "  %d required input(s) are missing.\n" % len(missing)
+        if placeholder:
+            msg += "  %d required input(s) are Git LFS placeholders, not data.\n" % len(placeholder)
+        if read_by:
+            msg += "  %d placeholder file(s) are read by a live step:\n" % len(read_by)
+            for rel, users in sorted(read_by.items()):
+                msg += "      %s  <- %s\n" % (rel, ", ".join(users))
+        msg += ("\n  Run `git lfs pull` and start again. Do NOT run individual scripts to work\n"
+                "  around this: a placeholder read as data produces a plausible wrong number\n"
+                "  rather than an error.\n")
         print_to_both(msg, log_file)
         return False
+
+    print_to_both("  [OK] %d required inputs present, none a placeholder. Ready to proceed.\n"
+                  % len(ok), log_file)
+    return True
 
 def verify_outputs(log_file, run_start=None):
     """Verify critical output files exist AND were written by this run.
