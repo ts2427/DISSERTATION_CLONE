@@ -272,3 +272,16 @@ Five of the six had never been recorded as retired anywhere. They are recorded n
 | `create_balance_test_table` | Pre-rebuild balance table on the retired sample. | 0e75740 (2026-09-08), which deleted it | no — recorded here |
 | `94_falsification_tests` | Pre-rebuild falsification tests; also a carrier of the retired rule date. | 0e75740 (2026-09-08), which deleted it | no — recorded here |
 | `141_essay1_appendix_tables_form499` | Superseded by `scripts/158` (tables) and `scripts/160` (Word). Already recorded in the 2026-09-11 addendum under "Stale pointers corrected". | 0e75740 (2026-09-08), which deleted it | yes |
+
+## Part L — TOMBSTONE on `outputs/tables/essay2_appendix/`
+
+**Not a retirement of a script: a withdrawal of 41 committed artefacts as evidence.**
+Nothing is deleted.
+
+| | |
+|---|---|
+| **What** | The 41 CSV files in `outputs/tables/essay2_appendix/`, plus `manifest.csv`. |
+| **Reason** | No committed script writes them. The only script naming the directory is `scripts/178_essay2_appendix_docx.py`, which merely renders them into `ESSAY2_APPENDIX.docx` (itself gitignored). The code that produced the numbers was a scratchpad file, `emit_appendix.py`, never committed. A figure here cannot be traced to its data or specification, cannot be regenerated from a clean clone, and cannot be checked. |
+| **Not stale copies** | `163` and `164` write **61** files to `outputs/tables/essay2_v2/`. These two sets share **zero** filenames — verified, not assumed. This directory holds `channel_*`, `cluster_*`, `delay_*` names; the live directory holds `t1_*` through `t52_*`. So these are a **different set of tables**, not an out-of-date copy: a citation to a file here cannot be repaired by pointing at the same name in `essay2_v2/`, because there is no same name. |
+| **Cite instead** | `outputs/tables/essay2_v2/` (written by 163 and 164, and since Part I2 asserted at N = 333 / 104 treated / 82 clusters on both write and read), `scripts/165` for the inferential frame, and `outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md` for the chain. |
+| **Marker on disk** | `outputs/tables/essay2_appendix/TOMBSTONE.md` |
