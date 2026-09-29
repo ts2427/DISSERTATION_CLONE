@@ -228,8 +228,10 @@ lg2('# Essay 2 Sample Attrition Ledger (computed live)')
 lg2('')
 lg2('Chain from the 1,054 PRC notification records to the Essay 2 regression')
 lg2('sample, every step its own line. Pre-rule = breach_date before the')
-lg2('December 8, 2007 effective date of 47 CFR 64.2011 (the only cutoff used;')
-lg2('there is no September 28, 2007 date and no "Rule 37.3").')
+lg2('December 8, 2007 effective date of 47 CFR 64.2011 - the only cutoff')
+lg2('used. The retired rule-effective dates and the retired rule number are'
+    ' inventoried in outputs/DEAD_DATE_PURGE_INVENTORY.md and appear nowhere'
+    ' in the v3 chain.')
 lg2('')
 
 s2 = pd.read_csv('Data/processed/rebuild/stage2_signed.csv', low_memory=False)
@@ -857,9 +859,11 @@ pd.DataFrame([r_g]).to_csv(OUTDIR / 't10_garch.csv', index=False)
 # stated [-25,-5]/[+5,+25] notification-anchored log-return windows. Its DV
 # was the script-20 convention: BREACH-anchored, calendar [-40,-1]/[0,+30],
 # annualized raw-return SD â€” the post window CONTAINS the announcement shock.
-# The stated windows exist only in create_regression_formulas_document.py
-# (documentation, alongside the fictional "Rule 37.3", SIC treatment, and a
-# third wrong date, "January 1, 2007"). The result is sensitive to this:
+# The stated windows exist only in create_regression_formulas_document.py - a
+# retired documentation script that also carries the wrong rule number, the
+# SIC-based treatment definition, and a third wrong rule-effective date. All
+# three are inventoried in outputs/DEAD_DATE_PURGE_INVENTORY.md. The result
+# is sensitive to the convention:
 XSC = [c if c != 'e2_pre_sd' else 'return_volatility_pre' for c in XS4]
 dc = FIN.dropna(subset=['volatility_change'] + XSC)
 Xc = sm.add_constant(dc[XSC].astype(float))
@@ -1041,13 +1045,13 @@ log('  The +7.31/+3.64/-0.54/-3.39 step-down REPRODUCES in sign, ordering, '
 pd.DataFrame(frows).to_csv(OUTDIR / 't15_forensic_old_quartiles.csv',
                            index=False)
 
-log('\nCodebase flags (directive): "September 28 2007"/"Rule 37.3" and '
-    'SIC-code treatment (4813/4841/4899) appear ONLY in retired pre-rebuild '
-    'scripts (83, 94, 20, build_essay1_*, create_*, scm_*, fix/rebuild_essay1_'
-    'appendix, boost_mobile_forensics, consolidate_validation_results, and '
-    'chronology-side scripts 131/137) and in script 142\'s note deliberately '
-    'documenting the retirement. NO live v3-chain script (150-158) or this '
-    'script assigns treatment by SIC or references the wrong date/rule.')
+log('\nCodebase flags (directive): the two retired rule-effective dates, '
+    'the retired rule number and the SIC-based treatment definition - all '
+    'inventoried in outputs/DEAD_DATE_PURGE_INVENTORY.md - appear ONLY in '
+    'retired pre-rebuild scripts and in the retirement notes that '
+    'deliberately document them. NO live v3-chain script (150-158) and no '
+    'part of this script assigns treatment by SIC or cites a retired '
+    'rule-effective date or rule number.')
 log('\n' + '=' * 90)
 log('PIPELINE FINDINGS (item 5 â€” things not already named in the directive)')
 log('=' * 90)
@@ -1085,9 +1089,11 @@ log(f"""\
 7. The old Essay 2 CODE never implemented the draft's stated volatility
    windows: scripts 20/90/90b used the breach-anchored annualized
    [-40,-1]/[0,+30] convention; the [-25,-5]/[+5,+25] language exists only
-   in create_regression_formulas_document.py, the same file that carries
-   "Rule 37.3", SIC-code treatment, and "January 1, 2007" (a THIRD wrong
-   rule date). The draft's methods prose described a measure that was never
+   in create_regression_formulas_document.py, the same retired file that
+   carries the wrong rule number, the SIC-code treatment definition, and a
+   third wrong rule-effective date (all inventoried in
+   outputs/DEAD_DATE_PURGE_INVENTORY.md). The draft's methods prose
+   described a measure that was never
    computed. See the DV-convention sensitivity in Phase E.""")
 log(f'\nTotal reconciliation/consistency assertions passed: {N_ASSERTS[0]}')
 

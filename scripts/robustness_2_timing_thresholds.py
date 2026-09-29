@@ -4,7 +4,7 @@ ROBUSTNESS CHECK 2: Alternative Disclosure Timing Thresholds
 Tests whether market reaction to disclosure timing is sensitive to the choice
 of "immediate" disclosure threshold (3, 5, 7, 14, 30, 60 days).
 
-Uses: FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv (1,054 breaches, 85 variables)
+Uses: FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv (1,054 PRC notification records, 85 variables)
 """
 
 import pandas as pd

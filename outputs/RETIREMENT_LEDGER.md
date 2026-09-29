@@ -227,3 +227,30 @@ identical content.
 
 The **second** declaration is commented out. The first stays, because 121c depends on it.
 Nothing is retired: the script itself is unchanged and still live.
+
+## Part J2 — retired strings removed from live script text
+
+The retired rule-effective dates, the retired rule number and the "1,054 breaches" phrasing
+appeared in **live** script docstrings and log output. In every case the text was a
+*disclaimer* — it reproduced the retired string in order to deny it — but a purge grep
+cannot distinguish a denial from a citation, and neither can a reader skimming log output.
+
+Every claim is preserved; only the literals move to the inventory that already holds them,
+`outputs/DEAD_DATE_PURGE_INVENTORY.md`.
+
+| File | Sites | Change |
+|---|---|---|
+| `163_essay2_rerun_form499` | 4 (the ledger header, the DV-convention comment, the codebase-flags log, closing summary item 7) | The literals are replaced by a pointer to the inventory. The codebase-flags log also dropped its list of carrier scripts, which Part H and Part J3 have just made stale. |
+| `robustness_1`–`robustness_5` | 1 each | "(1,054 breaches, N variables)" → "(1,054 **PRC notification records**, N variables)". 1,054 is the notification-record count, not a breach count; the two differ by the deduplication the rebuild introduced. |
+
+`scripts/163` was verified by parsing both versions and comparing the ASTs with **every
+string constant blanked out**: the skeletons are identical, so nothing but string literals
+and comments moved.
+
+**Left alone, as ruled:** the purge-detector fixtures in `scripts/168_essay3_audit.py`,
+`scripts/217_v4_offline_tests.py` and `scripts/240_methods_toolkit_v4.py`. Those files must
+contain the strings — they are what the detectors search for.
+
+**Verified:** across the 77 live steps, excluding those three fixtures, the strings
+"Rule 37.3", "September 28, 2007", "September 28 2007", "January 1, 2007",
+"1,054 breaches" and "4813/4841/4899" now occur **zero** times.
