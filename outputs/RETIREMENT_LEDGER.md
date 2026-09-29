@@ -39,6 +39,8 @@ These edits were also made in `run_all.py`:
 
 **Script 46 stays in run_all.** Script 53 merges its committed output for the legacy Essay 1/2 scripts. Removing 46 is in Tim's parking lot, pending a check that `executive_changes.csv` is committed and that 53 runs without 46.
 
+> **SUPERSEDED 2026-09-29 (Part H).** Both conditions were checked and both hold, so script 46 is retired. See the Part H entry below.
+
 ## Hardcoded values retired in scripts that stay
 
 | Script | Location | Value | Action |
@@ -144,3 +146,74 @@ Both branches — the Essay 1 hypothesis loop and the H5 block — now read
 `NULL-INCONCLUSIVE` branches are untouched: neither claims significance. A real verdict
 needs CV3 or the wild cluster bootstrap, which 158 does not compute; Essay 2's inferential
 frame is `scripts/165`.
+
+## Part H — 28 steps retired from `run_all.py`
+
+**The ruling.** Tim, 2026-09-29: "Retire the 31 live steps that read
+`FINAL_DISSERTATION_DATASET*` and feed nothing downstream."
+
+**The count is 28, not 31, and the correction is mine.** Re-testing the ruling's own
+criterion mechanically against the list I had produced in Part A found **four** entries that
+do not satisfy it:
+
+| Script | What the re-test found | Outcome |
+|---|---|---|
+| `180_essay2_elevation_calibration` | Contains **no reference to `FINAL_DISSERTATION_DATASET`**. It reads `outputs/tables/essay2_v2/t42_final_sample_with_repairs.csv` — the **canonical** Essay 2 sample — and its own docstring names its output as the source for **Table 21 Panel C**. | **NOT retired.** It fails the criterion on both halves. |
+| `181_essay2_spec_curve_permutation` | Same: no legacy reference. Reads `t1_final_sample.csv` and asserts `N == 333`, the canonical Essay 2 sample. | **NOT retired.** |
+| `power_analysis_h3_h4` | Reads no data at all. It hardcodes **`n = 653`** (line 19), a pre-rebuild sample size, and computes an MDE from it. | Retired, on a **different reason**: a hardcoded pre-rebuild constant, feeding nothing, with an untracked output. |
+| `extract_merge_fama_french` | Reads the raw Ken French files, not the legacy dataset. Writes `Data/wrds/fama_french_factors.csv`, which stays committed. | Retired, on a **different reason**: all nine scripts that read that file are themselves retired here, so no live step consumes it. |
+
+**Criterion 2 was then re-tested for all 28** against (a) the 77 steps still live after this
+part, (b) 87 cited documents — the essay appendices, the reports, the constants files and
+`docs/` — matching on output filename. **No output of any of the 28 is read by a surviving
+step or named in a cited document.**
+
+### The 28
+
+"Last commit" is the last commit touching the script. Their shared input is the pre-rebuild
+`FINAL_DISSERTATION_DATASET*`, which is why they go.
+
+| Script | Last commit | Result file(s) under `outputs/` | Last committed output |
+|---|---|---|---|
+| 99_add_cpni_hhi_variables | d3ef2fe (2026-06-30) | none - console and log output only | - |
+| 70_summary_statistics | 163fc84 (2026-09-15) | none - console and log output only | - |
+| h1_timing_fcc_interaction | b53541a (2026-07-24) | `outputs/H1_timing_fcc_interaction_results.csv` | b53541a (2026-07-24) |
+| 82_clustered_vs_hc3_comparison | d3ef2fe (2026-06-30) | `outputs/tables/essay2/TABLE_B9_clustered_vs_hc3_comparison.txt` | afa618a (2026-07-23) |
+| 90_essay2_volatility_regressions | aa2ed2d (2026-07-28) | none - console and log output only | - |
+| 86_essay3_fcc_causal_identification | d3ef2fe (2026-06-30) | none - console and log output only | - |
+| scm_mahalanobis_distance | afa618a (2026-07-23) | `outputs/scm_mahalanobis_results.csv`, `outputs/scm_mahalanobis_firm_level.csv`, `outputs/scm_mahalanobis_summary.csv` | afa618a (2026-07-23) |
+| 00_data_validation_checks | d3ef2fe (2026-06-30) | none - console and log output only | - |
+| 99_firm_fixed_effects_analysis | faae3ee (2026-06-30) | `outputs/tables/FE_H1_H4_RESULTS.txt` | - |
+| 100_ransomware_heterogeneity | faae3ee (2026-06-30) | `outputs/tables/TABLE_RANSOMWARE_HETEROGENEITY_RESULTS.csv` | afa618a (2026-07-23) |
+| 101_media_coverage_heterogeneity | faae3ee (2026-06-30) | `outputs/tables/TABLE_MEDIA_COVERAGE_HETEROGENEITY_RESULTS.csv` | afa618a (2026-07-23) |
+| 103_breach_type_diversity | faae3ee (2026-06-30) | `outputs/tables/TABLE_DIVERSITY_HETEROGENEITY_RESULTS.csv` | afa618a (2026-07-23) |
+| 104_restatement_summary | faae3ee (2026-06-30) | none - console and log output only | - |
+| 106_information_environment_composite | d3ef2fe (2026-06-30) | `outputs/tables/TABLE_INFO_ENVIRONMENT_COMPOSITE_RESULTS.csv` | afa618a (2026-07-23) |
+| 92_heterogeneity_analysis | d3ef2fe (2026-06-30) | none - console and log output only | - |
+| 93_market_model_sensitivity | d3ef2fe (2026-06-30) | none - console and log output only | - |
+| 95_low_r2_sensitivity | d3ef2fe (2026-06-30) | none - console and log output only | - |
+| robustness_1_alternative_windows | d3ef2fe (2026-06-30) | none - console and log output only | - |
+| power_analysis_h3_h4 | afa618a (2026-07-23) | `outputs/tables/essay1_null_sensitivity_analysis.txt` | - |
+| overlap_audit_fcc_clustering | 7951379 (2026-07-24) | `outputs/overlap_audit_summary.csv` | aa2ed2d (2026-07-28) |
+| corrected_longrun_car_clustering | 7951379 (2026-07-24) | `outputs/corrected_longrun_analysis_results.csv` | aa2ed2d (2026-07-28) |
+| calendar_month_clustering_60_90 | 7951379 (2026-07-24) | `outputs/calendar_month_clustering_results.csv` | aa2ed2d (2026-07-28) |
+| extract_merge_fama_french | 03c8ae6 (2026-07-24) | none - console and log output only | - |
+| sample_composition_diagnostic | 03c8ae6 (2026-07-24) | none - console and log output only | - |
+| ff3_simple_merge | 03c8ae6 (2026-07-24) | none - console and log output only | - |
+| factor_model_carhart_ff5 | 03c8ae6 (2026-07-24) | `outputs/factor_model_robustness_results.csv` | aa2ed2d (2026-07-28) |
+| extended_bhar_60d_90d | aa2ed2d (2026-07-28) | `outputs/extended_bhar_60d_90d_results.csv` | aa2ed2d (2026-07-28) |
+| 46_executive_changes_item5_02_with_cache | aa2ed2d (2026-07-28) | none - console and log output only | - |
+
+**Script 46 — the ledger's open item is now closed.** The 2026-09-11 entry above reads:
+*"Removing 46 is in Tim's parking lot, pending a check that `executive_changes.csv` is
+committed and that 53 runs without 46."* Both conditions are met.
+`Data/enrichment/executive_changes.csv` is **tracked, real content, 779 rows**, with
+`executive_change_180d` summing to **521** — not an LFS pointer and not empty. `scripts/53`
+merges that committed file, so it runs whether or not 46 does. Script 46 is retired with
+the other 27.
+
+**Nothing was run.** Per the standing rules, neither `run_all.py` nor script 158 was
+executed. Every edited file was parsed with `ast.parse`, and `run_all.py` was checked
+structurally: 77 live steps, 24 of them v4, the 28 commented out, 180 and 181 still live,
+`98_sox404_heterogeneity` declared live exactly once, and 158 < 160, 232 < 224, 233 < 224,
+227 < 229, 210 last among the v4 steps.

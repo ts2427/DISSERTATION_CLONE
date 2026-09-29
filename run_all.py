@@ -359,14 +359,20 @@ Log file: {log_path}
             {
                 'category': 'DATA PREPARATION - OUTCOME EXTRACTION',
                 'scripts': [
-                    ('scripts/46_executive_changes_item5_02_with_cache.py', 'Essay 3 Outcome: Executive Turnover from 8-K Item 5.02 (cached; 20-30 min on first run, 2-5 min after) [MUST RUN BEFORE SCRIPT 53]'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET and
+                    # feeds nothing cited. Its committed output Data/enrichment/executive_changes.csv
+                    # (779 rows, executive_change_180d sum 521) stays on disk, so scripts/53 still runs
+                    # without it - the check the ledger left open is now closed.
+                    # ('scripts/46_executive_changes_item5_02_with_cache.py', 'Essay 3 Outcome: Executive Turnover from 8-K Item 5.02 (cached; 20-30 min on first run, 2-5 min after) [MUST RUN BEFORE SCRIPT 53]'),
                 ]
             },
             {
                 'category': 'DATA PREPARATION - ENRICHMENTS',
                 'scripts': [
                     ('scripts/53_merge_CONFIRMED_enrichments.py', 'Merge All Enrichments (Prior breaches, breach severity, media coverage, Item 5.02 executive turnover, enforcement) → FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv'),
-                    ('scripts/99_add_cpni_hhi_variables.py', 'Add CPNI & HHI Variables (Essay 1 Alternative Explanations)'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/99_add_cpni_hhi_variables.py', 'Add CPNI & HHI Variables (Essay 1 Alternative Explanations)'),
                     ('scripts/98_sox404_heterogeneity.py', 'Governance Enrichment: SOX 404 proxy → FINAL_DISSERTATION_DATASET_WITH_GOVERNANCE.csv (required by 121c)'),
                 ]
             },
@@ -505,18 +511,28 @@ Log file: {log_path}
             {
                 'category': 'MAIN ANALYSIS (REFERENCE)',
                 'scripts': [
-                    ('scripts/70_summary_statistics.py', 'Summary Statistics (Table 1)'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/70_summary_statistics.py', 'Summary Statistics (Table 1)'),
                     ('scripts/80_essay1_car_regressions.py', 'Essay 1 Main Regressions (H1-H4: CAR on disclosure/FCC/reputation/severity) - HC3 robust SEs as primary [REFERENCE - SIC-BASED]'),
-                    ('scripts/h1_timing_fcc_interaction.py', 'H1 Theoretical Test: Timing × FCC Interaction (formal test of differential effects by regulatory status, canonical specification)'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/h1_timing_fcc_interaction.py', 'H1 Theoretical Test: Timing × FCC Interaction (formal test of differential effects by regulatory status, canonical specification)'),
                     # ARCHIVED: Pre-2007 causal ID replaced by SCM. Runs as robustness check only.
                     # ('scripts/81_post_2007_interaction_test.py', 'FCC Causal Identification (TABLE B8: Post-2007 Interaction Test - Market Returns)'),
-                    ('scripts/82_clustered_vs_hc3_comparison.py', 'Standard Errors Robustness (TABLE B9: Clustered vs HC3 Comparison)'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/82_clustered_vs_hc3_comparison.py', 'Standard Errors Robustness (TABLE B9: Clustered vs HC3 Comparison)'),
                     # RETIRED 2026-08-30 (Query 5 Part G): Rule-37.3/DiD-era content; no causal-identification claim survives zero treated pre-rule observations
                     # ('scripts/83_fcc_causal_identification.py', 'FCC Causal ID Summary (Industry Fixed Effects, Size Sensitivity Analysis)'),
-                    ('scripts/90_essay2_volatility_regressions.py', 'Essay 2 Volatility Analysis (FCC effect on post-breach volatility, Tables 2-3) [COMPLETE]'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/90_essay2_volatility_regressions.py', 'Essay 2 Volatility Analysis (FCC effect on post-breach volatility, Tables 2-3) [COMPLETE]'),
                     # ARCHIVED: Pre-2007 causal ID replaced by SCM. Runs as robustness check only.
                     # ('scripts/84_essay2_post_2007_interaction_test_volatility.py', 'Essay 2 Volatility Causal ID (TABLE B8: Post-2007 Test)'),
-                    ('scripts/86_essay3_fcc_causal_identification.py', 'Essay 2 Volatility Causal ID (Industry FE, Size Sensitivity)'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/86_essay3_fcc_causal_identification.py', 'Essay 2 Volatility Causal ID (Industry FE, Size Sensitivity)'),
                     # RETIRED 2026-09-11 (Essay 3 Query 2 Part H): legacy Essay 3 scripts on the SIC treatment and the
                     # any-Item-5.02 outcome (91, 91b, 91c, 91e, 91f, 91g, 91k, 91j) and the 7/28 Cox (91h); superseded by the
                     # Query 2 chain. The TOST description "confirms FCC effect is economically negligible" is withdrawn.
@@ -526,7 +542,9 @@ Log file: {log_path}
             {
                 'category': 'CAUSAL IDENTIFICATION: SYNTHETIC CONTROL METHOD',
                 'scripts': [
-                    ('scripts/scm_mahalanobis_distance.py', 'Essay 1 H2 Causal Identification: Mahalanobis Distance Weighted SCM (Abadie et al. 2010) - breach-event level matching with 500 permutations'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/scm_mahalanobis_distance.py', 'Essay 1 H2 Causal Identification: Mahalanobis Distance Weighted SCM (Abadie et al. 2010) - breach-event level matching with 500 permutations'),
                 ]
             },
             {
@@ -541,8 +559,12 @@ Log file: {log_path}
             {
                 'category': 'PUBLICATION READINESS: DATA INTEGRITY & CAUSAL ROBUSTNESS',
                 'scripts': [
-                    ('scripts/00_data_validation_checks.py', 'Data Validation Checks (logical consistency, duplicates, outliers, missing data)'),
-                    ('scripts/99_firm_fixed_effects_analysis.py', 'Firm Fixed Effects (H1-H4 within-firm variation, controls unobserved heterogeneity)'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/00_data_validation_checks.py', 'Data Validation Checks (logical consistency, duplicates, outliers, missing data)'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/99_firm_fixed_effects_analysis.py', 'Firm Fixed Effects (H1-H4 within-firm variation, controls unobserved heterogeneity)'),
                     # RETIRED 8/4/2026 (Rebuild Directive v2, data decision 3): enforcement columns are
                     # pre-audit provenance; enforcement enters as prose citation-armor only.
                     # ('scripts/92_enforcement_analysis.py', 'H6 Enforcement Analysis (regulatory enforcement prevalence and predictors)'),
@@ -564,15 +586,25 @@ Log file: {log_path}
                     # RETIRED 8/4/2026 (Rebuild Directive v2, data decision 1): NVD/CVSS variables are
                     # vendor-level threat-environment measures, not breach severity; belong to no hypothesis.
                     # ('scripts/99_cvss_complexity_heterogeneity.py', 'HETEROGENEITY PHASE 2: CVSS Technical Complexity - FCC x Complexity interaction [RETIRED - SIC-era +6.27% claim stale-manifested]'),
-                    ('scripts/100_ransomware_heterogeneity.py', 'HETEROGENEITY ANALYSIS #3: Ransomware Attack Vector - FCC x Ransomware interaction'),
-                    ('scripts/101_media_coverage_heterogeneity.py', 'HETEROGENEITY ANALYSIS #4: Media Coverage Moderation - FCC x Media interaction (+7.08%**)'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/100_ransomware_heterogeneity.py', 'HETEROGENEITY ANALYSIS #3: Ransomware Attack Vector - FCC x Ransomware interaction'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/101_media_coverage_heterogeneity.py', 'HETEROGENEITY ANALYSIS #4: Media Coverage Moderation - FCC x Media interaction (+7.08%**)'),
                     # RETIRED 2026-09-11 (Essay 3 Query 2 Part H): script 102 is entirely Essay 3 (any-5.02 outcome, SIC treatment)
                     # ('scripts/102_extended_governance_windows.py', 'HETEROGENEITY ANALYSIS #5: Extended Governance Time Windows - 30d/90d/180d comparison'),
-                    ('scripts/103_breach_type_diversity.py', 'HETEROGENEITY ANALYSIS #6: Breach Type Diversity - Multi-type complexity'),
-                    ('scripts/104_restatement_summary.py', 'HETEROGENEITY ANALYSIS #7: Restatement Prediction - Data limitation documentation'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/103_breach_type_diversity.py', 'HETEROGENEITY ANALYSIS #6: Breach Type Diversity - Multi-type complexity'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/104_restatement_summary.py', 'HETEROGENEITY ANALYSIS #7: Restatement Prediction - Data limitation documentation'),
                     # RETIRED 8/4/2026 (Rebuild Directive v2, data decision 1): CVE-based complexity index retired with NVD.
                     # ('scripts/105_complexity_index_heterogeneity.py', 'HETEROGENEITY ANALYSIS #8: Complexity Index - Unified severity/CVE/type complexity mechanism'),
-                    ('scripts/106_information_environment_composite.py', 'HETEROGENEITY ANALYSIS #9: Information Environment Composite - Media attention & reputation interaction (Spec A/B/C)'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/106_information_environment_composite.py', 'HETEROGENEITY ANALYSIS #9: Information Environment Composite - Media attention & reputation interaction (Spec A/B/C)'),
                 ]
             },
             {
@@ -580,35 +612,62 @@ Log file: {log_path}
                 'scripts': [
                     # RETIRED 2026-09-11 (Essay 3 Query 2 Part H; decision L3: no mediation analysis)
                     # ('scripts/91_essay3_mediation_analysis.py', 'Mediation Analysis (Essay 3): Does volatility mediate timing→turnover relationship?'),
-                    ('scripts/92_heterogeneity_analysis.py', 'Heterogeneity Analysis: CAR/volatility effects vary by firm size quartiles?'),
-                    ('scripts/93_market_model_sensitivity.py', 'Event Window Sensitivity: Robustness across 5d, 10d, 30d, 60d, 90d CARs'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/92_heterogeneity_analysis.py', 'Heterogeneity Analysis: CAR/volatility effects vary by firm size quartiles?'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/93_market_model_sensitivity.py', 'Event Window Sensitivity: Robustness across 5d, 10d, 30d, 60d, 90d CARs'),
                     # RETIRED 2026-08-30 (Query 5 Part G): Rule-37.3-era content
                     # ('scripts/94_falsification_tests.py', 'Falsification Tests: Pre-breach validation & breach-specificity confirmation'),
-                    ('scripts/95_low_r2_sensitivity.py', 'Low R² Sensitivity: Model adequacy with alternative specifications'),
-                    ('scripts/robustness_1_alternative_windows.py', 'Alternative Event Windows: CAR across multiple breach-to-event intervals'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/95_low_r2_sensitivity.py', 'Low R² Sensitivity: Model adequacy with alternative specifications'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/robustness_1_alternative_windows.py', 'Alternative Event Windows: CAR across multiple breach-to-event intervals'),
                     ('scripts/robustness_2_timing_thresholds.py', 'Timing Thresholds: Disclosure timing effects (1d, 3d, 7d, 14d, 30d)'),
                     ('scripts/robustness_3_sample_restrictions.py', 'Sample Restrictions: Results stratified by FCC, data type, firm size'),
                     ('scripts/robustness_4_standard_errors.py', 'Standard Errors: HC3, Clustered, Bootstrap comparison'),
                     ('scripts/robustness_5_fixed_effects.py', 'Fixed Effects: Industry 2-digit, 4-digit SIC, Year, and Firm FE'),
-                    ('scripts/power_analysis_h3_h4.py', 'Power Sensitivity Analysis: H3/H4 null hypothesis assessment (MDE at 80% power)'),
+                    # RETIRED 2026-09-29 (Part H): reads no data at all - it hardcodes the pre-rebuild
+                    # n = 653 (line 19) and computes an MDE from it. Feeds nothing; output untracked.
+                    # ('scripts/power_analysis_h3_h4.py', 'Power Sensitivity Analysis: H3/H4 null hypothesis assessment (MDE at 80% power)'),
                 ]
             },
             {
                 'category': 'LONG-HORIZON ANALYSIS & MITCHELL-STAFFORD ROBUSTNESS',
                 'scripts': [
-                    ('scripts/overlap_audit_fcc_clustering.py', 'Overlap Audit: Quantify event clustering in FCC sample (72.7% overlap at 90d) - diagnose Mitchell-Stafford problem severity'),
-                    ('scripts/corrected_longrun_car_clustering.py', 'Corrected Long-Horizon CAR: Compute CAR at 60d/90d (not BHAR), test with calendar-month clustering and non-overlapping sample'),
-                    ('scripts/calendar_month_clustering_60_90.py', 'Calendar-Month Clustering Test: Check whether 60d/90d results survive clustering correction for overlapping events'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/overlap_audit_fcc_clustering.py', 'Overlap Audit: Quantify event clustering in FCC sample (72.7% overlap at 90d) - diagnose Mitchell-Stafford problem severity'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/corrected_longrun_car_clustering.py', 'Corrected Long-Horizon CAR: Compute CAR at 60d/90d (not BHAR), test with calendar-month clustering and non-overlapping sample'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/calendar_month_clustering_60_90.py', 'Calendar-Month Clustering Test: Check whether 60d/90d results survive clustering correction for overlapping events'),
                 ]
             },
             {
                 'category': 'FACTOR MODEL & PERSISTENCE TESTING',
                 'scripts': [
-                    ('scripts/extract_merge_fama_french.py', 'Extract and Merge Fama-French Factors: Process Ken French data files (FF3, Momentum, FF5) locally with proper header handling'),
-                    ('scripts/sample_composition_diagnostic.py', 'Sample Composition Diagnostic: Isolate model choice effects from sample loss (critical: market-adjusted remains p=0.058 on restricted N=519 sample)'),
-                    ('scripts/ff3_simple_merge.py', 'FF3 Simple Merge Robustness: Test H1-H4 under FF3 specification (N=519, coefficient stable -2.12%, p-value inflation from factor adjustment, not sample loss)'),
-                    ('scripts/factor_model_carhart_ff5.py', 'Factor Model Robustness: Test H1-H4 under market model, Carhart 4-factor, FF5 (coefficient stable across all specifications)'),
-                    ('scripts/extended_bhar_60d_90d.py', 'Extended BHAR Windows: Compute 60-day and 90-day BHAR from daily returns, test persistence vs mean reversion (Mitchell-Stafford test)'),
+                    # RETIRED 2026-09-29 (Part H): builds Data/wrds/fama_french_factors.csv, which stays
+                    # committed. Every script that reads that file is itself retired here, so no live
+                    # step consumes it.
+                    # ('scripts/extract_merge_fama_french.py', 'Extract and Merge Fama-French Factors: Process Ken French data files (FF3, Momentum, FF5) locally with proper header handling'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/sample_composition_diagnostic.py', 'Sample Composition Diagnostic: Isolate model choice effects from sample loss (critical: market-adjusted remains p=0.058 on restricted N=519 sample)'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/ff3_simple_merge.py', 'FF3 Simple Merge Robustness: Test H1-H4 under FF3 specification (N=519, coefficient stable -2.12%, p-value inflation from factor adjustment, not sample loss)'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/factor_model_carhart_ff5.py', 'Factor Model Robustness: Test H1-H4 under market model, Carhart 4-factor, FF5 (coefficient stable across all specifications)'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/extended_bhar_60d_90d.py', 'Extended BHAR Windows: Compute 60-day and 90-day BHAR from daily returns, test persistence vs mean reversion (Mitchell-Stafford test)'),
                 ]
             },
             {
