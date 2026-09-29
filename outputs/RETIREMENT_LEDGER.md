@@ -217,3 +217,13 @@ executed. Every edited file was parsed with `ast.parse`, and `run_all.py` was ch
 structurally: 77 live steps, 24 of them v4, the 28 commented out, 180 and 181 still live,
 `98_sox404_heterogeneity` declared live exactly once, and 158 < 160, 232 < 224, 233 < 224,
 227 < 229, 210 last among the v4 steps.
+
+## Part J1 — a duplicate step declaration removed
+
+`scripts/98_sox404_heterogeneity.py` was declared **twice** in `run_all.py`: once in the
+data-preparation category, where `scripts/121c` needs its output, and once again later. It
+therefore ran twice on every pipeline invocation, the second run overwriting the first with
+identical content.
+
+The **second** declaration is commented out. The first stays, because 121c depends on it.
+Nothing is retired: the script itself is unchanged and still live.

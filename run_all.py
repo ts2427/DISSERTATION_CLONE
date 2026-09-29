@@ -582,7 +582,10 @@ Log file: {log_path}
                 'scripts': [
                     ('scripts/96_economic_significance.py', 'Economic Significance Analysis: FCC costs, volatility impact, governance disruption in dollar terms'),
                     ('scripts/97_heterogeneous_mechanisms.py', 'Heterogeneous Mechanisms: Effects vary by firm size, breach type, prior history'),
-                    ('scripts/98_sox404_heterogeneity.py', 'HETEROGENEITY PHASE 1: Governance Quality (SOX 404 proxy) - FCC x Governance interaction'),
+                    # J1 2026-09-29: DUPLICATE declaration removed (the step is already staged
+                    # earlier in the DATA PREPARATION category, where 121c needs it). It was
+                    # running twice per pipeline.
+                    # ('scripts/98_sox404_heterogeneity.py', 'HETEROGENEITY PHASE 1: Governance Quality (SOX 404 proxy) - FCC x Governance interaction'),
                     # RETIRED 8/4/2026 (Rebuild Directive v2, data decision 1): NVD/CVSS variables are
                     # vendor-level threat-environment measures, not breach severity; belong to no hypothesis.
                     # ('scripts/99_cvss_complexity_heterogeneity.py', 'HETEROGENEITY PHASE 2: CVSS Technical Complexity - FCC x Complexity interaction [RETIRED - SIC-era +6.27% claim stale-manifested]'),
