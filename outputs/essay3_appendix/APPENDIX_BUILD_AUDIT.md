@@ -4,6 +4,7 @@ Produced by `scripts/245_essay3_appendix.py` alongside `ESSAY3_APPENDIX_TABLES.m
 
 ## ASSERTIONS
 
+- T1 Panel A every ledger step has a reader-facing label **PASS**
 - T1 Panel B totals 1,054 **PASS**
 - T1 Panel B every label is a GRADE_LABEL value **PASS**
 - T1 Panel B no label is a raw final_grade code **PASS**
@@ -29,7 +30,24 @@ Produced by `scripts/245_essay3_appendix.py` alongside `ESSAY3_APPENDIX_TABLES.m
 - No cell contains inf, nan, or a hyphen used as a minus sign **PASS**
 - Note text contains no banned string (47 CFR, bare 'se', or a grade code) **PASS**
 
-32 assertion(s): 32 PASS, 0 FAIL.
+36 assertion(s): 36 PASS, 0 FAIL.
+
+## TABLE 1 STEP LABELS
+
+The reader-facing label shown in Table 1 Panel A, and the pipeline step name it comes from in the committed ledger.
+
+| Appendix label | Committed ledger step |
+|---|---|
+| PRC notification records | PRC notification records (master_breach_dataset.xlsx) |
+| Records assigned a parent CIK | Gate 1: signed parent CIK |
+| Firm-day events | Stage 3: CIK+date firm-day events |
+| After the rolling-campaign rule | Gate 2 adjacency collapse |
+| Canonical breach events | Stage 4/5 canonical events (CANONICAL_V4) |
+| Security link to CRSP | CRSP data (has_crsp_data) |
+| Compustat covariates within 550 days | Compustat covariates (size, leverage, ROA) = Query 2 scope |
+| Censoring rule | Fully observed outcome window (pre-specified censoring rule) |
+| Form 8-K activity requirement | Outcome-data requirement (>=1 8-K in [t0-730d, t0+180d], outcome CIK) |
+| At least 150 daily returns (analysis sample) | Prior 12-month market-adjusted return available (>=150 daily returns) |
 
 ## TABLE SOURCES
 

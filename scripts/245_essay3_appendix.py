@@ -212,13 +212,42 @@ def add(num, title, blocks, note):
                        sources="; ".join(x for x in moved if x)))
 
 
+# Reader-facing labels for Table 1 Panel A. The ledger's own step names carry pipeline
+# vocabulary (Gate 1, Stage 3, CANONICAL_V4, has_crsp_data) that means nothing to a reader
+# of the essay. Keys are matched as substrings of the committed step name, in order, so the
+# mapping survives a reworded ledger; the pipeline name is recorded in the build audit.
+STEP_LABEL = (
+    ("PRC notification records", "PRC notification records"),
+    ("Gate 1", "Records assigned a parent CIK"),
+    ("Stage 3", "Firm-day events"),
+    ("Gate 2", "After the rolling-campaign rule"),
+    ("Stage 4/5", "Canonical breach events"),
+    ("CRSP data", "Security link to CRSP"),
+    ("Compustat covariates", "Compustat covariates within 550 days"),
+    ("Fully observed outcome window", "Censoring rule"),
+    ("Outcome-data requirement", "Form 8-K activity requirement"),
+    ("Prior 12-month market-adjusted return", "At least 150 daily returns (analysis sample)"),
+)
+STEP_MAP = []
+
+
+def step_label(raw):
+    """-> the reader-facing label for one committed ledger step name."""
+    for keyfrag, lab in STEP_LABEL:
+        if keyfrag in raw:
+            STEP_MAP.append((lab, raw))
+            return lab
+    STEP_MAP.append(("(UNMAPPED) " + raw, raw))
+    return raw
+
+
 # =============================================================== TABLE 1
 lead = T01[T01["treated_events"].notna() | T01["step"].str.startswith("PRC", na=False)]
 rows1a, prevN = [], None
 for _, r in T01.iterrows():
     if str(r["step"]).startswith("  of which"):
         continue
-    rows1a.append([str(r["step"]), n0(r["N"]), n0(r.get("treated_events")),
+    rows1a.append([step_label(str(r["step"])), n0(r["N"]), n0(r.get("treated_events")),
                    n0(r.get("control_events")), n0(r.get("treated_parent_ciks")),
                    n0(r.get("pre_rule_treated")), n0(r.get("pre_rule_control"))])
     if "CRSP" in str(r["step"]):
@@ -228,6 +257,9 @@ for _, r in T01.iterrows():
                    else "No acceptable security link")
             rows1a.append(["    " + lab, n0(s["N"]), n0(s["treated_events"]),
                            n0(s["control_events"]), "", "", ""])
+_unmapped_steps = [r for lab, r in STEP_MAP if lab.startswith("(UNMAPPED)")]
+check("T1 Panel A every ledger step has a reader-facing label", not _unmapped_steps,
+      "; ".join(_unmapped_steps))
 T1A = pd.DataFrame(rows1a, columns=["Step", "N", "Treated events", "Control events",
                                     "Treated parent CIKs", "Pre-rule treated",
                                     "Pre-rule control"])
@@ -235,7 +267,7 @@ T1A = pd.DataFrame(rows1a, columns=["Step", "N", "Treated events", "Control even
 # byte; they are DATA, not prose, and are never case-folded.
 GRADE_LABEL = {
     "VERIFIED": "Verified",
-    "VERIFIED-GATE1": "Verified at Gate 1",
+    "VERIFIED-GATE1": "Verified at the parent-CIK gate",
     "VERIFIED-REASONING": "Verified by reasoning",
     "ADJUDICATED": "Adjudicated",
     "AMBIGUOUS": "Unresolved ambiguity",
@@ -580,10 +612,34 @@ order = ["year FE (reported year)", "two-digit SIC FE", "breach_date anchor",
          "restatement-dated outcome (rs)"]
 s9["_k"] = s9["sensitivity"].apply(lambda s: order.index(s) if s in order else 90 + len(s))
 s9 = s9.sort_values(["_k", "window"])
+# Reader-facing sensitivity labels: the committed names carry a column identifier
+# (breach_date) and the recall parameters as r_T / r_C.
+SENS_LABEL = {
+    "year FE (reported year)": "Notification-year fixed effects",
+    "two-digit SIC FE": "Two-digit SIC fixed effects",
+    "breach_date anchor": "Breach-date anchor",
+    "excluding pre-announced departures": "Excluding pre-announced departures",
+    "excluding the F2 baseline control": "Excluding the baseline-rate control",
+    "restatement-dated outcome (rs)": "Restatement-dated outcome",
+}
+
+
+def sens_label(raw):
+    if raw in SENS_LABEL:
+        return SENS_LABEL[raw]
+    if raw.startswith("recall-corrected"):
+        t = re.search(r"r_T=([0-9.]+)", raw)
+        c = re.search(r"r_C=([0-9.]+)", raw)
+        base = "Recall-corrected (treated recall %s, control recall %s)" % (
+            t.group(1) if t else "?", c.group(1) if c else "?")
+        return base
+    return raw
+
+
 rows = []
 for _, r in s9.iterrows():
-    lab = str(r["sensitivity"])
-    if "recall-corrected" in lab:
+    lab = sens_label(str(r["sensitivity"]))
+    if "Recall-corrected" in lab:
         lab += " [bounding exercise]" if "BOUNDING" in str(r["row_type"]) else ""
     rows.append([lab, n0(r["window"]), pp(r["coef"]), pp(r["se_cv3"]), p3(r["p_cv3"]),
                  p3(r["p_wcr"]), p3(r["p_bh"]), n0(r["n"])])
@@ -656,8 +712,9 @@ add(10, "Cluster Concentration",
      ("Panel C: CCM-based overlap restriction", T10C)],
     "*Note.* Sample level is events within parent CIKs; G = 119 clusters. β is in percentage "
     "points. A sign reversal is a cluster whose deletion changes the sign of β. Panel C "
-    "restricts to events that were also linked by the earlier CCM-based security link, which v4 "
-    "replaced with a rebuilt CUSIP-to-permno link; it is a CCM-based overlap restriction and is "
+    "restricts to events that were also linked by the earlier CCM-based security link, "
+    "which this study replaced with a rebuilt point-in-time link; it is a CCM-based overlap "
+    "restriction and is "
     "not a ticker match. All 58 events removed in Panel C are control events across 37 parent "
     "CIKs; no treated event turns on the linker rebuild. Sources: outputs/essay3_q4/table10.csv; "
     "outputs/essay3_v4/f1_cv3_variance_shares.csv; outputs/essay3_v4/239_v3_overlap_sensitivity.csv.")
@@ -1065,7 +1122,13 @@ for nm, ok, det in ASSERT:
     AUD.append("- " + nm + " **" + ("PASS" if ok else "FAIL") + "**"
                + (("  " + det) if det and not ok else ""))
 AUD += ["", "__TALLY__", ""]
-AUD += ["## TABLE SOURCES", "",
+AUD += ["## TABLE 1 STEP LABELS", "",
+        "The reader-facing label shown in Table 1 Panel A, and the pipeline step name it "
+        "comes from in the committed ledger.", "",
+        "| Appendix label | Committed ledger step |", "|---|---|"]
+for lab, raw in STEP_MAP:
+    AUD.append("| %s | %s |" % (lab, raw))
+AUD += ["", "## TABLE SOURCES", "",
         "The provenance sentence that each table's note used to carry. The appendix "
         "itself states findings only; build information lives here.", ""]
 for t in TABLES:
@@ -1113,6 +1176,31 @@ _md_leak = [(w, sum(1 for ln in _md_txt.split(chr(10)) if w in ln)) for w in _PA
 check("Appendix .md contains no outputs/ or scripts/ path and no .csv name",
       all(c == 0 for _, c in _md_leak),
       "; ".join("%s x%d" % (w, c) for w, c in _md_leak if c))
+_JARGON = (("snake_case identifier", re.compile(r"[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)+")),
+           ("v3 / v4", re.compile(r"(?<![A-Za-z])v[34](?![A-Za-z0-9])")),
+           ("Gate 1 / Gate 2", re.compile(r"Gate [12]")),
+           ("Stage", re.compile(r"(?<![A-Za-z])Stage(?![a-z])")),
+           ("CANONICAL", re.compile(r"CANONICAL")))
+
+
+def jargon_hits(text):
+    """-> [(kind, as_found, line_no)] for pipeline vocabulary that must not reach a reader."""
+    out = []
+    for kind, rx in _JARGON:
+        for n, ln in enumerate(text.split(chr(10)), 1):
+            for mm in rx.finditer(ln):
+                out.append((kind, mm.group(0), n))
+    return out
+
+
+_jg_md = jargon_hits(_md_txt)
+check("Appendix .md has no pipeline identifier or stage name", not _jg_md,
+      "; ".join("%s %r (line %d)" % h for h in _jg_md[:6]))
+check("jargon check is live (sees has_crsp_data / v4 / Gate 1 / Stage 3 / CANONICAL_V4)",
+      all(jargon_hits(x) for x in ("has_crsp_data", "in v4 the", "Gate 1: signed",
+                                   "Stage 3 events", "CANONICAL_V4"))
+      and not jargon_hits("Records assigned a parent CIK; Security link to CRSP"),
+      "probe failed")
 _cd_md = case_damage(_md_txt)
 check("Appendix .md has no case damage to a proper noun or acronym", not _cd_md,
       "; ".join("%s -> %s (line %d)" % (t, f, n) for t, f, n, _ in _cd_md[:5]))
@@ -1215,6 +1303,9 @@ try:
     check("Appendix .docx contains no outputs/ or scripts/ path and no .csv name",
           all(c == 0 for _, c in _dx_leak),
           "; ".join("%s x%d" % (w, c) for w, c in _dx_leak if c))
+    _jg_dx = jargon_hits(_dtxt)
+    check("Appendix .docx has no pipeline identifier or stage name", not _jg_dx,
+          "; ".join("%s %r" % (k, f) for k, f, _n in _jg_dx[:6]))
     _cd_dx = case_damage(_dtxt)
     check("Appendix .docx has no case damage to a proper noun or acronym", not _cd_dx,
           "; ".join("%s -> %s" % (t, f) for t, f, _n, _c in _cd_dx[:5]))

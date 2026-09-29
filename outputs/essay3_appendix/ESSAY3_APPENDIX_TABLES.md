@@ -12,18 +12,18 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 
 | Step | N | Treated events | Control events | Treated parent CIKs | Pre-rule treated | Pre-rule control |
 |---|---|---|---|---|---|---|
-| PRC notification records (master_breach_dataset.xlsx) | 1,054 |  |  |  |  |  |
-| Gate 1: signed parent CIK | 758 |  |  |  |  |  |
-| Stage 3: CIK+date firm-day events | 524 |  |  |  |  |  |
-| Gate 2 adjacency collapse | 491 |  |  |  |  |  |
-| Stage 4/5 canonical events (CANONICAL_V4) | 489 | 118 | 371 | 14 | 0 | 7 |
-| CRSP data (has_crsp_data) | 414 | 111 | 303 | 13 | 0 | 7 |
+| PRC notification records | 1,054 |  |  |  |  |  |
+| Records assigned a parent CIK | 758 |  |  |  |  |  |
+| Firm-day events | 524 |  |  |  |  |  |
+| After the rolling-campaign rule | 491 |  |  |  |  |  |
+| Canonical breach events | 489 | 118 | 371 | 14 | 0 | 7 |
+| Security link to CRSP | 414 | 111 | 303 | 13 | 0 | 7 |
 |     Identity-gate rejections | 9 | 6 | 3 |  |  |  |
 |     No acceptable security link | 66 | 1 | 65 |  |  |  |
-| Compustat covariates (size, leverage, ROA) = Query 2 scope | 412 | 109 | 303 | 13 | 0 | 7 |
-| Fully observed outcome window (pre-specified censoring rule) | 412 | 109 | 303 | 13 | 0 | 7 |
-| Outcome-data requirement (>=1 8-K in [t0-730d, t0+180d], outcome CIK) | 412 | 109 | 303 | 13 | 0 | 7 |
-| Prior 12-month market-adjusted return available (>=150 daily returns) | 405 | 109 | 296 | 13 | 0 | 7 |
+| Compustat covariates within 550 days | 412 | 109 | 303 | 13 | 0 | 7 |
+| Censoring rule | 412 | 109 | 303 | 13 | 0 | 7 |
+| Form 8-K activity requirement | 412 | 109 | 303 | 13 | 0 | 7 |
+| At least 150 daily returns (analysis sample) | 405 | 109 | 296 | 13 | 0 | 7 |
 
 **Panel B: Record resolution grades**
 
@@ -31,7 +31,7 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 |---|---|
 | Verified | 473 |
 | No matching registrant or unresolved | 281 |
-| Verified at Gate 1 | 264 |
+| Verified at the parent-CIK gate | 264 |
 | Verified by reasoning | 19 |
 | Private company | 5 |
 | Private during the breach window | 4 |
@@ -292,33 +292,33 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 
 | Sensitivity | Window (days) | β (pp) | CV3 SE (pp) | CV3 p | Bootstrap p | BH-adjusted p | N |
 |---|---|---|---|---|---|---|---|
-| year FE (reported year) | 30 | 0.78 | 3.02 | .796 | .744 | .986 | 405 |
-| year FE (reported year) | 90 | −1.65 | 7.05 | .815 | .750 | .986 | 405 |
-| year FE (reported year) | 180 | 5.57 | 8.61 | .519 | .461 | .986 | 405 |
-| two-digit SIC FE | 30 | 3.95 | 3.41 | .248 | .155 | .986 | 405 |
-| two-digit SIC FE | 90 | 4.17 | 7.88 | .597 | .484 | .986 | 405 |
-| two-digit SIC FE | 180 | 11.09 | 13.89 | .426 | .395 | .986 | 405 |
-| breach_date anchor | 30 | −2.08 | 3.95 | .600 | .554 | .986 | 405 |
-| breach_date anchor | 90 | −7.17 | 6.79 | .293 | .222 | .986 | 405 |
-| breach_date anchor | 180 | −5.06 | 10.58 | .633 | .592 | .986 | 405 |
-| excluding pre-announced departures | 30 | 1.71 | 3.03 | .572 | .527 | .986 | 405 |
-| excluding pre-announced departures | 90 | −0.46 | 6.67 | .945 | .929 | .986 | 405 |
-| excluding pre-announced departures | 180 | 5.64 | 10.04 | .576 | .545 | .986 | 405 |
-| excluding the F2 baseline control | 30 | 0.38 | 3.17 | .905 | .893 | .986 | 405 |
-| excluding the F2 baseline control | 90 | −3.70 | 8.00 | .645 | .605 | .986 | 405 |
-| excluding the F2 baseline control | 180 | 2.26 | 9.75 | .817 | .801 | .986 | 405 |
-| restatement-dated outcome (rs) | 30 | 3.42 | 5.89 | .562 | .666 | .986 | 405 |
-| restatement-dated outcome (rs) | 90 | −1.07 | 9.66 | .912 | .894 | .986 | 405 |
-| restatement-dated outcome (rs) | 180 | 0.30 | 14.80 | .984 | .984 | .986 | 405 |
-| recall-corrected, audit point estimates (r_T=0.842, r_C=0.750) | 30 | 0.07 | 4.30 | .986 | .984 | .986 | 405 |
-| recall-corrected, audit point estimates (r_T=0.842, r_C=0.750) | 90 | −6.82 | 10.34 | .511 | .404 | .986 | 405 |
-| recall-corrected, audit point estimates (r_T=0.842, r_C=0.750) | 180 | −1.03 | 12.49 | .935 | .927 | .986 | 405 |
-| recall-corrected, treated recall at CI low / control at CI high (r_T=0.604, r_C=0.927) [bounding exercise] | 30 | 2.22 | 4.37 | .613 | .574 | .986 | 405 |
-| recall-corrected, treated recall at CI high / control at CI low (r_T=0.966, r_C=0.476) [bounding exercise] | 30 | −2.48 | 6.11 | .685 | .633 | .986 | 405 |
-| recall-corrected, treated recall at CI low / control at CI high (r_T=0.604, r_C=0.927) [bounding exercise] | 90 | 0.96 | 9.61 | .921 | .902 | .986 | 405 |
-| recall-corrected, treated recall at CI high / control at CI low (r_T=0.966, r_C=0.476) [bounding exercise] | 90 | −18.54 | 15.52 | .235 | .125 | .986 | 405 |
-| recall-corrected, treated recall at CI low / control at CI high (r_T=0.604, r_C=0.927) [bounding exercise] | 180 | 18.83 | 14.23 | .188 | .168 | .986 | 405 |
-| recall-corrected, treated recall at CI high / control at CI low (r_T=0.966, r_C=0.476) [bounding exercise] | 180 | −25.27 | 15.84 | .113 | .071 | .986 | 405 |
+| Notification-year fixed effects | 30 | 0.78 | 3.02 | .796 | .744 | .986 | 405 |
+| Notification-year fixed effects | 90 | −1.65 | 7.05 | .815 | .750 | .986 | 405 |
+| Notification-year fixed effects | 180 | 5.57 | 8.61 | .519 | .461 | .986 | 405 |
+| Two-digit SIC fixed effects | 30 | 3.95 | 3.41 | .248 | .155 | .986 | 405 |
+| Two-digit SIC fixed effects | 90 | 4.17 | 7.88 | .597 | .484 | .986 | 405 |
+| Two-digit SIC fixed effects | 180 | 11.09 | 13.89 | .426 | .395 | .986 | 405 |
+| Breach-date anchor | 30 | −2.08 | 3.95 | .600 | .554 | .986 | 405 |
+| Breach-date anchor | 90 | −7.17 | 6.79 | .293 | .222 | .986 | 405 |
+| Breach-date anchor | 180 | −5.06 | 10.58 | .633 | .592 | .986 | 405 |
+| Excluding pre-announced departures | 30 | 1.71 | 3.03 | .572 | .527 | .986 | 405 |
+| Excluding pre-announced departures | 90 | −0.46 | 6.67 | .945 | .929 | .986 | 405 |
+| Excluding pre-announced departures | 180 | 5.64 | 10.04 | .576 | .545 | .986 | 405 |
+| Excluding the baseline-rate control | 30 | 0.38 | 3.17 | .905 | .893 | .986 | 405 |
+| Excluding the baseline-rate control | 90 | −3.70 | 8.00 | .645 | .605 | .986 | 405 |
+| Excluding the baseline-rate control | 180 | 2.26 | 9.75 | .817 | .801 | .986 | 405 |
+| Restatement-dated outcome | 30 | 3.42 | 5.89 | .562 | .666 | .986 | 405 |
+| Restatement-dated outcome | 90 | −1.07 | 9.66 | .912 | .894 | .986 | 405 |
+| Restatement-dated outcome | 180 | 0.30 | 14.80 | .984 | .984 | .986 | 405 |
+| Recall-corrected (treated recall 0.842, control recall 0.750) | 30 | 0.07 | 4.30 | .986 | .984 | .986 | 405 |
+| Recall-corrected (treated recall 0.842, control recall 0.750) | 90 | −6.82 | 10.34 | .511 | .404 | .986 | 405 |
+| Recall-corrected (treated recall 0.842, control recall 0.750) | 180 | −1.03 | 12.49 | .935 | .927 | .986 | 405 |
+| Recall-corrected (treated recall 0.604, control recall 0.927) [bounding exercise] | 30 | 2.22 | 4.37 | .613 | .574 | .986 | 405 |
+| Recall-corrected (treated recall 0.966, control recall 0.476) [bounding exercise] | 30 | −2.48 | 6.11 | .685 | .633 | .986 | 405 |
+| Recall-corrected (treated recall 0.604, control recall 0.927) [bounding exercise] | 90 | 0.96 | 9.61 | .921 | .902 | .986 | 405 |
+| Recall-corrected (treated recall 0.966, control recall 0.476) [bounding exercise] | 90 | −18.54 | 15.52 | .235 | .125 | .986 | 405 |
+| Recall-corrected (treated recall 0.604, control recall 0.927) [bounding exercise] | 180 | 18.83 | 14.23 | .188 | .168 | .986 | 405 |
+| Recall-corrected (treated recall 0.966, control recall 0.476) [bounding exercise] | 180 | −25.27 | 15.84 | .113 | .071 | .986 | 405 |
 
 **Panel B: Two-digit SIC cells**
 
@@ -389,7 +389,7 @@ Conventions: coefficients, standard errors, confidence intervals and minimum det
 | 180 | CCM-based overlap restriction | 347 | 83 | 2.08 | .852 | .818 |
 | 180 | Full sample | 405 |  | 2.33 | .816 | .790 |
 
-*Note.* Sample level is events within parent CIKs; G = 119 clusters. β is in percentage points. A sign reversal is a cluster whose deletion changes the sign of β. Panel C restricts to events that were also linked by the earlier CCM-based security link, which v4 replaced with a rebuilt CUSIP-to-permno link; it is a CCM-based overlap restriction and is not a ticker match. All 58 events removed in Panel C are control events across 37 parent CIKs; no treated event turns on the linker rebuild.
+*Note.* Sample level is events within parent CIKs; G = 119 clusters. β is in percentage points. A sign reversal is a cluster whose deletion changes the sign of β. Panel C restricts to events that were also linked by the earlier CCM-based security link, which this study replaced with a rebuilt point-in-time link; it is a CCM-based overlap restriction and is not a ticker match. All 58 events removed in Panel C are control events across 37 parent CIKs; no treated event turns on the linker rebuild.
 
 **Table 11**
 
