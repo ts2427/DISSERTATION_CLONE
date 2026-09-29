@@ -124,6 +124,13 @@ V4_DOCS = (
     # The Query 3 and Query 4 reports. Force-added (.gitignore:79 is *.md).
     "outputs/ESSAY3_QUERY3_REPORT.md",
     "outputs/ESSAY3_QUERY4_REPORT.md",
+    # Run-All Follow-Up Stage 2 (2026-09-29). Both are NEW documents, not edits of frozen
+    # ones: the Essay 1 attrition ledger written by scripts/247, and the tombstone that
+    # withdraws the 41 ungenerated Essay 2 appendix CSVs from citation.
+    "outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md",
+    "outputs/tables/essay2_appendix/TOMBSTONE.md",
+    "outputs/RUN_ALL_AUDIT_REPORT.md",
+    "outputs/RUN_ALL_FOLLOWUP_REPORT.md",
 )
 SCRIPT_RE = re.compile(r"^scripts/(\d+)_[^/]*\.py$")
 SCRIPT_LO, SCRIPT_HI = 210, 249
