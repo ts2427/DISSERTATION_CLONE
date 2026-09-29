@@ -127,26 +127,16 @@ C['H5_R2'] = round(m2.rsquared, 3)
 log(f"\nEssay 2 (H5, N={len(reg2)}, treated {int(reg2[TREAT].sum())}): FCC {b:+.4f} p={p:.4f} | "
     f"TOST p={tost2:.4f} | MDE {2.8 * se:.2f} | R2={m2.rsquared:.3f} | {C['H5_status']}")
 
-# ---------------- Essay 3: H6 ----------------
-reg3 = crsp.dropna(subset=CONTROLS).copy()
-C['N_essay3'] = len(reg3)
-log(f"\nEssay 3 (H6, N={len(reg3)}, treated {int(reg3[TREAT].sum())}):")
-for w in (30, 90, 180):
-    yv = reg3[f'executive_change_{w}d'].astype(int)
-    X3 = sm.add_constant(reg3[CONTROLS].astype(float))
-    try:
-        m3 = sm.Logit(yv, X3).fit(disp=0)
-        ame = m3.get_margeff().summary_frame()
-        row = ame.loc[TREAT] if TREAT in ame.index else ame.iloc[0]
-        C[f'H6_{w}d_base_rate'] = round(yv.mean(), 4)
-        C[f'H6_{w}d_ame_pp'] = round(row['dy/dx'] * 100, 2)
-        C[f'H6_{w}d_p'] = round(row['Pr(>|z|)'], 4)
-        C[f'H6_{w}d_mde80_pp'] = round(2.8 * row['Std. Err.'] * 100, 2)
-        log(f"  {w}d: base {100 * yv.mean():.1f}% | AME {C[f'H6_{w}d_ame_pp']:+.2f}pp "
-            f"p={C[f'H6_{w}d_p']:.4f} | MDE {C[f'H6_{w}d_mde80_pp']:.1f}pp")
-    except Exception as e:
-        log(f'  {w}d: estimation failed ({str(e)[:60]}) — REPORTED, not hidden')
-
+# ---------------- Essay 3: REMOVED 2026-09-29 ----------------
+# The 13 H6 keys this block used to write into constants_v3.json are GONE:
+#   N_essay3, H6_{30,90,180}d_{base_rate,ame_pp,p,mde80_pp}
+# They were the legacy any-Item-5.02 outcome on the 338-event sample - the outcome the
+# retirement ledger retired and Query 1 found the prose never computed. They sat in the
+# same file as the Essay 1 and 2 constants, under H6 key names, with nothing marking them
+# as superseded, so a reader taking "H6" from constants_v3.json got the retired figure.
+#
+# Essay 3 values live ONLY in outputs/essay3_v4/constants_essay3_v4.json, written by
+# scripts/227. Nothing in this script may write an Essay 3 result again.
 # ---------------- Descriptive first stage ----------------
 d1 = ev.dropna(subset=['disclosure_delay_days'])
 fs = (d1.loc[d1[TREAT] == 1, 'immediate_disclosure'].mean()

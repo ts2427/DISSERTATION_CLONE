@@ -118,3 +118,15 @@ are committed and are treated as inputs.
 **Also added:** `scripts/160_appendix_v3_to_word.py` as a live step **immediately after
 158**. It renders the 16 Essay 1 appendix tables that 158 writes, and it was never staged,
 so the Word appendix was only ever built by hand.
+
+## Part G1 — the 13 Essay 3 H6 keys are removed from `constants_v3.json`
+
+**Retired: every Essay 3 value written by `scripts/158_rebuild_s8_regenerate.py`.**
+
+| | |
+|---|---|
+| **Keys removed** | `N_essay3`, and for each window in {30, 90, 180}: `H6_{w}d_base_rate`, `H6_{w}d_ame_pp`, `H6_{w}d_p`, `H6_{w}d_mde80_pp`. Thirteen keys. |
+| **Reason** | They were the **legacy any-Item-5.02 outcome** on the 338-event sample — the outcome the Query 2 retirement retired and that `ESSAY3_QUERY1_REPORT.md` found the essay prose never computed. They sat in the same JSON file as the live Essay 1 and Essay 2 constants, under `H6_` key names, with nothing marking them superseded. A reader taking "H6" from `constants_v3.json` got the retired figure. |
+| **Removed from** | `scripts/158_rebuild_s8_regenerate.py`, a 21-line block. Replaced by a comment block naming the removed keys and the reason, so the absence is legible rather than silent. |
+| **Where Essay 3 values live now** | `outputs/essay3_v4/constants_essay3_v4.json` only, written and asserted by `scripts/227`. Nothing in 158 may write an Essay 3 result again. |
+| **Effect on the file** | `constants_v3.json` on disk still carries the 13 keys until 158 is next run. **158 was not run** — the standing rule holds. The keys disappear at the next 158 run, which is the same run as the pending Essay 1 rebaseline. |
