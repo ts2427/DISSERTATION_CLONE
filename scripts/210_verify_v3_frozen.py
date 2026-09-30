@@ -29,6 +29,13 @@ blob_id  the git object id at the baseline commit — what history says the file
 VERDICT RULES
 -------------
 FAIL  a baseline file whose blob id changed                     (UNCONDITIONAL)
+Authorised exceptions (2026-09-29). docs/claude/V3_FREEZE_EXCEPTIONS.md may declare
+  individual departures from the manifest, each pinned on BOTH the hash the file had and
+  the hash it has now. The manifest itself is never rewritten. Consequences, deliberately:
+  a FURTHER change to an excepted file fails (its new hash no longer matches), a change to
+  any other baseline file fails, and if the manifest is ever re-created every exception
+  stops matching and the gate fails closed. Exceptions are printed in full on every run.
+
 FAIL  a baseline file whose on-disk sha256 changed AND
       `git diff --quiet <baseline> -- <path>` exits nonzero     (real content change)
 PASS  a baseline file whose on-disk sha256 changed BUT
@@ -131,6 +138,8 @@ V4_DOCS = (
     "outputs/tables/essay2_appendix/TOMBSTONE.md",
     "outputs/RUN_ALL_AUDIT_REPORT.md",
     "outputs/RUN_ALL_FOLLOWUP_REPORT.md",
+    # The pinned freeze exceptions this script reads. New file, not an edit of a frozen one.
+    "docs/claude/V3_FREEZE_EXCEPTIONS.md",
 )
 SCRIPT_RE = re.compile(r"^scripts/(\d+)_[^/]*\.py$")
 SCRIPT_LO, SCRIPT_HI = 210, 249
@@ -188,6 +197,39 @@ def tracked_now():
         _mode, blob, _stage = meta.split()
         if in_scope(path):
             out[path] = blob
+    return out
+
+
+EXCEPTIONS = Path("docs/claude/V3_FREEZE_EXCEPTIONS.md")
+
+# One row of the exceptions table:
+#   | `path` | `old sha256` | `new sha256` | `old blob` | `new blob` | commits | parts |
+EXC_RE = re.compile(
+    r"^\|\s*`([^`]+)`\s*\|\s*`([0-9a-f]{64})`\s*\|\s*`([0-9a-f]{64})`\s*"
+    r"\|\s*`([0-9a-f]{40})`\s*\|\s*`([0-9a-f]{40})`\s*\|([^|]*)\|([^|]*)\|\s*$")
+
+
+def load_exceptions():
+    """Authorised, individually pinned departures from the manifest.
+
+    Added 2026-09-29 (Tim's ruling on Stage 2): the manifest must NOT be re-created,
+    because rewriting it would record the new state as the baseline and erase the evidence
+    that 13 baseline files moved. Instead each departure is declared with the hash it had
+    AND the hash it has, so the override is spent as soon as the file changes again.
+    """
+    if not EXCEPTIONS.exists():
+        return {}
+    out = {}
+    for line in EXCEPTIONS.read_text(encoding="utf-8").split("\n"):
+        m = EXC_RE.match(line.strip())
+        if not m:
+            continue
+        path, old_sha, new_sha, old_blob, new_blob, commits, parts = m.groups()
+        assert path not in out, f"duplicate exception for {path}"
+        assert old_sha != new_sha, f"exception for {path} pins the same hash twice"
+        out[path] = dict(old_sha=old_sha, new_sha=new_sha, old_blob=old_blob,
+                         new_blob=new_blob, commits=commits.split(), parts=parts.split(),
+                         used_sha=False, used_blob=False)
     return out
 
 
@@ -265,6 +307,8 @@ def verify():
     now = tracked_now()
     sha_bad, blob_bad, deleted, added_ok, added_bad = [], [], [], [], []
     notes, eol_artifacts = [], []
+    exc = load_exceptions()
+    exc_hit = []
 
     for p, rec in base.items():
         if int(rec["append_only"]):
@@ -284,14 +328,23 @@ def verify():
         if cur_blob is None:
             deleted.append(f"{p} (untracked now)")
         elif cur_blob != rec["blob_id"]:
-            blob_bad.append((p, rec["blob_id"][:12], cur_blob[:12]))
+            e = exc.get(p)
+            if e and e["old_blob"] == rec["blob_id"] and e["new_blob"] == cur_blob:
+                e["used_blob"] = True
+            else:
+                blob_bad.append((p, rec["blob_id"][:12], cur_blob[:12]))
 
         cur_sha = sha256_file(fp)
         if cur_sha != rec["sha256"]:
             if git_rc("diff", "--quiet", commit, "--", p) == 0:
                 eol_artifacts.append(p)      # git sees no difference: representation only
             else:
-                sha_bad.append((p, rec["sha256"][:12], cur_sha[:12]))
+                e = exc.get(p)
+                if e and e["old_sha"] == rec["sha256"] and e["new_sha"] == cur_sha:
+                    e["used_sha"] = True
+                    exc_hit.append(p)
+                else:
+                    sha_bad.append((p, rec["sha256"][:12], cur_sha[:12]))
 
     for p in sorted(now):
         if p not in base:
@@ -318,6 +371,23 @@ def verify():
             rc = git_rc("diff", "--quiet", commit, "--", p)
             print(f"   {p}\n      blob matches baseline: {blob_ok}   "
                   f"git diff --quiet exit: {rc}")
+    # Authorised exceptions are printed in full, every time. A PASS must never be able
+    # to hide the fact that baseline files moved.
+    print(f"\nAUTHORISED EXCEPTIONS ({EXCEPTIONS}) : {len(exc_hit)} of {len(exc)} declared")
+    for pth in sorted(exc_hit):
+        e = exc[pth]
+        print(f"   {pth}")
+        print(f"      sha  {e['old_sha'][:12]} -> {e['new_sha'][:12]}   "
+              f"blob {e['old_blob'][:12]} -> {e['new_blob'][:12]}"
+              f"{'' if e['used_blob'] else '   (blob still at baseline)'}")
+        print(f"      {' '.join(e['commits'])}   parts: {' '.join(e['parts'])}")
+    unused = sorted(k for k, e in exc.items() if not (e["used_sha"] or e["used_blob"]))
+    if unused:
+        print(f"   DECLARED BUT NOT MATCHED       : {len(unused)}")
+        for pth in unused:
+            print(f"      {pth} - the file no longer has the pinned new hash, or it is "
+                  f"back at its baseline. Its exception is spent; remove the row or "
+                  f"re-record it.")
     print(f"\nSHA256 CHANGED (real content)  : {len(sha_bad)}")
     for p, a, b in sha_bad[:25]:
         print(f"   {p}\n      was {a}  now {b}")
