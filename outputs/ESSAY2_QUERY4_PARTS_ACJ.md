@@ -170,6 +170,8 @@ control 229     75  0.0  0.0  0.0 24.0 76.0 199.4 313.20  961.0  71.1 125.5
   outputs\ESSAY2_QUERY4_PARTS_ACJ.md:188: Dashboard\pages\9_Conclusion.py:144: - After 2007: FCC firms forced to disclose within 7 days; non-FCC still free
   outputs\ESSAY2_QUERY4_PARTS_ACJ.md:189: (94 locations; every one describes a customer-disclosure deadline or ceiling the rule does not contain — these are delet
   outputs\ESSAY2_QUERY5_REPORT.md:43: Deadline-language locations: the t24 scan (executed below). Hypothesis logic: **none of H1–H4 requires the deadline read
+  outputs\ESSAY3_QUERY3_REPORT.md:866: `7-Day Rule`: **0 hits anywhere.** `deadline` near § 64.2011: only in
+  outputs\ESSAY3_QUERY4_REPORT.md:471: 651 0 | 648 0 | BoardEx 0 | turnover 0 | natural experiment 0 | deadline 0 | 7-Day Rule 0
   Dashboard\app.py:225: - Interpretation: Forced 7-day disclosure INCREASES rather than decreases asymmetry
   Dashboard\app.py:391: <b>Essay 2:</b> FCC firms experience HIGHER volatility (+1.83%**) even with forced 7-day disclosure. Information asymmet
   Dashboard\app.py:409: before the 2007 FCC 7-Day Rule implementation. This figure provides visual proof of that assumption.
@@ -186,7 +188,7 @@ control 229     75  0.0  0.0  0.0 24.0 76.0 199.4 313.20  961.0  71.1 125.5
   Dashboard\pages\8_Key_Findings.py:287: FCC PATH (Forced 7-day disclosure):
   Dashboard\pages\8_Key_Findings.py:359: - Market EXPECTS 7-day disclosure (it's required)
   Dashboard\pages\9_Conclusion.py:144: - After 2007: FCC firms forced to disclose within 7 days; non-FCC still free
-  (94 locations; every one describes a customer-disclosure deadline or ceiling the rule does not contain — these are deletions.)
+  (96 locations; every one describes a customer-disclosure deadline or ceiling the rule does not contain — these are deletions.)
 
 ==========================================================================================
 ## B2 — Is duplication non-random in firm size? (489-event universe)

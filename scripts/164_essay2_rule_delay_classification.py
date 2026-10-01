@@ -260,11 +260,20 @@ PATTERNS = [r'7-Day Rule', r'7-day mandatory', r'[Mm]andatory 7', r'seven-day',
             r'notification within 30 days', r'deadline outruns',
             r'breach notification within \d+ days', r'[Mm]andatory [Dd]isclosure [Tt]iming.*deadline']
 hits = []
+# Tools whose JOB is to carry these phrases, so a hit in them is a false positive: the
+# purge/claim detectors (168, 217, 240) and, from 2026-10-01, the essay-to-output match
+# harness (248), whose own pattern list quotes the phrasing this scan looks for and so
+# put itself into the results. Excluded by SCRIPT NUMBER, stable across renames.
+# NOTE: this comment is deliberately worded so it does not match PATTERNS itself - the
+# first version of it quoted the phrase and added a row to the very scan it was fixing.
+SCAN_EXCLUDE = ('168_', '217_', '240_', '248_')
 scan_files = (sorted(Path('scripts').glob('*.py'))
               + sorted(Path('outputs').glob('*.md'))
               + sorted(Path('Dashboard').rglob('*.py'))
               + [Path('README.md')])
 for fp in scan_files:
+    if fp.name.startswith(SCAN_EXCLUDE):
+        continue
     try:
         txt = fp.read_text(encoding='utf-8', errors='replace').splitlines()
     except Exception:

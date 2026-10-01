@@ -81,6 +81,8 @@ outputs\ESSAY2_QUERY4_PARTS_ACJ.md,187,Dashboard\pages\8_Key_Findings.py:359: - 
 outputs\ESSAY2_QUERY4_PARTS_ACJ.md,188,Dashboard\pages\9_Conclusion.py:144: - After 2007: FCC firms forced to disclose within 7 days; non-FCC still free,[Dd]isclose within
 outputs\ESSAY2_QUERY4_PARTS_ACJ.md,189,(94 locations; every one describes a customer-disclosure deadline or ceiling the rule does not contain — these are delet,disclosure deadline
 outputs\ESSAY2_QUERY5_REPORT.md,43,Deadline-language locations: the t24 scan (executed below). Hypothesis logic: **none of H1–H4 requires the deadline read,7-day disclosure
+outputs\ESSAY3_QUERY3_REPORT.md,866,`7-Day Rule`: **0 hits anywhere.** `deadline` near § 64.2011: only in,7-Day Rule
+outputs\ESSAY3_QUERY4_REPORT.md,471,651 0 | 648 0 | BoardEx 0 | turnover 0 | natural experiment 0 | deadline 0 | 7-Day Rule 0,7-Day Rule
 Dashboard\app.py,225,- Interpretation: Forced 7-day disclosure INCREASES rather than decreases asymmetry,7-day disclosure
 Dashboard\app.py,391,<b>Essay 2:</b> FCC firms experience HIGHER volatility (+1.83%**) even with forced 7-day disclosure. Information asymmet,7-day disclosure
 Dashboard\app.py,409,before the 2007 FCC 7-Day Rule implementation. This figure provides visual proof of that assumption.,7-Day Rule
