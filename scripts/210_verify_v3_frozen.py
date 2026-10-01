@@ -146,6 +146,10 @@ V4_DOCS = (
     "outputs/rebuild/CONSTANTS_BLOCK_V3.md",
     "outputs/ALIGNMENT_REPORT.md",
     "outputs/TIMING_MEASUREMENT_REPORT.md",
+    # Parts B3 and E of the alignment query. Both are NEW documentation, not edits of
+    # frozen files: the Essay 2 reproduction exception and the known-limitations ledger.
+    "docs/claude/REPRODUCE_ESSAY2.md",
+    "docs/claude/KNOWN_LIMITATIONS.md",
 )
 SCRIPT_RE = re.compile(r"^scripts/(\d+)_[^/]*\.py$")
 SCRIPT_LO, SCRIPT_HI = 210, 249
