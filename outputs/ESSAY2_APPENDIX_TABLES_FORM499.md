@@ -71,6 +71,7 @@ ASSERT PASS â€” treated CRSP-match failures reconcile
 ASSERT PASS â€” org-type composition sums to CRSP-fail total
 ASSERT PASS â€” by-year canonical column sums to canonical N/treated
 ASSERT PASS â€” by-year final column sums to final N/treated
+ASSERT PASS â€” Essay 1 regression sample reproduces from the script-158 recipe and matches constants_v3
 
 ==========================================================================================
 PHASE B â€” DESCRIPTIVES BY TREATMENT STATUS
@@ -312,7 +313,7 @@ FORENSIC â€” old-draft provenance closure (nothing here is a result; pre-de
   Q4: -3.5119 (p=0.0236, N=223) vs old draft -3.39
   The +7.31/+3.64/-0.54/-3.39 step-down REPRODUCES in sign, ordering, and approximate magnitude (+7.65/+2.86/-2.05/-3.51 under the full old control set) â€” the old quartile numbers are the pre-deduplication + SIC-treatment artifact, not a third-source mystery. Provenance closed. On corrected data the pattern does not exist (Phase D).
 
-Codebase flags (directive): "September 28 2007"/"Rule 37.3" and SIC-code treatment (4813/4841/4899) appear ONLY in retired pre-rebuild scripts (83, 94, 20, build_essay1_*, create_*, scm_*, fix/rebuild_essay1_appendix, boost_mobile_forensics, consolidate_validation_results, and chronology-side scripts 131/137) and in script 142's note deliberately documenting the retirement. NO live v3-chain script (150-158) or this script assigns treatment by SIC or references the wrong date/rule.
+Codebase flags (directive): the two retired rule-effective dates, the retired rule number and the SIC-based treatment definition - all inventoried in outputs/DEAD_DATE_PURGE_INVENTORY.md - appear ONLY in retired pre-rebuild scripts and in the retirement notes that deliberately document them. NO live v3-chain script (150-158) and no part of this script assigns treatment by SIC or cites a retired rule-effective date or rule number.
 
 ==========================================================================================
 PIPELINE FINDINGS (item 5 â€” things not already named in the directive)
@@ -349,9 +350,11 @@ PIPELINE FINDINGS (item 5 â€” things not already named in the directive)
 7. The old Essay 2 CODE never implemented the draft's stated volatility
    windows: scripts 20/90/90b used the breach-anchored annualized
    [-40,-1]/[0,+30] convention; the [-25,-5]/[+5,+25] language exists only
-   in create_regression_formulas_document.py, the same file that carries
-   "Rule 37.3", SIC-code treatment, and "January 1, 2007" (a THIRD wrong
-   rule date). The draft's methods prose described a measure that was never
+   in create_regression_formulas_document.py, the same retired file that
+   carries the wrong rule number, the SIC-code treatment definition, and a
+   third wrong rule-effective date (all inventoried in
+   outputs/DEAD_DATE_PURGE_INVENTORY.md). The draft's methods prose
+   described a measure that was never
    computed. See the DV-convention sensitivity in Phase E.
 
-Total reconciliation/consistency assertions passed: 131
+Total reconciliation/consistency assertions passed: 132

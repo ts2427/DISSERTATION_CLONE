@@ -1,4 +1,5 @@
 final_cik,org_name,edgar,comnam,cusip8,ncusip_on_row,breach_date,namedt,nameenddt,permno_rejected,note
+1067837,"Audacy, Inc",,ENTERCOM COMMUNICATIONS CORP,29363910,29363910,2019-08-04,1999-01-29,2021-04-08,86560.0,CRSP name at breach_date does not match the breached organization; parent relationship unverified
 1283699,"T-Mobile USA, Inc.",,METROPCS COMMUNICATIONS INC,87259010,59170810,2009-09-03,2007-04-19,2013-04-30,91937.0,CRSP name at breach_date does not match the breached organization; parent relationship unverified
 1283699,"T-Mobile USA, Inc.",,METROPCS COMMUNICATIONS INC,87259010,59170810,2009-10-05,2007-04-19,2013-04-30,91937.0,CRSP name at breach_date does not match the breached organization; parent relationship unverified
 1283699,T-Mobile,,METROPCS COMMUNICATIONS INC,87259010,59170810,2009-10-08,2007-04-19,2013-04-30,91937.0,CRSP name at breach_date does not match the breached organization; parent relationship unverified

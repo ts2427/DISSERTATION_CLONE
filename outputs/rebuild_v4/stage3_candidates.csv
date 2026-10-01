@@ -1,4 +1,5 @@
 candidate_type,cik,org,breach_date,crsp_permno,comnam_at_breach,candidate,confidence,reason,shared_tokens,generic_only
+gate_exclusion,1067837,"Audacy, Inc",2019-08-04,86560.0,ENTERCOM COMMUNICATIONS CORP,,,CRSP name at breach_date does not match the breached organization; parent relationship unverified,,
 gate_exclusion,1283699,"T-Mobile USA, Inc.",2009-09-03,91937.0,METROPCS COMMUNICATIONS INC,,,CRSP name at breach_date does not match the breached organization; parent relationship unverified,,
 gate_exclusion,1283699,"T-Mobile USA, Inc.",2009-10-05,91937.0,METROPCS COMMUNICATIONS INC,,,CRSP name at breach_date does not match the breached organization; parent relationship unverified,,
 gate_exclusion,1283699,T-Mobile,2009-10-08,91937.0,METROPCS COMMUNICATIONS INC,,,CRSP name at breach_date does not match the breached organization; parent relationship unverified,,
@@ -12,10 +13,13 @@ b_successor_cik,58696,Lennar Corporation,2023-07-20,,,"LENNAR CORP (gvkey 6669, 
 a_subsidiary,72945,Northrop Grumman Systems Corporation,2016-04-18,,,Northrop Grumman Corporation,,no gvkey in Compustat for this CIK,,False
 a_subsidiary,108772,Xerox Corporation,2023-12-10,,,Xerox Holdings Corporation,,no gvkey in Compustat for this CIK,,False
 a_subsidiary,353394,"Leidos, Inc.",2022-09-30,,,"Leidos Holdings, Inc.",,no gvkey in Compustat for this CIK,,False
+b_successor_cik,813828,Paramount,2023-01-01,,,"PARAMOUNT SKYDANCE CORP (gvkey 13714, cik 2041610)",unverified,no gvkey in Compustat for this CIK,PARAMOUNT,False
+b_successor_cik,813828,Paramount Global,2023-08-10,,,"PARAMOUNT SKYDANCE CORP (gvkey 13714, cik 2041610)",unverified,no gvkey in Compustat for this CIK,PARAMOUNT,False
 b_successor_cik,826083,Dell Inc.,2013-02-26,,,"DELL TECHNOLOGIES INC (gvkey 14489, cik 1571996)",unverified,no gvkey in Compustat for this CIK,DELL,False
 b_successor_cik,912752,"Sinclair Broadcast Group, Inc.",2020-05-01,,,"SINCLAIR INC (gvkey 60800, cik 1971213)",unverified,no gvkey in Compustat for this CIK,SINCLAIR,False
 b_successor_cik,912752,"Sinclair Broadcast Group, Inc.",2021-06-23,,,"SINCLAIR INC (gvkey 60800, cik 1971213)",unverified,no gvkey in Compustat for this CIK,SINCLAIR,False
 b_successor_cik,912752,"Sinclair Broadcast Group, Inc.",2021-12-16,,,"SINCLAIR INC (gvkey 60800, cik 1971213)",unverified,no gvkey in Compustat for this CIK,SINCLAIR,False
+b_successor_cik,926480,The Walt Disney Company,2008-07-29,,,"DISNEY (WALT) CO (gvkey 3980, cik 1744489)",unverified,no gvkey in Compustat for this CIK,DISNEY|WALT,False
 b_successor_cik,1000564,Communications & Power Industries LLC,2020-01-18,,,"AMERICAN ELECTRIC POWER CO (gvkey 1440, cik 4904)",unverified,no gvkey in Compustat for this CIK,POWER,False
 a_subsidiary,1091411,Sony Corporation of America,2009-06-02,,,Sony Group Corporation,,no gvkey in Compustat for this CIK,,False
 a_subsidiary,1137785,Seagate US LLC,2016-02-29,,,Seagate Technology Holdings plc,,no gvkey in Compustat for this CIK,,False

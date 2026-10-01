@@ -3,7 +3,7 @@
 documents under item5_02_text        : 1576
 of those, frozen in v3-frozen (v3's)   : 1126
 added by v4                          : 450
-documents named in b_scope_filings   : 1517
+documents named in b_scope_filings   : 1514
 POOL (v4-added AND in scope)         : 450
 
 seed                                 : 20260919 (fixed in this file)
