@@ -164,12 +164,21 @@ LONG_RUNNING_SCRIPTS = {
     'scripts/182_essay2_test_ledger.py': 3600,  # re-executes six Essay 2 scripts via runpy
 }
 
-def run_script(script_path, description, log_file):
+def run_script(script_path, description, log_file, script_args=None):
     """
     Run a Python script and capture output to log.
     Returns True if successful.
+
+    script_args (added 2026-10-01): optional command-line arguments, supplied by a step's
+    third tuple element. Defaults to none, so every two-element step is invoked exactly as
+    before. This exists because scripts/219 needs --assemble-only to build its covariates
+    from the committed Compustat pull instead of attempting a WRDS pull; without it the
+    script aborts rather than overwrite committed data, which is what made the clean-clone
+    run fail.
     """
-    header = f"\nRunning: {description}\nScript: {script_path}\n" + "-" * 80
+    script_args = list(script_args or [])
+    shown = script_path + (' ' + ' '.join(script_args) if script_args else '')
+    header = f"\nRunning: {description}\nScript: {shown}\n" + "-" * 80
     print_to_both(header, log_file)
 
     start_time = time.time()
@@ -182,7 +191,7 @@ def run_script(script_path, description, log_file):
 
     try:
         result = subprocess.run(
-            [sys.executable, script_path],
+            [sys.executable, script_path] + script_args,
             capture_output=True,
             text=True,
             encoding='utf-8',
@@ -552,7 +561,10 @@ Log file: {log_path}
                     ('scripts/212_pit_linker_v4.py', 'v4 Stage 2: point-in-time CIK->gvkey->CUSIP->permno linker with the identity gate, v3 pass -> Stage 3 worklist'),
                     ('scripts/214_corrections_v4.py', 'v4 correction ledger -> CANONICAL_V4 (Sprint anchor, Carnival, CIK re-parenting, Gate-2 notification anchor, health indicator)'),
                     ('scripts/215_ledger_v4.py', 'v4 linkage ledger and symmetry report'),
-                    ('scripts/219_wrds_funda_v4.py', 'v4 covariates from the committed Compustat pull (gvkey-joined; 550-day staleness rule verbatim from 156)'),
+                    # --assemble-only is REQUIRED (REPRODUCE_ESSAY3_V4.md:30). Without it
+                    # 219 attempts the WRDS pull and aborts at 219:181 rather than
+                    # overwrite Data/wrds_v4/comp_funda.csv, which is committed.
+                    ('scripts/219_wrds_funda_v4.py', 'v4 covariates from the committed Compustat pull (gvkey-joined; 550-day staleness rule verbatim from 156)', ['--assemble-only']),
                     ('scripts/234_outcome_cik_v4.py', 'v4 outcome filer resolved by rule (the CIK whose Form 8-K filings are read)'),
                     ('scripts/233_resolve_reconciliation.py', 'PREREQUISITE of 224: reconciles outcome_cik against the v3 patch list; every row must say agree'),
                     ('scripts/230_outcome_gap_v4.py', 'v4 outcome-CIK gap and the fetch window per event'),
@@ -825,16 +837,23 @@ Log file: {log_path}
             cat_header = f"\n{'=' * 80}\n{category}\n{'=' * 80}\n"
             print_to_both(cat_header, log_file)
             
-            for script_path, description in scripts:
+            for step in scripts:
+                # A step is (path, description) or, since 2026-10-01, an optional third
+                # element: a list of command-line arguments. Two-element steps are
+                # unaffected - they resolve to an empty argument list and the invocation
+                # is byte-identical to before.
+                script_path, description = step[0], step[1]
+                script_args = list(step[2]) if len(step) > 2 else []
+
                 # Check if script exists
                 if not Path(script_path).exists():
                     msg = f"\n[SKIP] Script not found: {script_path}\n"
                     print_to_both(msg, log_file)
                     results[description] = False
                     continue
-                
+
                 # Run script
-                success = run_script(script_path, description, log_file)
+                success = run_script(script_path, description, log_file, script_args)
                 results[description] = success
         
         # Calculate timing
