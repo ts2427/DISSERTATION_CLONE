@@ -116,7 +116,68 @@ RUN_ARTIFACTS = (
     "outputs/essay3_q2/203_case.log",                    # scripts/203
     "outputs/essay3_q2/b_exhibits_log.csv",              # scripts/203, per-exhibit record
     "outputs/essay3_q2/204_se_diagnostics.log",          # scripts/204
+    # Figures (added 2026-10-01 by ruling). matplotlib PNGs are not byte-reproducible
+    # across environments - font rasterisation and the PNG encoder differ - while the
+    # numbers they plot come from CSVs this gate does compare byte for byte.
+    "outputs/figures/essay2_v2/fig_C3_spec_curve.png",         # scripts/171
+    "outputs/figures/essay2_v2/fig_C4_power_curve.png",        # scripts/171
+    "outputs/figures/essay2_v2/fig_C5_carrier_denominator.png",  # scripts/174
+    # Timestamp-only progress reports (added 2026-10-01 by ruling). Each differs between
+    # runs ONLY on a "- run (UTC):" line. All five already fall under the
+    # outputs/rebuild_v4/ prefix in EXCLUDE_PREFIXES, so they are not in the manifest and
+    # these entries never match; they are listed anyway so the intent is on the record and
+    # the rule survives any future change to that prefix.
+    "outputs/rebuild_v4/212_link_report.md",             # scripts/212 pass 1
+    "outputs/rebuild_v4/v4_212_link_report.md",          # scripts/212 pass 2
+    "outputs/rebuild_v4/214_corrections.md",             # scripts/214
+    "outputs/rebuild_v4/215_ledger.md",                  # scripts/215
+    "outputs/rebuild_v4/237_validation_draw.md",         # scripts/237
 )
+
+# SKIP-DEPENDENT FILES (added 2026-10-01 by ruling). A file whose content legitimately
+# differs when a DECLARED skip removed the step that supplies part of it - and which must
+# still be compared when that step runs. The governing condition is the same one
+# run_all.py's DECLARED_SKIPS tests: the licensed input's presence.
+#
+# ESSAY2_QUERY6_REPORT.md is scripts/174's umbrella report. Its CPQS and EDGE
+# effective-spread channel lines come from the intraday quotes top-up that scripts/170 and
+# 167 need, so on a machine without the WRDS licence those lines are absent. On a licensed
+# checkout the file is compared byte for byte like anything else.
+SKIP_DEPENDENT = {
+    "outputs/ESSAY2_QUERY6_REPORT.md": (
+        "Data/wrds/crsp_quotes_topup.csv",
+        "scripts/174 effective-spread channels; needs the licensed quotes top-up "
+        "(the scripts/170 declared exception)"),
+}
+
+
+def _skip_dependent_waived(path):
+    """True if `path` is skip-dependent AND its governing input is absent."""
+    ent = SKIP_DEPENDENT.get(path)
+    return bool(ent) and not path_exists(Path(ent[0]))
+
+
+# DOCX: compared on EXTRACTED TEXT, not container bytes (2026-10-01 ruling).
+# A .docx is a ZIP. Every member carries a modification timestamp and the archive is
+# rebuilt on each render, so two renders of identical content never match byte for byte.
+# Comparing the text instead makes the check mean what it should: a text difference still
+# FAILS. Covers all three tracked .docx files:
+#     outputs/rebuild/APPENDIX_V3_TABLES.docx        (scripts/160, in the manifest)
+#     outputs/rebuild/INTEXT_TABLES_3_14.docx        (in the manifest, no live writer)
+#     outputs/essay3_appendix/ESSAY3_APPENDIX_TABLES.docx  (scripts/245, tracked, not in
+#                                                     the manifest - covered if added)
+# outputs/rebuild/INTEXT_TABLES_4_5.docx is written by scripts/160 but is untracked, so no
+# gate applies to it.
+def docx_text(data):
+    """All visible text runs of a .docx, in order. -> str, or None if unreadable."""
+    import io
+    import zipfile
+    try:
+        with zipfile.ZipFile(io.BytesIO(data)) as z:
+            xml = z.read("word/document.xml").decode("utf-8", "replace")
+    except Exception:
+        return None
+    return "\n".join(re.findall(r"<w:t[^>]*>([^<]*)</w:t>", xml))
 
 V4_DIRS = (
     "Data/wrds_v4/",
@@ -343,6 +404,13 @@ def sha256_file(path):
     return h.hexdigest()
 
 
+def git_bytes(blob_id):
+    """Raw bytes of a git blob by object id. -> bytes, or None."""
+    r = subprocess.run(["git", "cat-file", "blob", blob_id],
+                       capture_output=True)
+    return r.stdout if r.returncode == 0 else None
+
+
 def sha256_file_eolnorm(path):
     """sha256 of the file with CRLF collapsed to LF.
 
@@ -442,6 +510,7 @@ def verify():
     cur_oids = lfs_oids()
     lfs_ok, lfs_bad = [], []
     run_art = []
+    docx_same, skip_waived = [], []
 
     for p, rec in base.items():
         if int(rec["append_only"]):
@@ -488,6 +557,21 @@ def verify():
 
         cur_sha = sha256_file(fp)
         if cur_sha != rec["sha256"]:
+            # A .docx differing in bytes: decide on TEXT. The manifest keeps no copy of the
+            # old bytes, so the recorded blob supplies them - machine-independent and exact.
+            if p.lower().endswith(".docx"):
+                was = git_bytes(rec["blob_id"])
+                a = docx_text(was) if was is not None else None
+                b = docx_text(read_bytes(fp))
+                if a is not None and b is not None and a == b:
+                    docx_same.append(p)
+                    continue
+                sha_bad.append((p, "docx-text", "extracted text differs"))
+                continue
+            # A skip-dependent file whose governing input is absent.
+            if _skip_dependent_waived(p):
+                skip_waived.append(p)
+                continue
             # EOL-versus-content, decided against the MANIFEST's normalised hash. Older
             # manifests carry no such column; those fall back to the git-diff test against
             # the baseline tag, which is what this replaced.
@@ -565,6 +649,10 @@ def verify():
     for p in deleted[:25]:
         print(f"   {p}")
     print(f"RUN ARTIFACTS (logs, exempt)   : {len(run_art)} (present-checked; content not compared)")
+    print(f"DOCX same text, new container  : {len(docx_same)} (compared on extracted text, not bytes)")
+    print(f"WAIVED by a declared skip      : {len(skip_waived)}")
+    for _p in skip_waived:
+        print(f"   {_p} -- {SKIP_DEPENDENT[_p][1]}")
     print(f"ADDED outside v4 allowlist     : {len(added_bad)}")
     for p in added_bad[:25]:
         print(f"   {p}")
