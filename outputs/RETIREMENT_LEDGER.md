@@ -646,3 +646,62 @@ samples frozen; the two consequences are disclosed as entries 7 and 8 of
 A script with a `--canonical` argument has more than one correct output, and "it does not
 match what is committed" is not evidence that what is committed is wrong. Before concluding
 a committed artefact is stale, reproduce it from **every** input the script accepts.
+
+---
+
+# verify_outputs() REBUILT — 2026-10-01
+
+The prune made the old critical-file list unsatisfiable, and it was the last thing keeping
+`run_all.py` from exiting 0 on a run where all 59 live steps succeeded. Of its 33 entries,
+**2 were permanently MISSING** - written only by scripts 86c and 90b, retired by the prune
+and never committed - and **~20 were permanently STALE**, outputs of other retired steps
+that exist only because they are committed. The list is now three categories, written into
+the function's docstring so the definition of a clean run is on the record.
+
+**33 entries -> 54: 51 freshness-required, 3 presence-only, 22 dropped.**
+
+## 1. Freshness required (51)
+
+Every keep-set file a live step writes, plus the inputs live steps write for each other:
+`CANONICAL_V3.csv`, `STAGE7_VERIFICATION.md`, `constants_v3.json`, the Essay 1 attrition
+ledger and all 16 `appendix_v3` tables; Essay 2's `t1_final_sample`, `t51`, `t52`, `t53`;
+Query 2's `c2_outcomes_events`, `e_analysis_sample`, `e_ledger`, `f1_ladder`,
+`f1_se_diagnostics`, `tmobile_timeline`; and the v4 chain's `CANONICAL_V4.csv`,
+`v4_212_links.csv`, `e_analysis_sample`, `e_ledger`, `f1_ladder`, `tmobile_timeline`,
+`g6_case_table`, `g6_restatement_dated`, `essay3_q3/tmobile_case.csv`, the 11
+`essay3_q4/table*.csv` and `ESSAY3_APPENDIX_TABLES.md`.
+
+Each was confirmed written during the 2026-10-01 verification run before being listed, so a
+failure here is a real regression rather than a stale list. Negative-tested: with
+`run_start` set to now, all 51 report STALE and the function returns False.
+
+## 2. Presence only (3)
+
+| file | why freshness is the wrong test |
+|---|---|
+| `outputs/essay3_q2/constants_essay3_q2.json` | assertion baseline; `scripts/202` asserts against it and writes it only if absent |
+| `outputs/essay3_v4/constants_essay3_v4.json` | assertion baseline; `scripts/227` asserts against it and writes it only if absent |
+| `outputs/essay3_q4/tmobile_502_text.md` | an input, not an output - no live step writes it; `scripts/245` reads it (184 and 185 are retired) |
+
+The two baselines are the mechanism that makes the Essay 3 verdicts reproducible rather
+than re-derived on every run; demanding freshness would demand the opposite of their
+purpose. **`outputs/rebuild/constants_v3.json` is deliberately NOT in this category** -
+`scripts/158` rewrites it on every run, confirmed in the verification run, so it is held to
+the freshness test even though it is also Essay 1's assertion baseline.
+
+## 3. Dropped (22)
+
+Written only by retired steps. The files stay committed; nothing live reads them.
+
+| step | dropped entries |
+|---|---|
+| `86c` | `h1_h4_form499_corrected_summary.csv`, `h1_h4_form499_corrected_regression_results.txt` *(never committed)* |
+| `90b` | `h5_form499_corrected_heterogeneity.csv`, `h5_form499_corrected_regression_results.txt` *(never committed)* |
+| `96` | `economic_significance/economic_impact_summary.csv`, `economic_significance/economic_significance_report.txt` |
+| `98` | `tables/TABLE_GOVERNANCE_HETEROGENEITY_RESULTS.csv` |
+| pre-rebuild | `TABLE_RANSOMWARE_`, `TABLE_MEDIA_COVERAGE_`, `TABLE_DIVERSITY_HETEROGENEITY_RESULTS.csv`, `tables/TABLE1_COMBINED.txt`, `H1_timing_fcc_interaction_results.csv` |
+| SIC-era Essay 2/3 | `essay2/TABLE2_baseline_disclosure.txt`, `TABLE3_fcc_regulation.txt`, `TABLE4_prior_breaches.txt`, `TABLE5_breach_severity.txt`, `TABLE_B8_post_2007_interaction.txt`, `TABLE_B9_clustered_vs_hc3_comparison.txt`, `H1_TOST_Equivalence_Test.txt`, `DIAGNOSTICS_VIF_summary.txt`, `essay3/TABLE2_volatility_changes.txt`, `essay3/TABLE3_information_asymmetry.txt` |
+
+This is the third pre-prune gate the prune exposed, after the `critical_keys` gate and the
+two obsolete `REQUIRED_INPUTS`. All three failed the same way: they asserted on steps that
+no longer run.

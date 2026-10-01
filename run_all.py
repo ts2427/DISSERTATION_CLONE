@@ -388,75 +388,134 @@ def verify_data(log_file):
     return True
 
 def verify_outputs(log_file, run_start=None):
-    """Verify critical output files exist AND were written by this run.
+    """Verify that this run produced the outputs the three essays are built from.
 
-    run_start: epoch seconds recorded when the pipeline began. A required file whose mtime predates
-    it is reported STALE - it exists only because it is committed in the repository, not because this
-    run produced it. Until 2026-09-11 this function tested existence alone, so a clean-clone run in
-    which six scripts failed (including the Stage 8 assertion) still reported SUCCESS on files that
-    had come straight from git. Passing run_start=None restores the old existence-only behaviour.
+    REBUILT 2026-10-01 by ruling. The list this replaced was assembled before the
+    publish-ready prune and had become unsatisfiable: of its 33 entries, 2 were written
+    only by scripts 86c and 90b - retired by the prune and never committed, so permanently
+    MISSING - and ~20 more were outputs of other retired steps, present only because they
+    are committed and therefore permanently STALE. A run in which all 59 live steps
+    succeeded still failed here. Its definition of a clean run no longer matched the
+    pipeline, so this is what a clean run means now.
+
+    THREE CATEGORIES.
+
+    1. FRESHNESS REQUIRED (`CRITICAL_FRESH`). Every file in the essay keep-set that a LIVE
+       step writes, plus the direct inputs that live steps write for each other. These must
+       exist AND have an mtime at or after `run_start`: existing is not enough, because a
+       committed copy would otherwise mask a step that silently did nothing. Each one was
+       confirmed written during the verification run of 2026-10-01 before being listed
+       here, so a failure in this category means a real regression, not a stale list.
+
+    2. PRESENCE ONLY (`CRITICAL_PRESENT`). Files a live step deliberately does NOT rewrite.
+       Two are assertion baselines: scripts/202 and scripts/227 each compare their results
+       against a committed constants file and write it only if it is absent, which is the
+       mechanism that makes the Essay 3 verdicts reproducible rather than re-derived. A
+       freshness test on those two would demand the opposite of what they are for. The
+       third is an input, not an output: no live step writes it. These are checked for
+       existence, which is the only thing that can meaningfully be checked.
+
+    3. DROPPED. Entries written only by steps the prune retired. They are not outputs of
+       this pipeline any more, so asserting on them says nothing about whether this run was
+       clean. The files themselves stay committed and nothing reads them; each dropped
+       entry is named in outputs/RETIREMENT_LEDGER.md.
+
+    `run_start` is epoch seconds recorded when the pipeline began. Passing None restores
+    existence-only behaviour for both categories. Until 2026-09-11 this function tested
+    existence alone, so a clean-clone run in which six scripts failed - including the
+    Stage 8 assertion - still reported SUCCESS on files that had come straight from git.
     """
     print_section("OUTPUT VERIFICATION")
     log_file.write("\n" + "=" * 80 + "\nOUTPUT VERIFICATION\n" + "=" * 80 + "\n\n")
 
-    # Define critical output files
-    critical_files = [
-        # Form 499 Corrected (PRIMARY)
-        Path('outputs/h1_h4_form499_corrected_summary.csv'),
-        Path('outputs/h1_h4_form499_corrected_regression_results.txt'),
-        Path('outputs/h5_form499_corrected_heterogeneity.csv'),
-        Path('outputs/h5_form499_corrected_regression_results.txt'),
-        # RETIRED 2026-09-11 (Essay 3 Query 2 Part H): 7/28-chain H6 outputs of script 91m
-        # Path('outputs/h6_form499_corrected_power_analysis.csv'),
-        # Path('outputs/h6_form499_corrected_regression_results.txt'),
-        # Essay 3 — Query 2 chain (CURRENT)
-        Path('outputs/essay3_q2/c2_outcomes_events.csv'),
-        Path('outputs/essay3_q2/e_analysis_sample.csv'),
-        Path('outputs/essay3_q2/f1_ladder.csv'),
-        Path('outputs/essay3_q2/constants_essay3_q2.json'),
-        Path('outputs/essay3_q2/tmobile_timeline.csv'),
-        Path('outputs/essay3_q2/f1_se_diagnostics.csv'),
-        # Essay 1 — canonical v3 chain (CURRENT)
+    # ---- 1. FRESHNESS REQUIRED ---------------------------------------------------
+    CRITICAL_FRESH = [
+        # v3 chain and Essay 1 (scripts 150-158, 247)
+        Path('Data/processed/rebuild/CANONICAL_V3.csv'),
+        Path('outputs/rebuild/STAGE7_VERIFICATION.md'),
         Path('outputs/rebuild/constants_v3.json'),
-        Path('outputs/rebuild/appendix_v3/table_1.csv'),
-        # Essay 2 — canonical chain, scripts 163-182 (CURRENT)
+        Path('outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md'),
+    ] + [Path('outputs/rebuild/appendix_v3/table_%d.csv' % i) for i in range(1, 17)] + [
+        # Essay 2 canonical chain (scripts 163-182)
+        Path('outputs/tables/essay2_v2/t1_final_sample.csv'),
         Path('outputs/tables/essay2_v2/t51_elevation_calibration.csv'),
         Path('outputs/tables/essay2_v2/t52_spec_curve_permutation.csv'),
         Path('outputs/tables/essay2_v2/t53_test_ledger.csv'),
-        # COMMITTED BUT NOT REGENERATED, so deliberately not required here:
-        #   outputs/tables/essay2_appendix/*.csv (no committed generator) and ESSAY2_APPENDIX.docx (gitignored).
-        # LEGACY / REFERENCE (SIC-based and 7/28-era chains; retained for the old-vs-new exhibit, NOT current results)
-        Path('outputs/tables/TABLE1_COMBINED.txt'),
-        Path('outputs/tables/essay2/TABLE2_baseline_disclosure.txt'),
-        Path('outputs/tables/essay2/TABLE3_fcc_regulation.txt'),
-        Path('outputs/tables/essay2/TABLE4_prior_breaches.txt'),
-        Path('outputs/tables/essay2/TABLE5_breach_severity.txt'),
-        Path('outputs/H1_timing_fcc_interaction_results.csv'),
-        Path('outputs/tables/essay2/TABLE_B8_post_2007_interaction.txt'),
-        Path('outputs/tables/essay2/TABLE_B9_clustered_vs_hc3_comparison.txt'),
-        Path('outputs/tables/essay2/H1_TOST_Equivalence_Test.txt'),
-        Path('outputs/tables/essay2/DIAGNOSTICS_VIF_summary.txt'),
-        # RETIRED 2026-09-11 (Essay 3 Query 2 Part H): legacy essay3_governance outputs (7/28 and
-        # SIC-era chains; scripts 91, 91b, 91c, 91e, 91f, 91g, 91h, 91j, 91k) — see outputs/RETIREMENT_LEDGER.md
-        Path('outputs/tables/essay3/TABLE2_volatility_changes.txt'),
-        Path('outputs/tables/essay3/TABLE3_information_asymmetry.txt'),
-        Path('outputs/economic_significance/economic_impact_summary.csv'),
-        Path('outputs/economic_significance/economic_significance_report.txt'),
-        Path('outputs/tables/TABLE_GOVERNANCE_HETEROGENEITY_RESULTS.csv'),
-        # RETIRED 8/4/2026: Path('outputs/tables/TABLE_CVSS_COMPLEXITY_HETEROGENEITY_RESULTS.csv'),
-        Path('outputs/tables/TABLE_RANSOMWARE_HETEROGENEITY_RESULTS.csv'),
-        Path('outputs/tables/TABLE_MEDIA_COVERAGE_HETEROGENEITY_RESULTS.csv'),
-        # RETIRED 2026-09-11: Path('outputs/tables/TABLE_EXTENDED_GOVERNANCE_WINDOWS_RESULTS.csv'),  (script 102)
-        Path('outputs/tables/TABLE_DIVERSITY_HETEROGENEITY_RESULTS.csv'),
+        # Essay 3 Query 2 chain (scripts 187-204) - its outputs are read by the v4 chain
+        Path('outputs/essay3_q2/c2_outcomes_events.csv'),
+        Path('outputs/essay3_q2/e_analysis_sample.csv'),
+        Path('outputs/essay3_q2/e_ledger.csv'),
+        Path('outputs/essay3_q2/f1_ladder.csv'),
+        Path('outputs/essay3_q2/f1_se_diagnostics.csv'),
+        Path('outputs/essay3_q2/tmobile_timeline.csv'),
+        # v4 chain - Essay 3 of record (scripts 212-247)
+        Path('Data/processed/rebuild_v4/CANONICAL_V4.csv'),
+        Path('outputs/rebuild_v4/v4_212_links.csv'),
+        Path('outputs/essay3_v4/e_analysis_sample.csv'),
+        Path('outputs/essay3_v4/e_ledger.csv'),
+        Path('outputs/essay3_v4/f1_ladder.csv'),
+        Path('outputs/essay3_v4/tmobile_timeline.csv'),
+        Path('outputs/essay3_v4/g6_case_table.csv'),
+        Path('outputs/essay3_v4/g6_restatement_dated.csv'),
+        Path('outputs/essay3_q3/tmobile_case.csv'),
+    ] + [Path('outputs/essay3_q4/table%02d.csv' % i) for i in range(1, 12)] + [
+        Path('outputs/essay3_appendix/ESSAY3_APPENDIX_TABLES.md'),
     ]
+
+    # ---- 2. PRESENCE ONLY --------------------------------------------------------
+    CRITICAL_PRESENT = [
+        # Assertion baselines: written only when absent, then asserted against forever.
+        (Path('outputs/essay3_q2/constants_essay3_q2.json'),
+         'assertion baseline; scripts/202 asserts against it and writes it only if absent'),
+        (Path('outputs/essay3_v4/constants_essay3_v4.json'),
+         'assertion baseline; scripts/227 asserts against it and writes it only if absent'),
+        # An input, not an output: no live step writes it; scripts/245 reads it.
+        (Path('outputs/essay3_q4/tmobile_502_text.md'),
+         'committed input to scripts/245; written by no live step (184/185 are retired)'),
+    ]
+    # NOT in this category: outputs/rebuild/constants_v3.json. scripts/158 rewrites it on
+    # every run - confirmed written during the verification run - so it is held to the
+    # freshness test above, even though it is also an assertion baseline for Essay 1.
+
+    # ---- 3. DROPPED, for the record ----------------------------------------------
+    # Written only by retired steps; see outputs/RETIREMENT_LEDGER.md.
+    #   scripts/86c  outputs/h1_h4_form499_corrected_summary.csv
+    #                outputs/h1_h4_form499_corrected_regression_results.txt   (never committed)
+    #   scripts/90b  outputs/h5_form499_corrected_heterogeneity.csv
+    #                outputs/h5_form499_corrected_regression_results.txt      (never committed)
+    #   scripts/96   outputs/economic_significance/economic_impact_summary.csv
+    #                outputs/economic_significance/economic_significance_report.txt
+    #   scripts/98   outputs/tables/TABLE_GOVERNANCE_HETEROGENEITY_RESULTS.csv
+    #   pre-rebuild  outputs/tables/TABLE_RANSOMWARE_HETEROGENEITY_RESULTS.csv
+    #                outputs/tables/TABLE_MEDIA_COVERAGE_HETEROGENEITY_RESULTS.csv
+    #                outputs/tables/TABLE_DIVERSITY_HETEROGENEITY_RESULTS.csv
+    #                outputs/tables/TABLE1_COMBINED.txt
+    #                outputs/H1_timing_fcc_interaction_results.csv
+    #   SIC-era      outputs/tables/essay2/TABLE2_baseline_disclosure.txt
+    #                outputs/tables/essay2/TABLE3_fcc_regulation.txt
+    #                outputs/tables/essay2/TABLE4_prior_breaches.txt
+    #                outputs/tables/essay2/TABLE5_breach_severity.txt
+    #                outputs/tables/essay2/TABLE_B8_post_2007_interaction.txt
+    #                outputs/tables/essay2/TABLE_B9_clustered_vs_hc3_comparison.txt
+    #                outputs/tables/essay2/H1_TOST_Equivalence_Test.txt
+    #                outputs/tables/essay2/DIAGNOSTICS_VIF_summary.txt
+    #                outputs/tables/essay3/TABLE2_volatility_changes.txt
+    #                outputs/tables/essay3/TABLE3_information_asymmetry.txt
+    # 22 entries dropped, 11 retained; 33 -> 54 entries (51 freshness + 3 presence-only).
+
+    critical_files = CRITICAL_FRESH + [f for f, _ in CRITICAL_PRESENT]
 
     present_files = []
     missing_files = []
     stale_files = []
 
+    present_only = {f for f, _ in CRITICAL_PRESENT}
+    presence_ok = []
     for filepath in critical_files:
         if not filepath.exists():
             missing_files.append(str(filepath))
+        elif filepath in present_only:
+            presence_ok.append(str(filepath))      # freshness deliberately not tested
         elif run_start is not None and filepath.stat().st_mtime < run_start:
             stale_files.append(str(filepath))
         else:
@@ -466,6 +525,7 @@ def verify_outputs(log_file, run_start=None):
     msg = f"\nCritical Output Files:\n"
     msg += f"  Written by this run: {len(present_files)}/{len(critical_files)}\n"
     msg += f"  Stale (pre-existing, NOT written by this run): {len(stale_files)}/{len(critical_files)}\n"
+    msg += f"  Presence-only (baselines/inputs, freshness not tested): {len(presence_ok)}/{len(critical_files)}\n"
     msg += f"  Missing: {len(missing_files)}/{len(critical_files)}\n"
 
     if present_files:
