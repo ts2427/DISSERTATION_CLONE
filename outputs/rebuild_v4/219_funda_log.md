@@ -1,12 +1,5 @@
 # REBUILD V4 - Stage 6 Compustat fundamentals (scripts/219)
 
-gvkeys to pull: 140
-first 3 gvkey literals sent: '001300', '001410', '001440'
-sentinel gvkeys: AT&T 009899; Sprint 010984; T-Mobile 017874
-  chunk 1: gvkeys 140, rows 5378
-comp.funda: 5378 rows; gvkeys reached 140/140 = 100.0%
-sentinels reached funda: AT&T, Sprint, T-Mobile
-written Data\wrds_v4\comp_funda.csv
 
 ## Coverage (gvkey arm)
 - firm_size_log: 438 of 489 (v3 inherited 346)
