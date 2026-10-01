@@ -140,6 +140,12 @@ V4_DOCS = (
     "outputs/RUN_ALL_FOLLOWUP_REPORT.md",
     # The pinned freeze exceptions this script reads. New file, not an edit of a frozen one.
     "docs/claude/V3_FREEZE_EXCEPTIONS.md",
+    # Part A5 (2026-10-01): newly tracked at the rebaseline. CONSTANTS_BLOCK_V3.md is
+    # written by scripts/158 next to constants_v3.json and had never been committed
+    # (outputs/*.md is gitignored); the alignment report is this query's deliverable.
+    "outputs/rebuild/CONSTANTS_BLOCK_V3.md",
+    "outputs/ALIGNMENT_REPORT.md",
+    "outputs/TIMING_MEASUREMENT_REPORT.md",
 )
 SCRIPT_RE = re.compile(r"^scripts/(\d+)_[^/]*\.py$")
 SCRIPT_LO, SCRIPT_HI = 210, 249
@@ -253,11 +259,20 @@ def filtered_baseline(commit, path):
 def create():
     commit = baseline_commit()
     MANIFEST.parent.mkdir(parents=True, exist_ok=True)
+    # Fixed 2026-10-01 (Part A5). This function refreshed sha256 from disk but copied
+    # blob_id straight from the baseline tag's tree, while verify() compares blob_id
+    # against `git ls-files -s` TODAY. So after a --create, every file whose git blob had
+    # moved since v3-frozen still failed the blob test - 30 of them - and the gate could
+    # never return PASS again. A re-freeze has to record the CURRENT blob, from the same
+    # source verify() reads. The manifest's SCOPE still comes from the baseline tree,
+    # which is deliberate and unchanged: a re-freeze re-records the bytes of the frozen
+    # file set, it does not widen that set.
+    now = tracked_now()
     rows = []
     for p, blob in sorted(baseline_tree(commit).items()):
         fp = Path(p)
         size, sha = (fp.stat().st_size, sha256_file(fp)) if fp.exists() else (-1, "MISSING")
-        row = dict(path=p, size=size, sha256=sha, blob_id=blob,
+        row = dict(path=p, size=size, sha256=sha, blob_id=now.get(p, blob),
                    append_only=int(p in APPEND_ONLY), prefix_size="", prefix_sha256="")
         if p in APPEND_ONLY:
             base = filtered_baseline(commit, p)
