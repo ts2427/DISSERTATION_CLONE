@@ -1,4 +1,4 @@
 Spec,FCC coef,p
-Baseline HC3,-0.2663,0.8404
-+ Year FE,-0.9976,0.4396
-CAPTION,"This table compares the Form 499 coefficient from the baseline HC3 specification with a specification adding calendar-year fixed effects, both estimated on the regression sample (N = 338).",
+Baseline HC3,-0.4994,0.7326
++ Year FE,-1.2451,0.4397
+CAPTION,"This table compares the Form 499 coefficient from the baseline HC3 specification with a specification adding calendar-year fixed effects, both estimated on the regression sample (N = 340).",

@@ -1,6 +1,6 @@
 Restriction,Timing coef,Timing p,FCC coef,FCC p,ROA coef,ROA p,N
-Full,0.964,0.33,-0.266,0.84,7.65,0.16,338
-Excl. largest decile,1.17,0.277,-0.375,0.8,8.57,0.13,305
-Excl. smallest decile,0.527,0.611,-0.471,0.736,4.92,0.379,316
-Non-health,0.743,0.447,-0.212,0.874,8.07,0.156,323
+Full,1.414,0.171,-0.499,0.733,7.76,0.153,340
+Excl. largest decile,1.668,0.139,-0.644,0.694,8.65,0.127,307
+Excl. smallest decile,1.029,0.345,-0.717,0.644,5.2,0.353,318
+Non-health,1.2,0.242,-0.449,0.762,8.18,0.149,325
 CAPTION,This table re-estimates the baseline specification with HC3 standard errors on restricted samples; each row reports its own N. Controls without variation within a restricted sample are dropped from that row.,,,,,,

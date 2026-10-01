@@ -1,6 +1,6 @@
 Hypothesis,Coef,p,TOST_p_2.10,MDE80,Status
-H2_FCC,-0.2663,0.8404,0.0833,3.703,NULL-INCONCLUSIVE
-H1_timing,0.9641,0.3298,0.1259,2.7702,NULL-INCONCLUSIVE
-H3_prior,0.0238,0.7092,0.0,0.1786,BOUNDED NULL
-H4_health,-1.0553,0.687,0.3451,7.3343,NULL-INCONCLUSIVE
-CAPTION,"This table summarizes the four hypothesis tests from the baseline HC3 regression on the regression sample (N = 338). TOST p-values test equivalence against the +/-2.10 percentage-point bound, which was fixed from the prior literature before the rebuilt estimates existed; MDE80 is the minimum detectable effect at 80 percent power.",,,,
+H2_FCC,-0.4994,0.7326,0.1371,4.0926,NULL-INCONCLUSIVE
+H1_timing,1.4143,0.1712,0.2538,2.8942,NULL-INCONCLUSIVE
+H3_prior,0.0258,0.6916,0.0,0.1818,BOUNDED NULL
+H4_health,-0.9405,0.7176,0.328,7.2803,NULL-INCONCLUSIVE
+CAPTION,"This table summarizes the four hypothesis tests from the baseline HC3 regression on the regression sample (N = 340). TOST p-values test equivalence against the +/-2.10 percentage-point bound, which was fixed from the prior literature before the rebuilt estimates existed; MDE80 is the minimum detectable effect at 80 percent power.",,,,

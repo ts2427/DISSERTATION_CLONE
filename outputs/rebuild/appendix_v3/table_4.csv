@@ -1,10 +1,10 @@
 Variable,Coef,SE,p
-const,-1.1918,4.31,0.7822
-fcc_form499,-0.2663,1.3225,0.8404
-immediate_disclosure,0.9641,0.9894,0.3298
-prior_breaches_1yr,0.0238,0.0638,0.7092
-health_breach,-1.0553,2.6194,0.687
-firm_size_log,0.0313,0.3596,0.9307
-leverage,-0.1029,2.1287,0.9614
-roa,7.6509,5.4405,0.1596
-CAPTION,"This table reports the baseline ordinary least squares regression of the 30-day CAR on the four hypothesis variables and three accounting controls, estimated on the regression sample (N = 338) with HC3 heteroskedasticity-robust standard errors.",,
+const,-1.7249,4.4103,0.6957
+fcc_form499,-0.4994,1.4616,0.7326
+immediate_disclosure,1.4143,1.0337,0.1712
+prior_breaches_1yr,0.0258,0.0649,0.6916
+health_breach,-0.9405,2.6001,0.7176
+firm_size_log,0.061,0.3673,0.868
+leverage,0.0032,2.1476,0.9988
+roa,7.7592,5.4334,0.1533
+CAPTION,"This table reports the baseline ordinary least squares regression of the 30-day CAR on the four hypothesis variables and three accounting controls, estimated on the regression sample (N = 340) with HC3 heteroskedasticity-robust standard errors.",,

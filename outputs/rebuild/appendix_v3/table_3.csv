@@ -1,14 +1,14 @@
 Comparison,Group,Mean CAR,Median CAR,N,Welch diff,Welch p
-Form 499,Filer,-0.545,-0.242,104,,
+Form 499,Filer,-0.689,-0.242,106,,
 Form 499,Non-filer,0.014,0.412,234,,
-Form 499,Difference,-0.559,,,-0.557,0.578
-Timing,Immediate,0.387,1.398,123,,
-Timing,Delayed,-0.47,-0.459,215,,
-Timing,Difference,0.858,,,0.912,0.3629
+Form 499,Difference,-0.703,,,-0.635,0.526
+Timing,Immediate,0.61,1.415,124,,
+Timing,Delayed,-0.673,-0.461,216,,
+Timing,Difference,1.283,,,1.307,0.1925
 Health,Health,-1.541,0.428,15,,
-Health,Non-health,-0.094,0.145,323,,
-Health,Difference,-1.447,,,-0.627,0.54
-History,Any prior,0.278,0.446,203,,
-History,No prior,-0.814,-0.537,135,,
-History,Difference,1.092,,,1.1,0.2725
-CAPTION,This table reports mean and median 30-day CARs by subgroup on the regression sample (N = 338). Each Difference row reports the difference in group means with a Welch two-sample t-test allowing unequal variances; medians are reported for each group but are not tested.,,,,,
+Health,Non-health,-0.144,0.145,325,,
+Health,Difference,-1.397,,,-0.604,0.5546
+History,Any prior,0.414,0.567,204,,
+History,No prior,-1.134,-0.603,136,,
+History,Difference,1.547,,,1.48,0.1403
+CAPTION,This table reports mean and median 30-day CARs by subgroup on the regression sample (N = 340). Each Difference row reports the difference in group means with a Welch two-sample t-test allowing unequal variances; medians are reported for each group but are not tested.,,,,,
