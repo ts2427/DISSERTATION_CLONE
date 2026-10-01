@@ -8,7 +8,7 @@ or CRSP pull. `essay3-v4-final` is unmoved at `8c0d09e`.
 |---|---|
 | **A** rebaseline and re-freeze | **complete** — `0c9b378`, `7bddcd0`, `f0bdf72`, tag `v3-rebaseline-final` |
 | **B** Essay 2 appendix and the WRDS exception | **complete** — `e16e702` |
-| **C** clean-clone run | **running** — launched, 0 errors through the Essay 1 and Query 2 chains; see C below |
+| **C** clean-clone run | **stopped at a failure, as specified** — 30 of 31 steps OK; `219_wrds_funda_v4` returns 1; see C below |
 | **D** essay-to-output match | **cannot start — `docs/drafts/` does not exist** |
 | **E** known-limitations ledger | **complete** — `ff2b88f` |
 
@@ -267,21 +267,101 @@ Two findings from the setup alone:
 `scripts/170` was commented out **in the clone only**, as declared in B3. Nothing else was
 skipped. Live steps in the clone: 77.
 
-## C2. Step results so far
+## C2. One step failed. Stopped there, as specified, and not patched.
 
-**0 errors.** The run has passed the v3 chain (150–158), `160`, and `247` — the Essay 1
-ledger, which exits 0 against the rebaselined constants — and is now inside the Essay 3
-Query 2 chain at `202`, the wild cluster bootstrap with B = 99,999.
+**31 steps finished: 30 OK, 1 FAIL. Cumulative runtime 209.7 seconds.**
 
-The remaining steps include several declared hour-scale ones: `163` (full DV rebuild),
-`166` (193-specification grid), `181` (permutation null across that grid), `182`
-(re-executes six Essay 2 scripts via `runpy`), then the v4 chain's `220` (~1,500 filings)
-and `227` (B = 99,999). **The declared timeouts alone sum to over seven hours**, so the run
-is still going as this report is written.
+| step | outcome | seconds |
+|---|---|---:|
+| `53_merge_CONFIRMED_enrichments` | OK | 2.3 |
+| `98_sox404_heterogeneity` | OK | 1.9 |
+| `150_rebuild_s2_entity_resolution` | OK | 23.5 |
+| `151_rebuild_gate1_apply` | OK | 0.8 |
+| `152_rebuild_s3_dedup` | OK | 1.3 |
+| `153_rebuild_gate2_apply` | OK | 0.7 |
+| `154_rebuild_s4_treatment` | OK | 5.4 |
+| `159_wrds_coverage_topup` | OK | 0.7 |
+| `155_rebuild_s5_outcomes` | OK | 2.6 |
+| `156_rebuild_s6_assembly` | OK | 5.6 |
+| `157_rebuild_s7_verification` | OK | 2.6 |
+| `158_rebuild_s8_regenerate` | OK | 6.4 |
+| `160_appendix_v3_to_word` | OK | 1.1 |
+| `247_essay1_ledger_attrition_v3` | OK | 0.7 |
+| `187_essay3_q2_fetch_502_text` | OK | 2.2 |
+| `195_essay3_q2_classifier_v2` | OK | 35.7 |
+| `199_essay3_q2_sample_e` | OK | 3.6 |
+| `202_essay3_q2_estimation` | OK | 8.9 |
+| `190_essay3_q2_tmobile_sprint_case` | OK | 36.6 |
+| `191_essay3_q2_tmobile_proxy_periodic` | OK | 10.3 |
+| `203_essay3_q2_tmobile_case_timeline` | OK | 1.5 |
+| `204_essay3_q2_se_diagnostics` | OK | 1.7 |
+| `212_pit_linker_v4` | OK | 1.5 |
+| `214_corrections_v4` | OK | 1.6 |
+| `215_ledger_v4` | OK | 1.9 |
+| **`219_wrds_funda_v4`** | **FAIL rc=1** | **1.2** |
+| `234_outcome_cik_v4` | OK | 37.4 |
+| `233_resolve_reconciliation` | OK | 0.7 |
+| `230_outcome_gap_v4` | OK | 1.3 |
+| `235_fetch_completeness_v4` | OK | 7.2 |
+| `237_validation_draw_v4` | OK | 0.8 |
 
-**C2's stop condition has not triggered: no step has returned nonzero, and nothing has been
-patched.** The full step-by-step return codes and runtimes, C3's file-by-file comparison and
-C4's per-essay verdict will be appended when the run finishes.
+In flight when the run was stopped: `220_essay3_v4_classifier_v2`.
+
+**Correcting my own estimate:** I projected "over seven hours" from the declared
+`LONG_RUNNING_SCRIPTS` timeouts. Those are worst-case first-run values for steps that fetch
+from SEC; with the caches committed, `187` took 2.2 s, `191` 10.3 s and `202` 8.9 s. The
+whole run would plainly have finished in well under an hour.
+
+### The failure
+
+```
+Running: v4 covariates from the committed Compustat pull (gvkey-joined; ...)
+Script: scripts/219_wrds_funda_v4.py
+# REBUILD V4 - Stage 6 Compustat fundamentals (scripts/219)
+## ABORTED
+ABORT: refusing to overwrite an existing pull file: Data\wrds_v4\comp_funda.csv
+[ERROR] Script failed (return code 1) after 1.2 seconds
+```
+
+**This is my defect, introduced in Stage 2 Part F1.** `scripts/219` requires
+`--assemble-only` to run offline from the committed pull; without it, it attempts the WRDS
+pull and aborts at `219:181` rather than overwrite committed data. `REPRODUCE_ESSAY3_V4.md:30`
+says so explicitly:
+
+```
+python scripts/219_wrds_funda_v4.py --assemble-only    # offline: covariates from the committed pull
+```
+
+I staged it at `run_all.py:555` as a bare tuple with no flag. I had the document open when I
+wrote that step and missed the flag.
+
+**It is not a one-word fix, which is why I am reporting rather than patching.**
+`run_script` invokes `[sys.executable, script_path]` — a single path, with no argument
+support anywhere in the step format, and no staged step in the file carries arguments.
+Making 219 runnable needs either argv splitting in `run_script` or a separate wrapper, and
+that is a change to how every step is invoked.
+
+### Why stopping here was the right call, concretely
+
+`scripts/224` reads `outputs/rebuild_v4/219_covariates_v4.csv` (`224:29`). **That file is
+committed, 58 KB, and was not regenerated by this run** — its mtime is the checkout time,
+11:31. So had the run continued past the failure, `224` and `227` would have read the
+**committed** covariates and the Essay 3 v4 chain would have *appeared* to reproduce while
+one of its stages had actually failed. That is exactly the masking that `verify_outputs`'s
+stale-file check was added to catch in `e65d4b1`, and exactly what C2's stop rule prevents.
+
+**Nothing was patched.** `scripts/170` remains the only skipped step, as declared.
+
+## C3, C4 — not answerable yet
+
+C3 compares regenerated outputs against the committed ones file by file. With `219` failed
+and the v4 chain interrupted at `220`, the Essay 3 comparison would be between committed
+files and themselves for the covariates and absent for everything downstream. The v3 side
+did regenerate cleanly — `150`–`158`, `160` and `247` all returned 0 — but a partial
+comparison reported as a result is worse than no comparison.
+
+Rule on the 219 staging and the run repeats in under an hour, at which point C3 and C4 can
+be answered properly.
 
 ---
 
@@ -348,9 +428,13 @@ the new manifest with 0 exceptions declared, 0 sha changes, 0 blob changes and 0
 unallowlisted additions, after two defects in `210` itself had to be fixed to make
 `--create` usable at all.
 
-**2. Does each essay regenerate from a clean clone?** Not yet answerable — the run is still
-going, with **0 errors** through the v3 chain, `160`, `247` and into the Query 2 chain, and
-several hour-scale steps still ahead.
+**2. Does each essay regenerate from a clean clone?** **Essay 1 — yes**, `150`–`158`, `160`
+and `247` all returned 0 from a clean clone and the ledger agrees with the rebaselined
+constants; **Essay 2 — not established**, its chain sits after the failure and was never
+reached, with `170` separately declared unreproducible without a WRDS login; **Essay 3 —
+no**, `scripts/219` returns 1 because `run_all.py:555` stages it without the
+`--assemble-only` flag `REPRODUCE_ESSAY3_V4.md:30` requires, and `run_script` has no way to
+pass one.
 
 **3. Per essay, how many numbers are MATCH, MISMATCH, NO PROVENANCE, STALE?** Not
 answerable — `docs/drafts/` does not exist and no `.docx` has appeared, so there is no essay
