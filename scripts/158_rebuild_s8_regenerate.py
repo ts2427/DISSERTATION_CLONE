@@ -383,7 +383,14 @@ T[14] = pd.DataFrame([{'Variable': v, 'Coef (log turnover)': round(mv.params[v],
 C['volume_fcc_coef'] = round(mv.params[TREAT], 4)
 C['volume_fcc_p'] = round(mv.pvalues[TREAT], 4)
 from sklearn.ensemble import RandomForestRegressor
-rf = RandomForestRegressor(n_estimators=500, random_state=42, n_jobs=-1)
+# n_jobs=1, not -1 (2026-10-01). random_state=42 fixes the trees, but n_jobs=-1
+# parallelises the aggregation of their importances, and the floating-point summation
+# order then depends on the thread count. table_15.csv therefore did not reproduce across
+# machines: firm_size_log came out 0.2386 here and 0.2392 in a clean clone, a spread of
+# about 6e-4. Row order and the top feature were stable, which is why constants_v3.json -
+# whose only dependency here is RF_top_feature - stayed byte-identical and the drift went
+# unnoticed. Single-threaded costs runtime and buys bit-reproducibility.
+rf = RandomForestRegressor(n_estimators=500, random_state=42, n_jobs=1)
 rf.fit(reg[CONTROLS].astype(float), y)
 T[15] = pd.DataFrame(sorted(zip(CONTROLS, rf.feature_importances_), key=lambda x: -x[1]),
                      columns=['Feature', 'Importance']).round(4)
