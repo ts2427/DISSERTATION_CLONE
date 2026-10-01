@@ -8,11 +8,43 @@ exception**, declared here in the same form as the WRDS and SEC stages in
 
 | Stage | Needs | Committed output it leaves behind |
 |---|---|---|
+| `121a` Form 499 entity matching (**staged with `--assemble-only`**) | the FCC Form 499 endpoint for a live refresh; **nothing** to run offline | `outputs/form499_matched_records.csv`, `outputs/form499_unmatched_with_candidates.csv`, from the committed snapshot |
 | `167` Essay 2 microstructure pull (**not staged**) | WRDS subscription (CRSP-licensed quote data) | the quote extract itself is gitignored; its derived table `outputs/tables/essay2_v2/t35_microstructure.csv` **is** committed |
 | `170` Essay 2 scope and bounds (**staged; fails loudly**) | the quote extract `167` pulls | `outputs/tables/essay2_v2/t43_intent_scope.csv` and `t44_equivalence_bounds.csv` |
 | `173`, `179` one-time licensed WRDS pulls | WRDS subscription | `Data/wrds/q6_*.csv`, `Data/wrds/crsp_daily_topup_dish.csv` — committed; **do not re-run** |
 
 Everything else reruns offline from those bytes.
+
+## `scripts/121a_form499_entity_matching.py` — the Form 499 registry
+
+**The live fetch.** Without `--assemble-only`, `121a` queries
+`https://apps.fcc.gov/cgb/form499/499results.cfm?xml=TRUE` with a declared academic
+User-Agent. From a clean clone that returns **HTTP 403**, which is why this was the one
+undeclared network dependency in the Essay 2 chain and why the clean-clone run of
+2026-10-01 failed on it.
+
+**The snapshot, and how it was obtained.** `Data/edgar/form499_registry.xml`, 63.8 MB,
+Git-LFS tracked, committed **2026-08-04** in `77b362d` ("Canonical V3: rebuild chain,
+vintage snapshots, and portability closure"). It is the response body of exactly that
+query, and it carries the FCC's own stamp in its root element:
+
+```xml
+<Filer499QueryResults ... Updated="2026-07-21" RecordCount="20669" >
+```
+
+So the registry vintage is **2026-07-21** — the FCC's last update before the snapshot was
+taken — and it contains **20,669 `<Filer>` records**. Treatment is assigned from this
+snapshot, not from a live query, which is what makes the Form 499 membership stable across
+reruns.
+
+**Offline mode.** `python scripts/121a_form499_entity_matching.py --assemble-only` parses
+the snapshot instead of querying, and prints the stamp it read so the vintage is in the log.
+`run_all.py` stages the step with that flag. **Verified: the assembled outputs are
+byte-identical to the committed `outputs/form499_matched_records.csv` and
+`outputs/form499_unmatched_with_candidates.csv`.**
+
+Without the flag the step still attempts the live fetch, and on a non-200 it now names the
+flag and the snapshot path in the error rather than failing silently.
 
 ## `scripts/170_essay2_scope_and_bounds.py` — the exception in full
 

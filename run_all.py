@@ -627,7 +627,10 @@ Log file: {log_path}
             {
                 'category': 'DATA PREPARATION - FORM 499 CLASSIFICATION',
                 'scripts': [
-                    ('scripts/121a_form499_entity_matching.py', 'Form 499 Entity Matching: Exact-string match (normalized) PRC firms to FCC registry (107/779 matched)'),
+                    # --assemble-only is REQUIRED from a clean clone: the live FCC endpoint
+                    # returns HTTP 403, so the step parses the committed registry snapshot
+                    # Data/edgar/form499_registry.xml instead (docs/claude/REPRODUCE_ESSAY2.md).
+                    ('scripts/121a_form499_entity_matching.py', 'Form 499 Entity Matching: Exact-string match (normalized) PRC firms to FCC registry (107/779 matched)', ['--assemble-only']),
                     ('scripts/121b_form499_coverage_validation.py', 'Form 499 Coverage Validation: Validate matches against start/end dates (88 date-valid)'),
                     ('scripts/121c_merge_form499_classification.py', 'Merge Form 499 Classification: Add fcc_form499 binary to dataset (79 treated in regression sample)'),
                     ('scripts/122_manual_form499_corrections.py', 'Manual Form 499 Corrections: Apply two-clause rule to SIC-flagged firms (add +36 treated via parent-brand rule) → FINAL_DISSERTATION_DATASET_FORM499_CORRECTED.csv'),
