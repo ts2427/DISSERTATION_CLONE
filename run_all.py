@@ -239,15 +239,16 @@ LFS_PLACEHOLDER_MAGIC = "version https://git-lfs"
 # 40 minutes in. Each is annotated with what needs it, so the list can be maintained.
 REQUIRED_INPUTS = [
     ("Data/processed/rebuild/CANONICAL_V3.csv",
-     "the canonical event table; 19 live steps read it, including 156-158 and the v4 chain"),
+     "the canonical event table; 18 live steps read it, including 156-158 and the v4 chain"),
     ("outputs/rebuild/constants_v3.json",
-     "the Essay 1 assertion baseline (158, 160, 163 and the Query 2 chain read it)"),
+     "the Essay 1 assertion baseline; 7 live steps read it (156, 158, 163, 199, 202, 210, 247)"),
     ("outputs/essay3_v4/constants_essay3_v4.json",
      "the Essay 3 assertion baseline; scripts/227 asserts every ladder value against it"),
-    ("Data/processed/FINAL_DISSERTATION_DATASET_FORM499_CORRECTED.csv",
-     "pre-rebuild, but still read by 5 live steps: 122, 86c, 90b, 143, 144"),
-    ("Data/enrichment/executive_changes.csv",
-     "merged by scripts/53; its producer (46) was retired 2026-09-29"),
+    # RETIRED 2026-10-01 (publish-ready prune): the two pre-rebuild inputs below were
+    # required only by steps that the prune retired. FINAL_DISSERTATION_DATASET_FORM499_
+    # CORRECTED.csv was read by 122, 86c, 90b, 143 and 144, and executive_changes.csv was
+    # merged by 53 - all six are now commented out, so no live step reads either file and
+    # the guard no longer enforces them. Both remain committed.
     ("Data/wrds/crsp_daily_returns.csv", "returns for every market-model step"),
     ("Data/wrds/market_indices.csv", "the market index for every market-model step"),
 ]
@@ -509,11 +510,13 @@ Log file: {log_path}
             {
                 'category': 'DATA PREPARATION - ENRICHMENTS',
                 'scripts': [
-                    ('scripts/53_merge_CONFIRMED_enrichments.py', 'Merge All Enrichments (Prior breaches, breach severity, media coverage, Item 5.02 executive turnover, enforcement) → FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv'),
+                    # RETIRED 2026-10-01 (publish-ready prune): pre-rebuild enrichment merge
+                    # ('scripts/53_merge_CONFIRMED_enrichments.py', 'Merge All Enrichments (Prior breaches, breach severity, media coverage, Item 5.02 executive turnover, enforcement) → FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv'),
                     # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
                     # and feeds no constants key, appendix table, ledger or cited figure.
                     # ('scripts/99_add_cpni_hhi_variables.py', 'Add CPNI & HHI Variables (Essay 1 Alternative Explanations)'),
-                    ('scripts/98_sox404_heterogeneity.py', 'Governance Enrichment: SOX 404 proxy → FINAL_DISSERTATION_DATASET_WITH_GOVERNANCE.csv (required by 121c)'),
+                    # RETIRED 2026-10-01 (publish-ready prune): pre-rebuild governance merge + heterogeneity table
+                    # ('scripts/98_sox404_heterogeneity.py', 'Governance Enrichment: SOX 404 proxy → FINAL_DISSERTATION_DATASET_WITH_GOVERNANCE.csv (required by 121c)'),
                 ]
             },
             {
@@ -529,7 +532,8 @@ Log file: {log_path}
                     ('scripts/156_rebuild_s6_assembly.py', 'Stage 6: keyed covariates (NO positional joins); Item 5.02 from live EDGAR (cached) → CANONICAL_V3.csv'),
                     ('scripts/157_rebuild_s7_verification.py', 'Stage 7: disclosure-date armor, OCR health check (bounded), CRSP-attrition balance'),
                     ('scripts/158_rebuild_s8_regenerate.py', 'Stage 8: all three essays + ROA amendment + appendix v3 + CONSTANTS BLOCK V3 (assertion baseline)'),
-                    ('scripts/160_appendix_v3_to_word.py', 'Essay 1 appendix v3 -> Word: renders the 16 tables 158 writes (must follow 158)'),
+                    # RETIRED 2026-10-01 (publish-ready prune): renders the kept appendix tables to .docx
+                    # ('scripts/160_appendix_v3_to_word.py', 'Essay 1 appendix v3 -> Word: renders the 16 tables 158 writes (must follow 158)'),
                     ('scripts/247_essay1_ledger_attrition_v3.py', 'Essay 1 attrition ledger, computed live from the v3 chain (10 assertions). EXITS NONZERO while constants_v3.json is stale against CANONICAL_V3 - that failure is the pending rebaseline, and the ledger is written either way'),
                 ]
             },
@@ -630,17 +634,23 @@ Log file: {log_path}
                     # --assemble-only is REQUIRED from a clean clone: the live FCC endpoint
                     # returns HTTP 403, so the step parses the committed registry snapshot
                     # Data/edgar/form499_registry.xml instead (docs/claude/REPRODUCE_ESSAY2.md).
-                    ('scripts/121a_form499_entity_matching.py', 'Form 499 Entity Matching: Exact-string match (normalized) PRC firms to FCC registry (107/779 matched)', ['--assemble-only']),
-                    ('scripts/121b_form499_coverage_validation.py', 'Form 499 Coverage Validation: Validate matches against start/end dates (88 date-valid)'),
-                    ('scripts/121c_merge_form499_classification.py', 'Merge Form 499 Classification: Add fcc_form499 binary to dataset (79 treated in regression sample)'),
-                    ('scripts/122_manual_form499_corrections.py', 'Manual Form 499 Corrections: Apply two-clause rule to SIC-flagged firms (add +36 treated via parent-brand rule) → FINAL_DISSERTATION_DATASET_FORM499_CORRECTED.csv'),
+                    # RETIRED 2026-10-01 (publish-ready prune): pre-rebuild Form 499 entity matching
+                    # ('scripts/121a_form499_entity_matching.py', 'Form 499 Entity Matching: Exact-string match (normalized) PRC firms to FCC registry (107/779 matched)', ['--assemble-only']),
+                    # RETIRED 2026-10-01 (publish-ready prune): pre-rebuild Form 499 coverage validation
+                    # ('scripts/121b_form499_coverage_validation.py', 'Form 499 Coverage Validation: Validate matches against start/end dates (88 date-valid)'),
+                    # RETIRED 2026-10-01 (publish-ready prune): pre-rebuild Form 499 classification merge
+                    # ('scripts/121c_merge_form499_classification.py', 'Merge Form 499 Classification: Add fcc_form499 binary to dataset (79 treated in regression sample)'),
+                    # RETIRED 2026-10-01 (publish-ready prune): pre-rebuild Form 499 manual corrections
+                    # ('scripts/122_manual_form499_corrections.py', 'Manual Form 499 Corrections: Apply two-clause rule to SIC-flagged firms (add +36 treated via parent-brand rule) → FINAL_DISSERTATION_DATASET_FORM499_CORRECTED.csv'),
                 ]
             },
             {
                 'category': 'FORM 499 CORRECTED ANALYSES [LEGACY — superseded 8/4/2026 by the CANONICAL V3 chain above; retained to regenerate the old base for the old-vs-new data-quality comparison exhibit]',
                 'scripts': [
-                    ('scripts/86c_essay1_h1_h4_form499_corrected.py', 'H1-H4 Re-estimation with Form 499 Corrected Classification (n=115 treated, authoritative regulatory status)'),
-                    ('scripts/90b_essay2_h5_form499_corrected.py', 'H5 Volatility Re-estimation with Form 499 Corrected (First real result, post-deduplication)'),
+                    # RETIRED 2026-10-01 (publish-ready prune): pre-rebuild Essay 1 H1-H4 regressions
+                    # ('scripts/86c_essay1_h1_h4_form499_corrected.py', 'H1-H4 Re-estimation with Form 499 Corrected Classification (n=115 treated, authoritative regulatory status)'),
+                    # RETIRED 2026-10-01 (publish-ready prune): pre-rebuild Essay 2 H5 heterogeneity
+                    # ('scripts/90b_essay2_h5_form499_corrected.py', 'H5 Volatility Re-estimation with Form 499 Corrected (First real result, post-deduplication)'),
                     # RETIRED 2026-09-11 (Essay 3 Query 2 Part H): 7/28-chain H6 on the any-5.02 outcome; superseded by the Query 2 chain
                     # ('scripts/91m_essay3_h6_form499_corrected.py', 'H6 Executive Turnover Re-estimation with Form 499 Corrected (First real result, MDE/TOST)'),
                     # RETIRED 2026-08-30 (Query 5 Part F): 7/28-vintage chain superseded by appendix_v3 (scripts/158/160).
@@ -649,8 +659,10 @@ Log file: {log_path}
                     # RETIRED 2026-08-30 (Query 5 Part F): 7/28-vintage chain; v3 ledger lives in CANONICAL_V3_LINEAGE.md + ESSAY2 ledgers.
                     # The script itself was DELETED in 0e75740; the entry below is provenance only. Do not revive it:
                     # outputs/SAMPLE_ATTRITION_LEDGER.md is now a TOMBSTONE and regenerating it would overwrite that.
-                    ('scripts/143_essay1_results_supplements.py', 'Essay 1 Results Supplements (timing x FCC interaction, 5-day CAR, TOST min bounds, overlap share, 60/90d horizons under uniform convention; CONTAINS car_30d provenance finding - stored column inherits pre-audit computation) → outputs/ESSAY1_RESULTS_SUPPLEMENTS.md'),
-                    ('scripts/144_residual_duplicate_audit.py', 'Residual-Duplicate Audit (name-variant twins defeating exact-key dedup: 26 groups/30 excess rows → 754-event candidate set; ±3-day adjacency candidates reported not collapsed; NOTHING canonical overwritten) → outputs/RESIDUAL_DUPLICATE_AUDIT.md + FINAL_DATASET_DEDUP_V2_CANDIDATE.csv'),
+                    # RETIRED 2026-10-01 (publish-ready prune): pre-rebuild Essay 1 results supplements
+                    # ('scripts/143_essay1_results_supplements.py', 'Essay 1 Results Supplements (timing x FCC interaction, 5-day CAR, TOST min bounds, overlap share, 60/90d horizons under uniform convention; CONTAINS car_30d provenance finding - stored column inherits pre-audit computation) → outputs/ESSAY1_RESULTS_SUPPLEMENTS.md'),
+                    # RETIRED 2026-10-01 (publish-ready prune): pre-rebuild residual duplicate audit
+                    # ('scripts/144_residual_duplicate_audit.py', 'Residual-Duplicate Audit (name-variant twins defeating exact-key dedup: 26 groups/30 excess rows → 754-event candidate set; ±3-day adjacency candidates reported not collapsed; NOTHING canonical overwritten) → outputs/RESIDUAL_DUPLICATE_AUDIT.md + FINAL_DATASET_DEDUP_V2_CANDIDATE.csv'),
                 ]
             },
             {
@@ -659,7 +671,8 @@ Log file: {log_path}
                     # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
                     # and feeds no constants key, appendix table, ledger or cited figure.
                     # ('scripts/70_summary_statistics.py', 'Summary Statistics (Table 1)'),
-                    ('scripts/80_essay1_car_regressions.py', 'Essay 1 Main Regressions (H1-H4: CAR on disclosure/FCC/reputation/severity) - HC3 robust SEs as primary [REFERENCE - SIC-BASED]'),
+                    # RETIRED 2026-10-01 (publish-ready prune): pre-rebuild Essay 1 CAR regressions
+                    # ('scripts/80_essay1_car_regressions.py', 'Essay 1 Main Regressions (H1-H4: CAR on disclosure/FCC/reputation/severity) - HC3 robust SEs as primary [REFERENCE - SIC-BASED]'),
                     # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
                     # and feeds no constants key, appendix table, ledger or cited figure.
                     # ('scripts/h1_timing_fcc_interaction.py', 'H1 Theoretical Test: Timing × FCC Interaction (formal test of differential effects by regulatory status, canonical specification)'),
@@ -715,15 +728,19 @@ Log file: {log_path}
             {
                 'category': 'MACHINE LEARNING',
                 'scripts': [
-                    ('scripts/60_train_ml_model.py', 'Train ML Model'),
-                    ('scripts/61_ml_validation.py', 'ML Validation & Robustness Text'),
+                    # RETIRED 2026-10-01 (publish-ready prune): ML feature-importance models and figures
+                    # ('scripts/60_train_ml_model.py', 'Train ML Model'),
+                    # RETIRED 2026-10-01 (publish-ready prune): ML validation figures and robustness text
+                    # ('scripts/61_ml_validation.py', 'ML Validation & Robustness Text'),
                 ]
             },
             {
                 'category': 'ECONOMIC SIGNIFICANCE & COMPREHENSIVE HETEROGENEITY ANALYSIS',
                 'scripts': [
-                    ('scripts/96_economic_significance.py', 'Economic Significance Analysis: FCC costs, volatility impact, governance disruption in dollar terms'),
-                    ('scripts/97_heterogeneous_mechanisms.py', 'Heterogeneous Mechanisms: Effects vary by firm size, breach type, prior history'),
+                    # RETIRED 2026-10-01 (publish-ready prune): economic-significance figures
+                    # ('scripts/96_economic_significance.py', 'Economic Significance Analysis: FCC costs, volatility impact, governance disruption in dollar terms'),
+                    # RETIRED 2026-10-01 (publish-ready prune): heterogeneous-mechanism figures
+                    # ('scripts/97_heterogeneous_mechanisms.py', 'Heterogeneous Mechanisms: Effects vary by firm size, breach type, prior history'),
                     # J1 2026-09-29: DUPLICATE declaration removed (the step is already staged
                     # earlier in the DATA PREPARATION category, where 121c needs it). It was
                     # running twice per pipeline.
@@ -770,10 +787,14 @@ Log file: {log_path}
                     # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
                     # and feeds no constants key, appendix table, ledger or cited figure.
                     # ('scripts/robustness_1_alternative_windows.py', 'Alternative Event Windows: CAR across multiple breach-to-event intervals'),
-                    ('scripts/robustness_2_timing_thresholds.py', 'Timing Thresholds: Disclosure timing effects (1d, 3d, 7d, 14d, 30d)'),
-                    ('scripts/robustness_3_sample_restrictions.py', 'Sample Restrictions: Results stratified by FCC, data type, firm size'),
-                    ('scripts/robustness_4_standard_errors.py', 'Standard Errors: HC3, Clustered, Bootstrap comparison'),
-                    ('scripts/robustness_5_fixed_effects.py', 'Fixed Effects: Industry 2-digit, 4-digit SIC, Year, and Firm FE'),
+                    # RETIRED 2026-10-01 (publish-ready prune): robustness figure set R02
+                    # ('scripts/robustness_2_timing_thresholds.py', 'Timing Thresholds: Disclosure timing effects (1d, 3d, 7d, 14d, 30d)'),
+                    # RETIRED 2026-10-01 (publish-ready prune): robustness figure set R03
+                    # ('scripts/robustness_3_sample_restrictions.py', 'Sample Restrictions: Results stratified by FCC, data type, firm size'),
+                    # RETIRED 2026-10-01 (publish-ready prune): robustness figure set R04
+                    # ('scripts/robustness_4_standard_errors.py', 'Standard Errors: HC3, Clustered, Bootstrap comparison'),
+                    # RETIRED 2026-10-01 (publish-ready prune): robustness figure set R05
+                    # ('scripts/robustness_5_fixed_effects.py', 'Fixed Effects: Industry 2-digit, 4-digit SIC, Year, and Firm FE'),
                     # RETIRED 2026-09-29 (Part H): reads no data at all - it hardcodes the pre-rebuild
                     # n = 653 (line 19) and computes an MDE from it. Feeds nothing; output untracked.
                     # ('scripts/power_analysis_h3_h4.py', 'Power Sensitivity Analysis: H3/H4 null hypothesis assessment (MDE at 80% power)'),
@@ -817,7 +838,8 @@ Log file: {log_path}
             {
                 'category': 'DEFENSE PREPARATION',
                 'scripts': [
-                    ('scripts/defense_prep_all_tasks.py', 'Pre-Defense Preparation: Five critical tasks - FCC economic significance, deduplication summary, H2 stability, power analysis, SCM vs OLS comparison'),
+                    # RETIRED 2026-10-01 (publish-ready prune): defense-prep text
+                    # ('scripts/defense_prep_all_tasks.py', 'Pre-Defense Preparation: Five critical tasks - FCC economic significance, deduplication summary, H2 stability, power analysis, SCM vs OLS comparison'),
                 ]
             }
         ]

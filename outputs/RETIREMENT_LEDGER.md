@@ -313,3 +313,113 @@ re-creating it for each later commit — it was re-created three times in this s
 **Only the tag was force-pushed.** No branch history was rewritten; `rebuild-v4` is
 append-only throughout. `essay3-v4-final` is untouched and remains at `8c0d09e`
 (tag object `60ca75b`).
+
+---
+
+# PUBLISH-READY PRUNE OF run_all.py — 2026-10-01 (Part B)
+
+`run_all.py` went from **78 live steps to 57**. Twenty-one steps are commented out in
+place; **no script was deleted**, and `git diff --stat -- scripts/` is empty for this
+change. Each retired tuple carries a one-line reason above it in `run_all.py`.
+
+## The criterion applied
+
+A step stays if any output it writes, directly or through a downstream step, reaches:
+`constants_v3.json`, the Essay 1 attrition ledger, the 16 `appendix_v3` tables,
+`constants_essay3_v4.json`, the 11 Essay 3 tables, the Essay 3 T-Mobile exhibits, or the
+Essay 2 canonical chain (163–182 and their inputs). Guards and gates stay by ruling.
+
+## Why this was decided by family and not path-by-path
+
+A static resolver over the scripts' own path expressions was built first and **proposed two
+retirements that would have broken the pipeline**:
+
+| proposed | why it was wrong |
+|---|---|
+| `scripts/156` | writes `CANONICAL_V3.csv` through `out = Path(...)`, which a literal scan misses |
+| `scripts/212` | writes `v4_212_links.csv` through `OUT / f"{PREFIX}{name}"` — read by **219, 224 and 227**, and 227 writes `constants_essay3_v4.json` |
+
+Both were caught only by a text cross-check, and the second shows the failure mode is not
+fixable by a better resolver: the filename does not exist anywhere in the source. A third
+case pointed the same way — `scripts/239`, kept because 244 reads its output, genuinely
+reads `outputs/essay3_q2/constants_essay3_q2.json`, so the Query 2 chain is **not** inert.
+
+So **nothing in the analytical chains was pruned at all.** Kept whole: the v3 chain
+(150–160), the Essay 2 canonical chain (163–182), the Query 2 chain (187–204), the v4 chain
+(212–247), and the gates (`210`, `217`, `246`). What retired is two families where the
+evidence is categorical rather than per-path.
+
+## The test that justifies the retirement
+
+Every kept script was searched for **any** reference to the retired families. Five hits,
+all adjudicated:
+
+| kept script | reference | verdict |
+|---|---|---|
+| `247` | a docstring saying it does **not** read `FINAL_DISSERTATION_DATASET*` | not a dependency |
+| `214` | reads `FINAL_DISSERTATION_DATASET_DEDUPLICATED.csv` | **committed**; written by no live step, before or after |
+| `163`, `164`, `166` | read `FINAL_DISSERTATION_DATASET_ENRICHED.csv` | **committed**; written by no live step, before or after |
+
+The two files the kept scripts genuinely read are produced by **none of the 21 retired
+steps** — verified by searching each retired script's write calls for them. They were
+already committed inputs rather than pipeline products, so the prune cannot starve a kept
+step in a fresh clone.
+
+## Retired — pre-rebuild `FINAL_DISSERTATION_DATASET` lineage (11)
+
+| step | why it goes |
+|---|---|
+| `53_merge_CONFIRMED_enrichments` | pre-rebuild enrichment merge; its output is committed and read by nothing live that it produces |
+| `98_sox404_heterogeneity` | pre-rebuild governance merge; its heterogeneity table is a 7/28-era exhibit |
+| `121a_form499_entity_matching` | pre-rebuild Form 499 matching; v3 treatment comes from `scripts/154` |
+| `121b_form499_coverage_validation` | validates 121a's output, which nothing cited reads |
+| `121c_merge_form499_classification` | merges 121a/b into the pre-rebuild dataset |
+| `122_manual_form499_corrections` | the pre-rebuild two-clause correction; superseded by 154 |
+| `86c_essay1_h1_h4_form499_corrected` | pre-rebuild Essay 1 H1–H4; superseded by `158`'s `appendix_v3` |
+| `90b_essay2_h5_form499_corrected` | pre-rebuild Essay 2 H5; superseded by `scripts/165` |
+| `80_essay1_car_regressions` | pre-rebuild Essay 1 CAR regressions, SIC-based |
+| `143_essay1_results_supplements` | supplements to the pre-rebuild Essay 1 results |
+| `144_residual_duplicate_audit` | audits the pre-rebuild dataset; v3 dedup is Gate 2 in `152`/`153` |
+
+## Retired — presentation only (10)
+
+| step | why it goes |
+|---|---|
+| `60_train_ml_model` | writes only `outputs/ml_models/` figures and importances |
+| `61_ml_validation` | writes only `outputs/validation/` figures and robustness prose |
+| `96_economic_significance` | writes only `outputs/economic_significance/` |
+| `97_heterogeneous_mechanisms` | writes only `outputs/heterogeneous_analysis/` figures |
+| `robustness_2_timing_thresholds` | writes only `outputs/robustness/` R02 |
+| `robustness_3_sample_restrictions` | writes only `outputs/robustness/` R03 |
+| `robustness_4_standard_errors` | writes only `outputs/robustness/` R04 |
+| `robustness_5_fixed_effects` | writes only `outputs/robustness/` R05 |
+| `defense_prep_all_tasks` | writes only `outputs/defense_prep/` text |
+| `160_appendix_v3_to_word` | writes only `.docx`; **flagged** — see below |
+
+## One flagged judgment call: `160`
+
+`160` renders the kept 16 `appendix_v3` tables to `APPENDIX_V3_TABLES.docx` and
+`INTEXT_TABLES_4_5.docx`. The criterion retires it: the keep-set names the **16 CSVs**, and
+the Word files are not in it. It is recorded here as the single retirement that removes a
+convenience rather than a dead end — un-commenting one line restores it, and the `.docx`
+files remain committed. **This is reversible on one word from Tim.**
+
+## Two `REQUIRED_INPUTS` entries removed as a consequence
+
+The pre-flight guard enforced two inputs that only retired steps needed:
+
+- `FINAL_DISSERTATION_DATASET_FORM499_CORRECTED.csv` — annotated "read by 5 live steps: 122,
+  86c, 90b, 143, 144". **All five are now retired.**
+- `Data/enrichment/executive_changes.csv` — merged by `scripts/53`, now retired.
+
+Confirmed no live step reads either. Both files remain committed. The guard now holds 5
+entries, and two stale annotations were corrected to the true live-reader counts
+(`CANONICAL_V3.csv` 18, `constants_v3.json` 7).
+
+## What the retired steps' committed outputs still do
+
+Retiring a step **unstages its execution, not its output**. The committed artefacts of
+retired steps stay in the repository and some are still read: `214`, `163`, `164` and `166`
+read two pre-rebuild datasets, and `verify_outputs()` still lists
+`outputs/economic_significance/` and `TABLE_GOVERNANCE_HETEROGENEITY_RESULTS.csv` among its
+legacy files. All are committed, so a fresh clone has them and the check still passes.
