@@ -90,6 +90,32 @@ committed even though the quote extract it came from cannot be.
 the Essay 2 appendix only. Any other failing step is a real failure and must not be
 skipped.
 
+## `t24_a4_deadline_scan.csv` — the record, and why it grew
+
+**The regenerated file is the record** (Tim's ruling, 2026-10-01). It has **100 rows**; the
+version it replaced had 98.
+
+`scripts/164` greps the repository for phrasing that describes 47 C.F.R. § 64.2011 as a
+customer-disclosure deadline, which the rule does not contain. Two things changed the
+result:
+
+1. **Two rows were added, and the prior version simply predated them.** The replaced t24
+   was written **2026-09-08**. `outputs/ESSAY3_QUERY3_REPORT.md` and
+   `outputs/ESSAY3_QUERY4_REPORT.md` were both added **2026-09-25**, so they did not exist
+   when it was generated. Both new rows are those reports *stating zero hits* —
+   "`7-Day Rule`: **0 hits anywhere**" and "7-Day Rule 0" — not descriptions of the rule as
+   a deadline. The scan reads `outputs/*.md`, so audit reports that quote the phrases in
+   order to deny them appear in their own results.
+2. **One row was removed.** `scripts/248`, the essay-to-output match harness, carries the
+   phrasing in its own pattern list and so put itself in the scan. It is now excluded by
+   script number alongside the purge detectors `168`, `217` and `240`, for the same reason.
+
+**No exclusion rule both is principled and reproduces the 2026-09-08 file.** "Exclude audit
+reports that quote these phrases" would also drop
+`outputs/DEAD_DATE_PURGE_INVENTORY.md`, which that file *does* contain. So the choice was
+between tailoring the rule to hit a number and accepting the regenerated output; the
+regenerated output is the record.
+
 ## The appendix situation, in one line
 
 The Essay 2 appendix Tim cites (`outputs/ESSAY2_APPENDIX.md`, 28 tables) draws on
