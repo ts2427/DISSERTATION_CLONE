@@ -452,3 +452,117 @@ and runs the moment the files land.
 
 **4. How many purge-list hits and how many contradicted claims does each essay contain?**
 Not answerable, for the same reason, with both added D4 checks implemented and unrun.
+
+---
+
+# FIX ROUND — 2026-10-01, after the clean-clone findings
+
+| ruling | commit | outcome |
+|---|---|---|
+| `121a` offline mode | `2ca5639` | **outputs byte-identical**; snapshot vintage documented |
+| `182` carry 170's rows | `42acb85` | **`t53` byte-identical**; exposed the undeclared `bidask` dependency |
+| `210` long paths | `220f2ef` | **deletions 14 → 0** in a 369-character-path clone |
+| `210` EOL adjudication | `16f9a60` | **121a, 164, 182 now classify EOL-only**; gate still catches real changes |
+| `158` `n_jobs=1` | `a117145` | **`table_15` byte-identical across two runs**; `constants_v3.json` unchanged |
+| `t24` accepted as the record | `246ed6e` | note recorded in `REPRODUCE_ESSAY2.md` |
+
+## 210's EOL adjudication, and what it fixed
+
+The manifest now carries a **`sha256_eolnorm`** column — sha256 of the bytes with CRLF
+collapsed to LF — written by `--create` alongside `sha256`. `verify()` compares the disk's
+normalised hash against that column, so **both sides of the comparison come from the
+manifest**. The old test compared the working tree to the `v3-frozen` *tag* while the
+sha256 it was explaining came from the *manifest*; after a re-freeze those disagree, which
+is why three scripts edited this session were misreported as content changes.
+
+Manifests without the column fall back to the old git-diff test, so an old manifest still
+works and the output says which test was used. The file is read in one pass rather than
+chunked, because chunking can split a CRLF across the boundary.
+
+**Verified, the case the ruling names:** rewriting `scripts/121a`, `164` and `182` with
+CRLF moves eol artifacts 0 → 3, leaves `SHA256 CHANGED` at 0, names all three in the
+output, and the gate still returns **PASS rc=0**.
+
+**Negative-tested, so the escape hatch cannot be abused:** CRLF *plus one added line* to
+`scripts/164` returns **FAIL rc=1** with `SHA256 CHANGED 1` and eol artifacts 0. A real
+content change is still caught even when wrapped in a line-ending change.
+
+## 210 in a fresh deep-path clone: the long-path fix works, a third defect blocks the PASS
+
+Clone into a 195-character directory, **longest tracked path 369 characters**, `clone rc=0`,
+**0 missing tracked files**:
+
+| finding | before the fixes | now |
+|---|---:|---:|
+| `DELETED / UNTRACKED` | 14 | **0** |
+| `BLOB ID CHANGED` | 0 | **0** |
+| `ADDED outside allowlist` | 0 | **0** |
+| `SHA256 CHANGED` | 10 | **19** |
+| eol artifacts | 1,351 | 1,346 |
+| RESULT | FAIL | **FAIL** |
+
+**The two ruled fixes both worked.** Deletions went to zero at a path length that
+previously hid 13 files, and the three edited scripts are no longer misreported.
+
+**A third defect, which the ruling did not cover and which I have not patched.** All 19
+remaining `SHA256 CHANGED` entries are `Data/JSON Files/nvdcve-2.0-20NN.json`, and the
+cause is that **the manifest's `sha256` is machine-state-dependent for Git-LFS files**:
+
+| | bytes on disk | first characters |
+|---|---:|---|
+| authoring repo | **136** | `version https://git-lfs.github.com/spec/v1` |
+| the clone, after `git lfs pull` | **37,669,631** | `{ "resultsPerPage" : 6580, …` |
+
+The manifest records 136 bytes, because on this machine those 19 files are **unsmudged LFS
+pointers**; the clone holds the real content. 210 compares on-disk bytes, so it correctly
+reports a difference — the two machines genuinely hold different bytes for the same tracked
+path. 210's own header already names this duality ("Git-LFS pointers in the index but real
+content in the working tree"); what it does not handle is the duality running the other
+way.
+
+**So 210 can only PASS on a machine whose LFS smudge state matches the one that wrote the
+manifest.** Three ways out, for a ruling rather than my choice: record the LFS **oid** for
+pointer files instead of the on-disk hash; compare the *smudged* content on both sides; or
+exempt the known-pointer paths and say so in the output. The first is the smallest change
+and the only one that makes the manifest machine-independent.
+
+## `table_15` determinism
+
+`scripts/158:385-390` now passes `n_jobs=1`. The seed was always fixed; `n_jobs=-1`
+parallelised the aggregation of tree importances, so the floating-point summation order
+depended on the thread count.
+
+- **`table_15.csv` is byte-identical across two consecutive runs** (md5 `3a7962abbd89`
+  both times), where it previously differed between machines by up to 6 × 10⁻⁴.
+- **`constants_v3.json` is unchanged** (md5 `25ab773e8066` before and after), and 158's
+  assertion check against the existing baseline passed on both runs.
+- The single-threaded values equal the committed ones on this machine, so only the script
+  moved.
+
+## Part D — the drafts are not on this machine
+
+Run exactly as ruled:
+
+```
+$ python scripts/248_essay_to_output_match.py --drafts "C:\Users\mcobp\Documents\essay_drafts"
+ABORT: no drafts directory at C:\Users\mcobp\Documents\essay_drafts
+Part D needs the three essay .docx drafts. Nothing was guessed or inferred.
+EXIT: 2
+```
+
+`C:\Users\mcobp\Documents\` exists; it has no `essay_drafts` subfolder. Searched the
+whole user profile at any depth:
+
+- **no directory named `essay_drafts` anywhere**;
+- **no `.docx` modified anywhere under the profile in the last two days**;
+- no `docs/drafts/` in the second repository copy at
+  `C:\Users\mcobp\OneDrive\Documents\DISSERTATION_CLONE\`, and no `.docx` in its
+  top three levels.
+
+**Nothing in Part D was attempted.** No number was extracted, classified or guessed, no
+report was written, and no file containing draft text exists to commit. Both added D4
+checks are implemented and unrun.
+
+The harness is ready: `scripts/248_essay_to_output_match.py --drafts <dir>
+--out <dir>/ESSAY_MATCH_REPORT.md` writes wherever it is told, so it can put the report in
+the drafts folder outside the repository as ruled.
