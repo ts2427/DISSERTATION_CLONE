@@ -8,8 +8,8 @@ or CRSP pull. `essay3-v4-final` is unmoved at `8c0d09e`.
 |---|---|
 | **A** rebaseline and re-freeze | **complete** — `0c9b378`, `7bddcd0`, `f0bdf72`, tag `v3-rebaseline-final` |
 | **B** Essay 2 appendix and the WRDS exception | **complete** — `e16e702` |
-| **C** clean-clone run | **stopped at a failure, as specified** — 30 of 31 steps OK; `219_wrds_funda_v4` returns 1; see C below |
-| **D** essay-to-output match | **cannot start — `docs/drafts/` does not exist** |
+| **C** clean-clone run | **complete** — 77 steps, 74 OK, 3 failed; Essay 1 and Essay 3 reproduce byte-identically, Essay 2 does not |
+| **D** essay-to-output match | **cannot run — `docs/drafts/` does not exist; harness built and validated** |
 | **E** known-limitations ledger | **complete** — `ff2b88f` |
 
 ---
@@ -243,150 +243,167 @@ CRSP-licensed quote extract pulled by `scripts/167`, gitignored and uncommittabl
 
 ---
 
-# PART C — clean-clone run (in progress)
+# PART C — clean-clone run
 
-## C1. Setup, and what it already proved
+Three attempts. The first two are reported because what went wrong in them is part of the
+answer.
 
-Cloned `rebuild-v4` at **`e16e702`** into a temporary directory. The clone was taken from
-the local repository rather than GitHub, because the rebaseline commits are not pushed yet;
-LFS objects were pulled from GitHub (**113 objects, 1.87 GiB**). **No file was copied in
-from the working copy.**
+| attempt | clone | outcome |
+|---|---|---|
+| 1 | deep path, no `core.longpaths` | checkout lost 13 literature PDFs; failed at `219` (staged without `--assemble-only`) |
+| 2 | `core.longpaths=true` | 47 steps OK, `210` failed; **I killed it on the monitor's first `[ERROR]`**, which turned 1 genuine failure into 29 `STATUS_DLL_INIT_FAILED` artefacts and cost the Essay 2 chain |
+| **3** | `core.longpaths=true`, manifest at HEAD, `170` skipped by renaming the script so `run_all.py` stays untouched | **ran to completion: 77 steps, 74 OK, 3 failed, 566.9 s** |
 
-Two findings from the setup alone:
+My stop in attempt 2 was too eager: `scripts/210` is a *gate*, not a stage, and its failure
+decomposed into causes that were mostly mine. Attempt 3 was allowed to finish so the step
+table is complete, with failures read from the log afterwards.
 
-- **The checkout initially failed on 13 files** — all literature PDFs under `Data/Articles/`
-  — with `Filename too long`. This is Windows `MAX_PATH` against a deep temporary directory,
-  not a repository defect; `git config core.longpaths true` then completed the checkout with
-  **0 missing tracked files**. Worth knowing that a clone into a deep path needs that flag.
-- **The I1 guard passes in the clean clone, with zero placeholders anywhere.** All 7
-  required inputs present and real; the "Git LFS placeholders elsewhere" section printed
-  nothing, where the working repo still has 19. That is direct evidence that **I3 fixed the
-  clean-clone LFS problem** — `git lfs pull` now materialises every tracked object because
-  the filter attribute exists for all of them.
+## C1. Setup
 
-`scripts/170` was commented out **in the clone only**, as declared in B3. Nothing else was
-skipped. Live steps in the clone: 77.
+Cloned `rebuild-v4` into a temporary directory with `core.longpaths=true`; LFS pulled from
+GitHub (113 objects, 1.87 GiB). **clone rc=0, 0 missing tracked files, `run_all.py`
+byte-identical to the commit.** No file was copied in from the working copy. `scripts/170`
+skipped as declared, by renaming it so `run_all` reports `[SKIP] Script not found`.
 
-## C2. One step failed. Stopped there, as specified, and not patched.
+**The I1 guard passes in the clean clone with zero LFS placeholders anywhere**, where the
+working repository still has 19 — direct evidence that I3 fixed the clean-clone
+degradation.
 
-**31 steps finished: 30 OK, 1 FAIL. Cumulative runtime 209.7 seconds.**
+## C2. The three failures
 
-| step | outcome | seconds |
-|---|---|---:|
-| `53_merge_CONFIRMED_enrichments` | OK | 2.3 |
-| `98_sox404_heterogeneity` | OK | 1.9 |
-| `150_rebuild_s2_entity_resolution` | OK | 23.5 |
-| `151_rebuild_gate1_apply` | OK | 0.8 |
-| `152_rebuild_s3_dedup` | OK | 1.3 |
-| `153_rebuild_gate2_apply` | OK | 0.7 |
-| `154_rebuild_s4_treatment` | OK | 5.4 |
-| `159_wrds_coverage_topup` | OK | 0.7 |
-| `155_rebuild_s5_outcomes` | OK | 2.6 |
-| `156_rebuild_s6_assembly` | OK | 5.6 |
-| `157_rebuild_s7_verification` | OK | 2.6 |
-| `158_rebuild_s8_regenerate` | OK | 6.4 |
-| `160_appendix_v3_to_word` | OK | 1.1 |
-| `247_essay1_ledger_attrition_v3` | OK | 0.7 |
-| `187_essay3_q2_fetch_502_text` | OK | 2.2 |
-| `195_essay3_q2_classifier_v2` | OK | 35.7 |
-| `199_essay3_q2_sample_e` | OK | 3.6 |
-| `202_essay3_q2_estimation` | OK | 8.9 |
-| `190_essay3_q2_tmobile_sprint_case` | OK | 36.6 |
-| `191_essay3_q2_tmobile_proxy_periodic` | OK | 10.3 |
-| `203_essay3_q2_tmobile_case_timeline` | OK | 1.5 |
-| `204_essay3_q2_se_diagnostics` | OK | 1.7 |
-| `212_pit_linker_v4` | OK | 1.5 |
-| `214_corrections_v4` | OK | 1.6 |
-| `215_ledger_v4` | OK | 1.9 |
-| **`219_wrds_funda_v4`** | **FAIL rc=1** | **1.2** |
-| `234_outcome_cik_v4` | OK | 37.4 |
-| `233_resolve_reconciliation` | OK | 0.7 |
-| `230_outcome_gap_v4` | OK | 1.3 |
-| `235_fetch_completeness_v4` | OK | 7.2 |
-| `237_validation_draw_v4` | OK | 0.8 |
+| step | rc | seconds | cause |
+|---|---|---:|---|
+| `121a_form499_entity_matching` | 1 | 1.0 | **`ERROR: Status 403` from the FCC Form 499 endpoint.** An undeclared network dependency — this is a real reproducibility gap, in the same class as 219 but not documented anywhere. |
+| `182_essay2_test_ledger` | 1 | 22.0 | `runpy.run_path` on `scripts/170`, which is the declared WRDS exception. **Skipping 170 breaks 182**, so the exception is not self-contained. It fails either way on a clean clone: with 170 present it raises on the missing CRSP quote file instead. |
+| `210_verify_v3_frozen` | 1 | 85.7 | the freeze gate — decomposed below |
 
-In flight when the run was stopped: `220_essay3_v4_classifier_v2`.
+74 steps returned 0, including **the entire Essay 3 v4 chain**: `219` with the new flag
+(1.3 s), `220` (22.0 s), `224`, `227` (11.4 s, asserting against its own constants), `229`,
+`232` (63.2 s), `239`, `242`–`246`, and `217`'s offline suite.
 
-**Correcting my own estimate:** I projected "over seven hours" from the declared
-`LONG_RUNNING_SCRIPTS` timeouts. Those are worst-case first-run values for steps that fetch
-from SEC; with the caches committed, `187` took 2.2 s, `191` 10.3 s and `202` 8.9 s. The
-whole run would plainly have finished in well under an hour.
+### Why 210 fails in a clone, and why none of it is the pipeline
 
-### The failure
+| finding | count | cause |
+|---|---:|---|
+| `SHA256 CHANGED` | 8 | 3 legacy `FINAL_DISSERTATION_DATASET*` files, 2 `stage7_*` CSVs, 2 timestamped logs, 1 `.docx` |
+| `BLOB ID CHANGED` | 0 | — |
+| `DELETED / UNTRACKED` | 14 | 13 `Data/Articles/*.pdf` **present on disk** but unstattable, plus the 170 I renamed |
+| `eol artifacts` | 1,354 | line endings; 210 itself labels these "PERMITTED OFF-PLATFORM ONLY" |
+| `ADDED outside allowlist` | 0 | — |
 
-```
-Running: v4 covariates from the committed Compustat pull (gvkey-joined; ...)
-Script: scripts/219_wrds_funda_v4.py
-# REBUILD V4 - Stage 6 Compustat fundamentals (scripts/219)
-## ABORTED
-ABORT: refusing to overwrite an existing pull file: Data\wrds_v4\comp_funda.csv
-[ERROR] Script failed (return code 1) after 1.2 seconds
-```
+**A portability defect in 210, reported not patched.** It tests presence with
+`Path(p).exists()`, and **Python cannot stat paths over 260 characters on Windows even when
+`core.longpaths` lets git create them**. Thirteen literature PDFs with long filenames are
+therefore reported as deleted, and `verify()` treats deletions as fatal. **The gate cannot
+pass in a clone at a deep path regardless of the pipeline.** On the authoring machine the
+base path is short, which is why this has never surfaced. The fix is an extended-length
+path prefix or `os.stat` on the `\\?\` form.
 
-**This is my defect, introduced in Stage 2 Part F1.** `scripts/219` requires
-`--assemble-only` to run offline from the committed pull; without it, it attempts the WRDS
-pull and aborts at `219:181` rather than overwrite committed data. `REPRODUCE_ESSAY3_V4.md:30`
-says so explicitly:
+Two of the eight content differences were mine and are now fixed: the `stage7_*` CSVs were
+**stale against the rebaseline** — committed at 335 rows, regenerated at 337 — because A2
+ran `158` alone and `157` was never re-run. `scripts/157` has now been run and committed
+(`ef551eb`), and the balance table reads Included (CRSP) N=356 treated share 0.3118 against
+Excluded N=133 treated share 0.0526.
 
-```
-python scripts/219_wrds_funda_v4.py --assemble-only    # offline: covariates from the committed pull
-```
+The three legacy `FINAL_DISSERTATION_DATASET*` differences are a **consequence of Part H**:
+`99_add_cpni_hhi_variables` is retired, so `cpni_breach` (139 → 149),
+`hhi_industry_year` and `has_high_complexity` (0 → 582) are now produced differently. Those
+datasets feed nothing cited — zero of `constants_v3.json`'s keys come from them — so the
+difference is real and inconsequential for all three essays.
 
-I staged it at `run_all.py:555` as a bare tuple with no flag. I had the document open when I
-wrote that step and missed the flag.
+## C3. Regenerated against committed, file by file
 
-**It is not a one-word fix, which is why I am reporting rather than patching.**
-`run_script` invokes `[sys.executable, script_path]` — a single path, with no argument
-support anywhere in the step format, and no staged step in the file carries arguments.
-Making 219 runnable needs either argv splitting in `run_script` or a separate wrapper, and
-that is a change to how every step is invoked.
+Tolerance for "numerically identical": **1e-9** on every numeric column, with text columns
+compared as strings.
 
-### Why stopping here was the right call, concretely
+| target | verdict |
+|---|---|
+| **`constants_v3.json`** | **byte-identical** |
+| **`constants_essay3_v4.json`** | **byte-identical** |
+| `constants_essay3_q2.json` | byte-identical |
+| **Essay 1 attrition ledger** | **byte-identical** |
+| **`appendix_v3/` (16 tables)** | **16 of 16 byte-identical** |
+| **Essay 3 table CSVs (`essay3_q4/`, 18 files)** | **18 of 18 byte-identical** |
+| Essay 3 v4 outputs (50 files) | 47 byte-identical, 2 eol-only, 1 different (`227_estimation.log`, timestamped) |
+| Essay 2 live tables (61 files) | 50 byte-identical, 10 numerically identical, 1 different (`t24_a4_deadline_scan.csv`) |
+| Essay 3 appendix (5 files) | 4 byte-identical, 1 different (`.docx`, embeds a build timestamp) |
+| Essay 2 attrition ledger | different — see below |
 
-`scripts/224` reads `outputs/rebuild_v4/219_covariates_v4.csv` (`224:29`). **That file is
-committed, 58 KB, and was not regenerated by this run** — its mtime is the checkout time,
-11:31. So had the run continued past the failure, `224` and `227` would have read the
-**committed** covariates and the Essay 3 v4 chain would have *appeared* to reproduce while
-one of its stages had actually failed. That is exactly the masking that `verify_outputs`'s
-stale-file check was added to catch in `e65d4b1`, and exactly what C2's stop rule prevents.
+**Every differing value, accounted for:**
 
-**Nothing was patched.** `scripts/170` remains the only skipped step, as declared.
+1. `t24_a4_deadline_scan.csv` — a repo-wide grep for deadline language. It now finds a hit
+   in **`scripts/248_essay_to_output_match.py`**, the Part D harness I added this session,
+   whose purge list contains the literal string "64.2011 as a customer/public disclosure
+   deadline". **My own new script pollutes Essay 2's deadline scan.** The harness should be
+   excluded from that scan, or its patterns built so they do not match literally.
+2. Essay 2 attrition ledger — two differences, both expected consequences of committed
+   changes: J2 rewrote `163`'s ledger header, so the regenerated text carries the new
+   wording while the committed copy predates J2; and the committed copy still contains the
+   `DUAL-PRINT (documented divergence, 9/4)` paragraph reporting 340/106 against 338/104,
+   which **the rebaseline resolved**, so `163` no longer prints it. The committed ledger is
+   stale, not wrong.
+3. `227_estimation.log`, `187_fetch.log`, `b_fetch_log.csv`, `APPENDIX_V3_TABLES.docx`,
+   `ESSAY3_APPENDIX_TABLES.docx` — timestamps.
 
-## C3, C4 — not answerable yet
+## C4. One sentence per essay
 
-C3 compares regenerated outputs against the committed ones file by file. With `219` failed
-and the v4 chain interrupted at `220`, the Essay 3 comparison would be between committed
-files and themselves for the covariates and absent for everything downstream. The v3 side
-did regenerate cleanly — `150`–`158`, `160` and `247` all returned 0 — but a partial
-comparison reported as a result is worse than no comparison.
-
-Rule on the 219 staging and the run repeats in under an hour, at which point C3 and C4 can
-be answered properly.
+- **Essay 1 — yes.** `150`–`158`, `160` and `247` all returned 0, and `constants_v3.json`,
+  all 16 `appendix_v3` tables and the attrition ledger are **byte-identical** to the
+  committed copies.
+- **Essay 2 — no.** `121a` fails on an **undeclared** FCC endpoint dependency (HTTP 403),
+  `182` fails because it `runpy`s the declared WRDS exception `170`, and `170` itself is
+  skipped — though the cited core does regenerate: 60 of its 61 live tables are
+  byte-identical or numerically identical within 1e-9.
+- **Essay 3 — yes.** The whole v4 chain returned 0 including `220`, `224`, `227`, `229`,
+  `245` and `217`, `constants_essay3_v4.json` is byte-identical, and all 18 table CSVs are
+  byte-identical.
 
 ---
 
-# PART D — cannot start
+# PART D — still cannot run; the drafts are not on this machine
 
-**`docs/drafts/` does not exist.** Checked again at the time of writing: the directory is
-absent, and **no `.docx` anywhere in the repository has been created or modified in the last
-24 hours**. The newest three are `outputs/essay3_appendix/ESSAY3_APPENDIX_TABLES.docx`
-(2026-09-29, generated by `scripts/245`), `outputs/ESSAY2_APPENDIX.docx` (2026-09-07) and
-`outputs/rebuild/INTEXT_TABLES_3_14.docx` (2026-08-30).
+**`docs/drafts/` does not exist.** Searched again, inside and outside the repository:
 
-The only directory named `drafts` is `./drafts/` at the repository root, holding six **Essay
-3 methods fragments** in Markdown dated 2026-09-19 — `e3_sample.md`, `e3_treatment.md`,
-`e3_outcome.md`, `e3_controls.md`, `e3_design.md`, `e3_estimation.md`. Those are not the
-three essay drafts D1 asks for, and they are not new.
+- No directory named `drafts` anywhere except `./drafts/` at the repository root, which
+  holds six **Essay 3 methods fragments** in Markdown dated 2026-09-19.
+- The `.docx` files that match "draft" are at the **repository root** and are old:
+  `Essay 1 DRAFT.docx` **2026-03-13**, `Draft Draft.docx` **2026-04-07**. The Essay 2
+  results sections are 2026-05-31. The newest root `.docx` of any kind is **2026-07-14**.
+- **The v3 rebuild closed 2026-08-30 and the rebaseline was 2026-10-01**, so every one of
+  those documents predates the data they would be checked against. Running D on them would
+  return a table of STALE classifications that establishes nothing.
+- The only recent `.docx` anywhere under the user profile is
+  `~/Downloads/Essay3_References.docx`, a references file.
 
-**Nothing in Part D has been attempted.** No number has been extracted, classified,
-estimated or guessed, and the added D4 checks — Essay 2 sentences citing an `H5_*` value
-from `constants_v3.json` instead of `scripts/165`, and any sentence stating the direction of
-`T6_treated_timing_coef` — are both unrun. Both are pointed checks given Part A: `H5_p` is
-now .0292 in the JSON against a null in the frame of record, and
-`T6_treated_timing_coef` **changed sign** at the rebaseline, from −0.7835 to +0.5562, so any
-sentence asserting its direction is now suspect whichever direction it asserts.
+**Nothing in Part D was attempted on those files.** No number was extracted, classified or
+guessed.
 
-Place the three `.docx` files at `docs/drafts/` and Part D runs as specified.
+## The harness is written, validated and committed
+
+`scripts/248_essay_to_output_match.py` implements D1–D5 and both added D4 checks. It builds
+a provenance index of **40,351 live value forms** — from `constants_v3.json`,
+`constants_essay3_v4.json`, the live Essay 2 tables, `appendix_v3/`, the Essay 3 table CSVs
+and both attrition ledgers — and **6,935 retired forms** from the Query 2 constants and the
+tombstoned Essay 2 appendix. Validated against the pipeline-generated
+`ESSAY3_APPENDIX_TABLES.docx`: 2,115 MATCH, 246 NO PROVENANCE, 4 STALE, 0 purge hits, 0
+contradicted claims. With no drafts present it aborts rc=2 rather than inventing anything.
+
+Run it with `--drafts <dir>` once the files are placed.
+
+**Two limitations documented in the script**, because they bound what its output can be
+trusted for: matching is on numeric value alone, so MATCH means the value exists in the
+pipeline rather than that it is right for that sentence (the 4 STALE above are pure value
+collisions); and **it cannot emit MISMATCH**, since separating "says 338 where the output
+says 340" from "says 338 about something else" requires knowing which quantity a sentence
+is about. The rebaseline's known mismatches are listed in the docstring so they can be
+found among the NO PROVENANCE rows: 338 → 340, 104 → 106 treated events, 35 → 36 parent
+entities, 11 → 12 parent CIKs, 354 → 356, 109 → 111, 116 → 118, and
+`car30d_regression_mean` −0.1581 → −0.2052.
+
+**Both added D4 checks are implemented and unrun**, and Part A makes both pointed:
+`H5_p` is now **.0292** in `constants_v3.json` against a null in the frame of record, and
+**`T6_treated_timing_coef` changed sign** (−0.7835 → +0.5562), so any sentence asserting its
+direction is suspect whichever way it points.
 
 ---
 
@@ -423,22 +440,23 @@ the disqualified HC3 label — so the ledger is not misread as a list of open de
 **1. Did the rebaseline change any verdict, and does 210 pass against the new manifest?**
 One status changed — `H5_status`, from `NULL-INCONCLUSIVE` to `HC3-ONLY, NOT A VERDICT`,
 because its HC3 p crossed .05 (.0630 → .0292) while its TOST p moved further from rejection
-(.7491 → .8456); Essay 1's four verdicts are unchanged, and **210 now reports PASS** against
-the new manifest with 0 exceptions declared, 0 sha changes, 0 blob changes and 0
-unallowlisted additions, after two defects in `210` itself had to be fixed to make
-`--create` usable at all.
+(.7491 → .8456), with Essay 1's four verdicts unchanged; and **yes, 210 passes** in this
+repository — 0 exceptions declared, 0 sha changes, 0 blob changes, 0 deletions, 0
+unallowlisted additions — after two defects in `210` had to be fixed to make `--create`
+usable at all, though it **cannot** pass in a clone at a deep path because
+`Path.exists()` cannot stat 13 long filenames that are present on disk.
 
-**2. Does each essay regenerate from a clean clone?** **Essay 1 — yes**, `150`–`158`, `160`
-and `247` all returned 0 from a clean clone and the ledger agrees with the rebaselined
-constants; **Essay 2 — not established**, its chain sits after the failure and was never
-reached, with `170` separately declared unreproducible without a WRDS login; **Essay 3 —
-no**, `scripts/219` returns 1 because `run_all.py:555` stages it without the
-`--assemble-only` flag `REPRODUCE_ESSAY3_V4.md:30` requires, and `run_script` has no way to
-pass one.
+**2. Does each essay regenerate from a clean clone?** **Essay 1 yes** (`constants_v3.json`,
+all 16 appendix tables and the ledger byte-identical); **Essay 2 no** (`121a` fails on an
+undeclared FCC endpoint returning 403, and `182` fails because it executes the declared
+WRDS exception `170`, although 60 of its 61 live tables reproduce); **Essay 3 yes** (the
+whole v4 chain returns 0 and `constants_essay3_v4.json` plus all 18 table CSVs are
+byte-identical).
 
-**3. Per essay, how many numbers are MATCH, MISMATCH, NO PROVENANCE, STALE?** Not
-answerable — `docs/drafts/` does not exist and no `.docx` has appeared, so there is no essay
-text to trace.
+**3. Per essay, how many numbers are MATCH, MISMATCH, NO PROVENANCE, and STALE?** Not
+answerable — `docs/drafts/` does not exist and every `.docx` on this machine predates the
+rebuild, so there is no current essay text to trace; the harness is built, validated and
+waiting on the files.
 
-**4. How many purge-list hits and contradicted claims per essay?** Not answerable, for the
-same reason.
+**4. How many purge-list hits and how many contradicted claims does each essay contain?**
+Not answerable, for the same reason, with both added D4 checks implemented and unrun.
