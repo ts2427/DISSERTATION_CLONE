@@ -60,16 +60,10 @@ subsidiaries), which is why the two differ.
 
 | Quantity | Recomputed here | Committed in `constants_v3.json` | Agree |
 |---|---:|---:|---|
-| Regression sample N | 340 | 338 | **NO** |
-| Treated events | 106 | 104 | **NO** |
+| Regression sample N | 340 | 340 | yes |
+| Treated events | 106 | 106 | yes |
 
-**PENDING REBASELINE: constants_v3.json is stale against CANONICAL_V3.**
-
-`constants_v3.json` is written by `scripts/158`, which has not been re-run since
-the chain last changed. Nothing above is wrong: the ledger describes the data as
-it stands, and the constants file describes the data as it stood when 158 last
-ran. Until 158 is re-run, cite the ledger for the chain and treat the committed
-N and treated counts as superseded.
+The ledger and the committed constants agree.
 
 ---
 
