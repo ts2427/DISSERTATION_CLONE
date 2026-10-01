@@ -285,3 +285,31 @@ Nothing is deleted.
 | **Not stale copies** | `163` and `164` write **61** files to `outputs/tables/essay2_v2/`. These two sets share **zero** filenames — verified, not assumed. This directory holds `channel_*`, `cluster_*`, `delay_*` names; the live directory holds `t1_*` through `t52_*`. So these are a **different set of tables**, not an out-of-date copy: a citation to a file here cannot be repaired by pointing at the same name in `essay2_v2/`, because there is no same name. |
 | **Cite instead** | `outputs/tables/essay2_v2/` (written by 163 and 164, and since Part I2 asserted at N = 333 / 104 treated / 82 clusters on both write and read), `scripts/165` for the inferential frame, and `outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md` for the chain. |
 | **Marker on disk** | `outputs/tables/essay2_appendix/TOMBSTONE.md` |
+
+## Tag moved — `v3-rebaseline-final`, 2026-10-01
+
+| | |
+|---|---|
+| **From** | `f0bdf72` — "Part A5: full v3 re-freeze; the 13 pinned exceptions are retired" |
+| **To** | `7e82edb` — "Part A5 follow-up: allowlist the two new Part B3/E documents, re-create the manifest" |
+| **Authorised by** | Tim's ruling of 2026-10-01: "move `v3-rebaseline-final` to `7e82edb` (force-push the tag only)" |
+
+**Why it moved.** `f0bdf72` is the commit that did the re-freeze, so it was the natural
+place for the tag — but `scripts/210` still returned **FAIL** there. Two documents added
+later in the same session, `docs/claude/REPRODUCE_ESSAY2.md` (Part B3) and
+`docs/claude/KNOWN_LIMITATIONS.md` (Part E), were committed after the manifest had been
+written, so the gate saw them as additions outside the v4 allowlist. `7e82edb` allowlists
+both and re-creates the manifest, and is the first commit at which the gate actually
+passes: 0 authorised exceptions declared, 0 sha changes, 0 blob changes, 0 deletions, 0
+unallowlisted additions, exit 0.
+
+A tag named `v3-rebaseline-final` that does not pass the freeze gate would misdescribe the
+state it marks, which is the whole reason for the move.
+
+**The ordering lesson, recorded so it is not repeated.** Run `scripts/210 --create` **last**,
+after every file a change set adds has been committed. Writing the manifest mid-way means
+re-creating it for each later commit — it was re-created three times in this session.
+
+**Only the tag was force-pushed.** No branch history was rewritten; `rebuild-v4` is
+append-only throughout. `essay3-v4-final` is untouched and remains at `8c0d09e`
+(tag object `60ca75b`).
