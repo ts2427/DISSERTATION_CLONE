@@ -150,6 +150,9 @@ V4_DOCS = (
     # frozen files: the Essay 2 reproduction exception and the known-limitations ledger.
     "docs/claude/REPRODUCE_ESSAY2.md",
     "docs/claude/KNOWN_LIMITATIONS.md",
+    # Written by scripts/157 beside the stage-7 CSVs; never committed before the
+    # 2026-10-01 stage-7 regeneration (outputs/*.md is gitignored).
+    "outputs/rebuild/STAGE7_VERIFICATION.md",
 )
 SCRIPT_RE = re.compile(r"^scripts/(\d+)_[^/]*\.py$")
 SCRIPT_LO, SCRIPT_HI = 210, 249
