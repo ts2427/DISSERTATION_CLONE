@@ -3,7 +3,7 @@
 - crsp_stocknames: 1,308 rows from 4 file(s) (crsp_stocknames.csv, crsp_stocknames_topup_20260919T000910Z.csv, crsp_stocknames_topup_20260919T135055Z.csv, crsp_stocknames_topup_20260919T135055Z_issuer.csv)
 # REBUILD V4 — Stage 2 point-in-time linker (CUSIP route)
 
-- run (UTC): 2026-09-19T14:00:59+00:00
+- run (UTC): 2026-10-01T20:18:15+00:00
 - events 489 | comp.company 151 | comp.security 316 | stocknames 1308
 - rule: all US common issues (tpci=0, excntry=USA), ncusip-first, header fallback behind the identity gate
 

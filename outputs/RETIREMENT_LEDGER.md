@@ -547,3 +547,102 @@ Scope is now authored files only: `scripts/*.py`, `Dashboard/**/*.py`, `README.m
 byte-identical file** (`497db3937f7a3136` both times). Nothing is lost: the fix for a
 mischaracterisation in a generated report is a fix to the script that writes it, and
 `scripts/` remains fully in scope.
+
+---
+
+# THE 212 SECOND LINKER PASS — AND A MISDIAGNOSIS, CORRECTED
+
+## What I got wrong
+
+On 2026-10-01 I reported that the committed `outputs/rebuild_v4/v4_212_links.csv` was
+**stale**, that regenerating it was the correct behaviour, and that doing so moved the
+Essay 3 sample from N=405/G=119 to N=380/G=106. **Every part of that was wrong.** The
+mistake was mine, in how I invoked the script, and it is recorded here because the wrong
+version was reported as a finding and nearly became a ruling to re-baseline Essay 3.
+
+I ran `scripts/212` with only `--out-prefix v4_`, leaving `--canonical` at its default of
+`Data/processed/rebuild/CANONICAL_V3.csv`. I then compared the result with the committed
+file, found 28 of 490 rows different, saw that `CANONICAL_V3.final_cik` agreed with *my*
+output and not with the committed one, and concluded the committed file was stale.
+
+The check I failed to run was the one that settles it: comparing against **`CANONICAL_V4`**.
+
+| | | |
+|---|---:|---|
+| `CANONICAL_V4.final_cik` == the committed links CIK | **27 of 27** | the committed file is the re-parented one |
+| `CANONICAL_V4.orig_cik` == the CIK I produced | **27 of 27** | my output was the pre-re-parenting one |
+
+The 28th differing row is Sprint Nextel, which differs on `breach_date`, not CIK.
+
+**Run as designed, 212 reproduces all five committed CSVs byte-identically:**
+
+```
+python scripts/212_pit_linker_v4.py \
+    --canonical Data/processed/rebuild_v4/CANONICAL_V4.csv --out-prefix v4_
+```
+
+`v4_212_links.csv`, `v4_212_identity_review.csv`, `v4_212_no_gvkey.csv`,
+`v4_212_unmatched_cusips.csv`, `v4_212_v3_disagreements.csv` — all five clean against
+`git diff`. Only `v4_212_link_report.md` changes, on its `- run (UTC):` timestamp line;
+that file is under the `outputs/rebuild_v4/` prefix the freeze manifest excludes, so it is
+not a gate concern.
+
+So the committed file was never stale, the "25 dropped events" were an artifact of feeding
+the linker the wrong canonical, and the Essay 3 sample never moved. The 24 control events
+that appeared to drop did so with `note = "no gvkey"` — which is precisely what `214`'s own
+docstring predicts of a subsidiary CIK, and precisely what the re-parenting exists to
+prevent.
+
+## The design, which was documented all along
+
+Commit `218d3d9`, "REBUILD V4: apply Stage 3+4 to CANONICAL_V4, re-link, and categorise
+every loss", states it:
+
+> **2. SECOND LINKER PASS.** 212 takes `--canonical` and `--out-prefix` ... The second pass
+> writes `v4_`-prefixed outputs so it cannot overwrite `stage3_candidates.csv`, which is the
+> evidence 213 was built on.
+
+And `scripts/214`'s `apply_stage3` gives the reason:
+
+> A subsidiary's own CIK has no Compustat gvkey, so the linker could never reach a permno
+> through it. Stage 3 established, against an Exhibit 21 or a succession filing, which
+> registrant the event belongs to; this points the event at that registrant **so the second
+> linker pass can find it.**
+
+**212 is meant to run twice.** `run_all.py` staged only pass 1, which is why
+`v4_212_links.csv` — read by 13 live steps, among them `227`, which writes
+`constants_essay3_v4.json` — was produced by no live step and survived only as a committed
+artefact.
+
+## What changed in run_all.py
+
+| pass | canonical | writes | why it sits where it does |
+|---|---|---|---|
+| **1** | `CANONICAL_V3` (default) | unprefixed `212_*.csv`, incl. `stage3_candidates.csv` | that file is the Stage 3 worklist `213` verifies and `214`'s re-parenting is built on, so it must precede `214` |
+| **2** | `CANONICAL_V4` | `v4_212_*.csv` | `CANONICAL_V4.final_cik` is the re-parented registrant, so this pass must follow `214`; the `v4_` prefix keeps it from overwriting `stage3_candidates.csv` |
+
+No cycle: `214` reads only `CANONICAL_V3` and writes `CANONICAL_V4`; it never reads 212's
+output. Live steps go 58 -> **59**. The two steps carry distinct descriptions, which
+matters because `run_all.py` keys its `results` dict by description — identical text would
+have made one pass silently overwrite the other's status.
+
+## What this does not fix
+
+Nothing about the samples, and nothing about Essays 1 and 2, which read
+`CANONICAL_V3.final_cik` and so still carry the pre-re-parenting CIKs. Tim ruled the
+samples frozen; the two consequences are disclosed as entries 7 and 8 of
+`docs/claude/KNOWN_LIMITATIONS.md`:
+
+- **Aon** is one firm under two CIKs inside both the Essay 1 340 and the Essay 2 333, so
+  Essay 1 clusters 83 where 82 firms are present and Essay 2 clusters 82 where 81 are. All
+  three Aon events are control. It is the only such case in either sample; Essay 3, on
+  `CANONICAL_V4`, has none.
+- **Sprint's 2012-08-01 breach date** postdates its own 2009-03-30 notification. It is in
+  the Essay 1 CRSP 356 with a `car_30d` of 12.0426 but in **neither** the 340 **nor** the
+  333, so it reaches no regression of record. v4 corrects it to 2009-01-01.
+
+## The lesson
+
+A script with a `--canonical` argument has more than one correct output, and "it does not
+match what is committed" is not evidence that what is committed is wrong. Before concluding
+a committed artefact is stale, reproduce it from **every** input the script accepts.

@@ -196,13 +196,113 @@ windows for these two events are anchored on a date that is not a notification d
 
 ---
 
+## 7. Two CIKs, one firm: Aon is clustered as two firms in Essays 1 and 2
+
+Essays 1 and 2 cluster on `CANONICAL_V3.final_cik` — `158:300` passes
+`cov_kwds={'groups': reg['final_cik']}` and reports "clustering by parent CIK", and
+`scripts/165` declares "Cluster level: PARENT CIK (final_cik)" and asserts
+`fin['final_cik'].nunique() == 82`. In `CANONICAL_V3`, `final_cik` is the CIK the event
+was *recorded* under, which for a subsidiary or a pre-succession registrant is not the
+listed parent. **Within these two samples exactly one firm is therefore counted twice:**
+
+| firm | CIK | event | treated? |
+|---|---|---|---|
+| Aon | **315293** (`Aon plc`, ticker AON) | `Aon Corporation` 2020-12-17 | control |
+| Aon | **1808065** (`Aon plc`, no ticker, filings from 2020-04) | `Aon Corporation PLC` 2020-12-29 | control |
+| Aon | **1808065** | `Aon PLC` 2022-02-25 | control |
+
+`CANONICAL_V4` joins these two CIKs on a verified succession filing
+(`link_basis = successor_filing`, `orig_cik = 1808065`, `final_cik = 315293`). All three
+events are **control**, so no treated cluster is affected.
+
+**Cluster counts if Aon were merged:**
+
+| sample | N | clusters now | clusters merged |
+|---|---:|---:|---:|
+| Essay 1 regression | 340 | **83** | **82** |
+| Essay 2 final | 333 | **82** | **81** |
+| Essay 1 CRSP (for reference) | 356 | 88 | 86 |
+
+The Essay 1 CRSP sample loses two because Google/Alphabet (1288776 → 1652044) also appears
+under both CIKs there; that pair does not survive into the 340, and Seagate
+(1137785 → 1137789) splits in `CANONICAL_V3` but only the parent reaches either sample.
+
+**This is the complete list.** Every CIK pair the `CANONICAL_V4` re-parenting map joins was
+checked against both samples, and a second pass over organisation-name agreement found no
+further case. Two name matches were adjudicated and are **not** errors:
+
+- **Hewlett-Packard** — CIK 47217 (`Hewlett-Packard Company`, 5 events 2007-07-01 to
+  2010-02-09) and CIK 1645590 (`Hewlett Packard Enterprise Company`, 2 events 2023-12-12 to
+  2025-02-05). Separate firms after the 2015 split, with non-overlapping event windows.
+- **Sprint / T-Mobile** — CIK 101830 (Sprint-era equity, 12 events) and CIK 1283699
+  (T-Mobile, 34 events). A deliberate point-in-time separation: Sprint traded on its own
+  until the 2020 merger, and Gate 1 rule F pins the Sprint-era events to the Sprint equity
+  (*"Gate1-F: Sprint-era equity (SEC-verified: SPRINT LLC fka SPRINT CORP/NEXTEL,
+  10-Ks 2014-2019)"*).
+
+**Essay 3 is unaffected.** Its chain reads `CANONICAL_V4`, whose `final_cik` is already the
+re-parented registrant — 27 of its rows have `final_cik != orig_cik`. Its analysis sample
+(N=412) spans 121 clusters and contains **zero** firms under more than one `final_cik`.
+
+The samples are frozen, so this is disclosed and not corrected. The direction of the bias
+is known: splitting one firm into two clusters overstates the number of independent
+clusters by one, which makes clustered standard errors slightly **too small**. With
+82 or 83 clusters, one spurious cluster is immaterial to any verdict, and Essay 2's
+inference of record rests on CV3 and the wild cluster bootstrap rather than on the cluster
+count alone.
+
+---
+
+## 8. One breach date postdates its own notification by three and a half years
+
+`CANONICAL_V3` carries a `breach_date` of **2012-08-01** for a Sprint Nextel event whose
+own record text places the breach in **December 2008 to January 2009** and whose
+notification date is **2009-03-30**:
+
+> *"The New Hampshire Department of Justice reported a data breach involving Sprint Nextel
+> on March 30, 2009. The breach occurred between December 2008 and January 2009, affecting
+> 4 residents of New Hampshire. The compromised information includes customers' names,
+> addresses, wireless phone numbers, Sprint account numbers, security question answers, and
+> points of contact, but did not include Social Security numbers or payment information."*
+
+The row's own `end_breach_date` is **2009-01-01**, the end of the window the text
+describes. A breach date of 2012-08-01 is impossible: it falls three years and five months
+*after* the breach was reported. This is the same wrong-field class as entry 2, but it
+lands on the breach date rather than the notification date.
+
+**Which samples contain it:**
+
+| sample | contains it? | why |
+|---|---|---|
+| Essay 1 CRSP (356) | **yes** | `has_crsp_data = 1`, permno 39087, and it carries `car_30d = 12.0426` — a 30-day CAR computed on the wrong anchor |
+| **Essay 1 regression (340)** | **no** | dropped by the control filter, for a missing `immediate_disclosure` |
+| **Essay 2 (333)** | **no** | not in the final sample |
+| Essay 3 v4 (412) | yes, **at the corrected date** | treated; enters as 2009-01-01 |
+
+So it reaches no regression of record. It does sit inside the 356-event CRSP sample, which
+the descriptive and Table 16 panels are drawn from, carrying a CAR measured on a date the
+record contradicts.
+
+**v4 corrects it.** `scripts/214`'s `fix_sprint` rewrites the `breach_date` to the row's
+own `end_breach_date`, giving 2009-01-01, and only after asserting that its recomputation
+of `prior_breaches_1yr` reproduces v3's stored column exactly under the original dates —
+so the rule is v3's, not a new one. The correction also moves the *other* Sprint Nextel
+event (2009-02-01, "late February 2009", reported 2009-06-12 — a genuinely separate PRC
+record and a correct date) from `prior_breaches_1yr = 0` to `1`, because the first event
+now correctly precedes it within 365 days.
+
+`CANONICAL_V3` is frozen, so v3 keeps the wrong date and Essay 3 uses the corrected one.
+
+---
+
 ## What has been fixed, for contrast
 
 So that this ledger is not read as a list of open defects: the LFS placeholder problem
 *was* fixed (all 87 attributes restored, plus an executable guard that aborts
 `run_all.py` before step 1 on a missing or placeholder input); the retired Essay 3 H6 keys
 *were* removed from `constants_v3.json` at the rebaseline; and the HC3 significance label
-*was* disqualified before it could ever read `SIGNIFICANT`. The six entries above are
-different in kind — they are properties of the source records and of anchoring decisions,
-and correcting any of them would change the samples, which is the thing this project has
-decided not to do.
+*was* disqualified before it could ever read `SIGNIFICANT`; and the v4 linker's second
+pass *was* staged in `run_all.py`, so the v4 linkage is now derived from the canonical data
+rather than read from a committed artefact. The eight entries above are different in kind —
+they are properties of the source records and of anchoring decisions, and correcting any of
+them would change the samples, which is the thing this project has decided not to do.

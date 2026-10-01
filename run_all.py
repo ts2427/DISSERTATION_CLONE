@@ -582,18 +582,23 @@ Log file: {log_path}
                     # Order is REPRODUCE_ESSAY3_V4.md's, which diverges from numeric order in two
                     # places: 232 must precede 224 (224's ledger reads the censoring result) and
                     # 233 must precede 224 (224 aborts unless every reconciliation row says agree).
-                    # HELD 2026-10-01, pending a ruling. Adding ['--out-prefix', 'v4_'] here makes
-                    # 212 regenerate v4_212_links.csv, which 13 live steps read. It was implemented
-                    # and tested: the regenerated file is deterministic (prefixed and unprefixed
-                    # outputs are byte-identical) and it is the COMMITTED file that is stale - it
-                    # carries Lennar at CIK 920760 and Northrop at 1133421 where CANONICAL_V3 now
-                    # has 58696 and 72945, and a Sprint Nextel breach_date of 2009-01-01 that the
-                    # canonical does not contain. But re-running the v4 chain on the corrected
-                    # linkage moves the Essay 3 sample from N=405/G=119 to N=380/G=106 and fails
-                    # scripts/227's baseline assertion, so it is a sample and linkage change. Left
-                    # out until that is ruled on. See outputs/RETIREMENT_LEDGER.md.
-                    ('scripts/212_pit_linker_v4.py', 'v4 Stage 2: point-in-time CIK->gvkey->CUSIP->permno linker with the identity gate, v3 pass -> Stage 3 worklist'),
+                    # 212 runs TWICE, by design - see commit 218d3d9, which introduced the
+                    # --canonical and --out-prefix arguments for exactly this.
+                    #
+                    # PASS 1 reads CANONICAL_V3 and writes the UNPREFIXED 212_*.csv, including
+                    # stage3_candidates.csv - the worklist scripts/213 verifies and the evidence
+                    # the re-parenting in 214 is built on. It must therefore run BEFORE 214.
+                    ('scripts/212_pit_linker_v4.py', 'v4 Stage 2 PASS 1 of 2: point-in-time CIK->gvkey->CUSIP->permno linker on CANONICAL_V3; writes the unprefixed 212_* files and the Stage 3 worklist 213 verifies'),
                     ('scripts/214_corrections_v4.py', 'v4 correction ledger -> CANONICAL_V4 (Sprint anchor, Carnival, CIK re-parenting, Gate-2 notification anchor, health indicator)'),
+                    # PASS 2 reads CANONICAL_V4, whose final_cik is the RE-PARENTED registrant,
+                    # and writes the v4_-prefixed files. 13 live steps read v4_212_links.csv -
+                    # among them 227, which writes constants_essay3_v4.json - so without this
+                    # pass the v4 linkage is never derived and that file is only ever a committed
+                    # artefact. 214's own rule says why the order is this way: a subsidiary's CIK
+                    # has no Compustat gvkey, so re-parenting points the event at the registrant
+                    # 'so the second linker pass can find it'. The v4_ prefix keeps pass 2 from
+                    # overwriting stage3_candidates.csv, which is 213's evidence base.
+                    ('scripts/212_pit_linker_v4.py', 'v4 Stage 2 PASS 2 of 2: re-link on CANONICAL_V4 (re-parented CIKs) -> v4_212_* files, the linkage 13 live steps read', ['--canonical', 'Data/processed/rebuild_v4/CANONICAL_V4.csv', '--out-prefix', 'v4_']),
                     ('scripts/215_ledger_v4.py', 'v4 linkage ledger and symmetry report'),
                     # --assemble-only is REQUIRED (REPRODUCE_ESSAY3_V4.md:30). Without it
                     # 219 attempts the WRDS pull and aborts at 219:181 rather than
