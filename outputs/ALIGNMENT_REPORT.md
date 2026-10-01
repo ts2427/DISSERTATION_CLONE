@@ -566,3 +566,67 @@ checks are implemented and unrun.
 The harness is ready: `scripts/248_essay_to_output_match.py --drafts <dir>
 --out <dir>/ESSAY_MATCH_REPORT.md` writes wherever it is told, so it can put the report in
 the drafts folder outside the repository as ruled.
+
+---
+
+# 210 PASSES IN A CLEAN CLONE — 2026-10-01
+
+Three defects had to be fixed, each found by running the gate in a clone rather than
+reasoning about it.
+
+| defect | fix | commit |
+|---|---|---|
+| `Path.exists()` cannot stat paths over 260 characters on Windows, so 13 present files read as deleted | extended-length `\\?\` paths throughout | `220f2ef` |
+| EOL-versus-content adjudicated against the `v3-frozen` **tag** while the hash came from the **manifest**, so files legitimately changed since the tag were misreported | `sha256_eolnorm` column; both sides now come from the manifest | `16f9a60` |
+| the manifest's `sha256` is **machine-state-dependent for LFS files** — pointer text here, real content in a clone | `lfs_oid` column from `git lfs ls-files -l` (the index, not the working tree); oids compared, on-disk bytes not | `0e13473` |
+
+**Result in a fresh clone at a 195-character directory, longest tracked path 369
+characters, `clone rc=0`, 0 missing tracked files:**
+
+| finding | first clone | now |
+|---|---:|---:|
+| `DELETED / UNTRACKED` | 14 | **0** |
+| `SHA256 CHANGED` | 10 → 19 | **0** |
+| `LFS paths by OID` | — | **95 match, 0 changed** |
+| `BLOB ID CHANGED` | 0 | **0** |
+| `ADDED outside allowlist` | 0 | **0** |
+| eol artifacts | 1,351 | 1,346 (correctly classified) |
+| **RESULT** | FAIL | **PASS — exit 0** |
+
+`git lfs pull` was run in the working repository first, so **0 LFS pointers remain on
+disk** (down from 19) and the tree stayed clean, because the real content smudges back to
+the same pointer blobs. The manifest's recorded total rose from 447.6 MB to 2,265.2 MB for
+the same reason.
+
+**Negative-tested on an LFS path, as ruled.** Appending one line to
+`outputs/audit/audit_essay2_sample.csv` and staging it moved its oid from `516fba7fe1b3`
+to `c029ba799c1c`; 210 returned **FAIL rc=1** with `LFS paths by OID: 94 match, 1 changed`
+and the path named. Restoring the bytes and re-staging returned PASS with 95 match, 0
+changed. The earlier EOL negative test still holds: CRLF plus one added line to
+`scripts/164` fails as a content change.
+
+**What this does not weaken.** Oid comparison is strictly stronger than the on-disk hash
+for these paths: the oid is the content hash Git-LFS itself stores, and it changes whenever
+the content changes, on any machine. What it drops is the ability to notice that a given
+machine has not smudged its pointers — which is the I1 guard's job, and `run_all.py` aborts
+before step 1 on exactly that.
+
+## Part D, re-run as ruled
+
+```
+$ python scripts/248_essay_to_output_match.py \
+    --drafts "C:\Users\mcobp\Documents\essay_drafts" \
+    --out    "C:\Users\mcobp\Documents\essay_drafts\ESSAY_MATCH_REPORT.md"
+ABORT: no drafts directory at C:\Users\mcobp\Documents\essay_drafts
+Part D needs the three essay .docx drafts. Nothing was guessed or inferred.
+EXIT: 2
+```
+
+Confirmed three independent ways: `ls` fails; PowerShell `Test-Path` returns **False**
+while `C:\Users\mcobp\Documents` returns True and has **no subdirectories at all**;
+and a recursive scan of the whole profile finds **no `.docx` modified in the last 24
+hours**. Earlier passes found no `essay_drafts` directory at any depth and no
+`docs/drafts/` in the second repository copy under OneDrive.
+
+Nothing was attempted, no report was written, and no file containing draft text exists in
+or outside the repository to commit.
