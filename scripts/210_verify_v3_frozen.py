@@ -295,6 +295,22 @@ def sha256_file(path):
     return h.hexdigest()
 
 
+def sha256_file_eolnorm(path):
+    """sha256 of the file with CRLF collapsed to LF.
+
+    Added 2026-10-01. This is how EOL-versus-content is now adjudicated, replacing
+    `git diff --quiet <v3-frozen> -- <path>`. That test compared the working tree against
+    the FROZEN TAG while the sha256 it was explaining came from the MANIFEST, and after a
+    re-freeze the two disagree: a file legitimately changed since the tag - which the
+    current manifest records - fails the git test, so line-ending variance in a clone was
+    reported as a content change. Three scripts edited on 2026-10-01 were misreported that
+    way. Comparing normalised hashes keeps both sides of the comparison on the manifest.
+
+    Read in one pass rather than chunked: chunking can split a CRLF across the boundary.
+    """
+    return hashlib.sha256(read_bytes(path).replace(b"\r\n", b"\n")).hexdigest()
+
+
 def filtered_baseline(commit, path):
     """Baseline content as it would be written to the working tree (eol + LFS filters)."""
     return git("cat-file", "--filters", f"{commit}:{path}", binary=True)
@@ -315,9 +331,12 @@ def create():
     rows = []
     for p, blob in sorted(baseline_tree(commit).items()):
         fp = Path(p)
-        size, sha = ((path_size(fp), sha256_file(fp)) if path_exists(fp)
-                     else (-1, "MISSING"))
-        row = dict(path=p, size=size, sha256=sha, blob_id=now.get(p, blob),
+        if path_exists(fp):
+            size, sha, nsha = path_size(fp), sha256_file(fp), sha256_file_eolnorm(fp)
+        else:
+            size, sha, nsha = -1, "MISSING", "MISSING"
+        row = dict(path=p, size=size, sha256=sha, sha256_eolnorm=nsha,
+                   blob_id=now.get(p, blob),
                    append_only=int(p in APPEND_ONLY), prefix_size="", prefix_sha256="")
         if p in APPEND_ONLY:
             base = filtered_baseline(commit, p)
@@ -325,8 +344,9 @@ def create():
             row["prefix_sha256"] = sha256_bytes(base)
         rows.append(row)
     with open(MANIFEST, "w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=["path", "size", "sha256", "blob_id",
-                                          "append_only", "prefix_size", "prefix_sha256"])
+        w = csv.DictWriter(f, fieldnames=["path", "size", "sha256", "sha256_eolnorm",
+                                          "blob_id", "append_only", "prefix_size",
+                                          "prefix_sha256"])
         w.writeheader()
         w.writerows(rows)
     total = sum(r["size"] for r in rows if r["size"] > 0)
@@ -396,8 +416,16 @@ def verify():
 
         cur_sha = sha256_file(fp)
         if cur_sha != rec["sha256"]:
-            if git_rc("diff", "--quiet", commit, "--", p) == 0:
-                eol_artifacts.append(p)      # git sees no difference: representation only
+            # EOL-versus-content, decided against the MANIFEST's normalised hash. Older
+            # manifests carry no such column; those fall back to the git-diff test against
+            # the baseline tag, which is what this replaced.
+            rec_norm = rec.get("sha256_eolnorm") or ""
+            if rec_norm:
+                eol_only = sha256_file_eolnorm(fp) == rec_norm
+            else:
+                eol_only = git_rc("diff", "--quiet", commit, "--", p) == 0
+            if eol_only:
+                eol_artifacts.append(p)      # same bytes once line endings are normalised
             else:
                 e = exc.get(p)
                 if e and e["old_sha"] == rec["sha256"] and e["new_sha"] == cur_sha:
@@ -426,11 +454,14 @@ def verify():
         print(f"eol artifacts   : {len(eol_artifacts)} file(s) -- disk bytes differ from "
               f"the manifest but git reports no difference. PERMITTED OFF-PLATFORM ONLY;")
         print("                  on the authoring machine this must be 0.")
-        for p in eol_artifacts:
+        for p in eol_artifacts[:25]:
             blob_ok = now.get(p) == base[p]["blob_id"]
-            rc = git_rc("diff", "--quiet", commit, "--", p)
-            print(f"   {p}\n      blob matches baseline: {blob_ok}   "
-                  f"git diff --quiet exit: {rc}")
+            nsha = base[p].get("sha256_eolnorm") or ""
+            how = ("normalised hash matches the manifest" if nsha
+                   else "git reports no difference from the baseline (legacy manifest)")
+            print(f"   {p}\n      blob matches manifest: {blob_ok}   {how}")
+        if len(eol_artifacts) > 25:
+            print(f"   ... and {len(eol_artifacts) - 25} more")
     # Authorised exceptions are printed in full, every time. A PASS must never be able
     # to hide the fact that baseline files moved.
     print(f"\nAUTHORISED EXCEPTIONS ({EXCEPTIONS}) : {len(exc_hit)} of {len(exc)} declared")
