@@ -13,3 +13,135 @@ Data/wrds/ticker_permno_mapping.csv filter=lfs diff=lfs merge=lfs -text
 Data/processed/DATA_DICTIONARY_ENRICHED.csv filter=lfs diff=lfs merge=lfs -text
 # Frozen classifier (6f7be7a): keep LF on every checkout so its logged sha256 (42a64e12…) reproduces on Windows
 scripts/195_essay3_q2_classifier_v2.py text eol=lf
+
+# ==============================================================================
+# REBUILD V4 (branch rebuild-v4) — added at Stage 0, before any file exists under
+# Data/wrds_v4/. Point-in-time CRSP/Compustat pulls are large binaries-by-size;
+# they must be LFS-tracked from the first add so no raw blob ever enters history.
+# Appended only; no existing rule above is modified.
+# ==============================================================================
+Data/wrds_v4/** filter=lfs diff=lfs merge=lfs -text
+# Frozen v3 input under the REBUILD V4 freeze: pin LF so the working-tree bytes match the
+# manifest sha (4a46a82a…) on every platform. Without this, core.autocrlf=true renders it
+# CRLF on checkout, flipping the disk sha to 0d8e556c… and forcing scripts/210 to pass it
+# through the eol-artifact branch. Same pattern as scripts/195 above.
+scripts/204_essay3_q2_se_diagnostics.py text eol=lf
+
+# ==============================================================================
+# REBUILD V4 — byte-stability for generated CSVs (appended; nothing above changed).
+# pandas writes CRLF on Windows, and core.autocrlf normalises it to LF on commit, so
+# the on-disk bytes of every generated CSV differed from its own blob. A clean clone
+# therefore got different INPUT bytes than the tree they were produced in, and the
+# clean-clone check compared files that could never match. Worse, these CSVs carry
+# embedded newlines inside quoted free-text fields (incident_details), where the
+# rewrite is not a harmless line-ending change.
+#
+# Scoped to v4 paths ONLY. v3 blobs must not be renormalised: scripts/210 compares
+# them byte for byte.
+# ==============================================================================
+outputs/essay3_v4/**/*.csv -text
+outputs/rebuild_v4/**/*.csv -text
+Data/processed/rebuild_v4/**/*.csv -text
+
+# ==============================================================================
+# I3 (2026-09-29): the remaining 87 committed LFS pointer files get their attribute back.
+#
+# The note above says these were "NOT re-enabled here (LFS quota history)". That reason no
+# longer holds: `git lfs fetch --all` reports all objects present on the service (231 found,
+# 1.82 GB), so nothing needs re-uploading. What was missing was only the attribute - with
+# filter=unspecified, git checks the pointer text out verbatim, so a clean clone silently
+# receives a 130-byte text file where a dataset is expected and any reader of it degrades
+# without error. `git check-attr filter` returned "unspecified" for all 87.
+#
+# One rule per file, deliberately: a directory glob such as outputs/tables/** would also
+# capture every unrelated file in these directories, so a later `git add` of an ordinary
+# CSV there would push it into LFS. Paths containing a space are double-quoted, which
+# .gitattributes supports.
+# ==============================================================================
+"Data/JSON Files/nvdcve-2.0-2007.json" filter=lfs diff=lfs merge=lfs -text
+"Data/JSON Files/nvdcve-2.0-2008.json" filter=lfs diff=lfs merge=lfs -text
+"Data/JSON Files/nvdcve-2.0-2009.json" filter=lfs diff=lfs merge=lfs -text
+"Data/JSON Files/nvdcve-2.0-2010.json" filter=lfs diff=lfs merge=lfs -text
+"Data/JSON Files/nvdcve-2.0-2011.json" filter=lfs diff=lfs merge=lfs -text
+"Data/JSON Files/nvdcve-2.0-2012.json" filter=lfs diff=lfs merge=lfs -text
+"Data/JSON Files/nvdcve-2.0-2013.json" filter=lfs diff=lfs merge=lfs -text
+"Data/JSON Files/nvdcve-2.0-2014.json" filter=lfs diff=lfs merge=lfs -text
+"Data/JSON Files/nvdcve-2.0-2015.json" filter=lfs diff=lfs merge=lfs -text
+"Data/JSON Files/nvdcve-2.0-2016.json" filter=lfs diff=lfs merge=lfs -text
+"Data/JSON Files/nvdcve-2.0-2017.json" filter=lfs diff=lfs merge=lfs -text
+"Data/JSON Files/nvdcve-2.0-2018.json" filter=lfs diff=lfs merge=lfs -text
+"Data/JSON Files/nvdcve-2.0-2019.json" filter=lfs diff=lfs merge=lfs -text
+"Data/JSON Files/nvdcve-2.0-2020.json" filter=lfs diff=lfs merge=lfs -text
+"Data/JSON Files/nvdcve-2.0-2021.json" filter=lfs diff=lfs merge=lfs -text
+"Data/JSON Files/nvdcve-2.0-2022.json" filter=lfs diff=lfs merge=lfs -text
+"Data/JSON Files/nvdcve-2.0-2023.json" filter=lfs diff=lfs merge=lfs -text
+"Data/JSON Files/nvdcve-2.0-2024.json" filter=lfs diff=lfs merge=lfs -text
+"Data/JSON Files/nvdcve-2.0-2025.json" filter=lfs diff=lfs merge=lfs -text
+Data/audit_analytics/restatements.csv filter=lfs diff=lfs merge=lfs -text
+Data/audit_analytics/restatements_sample.csv filter=lfs diff=lfs merge=lfs -text
+Data/audit_analytics/sox_404_data.csv filter=lfs diff=lfs merge=lfs -text
+Data/audit_analytics/sox_sample.csv filter=lfs diff=lfs merge=lfs -text
+Data/enrichment/breach_severity_classification.csv filter=lfs diff=lfs merge=lfs -text
+Data/enrichment/industry_adjusted_returns.csv filter=lfs diff=lfs merge=lfs -text
+Data/enrichment/media_coverage.csv filter=lfs diff=lfs merge=lfs -text
+Data/enrichment/organization_breach_summary.csv filter=lfs diff=lfs merge=lfs -text
+Data/enrichment/prior_breach_history.csv filter=lfs diff=lfs merge=lfs -text
+Data/enrichment/regulatory_enforcement.csv filter=lfs diff=lfs merge=lfs -text
+Data/fcc/companies_to_match.csv filter=lfs diff=lfs merge=lfs -text
+Data/fcc/fcc_data_template.csv filter=lfs diff=lfs merge=lfs -text
+outputs/audit/audit_comprehensive.csv filter=lfs diff=lfs merge=lfs -text
+outputs/audit/audit_data_quality.csv filter=lfs diff=lfs merge=lfs -text
+outputs/audit/audit_dataset_size.csv filter=lfs diff=lfs merge=lfs -text
+outputs/audit/audit_essay2_sample.csv filter=lfs diff=lfs merge=lfs -text
+outputs/audit/audit_essay3_sample.csv filter=lfs diff=lfs merge=lfs -text
+outputs/audit/audit_fcc_analysis.csv filter=lfs diff=lfs merge=lfs -text
+outputs/audit/audit_market_reactions_car.csv filter=lfs diff=lfs merge=lfs -text
+outputs/audit/audit_sample_characteristics.csv filter=lfs diff=lfs merge=lfs -text
+outputs/audit/audit_volatility_analysis.csv filter=lfs diff=lfs merge=lfs -text
+outputs/essay2/tables/TABLE_MAIN_REGRESSIONS.csv filter=lfs diff=lfs merge=lfs -text
+outputs/essay2/tables/TABLE_ROBUSTNESS.csv filter=lfs diff=lfs merge=lfs -text
+outputs/essay2/tables/TABLE_SUBSAMPLES.csv filter=lfs diff=lfs merge=lfs -text
+outputs/essay2/tables/table1_descriptive_stats.csv filter=lfs diff=lfs merge=lfs -text
+outputs/essay2/tables/table2_sample_composition.csv filter=lfs diff=lfs merge=lfs -text
+outputs/essay2/tables/table3_univariate_disclosure.csv filter=lfs diff=lfs merge=lfs -text
+outputs/essay2/tables/table4_univariate_fcc.csv filter=lfs diff=lfs merge=lfs -text
+outputs/essay2/tables/table5_correlations.csv filter=lfs diff=lfs merge=lfs -text
+outputs/essay2_expanded/tables/table1_descriptives.csv filter=lfs diff=lfs merge=lfs -text
+outputs/essay2_expanded/tables/table_sample_comparison.csv filter=lfs diff=lfs merge=lfs -text
+outputs/essay2_final/tables/H1_Power_Analysis_Summary.csv filter=lfs diff=lfs merge=lfs -text
+outputs/essay2_final/tables/TABLE1_descriptives.csv filter=lfs diff=lfs merge=lfs -text
+outputs/essay2_final/tables/TABLE2_composition.csv filter=lfs diff=lfs merge=lfs -text
+outputs/essay2_final/tables/TABLE3_heterogeneity.csv filter=lfs diff=lfs merge=lfs -text
+outputs/essay2_final/tables/TABLE4_univariate.csv filter=lfs diff=lfs merge=lfs -text
+outputs/essay2_final/tables/TABLE7_comparison.csv filter=lfs diff=lfs merge=lfs -text
+outputs/essay3/tables/table1_descriptive_stats.csv filter=lfs diff=lfs merge=lfs -text
+outputs/essay3_revised/tables/TABLE1_descriptives.csv filter=lfs diff=lfs merge=lfs -text
+outputs/essay3_revised/tables/TABLE2_composition.csv filter=lfs diff=lfs merge=lfs -text
+outputs/essay3_revised/tables/TABLE3_univariate.csv filter=lfs diff=lfs merge=lfs -text
+outputs/essay3_revised/tables/TABLE5_hypothesis_tests.csv filter=lfs diff=lfs merge=lfs -text
+outputs/ml_models/feature_importance_essay2_rf.csv filter=lfs diff=lfs merge=lfs -text
+outputs/ml_models/feature_importance_essay3_rf.csv filter=lfs diff=lfs merge=lfs -text
+outputs/ml_models/ols_vs_ml_essay2_comparison.csv filter=lfs diff=lfs merge=lfs -text
+outputs/ml_models/ols_vs_ml_essay3_comparison.csv filter=lfs diff=lfs merge=lfs -text
+outputs/robustness/tables/TABLE_B1_alternative_windows.csv filter=lfs diff=lfs merge=lfs -text
+outputs/robustness/tables/TABLE_B1_detailed_results.csv filter=lfs diff=lfs merge=lfs -text
+outputs/robustness/tables/TABLE_B2_detailed_results.csv filter=lfs diff=lfs merge=lfs -text
+outputs/robustness/tables/TABLE_B2_timing_thresholds.csv filter=lfs diff=lfs merge=lfs -text
+outputs/robustness/tables/TABLE_B3_detailed_results.csv filter=lfs diff=lfs merge=lfs -text
+outputs/robustness/tables/TABLE_B3_sample_restrictions.csv filter=lfs diff=lfs merge=lfs -text
+outputs/robustness/tables/TABLE_B4_all_variables.csv filter=lfs diff=lfs merge=lfs -text
+outputs/robustness/tables/TABLE_B4_detailed_results.csv filter=lfs diff=lfs merge=lfs -text
+outputs/robustness/tables/TABLE_B4_standard_errors.csv filter=lfs diff=lfs merge=lfs -text
+outputs/tables/TABLE_CVSS_COMPLEXITY_VOLATILITY_RESULTS.csv filter=lfs diff=lfs merge=lfs -text
+outputs/tables/TABLE_GOVERNANCE_QUALITY_VOLATILITY_RESULTS.csv filter=lfs diff=lfs merge=lfs -text
+outputs/tables/TABLE_MEDIA_COVERAGE_VOLATILITY_RESULTS.csv filter=lfs diff=lfs merge=lfs -text
+outputs/tables/TABLE_SOX404_HETEROGENEITY_RESULTS.csv filter=lfs diff=lfs merge=lfs -text
+outputs/tables/TABLE_SOX404_SAMPLE_SUMMARY.csv filter=lfs diff=lfs merge=lfs -text
+outputs/tables/company_matching_validation.csv filter=lfs diff=lfs merge=lfs -text
+outputs/tables/essay2/DIAGNOSTICS_VIF_multicollinearity.csv filter=lfs diff=lfs merge=lfs -text
+outputs/tables/placebo_test_results.csv filter=lfs diff=lfs merge=lfs -text
+outputs/tables/sample_attrition.csv filter=lfs diff=lfs merge=lfs -text
+outputs/tables/table1_descriptive_stats.csv filter=lfs diff=lfs merge=lfs -text
+outputs/tables/table2_univariate_comparison.csv filter=lfs diff=lfs merge=lfs -text
+outputs/tables/table3_essay2_summary.csv filter=lfs diff=lfs merge=lfs -text
+outputs/tables/table4_essay3_summary.csv filter=lfs diff=lfs merge=lfs -text

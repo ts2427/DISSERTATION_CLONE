@@ -26,38 +26,50 @@ Dissertation: Data Breach Disclosure Timing and Market Reactions
 University of South Alabama
 Date: February 2026
 
-CRITICAL: DATA PIPELINE ROOT (FORM 499 CORRECTED)
-==================================================
-The current source of truth for this pipeline is:
-  → Data/processed/FINAL_DISSERTATION_DATASET_FORM499_CORRECTED.csv
+DATA PIPELINE ROOT
+==================
+  -> Data/processed/rebuild/CANONICAL_V3.csv, built by scripts/150-157.
 
-This dataset incorporates:
-  1. CIK audit (removed fuzzy-match duplicates, n=5)
-  2. Entity matching (two-clause rule for Form 499 filers)
-  3. Form 499 filer registry (authoritative regulatory classification)
+Treatment variable: fcc_form499 (Form 499 filer at breach date), which replaced the
+SIC-based fcc_reportable proxy. The 7/28/2026 membership adjudications still hold
+(Cricket treated, Boost treated, DISH untreated, Aero Charter excluded); the DISH
+adjudication was revisited 2026-09-04 and is date-conditional.
 
-Treatment variable: fcc_form499 (Form 499 filer at breach date)
-  - Replaces: fcc_reportable (SIC-based proxy)
-  - FINAL membership (7/28/2026 adjudications: Cricket treated, Boost treated,
-    DISH untreated, Aero Charter excluded): 118 treated / 37 firms in CRSP
-    sample; 115 treated in the H1-H4 regression sample (N=648)
+HISTORY, NOT CURRENT: this block previously named
+Data/processed/FINAL_DISSERTATION_DATASET_FORM499_CORRECTED.csv as the source of truth,
+with 118 treated / 37 firms in the CRSP sample and 115 treated in an N = 648 regression
+sample. Those are PRE-REBUILD figures, superseded by the v3 rebuild (1,054 notification
+records -> 758 -> 524 -> 489 events). The live sample sizes are not restated here, so
+that this docstring cannot go stale again: read them from
+outputs/rebuild/constants_v3.json (Essay 1) and outputs/tables/essay2_v2/ (Essay 2).
+Note that constants_v3.json is itself STALE against today's CANONICAL_V3 pending the
+rebaseline; scripts/247 prints both values and says so.
 
-This pipeline regenerates the corrected dataset from scratch via the chain:
-  46 (Item 5.02 extraction) -> 53 (enrichment merge) -> 99 (CPNI/HHI) ->
-  98 (governance) -> 121a-c (Form 499 matching) -> 122 (manual adjudications)
-Individual script runs may produce stale outputs. Always run the complete
-pipeline for final analysis numbers.
+The old regeneration chain named here was 46 -> 53 -> 99 -> 98 -> 121a-c -> 122.
+Scripts 46 and 99 were retired on 2026-09-29 (Part H): both read the pre-rebuild dataset
+and feed nothing cited. 53 still runs, merging 46's committed output.
 
-ESSAY 3 OUTCOME — CURRENT (Query 2 chain, 2026-09-11)
-=====================================================
+ESSAY 3 OUTCOME — CURRENT (v4 chain, 2026-09-29 ruling)
+=======================================================
+AUTHORITATIVE: the v4 chain, scripts 212-246, with its baseline in
+outputs/essay3_v4/constants_essay3_v4.json and its appendix in outputs/essay3_appendix/.
+v4 changes the SAMPLE, not the method: the classifier functions are byte-identical to
+scripts/195 by AST and the estimator is identical line for line, but the point-in-time
+CRSP relink moves the sample to N = 405 with 109 treated events across 13 parent CIKs
+(G = 119). Six steps in the chain assert against their own outputs.
+
+The Query 2 chain below is RETIRED (2026-09-29). It stays staged only because its
+outputs are the v3 side of the scripts/239 side-by-side. Its description follows.
+
 Executive departure reported under Item 5.02(b), coded from the filing text by the
 final deterministic classifier scripts/195 (v2, commit 6f7be7a; validated in two blind
 rounds + a stratified recall audit; stopping rule in outputs/ESSAY3_QUERY2_REPORT.md).
 Chain: 187 (text fetch, cached) -> 195 (classifier) -> 199 (sample) -> 202 (estimation,
 asserts vs outputs/essay3_q2/constants_essay3_q2.json) -> 190/191 (T-Mobile data) -> 203.
 RETIRED 2026-09-11: script 46's any-Item-5.02 flags as the Essay 3 outcome (Item 5.02
-covers appointments, elections and pay, not only departures). Script 46 itself stays in
-run_all for now because script 53 merges its committed output for legacy Essay 1/2 scripts.
+covers appointments, elections and pay, not only departures). Script 46 itself was
+retired 2026-09-29 (Part H); script 53 continues to merge its committed output,
+Data/enrichment/executive_changes.csv, which stays tracked.
 
 IF YOU ARE RUNNING THIS FOR THE FIRST TIME, READ THIS
 =====================================================
@@ -68,10 +80,12 @@ What the dissertation's current results are, and where they come from:
                                  -> outputs/rebuild/appendix_v3/ (16 tables; Word build scripts/160)
   Essay 2 (information asymmetry) canonical chain, scripts 163-182
                                  -> outputs/tables/essay2_v2/ and the outputs/ESSAY2_*.md reports
-  Essay 3 (governance response)  Query 2 chain, scripts 187/195/199/202/190/191/203/204
-                                 -> outputs/essay3_q2/ and outputs/ESSAY3_QUERY2_REPORT.md
-                                 -> its own baseline, outputs/essay3_q2/constants_essay3_q2.json.
-                                    Essay 3 results do NOT come from scripts/158 or constants_v3.json.
+  Essay 3 (governance response)  v4 chain, scripts 212-246 (AUTHORITATIVE, 2026-09-29)
+                                 -> outputs/essay3_v4/ and outputs/essay3_appendix/
+                                 -> its own baseline, outputs/essay3_v4/constants_essay3_v4.json.
+                                    Essay 3 results do NOT come from scripts/158 or constants_v3.json;
+                                    since 2026-09-29 scripts/158 writes no Essay 3 value at all.
+                                    The Query 2 chain (187/195/199/202/190/191/203/204) is RETIRED.
 
 All three essays report NULL results. The design is post-2007 cross-sectional: there are no treated
 events before the rule took effect, so nothing here supports a causal or natural-experiment claim.
@@ -80,10 +94,11 @@ only and is DISQUALIFIED as a significance test. Start from README.md and, for E
 outputs/essay3_q2/ESSAY3_STARTING_POINT.md.
 
 WHAT THIS PIPELINE DOES NOT REGENERATE (know this before trusting a clean run):
-  1. Git LFS. Many legacy files are committed as LFS pointers whose filter=lfs attribute was dropped
-     in 5f5c950, so a clean clone writes small placeholder files with NO error. The Essay 3 chain's
-     inputs are fine; several Essay 1/2 inputs and outputs are not. A placeholder begins
-     "version https://git-lfs.github.com/spec/v1". See README.md.
+  1. Git LFS. FIXED 2026-09-29 (Part I3): the filter=lfs attribute was dropped for 87 committed
+     pointer files in 5f5c950, so a clean clone wrote 130-byte placeholders with NO error and every
+     reader of them degraded silently. All 87 rules are restored in .gitattributes, and Part I1 adds
+     an executable guard that scans for placeholder content before any step runs and aborts. A
+     placeholder begins "version https://git-lfs.github.com/spec/v1"; the fix is `git lfs pull`.
   2. outputs/tables/essay2_appendix/*.csv (41 files) have NO committed generator. scripts/178 only
      renders them into ESSAY2_APPENDIX.docx (itself gitignored). They are committed artifacts only.
   3. Data/wrds/crsp_quotes_topup.csv is CRSP-licensed and gitignored, so scripts/167 (microstructure
@@ -102,8 +117,9 @@ See ESSAY_RESULTS_SUMMARY_CORRECTED.md for the authoritative figures.
 Summary: Essay 1 H1-H3 bounded nulls (TOST .045/.013/<.001 at +-2.10pp),
 H4 inconclusive; Essay 2 H5 bounded null (main +0.12pp p=.914, TOST .044),
 quartile pattern = noise. Essay 3: the 7/28-chain H6 figures are RETIRED
-(2026-09-11); current Essay 3 results are the Query 2 chain
-(outputs/ESSAY3_QUERY2_REPORT.md, outputs/essay3_q2/constants_essay3_q2.json).
+(2026-09-11), and the Query 2 chain that replaced them is retired in turn
+(2026-09-29); current Essay 3 results are the v4 chain
+(outputs/essay3_v4/constants_essay3_v4.json, outputs/essay3_appendix/).
 First stage 16.71pp: RETIRED (no computed source; outputs/ESSAY3_QUERY1_REPORT.md C1).
 Superseded values are listed in outputs/STALE_RESULTS_MANIFEST.txt.
 """
@@ -148,12 +164,21 @@ LONG_RUNNING_SCRIPTS = {
     'scripts/182_essay2_test_ledger.py': 3600,  # re-executes six Essay 2 scripts via runpy
 }
 
-def run_script(script_path, description, log_file):
+def run_script(script_path, description, log_file, script_args=None):
     """
     Run a Python script and capture output to log.
     Returns True if successful.
+
+    script_args (added 2026-10-01): optional command-line arguments, supplied by a step's
+    third tuple element. Defaults to none, so every two-element step is invoked exactly as
+    before. This exists because scripts/219 needs --assemble-only to build its covariates
+    from the committed Compustat pull instead of attempting a WRDS pull; without it the
+    script aborts rather than overwrite committed data, which is what made the clean-clone
+    run fail.
     """
-    header = f"\nRunning: {description}\nScript: {script_path}\n" + "-" * 80
+    script_args = list(script_args or [])
+    shown = script_path + (' ' + ' '.join(script_args) if script_args else '')
+    header = f"\nRunning: {description}\nScript: {shown}\n" + "-" * 80
     print_to_both(header, log_file)
 
     start_time = time.time()
@@ -166,7 +191,7 @@ def run_script(script_path, description, log_file):
 
     try:
         result = subprocess.run(
-            [sys.executable, script_path],
+            [sys.executable, script_path] + script_args,
             capture_output=True,
             text=True,
             encoding='utf-8',
@@ -207,94 +232,290 @@ def run_script(script_path, description, log_file):
         print_to_both(status, log_file)
         return False
 
+LFS_PLACEHOLDER_MAGIC = "version https://git-lfs"
+
+# Inputs no step can supply for itself. A missing one, or one that is still an LFS
+# placeholder, stops the pipeline before step 1 rather than degrading some regression
+# 40 minutes in. Each is annotated with what needs it, so the list can be maintained.
+REQUIRED_INPUTS = [
+    ("Data/processed/rebuild/CANONICAL_V3.csv",
+     "the canonical event table; 18 live steps read it, including 156-158 and the v4 chain"),
+    ("outputs/rebuild/constants_v3.json",
+     "the Essay 1 assertion baseline; 7 live steps read it (156, 158, 163, 199, 202, 210, 247)"),
+    ("outputs/essay3_v4/constants_essay3_v4.json",
+     "the Essay 3 assertion baseline; scripts/227 asserts every ladder value against it"),
+    # RETIRED 2026-10-01 (publish-ready prune): the two pre-rebuild inputs below were
+    # required only by steps that the prune retired. FINAL_DISSERTATION_DATASET_FORM499_
+    # CORRECTED.csv was read by 122, 86c, 90b, 143 and 144, and executive_changes.csv was
+    # merged by 53 - all six are now commented out, so no live step reads either file and
+    # the guard no longer enforces them. Both remain committed.
+    ("Data/wrds/crsp_daily_returns.csv", "returns for every market-model step"),
+    ("Data/wrds/market_indices.csv", "the market index for every market-model step"),
+]
+
+
+# Steps whose declared input is licensed and cannot ship in the repository. When the input
+# is absent the step is recorded as SKIPPED - not failed - because a clean clone is EXPECTED
+# not to have it. Each entry names the missing file and the document that declares it, and
+# both are printed, so a skip can never be mistaken for a silent pass. If the input IS
+# present the step runs normally, so a licensed checkout gets the full pipeline.
+DECLARED_SKIPS = {
+    'scripts/170_essay2_scope_and_bounds.py': (
+        'Data/wrds/crsp_quotes_topup.csv',
+        'docs/claude/REPRODUCE_ESSAY2.md',
+        'intraday quotes for the effective-spread measure; WRDS licence required'),
+}
+
+
+def _declared_skip(script_path):
+    """(missing_input, doc, why) if this step must be skipped, else None."""
+    ent = DECLARED_SKIPS.get(script_path.replace(chr(92), '/'))
+    if ent and not Path(ent[0]).exists():
+        return ent
+    return None
+
+
+def _is_lfs_placeholder(path):
+    """True if the file on disk is a git-lfs pointer rather than its content.
+
+    A pointer is ~130 bytes of text beginning with the magic line. The size test keeps
+    this cheap enough to run over the whole tree.
+    """
+    try:
+        if path.stat().st_size > 1024:
+            return False
+        with open(path, "rb") as fh:
+            return fh.read(len(LFS_PLACEHOLDER_MAGIC)).decode("ascii", "ignore") == LFS_PLACEHOLDER_MAGIC
+    except OSError:
+        return False
+
+
+def _live_step_sources():
+    """The text of every step declared live in this file, for the reference check."""
+    import re
+    out = {}
+    for line in Path(__file__).read_text(encoding="utf-8", errors="replace").split("\n"):
+        if line.lstrip().startswith("#"):
+            continue
+        m = re.match(r"^\s*\(\s*'(scripts/[^']+\.py)'\s*,", line)
+        if m and Path(m.group(1)).exists():
+            out[m.group(1)] = Path(m.group(1)).read_text(encoding="utf-8", errors="replace")
+    return out
+
+
 def verify_data(log_file):
-    """Verify required data files exist"""
-    print_section("STEP 0: DATA VERIFICATION")
-    log_file.write("\n" + "=" * 80 + "\nSTEP 0: DATA VERIFICATION\n" + "=" * 80 + "\n\n")
+    """Fail loudly on a missing input, or on one that is still a Git LFS placeholder.
 
-    # Primary: Form 499 corrected dataset
-    data_file = Path('Data/processed/FINAL_DISSERTATION_DATASET_FORM499_CORRECTED.csv')
+    Added 2026-09-29 (Part I1). Until then this function checked a single pre-rebuild
+    file for existence. That was the wrong test twice over: it named a dataset the v3
+    rebuild had superseded, and existence says nothing about content. 87 committed files
+    lost their filter=lfs attribute in 5f5c950, so a clean clone wrote 130-byte
+    placeholders in their place with NO error, and every script that read one carried on
+    with a column of nonsense. Part I3 restored the attributes; this guard is what makes
+    the failure loud if it ever happens again - a placeholder here stops the run instead
+    of producing a plausible number.
+    """
+    print_section("STEP 0: DATA VERIFICATION AND LFS GUARD")
+    log_file.write("\n" + "=" * 80 + "\nSTEP 0: DATA VERIFICATION AND LFS GUARD\n" + "=" * 80 + "\n\n")
 
-    if data_file.exists():
-        file_size = data_file.stat().st_size / (1024 * 1024)
-        msg = f"  [OK] Form 499 corrected dataset found ({file_size:.1f} MB)\n  [OK] Ready to proceed\n"
+    missing, placeholder, ok = [], [], []
+    for rel, why in REQUIRED_INPUTS:
+        path = Path(rel)
+        if not path.exists():
+            missing.append((rel, why))
+        elif _is_lfs_placeholder(path):
+            placeholder.append((rel, why))
+        else:
+            ok.append((rel, path.stat().st_size / (1024 * 1024)))
+
+    msg = "Required inputs\n"
+    for rel, mb in ok:
+        msg += "  [OK]      %-62s %8.1f MB\n" % (rel, mb)
+    for rel, why in missing:
+        msg += "  [MISSING] %-62s %s\n" % (rel, why)
+    for rel, why in placeholder:
+        msg += "  [LFS]     %-62s %s\n" % (rel, why)
+    print_to_both(msg, log_file)
+
+    # Every other placeholder in the tree. Not fatal on its own - some belong to retired
+    # chains - but fatal if a live step names the file, which is the silent-degradation case.
+    others, sources = [], _live_step_sources()
+    for base in ("Data", "outputs"):
+        root = Path(base)
+        if not root.exists():
+            continue
+        for path in root.rglob("*"):
+            if not path.is_file() or any(r == str(path).replace("\\", "/") for r, _ in REQUIRED_INPUTS):
+                continue
+            if _is_lfs_placeholder(path):
+                others.append(path.as_posix())
+
+    read_by = {}
+    for rel in others:
+        name = rel.rsplit("/", 1)[-1]
+        users = sorted(step for step, text in sources.items() if name in text)
+        if users:
+            read_by[rel] = users
+
+    if others:
+        msg = "\nGit LFS placeholders elsewhere in the tree: %d\n" % len(others)
+        for rel in sorted(others)[:20]:
+            msg += "  [~] %s%s\n" % (rel, "   <- READ BY A LIVE STEP" if rel in read_by else "")
+        if len(others) > 20:
+            msg += "  ... and %d more\n" % (len(others) - 20)
+        msg += "  These are pointer text, not data. Fix with: git lfs pull\n"
         print_to_both(msg, log_file)
-        return True
-    else:
-        msg = f"  [ERROR] Required data file missing: {data_file}\n"
+
+    fatal = missing or placeholder or read_by
+    if fatal:
+        msg = "\n[FATAL] The pipeline will not start.\n"
+        if missing:
+            msg += "  %d required input(s) are missing.\n" % len(missing)
+        if placeholder:
+            msg += "  %d required input(s) are Git LFS placeholders, not data.\n" % len(placeholder)
+        if read_by:
+            msg += "  %d placeholder file(s) are read by a live step:\n" % len(read_by)
+            for rel, users in sorted(read_by.items()):
+                msg += "      %s  <- %s\n" % (rel, ", ".join(users))
+        msg += ("\n  Run `git lfs pull` and start again. Do NOT run individual scripts to work\n"
+                "  around this: a placeholder read as data produces a plausible wrong number\n"
+                "  rather than an error.\n")
         print_to_both(msg, log_file)
         return False
 
-def verify_outputs(log_file, run_start=None):
-    """Verify critical output files exist AND were written by this run.
+    print_to_both("  [OK] %d required inputs present, none a placeholder. Ready to proceed.\n"
+                  % len(ok), log_file)
+    return True
 
-    run_start: epoch seconds recorded when the pipeline began. A required file whose mtime predates
-    it is reported STALE - it exists only because it is committed in the repository, not because this
-    run produced it. Until 2026-09-11 this function tested existence alone, so a clean-clone run in
-    which six scripts failed (including the Stage 8 assertion) still reported SUCCESS on files that
-    had come straight from git. Passing run_start=None restores the old existence-only behaviour.
+def verify_outputs(log_file, run_start=None):
+    """Verify that this run produced the outputs the three essays are built from.
+
+    REBUILT 2026-10-01 by ruling. The list this replaced was assembled before the
+    publish-ready prune and had become unsatisfiable: of its 33 entries, 2 were written
+    only by scripts 86c and 90b - retired by the prune and never committed, so permanently
+    MISSING - and ~20 more were outputs of other retired steps, present only because they
+    are committed and therefore permanently STALE. A run in which all 59 live steps
+    succeeded still failed here. Its definition of a clean run no longer matched the
+    pipeline, so this is what a clean run means now.
+
+    THREE CATEGORIES.
+
+    1. FRESHNESS REQUIRED (`CRITICAL_FRESH`). Every file in the essay keep-set that a LIVE
+       step writes, plus the direct inputs that live steps write for each other. These must
+       exist AND have an mtime at or after `run_start`: existing is not enough, because a
+       committed copy would otherwise mask a step that silently did nothing. Each one was
+       confirmed written during the verification run of 2026-10-01 before being listed
+       here, so a failure in this category means a real regression, not a stale list.
+
+    2. PRESENCE ONLY (`CRITICAL_PRESENT`). Files a live step deliberately does NOT rewrite.
+       Two are assertion baselines: scripts/202 and scripts/227 each compare their results
+       against a committed constants file and write it only if it is absent, which is the
+       mechanism that makes the Essay 3 verdicts reproducible rather than re-derived. A
+       freshness test on those two would demand the opposite of what they are for. The
+       third is an input, not an output: no live step writes it. These are checked for
+       existence, which is the only thing that can meaningfully be checked.
+
+    3. DROPPED. Entries written only by steps the prune retired. They are not outputs of
+       this pipeline any more, so asserting on them says nothing about whether this run was
+       clean. The files themselves stay committed and nothing reads them; each dropped
+       entry is named in outputs/RETIREMENT_LEDGER.md.
+
+    `run_start` is epoch seconds recorded when the pipeline began. Passing None restores
+    existence-only behaviour for both categories. Until 2026-09-11 this function tested
+    existence alone, so a clean-clone run in which six scripts failed - including the
+    Stage 8 assertion - still reported SUCCESS on files that had come straight from git.
     """
     print_section("OUTPUT VERIFICATION")
     log_file.write("\n" + "=" * 80 + "\nOUTPUT VERIFICATION\n" + "=" * 80 + "\n\n")
 
-    # Define critical output files
-    critical_files = [
-        # Form 499 Corrected (PRIMARY)
-        Path('outputs/h1_h4_form499_corrected_summary.csv'),
-        Path('outputs/h1_h4_form499_corrected_regression_results.txt'),
-        Path('outputs/h5_form499_corrected_heterogeneity.csv'),
-        Path('outputs/h5_form499_corrected_regression_results.txt'),
-        # RETIRED 2026-09-11 (Essay 3 Query 2 Part H): 7/28-chain H6 outputs of script 91m
-        # Path('outputs/h6_form499_corrected_power_analysis.csv'),
-        # Path('outputs/h6_form499_corrected_regression_results.txt'),
-        # Essay 3 — Query 2 chain (CURRENT)
-        Path('outputs/essay3_q2/c2_outcomes_events.csv'),
-        Path('outputs/essay3_q2/e_analysis_sample.csv'),
-        Path('outputs/essay3_q2/f1_ladder.csv'),
-        Path('outputs/essay3_q2/constants_essay3_q2.json'),
-        Path('outputs/essay3_q2/tmobile_timeline.csv'),
-        Path('outputs/essay3_q2/f1_se_diagnostics.csv'),
-        # Essay 1 — canonical v3 chain (CURRENT)
+    # ---- 1. FRESHNESS REQUIRED ---------------------------------------------------
+    CRITICAL_FRESH = [
+        # v3 chain and Essay 1 (scripts 150-158, 247)
+        Path('Data/processed/rebuild/CANONICAL_V3.csv'),
+        Path('outputs/rebuild/STAGE7_VERIFICATION.md'),
         Path('outputs/rebuild/constants_v3.json'),
-        Path('outputs/rebuild/appendix_v3/table_1.csv'),
-        # Essay 2 — canonical chain, scripts 163-182 (CURRENT)
+        Path('outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md'),
+    ] + [Path('outputs/rebuild/appendix_v3/table_%d.csv' % i) for i in range(1, 17)] + [
+        # Essay 2 canonical chain (scripts 163-182)
+        Path('outputs/tables/essay2_v2/t1_final_sample.csv'),
         Path('outputs/tables/essay2_v2/t51_elevation_calibration.csv'),
         Path('outputs/tables/essay2_v2/t52_spec_curve_permutation.csv'),
         Path('outputs/tables/essay2_v2/t53_test_ledger.csv'),
-        # COMMITTED BUT NOT REGENERATED, so deliberately not required here:
-        #   outputs/tables/essay2_appendix/*.csv (no committed generator) and ESSAY2_APPENDIX.docx (gitignored).
-        # LEGACY / REFERENCE (SIC-based and 7/28-era chains; retained for the old-vs-new exhibit, NOT current results)
-        Path('outputs/tables/TABLE1_COMBINED.txt'),
-        Path('outputs/tables/essay2/TABLE2_baseline_disclosure.txt'),
-        Path('outputs/tables/essay2/TABLE3_fcc_regulation.txt'),
-        Path('outputs/tables/essay2/TABLE4_prior_breaches.txt'),
-        Path('outputs/tables/essay2/TABLE5_breach_severity.txt'),
-        Path('outputs/H1_timing_fcc_interaction_results.csv'),
-        Path('outputs/tables/essay2/TABLE_B8_post_2007_interaction.txt'),
-        Path('outputs/tables/essay2/TABLE_B9_clustered_vs_hc3_comparison.txt'),
-        Path('outputs/tables/essay2/H1_TOST_Equivalence_Test.txt'),
-        Path('outputs/tables/essay2/DIAGNOSTICS_VIF_summary.txt'),
-        # RETIRED 2026-09-11 (Essay 3 Query 2 Part H): legacy essay3_governance outputs (7/28 and
-        # SIC-era chains; scripts 91, 91b, 91c, 91e, 91f, 91g, 91h, 91j, 91k) — see outputs/RETIREMENT_LEDGER.md
-        Path('outputs/tables/essay3/TABLE2_volatility_changes.txt'),
-        Path('outputs/tables/essay3/TABLE3_information_asymmetry.txt'),
-        Path('outputs/economic_significance/economic_impact_summary.csv'),
-        Path('outputs/economic_significance/economic_significance_report.txt'),
-        Path('outputs/tables/TABLE_GOVERNANCE_HETEROGENEITY_RESULTS.csv'),
-        # RETIRED 8/4/2026: Path('outputs/tables/TABLE_CVSS_COMPLEXITY_HETEROGENEITY_RESULTS.csv'),
-        Path('outputs/tables/TABLE_RANSOMWARE_HETEROGENEITY_RESULTS.csv'),
-        Path('outputs/tables/TABLE_MEDIA_COVERAGE_HETEROGENEITY_RESULTS.csv'),
-        # RETIRED 2026-09-11: Path('outputs/tables/TABLE_EXTENDED_GOVERNANCE_WINDOWS_RESULTS.csv'),  (script 102)
-        Path('outputs/tables/TABLE_DIVERSITY_HETEROGENEITY_RESULTS.csv'),
+        # Essay 3 Query 2 chain (scripts 187-204) - its outputs are read by the v4 chain
+        Path('outputs/essay3_q2/c2_outcomes_events.csv'),
+        Path('outputs/essay3_q2/e_analysis_sample.csv'),
+        Path('outputs/essay3_q2/e_ledger.csv'),
+        Path('outputs/essay3_q2/f1_ladder.csv'),
+        Path('outputs/essay3_q2/f1_se_diagnostics.csv'),
+        Path('outputs/essay3_q2/tmobile_timeline.csv'),
+        # v4 chain - Essay 3 of record (scripts 212-247)
+        Path('Data/processed/rebuild_v4/CANONICAL_V4.csv'),
+        Path('outputs/rebuild_v4/v4_212_links.csv'),
+        Path('outputs/essay3_v4/e_analysis_sample.csv'),
+        Path('outputs/essay3_v4/e_ledger.csv'),
+        Path('outputs/essay3_v4/f1_ladder.csv'),
+        Path('outputs/essay3_v4/tmobile_timeline.csv'),
+        Path('outputs/essay3_v4/g6_case_table.csv'),
+        Path('outputs/essay3_v4/g6_restatement_dated.csv'),
+        Path('outputs/essay3_q3/tmobile_case.csv'),
+    ] + [Path('outputs/essay3_q4/table%02d.csv' % i) for i in range(1, 12)] + [
+        Path('outputs/essay3_appendix/ESSAY3_APPENDIX_TABLES.md'),
     ]
+
+    # ---- 2. PRESENCE ONLY --------------------------------------------------------
+    CRITICAL_PRESENT = [
+        # Assertion baselines: written only when absent, then asserted against forever.
+        (Path('outputs/essay3_q2/constants_essay3_q2.json'),
+         'assertion baseline; scripts/202 asserts against it and writes it only if absent'),
+        (Path('outputs/essay3_v4/constants_essay3_v4.json'),
+         'assertion baseline; scripts/227 asserts against it and writes it only if absent'),
+        # An input, not an output: no live step writes it; scripts/245 reads it.
+        (Path('outputs/essay3_q4/tmobile_502_text.md'),
+         'committed input to scripts/245; written by no live step (184/185 are retired)'),
+    ]
+    # NOT in this category: outputs/rebuild/constants_v3.json. scripts/158 rewrites it on
+    # every run - confirmed written during the verification run - so it is held to the
+    # freshness test above, even though it is also an assertion baseline for Essay 1.
+
+    # ---- 3. DROPPED, for the record ----------------------------------------------
+    # Written only by retired steps; see outputs/RETIREMENT_LEDGER.md.
+    #   scripts/86c  outputs/h1_h4_form499_corrected_summary.csv
+    #                outputs/h1_h4_form499_corrected_regression_results.txt   (never committed)
+    #   scripts/90b  outputs/h5_form499_corrected_heterogeneity.csv
+    #                outputs/h5_form499_corrected_regression_results.txt      (never committed)
+    #   scripts/96   outputs/economic_significance/economic_impact_summary.csv
+    #                outputs/economic_significance/economic_significance_report.txt
+    #   scripts/98   outputs/tables/TABLE_GOVERNANCE_HETEROGENEITY_RESULTS.csv
+    #   pre-rebuild  outputs/tables/TABLE_RANSOMWARE_HETEROGENEITY_RESULTS.csv
+    #                outputs/tables/TABLE_MEDIA_COVERAGE_HETEROGENEITY_RESULTS.csv
+    #                outputs/tables/TABLE_DIVERSITY_HETEROGENEITY_RESULTS.csv
+    #                outputs/tables/TABLE1_COMBINED.txt
+    #                outputs/H1_timing_fcc_interaction_results.csv
+    #   SIC-era      outputs/tables/essay2/TABLE2_baseline_disclosure.txt
+    #                outputs/tables/essay2/TABLE3_fcc_regulation.txt
+    #                outputs/tables/essay2/TABLE4_prior_breaches.txt
+    #                outputs/tables/essay2/TABLE5_breach_severity.txt
+    #                outputs/tables/essay2/TABLE_B8_post_2007_interaction.txt
+    #                outputs/tables/essay2/TABLE_B9_clustered_vs_hc3_comparison.txt
+    #                outputs/tables/essay2/H1_TOST_Equivalence_Test.txt
+    #                outputs/tables/essay2/DIAGNOSTICS_VIF_summary.txt
+    #                outputs/tables/essay3/TABLE2_volatility_changes.txt
+    #                outputs/tables/essay3/TABLE3_information_asymmetry.txt
+    # 22 entries dropped, 11 retained; 33 -> 54 entries (51 freshness + 3 presence-only).
+
+    critical_files = CRITICAL_FRESH + [f for f, _ in CRITICAL_PRESENT]
 
     present_files = []
     missing_files = []
     stale_files = []
 
+    present_only = {f for f, _ in CRITICAL_PRESENT}
+    presence_ok = []
     for filepath in critical_files:
         if not filepath.exists():
             missing_files.append(str(filepath))
+        elif filepath in present_only:
+            presence_ok.append(str(filepath))      # freshness deliberately not tested
         elif run_start is not None and filepath.stat().st_mtime < run_start:
             stale_files.append(str(filepath))
         else:
@@ -304,6 +525,7 @@ def verify_outputs(log_file, run_start=None):
     msg = f"\nCritical Output Files:\n"
     msg += f"  Written by this run: {len(present_files)}/{len(critical_files)}\n"
     msg += f"  Stale (pre-existing, NOT written by this run): {len(stale_files)}/{len(critical_files)}\n"
+    msg += f"  Presence-only (baselines/inputs, freshness not tested): {len(presence_ok)}/{len(critical_files)}\n"
     msg += f"  Missing: {len(missing_files)}/{len(critical_files)}\n"
 
     if present_files:
@@ -359,15 +581,23 @@ Log file: {log_path}
             {
                 'category': 'DATA PREPARATION - OUTCOME EXTRACTION',
                 'scripts': [
-                    ('scripts/46_executive_changes_item5_02_with_cache.py', 'Essay 3 Outcome: Executive Turnover from 8-K Item 5.02 (cached; 20-30 min on first run, 2-5 min after) [MUST RUN BEFORE SCRIPT 53]'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET and
+                    # feeds nothing cited. Its committed output Data/enrichment/executive_changes.csv
+                    # (779 rows, executive_change_180d sum 521) stays on disk, so scripts/53 still runs
+                    # without it - the check the ledger left open is now closed.
+                    # ('scripts/46_executive_changes_item5_02_with_cache.py', 'Essay 3 Outcome: Executive Turnover from 8-K Item 5.02 (cached; 20-30 min on first run, 2-5 min after) [MUST RUN BEFORE SCRIPT 53]'),
                 ]
             },
             {
                 'category': 'DATA PREPARATION - ENRICHMENTS',
                 'scripts': [
-                    ('scripts/53_merge_CONFIRMED_enrichments.py', 'Merge All Enrichments (Prior breaches, breach severity, media coverage, Item 5.02 executive turnover, enforcement) → FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv'),
-                    ('scripts/99_add_cpni_hhi_variables.py', 'Add CPNI & HHI Variables (Essay 1 Alternative Explanations)'),
-                    ('scripts/98_sox404_heterogeneity.py', 'Governance Enrichment: SOX 404 proxy → FINAL_DISSERTATION_DATASET_WITH_GOVERNANCE.csv (required by 121c)'),
+                    # RETIRED 2026-10-01 (publish-ready prune): pre-rebuild enrichment merge
+                    # ('scripts/53_merge_CONFIRMED_enrichments.py', 'Merge All Enrichments (Prior breaches, breach severity, media coverage, Item 5.02 executive turnover, enforcement) → FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/99_add_cpni_hhi_variables.py', 'Add CPNI & HHI Variables (Essay 1 Alternative Explanations)'),
+                    # RETIRED 2026-10-01 (publish-ready prune): pre-rebuild governance merge + heterogeneity table
+                    # ('scripts/98_sox404_heterogeneity.py', 'Governance Enrichment: SOX 404 proxy → FINAL_DISSERTATION_DATASET_WITH_GOVERNANCE.csv (required by 121c)'),
                 ]
             },
             {
@@ -383,10 +613,12 @@ Log file: {log_path}
                     ('scripts/156_rebuild_s6_assembly.py', 'Stage 6: keyed covariates (NO positional joins); Item 5.02 from live EDGAR (cached) → CANONICAL_V3.csv'),
                     ('scripts/157_rebuild_s7_verification.py', 'Stage 7: disclosure-date armor, OCR health check (bounded), CRSP-attrition balance'),
                     ('scripts/158_rebuild_s8_regenerate.py', 'Stage 8: all three essays + ROA amendment + appendix v3 + CONSTANTS BLOCK V3 (assertion baseline)'),
+                    ('scripts/160_appendix_v3_to_word.py', 'Essay 1 appendix v3 -> Word: renders the 16 tables 158 writes (must follow 158)'),
+                    ('scripts/247_essay1_ledger_attrition_v3.py', 'Essay 1 attrition ledger, computed live from the v3 chain (10 assertions). EXITS NONZERO while constants_v3.json is stale against CANONICAL_V3 - that failure is the pending rebaseline, and the ledger is written either way'),
                 ]
             },
             {
-                'category': 'ESSAY 3 — QUERY 2 CHAIN (executive departure; CURRENT, 2026-09-11; results in a separate constants file)',
+                'category': 'ESSAY 3 — QUERY 2 CHAIN (RETIRED 2026-09-29; superseded by the v4 chain below. Kept staged because its outputs are the v3 side of the 239 side-by-side; its constants file is NOT authoritative)',
                 'scripts': [
                     ('scripts/187_essay3_q2_fetch_502_text.py', 'Essay 3 B: Item 5.02 filing text for the scope events (cached; asserts the fixed validation/dev draws reproduce)'),
                     ('scripts/195_essay3_q2_classifier_v2.py', 'Essay 3 C: FINAL classifier v2 (6f7be7a) -> c2_* codes, one-departure-per-person events, outcomes'),
@@ -401,6 +633,65 @@ Log file: {log_path}
                     #   200 (recall-audit sheet), 201 (recall-audit scoring).
                     # scripts/195 is FROZEN (commit 6f7be7a). Do not edit it: any revision invalidates the
                     # blind validation and requires a fresh round.
+                ]
+            },
+            {
+                'category': 'ESSAY 3 — v4 CHAIN (AUTHORITATIVE, 2026-09-29 ruling; point-in-time CRSP relink; '
+                            'constants in outputs/essay3_v4/constants_essay3_v4.json)',
+                'scripts': [
+                    # Order is REPRODUCE_ESSAY3_V4.md's, which diverges from numeric order in two
+                    # places: 232 must precede 224 (224's ledger reads the censoring result) and
+                    # 233 must precede 224 (224 aborts unless every reconciliation row says agree).
+                    # 212 runs TWICE, by design - see commit 218d3d9, which introduced the
+                    # --canonical and --out-prefix arguments for exactly this.
+                    #
+                    # PASS 1 reads CANONICAL_V3 and writes the UNPREFIXED 212_*.csv, including
+                    # stage3_candidates.csv - the worklist scripts/213 verifies and the evidence
+                    # the re-parenting in 214 is built on. It must therefore run BEFORE 214.
+                    ('scripts/212_pit_linker_v4.py', 'v4 Stage 2 PASS 1 of 2: point-in-time CIK->gvkey->CUSIP->permno linker on CANONICAL_V3; writes the unprefixed 212_* files and the Stage 3 worklist 213 verifies'),
+                    ('scripts/214_corrections_v4.py', 'v4 correction ledger -> CANONICAL_V4 (Sprint anchor, Carnival, CIK re-parenting, Gate-2 notification anchor, health indicator)'),
+                    # PASS 2 reads CANONICAL_V4, whose final_cik is the RE-PARENTED registrant,
+                    # and writes the v4_-prefixed files. 13 live steps read v4_212_links.csv -
+                    # among them 227, which writes constants_essay3_v4.json - so without this
+                    # pass the v4 linkage is never derived and that file is only ever a committed
+                    # artefact. 214's own rule says why the order is this way: a subsidiary's CIK
+                    # has no Compustat gvkey, so re-parenting points the event at the registrant
+                    # 'so the second linker pass can find it'. The v4_ prefix keeps pass 2 from
+                    # overwriting stage3_candidates.csv, which is 213's evidence base.
+                    ('scripts/212_pit_linker_v4.py', 'v4 Stage 2 PASS 2 of 2: re-link on CANONICAL_V4 (re-parented CIKs) -> v4_212_* files, the linkage 13 live steps read', ['--canonical', 'Data/processed/rebuild_v4/CANONICAL_V4.csv', '--out-prefix', 'v4_']),
+                    ('scripts/215_ledger_v4.py', 'v4 linkage ledger and symmetry report'),
+                    # --assemble-only is REQUIRED (REPRODUCE_ESSAY3_V4.md:30). Without it
+                    # 219 attempts the WRDS pull and aborts at 219:181 rather than
+                    # overwrite Data/wrds_v4/comp_funda.csv, which is committed.
+                    ('scripts/219_wrds_funda_v4.py', 'v4 covariates from the committed Compustat pull (gvkey-joined; 550-day staleness rule verbatim from 156)', ['--assemble-only']),
+                    ('scripts/234_outcome_cik_v4.py', 'v4 outcome filer resolved by rule (the CIK whose Form 8-K filings are read)'),
+                    ('scripts/233_resolve_reconciliation.py', 'PREREQUISITE of 224: reconciles outcome_cik against the v3 patch list; every row must say agree'),
+                    ('scripts/230_outcome_gap_v4.py', 'v4 outcome-CIK gap and the fetch window per event'),
+                    ('scripts/235_fetch_completeness_v4.py', 'v4 fetch completeness; also writes the b_* scope files 220 and 224 read'),
+                    ('scripts/237_validation_draw_v4.py', 'v4 out-of-sample validation draw (pool = documents v4 added, against the v3-frozen tree; seed 20260919)'),
+                    ('scripts/220_essay3_v4_classifier_v2.py', 'v4 classifier: byte-identical METHOD to scripts/195; only the data sources move. Slow (~1,500 filings)'),
+                    ('scripts/238_score_new_documents_v4.py', 'v4 new-document accuracy against the blind reference codes'),
+                    ('scripts/232_censoring_report_v4.py', 'MUST PRECEDE 224: censoring report on the outcome filer last filing'),
+                    ('scripts/224_essay3_v4_sample_e.py', 'v4 sample E: censoring rule, 8-K activity, 150-return rule, ledger (asserts its ledger closes)'),
+                    ('scripts/227_essay3_v4_estimation.py', 'v4 F/I: H6 ladder, placebo, 27 sensitivities, BH (ASSERTS against outputs/essay3_v4/constants_essay3_v4.json). Slow (B = 99,999)'),
+                    ('scripts/229_essay3_v4_se_diagnostics.py', 'v4 SE diagnostics (ASSERTS its recomputed HC3/CV1/CV3 equal f1_ladder.csv at all three windows)'),
+                    ('scripts/228_essay3_v4_tmobile_case_timeline.py', 'v4 T-Mobile case timeline'),
+                    ('scripts/239_v3_vs_v4_sidebyside.py', 'v3-overlap sensitivity and the v3-vs-v4 constants side-by-side'),
+                    ('scripts/242_essay3_q3_results_pull.py', 'Results-section pull (ASSERTS t and p reproduce f1_ladder.csv within its stored precision)'),
+                    ('scripts/243_essay3_q4_readouts.py', 'Control coefficients and logit diagnostics (ASSERTS both reproduce f1_ladder.csv and f1_logit_ame.csv)'),
+                    ('scripts/244_essay3_q4_tables.py', 'The eleven table CSVs (24 assertions: ledger closure, subgroup sums, 27 sensitivity rows, 26 T-Mobile events)'),
+                    ('scripts/246_essay3_descriptive_counts.py', 'Descriptive counts the appendix cites (ASSERTS all 14 against the Results figures)'),
+                    ('scripts/245_essay3_appendix.py', 'Renders the appendix, .md and .docx (36 assertions incl. label, title, note-text and case integrity)'),
+                    ('scripts/217_v4_offline_tests.py', 'v4 offline test suite; must be all-pass'),
+                    ('scripts/210_verify_v3_frozen.py', 'v3 freeze gate; must be PASS. Run it AFTER staging, or it cannot see newly added files'),
+                    # NOT STAGED, and deliberately so:
+                    #   211, 216 (WRDS pulls: subscription), 213, 231 (SEC fetches: network + declared
+                    #   User-Agent). Their outputs are committed and are treated as inputs.
+                    #   221, 222, 223, 225, 226 (one-off blind validation and audit draws; outputs
+                    #   committed under outputs/essay3_v4/).
+                    #   236 (loader) and 218 (common) are imported, not run.
+                    #   241 was a targeted re-estimation under freeze exception 1; 227 supersedes it.
+                    # scripts/220 is FROZEN and byte-identical in METHOD to scripts/195.
                 ]
             },
             {
@@ -435,46 +726,65 @@ Log file: {log_path}
             {
                 'category': 'DATA PREPARATION - FORM 499 CLASSIFICATION',
                 'scripts': [
-                    ('scripts/121a_form499_entity_matching.py', 'Form 499 Entity Matching: Exact-string match (normalized) PRC firms to FCC registry (107/779 matched)'),
-                    ('scripts/121b_form499_coverage_validation.py', 'Form 499 Coverage Validation: Validate matches against start/end dates (88 date-valid)'),
-                    ('scripts/121c_merge_form499_classification.py', 'Merge Form 499 Classification: Add fcc_form499 binary to dataset (79 treated in regression sample)'),
-                    ('scripts/122_manual_form499_corrections.py', 'Manual Form 499 Corrections: Apply two-clause rule to SIC-flagged firms (add +36 treated via parent-brand rule) → FINAL_DISSERTATION_DATASET_FORM499_CORRECTED.csv'),
+                    # --assemble-only is REQUIRED from a clean clone: the live FCC endpoint
+                    # returns HTTP 403, so the step parses the committed registry snapshot
+                    # Data/edgar/form499_registry.xml instead (docs/claude/REPRODUCE_ESSAY2.md).
+                    # RETIRED 2026-10-01 (publish-ready prune): pre-rebuild Form 499 entity matching
+                    # ('scripts/121a_form499_entity_matching.py', 'Form 499 Entity Matching: Exact-string match (normalized) PRC firms to FCC registry (107/779 matched)', ['--assemble-only']),
+                    # RETIRED 2026-10-01 (publish-ready prune): pre-rebuild Form 499 coverage validation
+                    # ('scripts/121b_form499_coverage_validation.py', 'Form 499 Coverage Validation: Validate matches against start/end dates (88 date-valid)'),
+                    # RETIRED 2026-10-01 (publish-ready prune): pre-rebuild Form 499 classification merge
+                    # ('scripts/121c_merge_form499_classification.py', 'Merge Form 499 Classification: Add fcc_form499 binary to dataset (79 treated in regression sample)'),
+                    # RETIRED 2026-10-01 (publish-ready prune): pre-rebuild Form 499 manual corrections
+                    # ('scripts/122_manual_form499_corrections.py', 'Manual Form 499 Corrections: Apply two-clause rule to SIC-flagged firms (add +36 treated via parent-brand rule) → FINAL_DISSERTATION_DATASET_FORM499_CORRECTED.csv'),
                 ]
             },
             {
                 'category': 'FORM 499 CORRECTED ANALYSES [LEGACY — superseded 8/4/2026 by the CANONICAL V3 chain above; retained to regenerate the old base for the old-vs-new data-quality comparison exhibit]',
                 'scripts': [
-                    ('scripts/86c_essay1_h1_h4_form499_corrected.py', 'H1-H4 Re-estimation with Form 499 Corrected Classification (n=115 treated, authoritative regulatory status)'),
-                    ('scripts/90b_essay2_h5_form499_corrected.py', 'H5 Volatility Re-estimation with Form 499 Corrected (First real result, post-deduplication)'),
+                    # RETIRED 2026-10-01 (publish-ready prune): pre-rebuild Essay 1 H1-H4 regressions
+                    # ('scripts/86c_essay1_h1_h4_form499_corrected.py', 'H1-H4 Re-estimation with Form 499 Corrected Classification (n=115 treated, authoritative regulatory status)'),
+                    # RETIRED 2026-10-01 (publish-ready prune): pre-rebuild Essay 2 H5 heterogeneity
+                    # ('scripts/90b_essay2_h5_form499_corrected.py', 'H5 Volatility Re-estimation with Form 499 Corrected (First real result, post-deduplication)'),
                     # RETIRED 2026-09-11 (Essay 3 Query 2 Part H): 7/28-chain H6 on the any-5.02 outcome; superseded by the Query 2 chain
                     # ('scripts/91m_essay3_h6_form499_corrected.py', 'H6 Executive Turnover Re-estimation with Form 499 Corrected (First real result, MDE/TOST)'),
                     # RETIRED 2026-08-30 (Query 5 Part F): 7/28-vintage chain superseded by appendix_v3 (scripts/158/160).
                     # The script itself was DELETED in 0e75740; the entry below is provenance only. The current
                     # Essay 1 appendix is outputs/rebuild/appendix_v3/ (scripts/158, Word build scripts/160).
-                    # ('scripts/141_essay1_appendix_tables_form499.py', 'Essay 1 Appendix Tables 1-14 (Form 499 corrected, all live-computed with canonical checks; replaces retired 7/24 rebuild whose Tables 8/10/11/12/13 were hardcoded placeholders) → outputs/tables/appendix_v2/ + outputs/ESSAY1_APPENDIX_TABLES_FORM499.md'),
                     # RETIRED 2026-08-30 (Query 5 Part F): 7/28-vintage chain; v3 ledger lives in CANONICAL_V3_LINEAGE.md + ESSAY2 ledgers.
                     # The script itself was DELETED in 0e75740; the entry below is provenance only. Do not revive it:
                     # outputs/SAMPLE_ATTRITION_LEDGER.md is now a TOMBSTONE and regenerating it would overwrite that.
-                    # ('scripts/142_sample_attrition_ledger.py', 'Sample Attrition Ledger (Methods source of truth: 1,054 documented / 784→779→672→648 computed live; rule-date anchor Dec 8, 2007 per 72 FR 31948 + FCC DA-08-1321; Sept 28 2007 retired) → outputs/SAMPLE_ATTRITION_LEDGER.md'),
-                    ('scripts/143_essay1_results_supplements.py', 'Essay 1 Results Supplements (timing x FCC interaction, 5-day CAR, TOST min bounds, overlap share, 60/90d horizons under uniform convention; CONTAINS car_30d provenance finding - stored column inherits pre-audit computation) → outputs/ESSAY1_RESULTS_SUPPLEMENTS.md'),
-                    ('scripts/144_residual_duplicate_audit.py', 'Residual-Duplicate Audit (name-variant twins defeating exact-key dedup: 26 groups/30 excess rows → 754-event candidate set; ±3-day adjacency candidates reported not collapsed; NOTHING canonical overwritten) → outputs/RESIDUAL_DUPLICATE_AUDIT.md + FINAL_DATASET_DEDUP_V2_CANDIDATE.csv'),
+                    # RETIRED 2026-10-01 (publish-ready prune): pre-rebuild Essay 1 results supplements
+                    # ('scripts/143_essay1_results_supplements.py', 'Essay 1 Results Supplements (timing x FCC interaction, 5-day CAR, TOST min bounds, overlap share, 60/90d horizons under uniform convention; CONTAINS car_30d provenance finding - stored column inherits pre-audit computation) → outputs/ESSAY1_RESULTS_SUPPLEMENTS.md'),
+                    # RETIRED 2026-10-01 (publish-ready prune): pre-rebuild residual duplicate audit
+                    # ('scripts/144_residual_duplicate_audit.py', 'Residual-Duplicate Audit (name-variant twins defeating exact-key dedup: 26 groups/30 excess rows → 754-event candidate set; ±3-day adjacency candidates reported not collapsed; NOTHING canonical overwritten) → outputs/RESIDUAL_DUPLICATE_AUDIT.md + FINAL_DATASET_DEDUP_V2_CANDIDATE.csv'),
                 ]
             },
             {
                 'category': 'MAIN ANALYSIS (REFERENCE)',
                 'scripts': [
-                    ('scripts/70_summary_statistics.py', 'Summary Statistics (Table 1)'),
-                    ('scripts/80_essay1_car_regressions.py', 'Essay 1 Main Regressions (H1-H4: CAR on disclosure/FCC/reputation/severity) - HC3 robust SEs as primary [REFERENCE - SIC-BASED]'),
-                    ('scripts/h1_timing_fcc_interaction.py', 'H1 Theoretical Test: Timing × FCC Interaction (formal test of differential effects by regulatory status, canonical specification)'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/70_summary_statistics.py', 'Summary Statistics (Table 1)'),
+                    # RETIRED 2026-10-01 (publish-ready prune): pre-rebuild Essay 1 CAR regressions
+                    # ('scripts/80_essay1_car_regressions.py', 'Essay 1 Main Regressions (H1-H4: CAR on disclosure/FCC/reputation/severity) - HC3 robust SEs as primary [REFERENCE - SIC-BASED]'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/h1_timing_fcc_interaction.py', 'H1 Theoretical Test: Timing × FCC Interaction (formal test of differential effects by regulatory status, canonical specification)'),
                     # ARCHIVED: Pre-2007 causal ID replaced by SCM. Runs as robustness check only.
                     # ('scripts/81_post_2007_interaction_test.py', 'FCC Causal Identification (TABLE B8: Post-2007 Interaction Test - Market Returns)'),
-                    ('scripts/82_clustered_vs_hc3_comparison.py', 'Standard Errors Robustness (TABLE B9: Clustered vs HC3 Comparison)'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/82_clustered_vs_hc3_comparison.py', 'Standard Errors Robustness (TABLE B9: Clustered vs HC3 Comparison)'),
                     # RETIRED 2026-08-30 (Query 5 Part G): Rule-37.3/DiD-era content; no causal-identification claim survives zero treated pre-rule observations
-                    # ('scripts/83_fcc_causal_identification.py', 'FCC Causal ID Summary (Industry Fixed Effects, Size Sensitivity Analysis)'),
-                    ('scripts/90_essay2_volatility_regressions.py', 'Essay 2 Volatility Analysis (FCC effect on post-breach volatility, Tables 2-3) [COMPLETE]'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/90_essay2_volatility_regressions.py', 'Essay 2 Volatility Analysis (FCC effect on post-breach volatility, Tables 2-3) [COMPLETE]'),
                     # ARCHIVED: Pre-2007 causal ID replaced by SCM. Runs as robustness check only.
                     # ('scripts/84_essay2_post_2007_interaction_test_volatility.py', 'Essay 2 Volatility Causal ID (TABLE B8: Post-2007 Test)'),
-                    ('scripts/86_essay3_fcc_causal_identification.py', 'Essay 2 Volatility Causal ID (Industry FE, Size Sensitivity)'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/86_essay3_fcc_causal_identification.py', 'Essay 2 Volatility Causal ID (Industry FE, Size Sensitivity)'),
                     # RETIRED 2026-09-11 (Essay 3 Query 2 Part H): legacy Essay 3 scripts on the SIC treatment and the
                     # any-Item-5.02 outcome (91, 91b, 91c, 91e, 91f, 91g, 91k, 91j) and the 7/28 Cox (91h); superseded by the
                     # Query 2 chain. The TOST description "confirms FCC effect is economically negligible" is withdrawn.
@@ -484,7 +794,9 @@ Log file: {log_path}
             {
                 'category': 'CAUSAL IDENTIFICATION: SYNTHETIC CONTROL METHOD',
                 'scripts': [
-                    ('scripts/scm_mahalanobis_distance.py', 'Essay 1 H2 Causal Identification: Mahalanobis Distance Weighted SCM (Abadie et al. 2010) - breach-event level matching with 500 permutations'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/scm_mahalanobis_distance.py', 'Essay 1 H2 Causal Identification: Mahalanobis Distance Weighted SCM (Abadie et al. 2010) - breach-event level matching with 500 permutations'),
                 ]
             },
             {
@@ -492,15 +804,17 @@ Log file: {log_path}
                 'scripts': [
                     # ARCHIVED: Parallel trends and balance test used pre-2007/post-2007 comparison.
                     # Causal ID now uses Synthetic Control Matching. These run as archived checks only.
-                    # ('scripts/create_parallel_trends_figure.py', 'Create Parallel Trends Figure (FCC vs non-FCC CAR by year, 2004-2010)'),
-                    # ('scripts/create_balance_test_table.py', 'Create Balance Test Table (Pre-2007 firm characteristics parity)'),
                 ]
             },
             {
                 'category': 'PUBLICATION READINESS: DATA INTEGRITY & CAUSAL ROBUSTNESS',
                 'scripts': [
-                    ('scripts/00_data_validation_checks.py', 'Data Validation Checks (logical consistency, duplicates, outliers, missing data)'),
-                    ('scripts/99_firm_fixed_effects_analysis.py', 'Firm Fixed Effects (H1-H4 within-firm variation, controls unobserved heterogeneity)'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/00_data_validation_checks.py', 'Data Validation Checks (logical consistency, duplicates, outliers, missing data)'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/99_firm_fixed_effects_analysis.py', 'Firm Fixed Effects (H1-H4 within-firm variation, controls unobserved heterogeneity)'),
                     # RETIRED 8/4/2026 (Rebuild Directive v2, data decision 3): enforcement columns are
                     # pre-audit provenance; enforcement enters as prose citation-armor only.
                     # ('scripts/92_enforcement_analysis.py', 'H6 Enforcement Analysis (regulatory enforcement prevalence and predictors)'),
@@ -509,28 +823,45 @@ Log file: {log_path}
             {
                 'category': 'MACHINE LEARNING',
                 'scripts': [
-                    ('scripts/60_train_ml_model.py', 'Train ML Model'),
-                    ('scripts/61_ml_validation.py', 'ML Validation & Robustness Text'),
+                    # RETIRED 2026-10-01 (publish-ready prune): ML feature-importance models and figures
+                    # ('scripts/60_train_ml_model.py', 'Train ML Model'),
+                    # RETIRED 2026-10-01 (publish-ready prune): ML validation figures and robustness text
+                    # ('scripts/61_ml_validation.py', 'ML Validation & Robustness Text'),
                 ]
             },
             {
                 'category': 'ECONOMIC SIGNIFICANCE & COMPREHENSIVE HETEROGENEITY ANALYSIS',
                 'scripts': [
-                    ('scripts/96_economic_significance.py', 'Economic Significance Analysis: FCC costs, volatility impact, governance disruption in dollar terms'),
-                    ('scripts/97_heterogeneous_mechanisms.py', 'Heterogeneous Mechanisms: Effects vary by firm size, breach type, prior history'),
-                    ('scripts/98_sox404_heterogeneity.py', 'HETEROGENEITY PHASE 1: Governance Quality (SOX 404 proxy) - FCC x Governance interaction'),
+                    # RETIRED 2026-10-01 (publish-ready prune): economic-significance figures
+                    # ('scripts/96_economic_significance.py', 'Economic Significance Analysis: FCC costs, volatility impact, governance disruption in dollar terms'),
+                    # RETIRED 2026-10-01 (publish-ready prune): heterogeneous-mechanism figures
+                    # ('scripts/97_heterogeneous_mechanisms.py', 'Heterogeneous Mechanisms: Effects vary by firm size, breach type, prior history'),
+                    # J1 2026-09-29: DUPLICATE declaration removed (the step is already staged
+                    # earlier in the DATA PREPARATION category, where 121c needs it). It was
+                    # running twice per pipeline.
+                    # ('scripts/98_sox404_heterogeneity.py', 'HETEROGENEITY PHASE 1: Governance Quality (SOX 404 proxy) - FCC x Governance interaction'),
                     # RETIRED 8/4/2026 (Rebuild Directive v2, data decision 1): NVD/CVSS variables are
                     # vendor-level threat-environment measures, not breach severity; belong to no hypothesis.
                     # ('scripts/99_cvss_complexity_heterogeneity.py', 'HETEROGENEITY PHASE 2: CVSS Technical Complexity - FCC x Complexity interaction [RETIRED - SIC-era +6.27% claim stale-manifested]'),
-                    ('scripts/100_ransomware_heterogeneity.py', 'HETEROGENEITY ANALYSIS #3: Ransomware Attack Vector - FCC x Ransomware interaction'),
-                    ('scripts/101_media_coverage_heterogeneity.py', 'HETEROGENEITY ANALYSIS #4: Media Coverage Moderation - FCC x Media interaction (+7.08%**)'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/100_ransomware_heterogeneity.py', 'HETEROGENEITY ANALYSIS #3: Ransomware Attack Vector - FCC x Ransomware interaction'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/101_media_coverage_heterogeneity.py', 'HETEROGENEITY ANALYSIS #4: Media Coverage Moderation - FCC x Media interaction (+7.08%**)'),
                     # RETIRED 2026-09-11 (Essay 3 Query 2 Part H): script 102 is entirely Essay 3 (any-5.02 outcome, SIC treatment)
                     # ('scripts/102_extended_governance_windows.py', 'HETEROGENEITY ANALYSIS #5: Extended Governance Time Windows - 30d/90d/180d comparison'),
-                    ('scripts/103_breach_type_diversity.py', 'HETEROGENEITY ANALYSIS #6: Breach Type Diversity - Multi-type complexity'),
-                    ('scripts/104_restatement_summary.py', 'HETEROGENEITY ANALYSIS #7: Restatement Prediction - Data limitation documentation'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/103_breach_type_diversity.py', 'HETEROGENEITY ANALYSIS #6: Breach Type Diversity - Multi-type complexity'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/104_restatement_summary.py', 'HETEROGENEITY ANALYSIS #7: Restatement Prediction - Data limitation documentation'),
                     # RETIRED 8/4/2026 (Rebuild Directive v2, data decision 1): CVE-based complexity index retired with NVD.
                     # ('scripts/105_complexity_index_heterogeneity.py', 'HETEROGENEITY ANALYSIS #8: Complexity Index - Unified severity/CVE/type complexity mechanism'),
-                    ('scripts/106_information_environment_composite.py', 'HETEROGENEITY ANALYSIS #9: Information Environment Composite - Media attention & reputation interaction (Spec A/B/C)'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/106_information_environment_composite.py', 'HETEROGENEITY ANALYSIS #9: Information Environment Composite - Media attention & reputation interaction (Spec A/B/C)'),
                 ]
             },
             {
@@ -538,41 +869,72 @@ Log file: {log_path}
                 'scripts': [
                     # RETIRED 2026-09-11 (Essay 3 Query 2 Part H; decision L3: no mediation analysis)
                     # ('scripts/91_essay3_mediation_analysis.py', 'Mediation Analysis (Essay 3): Does volatility mediate timing→turnover relationship?'),
-                    ('scripts/92_heterogeneity_analysis.py', 'Heterogeneity Analysis: CAR/volatility effects vary by firm size quartiles?'),
-                    ('scripts/93_market_model_sensitivity.py', 'Event Window Sensitivity: Robustness across 5d, 10d, 30d, 60d, 90d CARs'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/92_heterogeneity_analysis.py', 'Heterogeneity Analysis: CAR/volatility effects vary by firm size quartiles?'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/93_market_model_sensitivity.py', 'Event Window Sensitivity: Robustness across 5d, 10d, 30d, 60d, 90d CARs'),
                     # RETIRED 2026-08-30 (Query 5 Part G): Rule-37.3-era content
-                    # ('scripts/94_falsification_tests.py', 'Falsification Tests: Pre-breach validation & breach-specificity confirmation'),
-                    ('scripts/95_low_r2_sensitivity.py', 'Low R² Sensitivity: Model adequacy with alternative specifications'),
-                    ('scripts/robustness_1_alternative_windows.py', 'Alternative Event Windows: CAR across multiple breach-to-event intervals'),
-                    ('scripts/robustness_2_timing_thresholds.py', 'Timing Thresholds: Disclosure timing effects (1d, 3d, 7d, 14d, 30d)'),
-                    ('scripts/robustness_3_sample_restrictions.py', 'Sample Restrictions: Results stratified by FCC, data type, firm size'),
-                    ('scripts/robustness_4_standard_errors.py', 'Standard Errors: HC3, Clustered, Bootstrap comparison'),
-                    ('scripts/robustness_5_fixed_effects.py', 'Fixed Effects: Industry 2-digit, 4-digit SIC, Year, and Firm FE'),
-                    ('scripts/power_analysis_h3_h4.py', 'Power Sensitivity Analysis: H3/H4 null hypothesis assessment (MDE at 80% power)'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/95_low_r2_sensitivity.py', 'Low R² Sensitivity: Model adequacy with alternative specifications'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/robustness_1_alternative_windows.py', 'Alternative Event Windows: CAR across multiple breach-to-event intervals'),
+                    # RETIRED 2026-10-01 (publish-ready prune): robustness figure set R02
+                    # ('scripts/robustness_2_timing_thresholds.py', 'Timing Thresholds: Disclosure timing effects (1d, 3d, 7d, 14d, 30d)'),
+                    # RETIRED 2026-10-01 (publish-ready prune): robustness figure set R03
+                    # ('scripts/robustness_3_sample_restrictions.py', 'Sample Restrictions: Results stratified by FCC, data type, firm size'),
+                    # RETIRED 2026-10-01 (publish-ready prune): robustness figure set R04
+                    # ('scripts/robustness_4_standard_errors.py', 'Standard Errors: HC3, Clustered, Bootstrap comparison'),
+                    # RETIRED 2026-10-01 (publish-ready prune): robustness figure set R05
+                    # ('scripts/robustness_5_fixed_effects.py', 'Fixed Effects: Industry 2-digit, 4-digit SIC, Year, and Firm FE'),
+                    # RETIRED 2026-09-29 (Part H): reads no data at all - it hardcodes the pre-rebuild
+                    # n = 653 (line 19) and computes an MDE from it. Feeds nothing; output untracked.
+                    # ('scripts/power_analysis_h3_h4.py', 'Power Sensitivity Analysis: H3/H4 null hypothesis assessment (MDE at 80% power)'),
                 ]
             },
             {
                 'category': 'LONG-HORIZON ANALYSIS & MITCHELL-STAFFORD ROBUSTNESS',
                 'scripts': [
-                    ('scripts/overlap_audit_fcc_clustering.py', 'Overlap Audit: Quantify event clustering in FCC sample (72.7% overlap at 90d) - diagnose Mitchell-Stafford problem severity'),
-                    ('scripts/corrected_longrun_car_clustering.py', 'Corrected Long-Horizon CAR: Compute CAR at 60d/90d (not BHAR), test with calendar-month clustering and non-overlapping sample'),
-                    ('scripts/calendar_month_clustering_60_90.py', 'Calendar-Month Clustering Test: Check whether 60d/90d results survive clustering correction for overlapping events'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/overlap_audit_fcc_clustering.py', 'Overlap Audit: Quantify event clustering in FCC sample (72.7% overlap at 90d) - diagnose Mitchell-Stafford problem severity'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/corrected_longrun_car_clustering.py', 'Corrected Long-Horizon CAR: Compute CAR at 60d/90d (not BHAR), test with calendar-month clustering and non-overlapping sample'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/calendar_month_clustering_60_90.py', 'Calendar-Month Clustering Test: Check whether 60d/90d results survive clustering correction for overlapping events'),
                 ]
             },
             {
                 'category': 'FACTOR MODEL & PERSISTENCE TESTING',
                 'scripts': [
-                    ('scripts/extract_merge_fama_french.py', 'Extract and Merge Fama-French Factors: Process Ken French data files (FF3, Momentum, FF5) locally with proper header handling'),
-                    ('scripts/sample_composition_diagnostic.py', 'Sample Composition Diagnostic: Isolate model choice effects from sample loss (critical: market-adjusted remains p=0.058 on restricted N=519 sample)'),
-                    ('scripts/ff3_simple_merge.py', 'FF3 Simple Merge Robustness: Test H1-H4 under FF3 specification (N=519, coefficient stable -2.12%, p-value inflation from factor adjustment, not sample loss)'),
-                    ('scripts/factor_model_carhart_ff5.py', 'Factor Model Robustness: Test H1-H4 under market model, Carhart 4-factor, FF5 (coefficient stable across all specifications)'),
-                    ('scripts/extended_bhar_60d_90d.py', 'Extended BHAR Windows: Compute 60-day and 90-day BHAR from daily returns, test persistence vs mean reversion (Mitchell-Stafford test)'),
+                    # RETIRED 2026-09-29 (Part H): builds Data/wrds/fama_french_factors.csv, which stays
+                    # committed. Every script that reads that file is itself retired here, so no live
+                    # step consumes it.
+                    # ('scripts/extract_merge_fama_french.py', 'Extract and Merge Fama-French Factors: Process Ken French data files (FF3, Momentum, FF5) locally with proper header handling'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/sample_composition_diagnostic.py', 'Sample Composition Diagnostic: Isolate model choice effects from sample loss (critical: market-adjusted remains p=0.058 on restricted N=519 sample)'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/ff3_simple_merge.py', 'FF3 Simple Merge Robustness: Test H1-H4 under FF3 specification (N=519, coefficient stable -2.12%, p-value inflation from factor adjustment, not sample loss)'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/factor_model_carhart_ff5.py', 'Factor Model Robustness: Test H1-H4 under market model, Carhart 4-factor, FF5 (coefficient stable across all specifications)'),
+                    # RETIRED 2026-09-29 (Part H): reads the pre-rebuild FINAL_DISSERTATION_DATASET*
+                    # and feeds no constants key, appendix table, ledger or cited figure.
+                    # ('scripts/extended_bhar_60d_90d.py', 'Extended BHAR Windows: Compute 60-day and 90-day BHAR from daily returns, test persistence vs mean reversion (Mitchell-Stafford test)'),
                 ]
             },
             {
                 'category': 'DEFENSE PREPARATION',
                 'scripts': [
-                    ('scripts/defense_prep_all_tasks.py', 'Pre-Defense Preparation: Five critical tasks - FCC economic significance, deduplication summary, H2 stability, power analysis, SCM vs OLS comparison'),
+                    # RETIRED 2026-10-01 (publish-ready prune): defense-prep text
+                    # ('scripts/defense_prep_all_tasks.py', 'Pre-Defense Preparation: Five critical tasks - FCC economic significance, deduplication summary, H2 stability, power analysis, SCM vs OLS comparison'),
                 ]
             }
         ]
@@ -595,16 +957,37 @@ Log file: {log_path}
             cat_header = f"\n{'=' * 80}\n{category}\n{'=' * 80}\n"
             print_to_both(cat_header, log_file)
             
-            for script_path, description in scripts:
+            for step in scripts:
+                # A step is (path, description) or, since 2026-10-01, an optional third
+                # element: a list of command-line arguments. Two-element steps are
+                # unaffected - they resolve to an empty argument list and the invocation
+                # is byte-identical to before.
+                script_path, description = step[0], step[1]
+                script_args = list(step[2]) if len(step) > 2 else []
+
                 # Check if script exists
                 if not Path(script_path).exists():
                     msg = f"\n[SKIP] Script not found: {script_path}\n"
                     print_to_both(msg, log_file)
                     results[description] = False
                     continue
-                
+
+                # A declared skip: the licensed input is absent, which is the expected
+                # state of a clean clone. Recorded as SKIPPED, not as a failure.
+                skip = _declared_skip(script_path)
+                if skip:
+                    missing_input, doc, why = skip
+                    msg = (f"\n[SKIPPED] {script_path}\n"
+                           f"  declared exception: {missing_input} is not present\n"
+                           f"  reason            : {why}\n"
+                           f"  declared in       : {doc}\n"
+                           f"  This is NOT a failure. Supply the licensed input to run it.\n")
+                    print_to_both(msg, log_file)
+                    results[description] = 'SKIPPED'
+                    continue
+
                 # Run script
-                success = run_script(script_path, description, log_file)
+                success = run_script(script_path, description, log_file, script_args)
                 results[description] = success
         
         # Calculate timing
@@ -614,12 +997,16 @@ Log file: {log_path}
         summary_header = f"\n{'=' * 80}\nPIPELINE SUMMARY\n{'=' * 80}\n"
         print_to_both(summary_header, log_file)
         
-        successful = [name for name, success in results.items() if success]
-        failed = [name for name, success in results.items() if not success]
+        # Identity comparisons, so the SKIPPED marker cannot be counted as a success
+        # by truthiness nor as a failure by falsiness.
+        successful = [name for name, st in results.items() if st is True]
+        skipped = [name for name, st in results.items() if st == 'SKIPPED']
+        failed = [name for name, st in results.items() if st is False]
 
         summary = f"""
 Results:
   [OK] Successful: {len(successful)}/{len(results)}
+  [--] Skipped:    {len(skipped)}/{len(results)} (declared exceptions; not failures)
   [XX] Failed:     {len(failed)}/{len(results)}
 
 Total Execution Time: {total_time/60:.1f} minutes
@@ -629,6 +1016,11 @@ Total Execution Time: {total_time/60:.1f} minutes
         if successful:
             success_list = "\n[SUCCESS] Completed:\n" + "\n".join([f"  [+] {s}" for s in successful]) + "\n"
             print_to_both(success_list, log_file)
+
+        if skipped:
+            skip_list = ("\n[SKIPPED] Declared exceptions (not failures):\n"
+                         + "\n".join([f"  [~] {s_}" for s_ in skipped]) + "\n")
+            print_to_both(skip_list, log_file)
 
         if failed:
             fail_list = "\n[FAILED] Incomplete:\n" + "\n".join([f"  [-] {f}" for f in failed]) + "\n"
@@ -776,12 +1168,14 @@ Complete log saved to: {log_path}
 """
         print_to_both(outputs, log_file)
         
-        # Final status - keyed to the Form 499 primary analyses (match pipeline descriptions)
-        critical_keys = [
-            'H1-H4 Re-estimation with Form 499 Corrected Classification (n=115 treated, authoritative regulatory status)',
-            'H5 Volatility Re-estimation with Form 499 Corrected (First real result, post-deduplication)',
-        ]  # 91m removed from critical_keys 2026-09-11 (Essay 3 Query 2 Part H)
-        critical_scripts_succeeded = all(results.get(k, False) for k in critical_keys)
+        # RETIRED 2026-10-01: the Form 499 "critical keys" gate. It named the descriptions
+        # of scripts 86c and 90b, the pre-rebuild H1-H4 and H5 re-estimations - both retired
+        # by the publish-ready prune. Left in place it would have failed every run from now
+        # on: results.get() on a step that no longer exists is False, so a run with zero
+        # failures still fell through to the "[WARNING] Primary Form 499 analyses did not
+        # all succeed" branch and returned False. The rule that replaced it on 2026-09-11 -
+        # any failure fails the pipeline - already covers what this was for, across all
+        # live steps rather than two hand-picked pre-rebuild ones.
 
         # Verify critical outputs exist regardless of status
         outputs_verified = verify_outputs(log_file, run_start=start_time)
@@ -803,17 +1197,12 @@ Complete log saved to: {log_path}
             print_to_both(final, log_file)
             return False
 
-        if critical_scripts_succeeded:
-            final = f"\n[***] [SUCCESS] Core dissertation analysis complete and outputs verified.\n{'=' * 80}\n"
-            print_to_both(final, log_file)
-            return True
-
-        missing = [k for k in critical_keys if not results.get(k, False)]
-        final = ("\n[WARNING] Primary Form 499 analyses did not all succeed - review log.\n"
-                 + "\n".join(f"  [-] {k}" for k in missing)
-                 + f"\n{'=' * 80}\n")
+        note = ("" if not skipped else
+                f"  {len(skipped)} declared exception(s) skipped; see the SKIPPED list above.\n")
+        final = (f"\n[***] [SUCCESS] Core dissertation analysis complete and outputs verified.\n"
+                 + note + f"{'=' * 80}\n")
         print_to_both(final, log_file)
-        return False
+        return True
 
 def main():
     """Main entry point"""

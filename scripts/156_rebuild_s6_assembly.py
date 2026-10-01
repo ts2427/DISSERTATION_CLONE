@@ -206,6 +206,23 @@ log(f'Item 5.02 base rates (all events): 30d {100 * ev["executive_change_30d"].m
 
 # ---- assemble canonical v3 ----
 ev = ev.drop(columns=['bdt', 'reported_dt'])
+
+# I2 tripwire (2026-09-29). CANONICAL_V3 is read by 19 live steps and by both essays;
+# a silent change in its shape reaches every result before anyone notices. These four
+# are structural facts of the v3 chain, recomputed from the committed data on the day
+# they were written. They deliberately do NOT include the regression sample size, which
+# is the pending rebaseline and is expected to move (recomputed 340/106 against the
+# committed 338/104 in constants_v3.json).
+_S6 = [('events', len(ev), 489),
+       ('treated events', int(ev['fcc_form499'].sum()), 118),
+       ('events with CRSP data', int(ev['has_crsp_data'].sum()), 356),
+       ('treated parent CIKs', int(ev.loc[ev['fcc_form499'] == 1, 'final_cik'].nunique()), 14)]
+_bad = ['%s: got %d, expected %d' % (w, g, e) for w, g, e in _S6 if g != e]
+assert not _bad, ('CANONICAL_V3 shape changed: ' + '; '.join(_bad) +
+                  '. If this is intended, update the expected values here and say so in '
+                  'outputs/RETIREMENT_LEDGER.md - do not delete the check.')
+log('Stage 6 tripwire: ' + ', '.join('%s %d' % (w, g) for w, g, _ in _S6))
+
 out = Path('Data/processed/rebuild/CANONICAL_V3.csv')
 ev.to_csv(out, index=False)
 CONTROLS = ['fcc_form499', 'immediate_disclosure', 'prior_breaches_1yr', 'health_breach',

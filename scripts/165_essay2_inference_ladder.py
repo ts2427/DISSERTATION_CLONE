@@ -46,6 +46,15 @@ def log(m=''):
 
 TREAT = 'fcc_form499'
 fin = pd.read_csv(OUTDIR / 't1_final_sample.csv', low_memory=False)
+# I2 tripwire (2026-09-29): this script reports the inferential frame of record for
+# Essay 2 - CV1, CV3 and the wild cluster bootstrap. If the sample it loads is not the
+# canonical one, every p-value below is about a different sample, silently. 165 does not
+# read the legacy dataset at all (0 occurrences), so nothing forensic is guarded here.
+assert len(fin) == 333, 'Essay 2 sample is %d, expected the canonical 333' % len(fin)
+assert int(fin[TREAT].sum()) == 104, \
+    'treated events %d, expected 104' % int(fin[TREAT].sum())
+assert fin['final_cik'].nunique() == 82, \
+    'clusters %d, expected 82' % fin['final_cik'].nunique()
 XS4 = ['delay_w', 'e2_pre_sd', 'firm_size_log', 'leverage', 'roa', TREAT,
        'health_breach', 'prior_events']
 Y = fin['e2_vol_change'].astype(float).to_numpy()

@@ -18,12 +18,24 @@ Process:
   5. Generate summary statistics
 """
 
+import argparse
 import pandas as pd
 import requests
 import xml.etree.ElementTree as ET
 import sys
 from datetime import datetime
 from pathlib import Path
+
+# --assemble-only (2026-10-01): parse the committed Form 499 registry snapshot instead of
+# querying the FCC endpoint. Added because the live fetch returns HTTP 403 from a clean
+# clone, which made this the one undeclared network dependency in the Essay 2 chain. The
+# snapshot is Data/edgar/form499_registry.xml, committed in 77b362d (2026-08-04), carrying
+# the FCC's own stamp Updated="2026-07-21" RecordCount="20669".
+_ap = argparse.ArgumentParser()
+_ap.add_argument('--assemble-only', action='store_true',
+                 help='parse the committed registry snapshot; do not query the FCC')
+_args, _ = _ap.parse_known_args()
+REGISTRY_SNAPSHOT = Path('Data/edgar/form499_registry.xml')
 
 # Setup
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
@@ -63,7 +75,6 @@ except FileNotFoundError:
 # ============================================================================
 print("\n2. LOADING FORM 499 REGISTRY...")
 
-print("   Retrieving from FCC endpoint...")
 endpoint = "https://apps.fcc.gov/cgb/form499/499results.cfm"
 params = {'xml': 'TRUE'}
 headers = {
@@ -71,12 +82,25 @@ headers = {
 }
 
 try:
-    response = requests.get(endpoint, params=params, headers=headers, timeout=120)
-    if response.status_code != 200:
-        print(f"   ERROR: Status {response.status_code}")
-        sys.exit(1)
+    if _args.assemble_only:
+        if not REGISTRY_SNAPSHOT.exists():
+            print(f"   ERROR: registry snapshot not found: {REGISTRY_SNAPSHOT}")
+            sys.exit(1)
+        print(f"   Parsing the committed snapshot: {REGISTRY_SNAPSHOT}")
+        root = ET.parse(REGISTRY_SNAPSHOT).getroot()
+        print(f"   Snapshot stamp: Updated={root.get('Updated')} "
+              f"RecordCount={root.get('RecordCount')}")
+    else:
+        print("   Retrieving from FCC endpoint...")
+        response = requests.get(endpoint, params=params, headers=headers, timeout=120)
+        if response.status_code != 200:
+            print(f"   ERROR: Status {response.status_code}")
+            print(f"   The live endpoint is a declared exception "
+                  f"(docs/claude/REPRODUCE_ESSAY2.md). Re-run with --assemble-only to "
+                  f"parse the committed snapshot {REGISTRY_SNAPSHOT}.")
+            sys.exit(1)
+        root = ET.fromstring(response.text)
 
-    root = ET.fromstring(response.text)
     all_filers = root.findall('.//Filer')
     print(f"   Loaded: {len(all_filers)} filer records")
 

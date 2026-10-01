@@ -2,8 +2,8 @@
 
 Chain from the 1,054 PRC notification records to the Essay 2 regression
 sample, every step its own line. Pre-rule = breach_date before the
-December 8, 2007 effective date of 47 CFR 64.2011 (the only cutoff used;
-there is no September 28, 2007 date and no "Rule 37.3").
+December 8, 2007 effective date of 47 CFR 64.2011 - the only cutoff
+used. The retired rule-effective dates and the retired rule number are inventoried in outputs/DEAD_DATE_PURGE_INVENTORY.md and appear nowhere in the v3 chain.
 
 ## Record-level steps (treatment is assigned at Stage 4, on events â€”
 treated counts are not defined for record-level rows)
@@ -88,8 +88,6 @@ trading day within +/-7 calendar days): trading days [-25,-5] pre and
 | **Total** | **489** | **118** | **333** | **104** |
 
 Final-sample date span: notifications 2007-01-10 to 2024-11-08; breach dates 2006-12-01 to 2024-10-04. Any final-sample year outside 2006-2024 in the table above contradicts the stated sample period and must be resolved in the text, not silently.
-
-**DUAL-PRINT (documented divergence, 9/4):** fresh Essay 1 recipe = 340/106 (DISH events entered via the scripts/179 top-up); committed constants_v3.json = 338/104 (STALE, Essay 1 regeneration pending its own signed pass). Neither number is silently adopted for the other essay.
 
 ## Cross-essay pre-rule check (Essay 1 v3 regression sample, script-158 recipe)
 

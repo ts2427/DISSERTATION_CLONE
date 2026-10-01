@@ -1,0 +1,8 @@
+final_cik,org_name,breach_date,reported_date,treated,action,outcome_cik,reason
+2041610,Paramount,2023-01-01,2023-09-11 00:00:00,0,RULE,813828.0,scripts/234 rule: orig_cik
+2041610,Paramount Global,2023-08-10,2023-08-10 00:00:00,0,RULE,813828.0,scripts/234 rule: orig_cik
+1971213,"Sinclair Broadcast Group, Inc.",2020-05-01,2020-10-05 00:00:00,0,RULE,912752.0,scripts/234 rule: orig_cik
+1971213,"Sinclair Broadcast Group, Inc.",2021-06-23,2022-03-24 00:00:00,0,RULE,912752.0,scripts/234 rule: orig_cik
+1971213,"Sinclair Broadcast Group, Inc.",2021-12-16,2021-12-16 00:00:00,0,RULE,912752.0,scripts/234 rule: orig_cik
+1744489,The Walt Disney Company,2008-07-29,2008-07-29 00:00:00,0,RULE,1001039.0,scripts/234 rule: predecessor
+1652044,"Google, Inc.",2008-06-27,2008-06-27 00:00:00,0,RULE,1288776.0,scripts/234 rule: orig_cik

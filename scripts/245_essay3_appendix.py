@@ -1,0 +1,1344 @@
+"""
+ESSAY 3 APPENDIX — TABLES 1-11
+=============================================================================
+    python scripts/245_essay3_appendix.py
+
+FORMATTING ONLY. No estimation, no new statistic, no edit to any existing script or
+output. Every numeric cell is read from a committed CSV and then rounded, converted to
+percentage points / percent, or printed as a ratio the source CSV already carries.
+Counts are summed only for total rows, and every total is asserted against a committed
+total.
+
+Document shape follows outputs/ESSAY2_APPENDIX.md and scripts/178 (a .md for the
+repository record plus a .docx for the dissertation, title -> sections -> tables ->
+Notes). Cell conventions follow Query 5's APA 7 rules, which supersede Essay 2's
+unrounded cells: p to three decimals with no leading zero, coefficients and SEs and CIs
+and MDEs in percentage points to two decimals, rates in percent to one decimal, counts
+with thousands separators, U+2212 for minus.
+
+Reads  : outputs/essay3_q4/*.csv, outputs/essay3_q3/*.csv,
+         outputs/essay3_appendix/descriptive_counts.csv (scripts/246),
+         outputs/essay3_q4/tmobile_502_text.md,
+         Data/processed/rebuild/stage2_signed.csv (Table 1 Panel B grades)
+Writes : outputs/essay3_appendix/ESSAY3_APPENDIX_TABLES.md
+         outputs/essay3_appendix/ESSAY3_APPENDIX_TABLES.docx
+         outputs/essay3_appendix/text_figures_check.csv
+"""
+import re
+import sys
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
+Q3 = Path("outputs/essay3_q3")
+Q4 = Path("outputs/essay3_q4")
+OUT = Path("outputs/essay3_appendix")
+OUT.mkdir(parents=True, exist_ok=True)
+
+MINUS = "−"
+ASSERT, NOTREG, MD = [], [], []
+
+
+def check(name, ok, detail=""):
+    ASSERT.append((name, bool(ok), detail))
+
+
+def notreg(where, what):
+    NOTREG.append((where, what))
+
+
+def need(p):
+    p = Path(p)
+    if not p.exists():
+        sys.exit("ABORT 245: missing committed input " + str(p))
+    return p
+
+
+# ------------------------------------------------------------------ formatters
+def m(s):
+    return str(s).replace("-", MINUS)
+
+
+def pp(x, nd=2):
+    """proportion -> percentage points, nd decimals, U+2212 minus."""
+    if x is None or (isinstance(x, float) and not np.isfinite(x)) or pd.isna(x):
+        return ""
+    return m(("%." + str(nd) + "f") % (float(x) * 100.0))
+
+
+def pct(x, nd=1):
+    if x is None or pd.isna(x):
+        return ""
+    return m(("%." + str(nd) + "f") % (float(x) * 100.0))
+
+
+def p3(x):
+    """three decimals, no leading zero."""
+    if x is None or pd.isna(x):
+        return ""
+    s = "%.3f" % float(x)
+    return s[1:] if s.startswith("0.") else m(s)
+
+
+def k3(x):
+    return p3(x)
+
+
+def n0(x):
+    if x is None or pd.isna(x) or str(x) == "":
+        return ""
+    return "{:,}".format(int(float(x)))
+
+
+def f2(x, nd=2):
+    if x is None or pd.isna(x):
+        return ""
+    return m(("%." + str(nd) + "f") % float(x))
+
+
+def pct_from(num, den, nd=1):
+    """Percent computed from the COUNT and its DENOMINATOR, never from a stored,
+    already-rounded proportion. table04/table06 store proportions to 4 dp, and
+    re-rounding those to 1 dp loses the third digit (0.2905 -> 29.0, where the raw
+    86/296 = 29.0541 -> 29.1). Counts are exact, so this reproduces the Results text."""
+    if num is None or den in (None, 0) or pd.isna(num) or pd.isna(den):
+        return ""
+    return m(("%." + str(nd) + "f") % (100.0 * float(num) / float(den)))
+
+
+def ci_pp(lo, hi):
+    if pd.isna(lo) or pd.isna(hi):
+        return ""
+    return "[%s, %s]" % (pp(lo), pp(hi))
+
+
+def ci_str(s):
+    """'[0.822, 0.999]' -> '[.822, .999]' with U+2212 handling."""
+    if pd.isna(s) or not str(s).strip() or str(s).startswith("n/a"):
+        return ""
+    t = str(s).strip()
+    out = []
+    for tok in re.findall(r"-?\d*\.?\d+", t):
+        v = float(tok)
+        out.append(p3(v) if abs(v) < 1 else f2(v, 3))
+    return "[%s, %s]" % (out[0], out[1]) if len(out) == 2 else t
+
+
+# ------------------------------------------------------------------ sources
+T01 = pd.read_csv(need(Q4 / "table01.csv"))
+T02 = pd.read_csv(need(Q4 / "table02.csv"))
+T03 = pd.read_csv(need(Q4 / "table03.csv"))
+T04 = pd.read_csv(need(Q4 / "table04.csv"))
+T05 = pd.read_csv(need(Q4 / "table05.csv"))
+T06 = pd.read_csv(need(Q4 / "table06.csv"))
+T07 = pd.read_csv(need(Q4 / "table07.csv"))
+T08 = pd.read_csv(need(Q4 / "table08.csv"))
+T09 = pd.read_csv(need(Q4 / "table09.csv"))
+T10 = pd.read_csv(need(Q4 / "table10.csv"))
+T11 = pd.read_csv(need(Q4 / "table11.csv"))
+BCC = pd.read_csv(need(Q4 / "b_control_coefficients.csv"))
+CLG = pd.read_csv(need(Q4 / "c_logit_diagnostics.csv"))
+LAD = pd.read_csv(need("outputs/essay3_v4/f1_ladder.csv"))
+S2 = pd.read_csv(need("Data/processed/rebuild/stage2_signed.csv"), low_memory=False)
+ATTR = pd.read_csv(need(Q3 / "attrition.csv"))
+DC = pd.read_csv(need(OUT / "descriptive_counts.csv")).set_index("key")["value"].to_dict()
+SUB = ATTR[ATTR["step"].str.strip().str.startswith("of which", na=False)].rename(
+    columns={"treated": "treated_events", "control": "control_events"})
+TMTXT = re.sub(r"\s+", " ", need(Q4 / "tmobile_502_text.md").read_text(encoding="utf-8"))
+
+# Title abbreviations that must never appear in Table 11 Panel B. Built from an explicit
+# boundary class rather than a backslash escape: a "\b" written through a shell heredoc
+# once arrived as a literal backspace byte, which left this check inert.
+_ABBR = ("EVP", "SVP", "CFO", "CIO", "CEO", "VP", "Pres.")
+ABBREV_RE = re.compile("(?<![A-Za-z])(" + "|".join(re.escape(a) for a in _ABBR)
+                       + ")(?![A-Za-z])")
+
+# Proper nouns, acronyms and defined terms whose CASE is fixed. A broad
+# all-caps-to-normal-case pass over the note text once lowercased "AT&T" to "at&T" and
+# "CCM-based" to "ccm-based", which no count-based assertion could see. CASE_TERMS is
+# checked against the rendered .md and .docx, so a future editing pass cannot quietly
+# undo a proper noun.
+#
+# The boundary treats "_" as a word character, so a snake_case identifier printed as data
+# (has_crsp_data, sic2, prior12m_mktadj_ret_rd) is NOT read as damage to CRSP or SIC.
+CASE_TERMS = ("AT&T", "T-Mobile", "Sprint", "Verizon", "Comcast", "Charter", "CenturyLink",
+              "Frontier", "GoDaddy", "Twilio", "DISH", "Cable One", "Altice",
+              "Boost Mobile", "Intuit", "Corebridge", "Cencora", "MetroPCS", "FCC", "SEC",
+              "CRSP", "CUSIP", "CIK", "SIC", "PRC", "HIPAA", "IPO", "U.S.", "CCM", "HC3",
+              "CV1", "CV3", "MDE", "AME", "BH", "CEO", "CIO", "CFO", "CTO", "SE", "CI",
+              "Form 499", "Form 8-K", "Item 5.02")
+
+
+def case_damage(text):
+    """-> [(canonical, as_found, line_no, context)] for every wrong-case occurrence."""
+    out = []
+    rows = text.split(chr(10))
+    for term in CASE_TERMS:
+        rx = re.compile("(?<![A-Za-z0-9_])" + re.escape(term) + "(?![A-Za-z0-9_])", re.I)
+        for n, ln in enumerate(rows, 1):
+            for mm in rx.finditer(ln):
+                if mm.group(0) != term:
+                    out.append((term, mm.group(0), n,
+                                ln[max(0, mm.start() - 40):mm.end() + 30]))
+    return out
+
+
+TABLES = []          # (number, title, [(kind, payload)])
+
+
+def add(num, title, blocks, note):
+    """Register one table. The note is SPLIT: the appendix keeps the substantive note,
+    and the trailing "Sources: ..." sentence is moved to APPENDIX_BUILD_AUDIT.md.
+
+    The provenance stays declared here, beside the table it describes, so it cannot drift
+    from the table; it simply renders somewhere else. The appendix is the document a
+    reader reads, and a file path is build information, not a finding.
+    """
+    body, sep, src = note.partition("Sources:")
+    if not sep:
+        body, sep, src = note.partition("Source:")
+    # any remaining sentence naming a repository path is build information too
+    keep, moved = [], [src.strip().rstrip(".")] if src.strip() else []
+    for sent in re.split(r"(?<=\.)\s+", body.strip()):
+        if re.search(r"outputs/|scripts/|Data/", sent) or ".csv" in sent:
+            moved.append(sent.strip().rstrip("."))
+        else:
+            keep.append(sent)
+    TABLES.append(dict(num=num, title=title, blocks=blocks,
+                       note=" ".join(x for x in keep if x).strip(),
+                       sources="; ".join(x for x in moved if x)))
+
+
+# Reader-facing labels for Table 1 Panel A. The ledger's own step names carry pipeline
+# vocabulary (Gate 1, Stage 3, CANONICAL_V4, has_crsp_data) that means nothing to a reader
+# of the essay. Keys are matched as substrings of the committed step name, in order, so the
+# mapping survives a reworded ledger; the pipeline name is recorded in the build audit.
+STEP_LABEL = (
+    ("PRC notification records", "PRC notification records"),
+    ("Gate 1", "Records assigned a parent CIK"),
+    ("Stage 3", "Firm-day events"),
+    ("Gate 2", "After the rolling-campaign rule"),
+    ("Stage 4/5", "Canonical breach events"),
+    ("CRSP data", "Security link to CRSP"),
+    ("Compustat covariates", "Compustat covariates within 550 days"),
+    ("Fully observed outcome window", "Censoring rule"),
+    ("Outcome-data requirement", "Form 8-K activity requirement"),
+    ("Prior 12-month market-adjusted return", "At least 150 daily returns (analysis sample)"),
+)
+STEP_MAP = []
+
+
+def step_label(raw):
+    """-> the reader-facing label for one committed ledger step name."""
+    for keyfrag, lab in STEP_LABEL:
+        if keyfrag in raw:
+            STEP_MAP.append((lab, raw))
+            return lab
+    STEP_MAP.append(("(UNMAPPED) " + raw, raw))
+    return raw
+
+
+# =============================================================== TABLE 1
+lead = T01[T01["treated_events"].notna() | T01["step"].str.startswith("PRC", na=False)]
+rows1a, prevN = [], None
+for _, r in T01.iterrows():
+    if str(r["step"]).startswith("  of which"):
+        continue
+    rows1a.append([step_label(str(r["step"])), n0(r["N"]), n0(r.get("treated_events")),
+                   n0(r.get("control_events")), n0(r.get("treated_parent_ciks")),
+                   n0(r.get("pre_rule_treated")), n0(r.get("pre_rule_control"))])
+    if "CRSP" in str(r["step"]):
+        sub = SUB
+        for _, s in sub.iterrows():
+            lab = ("Identity-gate rejections" if "identity" in str(s["step"]).lower()
+                   else "No acceptable security link")
+            rows1a.append(["    " + lab, n0(s["N"]), n0(s["treated_events"]),
+                           n0(s["control_events"]), "", "", ""])
+_unmapped_steps = [r for lab, r in STEP_MAP if lab.startswith("(UNMAPPED)")]
+check("T1 Panel A every ledger step has a reader-facing label", not _unmapped_steps,
+      "; ".join(_unmapped_steps))
+T1A = pd.DataFrame(rows1a, columns=["Step", "N", "Treated events", "Control events",
+                                    "Treated parent CIKs", "Pre-rule treated",
+                                    "Pre-rule control"])
+# Keys are the literal final_grade values in stage2_signed.csv and must match byte for
+# byte; they are DATA, not prose, and are never case-folded.
+GRADE_LABEL = {
+    "VERIFIED": "Verified",
+    "VERIFIED-GATE1": "Verified at the review gate",
+    "VERIFIED-REASONING": "Verified by reasoning",
+    "ADJUDICATED": "Adjudicated",
+    "AMBIGUOUS": "Unresolved ambiguity",
+    "EXCLUDED-UNRESOLVED": "No matching registrant or unresolved",
+    "EXCLUDED-PRIVATE": "Private company",
+    "EXCLUDED-PRIVATE-WINDOW": "Private during the breach window",
+    "EXCLUDED-PRE-IPO": "Pre-IPO",
+    "EXCLUDED-NO-US-LISTING": "No U.S. listing",
+}
+g = S2["final_grade"].value_counts()
+T1B = pd.DataFrame([[GRADE_LABEL.get(k, k), n0(v)]
+                    for k, v in g.items()] + [["Total", n0(g.sum())]],
+                   columns=["Final resolution grade", "Records"])
+check("T1 Panel B totals 1,054", int(g.sum()) == 1054, "got %d" % int(g.sum()))
+# Every label must be a GRADE_LABEL VALUE, never a raw final_grade code. The mapping is
+# GRADE_LABEL.get(k, k), so a case-folded or mistyped key falls through silently and
+# prints the code; that happened once and no count-based assertion caught it.
+_lab = [x for x in T1B["Final resolution grade"] if x != "Total"]
+_unmapped = [x for x in _lab if x not in set(GRADE_LABEL.values())]
+check("T1 Panel B every label is a GRADE_LABEL value", not _unmapped,
+      "unmapped: " + "; ".join(_unmapped))
+_rawcode = re.compile(r"^[A-Z0-9]+(-[A-Z0-9]+)+$")
+_raw = [x for x in _lab if _rawcode.match(str(x))]
+check("T1 Panel B no label is a raw final_grade code", not _raw,
+      "raw codes printed: " + "; ".join(_raw))
+ev = T01.dropna(subset=["treated_events"])
+ev = ev[~ev["step"].str.startswith("  of which", na=False)]
+check("T1 ledger closes (N never rises)",
+      bool((T01[~T01["step"].str.startswith('  of which', na=False)]["N"].diff().dropna() <= 0).all()))
+check("T1 treated + control == N at every populated step",
+      bool((ev["treated_events"] + ev["control_events"] == ev["N"]).all()))
+add(1, "Sample Construction From Notification Records to the Analysis Sample",
+    [("Panel A: Attrition ledger", T1A), ("Panel B: Record resolution grades", T1B)],
+    "*Note.* Panel A rows above the canonical-event line are at the record level, where "
+    "treatment is undefined; rows from the canonical event set down are at the event level. "
+    "Parent CIKs are the clustering unit. Records per event have a mean of "
+    + DC["records_per_event_mean"] + " and a "
+    "maximum of %s (%s, %s). Pre-rule is defined relative to the "
+    % (DC["records_per_event_max"], DC["records_per_event_max_org"],
+       DC["records_per_event_max_date"]) +
+    "December 8, 2007 effective date of 47 C.F.R. § 64.2011. The two indented sub-rows decompose "
+    "the 75 events lost at the security-link step. Sources: outputs/essay3_q4/table01.csv "
+    "(Panel A, from outputs/essay3_v4/e_ledger.csv and outputs/rebuild_v4/"
+    "v4_212_identity_review.csv); Data/processed/rebuild/stage2_signed.csv (Panel B); "
+    "outputs/essay3_appendix/descriptive_counts.csv (records per event).")
+
+# =============================================================== TABLE 2
+t2 = T02.sort_values("treated_events", ascending=False)
+T2A = pd.DataFrame([[n0(r["final_cik"]), str(r["org_name"]), n0(r["treated_events_clause1"]),
+                     n0(r["treated_events_clause2"]), n0(r["treated_events"]),
+                     n0(r["control_events_same_cik"])] for _, r in t2.iterrows()]
+                   + [["Total", "", n0(t2["treated_events_clause1"].sum()),
+                       n0(t2["treated_events_clause2"].sum()), n0(t2["treated_events"].sum()),
+                       n0(t2["control_events_same_cik"].sum())]],
+                   columns=["CIK", "Name", "Clause 1 events", "Clause 2 events",
+                            "Total treated", "Control events on same CIK"])
+check("T2 treated total == 109", int(t2["treated_events"].sum()) == 109)
+check("T2 clause totals == 70 / 39",
+      int(t2["treated_events_clause1"].sum()) == 70 and int(t2["treated_events_clause2"].sum()) == 39)
+lad30 = LAD[LAD["window"] == 30].iloc[0]
+mixed = t2[t2["control_events_same_cik"] > 0]["org_name"].tolist()
+tm = int(t2[t2["final_cik"] == 1283699]["treated_events"].iloc[0])
+sp = int(t2[t2["final_cik"] == 101830]["treated_events"].iloc[0])
+T2B = pd.DataFrame([
+    ["Parent CIKs (G)", n0(lad30["G"])],
+    ["Treated clusters (G1)", n0(lad30["G1"])],
+    ["Effective clusters (G*)", f2(lad30["G_star"], 1)],
+    ["Cluster-size coefficient of variation", f2(lad30["cluster_size_cv"], 3)],
+    ["Singleton clusters", DC["singleton_clusters"]],
+    ["Largest cluster", "%s (CIK %s): %s events (%s%%)"
+     % (DC["largest_cluster_name"], DC["largest_cluster_cik"],
+        DC["largest_cluster_events"], DC["largest_cluster_share"])],
+    ["Mixed clusters (hold treated and control events)", "; ".join(mixed)],
+    ["T-Mobile share of treated events", "%s of %s (%s%%)" % (tm, 109, pct(tm / 109))],
+    ["T-Mobile and Sprint share of treated events",
+     "%s of %s (%s%%)" % (tm + sp, 109, pct((tm + sp) / 109))]],
+    columns=["Cluster statistic", "Value"])
+add(2, "Treated Parent CIKs and Cluster Structure",
+    [("Panel A: Treated parent CIKs", T2A), ("Panel B: Cluster structure", T2B)],
+    "*Note.* Sample level is events within parent CIKs; inference clusters on parent CIK. "
+    "Clause 1 is a direct Form 499 registry match; clause 2 is an adjudicated holding or "
+    "parent-brand relationship. Eight CIKs carry clause 1 events and eight carry clause 2 "
+    "events; three carry both (AT&T, Sprint, Comcast), so the two counts reconcile to 13 "
+    "CIKs. T-Mobile (1283699) and Sprint (101830) are separate parent CIKs and are clustered "
+    "separately; they are one corporate family only in the entity count (12). Twilio and "
+    "GoDaddy enter by direct registry match. Both "
+    "DISH events postdate July 1, 2020, the Boost Mobile divestiture that the date-conditional "
+    "rule turns on. G* is the effective number of clusters. Sources: "
+    "outputs/essay3_q4/table02.csv; outputs/essay3_v4/f1_ladder.csv; "
+    "outputs/essay3_appendix/descriptive_counts.csv (singleton and largest-cluster rows).")
+
+# =============================================================== TABLE 3
+BT = {"HACK": "Hacking or malware", "INSD": "Insider", "PHYS": "Physical records",
+      "PORT": "Portable device", "DISC": "Unintended disclosure",
+      "HACK+INSD": "Hacking and insider", "HACK+PORT": "Hacking and portable device",
+      "DISC+HACK": "Unintended disclosure and hacking"}
+t3 = T03.sort_values("treated_events", ascending=False)
+_t3T, _t3C = t3["treated_events"].sum(), t3["control_events"].sum()
+T3 = pd.DataFrame([[str(r["breach_type"]), n0(r["treated_events"]),
+                    pct_from(r["treated_events"], _t3T), n0(r["control_events"]),
+                    pct_from(r["control_events"], _t3C)] for _, r in t3.iterrows()]
+                  + [["Total", n0(t3["treated_events"].sum()), "100.0",
+                      n0(t3["control_events"].sum()), "100.0"]],
+                  columns=["PRC breach type", "Treated n", "Treated %", "Control n", "Control %"])
+check("T3 totals == 109 / 296",
+      int(t3["treated_events"].sum()) == 109 and int(t3["control_events"].sum()) == 296)
+add(3, "Breach Type by Treatment Group",
+    [("", T3)],
+    "*Note.* Sample level is events (109 treated, 296 control). Breach types are the Privacy "
+    "Rights Clearinghouse's own labels, carried through unchanged: "
+    + "; ".join("%s = %s" % (k, v) for k, v in BT.items())
+    + ". Combined codes arise where an event collapses source records of more than one type. "
+      "Column percentages sum to 100 within group. No test is performed. Source: "
+      "outputs/essay3_q4/table03.csv.")
+
+# =============================================================== TABLE 4
+VLAB = {"prior_breaches_1yr": "Prior breaches, 1 year", "health_breach": "Health information",
+        "firm_size_log": "Firm size (log total assets)", "leverage": "Leverage", "roa": "Return on assets",
+        "baseline_exec_rate_py_rd": "Baseline departure rate (per year)",
+        "prior12m_mktadj_ret_rd": "Prior 12-month market-adjusted return"}
+c3 = T04[T04["part"] == "C3"]
+rows = []
+for v in VLAB:
+    t = c3[(c3["variable"] == v) & (c3["group"] == "treated")].iloc[0]
+    c = c3[(c3["variable"] == v) & (c3["group"] == "control")].iloc[0]
+    rows.append([VLAB[v], "%s (%s)" % (f2(t["mean"], 4), f2(t["sd"], 4)),
+                 "%s (%s)" % (f2(c["mean"], 4), f2(c["sd"], 4)), f2(t["std_diff"], 3)])
+T4A = pd.DataFrame(rows, columns=["Covariate", "Treated M (SD)", "Control M (SD)",
+                                  "Standardized difference"])
+ft = c3[(c3["variable"] == "firm_size_log") & (c3["group"] == "treated")].iloc[0]
+fc = c3[(c3["variable"] == "firm_size_log") & (c3["group"] == "control")].iloc[0]
+T4B = pd.DataFrame([
+    ["Treated range", "[%s, %s]" % (f2(ft["min"], 4), f2(ft["max"], 4))],
+    ["Control range", "[%s, %s]" % (f2(fc["min"], 4), f2(fc["max"], 4))],
+    ["Control events inside the treated range",
+     "%s of %s (%s%%)" % (DC["control_in_treated_range_n"],
+                          DC["control_in_treated_range_denom"],
+                          DC["control_in_treated_range_pct"])],
+    ["Treated events inside the control range",
+     "%s of %s (%s%%)" % (DC["treated_in_control_range_n"],
+                          DC["treated_in_control_range_denom"],
+                          DC["treated_in_control_range_pct"])]],
+    columns=["Common support, log total assets", "Value"])
+c2 = T04[T04["part"] == "C2"]
+ct, cc = c2[c2["group"] == "treated"].iloc[0], c2[c2["group"] == "control"].iloc[0]
+T4C = pd.DataFrame([
+    ["Breach date equals notification date",
+     "%s%% (%s)" % (pct_from(ct["same_day"], ct["n"]), n0(ct["same_day"])),
+     "%s%% (%s)" % (pct_from(cc["same_day"], cc["n"]), n0(cc["same_day"]))],
+    ["Notification lag, median days", n0(ct["lag_median"]), n0(cc["lag_median"])],
+    ["Notification lag, IQR days", "[%s, %s]" % (n0(ct["lag_q25"]), n0(ct["lag_q75"])),
+     "[%s, %s]" % (n0(cc["lag_q25"]), n0(cc["lag_q75"]))],
+    ["Breach-anchored 180-day window closes before notification",
+     "%s%% (%s)" % (pct_from(ct["bd180_before_rd"], ct["n"]), n0(ct["bd180_before_rd"])),
+     "%s%% (%s)" % (pct_from(cc["bd180_before_rd"], cc["n"]), n0(cc["bd180_before_rd"]))]],
+    columns=["Anchor statistic", "Treated", "Control"])
+add(4, "Covariate Balance, Common Support, and Date Anchors",
+    [("Panel A: Covariates", T4A), ("Panel B: Common support", T4B),
+     ("Panel C: Date anchors", T4C)],
+    "*Note.* Sample level is events (109 treated, 296 control). The standardized difference is "
+    "the treated mean minus the control mean divided by the pooled standard deviation; the 0.1 "
+    "benchmark follows Austin (2009). No balance tests are reported, because they would add "
+    "unplanned hypothesis tests to the ledger. Panel B shows that common support is "
+    "substantial: the imbalance in firm size is a shift in means, not a failure of overlap. "
+    "Sources: outputs/essay3_q4/table04.csv, from outputs/essay3_q3/descriptives.csv; "
+    "outputs/essay3_appendix/descriptive_counts.csv (Panel B).")
+
+# =============================================================== TABLE 5
+FLD = {"exec_departure": "Executive departure", "exec departure (A)": "Executive departure",
+       "exec departure (A: any)": "Executive departure",
+       "ceo_departure": "Chief executive departure", "CEO departure": "Chief executive departure",
+       "CEO departure (A: any)": "Chief executive departure",
+       "director_only_departure": "Director-only departure",
+       "director-only departure": "Director-only departure"}
+RLAB = {"round 1 (80 = 50 calibration + 30 random)": "Round 1 (earlier classifier version)",
+        "round 2 (30 out-of-sample)": "Round 2 (out-of-sample)",
+        "recall audit (80 stratified 40/40)": "Stratified recall audit",
+        "v4 final (30 new documents)": "Final round (new documents)"}
+rows = []
+for rnd, lab in RLAB.items():
+    g = T05[(T05["round"] == rnd) & (T05["panel"] == "agreement")]
+    if rnd.startswith("round 1"):
+        g = g[(g.get("variant") == "A") & (g.get("sample") == "all 80")]
+    if rnd.startswith("recall"):
+        g = g[g["scoring"] == "PRIMARY (verified)"]
+    if rnd.startswith("v4"):
+        g = g[g["field"].astype(str).str.startswith("PRIMARY (verified) | ")]
+    for _, r in g.iterrows():
+        raw = str(r["field"]).replace("PRIMARY (verified) | ", "")
+        if raw not in FLD:
+            continue
+        rows.append([lab, n0(r["n"]), FLD[raw], k3(r["kappa"]),
+                     ("%s %s" % (p3(r["precision"]), ci_str(r.get("precision_ci95", "")))).strip(),
+                     ("%s %s" % (p3(r["recall"]), ci_str(r.get("recall_ci95", "")))).strip()])
+T5A = pd.DataFrame(rows, columns=["Round", "N scored", "Field", "κ",
+                                  "Precision [95% CI]", "Recall [95% CI]"])
+sp_ = T05[(T05["panel"] == "stratified recall") & (T05["field"] == "exec departure (A)")
+          & (T05["scoring"] == "PRIMARY (verified)")]
+T5B = pd.DataFrame([[str(r["stratum"]).title(), n0(r["ref_Y"]), n0(r["tp"]), n0(r["fp"]), n0(r["fn"]),
+                     "%s %s" % (p3(r["precision"]), ci_str(r["precision_ci95"])),
+                     "%s %s" % (p3(r["recall"]), ci_str(r["recall_ci95"]))] for _, r in sp_.iterrows()],
+                   columns=["Stratum", "Reference departures", "TP", "FP", "FN",
+                            "Precision [95% CI]", "Recall [95% CI]"])
+add(5, "Classifier Validation",
+    [("Panel A: Four validation rounds", T5A),
+     ("Panel B: Stratified recall audit, by treatment group", T5B)],
+    "*Note.* Sample level is filings. κ = Cohen's kappa; TP, FP, FN = true positives, false "
+    "positives, false negatives. Reference codes were produced blind to the classifier: in "
+    "rounds 1, 2 and the stratified audit the classifier's answers were sealed in a committed "
+    "file before coding; in the final round the classifier had never been run on those "
+    "documents and the reference codes were committed first. Round 1 scored an earlier "
+    "classifier version. Confidence intervals are Clopper-Pearson. Unresolved rows are "
+    "excluded under the primary scoring; the alternative scoring that forces them positive is "
+    "in the source CSV. An empty cell means the field had no reference positives and no "
+    "classifier positives, so the statistic is undefined. Sources: "
+    "outputs/essay3_q4/table05.csv; outputs/essay3_q2/d3_audit_recall_by_stratum.csv.")
+
+# =============================================================== TABLE 6
+rows = []
+for w in (30, 90, 180):
+    for grp in ("treated", "control"):
+        r = T06[(T06["window"] == w) & (T06["group"] == grp)].iloc[0]
+        rows.append([n0(w), grp.title(), n0(r["n"]),
+                     "%s (%s%%)" % (n0(r["any_502"]), pct_from(r["any_502"], r["n"])),
+                     "%s (%s%%)" % (n0(r["exec_departure"]), pct_from(r["exec_departure"], r["n"])),
+                     "%s (%s%%)" % (n0(r["ceo_departure"]), pct_from(r["ceo_departure"], r["n"])),
+                     "%s (%s%%)" % (n0(r["director_only"]), pct_from(r["director_only"], r["n"]))])
+T6A = pd.DataFrame(rows, columns=["Window (days)", "Group", "N", "Any Item 5.02 filing",
+                                  "Executive departure", "Chief executive departure",
+                                  "Director-only departure"])
+rows = []
+for w in (30, 90, 180):
+    for grp in ("treated", "control", "POOLED"):
+        r = T06[(T06["window"] == w) & (T06["group"] == grp)].iloc[0]
+        rows.append([n0(w), "Pooled" if grp == "POOLED" else grp.title(),
+                     n0(r["filing_no_exec"]),
+                     "%s%% (%s of %s)" % (pct_from(r["filing_no_exec"], r["n"]),
+                                          n0(r["filing_no_exec"]), n0(r["n"])),
+                     "%s%% (%s of %s)" % (pct_from(r["filing_no_exec"], r["any_502"]),
+                                          n0(r["filing_no_exec"]), n0(r["any_502"]))])
+T6B = pd.DataFrame(rows, columns=["Window (days)", "Group", "Filing, no executive departure",
+                                  "Over all events", "Over events with a filing"])
+for w in (30, 90, 180):
+    s = T06[T06["window"] == w]
+    t_, c_, p_ = (s[s["group"] == g].iloc[0] for g in ("treated", "control", "POOLED"))
+    check("T6 %3dd treated + control == pooled on every count" % w,
+          all(int(t_[k]) + int(c_[k]) == int(p_[k]) for k in
+              ("n", "any_502", "exec_departure", "ceo_departure", "director_only", "filing_no_exec")))
+add(6, "Item 5.02 Filings and Disclosed Departures by Window",
+    [("Panel A: Rates by window and group", T6A), ("Panel B: Crosswalk", T6B)],
+    "*Note.* Sample level is events (109 treated, 296 control). The notification anchor is used "
+    "throughout; a window is (t0, t0 + w] and excludes a filing dated on t0 itself. An Item 5.02 "
+    "filing is not a departure: Item 5.02 also covers appointments, elections and compensatory "
+    "arrangements, and Panel B shows how often a filing in the window reports no executive "
+    "departure at all. The chief executive model requires at least 10 events in each group and "
+    "is therefore not estimated at any window; the counts are reported for description only. "
+    "Sources: outputs/essay3_q4/table06.csv; outputs/essay3_q4/_d5_crosswalk.csv.")
+
+# =============================================================== TABLE 7
+lad = T07[T07["panel"] == "ladder (treatment)"]
+rows = []
+for w in (30, 90, 180):
+    r = lad[lad["window"] == w].iloc[0]
+    rows.append([n0(w), "HC3 (disqualified; reported per the analysis plan)", pp(r["coef"]),
+                 pp(r["se_hc3"]), p3(r["p_hc3"]), ""])
+    rows.append(["", "CV1", pp(r["coef"]), pp(r["se_cv1"]), p3(r["p_cv1"]), ""])
+    rows.append(["", "CV3", pp(r["coef"]), pp(r["se_cv3"]), p3(r["p_cv3"]),
+                 ci_pp(r["ci_cv3_lo"], r["ci_cv3_hi"])])
+    rows.append(["", "Wild cluster restricted bootstrap", pp(r["coef"]), "", p3(r["p_wcr"]),
+                 ci_pp(r["ci_wcr_lo"], r["ci_wcr_hi"])])
+    rows.append(["", "Control departure rate", pp(r["control_rate"]), "", "", ""])
+    rows.append(["", "MDE (80% power, two-sided 5%)", pp(r["mde80"]), "", "", ""])
+    rows.append(["", "MDE ÷ control rate", f2(r["mde_over_control"]), "", "", ""])
+T7A = pd.DataFrame(rows, columns=["Window (days)", "Estimator", "β (pp)", "SE (pp)", "p",
+                                  "95% CI (pp)"])
+ok = True
+for w in (30, 90, 180):
+    a = lad[lad["window"] == w].iloc[0]
+    b = LAD[LAD["window"] == w].iloc[0]
+    ok &= (pp(a["coef"]) == pp(b["coef"]) and pp(a["se_cv3"]) == pp(b["se_cv3"])
+           and p3(a["p_cv3"]) == p3(b["p_cv3"]))
+check("T7 Panel A CV3 rows equal f1_ladder.csv", ok)
+rows = []
+for w in (30, 90, 180):
+    c = CLG[CLG["window"] == w].iloc[0]
+    if not bool(c["converged"]):
+        rows.append([n0(w), "did not converge", "did not converge",
+                     "%s iterations; ConvergenceWarning" % n0(c["iterations"])])
+    else:
+        rows.append([n0(w), pp(c["ame"]), pp(c["se_cluster"]),
+                     "converged in %s iterations" % n0(c["iterations"])])
+T7B = pd.DataFrame(rows, columns=["Window (days)", "AME (pp)", "SE (pp)", "Convergence"])
+TLAB = dict(VLAB); TLAB["(intercept)"] = "(Intercept)"; TLAB["fcc_form499"] = "Form 499 filer (treatment)"
+rows = []
+for w in (30, 90, 180):
+    for _, r in BCC[BCC["window"] == w].iterrows():
+        rows.append([n0(w), TLAB.get(r["term"], r["term"]), pp(r["coef"]), pp(r["se_cv3"]),
+                     p3(r["p_cv3"])])
+T7C = pd.DataFrame(rows, columns=["Window (days)", "Term", "β (pp)", "CV3 SE (pp)", "p"])
+add(7, "Primary Estimates: Inference Ladder, Minimum Detectable Effects, Logit Check, and Controls",
+    [("Panel A: Inference ladder, minimum detectable effects", T7A),
+     ("Panel B: Logit average marginal effects", T7B),
+     ("Panel C: All terms, CV3", T7C)],
+    "*Note.* N = 405 events; G = 119 parent CIKs. Standard errors are clustered by parent CIK. "
+    "β, SE, CI and MDE are in percentage points. HC3 ignores within-cluster correlation and "
+    "is disqualified as an inferential rung; it is shown because the analysis plan specified the "
+    "full ladder, and its p must never be read as significance. CV3 uses the t distribution with "
+    "G − 1 = 118 degrees of freedom. The wild cluster restricted bootstrap uses B = 99,999 "
+    "for p and B = 9,999 for confidence-interval inversion; it yields no standard error. The "
+    "30-day logit failed to converge (35 iterations, ConvergenceWarning), so its average marginal "
+    "effect is not reported; there was no separation and no dropped observation at any window. "
+    "Panel C coefficients are descriptive: they are not hypothesis tests and are outside the "
+    "31-test ledger. Sources: outputs/essay3_q4/table07.csv; b_control_coefficients.csv; "
+    "c_logit_diagnostics.csv; outputs/essay3_v4/f1_ladder.csv.")
+
+# =============================================================== TABLE 8
+pl = T08[T08["panel"] == "placebo ladder"].iloc[0]
+rows = [["HC3 (disqualified; reported per the analysis plan)", pp(pl["coef"]), pp(pl["se_hc3"]),
+         p3(pl["p_hc3"]), ""],
+        ["CV1", pp(pl["coef"]), pp(pl["se_cv1"]), p3(pl["p_cv1"]), ""],
+        ["CV3", pp(pl["coef"]), pp(pl["se_cv3"]), p3(pl["p_cv3"]), ci_pp(pl["ci_cv3_lo"], pl["ci_cv3_hi"])],
+        ["Wild cluster restricted bootstrap", pp(pl["coef"]), "", p3(pl["p_wcr"]),
+         ci_pp(pl["ci_wcr_lo"], pl["ci_wcr_hi"])]]
+for grp in ("treated", "control"):
+    r = T08[(T08["panel"] == "placebo window rate") & (T08["group"] == grp)].iloc[0]
+    rows.append(["%s departure rate in the placebo window" % grp.title(),
+                 pct_from(r["events_with_departure"], r["n"]), "", "",
+                 "%s of %s events" % (n0(r["events_with_departure"]), n0(r["n"]))])
+T8 = pd.DataFrame(rows, columns=["Estimator", "β (pp) or rate (%)", "SE (pp)", "p", "95% CI (pp) / n"])
+add(8, "Pre-Disclosure Placebo",
+    [("", T8)],
+    "*Note.* N = 405 events; G = 119 parent CIKs. The placebo outcome is an executive departure "
+    "in (t0 − 180d, t0], the 180 days ending at notification. The interval is closed at t0, "
+    "so a departure dated on the notification date falls in the placebo window and not in any "
+    "outcome window. β, SE and CI are in percentage points. HC3 is disqualified as above. "
+    "Sources: outputs/essay3_q4/table08.csv, from outputs/essay3_v4/f4_placebo.csv.")
+
+# =============================================================== TABLE 9
+s9 = T09[T09["panel"] == "sensitivities"].copy()
+order = ["year FE (reported year)", "two-digit SIC FE", "breach_date anchor",
+         "excluding pre-announced departures", "excluding the F2 baseline control",
+         "restatement-dated outcome (rs)"]
+s9["_k"] = s9["sensitivity"].apply(lambda s: order.index(s) if s in order else 90 + len(s))
+s9 = s9.sort_values(["_k", "window"])
+# Reader-facing sensitivity labels: the committed names carry a column identifier
+# (breach_date) and the recall parameters as r_T / r_C.
+SENS_LABEL = {
+    "year FE (reported year)": "Notification-year fixed effects",
+    "two-digit SIC FE": "Two-digit SIC fixed effects",
+    "breach_date anchor": "Breach-date anchor",
+    "excluding pre-announced departures": "Excluding pre-announced departures",
+    "excluding the F2 baseline control": "Excluding the baseline-rate control",
+    "restatement-dated outcome (rs)": "Restatement-dated outcome",
+}
+
+
+def sens_label(raw):
+    if raw in SENS_LABEL:
+        return SENS_LABEL[raw]
+    if raw.startswith("recall-corrected"):
+        t = re.search(r"r_T=([0-9.]+)", raw)
+        c = re.search(r"r_C=([0-9.]+)", raw)
+        # recall is a proportion in [0, 1] and takes the same no-leading-zero form as
+        # p, kappa, precision and recall elsewhere in the appendix
+        return ("Recall-corrected (treated recall %s, control recall %s)"
+                % (p3(t.group(1)) if t else "?", p3(c.group(1)) if c else "?"))
+    return raw
+
+
+rows = []
+for _, r in s9.iterrows():
+    lab = sens_label(str(r["sensitivity"]))
+    if "Recall-corrected" in lab:
+        lab += " [bounding exercise]" if "BOUNDING" in str(r["row_type"]) else ""
+    rows.append([lab, n0(r["window"]), pp(r["coef"]), pp(r["se_cv3"]), p3(r["p_cv3"]),
+                 p3(r["p_wcr"]), p3(r["p_bh"]), n0(r["n"])])
+T9A = pd.DataFrame(rows, columns=["Sensitivity", "Window (days)", "β (pp)", "CV3 SE (pp)",
+                                  "CV3 p", "Bootstrap p", "BH-adjusted p", "N"])
+check("T9 Panel A has 27 rows", len(T9A) == 27, "got %d" % len(T9A))
+sic = T09[T09["panel"] == "SIC cells"].copy()
+sic["sic2"] = sic["sic2"].astype(str)
+s48 = sic[sic["sic2"] == "48"].iloc[0]
+s73 = sic[sic["sic2"] == "73"].iloc[0]
+rest = sic[~sic["sic2"].isin(["48", "73"])]
+T9B = pd.DataFrame([
+    ["48 (communications)", n0(s48["events"]), n0(s48["treated"]), n0(s48["control"])],
+    ["73 (business services)", n0(s73["events"]), n0(s73["treated"]), n0(s73["control"])],
+    ["%d cells, no treated events" % len(rest), n0(rest["events"].sum()), "0",
+     n0(rest["control"].sum())],
+    ["Total", n0(sic["events"].sum()), n0(sic["treated"].sum()), n0(sic["control"].sum())]],
+    columns=["Two-digit SIC cell", "Events", "Treated", "Control"])
+check("T9 Panel B events total 405", int(sic["events"].sum()) == 405)
+add(9, "Sensitivity Analyses",
+    [("Panel A: All 27 sensitivity specifications", T9A),
+     ("Panel B: Two-digit SIC cells", T9B)],
+    "*Note.* Sample level is events; every row retains all N = 405, so no specification drops a "
+    "fixed-effect singleton or a missing SIC cell. β and SE are in percentage points. "
+    "Benjamini-Hochberg is applied within the 27-test sensitivity family. HC3 does not appear: "
+    "it is disqualified, and its standard error is not finite for the SIC fixed-effects rows, "
+    "whose design is rank-deficient. The recall-corrected rows divide the outcome by the "
+    "measured stratum recall; that correction is uncapped and corrects missed departures only, "
+    "with no adjustment for false positives, and the two CI-endpoint rows are bounding exercises "
+    "rather than estimates. The complete test ledger is 31 tests (3 primary, 1 placebo, 27 "
+    "sensitivities); the chief executive family contributes 0 tests because its 10-event gate "
+    "failed at every window. The full 36-cell SIC list is in outputs/essay3_v4/f3_sic2_cells.csv. "
+    "Sources: outputs/essay3_q4/table09.csv; outputs/essay3_v4/i_tests.csv.")
+
+# =============================================================== TABLE 10
+lo = T10[T10["panel"] == "LOCO range"]
+var = T10[T10["panel"] == "top-ten variance shares"]
+rows = []
+for w in (30, 90, 180):
+    r = lo[lo["window"] == w].iloc[0]
+    rev = var[(var["window"] == w) & (var["sign_flip"] == 1)]
+    rows.append([n0(w), pp(r["full_coef"]),
+                 "[%s, %s]" % (pp(r["loco_min"]), pp(r["loco_max"])), n0(r["sign_flips"]),
+                 "; ".join("%s (%s)" % (x["name"], pp(x["coef_without"])) for _, x in rev.iterrows()),
+                 pp(r["without_TMobile"]), pp(r["without_Sprint"])])
+T10A = pd.DataFrame(rows, columns=["Window (days)", "Full-sample β (pp)",
+                                   "Range across deletions (pp)", "Sign reversals",
+                                   "Reversing clusters (β without)", "T-Mobile deleted (pp)",
+                                   "Sprint deleted (pp)"])
+rows = []
+for w in (30, 90, 180):
+    for _, r in var[var["window"] == w].iterrows():
+        rows.append([n0(w), n0(r["final_cik"]), str(r["name"]),
+                     "Treated" if int(r["treated_cluster"]) == 1 else "Control",
+                     n0(r["n_events"]), pct(r["share"]), pp(r["coef_without"])])
+T10B = pd.DataFrame(rows, columns=["Window (days)", "CIK", "Cluster", "Group", "Events",
+                                   "Share of CV3 jackknife variance (%)", "β without (pp)"])
+ov = T10[T10["panel"] == "overlap restriction"]
+rows = []
+for w in (30, 90, 180):
+    for s in ("v3-overlap", "full v4"):
+        r = ov[(ov["window"] == w) & (ov["sample"] == s)].iloc[0]
+        rows.append([n0(w), "CCM-based overlap restriction" if s == "v3-overlap" else "Full sample",
+                     n0(r["n"]), n0(r["G"]), pp(r["coef"]), p3(r["p_cv3"]), p3(r["p_wcr"])])
+T10C = pd.DataFrame(rows, columns=["Window (days)", "Sample", "N", "G", "β (pp)",
+                                   "CV3 p", "Bootstrap p"])
+add(10, "Cluster Concentration",
+    [("Panel A: Leave-one-cluster-out", T10A),
+     ("Panel B: Top ten clusters by share of CV3 jackknife variance", T10B),
+     ("Panel C: CCM-based overlap restriction", T10C)],
+    "*Note.* Sample level is events within parent CIKs; G = 119 clusters. β is in percentage "
+    "points. A sign reversal is a cluster whose deletion changes the sign of β. Panel C "
+    "restricts to events that were also linked by the earlier CCM-based security link, "
+    "which this study replaced with a rebuilt point-in-time link; it is a CCM-based overlap "
+    "restriction and is "
+    "not a ticker match. All 58 events removed in Panel C are control events across 37 parent "
+    "CIKs; no treated event turns on the linker rebuild. Sources: outputs/essay3_q4/table10.csv; "
+    "outputs/essay3_v4/f1_cv3_variance_shares.csv; outputs/essay3_v4/239_v3_overlap_sensitivity.csv.")
+
+# =============================================================== TABLE 11
+CLAUSE = {}
+for _, r in T02.iterrows():
+    CLAUSE[int(r["final_cik"])] = ("1 and 2" if r["treated_events_clause1"] > 0 and r["treated_events_clause2"] > 0
+                                   else ("1" if r["treated_events_clause1"] > 0 else "2"))
+YN = lambda v: "Y" if int(v) == 1 else "N"
+T11A = pd.DataFrame([[str(r["breach_date"]), str(r["reported_date"]),
+                      CLAUSE.get(1283699, ""), YN(r["placebo_exec"]), YN(r["exec_30"]),
+                      YN(r["exec_90"]), YN(r["exec_180"])] for _, r in T11.iterrows()],
+                    columns=["Breach date", "Notification date", "Treatment clause",
+                             "Placebo", "30 days", "90 days", "180 days"])
+check("T11 Panel A has 26 rows", len(T11A) == 26, "got %d" % len(T11A))
+# (display name, surname used to match the person string, title, filing date, accession, window)
+TITLES = [
+    ("Gary A. King", "King", "Executive Vice President and Chief Information Officer", "2016-02-19",
+     "0001193125-16-470124", "Outcome window"),
+    ("David A. Miller", "Miller", "Executive Vice President, General Counsel and Secretary", "2021-09-16",
+     "0001193125-21-275230", "Outcome window"),
+    ("Neville Ray", "Ray", "President, Technology", "2023-02-13", "0001193125-23-035719", "Outcome window"),
+    ("Peter Ewens", "Ewens", "Executive Vice President, Corporate Strategy & Development", "2023-09-08",
+     "0001193125-23-231377", "Outcome window"),
+    ("John Legere", "Legere", "Chief Executive Officer", "2019-11-18", "0001193125-19-294093", "Placebo window"),
+    ("J. Braxton Carter", "Carter", "Executive Vice President and Chief Financial Officer", "2019-11-18",
+     "0001193125-19-294093", "Placebo window")]
+def events_for(person_key, accession, which):
+    """Count Panel A EVENTS whose `which` window holds THIS person's departure.
+
+    Keyed on the person AND the accession, not on the surname alone: T-Mobile's
+    2018-08-20 event carries an earlier Legere departure from a different filing
+    (0001104659-18-028086), which is not the 2019-11-18 departure in this panel.
+    Counting by surname alone would attribute that event to this row.
+    """
+    pcol, acol = which + "_persons", which + "_accessions"
+    n = 0
+    for _, rr in T11.iterrows():
+        if person_key in str(rr.get(pcol, "") or "") and accession in str(rr.get(acol, "") or ""):
+            n += 1
+    return n
+
+
+rows, _bad_title, _abbrev = [], [], []
+for nm, key, ti, fd, acc, win in TITLES:
+    # character-for-character containment in the filing text (whitespace normalised only,
+    # because the source file wraps lines mid-title)
+    if ti not in TMTXT:
+        _bad_title.append("%s: %r" % (nm, ti))
+    if ABBREV_RE.search(ti):
+        _abbrev.append("%s: %r" % (nm, ti))
+    rows.append([nm, ti, fd, acc, win,
+                 n0(events_for(key, acc, "outcome")), n0(events_for(key, acc, "placebo"))])
+check("T11 Panel B every title is verbatim in tmobile_502_text.md", not _bad_title,
+      "not found: " + "; ".join(_bad_title))
+check("T11 Panel B no title uses an abbreviation", not _abbrev,
+      "abbreviated: " + "; ".join(_abbrev))
+# the abbreviation check must itself be live, not vacuous
+check("T11 abbreviation regex is live (fires on 'EVP', quiet on the spelled-out title)",
+      bool(ABBREV_RE.search("EVP and Chief Financial Officer"))
+      and not ABBREV_RE.search("Executive Vice President and Chief Financial Officer"),
+      "ABBREV_RE = %r" % ABBREV_RE.pattern)
+# self-test: the containment check must have teeth. An abbreviated form of a real title
+# must NOT be found, or the assertion above would pass on anything.
+_probe = TITLES[0][2].replace("Executive Vice President", "EVP")
+check("T11 Panel B title check has teeth (an abbreviated title is rejected)",
+      _probe not in TMTXT, "probe %r was found in the filing text" % _probe)
+T11B = pd.DataFrame(rows, columns=["Name", "Title as stated in the filing", "Filing date",
+                                   "Accession", "Window placement",
+                                   "Outcome-window events (180 days)", "Placebo-window events"])
+_ow = sum(int(x.replace(",", "")) for x in T11B["Outcome-window events (180 days)"])
+_pa180 = int((T11["exec_180"].astype(int)).sum())
+check("T11 Panel B outcome-window column sums to 13", _ow == 13, "got %d" % _ow)
+check("T11 Panel B outcome-window sum equals Panel A 180-day Y count",
+      _ow == _pa180, "Panel B %d vs Panel A %d" % (_ow, _pa180))
+add(11, "T-Mobile Events and Executive Departures",
+    [("Panel A: The 26 T-Mobile events", T11A), ("Panel B: The departures", T11B)],
+    "*Note.* Sample level is events in Panel A (all 26 T-Mobile events in the analysis sample, "
+    "CIK 1283699) and persons in Panel B. Y/N marks whether at least one executive departure "
+    "falls in that window. The 13 events with a "
+    "180-day departure resolve to only four distinct departures, because several breach records "
+    "fall within 180 days of the same filing. The two event columns count, for each person, how "
+    "many of the 26 events place that person's departure in the 180-day outcome window and how "
+    "many place it in the placebo window; they are counted per person, and a person can appear "
+    "in both. Legere and Carter fall in the placebo window of the 2019-11-26 event: their "
+    "8-K was filed 2019-11-18, eight days before that breach date and 105 days before the "
+    "2020-03-02 notification, so neither can be a response to either. Titles and context are "
+    "taken verbatim from the filings; no filing links any departure to a breach. Sources: "
+    "outputs/essay3_q4/table11.csv; outputs/essay3_q4/tmobile_502_text.md.")
+
+check("Tables numbered 1-11 in order", [t["num"] for t in TABLES] == list(range(1, 12)))
+bad = []
+for t in TABLES:
+    for lab, df in t["blocks"]:
+        for c in df.columns:
+            for v in df[c].astype(str):
+                if re.search(r"\b(inf|nan|NaN)\b", v) or re.search(r"(?<=[\s\[])-\d", v) or v.startswith("-"):
+                    bad.append("Table %d / %s / %s: %r" % (t["num"], lab, c, v))
+check("No cell contains inf, nan, or a hyphen used as a minus sign", not bad,
+      "; ".join(bad[:5]))
+# Note text must carry no lowercase-damage artefact and no raw grade code. " se " and
+# "se and" caught the two notes where the caps pass lowercased SE; "47 CFR" / "47 cfr"
+# enforce the C.F.R. citation form; the GRADE_LABEL keys must never appear as prose.
+_NOTE_BAN = ["47 CFR", "47 cfr", " se ", "se and"] + list(GRADE_LABEL)
+_nb = []
+for t in TABLES:
+    for pat in _NOTE_BAN:
+        if pat in t["note"]:
+            _nb.append("Table %d: %r" % (t["num"], pat))
+check("Note text contains no banned string (47 CFR, bare 'se', or a grade code)", not _nb,
+      "; ".join(_nb))
+
+# =============================================================== PART C
+CHK = []
+
+
+def fig(f, tab, pan, src, val):
+    CHK.append(dict(figure_as_written=str(f), table=tab, panel=pan, source_cell=src,
+                    value_after_formatting=str(val),
+                    result="MATCH" if str(f).strip() == str(val).strip() else "MISMATCH"))
+
+
+def L1(sub):
+    return T01[T01["step"].str.contains(sub, na=False, regex=False)].iloc[0]
+
+
+def L6(w, g, col):
+    return T06[(T06["window"] == w) & (T06["group"] == g)].iloc[0][col]
+
+
+def LA(w, col):
+    return lad[lad["window"] == w].iloc[0][col]
+
+
+def CV(v, g, col):
+    return c3[(c3["variable"] == v) & (c3["group"] == g)].iloc[0][col]
+
+
+def V10(w, cik, col):
+    r = var[(var["window"] == w) & (var["final_cik"] == cik)]
+    return r.iloc[0][col] if len(r) else None
+
+
+def OVL(w, col):
+    return ov[(ov["window"] == w) & (ov["sample"] == "v3-overlap")].iloc[0][col]
+
+
+def F5(field, rnd=None, scoring=None):
+    g = T05[(T05["panel"] == "agreement") & (T05["field"] == field)]
+    if rnd:
+        g = g[g["round"].astype(str).str.startswith(rnd)]
+    if scoring:
+        g = g[g["scoring"] == scoring]
+    return g.iloc[0]
+
+
+gate = SUB[SUB["step"].str.contains("identity-gate", na=False)].iloc[0]
+nolink = SUB[SUB["step"].str.contains("no acceptable", case=False, na=False)].iloc[0]
+
+# ---- sample ----
+for lbl, sub in [("1,054", "PRC notification"), ("758", "Gate 1"), ("524", "Stage 3"),
+                 ("491", "Gate 2"), ("489", "CANONICAL_V4"), ("405", "Prior 12-month")]:
+    fig(lbl, 1, "A", "table01.csv step '" + sub + "' -> N", n0(L1(sub)["N"]))
+fin = L1("Prior 12-month")
+fig("109", 1, "A", "table01.csv final step -> treated_events", n0(fin["treated_events"]))
+fig("296", 1, "A", "table01.csv final step -> control_events", n0(fin["control_events"]))
+fig("13", 1, "A", "table01.csv final step -> treated_parent_ciks", n0(fin["treated_parent_ciks"]))
+fig("119", 2, "B", "f1_ladder.csv 30d -> G", n0(lad30["G"]))
+fig("9", 1, "A", "table01.csv identity-gate sub-row -> N", n0(gate["N"]))
+fig("6", 1, "A", "table01.csv identity-gate sub-row -> treated_events", n0(gate["treated_events"]))
+fig("66", 1, "A", "table01.csv no-link sub-row -> N", n0(nolink["N"]))
+fig("2", 1, "A", "table01.csv 414 minus 412 at the Compustat step",
+    n0(int(L1("CRSP")["N"]) - int(L1("Compustat")["N"])))
+fig("7", 1, "A", "table01.csv 412 minus 405 at the 150-return step",
+    n0(int(L1("Outcome-data")["N"]) - int(fin["N"])))
+fig("0", 1, "A", "table01.csv final step -> pre_rule_treated", n0(fin["pre_rule_treated"]))
+fig("7", 1, "A", "table01.csv final step -> pre_rule_control", n0(fin["pre_rule_control"]))
+fig("1.55", 1, "Note", "descriptive_counts.csv records_per_event_mean",
+    DC["records_per_event_mean"])
+fig("31", 1, "Note", "descriptive_counts.csv records_per_event_max",
+    DC["records_per_event_max"])
+
+# ---- treated firms ----
+fig("70", 2, "A", "table02.csv sum treated_events_clause1", n0(t2["treated_events_clause1"].sum()))
+fig("39", 2, "A", "table02.csv sum treated_events_clause2", n0(t2["treated_events_clause2"].sum()))
+fig("26", 2, "B", "table02.csv CIK 1283699 -> treated_events", n0(tm))
+fig("23.9", 2, "B", "table02.csv 1283699 / 109", pct(tm / 109.0))
+fig("38", 2, "B", "table02.csv 1283699 + 101830", n0(tm + sp))
+fig("34.9", 2, "B", "table02.csv (1283699 + 101830) / 109", pct((tm + sp) / 109.0))
+fig("24", 2, "A", "table02.csv CIK 732717 -> treated_events",
+    n0(t2[t2["final_cik"] == 732717]["treated_events"].iloc[0]))
+fig("10", 2, "A", "table02.csv CIK 732712 -> treated_events",
+    n0(t2[t2["final_cik"] == 732712]["treated_events"].iloc[0]))
+fig("5", 2, "A", "table02.csv CIK 1447669 + 1609711 -> treated_events",
+    n0(t2[t2["final_cik"].isin([1447669, 1609711])]["treated_events"].sum()))
+fig("24.5", 2, "B", "f1_ladder.csv 30d -> G_star", f2(lad30["G_star"], 1))
+fig("61", 2, "B", "descriptive_counts.csv singleton_clusters", DC["singleton_clusters"])
+fig("78", 2, "B", "descriptive_counts.csv largest_cluster_events", DC["largest_cluster_events"])
+fig("19.3", 2, "B", "descriptive_counts.csv largest_cluster_share", DC["largest_cluster_share"])
+
+# ---- composition ----
+# INSD control share: the exact count 25/296 = 8.4459% gives 8.4. The 8.5 previously
+# written in the Results text came from re-rounding the stored 0.0845, and the text is
+# being corrected to 8.4 rather than the table to 8.5.
+for code, tv, cvv in [("HACK", "58.7", "76.0"), ("INSD", "20.2", "8.4"), ("PHYS", "11.0", "1.4")]:
+    r = T03[T03["breach_type"] == code].iloc[0]
+    fig(tv, 3, "", "table03.csv " + code + " treated_events / 109",
+        pct_from(r["treated_events"], _t3T))
+    fig(cvv, 3, "", "table03.csv " + code + " control_events / 296",
+        pct_from(r["control_events"], _t3C))
+fig("11.58", 4, "A", "table04.csv firm_size_log treated mean", f2(CV("firm_size_log", "treated", "mean")))
+fig("9.69", 4, "A", "table04.csv firm_size_log control mean", f2(CV("firm_size_log", "control", "mean")))
+fig("1.45", 4, "A", "table04.csv firm_size_log std_diff", f2(CV("firm_size_log", "treated", "std_diff")))
+fig("97.0", 4, "B", "descriptive_counts.csv control_in_treated_range_pct",
+    DC["control_in_treated_range_pct"])
+fig("85.3", 4, "B", "descriptive_counts.csv treated_in_control_range_pct",
+    DC["treated_in_control_range_pct"])
+fig("0.49", 4, "A", "table04.csv leverage std_diff", f2(CV("leverage", "treated", "std_diff")))
+fig("−0.56", 4, "A", "table04.csv roa std_diff", f2(CV("roa", "treated", "std_diff")))
+fig("1.66", 4, "A", "table04.csv prior_breaches_1yr treated mean", f2(CV("prior_breaches_1yr", "treated", "mean")))
+fig("4.16", 4, "A", "table04.csv prior_breaches_1yr control mean", f2(CV("prior_breaches_1yr", "control", "mean")))
+fig("2", 4, "A", "table04.csv health_breach treated mean x 109",
+    n0(round(float(CV("health_breach", "treated", "mean")) * 109)))
+fig("38.5", 4, "C", "table04.csv C2 treated same_day / n", pct_from(ct["same_day"], ct["n"]))
+fig("29.1", 4, "C", "table04.csv C2 control same_day / n", pct_from(cc["same_day"], cc["n"]))
+fig("22", 4, "C", "table04.csv C2 treated lag_median", n0(ct["lag_median"]))
+fig("27", 4, "C", "table04.csv C2 control lag_median", n0(cc["lag_median"]))
+fig("11.9", 4, "C", "table04.csv C2 treated bd180_before_rd / n",
+    pct_from(ct["bd180_before_rd"], ct["n"]))
+fig("14.5", 4, "C", "table04.csv C2 control bd180_before_rd / n",
+    pct_from(cc["bd180_before_rd"], cc["n"]))
+
+# ---- validation ----
+aud = F5("exec departure (A)", scoring="PRIMARY (verified)")
+fin5 = F5("PRIMARY (verified) | exec departure (A: any)")
+r2 = F5("exec departure (A: any)", rnd="round 2")
+fig(".787", 5, "A", "table05.csv audit exec departure kappa", k3(aud["kappa"]))
+fig(".870", 5, "A", "table05.csv final-round exec departure kappa", k3(fin5["kappa"]))
+fig(".966 [.822, .999]", 5, "A", "table05.csv audit precision + CI",
+    p3(aud["precision"]) + " " + ci_str(aud["precision_ci95"]))
+fig("1.000 [.398, 1.000]", 5, "A", "table05.csv final-round precision + CI",
+    f2(fin5["precision"], 3) + " " + ci_str(fin5["precision_ci95"]))
+fig(".800 [.631, .916]", 5, "A", "table05.csv audit recall + CI",
+    p3(aud["recall"]) + " " + ci_str(aud["recall_ci95"]))
+fig(".800 [.284, .995]", 5, "A", "table05.csv final-round recall + CI",
+    p3(fin5["recall"]) + " " + ci_str(fin5["recall_ci95"]))
+fig(".600 [.147, .947]", 5, "A", "table05.csv round-2 recall + CI",
+    p3(r2["recall"]) + " " + ci_str(r2["recall_ci95"]))
+st_t = sp_[sp_["stratum"] == "treated"].iloc[0]
+st_c = sp_[sp_["stratum"] == "control"].iloc[0]
+fig(".842 [.604, .966]", 5, "B", "stratified treated recall + CI",
+    p3(st_t["recall"]) + " " + ci_str(st_t["recall_ci95"]))
+fig("19", 5, "B", "stratified treated ref_Y", n0(st_t["ref_Y"]))
+fig(".750 [.476, .927]", 5, "B", "stratified control recall + CI",
+    p3(st_c["recall"]) + " " + ci_str(st_c["recall_ci95"]))
+fig("16", 5, "B", "stratified control ref_Y", n0(st_c["ref_Y"]))
+fig("1.000", 5, "B", "stratified treated precision", f2(st_t["precision"], 3))
+fig(".923", 5, "B", "stratified control precision", p3(st_c["precision"]))
+ceo_a = F5("CEO departure", scoring="PRIMARY (verified)")
+fig(".530", 5, "A", "table05.csv audit CEO kappa", k3(ceo_a["kappa"]))
+fig(".571", 5, "A", "table05.csv audit CEO precision", p3(ceo_a["precision"]))
+fig(".571", 5, "A", "table05.csv audit CEO recall", p3(ceo_a["recall"]))
+dir_a = F5("director-only departure", scoring="PRIMARY (verified)")
+fig(".746", 5, "A", "table05.csv audit director-only kappa", k3(dir_a["kappa"]))
+
+# ---- outcomes ----
+fig("75.2", 6, "A", "table06.csv 180d treated any_502 / n",
+    pct_from(L6(180, "treated", "any_502"), L6(180, "treated", "n")))
+fig("66.6", 6, "A", "table06.csv 180d control any_502 / n",
+    pct_from(L6(180, "control", "any_502"), L6(180, "control", "n")))
+for w, tv, cvv in [(30, "3.7", "4.4"), (90, "10.1", "14.5"), (180, "30.3", "24.7")]:
+    fig(tv, 6, "A", "table06.csv %dd treated exec_departure / n" % w,
+        pct_from(L6(w, "treated", "exec_departure"), L6(w, "treated", "n")))
+    fig(cvv, 6, "A", "table06.csv %dd control exec_departure / n" % w,
+        pct_from(L6(w, "control", "exec_departure"), L6(w, "control", "n")))
+fig("49 of 82", 6, "B", "table06.csv 180d treated filing_no_exec of any_502",
+    n0(L6(180, "treated", "filing_no_exec")) + " of " + n0(L6(180, "treated", "any_502")))
+fig("124 of 197", 6, "B", "table06.csv 180d control filing_no_exec of any_502",
+    n0(L6(180, "control", "filing_no_exec")) + " of " + n0(L6(180, "control", "any_502")))
+fig("173 of 279", 6, "B", "table06.csv 180d pooled filing_no_exec of any_502",
+    n0(L6(180, "POOLED", "filing_no_exec")) + " of " + n0(L6(180, "POOLED", "any_502")))
+fig("62.0", 6, "B", "table06.csv 180d pooled filing_no_exec / any_502",
+    pct_from(L6(180, "POOLED", "filing_no_exec"), L6(180, "POOLED", "any_502")))
+for w, tv, cvv in [(30, "0", "1"), (90, "3", "8"), (180, "8", "24")]:
+    fig(tv, 6, "A", "table06.csv %dd treated ceo_departure" % w, n0(L6(w, "treated", "ceo_departure")))
+    fig(cvv, 6, "A", "table06.csv %dd control ceo_departure" % w, n0(L6(w, "control", "ceo_departure")))
+for w, tv, cvv in [(30, "8", "4"), (90, "18", "20"), (180, "21", "56")]:
+    fig(tv, 6, "A", "table06.csv %dd treated director_only" % w, n0(L6(w, "treated", "director_only")))
+    fig(cvv, 6, "A", "table06.csv %dd control director_only" % w, n0(L6(w, "control", "director_only")))
+
+# ---- primary ----
+for w, b, pc, pw, mde, ratio, cr in [
+        (30, "0.40", ".906", ".889", "9.44", "2.15", "4.39"),
+        (90, "−4.10", ".605", ".514", "22.34", "1.54", "14.53"),
+        (180, "2.33", ".816", ".790", "28.15", "1.14", "24.66")]:
+    fig(b, 7, "A", "table07.csv %dd coef -> pp" % w, pp(LA(w, "coef")))
+    fig(pc, 7, "A", "table07.csv %dd p_cv3" % w, p3(LA(w, "p_cv3")))
+    fig(pw, 7, "A", "table07.csv %dd p_wcr" % w, p3(LA(w, "p_wcr")))
+    fig(mde, 7, "A", "table07.csv %dd mde80 -> pp" % w, pp(LA(w, "mde80")))
+    fig(ratio, 7, "A", "table07.csv %dd mde_over_control" % w, f2(LA(w, "mde_over_control")))
+    fig(cr, 7, "A", "table07.csv %dd control_rate -> pp" % w, pp(LA(w, "control_rate")))
+fig("[−17.40, 22.06]", 7, "A", "table07.csv 180d CV3 CI -> pp",
+    ci_pp(LA(180, "ci_cv3_lo"), LA(180, "ci_cv3_hi")))
+fig("[−15.76, 20.11]", 7, "A", "table07.csv 180d WCR CI -> pp",
+    ci_pp(LA(180, "ci_wcr_lo"), LA(180, "ci_wcr_hi")))
+for w, ub in [(30, "7.02"), (90, "11.56"), (180, "22.06")]:
+    fig(ub, 7, "A", "table07.csv %dd ci_cv3_hi -> pp" % w, pp(LA(w, "ci_cv3_hi")))
+c90 = CLG[CLG["window"] == 90].iloc[0]
+c180 = CLG[CLG["window"] == 180].iloc[0]
+fig("−4.20", 7, "B", "c_logit_diagnostics.csv 90d ame -> pp", pp(c90["ame"]))
+fig("4.68", 7, "B", "c_logit_diagnostics.csv 90d se_cluster -> pp", pp(c90["se_cluster"]))
+fig("1.97", 7, "B", "c_logit_diagnostics.csv 180d ame -> pp", pp(c180["ame"]))
+fig("7.75", 7, "B", "c_logit_diagnostics.csv 180d se_cluster -> pp", pp(c180["se_cluster"]))
+fig("17", 7, "B", "table06.csv 30d pooled exec_departure", n0(L6(30, "POOLED", "exec_departure")))
+
+# ---- placebo ----
+prt = T08[(T08["panel"] == "placebo window rate") & (T08["group"] == "treated")].iloc[0]
+prc = T08[(T08["panel"] == "placebo window rate") & (T08["group"] == "control")].iloc[0]
+fig("22.9", 8, "", "table08.csv placebo treated events_with_departure / n",
+    pct_from(prt["events_with_departure"], prt["n"]))
+fig("23.6", 8, "", "table08.csv placebo control events_with_departure / n",
+    pct_from(prc["events_with_departure"], prc["n"]))
+fig("−8.62", 8, "", "table08.csv placebo coef -> pp", pp(pl["coef"]))
+fig(".312", 8, "", "table08.csv placebo p_cv3", p3(pl["p_cv3"]))
+fig(".231", 8, "", "table08.csv placebo p_wcr", p3(pl["p_wcr"]))
+fig("[−25.43, 8.18]", 8, "", "table08.csv placebo CV3 CI -> pp",
+    ci_pp(pl["ci_cv3_lo"], pl["ci_cv3_hi"]))
+
+# ---- sensitivities ----
+_it = pd.read_csv("outputs/essay3_v4/i_tests.csv")
+fig(".113", 9, "A", "table09.csv min p_cv3 across the 27", p3(s9["p_cv3"].min()))
+fig(".986", 9, "A", "table09.csv min p_bh across the 27", p3(s9["p_bh"].min()))
+fig("31", 9, "Note", "i_tests.csv row count", n0(len(_it)))
+fig("above .31", 9, "Note", "i_tests.csv min p_bh across all families",
+    "above .31" if float(_it["p_bh"].min()) > 0.31 else "not above .31 (" + p3(_it["p_bh"].min()) + ")")
+fig("104", 9, "B", "table09.csv SIC 48 treated", n0(s48["treated"]))
+fig("40", 9, "B", "table09.csv SIC 48 control", n0(s48["control"]))
+fig("5", 9, "B", "table09.csv SIC 73 treated", n0(s73["treated"]))
+fig("141", 9, "B", "table09.csv SIC 73 control", n0(s73["control"]))
+fig("34", 9, "B", "table09.csv cells with zero treated", n0(len(rest)))
+
+# ---- concentration ----
+for w, rv, tmd in [(30, "3", "−1.64"), (90, "1", "−6.87"), (180, "1", "−3.49")]:
+    r = lo[lo["window"] == w].iloc[0]
+    fig(rv, 10, "A", "table10.csv %dd sign_flips" % w, n0(r["sign_flips"]))
+    fig(tmd, 10, "A", "table10.csv %dd without_TMobile -> pp" % w, pp(r["without_TMobile"]))
+fig("59.2", 10, "B", "table10.csv 90d FIS share", pct(V10(90, 1136893, "share")))
+fig("36.9", 10, "B", "table10.csv 30d T-Mobile share", pct(V10(30, 1283699, "share")))
+fig("33.9", 10, "B", "table10.csv 180d T-Mobile share", pct(V10(180, 1283699, "share")))
+fig("18.3", 10, "B", "table10.csv 30d Corebridge share", pct(V10(30, 1889539, "share")))
+fig("58", 10, "C", "table10.csv 405 minus overlap n", n0(405 - int(OVL(30, "n"))))
+fig("347", 10, "C", "table10.csv overlap n", n0(OVL(30, "n")))
+fig("83", 10, "C", "table10.csv overlap G", n0(OVL(30, "G")))
+for w, b, pv in [(30, "1.77", ".585"), (90, "−3.45", ".731"), (180, "2.08", ".852")]:
+    fig(b, 10, "C", "table10.csv overlap %dd coef -> pp" % w, pp(OVL(w, "coef")))
+    fig(pv, 10, "C", "table10.csv overlap %dd p_cv3" % w, p3(OVL(w, "p_cv3")))
+
+# ---- T-Mobile ----
+for w, v in [(30, "3"), (90, "5"), (180, "13")]:
+    fig(v, 11, "A", "table11.csv sum exec_%d" % w, n0(T11["exec_%d" % w].sum()))
+fig("26", 11, "A", "table11.csv row count", n0(len(T11)))
+fig("8", 11, "A", "table11.csv sum placebo_exec", n0(T11["placebo_exec"].sum()))
+fig("13 of 33", 11, "A", "table11.csv exec_180 vs table06 180d treated exec_departure",
+    n0(T11["exec_180"].sum()) + " of " + n0(L6(180, "treated", "exec_departure")))
+
+CK = pd.DataFrame(CHK)
+CK.to_csv(OUT / "text_figures_check.csv", index=False)
+MIS = CK[CK["result"] == "MISMATCH"]
+
+# =============================================================== WRITE .md
+PREAMBLE = ("Analysis sample N = 405 events (109 treated, 296 control; G = 119 parent "
+            "CIKs, G1 = 13 treated clusters, 12 treated parent entities). Tables are "
+            "numbered in the order the Results section first mentions them.")
+CONVENTIONS = ("Conventions: coefficients, standard errors, confidence intervals and "
+               "minimum detectable effects are in percentage points to two decimals; "
+               "rates are percent to one decimal; p, kappa, precision and recall carry "
+               "three decimals with no leading zero; counts use thousands separators; "
+               "the minus sign is U+2212.")
+LINES = ["# Essay 3 Appendix", "", PREAMBLE, "", CONVENTIONS, ""]
+for t in TABLES:
+    LINES += ["**Table %d**" % t["num"], "", "*%s*" % t["title"], ""]
+    for lab, df in t["blocks"]:
+        if lab:
+            LINES += ["**%s**" % lab, ""]
+        LINES += ["| " + " | ".join(str(c) for c in df.columns) + " |",
+                  "|" + "|".join(["---"] * len(df.columns)) + "|"]
+        for _, rr in df.iterrows():
+            LINES.append("| " + " | ".join("" if pd.isna(v) else str(v) for v in rr) + " |")
+        LINES.append("")
+    LINES += [t["note"], ""]
+# The appendix files carry ONLY the title, Tables 1-11 and their notes. The build audit
+# goes to its own file: printing the assertion list into the document it audits put the
+# banned literals ("47 CFR", "EVP") back into the appendix as assertion NAMES, so a grep
+# of the appendix could not distinguish a real occurrence from a check forbidding it.
+(OUT / "ESSAY3_APPENDIX_TABLES.md").write_text("\n".join(LINES) + "\n", encoding="utf-8")
+
+AUD = ["# Essay 3 appendix - build audit", "",
+       "Produced by `scripts/245_essay3_appendix.py` alongside "
+       "`ESSAY3_APPENDIX_TABLES.md` and `.docx`. Kept separate from the appendix so that "
+       "the appendix contains only the title, Tables 1-11 and their notes, and so that "
+       "grepping the appendix for a banned string cannot match an assertion name.", "",
+       "## ASSERTIONS", ""]
+for nm, ok, det in ASSERT:
+    AUD.append("- " + nm + " **" + ("PASS" if ok else "FAIL") + "**"
+               + (("  " + det) if det and not ok else ""))
+AUD += ["", "__TALLY__", ""]
+AUD += ["## TABLE 1 STEP LABELS", "",
+        "The reader-facing label shown in Table 1 Panel A, and the pipeline step name it "
+        "comes from in the committed ledger.", "",
+        "| Appendix label | Committed ledger step |", "|---|---|"]
+for lab, raw in STEP_MAP:
+    AUD.append("| %s | %s |" % (lab, raw))
+AUD += ["", "## TABLE SOURCES", "",
+        "The provenance sentence that each table's note used to carry. The appendix "
+        "itself states findings only; build information lives here.", ""]
+for t in TABLES:
+    AUD.append("- **Table %d** %s" % (t["num"], t["sources"] or "(none recorded)"))
+AUD += ["", "## NOT REGENERABLE", ""]
+AUD += (["- **" + w + "** " + x for w, x in NOTREG] or ["- none"])
+AUD += ["", "## TEXT-TO-TABLE CHECK", "",
+        "%d figures checked; %d MISMATCH. Full listing in `text_figures_check.csv`."
+        % (len(CK), len(MIS)), ""]
+if len(MIS):
+    AUD += ["| Figure as written | Table | Panel | Source cell | Value after formatting |",
+            "|---|---|---|---|---|"]
+    for _, rr in MIS.iterrows():
+        AUD.append("| %s | %s | %s | %s | %s |" % (rr["figure_as_written"], rr["table"],
+                                                   rr["panel"], rr["source_cell"],
+                                                   rr["value_after_formatting"]))
+    AUD.append("")
+(OUT / "APPENDIX_BUILD_AUDIT.md").write_text("\n".join(AUD) + "\n", encoding="utf-8")
+
+# The appendix must carry no audit section. This is checked against the file ON DISK,
+# after it is written, because that is the artefact a reader greps - not the LINES list.
+_md_txt = (OUT / "ESSAY3_APPENDIX_TABLES.md").read_text(encoding="utf-8")
+_BANNED_H = ("## ASSERTIONS", "## NOT REGENERABLE", "## TEXT-TO-TABLE")
+_hits = [(n, ln) for n, ln in enumerate(_md_txt.split(chr(10)), 1)
+         if any(ln.startswith(h) for h in _BANNED_H)]
+check("Appendix .md has no ASSERTIONS / NOT REGENERABLE / TEXT-TO-TABLE section",
+      not _hits, "; ".join("line %d: %s" % (n, ln) for n, ln in _hits))
+# and no section heading of ANY kind: the appendix is the title, then Tables 1-11.
+# Checking only the three banned names would let a reintroduced group heading through.
+_h2 = [(n, ln) for n, ln in enumerate(_md_txt.split(chr(10)), 1) if ln.startswith("##")]
+check("Appendix .md has no section heading (only the title, then the tables)",
+      not _h2, "; ".join("line %d: %s" % (n, ln) for n, ln in _h2[:4]))
+# and the literals that only ever entered the appendix as assertion names must be gone
+_leak = [(w, sum(1 for ln in _md_txt.split(chr(10)) if w in ln))
+         for w in ("FAIL", "47 CFR", "47 cfr", "EVP")]
+check("Appendix .md contains no FAIL / 47 CFR / 47 cfr / EVP",
+      all(c == 0 for _, c in _leak),
+      "; ".join("%s x%d" % (w, c) for w, c in _leak if c))
+
+# The appendix must read as a document, not a build artefact: no repository path and no
+# file name. Checked on the RENDERED text of both files - the .docx is read back from
+# disk, because what matters is what the reader opens, not what the builder intended.
+_PATHY = ("outputs/", "scripts/", ".csv")
+_md_leak = [(w, sum(1 for ln in _md_txt.split(chr(10)) if w in ln)) for w in _PATHY]
+check("Appendix .md contains no outputs/ or scripts/ path and no .csv name",
+      all(c == 0 for _, c in _md_leak),
+      "; ".join("%s x%d" % (w, c) for w, c in _md_leak if c))
+_JARGON = (("snake_case identifier", re.compile(r"[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)+")),
+           ("v3 / v4", re.compile(r"(?<![A-Za-z])v[34](?![A-Za-z0-9])")),
+           ("Gate 1 / Gate 2", re.compile(r"Gate [12]")),
+           ("Stage", re.compile(r"(?<![A-Za-z])Stage(?![a-z])")),
+           ("CANONICAL", re.compile(r"CANONICAL")))
+
+
+def jargon_hits(text):
+    """-> [(kind, as_found, line_no)] for pipeline vocabulary that must not reach a reader."""
+    out = []
+    for kind, rx in _JARGON:
+        for n, ln in enumerate(text.split(chr(10)), 1):
+            for mm in rx.finditer(ln):
+                out.append((kind, mm.group(0), n))
+    return out
+
+
+_jg_md = jargon_hits(_md_txt)
+check("Appendix .md has no pipeline identifier or stage name", not _jg_md,
+      "; ".join("%s %r (line %d)" % h for h in _jg_md[:6]))
+check("jargon check is live (sees has_crsp_data / v4 / Gate 1 / Stage 3 / CANONICAL_V4)",
+      all(jargon_hits(x) for x in ("has_crsp_data", "in v4 the", "Gate 1: signed",
+                                   "Stage 3 events", "CANONICAL_V4"))
+      and not jargon_hits("Records assigned a parent CIK; Security link to CRSP"),
+      "probe failed")
+_cd_md = case_damage(_md_txt)
+check("Appendix .md has no case damage to a proper noun or acronym", not _cd_md,
+      "; ".join("%s -> %s (line %d)" % (t, f, n) for t, f, n, _ in _cd_md[:5]))
+# the check must be live, not vacuous: it has to see damage in a probe string and stay
+# quiet on the correct forms
+check("case-damage check is live (sees 'at&T'/'ccm', quiet on 'AT&T'/'CCM')",
+      bool(case_damage("at&T and ccm-based")) and not case_damage("AT&T and CCM-based")
+      and not case_damage("| CRSP data (has_crsp_data) |"),
+      "probe result: %r" % (case_damage("at&T and ccm-based"),))
+
+
+# =============================================================== WRITE .docx
+docx_ok = True
+try:
+    from docx import Document
+    from docx.enum.section import WD_ORIENT
+    from docx.enum.text import WD_ALIGN_PARAGRAPH
+    from docx.shared import Inches, Pt
+
+    doc = Document()
+    st = doc.styles["Normal"]
+    st.font.name = "Times New Roman"
+    st.font.size = Pt(12)
+    st.paragraph_format.space_after = Pt(0)
+    st.paragraph_format.line_spacing = 1.0
+    for s in doc.sections:
+        s.left_margin = s.right_margin = Inches(1)
+        s.top_margin = s.bottom_margin = Inches(1)
+
+    def para(text, bold=False, italic=False, size=12, align=None, sa=6):
+        p = doc.add_paragraph()
+        r = p.add_run(text)
+        r.font.name = "Times New Roman"
+        r.font.size = Pt(size)
+        r.bold, r.italic = bold, italic
+        p.paragraph_format.space_after = Pt(sa)
+        p.paragraph_format.line_spacing = 1.0
+        if align is not None:
+            p.alignment = align
+        return p
+
+    para("Essay 3 Appendix", bold=True, size=14, align=WD_ALIGN_PARAGRAPH.CENTER)
+    para(PREAMBLE, size=11)
+    para(CONVENTIONS, size=11)
+    WIDE = {7, 9, 10}
+    for t in TABLES:
+        if t["num"] in WIDE:
+            s = doc.add_section()
+            s.orientation = WD_ORIENT.LANDSCAPE
+            s.page_width, s.page_height = s.page_height, s.page_width
+            s.left_margin = s.right_margin = Inches(1)
+            s.top_margin = s.bottom_margin = Inches(1)
+        else:
+            doc.add_page_break()
+        para("Table %d" % t["num"], bold=True, sa=0)
+        para(t["title"], italic=True, sa=8)
+        for lab, df in t["blocks"]:
+            if lab:
+                para(lab, bold=True, size=11, sa=4)
+            tb = doc.add_table(rows=1, cols=len(df.columns))
+            tb.style = "Table Grid"
+            for i, c in enumerate(df.columns):
+                cell = tb.rows[0].cells[i]
+                cell.text = ""
+                run = cell.paragraphs[0].add_run(str(c))
+                run.bold = True
+                run.font.size = Pt(9)
+                run.font.name = "Times New Roman"
+                cell.paragraphs[0].paragraph_format.line_spacing = 1.0
+            for _, row in df.iterrows():
+                cells = tb.add_row().cells
+                for i, v in enumerate(row):
+                    cells[i].text = ""
+                    run = cells[i].paragraphs[0].add_run("" if pd.isna(v) else str(v))
+                    run.font.size = Pt(9)
+                    run.font.name = "Times New Roman"
+                    cells[i].paragraphs[0].paragraph_format.line_spacing = 1.0
+            para("", sa=4)
+        note = t["note"]
+        if note.startswith("*Note.*"):
+            note = note[len("*Note.*"):].strip()
+        p = doc.add_paragraph()
+        r0 = p.add_run("Note. ")
+        r0.italic = True
+        r0.font.size = Pt(9)
+        r0.font.name = "Times New Roman"
+        r1 = p.add_run(note)
+        r1.font.size = Pt(9)
+        r1.font.name = "Times New Roman"
+        p.paragraph_format.line_spacing = 1.0
+    doc.save(str(OUT / "ESSAY3_APPENDIX_TABLES.docx"))
+    # read the saved .docx back and check its rendered text the same way
+    _d = Document(str(OUT / "ESSAY3_APPENDIX_TABLES.docx"))
+    _dt = [q.text for q in _d.paragraphs]
+    for _tb in _d.tables:
+        for _row in _tb.rows:
+            _dt += [c.text for c in _row.cells]
+    _dtxt = chr(10).join(_dt)
+    _dx_leak = [(w, _dtxt.count(w)) for w in _PATHY]
+    check("Appendix .docx contains no outputs/ or scripts/ path and no .csv name",
+          all(c == 0 for _, c in _dx_leak),
+          "; ".join("%s x%d" % (w, c) for w, c in _dx_leak if c))
+    _jg_dx = jargon_hits(_dtxt)
+    check("Appendix .docx has no pipeline identifier or stage name", not _jg_dx,
+          "; ".join("%s %r" % (k, f) for k, f, _n in _jg_dx[:6]))
+    _cd_dx = case_damage(_dtxt)
+    check("Appendix .docx has no case damage to a proper noun or acronym", not _cd_dx,
+          "; ".join("%s -> %s" % (t, f) for t, f, _n, _c in _cd_dx[:5]))
+except Exception as exc:
+    docx_ok = False
+    print("DOCX FAILED: %s" % exc)
+
+# The tally is resolved LAST, after the .docx assertion has run, so the audit file
+# reports every assertion rather than only those raised before the .md was written.
+AUD_TALLY = ("%d assertion(s): %d PASS, %d FAIL."
+             % (len(ASSERT), sum(1 for _, o, _ in ASSERT if o),
+                sum(1 for _, o, _ in ASSERT if not o)))
+aud_path = OUT / "APPENDIX_BUILD_AUDIT.md"
+aud_path.write_text(aud_path.read_text(encoding="utf-8").replace("__TALLY__", AUD_TALLY),
+                    encoding="utf-8")
+
+print("=" * 96)
+print("PART B ASSERTIONS")
+print("=" * 96)
+for nm, ok, det in ASSERT:
+    print("  %-62s %s%s" % (nm, "PASS" if ok else "*** FAIL ***",
+                            ("  " + det) if det and not ok else ""))
+print()
+print("NOT REGENERABLE: %d" % len(NOTREG))
+for w, x in NOTREG:
+    print("  %s: %s" % (w, x))
+print()
+print("PART C: %d figures checked, %d MISMATCH" % (len(CK), len(MIS)))
+for _, rr in MIS.iterrows():
+    print("  MISMATCH | written %-24s | formatted %-24s | T%s %s | %s"
+          % (rr["figure_as_written"], rr["value_after_formatting"], rr["table"],
+             rr["panel"], rr["source_cell"]))
+print()
+print("written ESSAY3_APPENDIX_TABLES.md, text_figures_check.csv"
+      + (", ESSAY3_APPENDIX_TABLES.docx" if docx_ok else " (DOCX FAILED)"))

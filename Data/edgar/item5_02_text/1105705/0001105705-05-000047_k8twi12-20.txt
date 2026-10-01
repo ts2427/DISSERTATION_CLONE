@@ -1,0 +1,286 @@
+<DOCUMENT>
+<TYPE>8-K
+<SEQUENCE>1
+<FILENAME>k8twi12-20.txt
+<DESCRIPTION>TIME WARNER INC. FORM 8-K DECEMBER 20, 2005
+<TEXT>
+
+================================================================================
+                                  UNITED STATES
+                       SECURITIES AND EXCHANGE COMMISSION
+
+                             WASHINGTON, D.C. 20549
+
+                                ----------------
+
+
+                                    FORM 8-K
+
+                                 CURRENT REPORT
+                     Pursuant to Section 13 or 15(d) of the
+
+                         Securities Exchange Act of 1934
+
+       Date of Report (Date of Earliest Event Reported): December 20, 2005
+
+                                TIME WARNER INC.
+
+             (Exact Name of Registrant as Specified in its Charter)
+
+      Delaware                        1-15062                 13-4099534
+      --------                        -------                 -----------
+(State or Other Jurisdiction  (Commission File Number)      (IRS Employer
+  of Incorporation)                                       Identification No.)
+
+                One Time Warner Center, New York, New York 10019
+                  --------------------------------------------
+
+               (Address of Principal Executive Offices) (Zip Code)
+
+                                  212-484-8000
+                            --------------------------
+
+
+              (Registrant's Telephone Number, Including Area Code)
+
+                                 Not Applicable
+                                -----------------
+
+          (Former Name or Former Address, if Changed Since Last Report)
+
+Check  the  appropriate  box  below  if the  Form  8-K  filing  is  intended  to
+simultaneously  satisfy the filing obligation of the registrant under any of the
+following provisions (see General Instruction A.2 below):
+
+[ ] Written communications pursuant to Rule 425 under the Securities
+    Act (17 CFR 230.425)
+
+[ ] Soliciting material pursuant to Rule 14a-12 under the Exchange
+    Act (17 CFR 240.14a-12)
+
+[ ] Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange
+    Act (17 CFR 240.14d-2(b))
+
+[ ] Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange
+    Act (17 CFR 240.13e-4(c))
+
+================================================================================
+
+<PAGE>
+
+Item 5.02  Departure of Principal Officer; Appointment of Principal Officer
+---------------------------------------------------------------------------
+
+On December 21, 2005, the Company announced that Don Logan, its Chairman,  Media
+& Communications  Group, will retire effective December 31, 2005. Mr. Logan, who
+currently  serves as a director  of Time  Warner  Cable  Inc.,  will  become the
+non-executive chairman of the board of Time Warner Cable.
+
+The Company also  announced that Jeffrey  Bewkes,  age 53, who has served as its
+Chairman,  Entertainment  & Networks  Group since July 2002,  has been appointed
+President & Chief  Operating  Officer of Time Warner Inc.  effective  January 1,
+2006.  Prior to being appointed to his current position in July 2002, Mr. Bewkes
+served as the CEO of Home Box Office from May 1995.
+
+The description of the employment  agreement between Mr. Bewkes and the Company,
+which has not been changed at this time, is incorporated  herein by reference to
+the Company's Proxy Statement for its 2005 Annual Meeting of Stockholders (filed
+April 4, 2005).
+
+The press release issued by Time Warner Inc. on December 21, 2005 announcing the
+retirement of Mr. Logan and the  promotion of Mr.  Bewkes is attached  hereto as
+Exhibit 99.1.
+
+
+
+
+                                       2
+
+<PAGE>
+
+Item 8.01.    Other Events
+--------------------------
+
+     On December 20, 2005,  Time Warner Inc. ("Time Warner") and America Online,
+Inc. ("AOL") entered into a letter agreement (the  "Agreement") with Google Inc.
+("Google" and,  together with Time Warner and AOL, the  "Parties"),  pursuant to
+which the  Parties  agreed  to  consummate  the  transactions  described  in the
+Agreement.  The  Parties  also  agreed to  negotiate  and enter into  definitive
+agreements,  which are  expected to be signed in the first  calendar  quarter of
+2006, related to such transactions.  The Parties have also agreed upon a binding
+expedited  arbitration  procedure,  which should be  completed  during the first
+quarter of 2006,  to resolve any  disagreements  between the Parties  that would
+otherwise  prevent the entering into of definitive  agreements  during the first
+quarter of 2006.  The Agreement  provides  that, in the event the Parties do not
+enter into  definitive  agreements  to  consummate  certain of the  transactions
+described in the  Agreement by February 18, 2006,  the  commercial  transactions
+will take effect pursuant to the terms described in the Agreement.
+
+     The material terms of the Agreement are as follows:
+
+     Investment by Google in AOL (the "AOL Investment")
+     --------------------------------------------------
+
+      o   Investment.  In  exchange  for $1 billion,  Google  will  acquire a 5%
+          equity interest in AOL through an investment in a limited ---liability
+          company  ("HoldCo")  that  will  own  all  of the  outstanding  equity
+          interests in AOL.
+
+      o   Registration  Rights.  HoldCo will grant Google  certain  registration
+          rights as follows:
+
+            o  Beginning  on July 1, 2008,  Google will have  certain  rights to
+               require  HoldCo to register the HoldCo  interests  held by Google
+               for sale in a public  offering.  If Google  exercises this right,
+               Time Warner will have the right to  purchase  Google's  interests
+               for cash or shares of Time  Warner  stock  based on an  appraised
+               fair market value of Google's  equity  interest in HoldCo in lieu
+               of conducting an initial public offering.
+
+            o  Google will have certain  piggyback  registration  rights that it
+               may  exercise  in  respect  of  an  initial  public  offering  or
+               follow-on  offering  initiated by HoldCo  either  before or after
+               July 1, 2008, subject to certain underwriter cutback provisions.
+
+      o   Consent Rights.  HoldCo will agree not to take certain actions without
+          the prior  consent  of  Google,  including  amendments  to the  HoldCo
+          operating  agreement (if such  amendments  would be adverse to Google)
+          and entering into certain interested party transactions between HoldCo
+          and AOL and affiliates of Time Warner.
+
+      o   Sale  of  HoldCo  or AOL  Assets.  In the  event  of a sale  of all or
+          substantially  all of the assets of HoldCo or AOL,  Time Warner  would
+          cause the distribution to Google of its pro rata portion of such sale.
+
+      o   Pre-emptive  Rights.  Google will have a pre-emptive right to purchase
+          its pro rata portion of any new  issuance of equity  capital by HoldCo
+          or AOL.
+
+      o   Transfer  Provisions.  Google may not transfer its equity  interest in
+          HoldCo except under limited circumstances. Time Warner is permitted to
+          transfer its interests in HoldCo or AOL.  Under certain  circumstances
+          involving the transfer or issuance of HoldCo  equity  interests or the
+          transfer of AOL equity  interests by Time Warner,  Google can elect to
+          have Time Warner or HoldCo purchase Google's equity interest in HoldCo
+          at an appraised fair market value.  Google will also have the right to
+          tag along on sales by Time Warner of HoldCo interests, and Time Warner
+          may require Google to sell its interests in certain circumstances.
+
+
+                                       3
+<PAGE>
+
+
+     Commercial Transactions
+     -----------------------
+
+     The other  transactions  described  in the  Agreement  are of a  commercial
+nature,  and the terms of the  agreements and amendments are five years from the
+date of the Agreement.
+
+     Web Search  Services  and  Sponsored  Links.  AOL and Google have agreed to
+extend the term of their current multi-country web search services agreement and
+their current U.S. text-based  advertising  services  agreement.  AOL Europe and
+Google have also  committed to maintain their  European  text-based  advertising
+agreement  for the same term,  and AOL Europe has the ability to further  extend
+the term for two  additional  years.  AOL has  agreed  that  Google  will be its
+exclusive  provider of the services provided under these agreements,  subject to
+certain limitations. Although the U.S. text-based advertising services agreement
+is now subject to certain revenue guarantees from Google to AOL that apply given
+certain  conditions,  Google  does not  expect  the net  economics  under  these
+agreements  to be  materially  different  compared  to  that  which  would  have
+otherwise resulted under the existing agreements.
+
+     AOL Marketplace.  In addition to the text-based  advertising sold by Google
+that is distributed  through its sponsored links syndication  network (including
+AOL),  Google  has  agreed  to enable  AOL to sell  text-based  advertising  for
+distribution on the AOL properties. Google's revenue share from such advertising
+sold by AOL for AOL  properties  is  roughly  equivalent  to the  revenue  share
+retained by it under the text-based advertising agreement for AOL properties.
+
+     Display  Advertising.  Google has agreed to grant AOL  certain  information
+rights related to its network of display advertising space and the right to sell
+display advertising into that network.
+
+     Promotion.  Google has agreed to provide AOL with  advertising  credits and
+other  promotional   opportunities  for  AOL  content   consistent  with  Google
+principles.  Google will also fund  marketing  efforts  with  third-party  media
+outlets to promote  agreed-upon AOL properties,  events or initiatives that will
+be sponsored by Google.
+
+     Content  Availability.  Google has agreed to assist AOL and Time  Warner in
+understanding  Google's  published and/or publicly available tools for improving
+the accessibility of a web site's content to Google's web crawlers.
+
+     Instant  Messaging.  Google and AOL have  agreed to develop the ability for
+users of AOL's Instant  Messenger  service and Google Talk to interact with both
+services from both the AOL Instant  Messenger client and the Google Talk client,
+which  will  require  a user to  register  a Google  Talk user name with the AOL
+Instant Messenger Service in order to access it.
+
+
+     A press release announcing the Agreement was issued on December 20, 2005, a
+copy of which is being filed as Exhibit 99.2 hereto.
+
+
+
+                                       4
+<PAGE>
+
+Item 9.01 Financial Statements and Exhibits
+-------------------------------------------
+
+Exhibit 99.1    Press Release dated December 21, 2005 issued by Time Warner Inc.
+
+Exhibit 99.2   Press Release dated December 20, 2005 issued by Google Inc., Time
+               Warner Inc. and America Online, Inc.
+
+
+
+                                       5
+
+
+<PAGE>
+
+
+                                    SIGNATURE
+
+     Pursuant to the  requirements  of the  Securities  Exchange Act of 1934, as
+amended,  the  registrant has duly caused this report to be signed on its behalf
+by the undersigned hereunto duly authorized.
+
+
+
+                                         TIME WARNER INC.
+
+                                         By: /s/ Wayne H. Pace
+                                             -----------------------------------
+                                             Name:  Wayne H. Pace
+                                             Title: Executive Vice President and
+                                                    Chief Financial Officer
+
+Date: December  23, 2005
+
+
+                                       6
+
+<PAGE>
+
+
+
+                                 EXHIBIT INDEX
+
+Exhibit        Description
+-------        -----------
+
+99.1           Press release dated December 21, 2005 issued by Time Warner Inc.
+
+99.2           Press release dated December 20, 2005 issued by Google Inc., Time
+               Warner Inc. and America Online, Inc.
+
+
+                                       7
+
+
+</TEXT>
+</DOCUMENT>

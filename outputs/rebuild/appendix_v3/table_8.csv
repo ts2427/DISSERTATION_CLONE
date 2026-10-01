@@ -1,6 +1,6 @@
 Method,Timing p,FCC p,ROA p
-OLS,0.3138,0.8277,0.1076
-HC1,0.3235,0.8384,0.1491
-HC3,0.3298,0.8404,0.1596
-Firm-clustered,0.2547,0.8227,0.1866
-CAPTION,"This table reports p-values from the baseline specification on the regression sample (N = 338) under alternative standard-error methods: classical OLS, HC1, HC3, and clustering by parent CIK (82 clusters).",,
+OLS,0.1598,0.6965,0.1214
+HC1,0.1662,0.7299,0.143
+HC3,0.1712,0.7326,0.1533
+Firm-clustered,0.1509,0.6758,0.1761
+CAPTION,"This table reports p-values from the baseline specification on the regression sample (N = 340) under alternative standard-error methods: classical OLS, HC1, HC3, and clustering by parent CIK (83 clusters).",,

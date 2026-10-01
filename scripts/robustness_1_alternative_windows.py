@@ -4,7 +4,7 @@ ROBUSTNESS CHECK 1: Alternative Event Windows
 Tests FCC regulation effect across multiple CAR/BHAR windows to ensure
 results are not sensitive to event window specification.
 
-Uses: FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv (1,054 breaches, 85 variables)
+Uses: FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv (1,054 PRC notification records, 85 variables)
 """
 
 import pandas as pd

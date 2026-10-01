@@ -1,8 +1,8 @@
 Variable,N,Mean,SD,Median
-car_30d,354,-0.262,8.538,0.087
-car_5d,354,-0.412,4.252,-0.206
-firm_size_log,339,10.262,1.611,10.232
-leverage,339,0.665,0.205,0.669
-roa,339,0.06,0.108,0.063
-disclosure_delay_days,353,90.836,204.7,24.0
-CAPTION,This table reports summary statistics for the key continuous variables on the CRSP-covered sample (N = 354 events). Row-level N varies because Compustat covariates are available for 339 events and the disclosure delay for 353. CAR variables are cumulative market-adjusted abnormal returns in percentage points.,,,
+car_30d,356,-0.306,8.954,0.087
+car_5d,356,-0.381,4.262,-0.197
+firm_size_log,341,10.266,1.607,10.287
+leverage,341,0.665,0.204,0.669
+roa,341,0.06,0.108,0.063
+disclosure_delay_days,355,90.555,204.178,24.0
+CAPTION,This table reports summary statistics for the key continuous variables on the CRSP-covered sample (N = 356 events). Row-level N varies because Compustat covariates are available for 341 events and the disclosure delay for 355. CAR variables are cumulative market-adjusted abnormal returns in percentage points.,,,

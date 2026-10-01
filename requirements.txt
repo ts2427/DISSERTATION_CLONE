@@ -13,3 +13,8 @@ gdown>=4.7.1
 # and scripts/182 re-executes 164. Missing here until 2026-09-11, so both failed in a clean
 # clone with ModuleNotFoundError. Also used by the retired Cox scripts (91h, cox_timevarying_hazard).
 lifelines>=0.27
+# Bid-ask spread estimator (Ardia-Guidotti-Kroencke): imported by scripts/167, 170 and 174,
+# and scripts/182 re-executes 174. Same failure mode as lifelines above and found the same
+# way - it was installed in venv/ but declared nowhere, so scripts/174 died with
+# ModuleNotFoundError once the 170 failure that had been masking it was fixed (2026-10-01).
+bidask>=2.1

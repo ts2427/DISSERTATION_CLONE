@@ -6,7 +6,7 @@ Addresses key limitations:
 2. Industry Fixed Effects - Controls for industry-specific regulatory/market trends
 3. Industry-Restricted Sample - Compares FCC firms only to similar industries
 
-Uses: FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv (1,054 breaches, 85 variables)
+Uses: FINAL_DISSERTATION_DATASET_DEDUPLICATED_ENRICHED.csv (1,054 PRC notification records, 85 variables)
 """
 
 import pandas as pd

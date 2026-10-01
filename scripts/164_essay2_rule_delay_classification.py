@@ -260,11 +260,26 @@ PATTERNS = [r'7-Day Rule', r'7-day mandatory', r'[Mm]andatory 7', r'seven-day',
             r'notification within 30 days', r'deadline outruns',
             r'breach notification within \d+ days', r'[Mm]andatory [Dd]isclosure [Tt]iming.*deadline']
 hits = []
+# Tools whose JOB is to carry these phrases, so a hit in them is a false positive: the
+# purge/claim detectors (168, 217, 240) and, from 2026-10-01, the essay-to-output match
+# harness (248), whose own pattern list quotes the phrasing this scan looks for and so
+# put itself into the results. Excluded by SCRIPT NUMBER, stable across renames.
+# NOTE: this comment is deliberately worded so it does not match PATTERNS itself - the
+# first version of it quoted the phrase and added a row to the very scan it was fixing.
+SCAN_EXCLUDE = ('168_', '217_', '240_', '248_')
+# AUTHORED files only. outputs/*.md was dropped on 2026-10-01 by ruling: everything under
+# outputs/ is pipeline-written, several of those reports quote this scan's own hits, and one
+# of them is rewritten by an earlier step of the same run - so the scan was reading its own
+# output and t24 moved between runs (102 rows in a clean clone against 101 committed) with
+# no change to any authored file. Generated reports are not authored prose; the fix for one
+# is a fix to the script that writes it, and scripts/ is still fully in scope. The scan is
+# now a pure function of the committed source, so two consecutive runs agree.
 scan_files = (sorted(Path('scripts').glob('*.py'))
-              + sorted(Path('outputs').glob('*.md'))
               + sorted(Path('Dashboard').rglob('*.py'))
               + [Path('README.md')])
 for fp in scan_files:
+    if fp.name.startswith(SCAN_EXCLUDE):
+        continue
     try:
         txt = fp.read_text(encoding='utf-8', errors='replace').splitlines()
     except Exception:

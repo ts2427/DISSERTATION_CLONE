@@ -39,6 +39,8 @@ These edits were also made in `run_all.py`:
 
 **Script 46 stays in run_all.** Script 53 merges its committed output for the legacy Essay 1/2 scripts. Removing 46 is in Tim's parking lot, pending a check that `executive_changes.csv` is committed and that 53 runs without 46.
 
+> **SUPERSEDED 2026-09-29 (Part H).** Both conditions were checked and both hold, so script 46 is retired. See the Part H entry below.
+
 ## Hardcoded values retired in scripts that stay
 
 | Script | Location | Value | Action |
@@ -72,3 +74,634 @@ The line `outputs/tables/appendix_v3/` names a directory that has never existed.
 - `scripts/141_essay1_appendix_tables_form499.py` no longer exists. The two documents that still described it as live — `docs/DATA_QUALITY_DOCUMENTATION.md` and `outputs/STALE_RESULTS_MANIFEST.txt` — now say so and name the current generator.
 
 None of these files is read by code: every reference is either the generator that writes it, a filename inside another script's printed output, or a line of banner text. None is a Git LFS pointer. The edits change documentation only.
+
+---
+
+# Addendum — 2026-09-29 (Run-All Follow-Up, Stage 2)
+
+Tim's ruling of 2026-09-29: **v4 is authoritative for Essay 3.** Each part below is its own
+commit. Nothing is deleted: every retired script and every output stays on disk and in git
+history. Neither `run_all.py` nor `scripts/158` was executed.
+
+## Part F1 — Essay 3 Query 2 retired; the v4 chain staged as authoritative
+
+**Retired: the Essay 3 Query 2 chain** (scripts 187 → 195 → 199 → 202 → 190/191 → 203).
+
+| | |
+|---|---|
+| **Reason** | Superseded. v4 changes the *sample*, not the method: the classifier functions are byte-identical by AST and the estimator is identical line for line, but v4 relinks CRSP point-in-time, which moves the sample from N = 338 / 107 treated / 12 parent CIKs to **N = 405 / 109 treated / 13 parent CIKs** (G = 119, G\* = 24.5). Two builds of the same hypothesis cannot both be citable. |
+| **Ruling** | Tim, 2026-09-29: "v4 is authoritative for Essay 3. Record q2 as retired in `outputs/RETIREMENT_LEDGER.md`; keep its outputs." |
+| **Last committed output** | `outputs/essay3_q2/` — kept, not deleted. It is the **v3 side of the `scripts/239` side-by-side**, which is why the category stays staged in `run_all.py` rather than being commented out. |
+| **Not authoritative** | `outputs/essay3_q2/constants_essay3_q2.json`. The authoritative constants file is `outputs/essay3_v4/constants_essay3_v4.json`, written and asserted by `scripts/227`. |
+| **Still names q2** | `docs/claude/ESSAY3_POST_RERUN_STATE.md` predates this ruling and still describes the q2 build as current. It is Tim's document; it is not edited here. |
+
+**Added: the `ESSAY 3 — v4 CHAIN` category**, 24 live steps in `REPRODUCE_ESSAY3_V4.md` order —
+212, 214, 215, 219, 234, 233, 230, 235, 237, 220, 238, 232, 224, 227, 229, 228, 239, 242,
+243, 244, 246, 245, 217, 210.
+
+The order is not numeric, deliberately, and two of the departures are load-bearing:
+
+- **232 before 224** — 224's ledger reads the censoring result.
+- **233 before 224** — 224 aborts unless every reconciliation row says `agree`.
+- **210 last** — the freeze gate cannot see newly added files until they are staged.
+
+**Does the chain assert against its own outputs?** Yes, at six points: `224` asserts its own
+ledger closes; `227` asserts every ladder value against `constants_essay3_v4.json`; `229`
+re-derives HC3, CV1 and CV3 and asserts equality with `f1_ladder.csv` at all three windows;
+`242` asserts t and p reproduce `f1_ladder.csv` within its stored precision; `243` asserts
+the control coefficients and the logit AMEs against `f1_ladder.csv` and `f1_logit_ame.csv`;
+`244` carries 24 assertions and `245` thirty-six.
+
+**Not staged, deliberately:** 211 and 216 (WRDS pulls, subscription), 213 and 231 (SEC
+fetches, network plus a declared User-Agent), 221–223 and 225–226 (one-off blind validation
+and audit draws), 236 and 218 (imported, not run), 241 (superseded by 227). Their outputs
+are committed and are treated as inputs.
+
+**Also added:** `scripts/160_appendix_v3_to_word.py` as a live step **immediately after
+158**. It renders the 16 Essay 1 appendix tables that 158 writes, and it was never staged,
+so the Word appendix was only ever built by hand.
+
+## Part G1 — the 13 Essay 3 H6 keys are removed from `constants_v3.json`
+
+**Retired: every Essay 3 value written by `scripts/158_rebuild_s8_regenerate.py`.**
+
+| | |
+|---|---|
+| **Keys removed** | `N_essay3`, and for each window in {30, 90, 180}: `H6_{w}d_base_rate`, `H6_{w}d_ame_pp`, `H6_{w}d_p`, `H6_{w}d_mde80_pp`. Thirteen keys. |
+| **Reason** | They were the **legacy any-Item-5.02 outcome** on the 338-event sample — the outcome the Query 2 retirement retired and that `ESSAY3_QUERY1_REPORT.md` found the essay prose never computed. They sat in the same JSON file as the live Essay 1 and Essay 2 constants, under `H6_` key names, with nothing marking them superseded. A reader taking "H6" from `constants_v3.json` got the retired figure. |
+| **Removed from** | `scripts/158_rebuild_s8_regenerate.py`, a 21-line block. Replaced by a comment block naming the removed keys and the reason, so the absence is legible rather than silent. |
+| **Where Essay 3 values live now** | `outputs/essay3_v4/constants_essay3_v4.json` only, written and asserted by `scripts/227`. Nothing in 158 may write an Essay 3 result again. |
+| **Effect on the file** | `constants_v3.json` on disk still carries the 13 keys until 158 is next run. **158 was not run** — the standing rule holds. The keys disappear at the next 158 run, which is the same run as the pending Essay 1 rebaseline. |
+
+## Part G2 — the HC3 status label may no longer read SIGNIFICANT
+
+`scripts/158` set two status strings by comparing an **HC3** p-value to .05 and writing
+`'SIGNIFICANT'`. HC3 is a **disqualified rung** on this project's inference ladder
+(`run_all.py:77-78`; the placebo rejects at 12.1% under CV1, and HC3 is more
+anticonservative still). A file consumed as the constants of record must not contain a
+significance verdict from a rung that has been ruled out.
+
+Both branches — the Essay 1 hypothesis loop and the H5 block — now read
+`'HC3-ONLY, NOT A VERDICT (disqualified rung; see scripts/165)'`. The `BOUNDED NULL` and
+`NULL-INCONCLUSIVE` branches are untouched: neither claims significance. A real verdict
+needs CV3 or the wild cluster bootstrap, which 158 does not compute; Essay 2's inferential
+frame is `scripts/165`.
+
+## Part H — 28 steps retired from `run_all.py`
+
+**The ruling.** Tim, 2026-09-29: "Retire the 31 live steps that read
+`FINAL_DISSERTATION_DATASET*` and feed nothing downstream."
+
+**The count is 28, not 31, and the correction is mine.** Re-testing the ruling's own
+criterion mechanically against the list I had produced in Part A found **four** entries that
+do not satisfy it:
+
+| Script | What the re-test found | Outcome |
+|---|---|---|
+| `180_essay2_elevation_calibration` | Contains **no reference to `FINAL_DISSERTATION_DATASET`**. It reads `outputs/tables/essay2_v2/t42_final_sample_with_repairs.csv` — the **canonical** Essay 2 sample — and its own docstring names its output as the source for **Table 21 Panel C**. | **NOT retired.** It fails the criterion on both halves. |
+| `181_essay2_spec_curve_permutation` | Same: no legacy reference. Reads `t1_final_sample.csv` and asserts `N == 333`, the canonical Essay 2 sample. | **NOT retired.** |
+| `power_analysis_h3_h4` | Reads no data at all. It hardcodes **`n = 653`** (line 19), a pre-rebuild sample size, and computes an MDE from it. | Retired, on a **different reason**: a hardcoded pre-rebuild constant, feeding nothing, with an untracked output. |
+| `extract_merge_fama_french` | Reads the raw Ken French files, not the legacy dataset. Writes `Data/wrds/fama_french_factors.csv`, which stays committed. | Retired, on a **different reason**: all nine scripts that read that file are themselves retired here, so no live step consumes it. |
+
+**Criterion 2 was then re-tested for all 28** against (a) the 77 steps still live after this
+part, (b) 87 cited documents — the essay appendices, the reports, the constants files and
+`docs/` — matching on output filename. **No output of any of the 28 is read by a surviving
+step or named in a cited document.**
+
+### The 28
+
+"Last commit" is the last commit touching the script. Their shared input is the pre-rebuild
+`FINAL_DISSERTATION_DATASET*`, which is why they go.
+
+| Script | Last commit | Result file(s) under `outputs/` | Last committed output |
+|---|---|---|---|
+| 99_add_cpni_hhi_variables | d3ef2fe (2026-06-30) | none - console and log output only | - |
+| 70_summary_statistics | 163fc84 (2026-09-15) | none - console and log output only | - |
+| h1_timing_fcc_interaction | b53541a (2026-07-24) | `outputs/H1_timing_fcc_interaction_results.csv` | b53541a (2026-07-24) |
+| 82_clustered_vs_hc3_comparison | d3ef2fe (2026-06-30) | `outputs/tables/essay2/TABLE_B9_clustered_vs_hc3_comparison.txt` | afa618a (2026-07-23) |
+| 90_essay2_volatility_regressions | aa2ed2d (2026-07-28) | none - console and log output only | - |
+| 86_essay3_fcc_causal_identification | d3ef2fe (2026-06-30) | none - console and log output only | - |
+| scm_mahalanobis_distance | afa618a (2026-07-23) | `outputs/scm_mahalanobis_results.csv`, `outputs/scm_mahalanobis_firm_level.csv`, `outputs/scm_mahalanobis_summary.csv` | afa618a (2026-07-23) |
+| 00_data_validation_checks | d3ef2fe (2026-06-30) | none - console and log output only | - |
+| 99_firm_fixed_effects_analysis | faae3ee (2026-06-30) | `outputs/tables/FE_H1_H4_RESULTS.txt` | - |
+| 100_ransomware_heterogeneity | faae3ee (2026-06-30) | `outputs/tables/TABLE_RANSOMWARE_HETEROGENEITY_RESULTS.csv` | afa618a (2026-07-23) |
+| 101_media_coverage_heterogeneity | faae3ee (2026-06-30) | `outputs/tables/TABLE_MEDIA_COVERAGE_HETEROGENEITY_RESULTS.csv` | afa618a (2026-07-23) |
+| 103_breach_type_diversity | faae3ee (2026-06-30) | `outputs/tables/TABLE_DIVERSITY_HETEROGENEITY_RESULTS.csv` | afa618a (2026-07-23) |
+| 104_restatement_summary | faae3ee (2026-06-30) | none - console and log output only | - |
+| 106_information_environment_composite | d3ef2fe (2026-06-30) | `outputs/tables/TABLE_INFO_ENVIRONMENT_COMPOSITE_RESULTS.csv` | afa618a (2026-07-23) |
+| 92_heterogeneity_analysis | d3ef2fe (2026-06-30) | none - console and log output only | - |
+| 93_market_model_sensitivity | d3ef2fe (2026-06-30) | none - console and log output only | - |
+| 95_low_r2_sensitivity | d3ef2fe (2026-06-30) | none - console and log output only | - |
+| robustness_1_alternative_windows | d3ef2fe (2026-06-30) | none - console and log output only | - |
+| power_analysis_h3_h4 | afa618a (2026-07-23) | `outputs/tables/essay1_null_sensitivity_analysis.txt` | - |
+| overlap_audit_fcc_clustering | 7951379 (2026-07-24) | `outputs/overlap_audit_summary.csv` | aa2ed2d (2026-07-28) |
+| corrected_longrun_car_clustering | 7951379 (2026-07-24) | `outputs/corrected_longrun_analysis_results.csv` | aa2ed2d (2026-07-28) |
+| calendar_month_clustering_60_90 | 7951379 (2026-07-24) | `outputs/calendar_month_clustering_results.csv` | aa2ed2d (2026-07-28) |
+| extract_merge_fama_french | 03c8ae6 (2026-07-24) | none - console and log output only | - |
+| sample_composition_diagnostic | 03c8ae6 (2026-07-24) | none - console and log output only | - |
+| ff3_simple_merge | 03c8ae6 (2026-07-24) | none - console and log output only | - |
+| factor_model_carhart_ff5 | 03c8ae6 (2026-07-24) | `outputs/factor_model_robustness_results.csv` | aa2ed2d (2026-07-28) |
+| extended_bhar_60d_90d | aa2ed2d (2026-07-28) | `outputs/extended_bhar_60d_90d_results.csv` | aa2ed2d (2026-07-28) |
+| 46_executive_changes_item5_02_with_cache | aa2ed2d (2026-07-28) | none - console and log output only | - |
+
+**Script 46 — the ledger's open item is now closed.** The 2026-09-11 entry above reads:
+*"Removing 46 is in Tim's parking lot, pending a check that `executive_changes.csv` is
+committed and that 53 runs without 46."* Both conditions are met.
+`Data/enrichment/executive_changes.csv` is **tracked, real content, 779 rows**, with
+`executive_change_180d` summing to **521** — not an LFS pointer and not empty. `scripts/53`
+merges that committed file, so it runs whether or not 46 does. Script 46 is retired with
+the other 27.
+
+**Nothing was run.** Per the standing rules, neither `run_all.py` nor script 158 was
+executed. Every edited file was parsed with `ast.parse`, and `run_all.py` was checked
+structurally: 77 live steps, 24 of them v4, the 28 commented out, 180 and 181 still live,
+`98_sox404_heterogeneity` declared live exactly once, and 158 < 160, 232 < 224, 233 < 224,
+227 < 229, 210 last among the v4 steps.
+
+## Part J1 — a duplicate step declaration removed
+
+`scripts/98_sox404_heterogeneity.py` was declared **twice** in `run_all.py`: once in the
+data-preparation category, where `scripts/121c` needs its output, and once again later. It
+therefore ran twice on every pipeline invocation, the second run overwriting the first with
+identical content.
+
+The **second** declaration is commented out. The first stays, because 121c depends on it.
+Nothing is retired: the script itself is unchanged and still live.
+
+## Part J2 — retired strings removed from live script text
+
+The retired rule-effective dates, the retired rule number and the "1,054 breaches" phrasing
+appeared in **live** script docstrings and log output. In every case the text was a
+*disclaimer* — it reproduced the retired string in order to deny it — but a purge grep
+cannot distinguish a denial from a citation, and neither can a reader skimming log output.
+
+Every claim is preserved; only the literals move to the inventory that already holds them,
+`outputs/DEAD_DATE_PURGE_INVENTORY.md`.
+
+| File | Sites | Change |
+|---|---|---|
+| `163_essay2_rerun_form499` | 4 (the ledger header, the DV-convention comment, the codebase-flags log, closing summary item 7) | The literals are replaced by a pointer to the inventory. The codebase-flags log also dropped its list of carrier scripts, which Part H and Part J3 have just made stale. |
+| `robustness_1`–`robustness_5` | 1 each | "(1,054 breaches, N variables)" → "(1,054 **PRC notification records**, N variables)". 1,054 is the notification-record count, not a breach count; the two differ by the deduplication the rebuild introduced. |
+
+`scripts/163` was verified by parsing both versions and comparing the ASTs with **every
+string constant blanked out**: the skeletons are identical, so nothing but string literals
+and comments moved.
+
+**Left alone, as ruled:** the purge-detector fixtures in `scripts/168_essay3_audit.py`,
+`scripts/217_v4_offline_tests.py` and `scripts/240_methods_toolkit_v4.py`. Those files must
+contain the strings — they are what the detectors search for.
+
+**Verified:** across the 77 live steps, excluding those three fixtures, the strings
+"Rule 37.3", "September 28, 2007", "September 28 2007", "January 1, 2007",
+"1,054 breaches" and "4813/4841/4899" now occur **zero** times.
+
+## Part J3 — six dead commented-out tuples deleted
+
+Six commented-out step tuples named script files that **no longer exist on disk**. A
+commented tuple naming a missing file is worse than nothing: it reads as "this step is
+temporarily off", when in fact the step cannot be restored without rewriting the script.
+They are deleted from `run_all.py`; their history remains in git.
+
+Five of the six had never been recorded as retired anywhere. They are recorded now.
+
+| Script | Reason it went | Last commit touching it | Recorded before? |
+|---|---|---|---|
+| `142_sample_attrition_ledger` | Superseded by the live ledgers: `outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md` (script 163, Phase A) and, for Essay 1, the Part K ledger. Its own note documented the retired rule date and treatment. | 0e75740 (2026-09-08), which deleted it | no — recorded here |
+| `83_fcc_causal_identification` | Pre-rebuild FCC identification on the SIC-era treatment. | 0e75740 (2026-09-08), which deleted it | no — recorded here |
+| `create_parallel_trends_figure` | Pre-rebuild parallel-trends figure on the retired sample. | 0e75740 (2026-09-08), which deleted it | no — recorded here |
+| `create_balance_test_table` | Pre-rebuild balance table on the retired sample. | 0e75740 (2026-09-08), which deleted it | no — recorded here |
+| `94_falsification_tests` | Pre-rebuild falsification tests; also a carrier of the retired rule date. | 0e75740 (2026-09-08), which deleted it | no — recorded here |
+| `141_essay1_appendix_tables_form499` | Superseded by `scripts/158` (tables) and `scripts/160` (Word). Already recorded in the 2026-09-11 addendum under "Stale pointers corrected". | 0e75740 (2026-09-08), which deleted it | yes |
+
+## Part L — TOMBSTONE on `outputs/tables/essay2_appendix/`
+
+**Not a retirement of a script: a withdrawal of 41 committed artefacts as evidence.**
+Nothing is deleted.
+
+| | |
+|---|---|
+| **What** | The 41 CSV files in `outputs/tables/essay2_appendix/`, plus `manifest.csv`. |
+| **Reason** | No committed script writes them. The only script naming the directory is `scripts/178_essay2_appendix_docx.py`, which merely renders them into `ESSAY2_APPENDIX.docx` (itself gitignored). The code that produced the numbers was a scratchpad file, `emit_appendix.py`, never committed. A figure here cannot be traced to its data or specification, cannot be regenerated from a clean clone, and cannot be checked. |
+| **Not stale copies** | `163` and `164` write **61** files to `outputs/tables/essay2_v2/`. These two sets share **zero** filenames — verified, not assumed. This directory holds `channel_*`, `cluster_*`, `delay_*` names; the live directory holds `t1_*` through `t52_*`. So these are a **different set of tables**, not an out-of-date copy: a citation to a file here cannot be repaired by pointing at the same name in `essay2_v2/`, because there is no same name. |
+| **Cite instead** | `outputs/tables/essay2_v2/` (written by 163 and 164, and since Part I2 asserted at N = 333 / 104 treated / 82 clusters on both write and read), `scripts/165` for the inferential frame, and `outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md` for the chain. |
+| **Marker on disk** | `outputs/tables/essay2_appendix/TOMBSTONE.md` |
+
+## Tag moved — `v3-rebaseline-final`, 2026-10-01
+
+| | |
+|---|---|
+| **From** | `f0bdf72` — "Part A5: full v3 re-freeze; the 13 pinned exceptions are retired" |
+| **To** | `7e82edb` — "Part A5 follow-up: allowlist the two new Part B3/E documents, re-create the manifest" |
+| **Authorised by** | Tim's ruling of 2026-10-01: "move `v3-rebaseline-final` to `7e82edb` (force-push the tag only)" |
+
+**Why it moved.** `f0bdf72` is the commit that did the re-freeze, so it was the natural
+place for the tag — but `scripts/210` still returned **FAIL** there. Two documents added
+later in the same session, `docs/claude/REPRODUCE_ESSAY2.md` (Part B3) and
+`docs/claude/KNOWN_LIMITATIONS.md` (Part E), were committed after the manifest had been
+written, so the gate saw them as additions outside the v4 allowlist. `7e82edb` allowlists
+both and re-creates the manifest, and is the first commit at which the gate actually
+passes: 0 authorised exceptions declared, 0 sha changes, 0 blob changes, 0 deletions, 0
+unallowlisted additions, exit 0.
+
+A tag named `v3-rebaseline-final` that does not pass the freeze gate would misdescribe the
+state it marks, which is the whole reason for the move.
+
+**The ordering lesson, recorded so it is not repeated.** Run `scripts/210 --create` **last**,
+after every file a change set adds has been committed. Writing the manifest mid-way means
+re-creating it for each later commit — it was re-created three times in this session.
+
+**Only the tag was force-pushed.** No branch history was rewritten; `rebuild-v4` is
+append-only throughout. `essay3-v4-final` is untouched and remains at `8c0d09e`
+(tag object `60ca75b`).
+
+---
+
+# PUBLISH-READY PRUNE OF run_all.py — 2026-10-01 (Part B)
+
+`run_all.py` went from **78 live steps to 57**. Twenty-one steps are commented out in
+place; **no script was deleted**, and `git diff --stat -- scripts/` is empty for this
+change. Each retired tuple carries a one-line reason above it in `run_all.py`.
+
+## The criterion applied
+
+A step stays if any output it writes, directly or through a downstream step, reaches:
+`constants_v3.json`, the Essay 1 attrition ledger, the 16 `appendix_v3` tables,
+`constants_essay3_v4.json`, the 11 Essay 3 tables, the Essay 3 T-Mobile exhibits, or the
+Essay 2 canonical chain (163–182 and their inputs). Guards and gates stay by ruling.
+
+## Why this was decided by family and not path-by-path
+
+A static resolver over the scripts' own path expressions was built first and **proposed two
+retirements that would have broken the pipeline**:
+
+| proposed | why it was wrong |
+|---|---|
+| `scripts/156` | writes `CANONICAL_V3.csv` through `out = Path(...)`, which a literal scan misses |
+| `scripts/212` | writes `v4_212_links.csv` through `OUT / f"{PREFIX}{name}"` — read by **219, 224 and 227**, and 227 writes `constants_essay3_v4.json` |
+
+Both were caught only by a text cross-check, and the second shows the failure mode is not
+fixable by a better resolver: the filename does not exist anywhere in the source. A third
+case pointed the same way — `scripts/239`, kept because 244 reads its output, genuinely
+reads `outputs/essay3_q2/constants_essay3_q2.json`, so the Query 2 chain is **not** inert.
+
+So **nothing in the analytical chains was pruned at all.** Kept whole: the v3 chain
+(150–160), the Essay 2 canonical chain (163–182), the Query 2 chain (187–204), the v4 chain
+(212–247), and the gates (`210`, `217`, `246`). What retired is two families where the
+evidence is categorical rather than per-path.
+
+## The test that justifies the retirement
+
+Every kept script was searched for **any** reference to the retired families. Five hits,
+all adjudicated:
+
+| kept script | reference | verdict |
+|---|---|---|
+| `247` | a docstring saying it does **not** read `FINAL_DISSERTATION_DATASET*` | not a dependency |
+| `214` | reads `FINAL_DISSERTATION_DATASET_DEDUPLICATED.csv` | **committed**; written by no live step, before or after |
+| `163`, `164`, `166` | read `FINAL_DISSERTATION_DATASET_ENRICHED.csv` | **committed**; written by no live step, before or after |
+
+The two files the kept scripts genuinely read are produced by **none of the 21 retired
+steps** — verified by searching each retired script's write calls for them. They were
+already committed inputs rather than pipeline products, so the prune cannot starve a kept
+step in a fresh clone.
+
+## Retired — pre-rebuild `FINAL_DISSERTATION_DATASET` lineage (11)
+
+| step | why it goes |
+|---|---|
+| `53_merge_CONFIRMED_enrichments` | pre-rebuild enrichment merge; its output is committed and read by nothing live that it produces |
+| `98_sox404_heterogeneity` | pre-rebuild governance merge; its heterogeneity table is a 7/28-era exhibit |
+| `121a_form499_entity_matching` | pre-rebuild Form 499 matching; v3 treatment comes from `scripts/154` |
+| `121b_form499_coverage_validation` | validates 121a's output, which nothing cited reads |
+| `121c_merge_form499_classification` | merges 121a/b into the pre-rebuild dataset |
+| `122_manual_form499_corrections` | the pre-rebuild two-clause correction; superseded by 154 |
+| `86c_essay1_h1_h4_form499_corrected` | pre-rebuild Essay 1 H1–H4; superseded by `158`'s `appendix_v3` |
+| `90b_essay2_h5_form499_corrected` | pre-rebuild Essay 2 H5; superseded by `scripts/165` |
+| `80_essay1_car_regressions` | pre-rebuild Essay 1 CAR regressions, SIC-based |
+| `143_essay1_results_supplements` | supplements to the pre-rebuild Essay 1 results |
+| `144_residual_duplicate_audit` | audits the pre-rebuild dataset; v3 dedup is Gate 2 in `152`/`153` |
+
+## Retired — presentation only (10)
+
+| step | why it goes |
+|---|---|
+| `60_train_ml_model` | writes only `outputs/ml_models/` figures and importances |
+| `61_ml_validation` | writes only `outputs/validation/` figures and robustness prose |
+| `96_economic_significance` | writes only `outputs/economic_significance/` |
+| `97_heterogeneous_mechanisms` | writes only `outputs/heterogeneous_analysis/` figures |
+| `robustness_2_timing_thresholds` | writes only `outputs/robustness/` R02 |
+| `robustness_3_sample_restrictions` | writes only `outputs/robustness/` R03 |
+| `robustness_4_standard_errors` | writes only `outputs/robustness/` R04 |
+| `robustness_5_fixed_effects` | writes only `outputs/robustness/` R05 |
+| `defense_prep_all_tasks` | writes only `outputs/defense_prep/` text |
+| `160_appendix_v3_to_word` | writes only `.docx`; **flagged** — see below |
+
+## One flagged judgment call: `160`
+
+`160` renders the kept 16 `appendix_v3` tables to `APPENDIX_V3_TABLES.docx` and
+`INTEXT_TABLES_4_5.docx`. The criterion retires it: the keep-set names the **16 CSVs**, and
+the Word files are not in it. It is recorded here as the single retirement that removes a
+convenience rather than a dead end — un-commenting one line restores it, and the `.docx`
+files remain committed. **This is reversible on one word from Tim.**
+
+## Two `REQUIRED_INPUTS` entries removed as a consequence
+
+The pre-flight guard enforced two inputs that only retired steps needed:
+
+- `FINAL_DISSERTATION_DATASET_FORM499_CORRECTED.csv` — annotated "read by 5 live steps: 122,
+  86c, 90b, 143, 144". **All five are now retired.**
+- `Data/enrichment/executive_changes.csv` — merged by `scripts/53`, now retired.
+
+Confirmed no live step reads either. Both files remain committed. The guard now holds 5
+entries, and two stale annotations were corrected to the true live-reader counts
+(`CANONICAL_V3.csv` 18, `constants_v3.json` 7).
+
+## What the retired steps' committed outputs still do
+
+Retiring a step **unstages its execution, not its output**. The committed artefacts of
+retired steps stay in the repository and some are still read: `214`, `163`, `164` and `166`
+read two pre-rebuild datasets, and `verify_outputs()` still lists
+`outputs/economic_significance/` and `TABLE_GOVERNANCE_HETEROGENEITY_RESULTS.csv` among its
+legacy files. All are committed, so a fresh clone has them and the check still passes.
+
+---
+
+# THE 2026-10-01 RULINGS ROUND
+
+Five rulings on the Part C findings. Four are applied. **One is held**, because carrying it
+out would change the Essay 3 sample, and the ruling's own stop rule says to stop and report.
+
+## 160 — restored as a live step
+
+Un-commented. `run_all.py` goes from 57 live steps to **58**. It renders the kept 16
+`appendix_v3` tables to `APPENDIX_V3_TABLES.docx` and `INTEXT_TABLES_4_5.docx`.
+
+## 212 — HELD, not applied
+
+The ruling was to pass the output-prefix argument so 212 regenerates `v4_212_links.csv`,
+then confirm the result is byte-identical to the committed file, and **stop and report if
+not**. It was implemented and tested. It is not byte-identical, so it is held.
+
+**What was found.** 212's `out()` is `OUT / f"{PREFIX}{name}"`, and `--out-prefix` defaults
+to empty, so the staged step writes the unprefixed `212_*.csv` while **13 live steps read
+`v4_212_links.csv`** — a file no live step produces. With the prefix supplied, 212 writes
+it, deterministically: the prefixed and unprefixed outputs of the same run are
+byte-identical (`9796a1b872967966`), so the prefix is purely a naming switch.
+
+**But 4 of the 6 regenerated files differ from the committed ones, and the committed ones
+are the stale side:**
+
+| row | committed `v4_212_links.csv` | regenerated | `CANONICAL_V3` says |
+|---|---|---|---|
+| Lennar Corporation | CIK 920760, fully linked | CIK 58696, `no gvkey` | `final_cik = 58696` |
+| Northrop Grumman Systems | CIK 1133421, fully linked | CIK 72945, `no gvkey` | `final_cik = 72945` |
+| Sprint Nextel | `breach_date` 2009-01-01 | 2012-08-01 | 2009-02-01 and 2012-08-01 |
+
+28 of 490 rows differ. The committed file predates the CIK re-parenting and the Sprint
+anchor correction, so **the regeneration is the correct one** and the committed artefact is
+a stale input the v4 chain has been consuming.
+
+**Why it is held.** The v4 chain was re-run on the corrected linkage, in a throwaway clone,
+to measure the consequence. `CANONICAL_V4` does **not** change. But the Essay 3 sample does:
+
+| | committed | on the corrected linkage |
+|---|---:|---:|
+| `F1_30_n` | 405 | **380** |
+| `F1_30_G` | 119 | **106** |
+| `F1_30_coef` | 0.0040 | 0.0016 |
+| `F1_30_p_hc3` | .8764 | .9519 |
+
+`scripts/227` failed its own baseline assertion (`ASSERTION FAILURE vs Essay 3 baseline`),
+which is the gate working as designed. Accepting the corrected linkage would re-derive
+`constants_essay3_v4.json`, the 11 Essay 3 tables and the appendix — a sample and linkage
+change, which the standing constraint forbids without a ruling.
+
+The step is therefore left at two elements, with the finding recorded at the call site in
+`run_all.py`. **Three ways forward, all Tim's call:** accept the corrected linkage and
+re-baseline Essay 3; keep the status quo and document `v4_212_links.csv` as a committed
+input that the pipeline does not reproduce; or investigate why the committed file carries
+CIKs the canonical does not before deciding.
+
+## 170 — recorded as SKIPPED, not failed
+
+`DECLARED_SKIPS` in `run_all.py` maps the step to its licensed input
+(`Data/wrds/crsp_quotes_topup.csv`), the document that declares it
+(`docs/claude/REPRODUCE_ESSAY2.md`) and the reason. When the input is absent the step is
+recorded as `'SKIPPED'` and the run prints the missing file, the reason, the declaring
+document and the line `This is NOT a failure.` When the input **is** present the step runs
+normally, so a licensed checkout still gets the full pipeline.
+
+The summary now partitions three ways, by identity comparison (`is True`, `== 'SKIPPED'`,
+`is False`) so the marker string can be miscounted neither by truthiness nor by falsiness.
+
+### A latent bug this exposed
+
+The pipeline's final gate read:
+
+    critical_keys = ['H1-H4 Re-estimation with Form 499 ...', 'H5 Volatility ...']
+    critical_scripts_succeeded = all(results.get(k, False) for k in critical_keys)
+
+Those are the descriptions of **86c and 90b**, both retired by the prune. `results.get()` on
+a step that no longer exists is `False`, so **every future run — even with zero failures —
+would have fallen through to `[WARNING] Primary Form 499 analyses did not all succeed` and
+returned `False`.** The exit-0 requirement could not have been met with it in place. It is
+retired: the 2026-09-11 rule that any failure fails the pipeline already covers what it was
+for, across all live steps rather than two hand-picked pre-rebuild ones.
+
+## 210 — run artifacts exempted
+
+The v4 allowlist could not solve this: it admits only newly **tracked** files, and these are
+baseline files a live step **rewrites**. So `RUN_ARTIFACTS` is a new category — checked for
+presence, never for content or blob id. **Eleven files added, each a progress log written by
+one of the eight live Query 2 steps:**
+
+| file | written by |
+|---|---|
+| `outputs/essay3_q2/187_fetch.log` | `scripts/187` |
+| `outputs/essay3_q2/b_fetch_log.csv` | `scripts/187` (per-document fetch record) |
+| `outputs/essay3_q2/188_classifier.log` | `scripts/195` |
+| `outputs/essay3_q2/195_classifier.log` | `scripts/195` |
+| `outputs/essay3_q2/190_case.log` | `scripts/190` |
+| `outputs/essay3_q2/191_tmobile_proxy_periodic.log` | `scripts/191` |
+| `outputs/essay3_q2/199_sample.log` | `scripts/199` |
+| `outputs/essay3_q2/202_estimation.log` | `scripts/202` |
+| `outputs/essay3_q2/203_case.log` | `scripts/203` |
+| `outputs/essay3_q2/b_exhibits_log.csv` | `scripts/203` (per-exhibit record) |
+| `outputs/essay3_q2/204_se_diagnostics.log` | `scripts/204` |
+
+No analytic output is listed. Anything absent from the list is still compared byte for byte.
+Only two of the eleven actually changed in the Part C run; the other nine are listed because
+the same live steps write them and would trip the gate on a run that touched them.
+
+## t24 — the deadline scan no longer reads its own output
+
+`scripts/164`'s A4 scan globbed `outputs/*.md`, which the pipeline regenerates, and several
+of those reports **quote the scan's own earlier hits**. One of them,
+`ESSAY2_QUERY4_PARTS_ACJ.md`, is rewritten by 164 itself. So the scan was reading its own
+output and t24 moved between runs — 102 rows in the clean clone against 101 committed — with
+no change to any authored file.
+
+Scope is now authored files only: `scripts/*.py`, `Dashboard/**/*.py`, `README.md`.
+**t24 drops from 101 rows to 32** — 15 in `scripts/`, 16 in `Dashboard/`, and the header. All
+69 removed rows were `outputs/*.md` self-references. **Two consecutive runs now produce a
+byte-identical file** (`497db3937f7a3136` both times). Nothing is lost: the fix for a
+mischaracterisation in a generated report is a fix to the script that writes it, and
+`scripts/` remains fully in scope.
+
+---
+
+# THE 212 SECOND LINKER PASS — AND A MISDIAGNOSIS, CORRECTED
+
+## What I got wrong
+
+On 2026-10-01 I reported that the committed `outputs/rebuild_v4/v4_212_links.csv` was
+**stale**, that regenerating it was the correct behaviour, and that doing so moved the
+Essay 3 sample from N=405/G=119 to N=380/G=106. **Every part of that was wrong.** The
+mistake was mine, in how I invoked the script, and it is recorded here because the wrong
+version was reported as a finding and nearly became a ruling to re-baseline Essay 3.
+
+I ran `scripts/212` with only `--out-prefix v4_`, leaving `--canonical` at its default of
+`Data/processed/rebuild/CANONICAL_V3.csv`. I then compared the result with the committed
+file, found 28 of 490 rows different, saw that `CANONICAL_V3.final_cik` agreed with *my*
+output and not with the committed one, and concluded the committed file was stale.
+
+The check I failed to run was the one that settles it: comparing against **`CANONICAL_V4`**.
+
+| | | |
+|---|---:|---|
+| `CANONICAL_V4.final_cik` == the committed links CIK | **27 of 27** | the committed file is the re-parented one |
+| `CANONICAL_V4.orig_cik` == the CIK I produced | **27 of 27** | my output was the pre-re-parenting one |
+
+The 28th differing row is Sprint Nextel, which differs on `breach_date`, not CIK.
+
+**Run as designed, 212 reproduces all five committed CSVs byte-identically:**
+
+```
+python scripts/212_pit_linker_v4.py \
+    --canonical Data/processed/rebuild_v4/CANONICAL_V4.csv --out-prefix v4_
+```
+
+`v4_212_links.csv`, `v4_212_identity_review.csv`, `v4_212_no_gvkey.csv`,
+`v4_212_unmatched_cusips.csv`, `v4_212_v3_disagreements.csv` — all five clean against
+`git diff`. Only `v4_212_link_report.md` changes, on its `- run (UTC):` timestamp line;
+that file is under the `outputs/rebuild_v4/` prefix the freeze manifest excludes, so it is
+not a gate concern.
+
+So the committed file was never stale, the "25 dropped events" were an artifact of feeding
+the linker the wrong canonical, and the Essay 3 sample never moved. The 24 control events
+that appeared to drop did so with `note = "no gvkey"` — which is precisely what `214`'s own
+docstring predicts of a subsidiary CIK, and precisely what the re-parenting exists to
+prevent.
+
+## The design, which was documented all along
+
+Commit `218d3d9`, "REBUILD V4: apply Stage 3+4 to CANONICAL_V4, re-link, and categorise
+every loss", states it:
+
+> **2. SECOND LINKER PASS.** 212 takes `--canonical` and `--out-prefix` ... The second pass
+> writes `v4_`-prefixed outputs so it cannot overwrite `stage3_candidates.csv`, which is the
+> evidence 213 was built on.
+
+And `scripts/214`'s `apply_stage3` gives the reason:
+
+> A subsidiary's own CIK has no Compustat gvkey, so the linker could never reach a permno
+> through it. Stage 3 established, against an Exhibit 21 or a succession filing, which
+> registrant the event belongs to; this points the event at that registrant **so the second
+> linker pass can find it.**
+
+**212 is meant to run twice.** `run_all.py` staged only pass 1, which is why
+`v4_212_links.csv` — read by 13 live steps, among them `227`, which writes
+`constants_essay3_v4.json` — was produced by no live step and survived only as a committed
+artefact.
+
+## What changed in run_all.py
+
+| pass | canonical | writes | why it sits where it does |
+|---|---|---|---|
+| **1** | `CANONICAL_V3` (default) | unprefixed `212_*.csv`, incl. `stage3_candidates.csv` | that file is the Stage 3 worklist `213` verifies and `214`'s re-parenting is built on, so it must precede `214` |
+| **2** | `CANONICAL_V4` | `v4_212_*.csv` | `CANONICAL_V4.final_cik` is the re-parented registrant, so this pass must follow `214`; the `v4_` prefix keeps it from overwriting `stage3_candidates.csv` |
+
+No cycle: `214` reads only `CANONICAL_V3` and writes `CANONICAL_V4`; it never reads 212's
+output. Live steps go 58 -> **59**. The two steps carry distinct descriptions, which
+matters because `run_all.py` keys its `results` dict by description — identical text would
+have made one pass silently overwrite the other's status.
+
+## What this does not fix
+
+Nothing about the samples, and nothing about Essays 1 and 2, which read
+`CANONICAL_V3.final_cik` and so still carry the pre-re-parenting CIKs. Tim ruled the
+samples frozen; the two consequences are disclosed as entries 7 and 8 of
+`docs/claude/KNOWN_LIMITATIONS.md`:
+
+- **Aon** is one firm under two CIKs inside both the Essay 1 340 and the Essay 2 333, so
+  Essay 1 clusters 83 where 82 firms are present and Essay 2 clusters 82 where 81 are. All
+  three Aon events are control. It is the only such case in either sample; Essay 3, on
+  `CANONICAL_V4`, has none.
+- **Sprint's 2012-08-01 breach date** postdates its own 2009-03-30 notification. It is in
+  the Essay 1 CRSP 356 with a `car_30d` of 12.0426 but in **neither** the 340 **nor** the
+  333, so it reaches no regression of record. v4 corrects it to 2009-01-01.
+
+## The lesson
+
+A script with a `--canonical` argument has more than one correct output, and "it does not
+match what is committed" is not evidence that what is committed is wrong. Before concluding
+a committed artefact is stale, reproduce it from **every** input the script accepts.
+
+---
+
+# verify_outputs() REBUILT — 2026-10-01
+
+The prune made the old critical-file list unsatisfiable, and it was the last thing keeping
+`run_all.py` from exiting 0 on a run where all 59 live steps succeeded. Of its 33 entries,
+**2 were permanently MISSING** - written only by scripts 86c and 90b, retired by the prune
+and never committed - and **~20 were permanently STALE**, outputs of other retired steps
+that exist only because they are committed. The list is now three categories, written into
+the function's docstring so the definition of a clean run is on the record.
+
+**33 entries -> 54: 51 freshness-required, 3 presence-only, 22 dropped.**
+
+## 1. Freshness required (51)
+
+Every keep-set file a live step writes, plus the inputs live steps write for each other:
+`CANONICAL_V3.csv`, `STAGE7_VERIFICATION.md`, `constants_v3.json`, the Essay 1 attrition
+ledger and all 16 `appendix_v3` tables; Essay 2's `t1_final_sample`, `t51`, `t52`, `t53`;
+Query 2's `c2_outcomes_events`, `e_analysis_sample`, `e_ledger`, `f1_ladder`,
+`f1_se_diagnostics`, `tmobile_timeline`; and the v4 chain's `CANONICAL_V4.csv`,
+`v4_212_links.csv`, `e_analysis_sample`, `e_ledger`, `f1_ladder`, `tmobile_timeline`,
+`g6_case_table`, `g6_restatement_dated`, `essay3_q3/tmobile_case.csv`, the 11
+`essay3_q4/table*.csv` and `ESSAY3_APPENDIX_TABLES.md`.
+
+Each was confirmed written during the 2026-10-01 verification run before being listed, so a
+failure here is a real regression rather than a stale list. Negative-tested: with
+`run_start` set to now, all 51 report STALE and the function returns False.
+
+## 2. Presence only (3)
+
+| file | why freshness is the wrong test |
+|---|---|
+| `outputs/essay3_q2/constants_essay3_q2.json` | assertion baseline; `scripts/202` asserts against it and writes it only if absent |
+| `outputs/essay3_v4/constants_essay3_v4.json` | assertion baseline; `scripts/227` asserts against it and writes it only if absent |
+| `outputs/essay3_q4/tmobile_502_text.md` | an input, not an output - no live step writes it; `scripts/245` reads it (184 and 185 are retired) |
+
+The two baselines are the mechanism that makes the Essay 3 verdicts reproducible rather
+than re-derived on every run; demanding freshness would demand the opposite of their
+purpose. **`outputs/rebuild/constants_v3.json` is deliberately NOT in this category** -
+`scripts/158` rewrites it on every run, confirmed in the verification run, so it is held to
+the freshness test even though it is also Essay 1's assertion baseline.
+
+## 3. Dropped (22)
+
+Written only by retired steps. The files stay committed; nothing live reads them.
+
+| step | dropped entries |
+|---|---|
+| `86c` | `h1_h4_form499_corrected_summary.csv`, `h1_h4_form499_corrected_regression_results.txt` *(never committed)* |
+| `90b` | `h5_form499_corrected_heterogeneity.csv`, `h5_form499_corrected_regression_results.txt` *(never committed)* |
+| `96` | `economic_significance/economic_impact_summary.csv`, `economic_significance/economic_significance_report.txt` |
+| `98` | `tables/TABLE_GOVERNANCE_HETEROGENEITY_RESULTS.csv` |
+| pre-rebuild | `TABLE_RANSOMWARE_`, `TABLE_MEDIA_COVERAGE_`, `TABLE_DIVERSITY_HETEROGENEITY_RESULTS.csv`, `tables/TABLE1_COMBINED.txt`, `H1_timing_fcc_interaction_results.csv` |
+| SIC-era Essay 2/3 | `essay2/TABLE2_baseline_disclosure.txt`, `TABLE3_fcc_regulation.txt`, `TABLE4_prior_breaches.txt`, `TABLE5_breach_severity.txt`, `TABLE_B8_post_2007_interaction.txt`, `TABLE_B9_clustered_vs_hc3_comparison.txt`, `H1_TOST_Equivalence_Test.txt`, `DIAGNOSTICS_VIF_summary.txt`, `essay3/TABLE2_volatility_changes.txt`, `essay3/TABLE3_information_asymmetry.txt` |
+
+This is the third pre-prune gate the prune exposed, after the `critical_keys` gate and the
+two obsolete `REQUIRED_INPUTS`. All three failed the same way: they asserted on steps that
+no longer run.

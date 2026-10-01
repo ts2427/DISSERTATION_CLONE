@@ -1,0 +1,1751 @@
+final_cik,breach_date,org_name,treated,gvkey,variable,v3_value,v4_value,change,delta
+4904,2018-12-09,American Electric Power,0,001440,firm_size_log,11.078,11.078,identical,0.0
+4904,2018-12-09,American Electric Power,0,001440,leverage,0.7169,0.7169,identical,0.0
+4904,2018-12-09,American Electric Power,0,001440,roa,0.0295,0.0295,identical,0.0
+4904,2018-12-09,American Electric Power,0,001440,op_margin,0.3519,0.3519,identical,0.0
+4904,2019-02-18,American Electric Power,0,001440,firm_size_log,11.139,11.139,identical,0.0
+4904,2019-02-18,American Electric Power,0,001440,leverage,0.7214,0.7214,identical,0.0
+4904,2019-02-18,American Electric Power,0,001440,roa,0.028,0.028,identical,0.0
+4904,2019-02-18,American Electric Power,0,001440,op_margin,0.3103,0.3103,identical,0.0
+8670,2013-04-29,"Automatic Data Processing, Inc.",0,001891,firm_size_log,10.3358,10.3358,identical,0.0
+8670,2013-04-29,"Automatic Data Processing, Inc.",0,001891,leverage,0.8016,0.8016,identical,0.0
+8670,2013-04-29,"Automatic Data Processing, Inc.",0,001891,roa,0.0451,0.0451,identical,0.0
+8670,2013-04-29,"Automatic Data Processing, Inc.",0,001891,op_margin,0.214,0.214,identical,0.0
+12927,2016-11-21,The Boeing Company,0,002285,firm_size_log,11.4554,11.4554,identical,0.0
+12927,2016-11-21,The Boeing Company,0,002285,leverage,0.9322,0.9322,identical,0.0
+12927,2016-11-21,The Boeing Company,0,002285,roa,0.0548,0.0548,identical,0.0
+12927,2016-11-21,The Boeing Company,0,002285,op_margin,0.0917,0.0917,identical,0.0
+14693,2020-07-28,Brown-Forman Corporation,0,002435,firm_size_log,,8.6597,gained,
+14693,2020-07-28,Brown-Forman Corporation,0,002435,leverage,,0.6575,gained,
+14693,2020-07-28,Brown-Forman Corporation,0,002435,roa,,0.1434,gained,
+14693,2020-07-28,Brown-Forman Corporation,0,002435,op_margin,,0.3497,gained,
+18926,2013-12-27,CenturyLink,1,002884,firm_size_log,10.8971,10.8971,identical,0.0
+18926,2013-12-27,CenturyLink,1,002884,leverage,0.6429,0.6429,identical,0.0
+18926,2013-12-27,CenturyLink,1,002884,roa,0.0144,0.0144,identical,0.0
+18926,2013-12-27,CenturyLink,1,002884,op_margin,0.4166,0.4166,identical,0.0
+18926,2017-01-30,CenturyLink,1,002884,firm_size_log,10.7583,10.7583,identical,0.0
+18926,2017-01-30,CenturyLink,1,002884,leverage,0.715,0.715,identical,0.0
+18926,2017-01-30,CenturyLink,1,002884,roa,0.0133,0.0133,identical,0.0
+18926,2017-01-30,CenturyLink,1,002884,op_margin,0.3736,0.3736,identical,0.0
+18926,2017-02-28,CenturyLink,1,002884,firm_size_log,10.7583,10.7583,identical,0.0
+18926,2017-02-28,CenturyLink,1,002884,leverage,0.715,0.715,identical,0.0
+18926,2017-02-28,CenturyLink,1,002884,roa,0.0133,0.0133,identical,0.0
+18926,2017-02-28,CenturyLink,1,002884,op_margin,0.3736,0.3736,identical,0.0
+18926,2020-08-20,CenturyLink Communications,1,002884,firm_size_log,11.0782,11.0782,identical,0.0
+18926,2020-08-20,CenturyLink Communications,1,002884,leverage,0.7919,0.7919,identical,0.0
+18926,2020-08-20,CenturyLink Communications,1,002884,roa,-0.0814,-0.0814,identical,0.0
+18926,2020-08-20,CenturyLink Communications,1,002884,op_margin,0.3843,0.3843,identical,0.0
+18926,2022-03-15,Centurylink Communications,1,002884,firm_size_log,10.9681,10.9681,identical,0.0
+18926,2022-03-15,Centurylink Communications,1,002884,leverage,0.7958,0.7958,identical,0.0
+18926,2022-03-15,Centurylink Communications,1,002884,roa,0.0351,0.0351,identical,0.0
+18926,2022-03-15,Centurylink Communications,1,002884,op_margin,0.422,0.422,identical,0.0
+20520,2022-02-24,Frontier Communications,1,135484,firm_size_log,9.71,9.71,identical,0.0
+20520,2022-02-24,Frontier Communications,1,135484,leverage,0.7209,0.7209,identical,0.0
+20520,2022-02-24,Frontier Communications,1,135484,roa,0.3006,0.3006,identical,0.0
+20520,2022-02-24,Frontier Communications,1,135484,op_margin,0.3708,0.3708,identical,0.0
+20520,2023-12-18,"Frontier Communications Parent, Inc.",1,135484,firm_size_log,9.8322,9.8322,identical,0.0
+20520,2023-12-18,"Frontier Communications Parent, Inc.",1,135484,leverage,0.7243,0.7243,identical,0.0
+20520,2023-12-18,"Frontier Communications Parent, Inc.",1,135484,roa,0.0237,0.0237,identical,0.0
+20520,2023-12-18,"Frontier Communications Parent, Inc.",1,135484,op_margin,0.3218,0.3218,identical,0.0
+20520,2024-04-13,"Frontier Communications Parent, Inc.",1,135484,firm_size_log,9.9376,9.9376,identical,0.0
+20520,2024-04-13,"Frontier Communications Parent, Inc.",1,135484,leverage,0.7449,0.7449,identical,0.0
+20520,2024-04-13,"Frontier Communications Parent, Inc.",1,135484,roa,0.0014,0.0014,identical,0.0
+20520,2024-04-13,"Frontier Communications Parent, Inc.",1,135484,op_margin,0.3443,0.3443,identical,0.0
+20520,2024-06-10,"Frontier Communications Parent, Inc.",1,135484,firm_size_log,9.9376,9.9376,identical,0.0
+20520,2024-06-10,"Frontier Communications Parent, Inc.",1,135484,leverage,0.7449,0.7449,identical,0.0
+20520,2024-06-10,"Frontier Communications Parent, Inc.",1,135484,roa,0.0014,0.0014,identical,0.0
+20520,2024-06-10,"Frontier Communications Parent, Inc.",1,135484,op_margin,0.3443,0.3443,identical,0.0
+23632,2023-05-29,Consolidated Edison Company of New York LLC,0,105999,firm_size_log,,10.9586,gained,
+23632,2023-05-29,Consolidated Edison Company of New York LLC,0,105999,leverage,,0.7062,gained,
+23632,2023-05-29,Consolidated Edison Company of New York LLC,0,105999,roa,,0.0242,gained,
+23632,2023-05-29,Consolidated Edison Company of New York LLC,0,105999,op_margin,,0.2949,gained,
+27904,2017-09-01,"Delta Air Lines, Inc.",0,003851,firm_size_log,10.8447,10.8447,identical,0.0
+27904,2017-09-01,"Delta Air Lines, Inc.",0,003851,leverage,0.7603,0.7603,identical,0.0
+27904,2017-09-01,"Delta Air Lines, Inc.",0,003851,roa,0.0853,0.0853,identical,0.0
+27904,2017-09-01,"Delta Air Lines, Inc.",0,003851,op_margin,0.2234,0.2234,identical,0.0
+27904,2017-09-26,"Delta Air Lines, Inc.",0,003851,firm_size_log,10.8447,10.8447,identical,0.0
+27904,2017-09-26,"Delta Air Lines, Inc.",0,003851,leverage,0.7603,0.7603,identical,0.0
+27904,2017-09-26,"Delta Air Lines, Inc.",0,003851,roa,0.0853,0.0853,identical,0.0
+27904,2017-09-26,"Delta Air Lines, Inc.",0,003851,op_margin,0.2234,0.2234,identical,0.0
+27996,2019-08-13,Deluxe Corporation,0,003863,firm_size_log,,7.7429,gained,
+27996,2019-08-13,Deluxe Corporation,0,003863,leverage,,0.6029,gained,
+27996,2019-08-13,Deluxe Corporation,0,003863,roa,,0.0649,gained,
+27996,2019-08-13,Deluxe Corporation,0,003863,op_margin,,0.2474,gained,
+33185,2014-01-31,"Equifax, Inc.",0,004423,firm_size_log,8.4207,8.4207,identical,0.0
+33185,2014-01-31,"Equifax, Inc.",0,004423,leverage,0.4843,0.4843,identical,0.0
+33185,2014-01-31,"Equifax, Inc.",0,004423,roa,0.0775,0.0775,identical,0.0
+33185,2014-01-31,"Equifax, Inc.",0,004423,op_margin,0.3516,0.3516,identical,0.0
+33185,2016-01-01,TALX Corporation,0,004423,firm_size_log,8.4138,8.4138,identical,0.0
+33185,2016-01-01,TALX Corporation,0,004423,leverage,0.4787,0.4787,identical,0.0
+33185,2016-01-01,TALX Corporation,0,004423,roa,0.0952,0.0952,identical,0.0
+33185,2016-01-01,TALX Corporation,0,004423,op_margin,0.344,0.344,identical,0.0
+33185,2016-04-18,TALX Corporation,0,004423,firm_size_log,8.4138,8.4138,identical,0.0
+33185,2016-04-18,TALX Corporation,0,004423,leverage,0.4787,0.4787,identical,0.0
+33185,2016-04-18,TALX Corporation,0,004423,roa,0.0952,0.0952,identical,0.0
+33185,2016-04-18,TALX Corporation,0,004423,op_margin,0.344,0.344,identical,0.0
+33185,2017-03-09,TALX Corporation,0,004423,firm_size_log,8.8045,8.8045,identical,0.0
+33185,2017-03-09,TALX Corporation,0,004423,leverage,0.5916,0.5916,identical,0.0
+33185,2017-03-09,TALX Corporation,0,004423,roa,0.0733,0.0733,identical,0.0
+33185,2017-03-09,TALX Corporation,0,004423,op_margin,0.3558,0.3558,identical,0.0
+40704,2022-11-18,"General Mills, Inc.",0,005071,firm_size_log,10.3446,10.3446,identical,0.0
+40704,2022-11-18,"General Mills, Inc.",0,005071,leverage,0.653,0.653,identical,0.0
+40704,2022-11-18,"General Mills, Inc.",0,005071,roa,0.0871,0.0871,identical,0.0
+40704,2022-11-18,"General Mills, Inc.",0,005071,op_margin,0.2054,0.2054,identical,0.0
+43196,2016-02-16,"Gray Television, Inc.",0,005284,firm_size_log,7.67,7.67,identical,0.0
+43196,2016-02-16,"Gray Television, Inc.",0,005284,leverage,0.7997,0.7997,identical,0.0
+43196,2016-02-16,"Gray Television, Inc.",0,005284,roa,0.0183,0.0183,identical,0.0
+43196,2016-02-16,"Gray Television, Inc.",0,005284,op_margin,0.3267,0.3267,identical,0.0
+43196,2016-08-08,Gray Television,0,005284,firm_size_log,7.67,7.67,identical,0.0
+43196,2016-08-08,Gray Television,0,005284,leverage,0.7997,0.7997,identical,0.0
+43196,2016-08-08,Gray Television,0,005284,roa,0.0183,0.0183,identical,0.0
+43196,2016-08-08,Gray Television,0,005284,op_margin,0.3267,0.3267,identical,0.0
+43196,2021-09-01,"Gray Television, Inc.",0,005284,firm_size_log,8.9415,8.9415,identical,0.0
+43196,2021-09-01,"Gray Television, Inc.",0,005284,leverage,0.6856,0.6856,identical,0.0
+43196,2021-09-01,"Gray Television, Inc.",0,005284,roa,0.0536,0.0536,identical,0.0
+43196,2021-09-01,"Gray Television, Inc.",0,005284,op_margin,0.3881,0.3881,identical,0.0
+47111,2023-09-03,The Hershey Company,0,005597,firm_size_log,9.301,9.301,identical,0.0
+47111,2023-09-03,The Hershey Company,0,005597,leverage,0.6986,0.6986,identical,0.0
+47111,2023-09-03,The Hershey Company,0,005597,roa,0.1502,0.1502,identical,0.0
+47111,2023-09-03,The Hershey Company,0,005597,op_margin,0.2553,0.2553,identical,0.0
+47217,2007-07-01,Hewlett-Packard Company,0,005606,firm_size_log,11.3142,11.3142,identical,0.0
+47217,2007-07-01,Hewlett-Packard Company,0,005606,leverage,0.5347,0.5347,identical,0.0
+47217,2007-07-01,Hewlett-Packard Company,0,005606,roa,0.0756,0.0756,identical,0.0
+47217,2007-07-01,Hewlett-Packard Company,0,005606,op_margin,0.099,0.099,identical,0.0
+47217,2007-08-16,Hewlett Packard Company,0,005606,firm_size_log,11.3142,11.3142,identical,0.0
+47217,2007-08-16,Hewlett Packard Company,0,005606,leverage,0.5347,0.5347,identical,0.0
+47217,2007-08-16,Hewlett Packard Company,0,005606,roa,0.0756,0.0756,identical,0.0
+47217,2007-08-16,Hewlett Packard Company,0,005606,op_margin,0.099,0.099,identical,0.0
+47217,2008-12-04,Hewlett-Packard Company,0,005606,firm_size_log,11.6381,11.6381,identical,0.0
+47217,2008-12-04,Hewlett-Packard Company,0,005606,leverage,0.6564,0.6564,identical,0.0
+47217,2008-12-04,Hewlett-Packard Company,0,005606,roa,0.0735,0.0735,identical,0.0
+47217,2008-12-04,Hewlett-Packard Company,0,005606,op_margin,0.1199,0.1199,identical,0.0
+47217,2008-12-08,Hewlett-Packard Company,0,005606,firm_size_log,11.6381,11.6381,identical,0.0
+47217,2008-12-08,Hewlett-Packard Company,0,005606,leverage,0.6564,0.6564,identical,0.0
+47217,2008-12-08,Hewlett-Packard Company,0,005606,roa,0.0735,0.0735,identical,0.0
+47217,2008-12-08,Hewlett-Packard Company,0,005606,op_margin,0.1199,0.1199,identical,0.0
+47217,2010-02-09,Hewlett-Packard Company,0,005606,firm_size_log,11.6509,11.6509,identical,0.0
+47217,2010-02-09,Hewlett-Packard Company,0,005606,leverage,0.6471,0.6471,identical,0.0
+47217,2010-02-09,Hewlett-Packard Company,0,005606,roa,0.0667,0.0667,identical,0.0
+47217,2010-02-09,Hewlett-Packard Company,0,005606,op_margin,0.1379,0.1379,identical,0.0
+51143,2007-02-23,IBM,0,006066,firm_size_log,11.5448,11.5448,identical,0.0
+51143,2007-02-23,IBM,0,006066,leverage,0.7239,0.7239,identical,0.0
+51143,2007-02-23,IBM,0,006066,roa,0.0919,0.0919,identical,0.0
+51143,2007-02-23,IBM,0,006066,op_margin,0.1926,0.1926,identical,0.0
+51143,2011-04-14,IBM,0,006066,firm_size_log,11.6391,11.6391,identical,0.0
+51143,2011-04-14,IBM,0,006066,leverage,0.7958,0.7958,identical,0.0
+51143,2011-04-14,IBM,0,006066,roa,0.1307,0.1307,identical,0.0
+51143,2011-04-14,IBM,0,006066,op_margin,0.2361,0.2361,identical,0.0
+920760,2023-07-20,Lennar Corporation,0,006669,firm_size_log,,10.5449,gained,
+920760,2023-07-20,Lennar Corporation,0,006669,leverage,,0.3618,gained,
+920760,2023-07-20,Lennar Corporation,0,006669,roa,,0.1215,gained,
+920760,2023-07-20,Lennar Corporation,0,006669,op_margin,,0.2042,gained,
+62709,2013-06-01,"Marsh & McLennan Companies, Inc.",0,007065,firm_size_log,,9.6982,gained,
+62709,2013-06-01,"Marsh & McLennan Companies, Inc.",0,007065,leverage,,0.5944,gained,
+62709,2013-06-01,"Marsh & McLennan Companies, Inc.",0,007065,roa,,0.0722,gained,
+62709,2013-06-01,"Marsh & McLennan Companies, Inc.",0,007065,op_margin,,0.1863,gained,
+68505,2009-01-01,"Motorola, Inc.",0,007585,firm_size_log,,10.2353,gained,
+68505,2009-01-01,"Motorola, Inc.",0,007585,leverage,,0.6589,gained,
+68505,2009-01-01,"Motorola, Inc.",0,007585,roa,,-0.1523,gained,
+68505,2009-01-01,"Motorola, Inc.",0,007585,op_margin,,0.0233,gained,
+68505,2009-02-17,"Motorola, Inc.",0,007585,firm_size_log,,10.2353,gained,
+68505,2009-02-17,"Motorola, Inc.",0,007585,leverage,,0.6589,gained,
+68505,2009-02-17,"Motorola, Inc.",0,007585,roa,,-0.1523,gained,
+68505,2009-02-17,"Motorola, Inc.",0,007585,op_margin,,0.0233,gained,
+1133421,2016-04-18,Northrop Grumman Systems Corporation,0,007985,firm_size_log,,10.1045,gained,
+1133421,2016-04-18,Northrop Grumman Systems Corporation,0,007985,leverage,,0.7742,gained,
+1133421,2016-04-18,Northrop Grumman Systems Corporation,0,007985,roa,,0.0814,gained,
+1133421,2016-04-18,Northrop Grumman Systems Corporation,0,007985,op_margin,,0.1506,gained,
+73309,2023-05-26,Nucor Corporation,0,008030,firm_size_log,10.3884,10.3884,identical,0.0
+73309,2023-05-26,Nucor Corporation,0,008030,leverage,0.3975,0.3975,identical,0.0
+73309,2023-05-26,Nucor Corporation,0,008030,roa,0.2342,0.2342,identical,0.0
+73309,2023-05-26,Nucor Corporation,0,008030,op_margin,0.2787,0.2787,identical,0.0
+73309,2025-05-03,Nucor Corporation,0,008030,firm_size_log,10.4323,10.4323,identical,0.0
+73309,2025-05-03,Nucor Corporation,0,008030,leverage,0.369,0.369,identical,0.0
+73309,2025-05-03,Nucor Corporation,0,008030,roa,0.0597,0.0597,identical,0.0
+73309,2025-05-03,Nucor Corporation,0,008030,op_margin,0.141,0.141,identical,0.0
+73756,2024-01-01,"Oceaneering International, Inc.",0,008079,firm_size_log,,7.7138,gained,
+73756,2024-01-01,"Oceaneering International, Inc.",0,008079,leverage,,0.7168,gained,
+73756,2024-01-01,"Oceaneering International, Inc.",0,008079,roa,,0.0435,gained,
+73756,2024-01-01,"Oceaneering International, Inc.",0,008079,op_margin,,0.1181,gained,
+75362,2018-01-22,PACCAR,0,008253,firm_size_log,10.0622,10.0622,identical,0.0
+75362,2018-01-22,PACCAR,0,008253,leverage,0.6566,0.6566,identical,0.0
+75362,2018-01-22,PACCAR,0,008253,roa,0.0715,0.0715,identical,0.0
+75362,2018-01-22,PACCAR,0,008253,op_margin,0.1748,0.1748,identical,0.0
+76334,2022-03-11,Parker-Hannifin Corporation,0,008358,firm_size_log,9.9204,9.9204,identical,0.0
+76334,2022-03-11,Parker-Hannifin Corporation,0,008358,leverage,0.5864,0.5864,identical,0.0
+76334,2022-03-11,Parker-Hannifin Corporation,0,008358,roa,0.0858,0.0858,identical,0.0
+76334,2022-03-11,Parker-Hannifin Corporation,0,008358,op_margin,0.2111,0.2111,identical,0.0
+77476,2021-02-24,"PepsiCo, Inc.",0,008479,firm_size_log,11.4395,11.4395,identical,0.0
+77476,2021-02-24,"PepsiCo, Inc.",0,008479,leverage,0.8542,0.8542,identical,0.0
+77476,2021-02-24,"PepsiCo, Inc.",0,008479,roa,0.0766,0.0766,identical,0.0
+77476,2021-02-24,"PepsiCo, Inc.",0,008479,op_margin,0.1859,0.1859,identical,0.0
+78003,2006-12-01,Pfizer Inc,0,008530,firm_size_log,11.6747,11.6747,identical,0.0
+78003,2006-12-01,Pfizer Inc,0,008530,leverage,0.4418,0.4418,identical,0.0
+78003,2006-12-01,Pfizer Inc,0,008530,roa,0.0688,0.0688,identical,0.0
+78003,2006-12-01,Pfizer Inc,0,008530,op_margin,0.4077,0.4077,identical,0.0
+80172,2025-03-01,"National Presto Industries, Inc.",0,007762,firm_size_log,,6.1168,gained,
+80172,2025-03-01,"National Presto Industries, Inc.",0,007762,leverage,,0.1892,gained,
+80172,2025-03-01,"National Presto Industries, Inc.",0,007762,roa,,0.0914,gained,
+80172,2025-03-01,"National Presto Industries, Inc.",0,007762,op_margin,,0.1295,gained,
+91419,2010-04-05,The J.M. Smucker Company,0,009777,firm_size_log,9.0109,9.0109,identical,0.0
+91419,2010-04-05,The J.M. Smucker Company,0,009777,leverage,0.397,0.397,identical,0.0
+91419,2010-04-05,The J.M. Smucker Company,0,009777,roa,0.0325,0.0325,identical,0.0
+91419,2010-04-05,The J.M. Smucker Company,0,009777,op_margin,0.1743,0.1743,identical,0.0
+91440,2022-03-01,Snap-on Incorporated,0,009778,firm_size_log,8.8187,8.8187,identical,0.0
+91440,2022-03-01,Snap-on Incorporated,0,009778,leverage,0.3781,0.3781,identical,0.0
+91440,2022-03-01,Snap-on Incorporated,0,009778,roa,0.1214,0.1214,identical,0.0
+91440,2022-03-01,Snap-on Incorporated,0,009778,op_margin,0.2669,0.2669,identical,0.0
+92380,2017-10-01,Southwest Airlines Co.,0,009882,firm_size_log,10.0556,10.0556,identical,0.0
+92380,2017-10-01,Southwest Airlines Co.,0,009882,leverage,0.6375,0.6375,identical,0.0
+92380,2017-10-01,Southwest Airlines Co.,0,009882,roa,0.0964,0.0964,identical,0.0
+92380,2017-10-01,Southwest Airlines Co.,0,009882,op_margin,0.246,0.246,identical,0.0
+92380,2018-03-01,Southwest Airlines Co.,0,009882,firm_size_log,10.131,10.131,identical,0.0
+92380,2018-03-01,Southwest Airlines Co.,0,009882,leverage,0.5846,0.5846,identical,0.0
+92380,2018-03-01,Southwest Airlines Co.,0,009882,roa,0.1389,0.1389,identical,0.0
+92380,2018-03-01,Southwest Airlines Co.,0,009882,op_margin,0.2314,0.2314,identical,0.0
+96021,2023-01-14,Sysco Corporation,0,010247,firm_size_log,10.0027,10.0027,identical,0.0
+96021,2023-01-14,Sysco Corporation,0,010247,leverage,0.936,0.936,identical,0.0
+96021,2023-01-14,Sysco Corporation,0,010247,roa,0.0615,0.0615,identical,0.0
+96021,2023-01-14,Sysco Corporation,0,010247,op_margin,0.0481,0.0481,identical,0.0
+101830,2009-02-01,Sprint Nextel,1,010984,firm_size_log,10.9725,10.9725,identical,0.0
+101830,2009-02-01,Sprint Nextel,1,010984,leverage,0.6634,0.6634,identical,0.0
+101830,2009-02-01,Sprint Nextel,1,010984,roa,-0.048,-0.048,identical,0.0
+101830,2009-02-01,Sprint Nextel,1,010984,op_margin,0.2151,0.2151,identical,0.0
+101830,2009-01-01,Sprint Nextel,1,010984,firm_size_log,10.8074,10.9725,changed,0.1651
+101830,2009-01-01,Sprint Nextel,1,010984,leverage,0.7686,0.6634,changed,-0.1052
+101830,2009-01-01,Sprint Nextel,1,010984,roa,-0.0585,-0.048,changed,0.0105
+101830,2009-01-01,Sprint Nextel,1,010984,op_margin,0.1506,0.2151,changed,0.0645
+101830,2015-08-17,Sprint Corporation,1,010984,firm_size_log,11.327,11.327,identical,0.0
+101830,2015-08-17,Sprint Corporation,1,010984,leverage,0.7385,0.7385,identical,0.0
+101830,2015-08-17,Sprint Corporation,1,010984,roa,-0.0403,-0.0403,identical,0.0
+101830,2015-08-17,Sprint Corporation,1,010984,op_margin,0.1738,0.1738,identical,0.0
+101830,2017-05-01,Sprint Corporation,1,010984,firm_size_log,11.3519,11.3519,identical,0.0
+101830,2017-05-01,Sprint Corporation,1,010984,leverage,0.779,0.779,identical,0.0
+101830,2017-05-01,Sprint Corporation,1,010984,roa,-0.0142,-0.0142,identical,0.0
+101830,2017-05-01,Sprint Corporation,1,010984,op_margin,0.3123,0.3123,identical,0.0
+101830,2017-05-07,Sprint,1,010984,firm_size_log,11.3519,11.3519,identical,0.0
+101830,2017-05-07,Sprint,1,010984,leverage,0.779,0.779,identical,0.0
+101830,2017-05-07,Sprint,1,010984,roa,-0.0142,-0.0142,identical,0.0
+101830,2017-05-07,Sprint,1,010984,op_margin,0.3123,0.3123,identical,0.0
+101830,2018-03-02,Sprint Corporation,1,010984,firm_size_log,11.3519,11.3519,identical,0.0
+101830,2018-03-02,Sprint Corporation,1,010984,leverage,0.779,0.779,identical,0.0
+101830,2018-03-02,Sprint Corporation,1,010984,roa,-0.0142,-0.0142,identical,0.0
+101830,2018-03-02,Sprint Corporation,1,010984,op_margin,0.3123,0.3123,identical,0.0
+101830,2019-03-14,Sprint Corporation,1,010984,firm_size_log,11.3558,11.3558,identical,0.0
+101830,2019-03-14,Sprint Corporation,1,010984,leverage,0.6909,0.6909,identical,0.0
+101830,2019-03-14,Sprint Corporation,1,010984,roa,0.0865,0.0865,identical,0.0
+101830,2019-03-14,Sprint Corporation,1,010984,op_margin,0.3397,0.3397,identical,0.0
+101830,2019-05-09,Sprint Corporation,1,010984,firm_size_log,11.3457,11.3457,identical,0.0
+101830,2019-05-09,Sprint Corporation,1,010984,leverage,0.6912,0.6912,identical,0.0
+101830,2019-05-09,Sprint Corporation,1,010984,roa,-0.023,-0.023,identical,0.0
+101830,2019-05-09,Sprint Corporation,1,010984,op_margin,0.3802,0.3802,identical,0.0
+101830,2019-06-02,Sprint,1,010984,firm_size_log,11.3457,11.3457,identical,0.0
+101830,2019-06-02,Sprint,1,010984,leverage,0.6912,0.6912,identical,0.0
+101830,2019-06-02,Sprint,1,010984,roa,-0.023,-0.023,identical,0.0
+101830,2019-06-02,Sprint,1,010984,op_margin,0.3802,0.3802,identical,0.0
+101830,2019-06-08,Sprint,1,010984,firm_size_log,11.3457,11.3457,identical,0.0
+101830,2019-06-08,Sprint,1,010984,leverage,0.6912,0.6912,identical,0.0
+101830,2019-06-08,Sprint,1,010984,roa,-0.023,-0.023,identical,0.0
+101830,2019-06-08,Sprint,1,010984,op_margin,0.3802,0.3802,identical,0.0
+101830,2019-06-22,Sprint,1,010984,firm_size_log,11.3457,11.3457,identical,0.0
+101830,2019-06-22,Sprint,1,010984,leverage,0.6912,0.6912,identical,0.0
+101830,2019-06-22,Sprint,1,010984,roa,-0.023,-0.023,identical,0.0
+101830,2019-06-22,Sprint,1,010984,op_margin,0.3802,0.3802,identical,0.0
+101830,2019-08-13,Sprint Corporation,1,010984,firm_size_log,11.3457,11.3457,identical,0.0
+101830,2019-08-13,Sprint Corporation,1,010984,leverage,0.6912,0.6912,identical,0.0
+101830,2019-08-13,Sprint Corporation,1,010984,roa,-0.023,-0.023,identical,0.0
+101830,2019-08-13,Sprint Corporation,1,010984,op_margin,0.3802,0.3802,identical,0.0
+1770450,2023-12-10,Xerox Corporation,0,011636,firm_size_log,,9.3538,gained,
+1770450,2023-12-10,Xerox Corporation,0,011636,leverage,,0.6901,gained,
+1770450,2023-12-10,Xerox Corporation,0,011636,roa,,-0.0279,gained,
+1770450,2023-12-10,Xerox Corporation,0,011636,op_margin,,0.086,gained,
+277135,2017-08-23,"W.W. Grainger, Inc.",0,005256,firm_size_log,8.6472,8.6472,identical,0.0
+277135,2017-08-23,"W.W. Grainger, Inc.",0,005256,leverage,0.6653,0.6653,identical,0.0
+277135,2017-08-23,"W.W. Grainger, Inc.",0,005256,roa,0.1064,0.1064,identical,0.0
+277135,2017-08-23,"W.W. Grainger, Inc.",0,005256,op_margin,0.1443,0.1443,identical,0.0
+277135,2017-09-26,W.W. Grainger Inc.,0,005256,firm_size_log,8.6472,8.6472,identical,0.0
+277135,2017-09-26,W.W. Grainger Inc.,0,005256,leverage,0.6653,0.6653,identical,0.0
+277135,2017-09-26,W.W. Grainger Inc.,0,005256,roa,0.1064,0.1064,identical,0.0
+277135,2017-09-26,W.W. Grainger Inc.,0,005256,op_margin,0.1443,0.1443,identical,0.0
+315293,2020-12-17,Aon Corporation,0,003221,firm_size_log,10.2889,10.2889,identical,0.0
+315293,2020-12-17,Aon Corporation,0,003221,leverage,0.8827,0.8827,identical,0.0
+315293,2020-12-17,Aon Corporation,0,003221,roa,0.0521,0.0521,identical,0.0
+315293,2020-12-17,Aon Corporation,0,003221,op_margin,0.2891,0.2891,identical,0.0
+318154,2021-04-21,Amgen Inc.,0,001602,firm_size_log,11.0501,11.0501,identical,0.0
+318154,2021-04-21,Amgen Inc.,0,001602,leverage,0.8505,0.8505,identical,0.0
+318154,2021-04-21,Amgen Inc.,0,001602,roa,0.1154,0.1154,identical,0.0
+318154,2021-04-21,Amgen Inc.,0,001602,op_margin,0.4947,0.4947,identical,0.0
+318154,2023-08-16,Amgen Inc.,0,001602,firm_size_log,11.084,11.084,identical,0.0
+318154,2023-08-16,Amgen Inc.,0,001602,leverage,0.9438,0.9438,identical,0.0
+318154,2023-08-16,Amgen Inc.,0,001602,roa,0.1006,0.1006,identical,0.0
+318154,2023-08-16,Amgen Inc.,0,001602,op_margin,0.5072,0.5072,identical,0.0
+319687,2013-01-01,United Airlines,0,010484,firm_size_log,,9.9428,gained,
+319687,2013-01-01,United Airlines,0,010484,leverage,,1.1531,gained,
+319687,2013-01-01,United Airlines,0,010484,roa,,-0.0571,gained,
+319687,2013-01-01,United Airlines,0,010484,op_margin,,0.0577,gained,
+320193,2010-06-01,Apple Inc.,0,001690,firm_size_log,10.7685,10.7685,identical,0.0
+320193,2010-06-01,Apple Inc.,0,001690,leverage,0.3339,0.3339,identical,0.0
+320193,2010-06-01,Apple Inc.,0,001690,roa,0.1734,0.1734,identical,0.0
+320193,2010-06-01,Apple Inc.,0,001690,op_margin,0.2896,0.2896,identical,0.0
+320193,2013-07-18,Apple Inc.,0,001690,firm_size_log,12.0786,12.0786,identical,0.0
+320193,2013-07-18,Apple Inc.,0,001690,leverage,0.3286,0.3286,identical,0.0
+320193,2013-07-18,Apple Inc.,0,001690,roa,0.237,0.237,identical,0.0
+320193,2013-07-18,Apple Inc.,0,001690,op_margin,0.3734,0.3734,identical,0.0
+320193,2014-08-31,Apple Inc.,0,001690,firm_size_log,12.2405,12.2405,identical,0.0
+320193,2014-08-31,Apple Inc.,0,001690,leverage,0.4031,0.4031,identical,0.0
+320193,2014-08-31,Apple Inc.,0,001690,roa,0.1789,0.1789,identical,0.0
+320193,2014-08-31,Apple Inc.,0,001690,op_margin,0.3262,0.3262,identical,0.0
+320193,2015-07-01,Apple Inc.,0,001690,firm_size_log,12.3538,12.3538,identical,0.0
+320193,2015-07-01,Apple Inc.,0,001690,leverage,0.5189,0.5189,identical,0.0
+320193,2015-07-01,Apple Inc.,0,001690,roa,0.1704,0.1704,identical,0.0
+320193,2015-07-01,Apple Inc.,0,001690,op_margin,0.3307,0.3307,identical,0.0
+320193,2015-09-18,Apple Inc.,0,001690,firm_size_log,12.3538,12.3538,identical,0.0
+320193,2015-09-18,Apple Inc.,0,001690,leverage,0.5189,0.5189,identical,0.0
+320193,2015-09-18,Apple Inc.,0,001690,roa,0.1704,0.1704,identical,0.0
+320193,2015-09-18,Apple Inc.,0,001690,op_margin,0.3307,0.3307,identical,0.0
+320193,2019-02-02,Apple Inc.,0,001690,firm_size_log,12.8096,12.8096,identical,0.0
+320193,2019-02-02,Apple Inc.,0,001690,leverage,0.707,0.707,identical,0.0
+320193,2019-02-02,Apple Inc.,0,001690,roa,0.1628,0.1628,identical,0.0
+320193,2019-02-02,Apple Inc.,0,001690,op_margin,0.3013,0.3013,identical,0.0
+320193,2020-11-01,Apple Inc.,0,001690,firm_size_log,12.6882,12.6882,identical,0.0
+320193,2020-11-01,Apple Inc.,0,001690,leverage,0.7983,0.7983,identical,0.0
+320193,2020-11-01,Apple Inc.,0,001690,roa,0.1773,0.1773,identical,0.0
+320193,2020-11-01,Apple Inc.,0,001690,op_margin,0.2768,0.2768,identical,0.0
+1336920,2022-09-30,"Leidos, Inc.",0,165123,firm_size_log,,9.4926,gained,
+1336920,2022-09-30,"Leidos, Inc.",0,165123,leverage,,0.6724,gained,
+1336920,2022-09-30,"Leidos, Inc.",0,165123,roa,,0.0568,gained,
+1336920,2022-09-30,"Leidos, Inc.",0,165123,op_margin,,0.108,gained,
+354190,2017-06-01,Gallagher NAC,0,004973,firm_size_log,9.3492,9.3492,identical,0.0
+354190,2017-06-01,Gallagher NAC,0,004973,leverage,0.6818,0.6818,identical,0.0
+354190,2017-06-01,Gallagher NAC,0,004973,roa,0.0361,0.0361,identical,0.0
+354190,2017-06-01,Gallagher NAC,0,004973,op_margin,0.1711,0.1711,identical,0.0
+354190,2017-06-18,Gallagher NAC,0,004973,firm_size_log,9.3492,9.3492,identical,0.0
+354190,2017-06-18,Gallagher NAC,0,004973,leverage,0.6818,0.6818,identical,0.0
+354190,2017-06-18,Gallagher NAC,0,004973,roa,0.0361,0.0361,identical,0.0
+354190,2017-06-18,Gallagher NAC,0,004973,op_margin,0.1711,0.1711,identical,0.0
+354950,2014-02-10,The Home Depot,0,005680,firm_size_log,10.6095,10.6095,identical,0.0
+354950,2014-02-10,The Home Depot,0,005680,leverage,0.691,0.691,identical,0.0
+354950,2014-02-10,The Home Depot,0,005680,roa,0.1329,0.1329,identical,0.0
+354950,2014-02-10,The Home Depot,0,005680,op_margin,0.1369,0.1369,identical,0.0
+708818,2023-03-29,"NextGen Healthcare, Inc.",0,008858,firm_size_log,,6.442,gained,
+708818,2023-03-29,"NextGen Healthcare, Inc.",0,008858,leverage,,0.326,gained,
+708818,2023-03-29,"NextGen Healthcare, Inc.",0,008858,roa,,0.0026,gained,
+708818,2023-03-29,"NextGen Healthcare, Inc.",0,008858,op_margin,,0.1132,gained,
+723254,2020-09-16,Cintas Corporation,0,003062,firm_size_log,8.9451,8.9451,identical,0.0
+723254,2020-09-16,Cintas Corporation,0,003062,leverage,0.5782,0.5782,identical,0.0
+723254,2020-09-16,Cintas Corporation,0,003062,roa,0.1142,0.1142,identical,0.0
+723254,2020-09-16,Cintas Corporation,0,003062,op_margin,0.2022,0.2022,identical,0.0
+731766,2024-02-12,Change Healthcare Inc.,0,010903,firm_size_log,,12.5199,gained,
+731766,2024-02-12,Change Healthcare Inc.,0,010903,leverage,,0.6386,gained,
+731766,2024-02-12,Change Healthcare Inc.,0,010903,roa,,0.0818,gained,
+731766,2024-02-12,Change Healthcare Inc.,0,010903,op_margin,,0.0978,gained,
+732712,2008-06-27,Verizon,1,002136,firm_size_log,12.1386,12.1386,identical,0.0
+732712,2008-06-27,Verizon,1,002136,leverage,0.5568,0.5568,identical,0.0
+732712,2008-06-27,Verizon,1,002136,roa,0.0295,0.0295,identical,0.0
+732712,2008-06-27,Verizon,1,002136,op_margin,0.3326,0.3326,identical,0.0
+732712,2014-01-20,Verizon Corporate Services Group Inc.,1,002136,firm_size_log,12.5212,12.5212,identical,0.0
+732712,2014-01-20,Verizon Corporate Services Group Inc.,1,002136,leverage,0.6519,0.6519,identical,0.0
+732712,2014-01-20,Verizon Corporate Services Group Inc.,1,002136,roa,0.0419,0.0419,identical,0.0
+732712,2014-01-20,Verizon Corporate Services Group Inc.,1,002136,op_margin,0.4029,0.4029,identical,0.0
+732712,2014-02-26,Verizon,1,002136,firm_size_log,12.5212,12.5212,identical,0.0
+732712,2014-02-26,Verizon,1,002136,leverage,0.6519,0.6519,identical,0.0
+732712,2014-02-26,Verizon,1,002136,roa,0.0419,0.0419,identical,0.0
+732712,2014-02-26,Verizon,1,002136,op_margin,0.4029,0.4029,identical,0.0
+732712,2016-08-10,Verizon,1,002136,firm_size_log,12.4075,12.4075,identical,0.0
+732712,2016-08-10,Verizon,1,002136,leverage,0.9271,0.9271,identical,0.0
+732712,2016-08-10,Verizon,1,002136,roa,0.0731,0.0731,identical,0.0
+732712,2016-08-10,Verizon,1,002136,op_margin,0.3729,0.3729,identical,0.0
+732712,2017-07-20,Verizon,1,002136,firm_size_log,12.4057,12.4057,identical,0.0
+732712,2017-07-20,Verizon,1,002136,leverage,0.9016,0.9016,identical,0.0
+732712,2017-07-20,Verizon,1,002136,roa,0.0538,0.0538,identical,0.0
+732712,2017-07-20,Verizon,1,002136,op_margin,0.3332,0.3332,identical,0.0
+732712,2019-03-12,Verizon Media,0,002136,firm_size_log,12.4868,12.4868,identical,0.0
+732712,2019-03-12,Verizon Media,0,002136,leverage,0.7934,0.7934,identical,0.0
+732712,2019-03-12,Verizon Media,0,002136,roa,0.0586,0.0586,identical,0.0
+732712,2019-03-12,Verizon Media,0,002136,op_margin,0.3605,0.3605,identical,0.0
+732712,2019-04-24,Verizon,1,002136,firm_size_log,12.4868,12.4868,identical,0.0
+732712,2019-04-24,Verizon,1,002136,leverage,0.7934,0.7934,identical,0.0
+732712,2019-04-24,Verizon,1,002136,roa,0.0586,0.0586,identical,0.0
+732712,2019-04-24,Verizon,1,002136,op_margin,0.3605,0.3605,identical,0.0
+732712,2019-06-03,Verizon,1,002136,firm_size_log,12.4868,12.4868,identical,0.0
+732712,2019-06-03,Verizon,1,002136,leverage,0.7934,0.7934,identical,0.0
+732712,2019-06-03,Verizon,1,002136,roa,0.0586,0.0586,identical,0.0
+732712,2019-06-03,Verizon,1,002136,op_margin,0.3605,0.3605,identical,0.0
+732712,2023-05-11,Verizon,1,002136,firm_size_log,12.8471,12.8471,identical,0.0
+732712,2023-05-11,Verizon,1,002136,leverage,0.7565,0.7565,identical,0.0
+732712,2023-05-11,Verizon,1,002136,roa,0.056,0.056,identical,0.0
+732712,2023-05-11,Verizon,1,002136,op_margin,0.3477,0.3477,identical,0.0
+732712,2023-09-21,Verizon Communications Inc.,1,002136,firm_size_log,12.8471,12.8471,identical,0.0
+732712,2023-09-21,Verizon Communications Inc.,1,002136,leverage,0.7565,0.7565,identical,0.0
+732712,2023-09-21,Verizon Communications Inc.,1,002136,roa,0.056,0.056,identical,0.0
+732712,2023-09-21,Verizon Communications Inc.,1,002136,op_margin,0.3477,0.3477,identical,0.0
+732712,2024-02-06,Verizon Communications Inc.,1,002136,firm_size_log,12.8486,12.8486,identical,0.0
+732712,2024-02-06,Verizon Communications Inc.,1,002136,leverage,0.7533,0.7533,identical,0.0
+732712,2024-02-06,Verizon Communications Inc.,1,002136,roa,0.0305,0.0305,identical,0.0
+732712,2024-02-06,Verizon Communications Inc.,1,002136,op_margin,0.3527,0.3527,identical,0.0
+732717,2008-05-23,AT&T,1,009899,firm_size_log,12.5269,12.5269,identical,0.0
+732717,2008-05-23,AT&T,1,009899,leverage,0.5815,0.5815,identical,0.0
+732717,2008-05-23,AT&T,1,009899,roa,0.0434,0.0434,identical,0.0
+732717,2008-05-23,AT&T,1,009899,op_margin,0.353,0.353,identical,0.0
+732717,2012-01-01,AT&T,1,009899,firm_size_log,12.5075,12.5075,identical,0.0
+732717,2012-01-01,AT&T,1,009899,leverage,0.6087,0.6087,identical,0.0
+732717,2012-01-01,AT&T,1,009899,roa,0.0146,0.0146,identical,0.0
+732717,2012-01-01,AT&T,1,009899,op_margin,0.2737,0.2737,identical,0.0
+732717,2013-01-01,AT&T,1,009899,firm_size_log,12.5147,12.5147,identical,0.0
+732717,2013-01-01,AT&T,1,009899,leverage,0.6596,0.6596,identical,0.0
+732717,2013-01-01,AT&T,1,009899,roa,0.0267,0.0267,identical,0.0
+732717,2013-01-01,AT&T,1,009899,op_margin,0.2444,0.2444,identical,0.0
+732717,2013-11-05,AT&T,1,009899,firm_size_log,12.5147,12.5147,identical,0.0
+732717,2013-11-05,AT&T,1,009899,leverage,0.6596,0.6596,identical,0.0
+732717,2013-11-05,AT&T,1,009899,roa,0.0267,0.0267,identical,0.0
+732717,2013-11-05,AT&T,1,009899,op_margin,0.2444,0.2444,identical,0.0
+732717,2014-02-01,AT&T,1,009899,firm_size_log,12.5346,12.5346,identical,0.0
+732717,2014-02-01,AT&T,1,009899,leverage,0.6707,0.6707,identical,0.0
+732717,2014-02-01,AT&T,1,009899,roa,0.0657,0.0657,identical,0.0
+732717,2014-02-01,AT&T,1,009899,op_margin,0.3835,0.3835,identical,0.0
+732717,2014-04-01,AT&T,1,009899,firm_size_log,12.5346,12.5346,identical,0.0
+732717,2014-04-01,AT&T,1,009899,leverage,0.6707,0.6707,identical,0.0
+732717,2014-04-01,AT&T,1,009899,roa,0.0657,0.0657,identical,0.0
+732717,2014-04-01,AT&T,1,009899,op_margin,0.3835,0.3835,identical,0.0
+732717,2014-04-09,"AT&T Services, Inc.",1,009899,firm_size_log,12.5346,12.5346,identical,0.0
+732717,2014-04-09,"AT&T Services, Inc.",1,009899,leverage,0.6707,0.6707,identical,0.0
+732717,2014-04-09,"AT&T Services, Inc.",1,009899,roa,0.0657,0.0657,identical,0.0
+732717,2014-04-09,"AT&T Services, Inc.",1,009899,op_margin,0.3835,0.3835,identical,0.0
+732717,2014-06-05,"AT&T Services, Inc.",1,009899,firm_size_log,12.5346,12.5346,identical,0.0
+732717,2014-06-05,"AT&T Services, Inc.",1,009899,leverage,0.6707,0.6707,identical,0.0
+732717,2014-06-05,"AT&T Services, Inc.",1,009899,roa,0.0657,0.0657,identical,0.0
+732717,2014-06-05,"AT&T Services, Inc.",1,009899,op_margin,0.3835,0.3835,identical,0.0
+732717,2014-06-11,AT&T,1,009899,firm_size_log,12.5346,12.5346,identical,0.0
+732717,2014-06-11,AT&T,1,009899,leverage,0.6707,0.6707,identical,0.0
+732717,2014-06-11,AT&T,1,009899,roa,0.0657,0.0657,identical,0.0
+732717,2014-06-11,AT&T,1,009899,op_margin,0.3835,0.3835,identical,0.0
+732717,2014-08-05,ATT-Breach Notification,0,009899,firm_size_log,12.5346,12.5346,identical,0.0
+732717,2014-08-05,ATT-Breach Notification,0,009899,leverage,0.6707,0.6707,identical,0.0
+732717,2014-08-05,ATT-Breach Notification,0,009899,roa,0.0657,0.0657,identical,0.0
+732717,2014-08-05,ATT-Breach Notification,0,009899,op_margin,0.3835,0.3835,identical,0.0
+732717,2014-08-11,"AT&T Services, Inc.",1,009899,firm_size_log,12.5346,12.5346,identical,0.0
+732717,2014-08-11,"AT&T Services, Inc.",1,009899,leverage,0.6707,0.6707,identical,0.0
+732717,2014-08-11,"AT&T Services, Inc.",1,009899,roa,0.0657,0.0657,identical,0.0
+732717,2014-08-11,"AT&T Services, Inc.",1,009899,op_margin,0.3835,0.3835,identical,0.0
+732717,2014-10-09,AT&T,1,009899,firm_size_log,12.5346,12.5346,identical,0.0
+732717,2014-10-09,AT&T,1,009899,leverage,0.6707,0.6707,identical,0.0
+732717,2014-10-09,AT&T,1,009899,roa,0.0657,0.0657,identical,0.0
+732717,2014-10-09,AT&T,1,009899,op_margin,0.3835,0.3835,identical,0.0
+732717,2014-10-16,ATT-Breach Notification,0,009899,firm_size_log,12.5346,12.5346,identical,0.0
+732717,2014-10-16,ATT-Breach Notification,0,009899,leverage,0.6707,0.6707,identical,0.0
+732717,2014-10-16,ATT-Breach Notification,0,009899,roa,0.0657,0.0657,identical,0.0
+732717,2014-10-16,ATT-Breach Notification,0,009899,op_margin,0.3835,0.3835,identical,0.0
+732717,2017-01-01,"AT&T Services, Inc.",1,009899,firm_size_log,12.9087,12.9087,identical,0.0
+732717,2017-01-01,"AT&T Services, Inc.",1,009899,leverage,0.6927,0.6927,identical,0.0
+732717,2017-01-01,"AT&T Services, Inc.",1,009899,roa,0.0321,0.0321,identical,0.0
+732717,2017-01-01,"AT&T Services, Inc.",1,009899,op_margin,0.3063,0.3063,identical,0.0
+732717,2017-01-25,AT&T,1,009899,firm_size_log,12.9087,12.9087,identical,0.0
+732717,2017-01-25,AT&T,1,009899,leverage,0.6927,0.6927,identical,0.0
+732717,2017-01-25,AT&T,1,009899,roa,0.0321,0.0321,identical,0.0
+732717,2017-01-25,AT&T,1,009899,op_margin,0.3063,0.3063,identical,0.0
+732717,2017-02-01,AT&T Services,1,009899,firm_size_log,12.9087,12.9087,identical,0.0
+732717,2017-02-01,AT&T Services,1,009899,leverage,0.6927,0.6927,identical,0.0
+732717,2017-02-01,AT&T Services,1,009899,roa,0.0321,0.0321,identical,0.0
+732717,2017-02-01,AT&T Services,1,009899,op_margin,0.3063,0.3063,identical,0.0
+732717,2018-08-17,Cricket Wireless LLC,1,009899,firm_size_log,13.0038,13.0038,identical,0.0
+732717,2018-08-17,Cricket Wireless LLC,1,009899,leverage,0.6802,0.6802,identical,0.0
+732717,2018-08-17,Cricket Wireless LLC,1,009899,roa,0.0663,0.0663,identical,0.0
+732717,2018-08-17,Cricket Wireless LLC,1,009899,op_margin,0.307,0.307,identical,0.0
+732717,2018-08-21,Cricket Wireless LLC,1,009899,firm_size_log,13.0038,13.0038,identical,0.0
+732717,2018-08-21,Cricket Wireless LLC,1,009899,leverage,0.6802,0.6802,identical,0.0
+732717,2018-08-21,Cricket Wireless LLC,1,009899,roa,0.0663,0.0663,identical,0.0
+732717,2018-08-21,Cricket Wireless LLC,1,009899,op_margin,0.307,0.307,identical,0.0
+732717,2019-01-01,"AT&T, Inc.",1,009899,firm_size_log,13.1841,13.1841,identical,0.0
+732717,2019-01-01,"AT&T, Inc.",1,009899,leverage,0.6355,0.6355,identical,0.0
+732717,2019-01-01,"AT&T, Inc.",1,009899,roa,0.0364,0.0364,identical,0.0
+732717,2019-01-01,"AT&T, Inc.",1,009899,op_margin,0.3312,0.3312,identical,0.0
+732717,2022-06-01,AT&T,1,009899,firm_size_log,13.2206,13.2206,identical,0.0
+732717,2022-06-01,AT&T,1,009899,leverage,0.6667,0.6667,identical,0.0
+732717,2022-06-01,AT&T,1,009899,roa,0.0364,0.0364,identical,0.0
+732717,2022-06-01,AT&T,1,009899,op_margin,0.3048,0.3048,identical,0.0
+732717,2022-08-30,"AT&T Services, Inc.",1,009899,firm_size_log,13.2206,13.2206,identical,0.0
+732717,2022-08-30,"AT&T Services, Inc.",1,009899,leverage,0.6667,0.6667,identical,0.0
+732717,2022-08-30,"AT&T Services, Inc.",1,009899,roa,0.0364,0.0364,identical,0.0
+732717,2022-08-30,"AT&T Services, Inc.",1,009899,op_margin,0.3048,0.3048,identical,0.0
+732717,2023-03-01,"AT&T Services, Inc.",1,009899,firm_size_log,12.9063,12.9063,identical,0.0
+732717,2023-03-01,"AT&T Services, Inc.",1,009899,leverage,0.7357,0.7357,identical,0.0
+732717,2023-03-01,"AT&T Services, Inc.",1,009899,roa,-0.0195,-0.0195,identical,0.0
+732717,2023-03-01,"AT&T Services, Inc.",1,009899,op_margin,0.3434,0.3434,identical,0.0
+732717,2024-03-17,AT&T Inc.,1,009899,firm_size_log,12.9167,12.9167,identical,0.0
+732717,2024-03-17,AT&T Inc.,1,009899,leverage,0.7066,0.7066,identical,0.0
+732717,2024-03-17,AT&T Inc.,1,009899,roa,0.0354,0.0354,identical,0.0
+732717,2024-03-17,AT&T Inc.,1,009899,op_margin,0.3555,0.3555,identical,0.0
+732717,2024-03-26,AT&T Inc.,1,009899,firm_size_log,12.9167,12.9167,identical,0.0
+732717,2024-03-26,AT&T Inc.,1,009899,leverage,0.7066,0.7066,identical,0.0
+732717,2024-03-26,AT&T Inc.,1,009899,roa,0.0354,0.0354,identical,0.0
+732717,2024-03-26,AT&T Inc.,1,009899,op_margin,0.3555,0.3555,identical,0.0
+732717,2024-04-09,AT&T Inc,1,009899,firm_size_log,12.9167,12.9167,identical,0.0
+732717,2024-04-09,AT&T Inc,1,009899,leverage,0.7066,0.7066,identical,0.0
+732717,2024-04-09,AT&T Inc,1,009899,roa,0.0354,0.0354,identical,0.0
+732717,2024-04-09,AT&T Inc,1,009899,op_margin,0.3555,0.3555,identical,0.0
+732717,2024-04-14,AT&T Inc.,1,009899,firm_size_log,12.9167,12.9167,identical,0.0
+732717,2024-04-14,AT&T Inc.,1,009899,leverage,0.7066,0.7066,identical,0.0
+732717,2024-04-14,AT&T Inc.,1,009899,roa,0.0354,0.0354,identical,0.0
+732717,2024-04-14,AT&T Inc.,1,009899,op_margin,0.3555,0.3555,identical,0.0
+764180,2006-12-01,"Altria Group, Inc.",0,008543,firm_size_log,11.5894,11.5894,identical,0.0
+764180,2006-12-01,"Altria Group, Inc.",0,008543,leverage,0.6309,0.6309,identical,0.0
+764180,2006-12-01,"Altria Group, Inc.",0,008543,roa,0.0967,0.0967,identical,0.0
+764180,2006-12-01,"Altria Group, Inc.",0,008543,op_margin,0.2737,0.2737,identical,0.0
+771497,2018-01-08,ABM Industries Incorporated,0,001410,firm_size_log,,8.2461,gained,
+771497,2018-01-08,ABM Industries Incorporated,0,001410,leverage,,0.6392,gained,
+771497,2018-01-08,ABM Industries Incorporated,0,001410,roa,,0.001,gained,
+771497,2018-01-08,ABM Industries Incorporated,0,001410,op_margin,,0.0314,gained,
+773840,2021-02-16,Honeywell International Inc.,0,001300,firm_size_log,11.0758,11.0758,identical,0.0
+773840,2021-02-16,Honeywell International Inc.,0,001300,leverage,0.7244,0.7244,identical,0.0
+773840,2021-02-16,Honeywell International Inc.,0,001300,roa,0.074,0.074,identical,0.0
+773840,2021-02-16,Honeywell International Inc.,0,001300,op_margin,0.2228,0.2228,identical,0.0
+773840,2023-05-27,"Honeywell International, Inc.",0,001300,firm_size_log,11.0393,11.0393,identical,0.0
+773840,2023-05-27,"Honeywell International, Inc.",0,001300,leverage,0.7218,0.7218,identical,0.0
+773840,2023-05-27,"Honeywell International, Inc.",0,001300,roa,0.0797,0.0797,identical,0.0
+773840,2023-05-27,"Honeywell International, Inc.",0,001300,op_margin,0.234,0.234,identical,0.0
+773840,2023-06-03,Honeywell International Inc.,0,001300,firm_size_log,11.0393,11.0393,identical,0.0
+773840,2023-06-03,Honeywell International Inc.,0,001300,leverage,0.7218,0.7218,identical,0.0
+773840,2023-06-03,Honeywell International Inc.,0,001300,roa,0.0797,0.0797,identical,0.0
+773840,2023-06-03,Honeywell International Inc.,0,001300,op_margin,0.234,0.234,identical,0.0
+789019,2017-07-05,Microsoft Corporation,0,012141,firm_size_log,12.3929,12.3929,identical,0.0
+789019,2017-07-05,Microsoft Corporation,0,012141,leverage,0.6997,0.6997,identical,0.0
+789019,2017-07-05,Microsoft Corporation,0,012141,roa,0.088,0.088,identical,0.0
+789019,2017-07-05,Microsoft Corporation,0,012141,op_margin,0.3383,0.3383,identical,0.0
+789019,2019-12-05,Microsoft Corporation,0,012141,firm_size_log,12.5657,12.5657,identical,0.0
+789019,2019-12-05,Microsoft Corporation,0,012141,leverage,0.6429,0.6429,identical,0.0
+789019,2019-12-05,Microsoft Corporation,0,012141,roa,0.1369,0.1369,identical,0.0
+789019,2019-12-05,Microsoft Corporation,0,012141,op_margin,0.4335,0.4335,identical,0.0
+789019,2022-03-01,Microsoft Corporation,0,012141,firm_size_log,12.7182,12.7182,identical,0.0
+789019,2022-03-01,Microsoft Corporation,0,012141,leverage,0.5746,0.5746,identical,0.0
+789019,2022-03-01,Microsoft Corporation,0,012141,roa,0.1836,0.1836,identical,0.0
+789019,2022-03-01,Microsoft Corporation,0,012141,op_margin,0.4808,0.4808,identical,0.0
+789019,2022-09-24,Microsoft Corporation,0,012141,firm_size_log,12.8072,12.8072,identical,0.0
+789019,2022-09-24,Microsoft Corporation,0,012141,leverage,0.5435,0.5435,identical,0.0
+789019,2022-09-24,Microsoft Corporation,0,012141,roa,0.1994,0.1994,identical,0.0
+789019,2022-09-24,Microsoft Corporation,0,012141,op_margin,0.4948,0.4948,identical,0.0
+789019,2023-05-28,"Nuance Communications, Inc.",0,012141,firm_size_log,12.8072,12.8072,identical,0.0
+789019,2023-05-28,"Nuance Communications, Inc.",0,012141,leverage,0.5435,0.5435,identical,0.0
+789019,2023-05-28,"Nuance Communications, Inc.",0,012141,roa,0.1994,0.1994,identical,0.0
+789019,2023-05-28,"Nuance Communications, Inc.",0,012141,op_margin,0.4948,0.4948,identical,0.0
+789570,2019-07-07,MGM Resorts International,0,014418,firm_size_log,10.316,10.316,identical,0.0
+789570,2019-07-07,MGM Resorts International,0,014418,leverage,0.6501,0.6501,identical,0.0
+789570,2019-07-07,MGM Resorts International,0,014418,roa,0.0147,0.0147,identical,0.0
+789570,2019-07-07,MGM Resorts International,0,014418,op_margin,0.2067,0.2067,identical,0.0
+789570,2023-09-08,MGM Resorts International,0,014418,firm_size_log,10.7297,10.7297,identical,0.0
+789570,2023-09-08,MGM Resorts International,0,014418,leverage,0.8825,0.8825,identical,0.0
+789570,2023-09-08,MGM Resorts International,0,014418,roa,0.0315,0.0315,identical,0.0
+789570,2023-09-08,MGM Resorts International,0,014418,op_margin,0.1355,0.1355,identical,0.0
+790070,2014-01-07,EMC Corporation,0,012053,firm_size_log,,10.7331,gained,
+790070,2014-01-07,EMC Corporation,0,012053,leverage,,0.4812,gained,
+790070,2014-01-07,EMC Corporation,0,012053,roa,,0.063,gained,
+790070,2014-01-07,EMC Corporation,0,012053,op_margin,,0.2608,gained,
+796343,2013-09-11,Adobe Systems Incorporated,0,012540,firm_size_log,9.2078,9.2078,identical,0.0
+796343,2013-09-11,Adobe Systems Incorporated,0,012540,leverage,0.3318,0.3318,identical,0.0
+796343,2013-09-11,Adobe Systems Incorporated,0,012540,roa,0.0835,0.0835,identical,0.0
+796343,2013-09-11,Adobe Systems Incorporated,0,012540,op_margin,0.3311,0.3311,identical,0.0
+796343,2013-09-17,Adobe Systems Incorporated,0,012540,firm_size_log,9.2078,9.2078,identical,0.0
+796343,2013-09-17,Adobe Systems Incorporated,0,012540,leverage,0.3318,0.3318,identical,0.0
+796343,2013-09-17,Adobe Systems Incorporated,0,012540,roa,0.0835,0.0835,identical,0.0
+796343,2013-09-17,Adobe Systems Incorporated,0,012540,op_margin,0.3311,0.3311,identical,0.0
+796343,2019-10-19,Adobe Systems Incorporated,0,012540,firm_size_log,9.8399,9.8399,identical,0.0
+796343,2019-10-19,Adobe Systems Incorporated,0,012540,leverage,0.5012,0.5012,identical,0.0
+796343,2019-10-19,Adobe Systems Incorporated,0,012540,roa,0.138,0.138,identical,0.0
+796343,2019-10-19,Adobe Systems Incorporated,0,012540,op_margin,0.3522,0.3522,identical,0.0
+798354,2008-12-02,"Fiserv, Inc.",0,012635,firm_size_log,,9.3797,gained,
+798354,2008-12-02,"Fiserv, Inc.",0,012635,leverage,,0.7917,gained,
+798354,2008-12-02,"Fiserv, Inc.",0,012635,roa,,0.0371,gained,
+798354,2008-12-02,"Fiserv, Inc.",0,012635,op_margin,,0.2239,gained,
+798354,2021-09-25,Fiserv,0,012635,firm_size_log,,11.2202,gained,
+798354,2021-09-25,Fiserv,0,012635,leverage,,0.5533,gained,
+798354,2021-09-25,Fiserv,0,012635,roa,,0.0128,gained,
+798354,2021-09-25,Fiserv,0,012635,op_margin,,0.3297,gained,
+798354,2023-12-06,Fiserv,0,012635,firm_size_log,,11.337,gained,
+798354,2023-12-06,Fiserv,0,012635,leverage,,0.6222,gained,
+798354,2023-12-06,Fiserv,0,012635,roa,,0.0302,gained,
+798354,2023-12-06,Fiserv,0,012635,op_margin,,0.3767,gained,
+2041610,2023-01-01,Paramount,0,013714,firm_size_log,,10.975,gained,
+2041610,2023-01-01,Paramount,0,013714,leverage,,0.5957,gained,
+2041610,2023-01-01,Paramount,0,013714,roa,,0.0189,gained,
+2041610,2023-01-01,Paramount,0,013714,op_margin,,0.1086,gained,
+2041610,2023-08-10,Paramount Global,0,013714,firm_size_log,,10.975,gained,
+2041610,2023-08-10,Paramount Global,0,013714,leverage,,0.5957,gained,
+2041610,2023-08-10,Paramount Global,0,013714,roa,,0.0189,gained,
+2041610,2023-08-10,Paramount Global,0,013714,op_margin,,0.1086,gained,
+815097,2020-12-25,Carnival Corporation,0,013498,firm_size_log,10.8892,10.8892,identical,0.0
+815097,2020-12-25,Carnival Corporation,0,013498,leverage,0.6165,0.6165,identical,0.0
+815097,2020-12-25,Carnival Corporation,0,013498,roa,-0.191,-0.191,identical,0.0
+815097,2020-12-25,Carnival Corporation,0,013498,op_margin,-0.4685,-0.4685,identical,0.0
+815097,2021-03-19,Carnival Corporation,0,013498,firm_size_log,10.8892,10.8892,identical,0.0
+815097,2021-03-19,Carnival Corporation,0,013498,leverage,0.6165,0.6165,identical,0.0
+815097,2021-03-19,Carnival Corporation,0,013498,roa,-0.191,-0.191,identical,0.0
+815097,2021-03-19,Carnival Corporation,0,013498,op_margin,-0.4685,-0.4685,identical,0.0
+823768,2021-01-21,"USA Waste-Management Resources, LLC",0,014477,firm_size_log,10.2869,10.2869,identical,0.0
+823768,2021-01-21,"USA Waste-Management Resources, LLC",0,014477,leverage,0.746,0.746,identical,0.0
+823768,2021-01-21,"USA Waste-Management Resources, LLC",0,014477,roa,0.051,0.051,identical,0.0
+823768,2021-01-21,"USA Waste-Management Resources, LLC",0,014477,op_margin,0.2909,0.2909,identical,0.0
+831259,2023-08-08,Freeport-McMoRan Inc.,0,014590,firm_size_log,10.8414,10.8414,identical,0.0
+831259,2023-08-08,Freeport-McMoRan Inc.,0,014590,leverage,0.5132,0.5132,identical,0.0
+831259,2023-08-08,Freeport-McMoRan Inc.,0,014590,roa,0.0679,0.0679,identical,0.0
+831259,2023-08-08,Freeport-McMoRan Inc.,0,014590,op_margin,0.4169,0.4169,identical,0.0
+858877,2012-03-26,"Cisco Systems, Inc.",0,020779,firm_size_log,11.3748,11.3748,identical,0.0
+858877,2012-03-26,"Cisco Systems, Inc.",0,020779,leverage,0.4574,0.4574,identical,0.0
+858877,2012-03-26,"Cisco Systems, Inc.",0,020779,roa,0.0745,0.0745,identical,0.0
+858877,2012-03-26,"Cisco Systems, Inc.",0,020779,op_margin,0.248,0.248,identical,0.0
+858877,2012-04-13,"Cisco Systems, Inc.",0,020779,firm_size_log,11.3748,11.3748,identical,0.0
+858877,2012-04-13,"Cisco Systems, Inc.",0,020779,leverage,0.4574,0.4574,identical,0.0
+858877,2012-04-13,"Cisco Systems, Inc.",0,020779,roa,0.0745,0.0745,identical,0.0
+858877,2012-04-13,"Cisco Systems, Inc.",0,020779,op_margin,0.248,0.248,identical,0.0
+860731,2020-09-21,"Tyler Technologies, Inc.",0,010789,firm_size_log,7.6924,7.6924,identical,0.0
+860731,2020-09-21,"Tyler Technologies, Inc.",0,010789,leverage,0.2622,0.2622,identical,0.0
+860731,2020-09-21,"Tyler Technologies, Inc.",0,010789,roa,0.0669,0.0669,identical,0.0
+860731,2020-09-21,"Tyler Technologies, Inc.",0,010789,op_margin,0.2151,0.2151,identical,0.0
+872589,2010-06-18,"Regeneron Pharmaceuticals, Inc.",0,023812,firm_size_log,6.6083,6.6083,identical,0.0
+872589,2010-06-18,"Regeneron Pharmaceuticals, Inc.",0,023812,leverage,0.4647,0.4647,identical,0.0
+872589,2010-06-18,"Regeneron Pharmaceuticals, Inc.",0,023812,roa,-0.0915,-0.0915,identical,0.0
+872589,2010-06-18,"Regeneron Pharmaceuticals, Inc.",0,023812,op_margin,-0.1578,-0.1578,identical,0.0
+877890,2013-04-26,Citrix Systems Inc.,0,061676,firm_size_log,,8.4756,gained,
+877890,2013-04-26,Citrix Systems Inc.,0,061676,leverage,,0.3491,gained,
+877890,2013-04-26,Citrix Systems Inc.,0,061676,roa,,0.0735,gained,
+877890,2013-04-26,Citrix Systems Inc.,0,061676,op_margin,,0.2376,gained,
+877890,2016-11-15,Citrix Systems,0,061676,firm_size_log,,8.6091,gained,
+877890,2016-11-15,Citrix Systems,0,061676,leverage,,0.64,gained,
+877890,2016-11-15,Citrix Systems,0,061676,roa,,0.0583,gained,
+877890,2016-11-15,Citrix Systems,0,061676,op_margin,,0.2574,gained,
+877890,2018-10-13,"Citrix Systems, Inc.",0,061676,firm_size_log,,8.6691,gained,
+877890,2018-10-13,"Citrix Systems, Inc.",0,061676,leverage,,0.8295,gained,
+877890,2018-10-13,"Citrix Systems, Inc.",0,061676,roa,,-0.0036,gained,
+877890,2018-10-13,"Citrix Systems, Inc.",0,061676,op_margin,,0.2882,gained,
+892553,2009-07-23,"Chart Industries, Inc.",0,025964,firm_size_log,,6.8128,gained,
+892553,2009-07-23,"Chart Industries, Inc.",0,025964,leverage,,0.5542,gained,
+892553,2009-07-23,"Chart Industries, Inc.",0,025964,roa,,0.0868,gained,
+892553,2009-07-23,"Chart Industries, Inc.",0,025964,op_margin,,0.2066,gained,
+896878,2008-05-26,"Intuit, Inc.",0,027928,firm_size_log,8.3552,8.3552,identical,0.0
+896878,2008-05-26,"Intuit, Inc.",0,027928,leverage,0.5211,0.5211,identical,0.0
+896878,2008-05-26,"Intuit, Inc.",0,027928,roa,0.1035,0.1035,identical,0.0
+896878,2008-05-26,"Intuit, Inc.",0,027928,op_margin,0.2914,0.2914,identical,0.0
+896878,2008-09-24,Intuit,0,027928,firm_size_log,8.4482,8.4482,identical,0.0
+896878,2008-09-24,Intuit,0,027928,leverage,0.5543,0.5543,identical,0.0
+896878,2008-09-24,Intuit,0,027928,roa,0.1022,0.1022,identical,0.0
+896878,2008-09-24,Intuit,0,027928,op_margin,0.29,0.29,identical,0.0
+896878,2014-02-01,"Intuit, Inc.",0,027928,firm_size_log,8.61,8.61,identical,0.0
+896878,2014-02-01,"Intuit, Inc.",0,027928,leverage,0.3564,0.3564,identical,0.0
+896878,2014-02-01,"Intuit, Inc.",0,027928,roa,0.1564,0.1564,identical,0.0
+896878,2014-02-01,"Intuit, Inc.",0,027928,op_margin,0.3512,0.3512,identical,0.0
+896878,2014-04-01,Intuit Inc.,0,027928,firm_size_log,8.61,8.61,identical,0.0
+896878,2014-04-01,Intuit Inc.,0,027928,leverage,0.3564,0.3564,identical,0.0
+896878,2014-04-01,Intuit Inc.,0,027928,roa,0.1564,0.1564,identical,0.0
+896878,2014-04-01,Intuit Inc.,0,027928,op_margin,0.3512,0.3512,identical,0.0
+896878,2014-04-18,Intuit Inc.,0,027928,firm_size_log,8.61,8.61,identical,0.0
+896878,2014-04-18,Intuit Inc.,0,027928,leverage,0.3564,0.3564,identical,0.0
+896878,2014-04-18,Intuit Inc.,0,027928,roa,0.1564,0.1564,identical,0.0
+896878,2014-04-18,Intuit Inc.,0,027928,op_margin,0.3512,0.3512,identical,0.0
+896878,2015-04-07,Intuit,0,027928,firm_size_log,8.5566,8.5566,identical,0.0
+896878,2015-04-07,Intuit,0,027928,leverage,0.4082,0.4082,identical,0.0
+896878,2015-04-07,Intuit,0,027928,roa,0.1744,0.1744,identical,0.0
+896878,2015-04-07,Intuit,0,027928,op_margin,0.3353,0.3353,identical,0.0
+896878,2015-04-14,Intuit,0,027928,firm_size_log,8.5566,8.5566,identical,0.0
+896878,2015-04-14,Intuit,0,027928,leverage,0.4082,0.4082,identical,0.0
+896878,2015-04-14,Intuit,0,027928,roa,0.1744,0.1744,identical,0.0
+896878,2015-04-14,Intuit,0,027928,op_margin,0.3353,0.3353,identical,0.0
+896878,2015-05-20,Intuit,0,027928,firm_size_log,8.5566,8.5566,identical,0.0
+896878,2015-05-20,Intuit,0,027928,leverage,0.4082,0.4082,identical,0.0
+896878,2015-05-20,Intuit,0,027928,roa,0.1744,0.1744,identical,0.0
+896878,2015-05-20,Intuit,0,027928,op_margin,0.3353,0.3353,identical,0.0
+896878,2015-09-18,Intuit Inc,0,027928,firm_size_log,8.5108,8.5108,identical,0.0
+896878,2015-09-18,Intuit Inc,0,027928,leverage,0.5306,0.5306,identical,0.0
+896878,2015-09-18,Intuit Inc,0,027928,roa,0.0735,0.0735,identical,0.0
+896878,2015-09-18,Intuit Inc,0,027928,op_margin,0.2595,0.2595,identical,0.0
+896878,2015-10-12,Intuit Inc,0,027928,firm_size_log,8.5108,8.5108,identical,0.0
+896878,2015-10-12,Intuit Inc,0,027928,leverage,0.5306,0.5306,identical,0.0
+896878,2015-10-12,Intuit Inc,0,027928,roa,0.0735,0.0735,identical,0.0
+896878,2015-10-12,Intuit Inc,0,027928,op_margin,0.2595,0.2595,identical,0.0
+896878,2015-12-01,Intuit,0,027928,firm_size_log,8.5108,8.5108,identical,0.0
+896878,2015-12-01,Intuit,0,027928,leverage,0.5306,0.5306,identical,0.0
+896878,2015-12-01,Intuit,0,027928,roa,0.0735,0.0735,identical,0.0
+896878,2015-12-01,Intuit,0,027928,op_margin,0.2595,0.2595,identical,0.0
+896878,2015-12-07,Intuit Inc.,0,027928,firm_size_log,8.5108,8.5108,identical,0.0
+896878,2015-12-07,Intuit Inc.,0,027928,leverage,0.5306,0.5306,identical,0.0
+896878,2015-12-07,Intuit Inc.,0,027928,roa,0.0735,0.0735,identical,0.0
+896878,2015-12-07,Intuit Inc.,0,027928,op_margin,0.2595,0.2595,identical,0.0
+896878,2015-12-31,"Intuit, Inc.",0,027928,firm_size_log,8.5108,8.5108,identical,0.0
+896878,2015-12-31,"Intuit, Inc.",0,027928,leverage,0.5306,0.5306,identical,0.0
+896878,2015-12-31,"Intuit, Inc.",0,027928,roa,0.0735,0.0735,identical,0.0
+896878,2015-12-31,"Intuit, Inc.",0,027928,op_margin,0.2595,0.2595,identical,0.0
+896878,2016-01-21,Intuit Inc.,0,027928,firm_size_log,8.5108,8.5108,identical,0.0
+896878,2016-01-21,Intuit Inc.,0,027928,leverage,0.5306,0.5306,identical,0.0
+896878,2016-01-21,Intuit Inc.,0,027928,roa,0.0735,0.0735,identical,0.0
+896878,2016-01-21,Intuit Inc.,0,027928,op_margin,0.2595,0.2595,identical,0.0
+896878,2016-02-04,Intuit,0,027928,firm_size_log,8.5108,8.5108,identical,0.0
+896878,2016-02-04,Intuit,0,027928,leverage,0.5306,0.5306,identical,0.0
+896878,2016-02-04,Intuit,0,027928,roa,0.0735,0.0735,identical,0.0
+896878,2016-02-04,Intuit,0,027928,op_margin,0.2595,0.2595,identical,0.0
+896878,2016-02-24,Intuit,0,027928,firm_size_log,8.5108,8.5108,identical,0.0
+896878,2016-02-24,Intuit,0,027928,leverage,0.5306,0.5306,identical,0.0
+896878,2016-02-24,Intuit,0,027928,roa,0.0735,0.0735,identical,0.0
+896878,2016-02-24,Intuit,0,027928,op_margin,0.2595,0.2595,identical,0.0
+896878,2016-02-29,Intuit Inc,0,027928,firm_size_log,8.5108,8.5108,identical,0.0
+896878,2016-02-29,Intuit Inc,0,027928,leverage,0.5306,0.5306,identical,0.0
+896878,2016-02-29,Intuit Inc,0,027928,roa,0.0735,0.0735,identical,0.0
+896878,2016-02-29,Intuit Inc,0,027928,op_margin,0.2595,0.2595,identical,0.0
+896878,2016-03-07,"Intuit, Inc.",0,027928,firm_size_log,8.5108,8.5108,identical,0.0
+896878,2016-03-07,"Intuit, Inc.",0,027928,leverage,0.5306,0.5306,identical,0.0
+896878,2016-03-07,"Intuit, Inc.",0,027928,roa,0.0735,0.0735,identical,0.0
+896878,2016-03-07,"Intuit, Inc.",0,027928,op_margin,0.2595,0.2595,identical,0.0
+896878,2016-03-17,Intuit,0,027928,firm_size_log,8.5108,8.5108,identical,0.0
+896878,2016-03-17,Intuit,0,027928,leverage,0.5306,0.5306,identical,0.0
+896878,2016-03-17,Intuit,0,027928,roa,0.0735,0.0735,identical,0.0
+896878,2016-03-17,Intuit,0,027928,op_margin,0.2595,0.2595,identical,0.0
+896878,2016-03-22,Intuit Inc.,0,027928,firm_size_log,8.5108,8.5108,identical,0.0
+896878,2016-03-22,Intuit Inc.,0,027928,leverage,0.5306,0.5306,identical,0.0
+896878,2016-03-22,Intuit Inc.,0,027928,roa,0.0735,0.0735,identical,0.0
+896878,2016-03-22,Intuit Inc.,0,027928,op_margin,0.2595,0.2595,identical,0.0
+896878,2016-03-29,Intuit Inc,0,027928,firm_size_log,8.5108,8.5108,identical,0.0
+896878,2016-03-29,Intuit Inc,0,027928,leverage,0.5306,0.5306,identical,0.0
+896878,2016-03-29,Intuit Inc,0,027928,roa,0.0735,0.0735,identical,0.0
+896878,2016-03-29,Intuit Inc,0,027928,op_margin,0.2595,0.2595,identical,0.0
+896878,2016-04-06,Intuit,0,027928,firm_size_log,8.5108,8.5108,identical,0.0
+896878,2016-04-06,Intuit,0,027928,leverage,0.5306,0.5306,identical,0.0
+896878,2016-04-06,Intuit,0,027928,roa,0.0735,0.0735,identical,0.0
+896878,2016-04-06,Intuit,0,027928,op_margin,0.2595,0.2595,identical,0.0
+896878,2016-04-14,Intuit Inc.,0,027928,firm_size_log,8.5108,8.5108,identical,0.0
+896878,2016-04-14,Intuit Inc.,0,027928,leverage,0.5306,0.5306,identical,0.0
+896878,2016-04-14,Intuit Inc.,0,027928,roa,0.0735,0.0735,identical,0.0
+896878,2016-04-14,Intuit Inc.,0,027928,op_margin,0.2595,0.2595,identical,0.0
+896878,2016-04-29,Intuit,0,027928,firm_size_log,8.5108,8.5108,identical,0.0
+896878,2016-04-29,Intuit,0,027928,leverage,0.5306,0.5306,identical,0.0
+896878,2016-04-29,Intuit,0,027928,roa,0.0735,0.0735,identical,0.0
+896878,2016-04-29,Intuit,0,027928,op_margin,0.2595,0.2595,identical,0.0
+896878,2016-05-17,Intuit,0,027928,firm_size_log,8.5108,8.5108,identical,0.0
+896878,2016-05-17,Intuit,0,027928,leverage,0.5306,0.5306,identical,0.0
+896878,2016-05-17,Intuit,0,027928,roa,0.0735,0.0735,identical,0.0
+896878,2016-05-17,Intuit,0,027928,op_margin,0.2595,0.2595,identical,0.0
+896878,2016-05-27,Intuit,0,027928,firm_size_log,8.5108,8.5108,identical,0.0
+896878,2016-05-27,Intuit,0,027928,leverage,0.5306,0.5306,identical,0.0
+896878,2016-05-27,Intuit,0,027928,roa,0.0735,0.0735,identical,0.0
+896878,2016-05-27,Intuit,0,027928,op_margin,0.2595,0.2595,identical,0.0
+896878,2016-06-01,"Intuit, Inc.",0,027928,firm_size_log,8.5108,8.5108,identical,0.0
+896878,2016-06-01,"Intuit, Inc.",0,027928,leverage,0.5306,0.5306,identical,0.0
+896878,2016-06-01,"Intuit, Inc.",0,027928,roa,0.0735,0.0735,identical,0.0
+896878,2016-06-01,"Intuit, Inc.",0,027928,op_margin,0.2595,0.2595,identical,0.0
+896878,2016-06-09,Intuit Inc,0,027928,firm_size_log,8.5108,8.5108,identical,0.0
+896878,2016-06-09,Intuit Inc,0,027928,leverage,0.5306,0.5306,identical,0.0
+896878,2016-06-09,Intuit Inc,0,027928,roa,0.0735,0.0735,identical,0.0
+896878,2016-06-09,Intuit Inc,0,027928,op_margin,0.2595,0.2595,identical,0.0
+896878,2016-08-03,Intuit Inc.,0,027928,firm_size_log,8.3547,8.3547,identical,0.0
+896878,2016-08-03,Intuit Inc.,0,027928,leverage,0.7268,0.7268,identical,0.0
+896878,2016-08-03,Intuit Inc.,0,027928,roa,0.2304,0.2304,identical,0.0
+896878,2016-08-03,Intuit Inc.,0,027928,op_margin,0.3153,0.3153,identical,0.0
+896878,2016-08-22,Intuit Inc.,0,027928,firm_size_log,8.3547,8.3547,identical,0.0
+896878,2016-08-22,Intuit Inc.,0,027928,leverage,0.7268,0.7268,identical,0.0
+896878,2016-08-22,Intuit Inc.,0,027928,roa,0.2304,0.2304,identical,0.0
+896878,2016-08-22,Intuit Inc.,0,027928,op_margin,0.3153,0.3153,identical,0.0
+896878,2016-09-12,Intuit Inc,0,027928,firm_size_log,8.3547,8.3547,identical,0.0
+896878,2016-09-12,Intuit Inc,0,027928,leverage,0.7268,0.7268,identical,0.0
+896878,2016-09-12,Intuit Inc,0,027928,roa,0.2304,0.2304,identical,0.0
+896878,2016-09-12,Intuit Inc,0,027928,op_margin,0.3153,0.3153,identical,0.0
+896878,2016-09-26,Intuit Inc.,0,027928,firm_size_log,8.3547,8.3547,identical,0.0
+896878,2016-09-26,Intuit Inc.,0,027928,leverage,0.7268,0.7268,identical,0.0
+896878,2016-09-26,Intuit Inc.,0,027928,roa,0.2304,0.2304,identical,0.0
+896878,2016-09-26,Intuit Inc.,0,027928,op_margin,0.3153,0.3153,identical,0.0
+896878,2016-10-18,Intuit,0,027928,firm_size_log,8.3547,8.3547,identical,0.0
+896878,2016-10-18,Intuit,0,027928,leverage,0.7268,0.7268,identical,0.0
+896878,2016-10-18,Intuit,0,027928,roa,0.2304,0.2304,identical,0.0
+896878,2016-10-18,Intuit,0,027928,op_margin,0.3153,0.3153,identical,0.0
+896878,2016-10-23,Intuit Inc.,0,027928,firm_size_log,8.3547,8.3547,identical,0.0
+896878,2016-10-23,Intuit Inc.,0,027928,leverage,0.7268,0.7268,identical,0.0
+896878,2016-10-23,Intuit Inc.,0,027928,roa,0.2304,0.2304,identical,0.0
+896878,2016-10-23,Intuit Inc.,0,027928,op_margin,0.3153,0.3153,identical,0.0
+896878,2016-10-30,Intuit Inc,0,027928,firm_size_log,8.3547,8.3547,identical,0.0
+896878,2016-10-30,Intuit Inc,0,027928,leverage,0.7268,0.7268,identical,0.0
+896878,2016-10-30,Intuit Inc,0,027928,roa,0.2304,0.2304,identical,0.0
+896878,2016-10-30,Intuit Inc,0,027928,op_margin,0.3153,0.3153,identical,0.0
+896878,2016-11-22,Intuit Inc,0,027928,firm_size_log,8.3547,8.3547,identical,0.0
+896878,2016-11-22,Intuit Inc,0,027928,leverage,0.7268,0.7268,identical,0.0
+896878,2016-11-22,Intuit Inc,0,027928,roa,0.2304,0.2304,identical,0.0
+896878,2016-11-22,Intuit Inc,0,027928,op_margin,0.3153,0.3153,identical,0.0
+896878,2016-12-05,"Intuit, Inc.",0,027928,firm_size_log,8.3547,8.3547,identical,0.0
+896878,2016-12-05,"Intuit, Inc.",0,027928,leverage,0.7268,0.7268,identical,0.0
+896878,2016-12-05,"Intuit, Inc.",0,027928,roa,0.2304,0.2304,identical,0.0
+896878,2016-12-05,"Intuit, Inc.",0,027928,op_margin,0.3153,0.3153,identical,0.0
+896878,2016-12-13,"Intuit, Inc.",0,027928,firm_size_log,8.3547,8.3547,identical,0.0
+896878,2016-12-13,"Intuit, Inc.",0,027928,leverage,0.7268,0.7268,identical,0.0
+896878,2016-12-13,"Intuit, Inc.",0,027928,roa,0.2304,0.2304,identical,0.0
+896878,2016-12-13,"Intuit, Inc.",0,027928,op_margin,0.3153,0.3153,identical,0.0
+896878,2017-01-01,Intuit Inc.,0,027928,firm_size_log,8.3547,8.3547,identical,0.0
+896878,2017-01-01,Intuit Inc.,0,027928,leverage,0.7268,0.7268,identical,0.0
+896878,2017-01-01,Intuit Inc.,0,027928,roa,0.2304,0.2304,identical,0.0
+896878,2017-01-01,Intuit Inc.,0,027928,op_margin,0.3153,0.3153,identical,0.0
+896878,2017-01-12,Intuit Inc.,0,027928,firm_size_log,8.3547,8.3547,identical,0.0
+896878,2017-01-12,Intuit Inc.,0,027928,leverage,0.7268,0.7268,identical,0.0
+896878,2017-01-12,Intuit Inc.,0,027928,roa,0.2304,0.2304,identical,0.0
+896878,2017-01-12,Intuit Inc.,0,027928,op_margin,0.3153,0.3153,identical,0.0
+896878,2017-01-27,Intuit,0,027928,firm_size_log,8.3547,8.3547,identical,0.0
+896878,2017-01-27,Intuit,0,027928,leverage,0.7268,0.7268,identical,0.0
+896878,2017-01-27,Intuit,0,027928,roa,0.2304,0.2304,identical,0.0
+896878,2017-01-27,Intuit,0,027928,op_margin,0.3153,0.3153,identical,0.0
+896878,2017-02-13,"Intuit, Inc.",0,027928,firm_size_log,8.3547,8.3547,identical,0.0
+896878,2017-02-13,"Intuit, Inc.",0,027928,leverage,0.7268,0.7268,identical,0.0
+896878,2017-02-13,"Intuit, Inc.",0,027928,roa,0.2304,0.2304,identical,0.0
+896878,2017-02-13,"Intuit, Inc.",0,027928,op_margin,0.3153,0.3153,identical,0.0
+896878,2017-02-20,Intuit Inc.,0,027928,firm_size_log,8.3547,8.3547,identical,0.0
+896878,2017-02-20,Intuit Inc.,0,027928,leverage,0.7268,0.7268,identical,0.0
+896878,2017-02-20,Intuit Inc.,0,027928,roa,0.2304,0.2304,identical,0.0
+896878,2017-02-20,Intuit Inc.,0,027928,op_margin,0.3153,0.3153,identical,0.0
+896878,2017-02-28,Intuit Inc.,0,027928,firm_size_log,8.3547,8.3547,identical,0.0
+896878,2017-02-28,Intuit Inc.,0,027928,leverage,0.7268,0.7268,identical,0.0
+896878,2017-02-28,Intuit Inc.,0,027928,roa,0.2304,0.2304,identical,0.0
+896878,2017-02-28,Intuit Inc.,0,027928,op_margin,0.3153,0.3153,identical,0.0
+896878,2017-03-12,Intuit Inc.,0,027928,firm_size_log,8.3547,8.3547,identical,0.0
+896878,2017-03-12,Intuit Inc.,0,027928,leverage,0.7268,0.7268,identical,0.0
+896878,2017-03-12,Intuit Inc.,0,027928,roa,0.2304,0.2304,identical,0.0
+896878,2017-03-12,Intuit Inc.,0,027928,op_margin,0.3153,0.3153,identical,0.0
+896878,2017-04-02,"Intuit, Inc.",0,027928,firm_size_log,8.3547,8.3547,identical,0.0
+896878,2017-04-02,"Intuit, Inc.",0,027928,leverage,0.7268,0.7268,identical,0.0
+896878,2017-04-02,"Intuit, Inc.",0,027928,roa,0.2304,0.2304,identical,0.0
+896878,2017-04-02,"Intuit, Inc.",0,027928,op_margin,0.3153,0.3153,identical,0.0
+896878,2017-04-17,Intuit Inc,0,027928,firm_size_log,8.3547,8.3547,identical,0.0
+896878,2017-04-17,Intuit Inc,0,027928,leverage,0.7268,0.7268,identical,0.0
+896878,2017-04-17,Intuit Inc,0,027928,roa,0.2304,0.2304,identical,0.0
+896878,2017-04-17,Intuit Inc,0,027928,op_margin,0.3153,0.3153,identical,0.0
+896878,2017-04-30,Intuit Inc,0,027928,firm_size_log,8.3547,8.3547,identical,0.0
+896878,2017-04-30,Intuit Inc,0,027928,leverage,0.7268,0.7268,identical,0.0
+896878,2017-04-30,Intuit Inc,0,027928,roa,0.2304,0.2304,identical,0.0
+896878,2017-04-30,Intuit Inc,0,027928,op_margin,0.3153,0.3153,identical,0.0
+896878,2017-06-01,Intuit Inc.,0,027928,firm_size_log,8.3547,8.3547,identical,0.0
+896878,2017-06-01,Intuit Inc.,0,027928,leverage,0.7268,0.7268,identical,0.0
+896878,2017-06-01,Intuit Inc.,0,027928,roa,0.2304,0.2304,identical,0.0
+896878,2017-06-01,Intuit Inc.,0,027928,op_margin,0.3153,0.3153,identical,0.0
+896878,2017-06-14,"Intuit, Inc.",0,027928,firm_size_log,8.3547,8.3547,identical,0.0
+896878,2017-06-14,"Intuit, Inc.",0,027928,leverage,0.7268,0.7268,identical,0.0
+896878,2017-06-14,"Intuit, Inc.",0,027928,roa,0.2304,0.2304,identical,0.0
+896878,2017-06-14,"Intuit, Inc.",0,027928,op_margin,0.3153,0.3153,identical,0.0
+896878,2017-07-30,"Intuit, Inc.",0,027928,firm_size_log,8.3547,8.3547,identical,0.0
+896878,2017-07-30,"Intuit, Inc.",0,027928,leverage,0.7268,0.7268,identical,0.0
+896878,2017-07-30,"Intuit, Inc.",0,027928,roa,0.2304,0.2304,identical,0.0
+896878,2017-07-30,"Intuit, Inc.",0,027928,op_margin,0.3153,0.3153,identical,0.0
+896878,2017-08-08,Intuit Inc.,0,027928,firm_size_log,8.3109,8.3109,identical,0.0
+896878,2017-08-08,Intuit Inc.,0,027928,leverage,0.6672,0.6672,identical,0.0
+896878,2017-08-08,Intuit Inc.,0,027928,roa,0.2387,0.2387,identical,0.0
+896878,2017-08-08,Intuit Inc.,0,027928,op_margin,0.315,0.315,identical,0.0
+896878,2017-08-16,Intuit Inc.,0,027928,firm_size_log,8.3109,8.3109,identical,0.0
+896878,2017-08-16,Intuit Inc.,0,027928,leverage,0.6672,0.6672,identical,0.0
+896878,2017-08-16,Intuit Inc.,0,027928,roa,0.2387,0.2387,identical,0.0
+896878,2017-08-16,Intuit Inc.,0,027928,op_margin,0.315,0.315,identical,0.0
+896878,2017-08-25,Intuit Inc.,0,027928,firm_size_log,8.3109,8.3109,identical,0.0
+896878,2017-08-25,Intuit Inc.,0,027928,leverage,0.6672,0.6672,identical,0.0
+896878,2017-08-25,Intuit Inc.,0,027928,roa,0.2387,0.2387,identical,0.0
+896878,2017-08-25,Intuit Inc.,0,027928,op_margin,0.315,0.315,identical,0.0
+896878,2017-09-01,Intuit Inc,0,027928,firm_size_log,8.3109,8.3109,identical,0.0
+896878,2017-09-01,Intuit Inc,0,027928,leverage,0.6672,0.6672,identical,0.0
+896878,2017-09-01,Intuit Inc,0,027928,roa,0.2387,0.2387,identical,0.0
+896878,2017-09-01,Intuit Inc,0,027928,op_margin,0.315,0.315,identical,0.0
+896878,2017-10-17,Intuit,0,027928,firm_size_log,8.3109,8.3109,identical,0.0
+896878,2017-10-17,Intuit,0,027928,leverage,0.6672,0.6672,identical,0.0
+896878,2017-10-17,Intuit,0,027928,roa,0.2387,0.2387,identical,0.0
+896878,2017-10-17,Intuit,0,027928,op_margin,0.315,0.315,identical,0.0
+896878,2018-02-06,Intuit Inc.,0,027928,firm_size_log,8.3109,8.3109,identical,0.0
+896878,2018-02-06,Intuit Inc.,0,027928,leverage,0.6672,0.6672,identical,0.0
+896878,2018-02-06,Intuit Inc.,0,027928,roa,0.2387,0.2387,identical,0.0
+896878,2018-02-06,Intuit Inc.,0,027928,op_margin,0.315,0.315,identical,0.0
+896878,2018-03-14,Intuit Inc.,0,027928,firm_size_log,8.3109,8.3109,identical,0.0
+896878,2018-03-14,Intuit Inc.,0,027928,leverage,0.6672,0.6672,identical,0.0
+896878,2018-03-14,Intuit Inc.,0,027928,roa,0.2387,0.2387,identical,0.0
+896878,2018-03-14,Intuit Inc.,0,027928,op_margin,0.315,0.315,identical,0.0
+896878,2018-04-26,Intuit,0,027928,firm_size_log,8.3109,8.3109,identical,0.0
+896878,2018-04-26,Intuit,0,027928,leverage,0.6672,0.6672,identical,0.0
+896878,2018-04-26,Intuit,0,027928,roa,0.2387,0.2387,identical,0.0
+896878,2018-04-26,Intuit,0,027928,op_margin,0.315,0.315,identical,0.0
+896878,2018-05-16,Intuit,0,027928,firm_size_log,8.3109,8.3109,identical,0.0
+896878,2018-05-16,Intuit,0,027928,leverage,0.6672,0.6672,identical,0.0
+896878,2018-05-16,Intuit,0,027928,roa,0.2387,0.2387,identical,0.0
+896878,2018-05-16,Intuit,0,027928,op_margin,0.315,0.315,identical,0.0
+896878,2018-06-15,Intuit Inc,0,027928,firm_size_log,8.3109,8.3109,identical,0.0
+896878,2018-06-15,Intuit Inc,0,027928,leverage,0.6672,0.6672,identical,0.0
+896878,2018-06-15,Intuit Inc,0,027928,roa,0.2387,0.2387,identical,0.0
+896878,2018-06-15,Intuit Inc,0,027928,op_margin,0.315,0.315,identical,0.0
+896878,2019-01-29,"Intuit, Inc.",0,027928,firm_size_log,8.5522,8.5522,identical,0.0
+896878,2019-01-29,"Intuit, Inc.",0,027928,leverage,0.5454,0.5454,identical,0.0
+896878,2019-01-29,"Intuit, Inc.",0,027928,roa,0.2339,0.2339,identical,0.0
+896878,2019-01-29,"Intuit, Inc.",0,027928,op_margin,0.307,0.307,identical,0.0
+896878,2019-02-21,"Intuit, Inc.",0,027928,firm_size_log,8.5522,8.5522,identical,0.0
+896878,2019-02-21,"Intuit, Inc.",0,027928,leverage,0.5454,0.5454,identical,0.0
+896878,2019-02-21,"Intuit, Inc.",0,027928,roa,0.2339,0.2339,identical,0.0
+896878,2019-02-21,"Intuit, Inc.",0,027928,op_margin,0.307,0.307,identical,0.0
+896878,2019-03-21,Intuit Inc.,0,027928,firm_size_log,8.5522,8.5522,identical,0.0
+896878,2019-03-21,Intuit Inc.,0,027928,leverage,0.5454,0.5454,identical,0.0
+896878,2019-03-21,Intuit Inc.,0,027928,roa,0.2339,0.2339,identical,0.0
+896878,2019-03-21,Intuit Inc.,0,027928,op_margin,0.307,0.307,identical,0.0
+896878,2019-03-26,"Intuit, Inc.",0,027928,firm_size_log,8.5522,8.5522,identical,0.0
+896878,2019-03-26,"Intuit, Inc.",0,027928,leverage,0.5454,0.5454,identical,0.0
+896878,2019-03-26,"Intuit, Inc.",0,027928,roa,0.2339,0.2339,identical,0.0
+896878,2019-03-26,"Intuit, Inc.",0,027928,op_margin,0.307,0.307,identical,0.0
+896878,2019-04-07,Intuit Inc.,0,027928,firm_size_log,8.5522,8.5522,identical,0.0
+896878,2019-04-07,Intuit Inc.,0,027928,leverage,0.5454,0.5454,identical,0.0
+896878,2019-04-07,Intuit Inc.,0,027928,roa,0.2339,0.2339,identical,0.0
+896878,2019-04-07,Intuit Inc.,0,027928,op_margin,0.307,0.307,identical,0.0
+896878,2019-04-16,Intuit,0,027928,firm_size_log,8.5522,8.5522,identical,0.0
+896878,2019-04-16,Intuit,0,027928,leverage,0.5454,0.5454,identical,0.0
+896878,2019-04-16,Intuit,0,027928,roa,0.2339,0.2339,identical,0.0
+896878,2019-04-16,Intuit,0,027928,op_margin,0.307,0.307,identical,0.0
+896878,2019-09-20,Intuit Inc,0,027928,firm_size_log,8.7456,8.7456,identical,0.0
+896878,2019-09-20,Intuit Inc,0,027928,leverage,0.4033,0.4033,identical,0.0
+896878,2019-09-20,Intuit Inc,0,027928,roa,0.2478,0.2478,identical,0.0
+896878,2019-09-20,Intuit Inc,0,027928,op_margin,0.3066,0.3066,identical,0.0
+896878,2020-03-31,Intuit,0,027928,firm_size_log,8.7456,8.7456,identical,0.0
+896878,2020-03-31,Intuit,0,027928,leverage,0.4033,0.4033,identical,0.0
+896878,2020-03-31,Intuit,0,027928,roa,0.2478,0.2478,identical,0.0
+896878,2020-03-31,Intuit,0,027928,op_margin,0.3066,0.3066,identical,0.0
+896878,2020-04-12,Intuit Inc.,0,027928,firm_size_log,8.7456,8.7456,identical,0.0
+896878,2020-04-12,Intuit Inc.,0,027928,leverage,0.4033,0.4033,identical,0.0
+896878,2020-04-12,Intuit Inc.,0,027928,roa,0.2478,0.2478,identical,0.0
+896878,2020-04-12,Intuit Inc.,0,027928,op_margin,0.3066,0.3066,identical,0.0
+896878,2022-02-06,Intuit Inc,0,027928,firm_size_log,9.6496,9.6496,identical,0.0
+896878,2022-02-06,Intuit Inc,0,027928,leverage,0.3639,0.3639,identical,0.0
+896878,2022-02-06,Intuit Inc,0,027928,roa,0.1329,0.1329,identical,0.0
+896878,2022-02-06,Intuit Inc,0,027928,op_margin,0.2995,0.2995,identical,0.0
+896878,2022-04-15,Intuit Inc.,0,027928,firm_size_log,9.6496,9.6496,identical,0.0
+896878,2022-04-15,Intuit Inc.,0,027928,leverage,0.3639,0.3639,identical,0.0
+896878,2022-04-15,Intuit Inc.,0,027928,roa,0.1329,0.1329,identical,0.0
+896878,2022-04-15,Intuit Inc.,0,027928,op_margin,0.2995,0.2995,identical,0.0
+896878,2023-01-01,Intuit Inc.,0,027928,firm_size_log,10.2304,10.2304,identical,0.0
+896878,2023-01-01,Intuit Inc.,0,027928,leverage,0.4072,0.4072,identical,0.0
+896878,2023-01-01,Intuit Inc.,0,027928,roa,0.0745,0.0745,identical,0.0
+896878,2023-01-01,Intuit Inc.,0,027928,op_margin,0.2771,0.2771,identical,0.0
+896878,2023-06-04,Intuit Inc,0,027928,firm_size_log,10.2304,10.2304,identical,0.0
+896878,2023-06-04,Intuit Inc,0,027928,leverage,0.4072,0.4072,identical,0.0
+896878,2023-06-04,Intuit Inc,0,027928,roa,0.0745,0.0745,identical,0.0
+896878,2023-06-04,Intuit Inc,0,027928,op_margin,0.2771,0.2771,identical,0.0
+896878,2023-12-01,Intuit Inc.,0,027928,firm_size_log,10.2321,10.2321,identical,0.0
+896878,2023-12-01,Intuit Inc.,0,027928,leverage,0.3784,0.3784,identical,0.0
+896878,2023-12-01,Intuit Inc.,0,027928,roa,0.0858,0.0858,identical,0.0
+896878,2023-12-01,Intuit Inc.,0,027928,op_margin,0.275,0.275,identical,0.0
+896878,2024-01-29,Intuit Inc.,0,027928,firm_size_log,10.2321,10.2321,identical,0.0
+896878,2024-01-29,Intuit Inc.,0,027928,leverage,0.3784,0.3784,identical,0.0
+896878,2024-01-29,Intuit Inc.,0,027928,roa,0.0858,0.0858,identical,0.0
+896878,2024-01-29,Intuit Inc.,0,027928,op_margin,0.275,0.275,identical,0.0
+896878,2024-03-05,Intuit Inc,0,027928,firm_size_log,10.2321,10.2321,identical,0.0
+896878,2024-03-05,Intuit Inc,0,027928,leverage,0.3784,0.3784,identical,0.0
+896878,2024-03-05,Intuit Inc,0,027928,roa,0.0858,0.0858,identical,0.0
+896878,2024-03-05,Intuit Inc,0,027928,op_margin,0.275,0.275,identical,0.0
+896878,2024-12-20,Intuit Inc.,0,027928,firm_size_log,10.3776,10.3776,identical,0.0
+896878,2024-12-20,Intuit Inc.,0,027928,leverage,0.4262,0.4262,identical,0.0
+896878,2024-12-20,Intuit Inc.,0,027928,roa,0.0922,0.0922,identical,0.0
+896878,2024-12-20,Intuit Inc.,0,027928,op_margin,0.285,0.285,identical,0.0
+896878,2025-01-21,Intuit Inc.,0,027928,firm_size_log,10.3776,10.3776,identical,0.0
+896878,2025-01-21,Intuit Inc.,0,027928,leverage,0.4262,0.4262,identical,0.0
+896878,2025-01-21,Intuit Inc.,0,027928,roa,0.0922,0.0922,identical,0.0
+896878,2025-01-21,Intuit Inc.,0,027928,op_margin,0.285,0.285,identical,0.0
+908937,2012-03-19,Sirius XM Radio Inc.,0,030662,firm_size_log,8.9221,8.9221,identical,0.0
+908937,2012-03-19,Sirius XM Radio Inc.,0,030662,leverage,0.9061,0.9061,identical,0.0
+908937,2012-03-19,Sirius XM Radio Inc.,0,030662,roa,0.057,0.057,identical,0.0
+908937,2012-03-19,Sirius XM Radio Inc.,0,030662,op_margin,0.3131,0.3131,identical,0.0
+908937,2012-04-12,Sirius XM Satellite Radio,0,030662,firm_size_log,8.9221,8.9221,identical,0.0
+908937,2012-04-12,Sirius XM Satellite Radio,0,030662,leverage,0.9061,0.9061,identical,0.0
+908937,2012-04-12,Sirius XM Satellite Radio,0,030662,roa,0.057,0.057,identical,0.0
+908937,2012-04-12,Sirius XM Satellite Radio,0,030662,op_margin,0.3131,0.3131,identical,0.0
+908937,2016-02-01,Sirius XM Radio Inc.,0,030662,firm_size_log,8.993,8.993,identical,0.0
+908937,2016-02-01,Sirius XM Radio Inc.,0,030662,leverage,1.0207,1.0207,identical,0.0
+908937,2016-02-01,Sirius XM Radio Inc.,0,030662,roa,0.0633,0.0633,identical,0.0
+908937,2016-02-01,Sirius XM Radio Inc.,0,030662,op_margin,0.343,0.343,identical,0.0
+908937,2016-04-05,Sirius XM Radio Inc.,0,030662,firm_size_log,8.993,8.993,identical,0.0
+908937,2016-04-05,Sirius XM Radio Inc.,0,030662,leverage,1.0207,1.0207,identical,0.0
+908937,2016-04-05,Sirius XM Radio Inc.,0,030662,roa,0.0633,0.0633,identical,0.0
+908937,2016-04-05,Sirius XM Radio Inc.,0,030662,op_margin,0.343,0.343,identical,0.0
+908937,2016-08-20,Sirius XM Radio Inc.,0,030662,firm_size_log,8.993,8.993,identical,0.0
+908937,2016-08-20,Sirius XM Radio Inc.,0,030662,leverage,1.0207,1.0207,identical,0.0
+908937,2016-08-20,Sirius XM Radio Inc.,0,030662,roa,0.0633,0.0633,identical,0.0
+908937,2016-08-20,Sirius XM Radio Inc.,0,030662,op_margin,0.343,0.343,identical,0.0
+908937,2016-09-26,Sirius XM Radio Inc,0,030662,firm_size_log,8.993,8.993,identical,0.0
+908937,2016-09-26,Sirius XM Radio Inc,0,030662,leverage,1.0207,1.0207,identical,0.0
+908937,2016-09-26,Sirius XM Radio Inc,0,030662,roa,0.0633,0.0633,identical,0.0
+908937,2016-09-26,Sirius XM Radio Inc,0,030662,op_margin,0.343,0.343,identical,0.0
+908937,2016-10-04,"Sirius XM Radio, Inc.",0,030662,firm_size_log,8.993,8.993,identical,0.0
+908937,2016-10-04,"Sirius XM Radio, Inc.",0,030662,leverage,1.0207,1.0207,identical,0.0
+908937,2016-10-04,"Sirius XM Radio, Inc.",0,030662,roa,0.0633,0.0633,identical,0.0
+908937,2016-10-04,"Sirius XM Radio, Inc.",0,030662,op_margin,0.343,0.343,identical,0.0
+908937,2016-10-31,Sirius XM Radio Inc.,0,030662,firm_size_log,8.993,8.993,identical,0.0
+908937,2016-10-31,Sirius XM Radio Inc.,0,030662,leverage,1.0207,1.0207,identical,0.0
+908937,2016-10-31,Sirius XM Radio Inc.,0,030662,roa,0.0633,0.0633,identical,0.0
+908937,2016-10-31,Sirius XM Radio Inc.,0,030662,op_margin,0.343,0.343,identical,0.0
+908937,2016-11-15,Sirius XM Radio Inc.,0,030662,firm_size_log,8.993,8.993,identical,0.0
+908937,2016-11-15,Sirius XM Radio Inc.,0,030662,leverage,1.0207,1.0207,identical,0.0
+908937,2016-11-15,Sirius XM Radio Inc.,0,030662,roa,0.0633,0.0633,identical,0.0
+908937,2016-11-15,Sirius XM Radio Inc.,0,030662,op_margin,0.343,0.343,identical,0.0
+908937,2016-12-04,Sirius XM Radio Inc,0,030662,firm_size_log,8.993,8.993,identical,0.0
+908937,2016-12-04,Sirius XM Radio Inc,0,030662,leverage,1.0207,1.0207,identical,0.0
+908937,2016-12-04,Sirius XM Radio Inc,0,030662,roa,0.0633,0.0633,identical,0.0
+908937,2016-12-04,Sirius XM Radio Inc,0,030662,op_margin,0.343,0.343,identical,0.0
+908937,2016-12-19,"Sirius XM Radio, Inc.",0,030662,firm_size_log,8.993,8.993,identical,0.0
+908937,2016-12-19,"Sirius XM Radio, Inc.",0,030662,leverage,1.0207,1.0207,identical,0.0
+908937,2016-12-19,"Sirius XM Radio, Inc.",0,030662,roa,0.0633,0.0633,identical,0.0
+908937,2016-12-19,"Sirius XM Radio, Inc.",0,030662,op_margin,0.343,0.343,identical,0.0
+908937,2017-01-06,Sirius XM Radio Inc.,0,030662,firm_size_log,8.9876,8.9876,identical,0.0
+908937,2017-01-06,Sirius XM Radio Inc.,0,030662,leverage,1.099,1.099,identical,0.0
+908937,2017-01-06,Sirius XM Radio Inc.,0,030662,roa,0.0932,0.0932,identical,0.0
+908937,2017-01-06,Sirius XM Radio Inc.,0,030662,op_margin,0.3508,0.3508,identical,0.0
+908937,2017-01-25,"Sirius XM Radio, Inc.",0,030662,firm_size_log,8.9876,8.9876,identical,0.0
+908937,2017-01-25,"Sirius XM Radio, Inc.",0,030662,leverage,1.099,1.099,identical,0.0
+908937,2017-01-25,"Sirius XM Radio, Inc.",0,030662,roa,0.0932,0.0932,identical,0.0
+908937,2017-01-25,"Sirius XM Radio, Inc.",0,030662,op_margin,0.3508,0.3508,identical,0.0
+908937,2017-08-06,Sirius XM Radio Inc.,0,030662,firm_size_log,8.9876,8.9876,identical,0.0
+908937,2017-08-06,Sirius XM Radio Inc.,0,030662,leverage,1.099,1.099,identical,0.0
+908937,2017-08-06,Sirius XM Radio Inc.,0,030662,roa,0.0932,0.0932,identical,0.0
+908937,2017-08-06,Sirius XM Radio Inc.,0,030662,op_margin,0.3508,0.3508,identical,0.0
+908937,2017-09-18,Sirius XM Radio Inc.,0,030662,firm_size_log,8.9876,8.9876,identical,0.0
+908937,2017-09-18,Sirius XM Radio Inc.,0,030662,leverage,1.099,1.099,identical,0.0
+908937,2017-09-18,Sirius XM Radio Inc.,0,030662,roa,0.0932,0.0932,identical,0.0
+908937,2017-09-18,Sirius XM Radio Inc.,0,030662,op_margin,0.3508,0.3508,identical,0.0
+1971213,2020-05-01,"Sinclair Broadcast Group, Inc.",0,060800,firm_size_log,,9.7625,gained,
+1971213,2020-05-01,"Sinclair Broadcast Group, Inc.",0,060800,leverage,,0.8404,gained,
+1971213,2020-05-01,"Sinclair Broadcast Group, Inc.",0,060800,roa,,0.0027,gained,
+1971213,2020-05-01,"Sinclair Broadcast Group, Inc.",0,060800,op_margin,,0.2118,gained,
+1971213,2021-06-23,"Sinclair Broadcast Group, Inc.",0,060800,firm_size_log,,9.5017,gained,
+1971213,2021-06-23,"Sinclair Broadcast Group, Inc.",0,060800,leverage,,1.0744,gained,
+1971213,2021-06-23,"Sinclair Broadcast Group, Inc.",0,060800,roa,,-0.1804,gained,
+1971213,2021-06-23,"Sinclair Broadcast Group, Inc.",0,060800,op_margin,,0.346,gained,
+1971213,2021-12-16,"Sinclair Broadcast Group, Inc.",0,060800,firm_size_log,,9.5017,gained,
+1971213,2021-12-16,"Sinclair Broadcast Group, Inc.",0,060800,leverage,,1.0744,gained,
+1971213,2021-12-16,"Sinclair Broadcast Group, Inc.",0,060800,roa,,-0.1804,gained,
+1971213,2021-12-16,"Sinclair Broadcast Group, Inc.",0,060800,op_margin,,0.346,gained,
+920522,2013-08-13,"Essex Property Trust, Inc.",0,030293,firm_size_log,8.4862,8.4862,identical,0.0
+920522,2013-08-13,"Essex Property Trust, Inc.",0,030293,leverage,0.6112,0.6112,identical,0.0
+920522,2013-08-13,"Essex Property Trust, Inc.",0,030293,roa,0.0258,0.0258,identical,0.0
+920522,2013-08-13,"Essex Property Trust, Inc.",0,030293,op_margin,0.3748,0.3748,identical,0.0
+924613,2013-07-22,Nokia Inc.,0,023671,firm_size_log,10.5838,10.5838,identical,0.0
+924613,2013-07-22,Nokia Inc.,0,023671,leverage,0.6846,0.6846,identical,0.0
+924613,2013-07-22,Nokia Inc.,0,023671,roa,-0.1037,-0.1037,identical,0.0
+924613,2013-07-22,Nokia Inc.,0,023671,op_margin,0.0231,0.0231,identical,0.0
+1744489,2008-07-29,The Walt Disney Company,0,003980,firm_size_log,11.0174,11.0174,identical,0.0
+1744489,2008-07-29,The Walt Disney Company,0,003980,leverage,0.474,0.474,identical,0.0
+1744489,2008-07-29,The Walt Disney Company,0,003980,roa,0.0769,0.0769,identical,0.0
+1744489,2008-07-29,The Walt Disney Company,0,003980,op_margin,0.235,0.235,identical,0.0
+943452,2022-03-15,Wabtec Corporation,0,060979,firm_size_log,9.823,9.823,identical,0.0
+943452,2022-03-15,Wabtec Corporation,0,060979,leverage,0.4452,0.4452,identical,0.0
+943452,2022-03-15,Wabtec Corporation,0,060979,roa,0.0302,0.0302,identical,0.0
+943452,2022-03-15,Wabtec Corporation,0,060979,op_margin,0.184,0.184,identical,0.0
+1000228,2023-09-27,"Henry Schein, Inc.",0,061494,firm_size_log,9.0603,9.0603,identical,0.0
+1000228,2023-09-27,"Henry Schein, Inc.",0,061494,leverage,0.4573,0.4573,identical,0.0
+1000228,2023-09-27,"Henry Schein, Inc.",0,061494,roa,0.0625,0.0625,identical,0.0
+1000228,2023-09-27,"Henry Schein, Inc.",0,061494,op_margin,0.0848,0.0848,identical,0.0
+1001082,2023-02-22,"DISH Network, LLC",1,060900,firm_size_log,10.8706,10.8706,identical,0.0
+1001082,2023-02-22,"DISH Network, LLC",1,060900,leverage,0.6501,0.6501,identical,0.0
+1001082,2023-02-22,"DISH Network, LLC",1,060900,roa,0.0438,0.0438,identical,0.0
+1001082,2023-02-22,"DISH Network, LLC",1,060900,op_margin,0.1656,0.1656,identical,0.0
+1001082,2023-05-17,"DISH Network, LLC",1,060900,firm_size_log,10.8706,10.8706,identical,0.0
+1001082,2023-05-17,"DISH Network, LLC",1,060900,leverage,0.6501,0.6501,identical,0.0
+1001082,2023-05-17,"DISH Network, LLC",1,060900,roa,0.0438,0.0438,identical,0.0
+1001082,2023-05-17,"DISH Network, LLC",1,060900,op_margin,0.1656,0.1656,identical,0.0
+1001250,2023-05-01,The EstÃ©e Lauder Companies Inc.,0,061567,firm_size_log,9.948,9.948,identical,0.0
+1001250,2023-05-01,The EstÃ©e Lauder Companies Inc.,0,061567,leverage,0.6924,0.6924,identical,0.0
+1001250,2023-05-01,The EstÃ©e Lauder Companies Inc.,0,061567,roa,0.1143,0.1143,identical,0.0
+1001250,2023-05-01,The EstÃ©e Lauder Companies Inc.,0,061567,op_margin,0.2369,0.2369,identical,0.0
+1001250,2023-05-30,The EstÃ©e Lauder Companies Inc.,0,061567,firm_size_log,9.948,9.948,identical,0.0
+1001250,2023-05-30,The EstÃ©e Lauder Companies Inc.,0,061567,leverage,0.6924,0.6924,identical,0.0
+1001250,2023-05-30,The EstÃ©e Lauder Companies Inc.,0,061567,roa,0.1143,0.1143,identical,0.0
+1001250,2023-05-30,The EstÃ©e Lauder Companies Inc.,0,061567,op_margin,0.2369,0.2369,identical,0.0
+1001250,2023-07-11,The EstÃ©e Lauder Companies Inc.,0,061567,firm_size_log,10.0611,10.0611,identical,0.0
+1001250,2023-07-11,The EstÃ©e Lauder Companies Inc.,0,061567,leverage,0.7259,0.7259,identical,0.0
+1001250,2023-07-11,The EstÃ©e Lauder Companies Inc.,0,061567,roa,0.043,0.043,identical,0.0
+1001250,2023-07-11,The EstÃ©e Lauder Companies Inc.,0,061567,op_margin,0.1604,0.1604,identical,0.0
+1002517,2014-12-10,"Nuance Communications, Inc.",0,061685,firm_size_log,,8.6691,gained,
+1002517,2014-12-10,"Nuance Communications, Inc.",0,061685,leverage,,0.5564,gained,
+1002517,2014-12-10,"Nuance Communications, Inc.",0,061685,roa,,-0.0258,gained,
+1002517,2014-12-10,"Nuance Communications, Inc.",0,061685,op_margin,,0.1269,gained,
+1011006,2012-07-11,Yahoo! Voices,0,062634,firm_size_log,,9.6012,gained,
+1011006,2012-07-11,Yahoo! Voices,0,062634,roa,,0.0709,gained,
+1011006,2012-07-11,Yahoo! Voices,0,062634,op_margin,,0.2955,gained,
+1011006,2013-08-01,Yahoo! Inc.,0,062634,firm_size_log,,9.747,gained,
+1011006,2013-08-01,Yahoo! Inc.,0,062634,roa,,0.2307,gained,
+1011006,2013-08-01,Yahoo! Inc.,0,062634,op_margin,,0.2922,gained,
+1011006,2014-12-01,Yahoo,0,062634,firm_size_log,,9.7294,gained,
+1011006,2014-12-01,Yahoo,0,062634,leverage,,0.2186,gained,
+1011006,2014-12-01,Yahoo,0,062634,roa,,0.0813,gained,
+1011006,2014-12-01,Yahoo,0,062634,op_margin,,0.2577,gained,
+1011006,2016-08-13,Yahoo Inc.,0,062634,firm_size_log,,10.7189,gained,
+1011006,2016-08-13,Yahoo Inc.,0,062634,leverage,,0.3567,gained,
+1011006,2016-08-13,Yahoo Inc.,0,062634,roa,,-0.0964,gained,
+1011006,2016-08-13,Yahoo Inc.,0,062634,op_margin,,0.0955,gained,
+1041061,2023-01-13,"Yum! Brands, Inc.",0,065417,firm_size_log,8.6735,8.6735,identical,0.0
+1041061,2023-01-13,"Yum! Brands, Inc.",0,065417,leverage,2.5183,2.5183,identical,0.0
+1041061,2023-01-13,"Yum! Brands, Inc.",0,065417,roa,0.2267,0.2267,identical,0.0
+1041061,2023-01-13,"Yum! Brands, Inc.",0,065417,op_margin,0.3534,0.3534,identical,0.0
+1048911,2011-05-01,"FedEx Ground Package System, Inc.",0,004598,firm_size_log,10.1227,10.1227,identical,0.0
+1048911,2011-05-01,"FedEx Ground Package System, Inc.",0,004598,leverage,0.4454,0.4454,identical,0.0
+1048911,2011-05-01,"FedEx Ground Package System, Inc.",0,004598,roa,0.0475,0.0475,identical,0.0
+1048911,2011-05-01,"FedEx Ground Package System, Inc.",0,004598,op_margin,0.1129,0.1129,identical,0.0
+1051470,2013-10-31,Crown Castle,0,113490,firm_size_log,9.6859,9.6859,identical,0.0
+1051470,2013-10-31,Crown Castle,0,113490,leverage,0.8166,0.8166,identical,0.0
+1051470,2013-10-31,Crown Castle,0,113490,roa,0.0117,0.0117,identical,0.0
+1051470,2013-10-31,Crown Castle,0,113490,op_margin,0.6143,0.6143,identical,0.0
+1051470,2013-11-19,Crown Castle,0,113490,firm_size_log,9.6859,9.6859,identical,0.0
+1051470,2013-11-19,Crown Castle,0,113490,leverage,0.8166,0.8166,identical,0.0
+1051470,2013-11-19,Crown Castle,0,113490,roa,0.0117,0.0117,identical,0.0
+1051470,2013-11-19,Crown Castle,0,113490,op_margin,0.6143,0.6143,identical,0.0
+1058290,2020-04-09,Cognizant Technology Solutions Corporation,0,111864,firm_size_log,9.693,9.693,identical,0.0
+1058290,2020-04-09,Cognizant Technology Solutions Corporation,0,111864,leverage,0.3198,0.3198,identical,0.0
+1058290,2020-04-09,Cognizant Technology Solutions Corporation,0,111864,roa,0.1137,0.1137,identical,0.0
+1058290,2020-04-09,Cognizant Technology Solutions Corporation,0,111864,op_margin,0.1978,0.1978,identical,0.0
+1060391,2013-08-10,Republic Services,0,112168,firm_size_log,9.8841,9.8841,identical,0.0
+1060391,2013-08-10,Republic Services,0,112168,leverage,0.6072,0.6072,identical,0.0
+1060391,2013-08-10,Republic Services,0,112168,roa,0.0291,0.0291,identical,0.0
+1060391,2013-08-10,Republic Services,0,112168,op_margin,0.2823,0.2823,identical,0.0
+1060391,2013-08-26,Republic Services,0,112168,firm_size_log,9.8841,9.8841,identical,0.0
+1060391,2013-08-26,Republic Services,0,112168,leverage,0.6072,0.6072,identical,0.0
+1060391,2013-08-26,Republic Services,0,112168,roa,0.0291,0.0291,identical,0.0
+1060391,2013-08-26,Republic Services,0,112168,op_margin,0.2823,0.2823,identical,0.0
+1060391,2019-02-01,"Republic Services, Inc.",0,112168,firm_size_log,9.9812,9.9812,identical,0.0
+1060391,2019-02-01,"Republic Services, Inc.",0,112168,leverage,0.6332,0.6332,identical,0.0
+1060391,2019-02-01,"Republic Services, Inc.",0,112168,roa,0.048,0.048,identical,0.0
+1060391,2019-02-01,"Republic Services, Inc.",0,112168,op_margin,0.2792,0.2792,identical,0.0
+1060391,2021-09-20,"Republic Services, Inc.",0,112168,firm_size_log,10.0619,10.0619,identical,0.0
+1060391,2021-09-20,"Republic Services, Inc.",0,112168,leverage,0.6378,0.6378,identical,0.0
+1060391,2021-09-20,"Republic Services, Inc.",0,112168,roa,0.0413,0.0413,identical,0.0
+1060391,2021-09-20,"Republic Services, Inc.",0,112168,op_margin,0.2979,0.2979,identical,0.0
+1060391,2022-04-09,"Republic Services, Inc.",0,112168,firm_size_log,10.1248,10.1248,identical,0.0
+1060391,2022-04-09,"Republic Services, Inc.",0,112168,leverage,0.6402,0.6402,identical,0.0
+1060391,2022-04-09,"Republic Services, Inc.",0,112168,roa,0.0517,0.0517,identical,0.0
+1060391,2022-04-09,"Republic Services, Inc.",0,112168,op_margin,0.2958,0.2958,identical,0.0
+1067837,2019-08-04,"Audacy, Inc",0,117902,firm_size_log,,8.2991,gained,
+1067837,2019-08-04,"Audacy, Inc",0,117902,leverage,,0.6681,gained,
+1067837,2019-08-04,"Audacy, Inc",0,117902,roa,,-0.0899,gained,
+1067837,2019-08-04,"Audacy, Inc",0,117902,op_margin,,0.2017,gained,
+1067837,2019-09-18,Entercom Communications Corp.,0,117902,firm_size_log,,8.2991,gained,
+1067837,2019-09-18,Entercom Communications Corp.,0,117902,leverage,,0.6681,gained,
+1067837,2019-09-18,Entercom Communications Corp.,0,117902,roa,,-0.0899,gained,
+1067837,2019-09-18,Entercom Communications Corp.,0,117902,op_margin,,0.2017,gained,
+1091667,2008-07-14,"Charter Communications, Inc.",1,126136,firm_size_log,9.5933,9.5933,identical,0.0
+1091667,2008-07-14,"Charter Communications, Inc.",1,126136,leverage,1.5242,1.5242,identical,0.0
+1091667,2008-07-14,"Charter Communications, Inc.",1,126136,roa,-0.1102,-0.1102,identical,0.0
+1091667,2008-07-14,"Charter Communications, Inc.",1,126136,op_margin,0.3487,0.3487,identical,0.0
+1091667,2008-08-11,Charter Communications,1,126136,firm_size_log,9.5933,9.5933,identical,0.0
+1091667,2008-08-11,Charter Communications,1,126136,leverage,1.5242,1.5242,identical,0.0
+1091667,2008-08-11,Charter Communications,1,126136,roa,-0.1102,-0.1102,identical,0.0
+1091667,2008-08-11,Charter Communications,1,126136,op_margin,0.3487,0.3487,identical,0.0
+1091667,2013-04-26,"Charter Communications, Inc.",1,126136,firm_size_log,9.655,9.655,identical,0.0
+1091667,2013-04-26,"Charter Communications, Inc.",1,126136,leverage,0.9904,0.9904,identical,0.0
+1091667,2013-04-26,"Charter Communications, Inc.",1,126136,roa,-0.0195,-0.0195,identical,0.0
+1091667,2013-04-26,"Charter Communications, Inc.",1,126136,op_margin,0.3497,0.3497,identical,0.0
+1091667,2014-01-21,"Charter Communications, Inc.",1,126136,firm_size_log,9.7582,9.7582,identical,0.0
+1091667,2014-01-21,"Charter Communications, Inc.",1,126136,leverage,0.9913,0.9913,identical,0.0
+1091667,2014-01-21,"Charter Communications, Inc.",1,126136,roa,-0.0098,-0.0098,identical,0.0
+1091667,2014-01-21,"Charter Communications, Inc.",1,126136,op_margin,0.3501,0.3501,identical,0.0
+1091667,2014-09-30,Charter Communication,1,126136,firm_size_log,9.7582,9.7582,identical,0.0
+1091667,2014-09-30,Charter Communication,1,126136,leverage,0.9913,0.9913,identical,0.0
+1091667,2014-09-30,Charter Communication,1,126136,roa,-0.0098,-0.0098,identical,0.0
+1091667,2014-09-30,Charter Communication,1,126136,op_margin,0.3501,0.3501,identical,0.0
+1091667,2022-12-21,Charter Communications,1,126136,firm_size_log,11.867,11.867,identical,0.0
+1091667,2022-12-21,Charter Communications,1,126136,leverage,0.8726,0.8726,identical,0.0
+1091667,2022-12-21,Charter Communications,1,126136,roa,0.0327,0.0327,identical,0.0
+1091667,2022-12-21,Charter Communications,1,126136,op_margin,0.3909,0.3909,identical,0.0
+1091667,2023-01-01,"Charter Communications, Inc.",1,126136,firm_size_log,11.8812,11.8812,identical,0.0
+1091667,2023-01-01,"Charter Communications, Inc.",1,126136,leverage,0.9132,0.9132,identical,0.0
+1091667,2023-01-01,"Charter Communications, Inc.",1,126136,roa,0.035,0.035,identical,0.0
+1091667,2023-01-01,"Charter Communications, Inc.",1,126136,op_margin,0.3914,0.3914,identical,0.0
+1091667,2023-09-01,"Charter Communications, Inc.",1,126136,firm_size_log,11.8812,11.8812,identical,0.0
+1091667,2023-09-01,"Charter Communications, Inc.",1,126136,leverage,0.9132,0.9132,identical,0.0
+1091667,2023-09-01,"Charter Communications, Inc.",1,126136,roa,0.035,0.035,identical,0.0
+1091667,2023-09-01,"Charter Communications, Inc.",1,126136,op_margin,0.3914,0.3914,identical,0.0
+1105705,2006-12-01,Time Warner Inc.,0,025056,firm_size_log,,11.7157,gained,
+1105705,2006-12-01,Time Warner Inc.,0,025056,leverage,,0.4412,gained,
+1105705,2006-12-01,Time Warner Inc.,0,025056,roa,,0.0238,gained,
+1105705,2006-12-01,Time Warner Inc.,0,025056,op_margin,,0.2474,gained,
+1105705,2015-01-28,Time Warner Inc.,0,025056,firm_size_log,,11.055,gained,
+1105705,2015-01-28,Time Warner Inc.,0,025056,leverage,,0.6131,gained,
+1105705,2015-01-28,Time Warner Inc.,0,025056,roa,,0.0605,gained,
+1105705,2015-01-28,Time Warner Inc.,0,025056,op_margin,,0.2524,gained,
+1105705,2015-02-19,TimeWarner,0,025056,firm_size_log,,11.055,gained,
+1105705,2015-02-19,TimeWarner,0,025056,leverage,,0.6131,gained,
+1105705,2015-02-19,TimeWarner,0,025056,roa,,0.0605,gained,
+1105705,2015-02-19,TimeWarner,0,025056,op_margin,,0.2524,gained,
+1105705,2016-08-10,Time Warner Inc.,0,025056,firm_size_log,,11.0643,gained,
+1105705,2016-08-10,Time Warner Inc.,0,025056,leverage,,0.6296,gained,
+1105705,2016-08-10,Time Warner Inc.,0,025056,roa,,0.06,gained,
+1105705,2016-08-10,Time Warner Inc.,0,025056,op_margin,,0.2726,gained,
+1105705,2017-05-15,"Home Box Office, Inc.",0,025056,firm_size_log,,11.0969,gained,
+1105705,2017-05-15,"Home Box Office, Inc.",0,025056,leverage,,0.6306,gained,
+1105705,2017-05-15,"Home Box Office, Inc.",0,025056,roa,,0.0595,gained,
+1105705,2017-05-15,"Home Box Office, Inc.",0,025056,op_margin,,0.2861,gained,
+1105705,2017-07-20,Time Warner Inc.,0,025056,firm_size_log,,11.0969,gained,
+1105705,2017-07-20,Time Warner Inc.,0,025056,leverage,,0.6306,gained,
+1105705,2017-07-20,Time Warner Inc.,0,025056,roa,,0.0595,gained,
+1105705,2017-07-20,Time Warner Inc.,0,025056,op_margin,,0.2861,gained,
+1105705,2017-07-23,"Home Box Office, Inc.",0,025056,firm_size_log,,11.0969,gained,
+1105705,2017-07-23,"Home Box Office, Inc.",0,025056,leverage,,0.6306,gained,
+1105705,2017-07-23,"Home Box Office, Inc.",0,025056,roa,,0.0595,gained,
+1105705,2017-07-23,"Home Box Office, Inc.",0,025056,op_margin,,0.2861,gained,
+1105705,2017-10-30,"Home Box Office, Inc.",0,025056,firm_size_log,,11.0969,gained,
+1105705,2017-10-30,"Home Box Office, Inc.",0,025056,leverage,,0.6306,gained,
+1105705,2017-10-30,"Home Box Office, Inc.",0,025056,roa,,0.0595,gained,
+1105705,2017-10-30,"Home Box Office, Inc.",0,025056,op_margin,,0.2861,gained,
+1108524,2008-02-07,Salesforce.com,0,157855,firm_size_log,6.9936,6.9936,identical,0.0
+1108524,2008-02-07,Salesforce.com,0,157855,leverage,0.5769,0.5769,identical,0.0
+1108524,2008-02-07,Salesforce.com,0,157855,roa,0.0168,0.0168,identical,0.0
+1108524,2008-02-07,Salesforce.com,0,157855,op_margin,0.0598,0.0598,identical,0.0
+1123360,2012-06-22,"Global Payments, Inc.",0,141913,firm_size_log,7.8966,7.8966,identical,0.0
+1123360,2012-06-22,"Global Payments, Inc.",0,141913,leverage,0.4623,0.4623,identical,0.0
+1123360,2012-06-22,"Global Payments, Inc.",0,141913,roa,0.07,0.07,identical,0.0
+1123360,2012-06-22,"Global Payments, Inc.",0,141913,op_margin,0.2297,0.2297,identical,0.0
+1123360,2012-07-25,Global Payments Inc.,0,141913,firm_size_log,7.8966,7.8966,identical,0.0
+1123360,2012-07-25,Global Payments Inc.,0,141913,leverage,0.4623,0.4623,identical,0.0
+1123360,2012-07-25,Global Payments Inc.,0,141913,roa,0.07,0.07,identical,0.0
+1123360,2012-07-25,Global Payments Inc.,0,141913,op_margin,0.2297,0.2297,identical,0.0
+1124610,2015-07-02,"VMware, Inc.",0,178083,firm_size_log,,9.6301,gained,
+1124610,2015-07-02,"VMware, Inc.",0,178083,leverage,,0.5014,gained,
+1124610,2015-07-02,"VMware, Inc.",0,178083,roa,,0.0582,gained,
+1124610,2015-07-02,"VMware, Inc.",0,178083,op_margin,,0.2542,gained,
+1124610,2015-08-19,Vmware Inc,0,178083,firm_size_log,,9.6301,gained,
+1124610,2015-08-19,Vmware Inc,0,178083,leverage,,0.5014,gained,
+1124610,2015-08-19,Vmware Inc,0,178083,roa,,0.0582,gained,
+1124610,2015-08-19,Vmware Inc,0,178083,op_margin,,0.2542,gained,
+1125259,2019-04-01,Carnival Corporation & PLC,0,140821,firm_size_log,,9.6173,gained,
+1125259,2019-04-01,Carnival Corporation & PLC,0,140821,leverage,,0.4317,gained,
+1125259,2019-04-01,Carnival Corporation & PLC,0,140821,roa,,0.0775,gained,
+1125259,2019-04-01,Carnival Corporation & PLC,0,140821,op_margin,,0.2403,gained,
+1125259,2019-04-11,Carnival Corporation & PLC,0,140821,firm_size_log,,9.6173,gained,
+1125259,2019-04-11,Carnival Corporation & PLC,0,140821,leverage,,0.4317,gained,
+1125259,2019-04-11,Carnival Corporation & PLC,0,140821,roa,,0.0775,gained,
+1125259,2019-04-11,Carnival Corporation & PLC,0,140821,op_margin,,0.2403,gained,
+1136893,2007-09-24,"Fidelity National Information Services, Inc.",0,165993,firm_size_log,8.9399,8.9399,identical,0.0
+1136893,2007-09-24,"Fidelity National Information Services, Inc.",0,165993,leverage,0.5864,0.5864,identical,0.0
+1136893,2007-09-24,"Fidelity National Information Services, Inc.",0,165993,roa,0.034,0.034,identical,0.0
+1136893,2007-09-24,"Fidelity National Information Services, Inc.",0,165993,op_margin,0.2409,0.2409,identical,0.0
+1136893,2023-05-01,"Fidelity National Information Services, Inc.",0,165993,firm_size_log,11.0553,11.0553,identical,0.0
+1136893,2023-05-01,"Fidelity National Information Services, Inc.",0,165993,leverage,0.5669,0.5669,identical,0.0
+1136893,2023-05-01,"Fidelity National Information Services, Inc.",0,165993,roa,-0.2642,-0.2642,identical,0.0
+1136893,2023-05-01,"Fidelity National Information Services, Inc.",0,165993,op_margin,0.3705,0.3705,identical,0.0
+1136893,2023-05-27,"Fidelity National Information Services, Inc.",0,165993,firm_size_log,11.0553,11.0553,identical,0.0
+1136893,2023-05-27,"Fidelity National Information Services, Inc.",0,165993,leverage,0.5669,0.5669,identical,0.0
+1136893,2023-05-27,"Fidelity National Information Services, Inc.",0,165993,roa,-0.2642,-0.2642,identical,0.0
+1136893,2023-05-27,"Fidelity National Information Services, Inc.",0,165993,op_margin,0.3705,0.3705,identical,0.0
+1136893,2023-06-21,"Fidelity National Information Services, Inc.",0,165993,firm_size_log,11.0553,11.0553,identical,0.0
+1136893,2023-06-21,"Fidelity National Information Services, Inc.",0,165993,leverage,0.5669,0.5669,identical,0.0
+1136893,2023-06-21,"Fidelity National Information Services, Inc.",0,165993,roa,-0.2642,-0.2642,identical,0.0
+1136893,2023-06-21,"Fidelity National Information Services, Inc.",0,165993,op_margin,0.3705,0.3705,identical,0.0
+1136893,2023-06-26,"Fidelity National Information Services, Inc.",0,165993,firm_size_log,11.0553,11.0553,identical,0.0
+1136893,2023-06-26,"Fidelity National Information Services, Inc.",0,165993,leverage,0.5669,0.5669,identical,0.0
+1136893,2023-06-26,"Fidelity National Information Services, Inc.",0,165993,roa,-0.2642,-0.2642,identical,0.0
+1136893,2023-06-26,"Fidelity National Information Services, Inc.",0,165993,op_margin,0.3705,0.3705,identical,0.0
+1136893,2023-07-17,"Fidelity National Information Services, Inc.",0,165993,firm_size_log,11.0553,11.0553,identical,0.0
+1136893,2023-07-17,"Fidelity National Information Services, Inc.",0,165993,leverage,0.5669,0.5669,identical,0.0
+1136893,2023-07-17,"Fidelity National Information Services, Inc.",0,165993,roa,-0.2642,-0.2642,identical,0.0
+1136893,2023-07-17,"Fidelity National Information Services, Inc.",0,165993,op_margin,0.3705,0.3705,identical,0.0
+1136893,2023-07-21,"Fidelity National Information Services, Inc.",0,165993,firm_size_log,11.0553,11.0553,identical,0.0
+1136893,2023-07-21,"Fidelity National Information Services, Inc.",0,165993,leverage,0.5669,0.5669,identical,0.0
+1136893,2023-07-21,"Fidelity National Information Services, Inc.",0,165993,roa,-0.2642,-0.2642,identical,0.0
+1136893,2023-07-21,"Fidelity National Information Services, Inc.",0,165993,op_margin,0.3705,0.3705,identical,0.0
+1136893,2023-09-08,"Fidelity National Information Services, Inc.",0,165993,firm_size_log,11.0553,11.0553,identical,0.0
+1136893,2023-09-08,"Fidelity National Information Services, Inc.",0,165993,leverage,0.5669,0.5669,identical,0.0
+1136893,2023-09-08,"Fidelity National Information Services, Inc.",0,165993,roa,-0.2642,-0.2642,identical,0.0
+1136893,2023-09-08,"Fidelity National Information Services, Inc.",0,165993,op_margin,0.3705,0.3705,identical,0.0
+1136893,2023-09-19,"Fidelity National Information Services, Inc.",0,165993,firm_size_log,11.0553,11.0553,identical,0.0
+1136893,2023-09-19,"Fidelity National Information Services, Inc.",0,165993,leverage,0.5669,0.5669,identical,0.0
+1136893,2023-09-19,"Fidelity National Information Services, Inc.",0,165993,roa,-0.2642,-0.2642,identical,0.0
+1136893,2023-09-19,"Fidelity National Information Services, Inc.",0,165993,op_margin,0.3705,0.3705,identical,0.0
+1136893,2023-10-04,"Fidelity National Information Services, Inc.",0,165993,firm_size_log,11.0553,11.0553,identical,0.0
+1136893,2023-10-04,"Fidelity National Information Services, Inc.",0,165993,leverage,0.5669,0.5669,identical,0.0
+1136893,2023-10-04,"Fidelity National Information Services, Inc.",0,165993,roa,-0.2642,-0.2642,identical,0.0
+1136893,2023-10-04,"Fidelity National Information Services, Inc.",0,165993,op_margin,0.3705,0.3705,identical,0.0
+1136893,2023-11-09,"Fidelity National Information Services, Inc.",0,165993,firm_size_log,11.0553,11.0553,identical,0.0
+1136893,2023-11-09,"Fidelity National Information Services, Inc.",0,165993,leverage,0.5669,0.5669,identical,0.0
+1136893,2023-11-09,"Fidelity National Information Services, Inc.",0,165993,roa,-0.2642,-0.2642,identical,0.0
+1136893,2023-11-09,"Fidelity National Information Services, Inc.",0,165993,op_margin,0.3705,0.3705,identical,0.0
+1136893,2023-11-20,"Fidelity National Information Services, Inc.",0,165993,firm_size_log,11.0553,11.0553,identical,0.0
+1136893,2023-11-20,"Fidelity National Information Services, Inc.",0,165993,leverage,0.5669,0.5669,identical,0.0
+1136893,2023-11-20,"Fidelity National Information Services, Inc.",0,165993,roa,-0.2642,-0.2642,identical,0.0
+1136893,2023-11-20,"Fidelity National Information Services, Inc.",0,165993,op_margin,0.3705,0.3705,identical,0.0
+1137789,2016-02-29,Seagate US LLC,0,150937,firm_size_log,,9.1947,gained,
+1137789,2016-02-29,Seagate US LLC,0,150937,leverage,,0.6934,gained,
+1137789,2016-02-29,Seagate US LLC,0,150937,roa,,0.1769,gained,
+1137789,2016-02-29,Seagate US LLC,0,150937,op_margin,,0.1717,gained,
+1137789,2016-03-14,Seagate US LLC,0,150937,firm_size_log,,9.1947,gained,
+1137789,2016-03-14,Seagate US LLC,0,150937,leverage,,0.6934,gained,
+1137789,2016-03-14,Seagate US LLC,0,150937,roa,,0.1769,gained,
+1137789,2016-03-14,Seagate US LLC,0,150937,op_margin,,0.1717,gained,
+1137789,2017-07-08,Seagate Technology LLC,0,150937,firm_size_log,9.1343,9.1343,identical,0.0
+1137789,2017-07-08,Seagate Technology LLC,0,150937,leverage,0.8528,0.8528,identical,0.0
+1137789,2017-07-08,Seagate Technology LLC,0,150937,roa,0.0833,0.0833,identical,0.0
+1137789,2017-07-08,Seagate Technology LLC,0,150937,op_margin,0.1839,0.1839,identical,0.0
+1140859,2024-02-21,"Cencora, Inc.",0,031673,firm_size_log,11.0439,11.0439,identical,0.0
+1140859,2024-02-21,"Cencora, Inc.",0,031673,leverage,0.9893,0.9893,identical,0.0
+1140859,2024-02-21,"Cencora, Inc.",0,031673,roa,0.0279,0.0279,identical,0.0
+1140859,2024-02-21,"Cencora, Inc.",0,031673,op_margin,0.0134,0.0134,identical,0.0
+1140859,2024-04-10,"Cencora, Inc.",0,031673,firm_size_log,11.0439,11.0439,identical,0.0
+1140859,2024-04-10,"Cencora, Inc.",0,031673,leverage,0.9893,0.9893,identical,0.0
+1140859,2024-04-10,"Cencora, Inc.",0,031673,roa,0.0279,0.0279,identical,0.0
+1140859,2024-04-10,"Cencora, Inc.",0,031673,op_margin,0.0134,0.0134,identical,0.0
+1140859,2024-05-08,"Cencora, Inc.",0,031673,firm_size_log,11.0439,11.0439,identical,0.0
+1140859,2024-05-08,"Cencora, Inc.",0,031673,leverage,0.9893,0.9893,identical,0.0
+1140859,2024-05-08,"Cencora, Inc.",0,031673,roa,0.0279,0.0279,identical,0.0
+1140859,2024-05-08,"Cencora, Inc.",0,031673,op_margin,0.0134,0.0134,identical,0.0
+1166691,2008-01-29,Comcast,1,003226,firm_size_log,11.6388,11.6388,identical,0.0
+1166691,2008-01-29,Comcast,1,003226,leverage,0.6333,0.6333,identical,0.0
+1166691,2008-01-29,Comcast,1,003226,roa,0.0228,0.0228,identical,0.0
+1166691,2008-01-29,Comcast,1,003226,op_margin,0.3828,0.3828,identical,0.0
+1166691,2009-05-11,"Comcast Cable Communications, Inc.",1,003226,firm_size_log,11.6353,11.6353,identical,0.0
+1166691,2009-05-11,"Comcast Cable Communications, Inc.",1,003226,leverage,0.6395,0.6395,identical,0.0
+1166691,2009-05-11,"Comcast Cable Communications, Inc.",1,003226,roa,0.0225,0.0225,identical,0.0
+1166691,2009-05-11,"Comcast Cable Communications, Inc.",1,003226,op_margin,0.3882,0.3882,identical,0.0
+1166691,2009-06-22,"Comcast Cable Communications, Inc.",1,003226,firm_size_log,11.6353,11.6353,identical,0.0
+1166691,2009-06-22,"Comcast Cable Communications, Inc.",1,003226,leverage,0.6395,0.6395,identical,0.0
+1166691,2009-06-22,"Comcast Cable Communications, Inc.",1,003226,roa,0.0225,0.0225,identical,0.0
+1166691,2009-06-22,"Comcast Cable Communications, Inc.",1,003226,op_margin,0.3882,0.3882,identical,0.0
+1166691,2012-08-24,NBC Sports Group,0,003226,firm_size_log,11.9692,11.9692,identical,0.0
+1166691,2012-08-24,NBC Sports Group,0,003226,leverage,0.5966,0.5966,identical,0.0
+1166691,2012-08-24,NBC Sports Group,0,003226,roa,0.0264,0.0264,identical,0.0
+1166691,2012-08-24,NBC Sports Group,0,003226,op_margin,0.3315,0.3315,identical,0.0
+1166691,2013-08-24,NBC Sports Group,0,003226,firm_size_log,12.0135,12.0135,identical,0.0
+1166691,2013-08-24,NBC Sports Group,0,003226,leverage,0.5951,0.5951,identical,0.0
+1166691,2013-08-24,NBC Sports Group,0,003226,roa,0.0376,0.0376,identical,0.0
+1166691,2013-08-24,NBC Sports Group,0,003226,op_margin,0.3193,0.3193,identical,0.0
+1166691,2013-10-15,NBC Sports Group,0,003226,firm_size_log,12.0135,12.0135,identical,0.0
+1166691,2013-10-15,NBC Sports Group,0,003226,leverage,0.5951,0.5951,identical,0.0
+1166691,2013-10-15,NBC Sports Group,0,003226,roa,0.0376,0.0376,identical,0.0
+1166691,2013-10-15,NBC Sports Group,0,003226,op_margin,0.3193,0.3193,identical,0.0
+1166691,2014-09-29,Comcast,1,003226,firm_size_log,11.9755,11.9755,identical,0.0
+1166691,2014-09-29,Comcast,1,003226,leverage,0.6725,0.6725,identical,0.0
+1166691,2014-09-29,Comcast,1,003226,roa,0.0429,0.0429,identical,0.0
+1166691,2014-09-29,Comcast,1,003226,op_margin,0.3326,0.3326,identical,0.0
+1166691,2022-01-04,NBCUniversal,1,003226,firm_size_log,12.5278,12.5278,identical,0.0
+1166691,2022-01-04,NBCUniversal,1,003226,leverage,0.6448,0.6448,identical,0.0
+1166691,2022-01-04,NBCUniversal,1,003226,roa,0.0513,0.0513,identical,0.0
+1166691,2022-01-04,NBCUniversal,1,003226,op_margin,0.2977,0.2977,identical,0.0
+1166691,2023-10-16,Comcast Cable Communications LLC,1,003226,firm_size_log,12.4579,12.4579,identical,0.0
+1166691,2023-10-16,Comcast Cable Communications LLC,1,003226,leverage,0.6811,0.6811,identical,0.0
+1166691,2023-10-16,Comcast Cable Communications LLC,1,003226,roa,0.0209,0.0209,identical,0.0
+1166691,2023-10-16,Comcast Cable Communications LLC,1,003226,op_margin,0.3046,0.3046,identical,0.0
+1166691,2024-01-26,Comcast Cable Communications LLC,1,003226,firm_size_log,12.4868,12.4868,identical,0.0
+1166691,2024-01-26,Comcast Cable Communications LLC,1,003226,leverage,0.6848,0.6848,identical,0.0
+1166691,2024-01-26,Comcast Cable Communications LLC,1,003226,roa,0.0581,0.0581,identical,0.0
+1166691,2024-01-26,Comcast Cable Communications LLC,1,003226,op_margin,0.3097,0.3097,identical,0.0
+1166691,2024-02-14,Comcast Cable Communications LLC,1,003226,firm_size_log,12.4868,12.4868,identical,0.0
+1166691,2024-02-14,Comcast Cable Communications LLC,1,003226,leverage,0.6848,0.6848,identical,0.0
+1166691,2024-02-14,Comcast Cable Communications LLC,1,003226,roa,0.0581,0.0581,identical,0.0
+1166691,2024-02-14,Comcast Cable Communications LLC,1,003226,op_margin,0.3097,0.3097,identical,0.0
+1166691,2024-10-04,Comcast Cable Communications LLC,1,003226,firm_size_log,12.4868,12.4868,identical,0.0
+1166691,2024-10-04,Comcast Cable Communications LLC,1,003226,leverage,0.6848,0.6848,identical,0.0
+1166691,2024-10-04,Comcast Cable Communications LLC,1,003226,roa,0.0581,0.0581,identical,0.0
+1166691,2024-10-04,Comcast Cable Communications LLC,1,003226,op_margin,0.3097,0.3097,identical,0.0
+1180262,2022-02-01,"Herbalife International of America, Inc.",0,014269,firm_size_log,,7.9444,gained,
+1180262,2022-02-01,"Herbalife International of America, Inc.",0,014269,leverage,,1.4935,gained,
+1180262,2022-02-01,"Herbalife International of America, Inc.",0,014269,roa,,0.1586,gained,
+1180262,2022-02-01,"Herbalife International of America, Inc.",0,014269,op_margin,,0.1466,gained,
+51434,2023-05-30,International Paper Company,0,006104,firm_size_log,,10.0833,gained,
+51434,2023-05-30,International Paper Company,0,006104,leverage,,0.6451,gained,
+51434,2023-05-30,International Paper Company,0,006104,roa,,0.0628,gained,
+51434,2023-05-30,International Paper Company,0,006104,op_margin,,0.1351,gained,
+1283699,2014-01-02,"T-Mobile USA, Inc.",1,017874,firm_size_log,10.8188,10.8188,identical,0.0
+1283699,2014-01-02,"T-Mobile USA, Inc.",1,017874,leverage,0.7148,0.7148,identical,0.0
+1283699,2014-01-02,"T-Mobile USA, Inc.",1,017874,roa,0.0007,0.0007,identical,0.0
+1283699,2014-01-02,"T-Mobile USA, Inc.",1,017874,op_margin,0.1959,0.1959,identical,0.0
+1283699,2015-09-14,"T-Mobile USA, Inc.",1,017874,firm_size_log,10.9447,10.9447,identical,0.0
+1283699,2015-09-14,"T-Mobile USA, Inc.",1,017874,leverage,0.7235,0.7235,identical,0.0
+1283699,2015-09-14,"T-Mobile USA, Inc.",1,017874,roa,0.0044,0.0044,identical,0.0
+1283699,2015-09-14,"T-Mobile USA, Inc.",1,017874,op_margin,0.179,0.179,identical,0.0
+1283699,2015-10-01,T-Mobile USA Inc.,1,017874,firm_size_log,10.9447,10.9447,identical,0.0
+1283699,2015-10-01,T-Mobile USA Inc.,1,017874,leverage,0.7235,0.7235,identical,0.0
+1283699,2015-10-01,T-Mobile USA Inc.,1,017874,roa,0.0044,0.0044,identical,0.0
+1283699,2015-10-01,T-Mobile USA Inc.,1,017874,op_margin,0.179,0.179,identical,0.0
+1283699,2015-11-04,T-Mobile USA Inc,1,017874,firm_size_log,10.9447,10.9447,identical,0.0
+1283699,2015-11-04,T-Mobile USA Inc,1,017874,leverage,0.7235,0.7235,identical,0.0
+1283699,2015-11-04,T-Mobile USA Inc,1,017874,roa,0.0044,0.0044,identical,0.0
+1283699,2015-11-04,T-Mobile USA Inc,1,017874,op_margin,0.179,0.179,identical,0.0
+1283699,2017-04-01,T-Mobile,1,017874,firm_size_log,11.0958,11.0958,identical,0.0
+1283699,2017-04-01,T-Mobile,1,017874,leverage,0.7232,0.7232,identical,0.0
+1283699,2017-04-01,T-Mobile,1,017874,roa,0.0222,0.0222,identical,0.0
+1283699,2017-04-01,T-Mobile,1,017874,op_margin,0.2501,0.2501,identical,0.0
+1283699,2017-08-24,"T-Mobile USA, Inc.",1,017874,firm_size_log,11.0958,11.0958,identical,0.0
+1283699,2017-08-24,"T-Mobile USA, Inc.",1,017874,leverage,0.7232,0.7232,identical,0.0
+1283699,2017-08-24,"T-Mobile USA, Inc.",1,017874,roa,0.0222,0.0222,identical,0.0
+1283699,2017-08-24,"T-Mobile USA, Inc.",1,017874,op_margin,0.2501,0.2501,identical,0.0
+1283699,2017-09-16,"T-Mobile USA, Inc.",1,017874,firm_size_log,11.0958,11.0958,identical,0.0
+1283699,2017-09-16,"T-Mobile USA, Inc.",1,017874,leverage,0.7232,0.7232,identical,0.0
+1283699,2017-09-16,"T-Mobile USA, Inc.",1,017874,roa,0.0222,0.0222,identical,0.0
+1283699,2017-09-16,"T-Mobile USA, Inc.",1,017874,op_margin,0.2501,0.2501,identical,0.0
+1283699,2018-08-20,T-Mobile USA Inc.,1,017874,firm_size_log,11.1643,11.1643,identical,0.0
+1283699,2018-08-20,T-Mobile USA Inc.,1,017874,leverage,0.6803,0.6803,identical,0.0
+1283699,2018-08-20,T-Mobile USA Inc.,1,017874,roa,0.0643,0.0643,identical,0.0
+1283699,2018-08-20,T-Mobile USA Inc.,1,017874,op_margin,0.2666,0.2666,identical,0.0
+1283699,2019-11-26,T-Mobile USA,1,017874,firm_size_log,11.1909,11.1909,identical,0.0
+1283699,2019-11-26,T-Mobile USA,1,017874,leverage,0.6589,0.6589,identical,0.0
+1283699,2019-11-26,T-Mobile USA,1,017874,roa,0.0399,0.0399,identical,0.0
+1283699,2019-11-26,T-Mobile USA,1,017874,op_margin,0.2737,0.2737,identical,0.0
+1283699,2020-04-02,Sprint,1,017874,firm_size_log,11.3728,11.3728,identical,0.0
+1283699,2020-04-02,Sprint,1,017874,leverage,0.6688,0.6688,identical,0.0
+1283699,2020-04-02,Sprint,1,017874,roa,0.0399,0.0399,identical,0.0
+1283699,2020-04-02,Sprint,1,017874,op_margin,0.288,0.288,identical,0.0
+1283699,2020-04-15,Sprint,1,017874,firm_size_log,11.3728,11.3728,identical,0.0
+1283699,2020-04-15,Sprint,1,017874,leverage,0.6688,0.6688,identical,0.0
+1283699,2020-04-15,Sprint,1,017874,roa,0.0399,0.0399,identical,0.0
+1283699,2020-04-15,Sprint,1,017874,op_margin,0.288,0.288,identical,0.0
+1283699,2020-08-27,"T-Mobile US, Inc.",1,017874,firm_size_log,11.3728,11.3728,identical,0.0
+1283699,2020-08-27,"T-Mobile US, Inc.",1,017874,leverage,0.6688,0.6688,identical,0.0
+1283699,2020-08-27,"T-Mobile US, Inc.",1,017874,roa,0.0399,0.0399,identical,0.0
+1283699,2020-08-27,"T-Mobile US, Inc.",1,017874,op_margin,0.288,0.288,identical,0.0
+1283699,2020-08-31,T-Mobile,1,017874,firm_size_log,11.3728,11.3728,identical,0.0
+1283699,2020-08-31,T-Mobile,1,017874,leverage,0.6688,0.6688,identical,0.0
+1283699,2020-08-31,T-Mobile,1,017874,roa,0.0399,0.0399,identical,0.0
+1283699,2020-08-31,T-Mobile,1,017874,op_margin,0.288,0.288,identical,0.0
+1283699,2021-01-18,T-Mobile,1,017874,firm_size_log,12.2069,12.2069,identical,0.0
+1283699,2021-01-18,T-Mobile,1,017874,leverage,0.6735,0.6735,identical,0.0
+1283699,2021-01-18,T-Mobile,1,017874,roa,0.0153,0.0153,identical,0.0
+1283699,2021-01-18,T-Mobile,1,017874,op_margin,0.3447,0.3447,identical,0.0
+1283699,2021-02-12,"T-Mobile USA, Inc.",1,017874,firm_size_log,12.2069,12.2069,identical,0.0
+1283699,2021-02-12,"T-Mobile USA, Inc.",1,017874,leverage,0.6735,0.6735,identical,0.0
+1283699,2021-02-12,"T-Mobile USA, Inc.",1,017874,roa,0.0153,0.0153,identical,0.0
+1283699,2021-02-12,"T-Mobile USA, Inc.",1,017874,op_margin,0.3447,0.3447,identical,0.0
+1283699,2021-02-20,T-Mobile,1,017874,firm_size_log,12.2069,12.2069,identical,0.0
+1283699,2021-02-20,T-Mobile,1,017874,leverage,0.6735,0.6735,identical,0.0
+1283699,2021-02-20,T-Mobile,1,017874,roa,0.0153,0.0153,identical,0.0
+1283699,2021-02-20,T-Mobile,1,017874,op_margin,0.3447,0.3447,identical,0.0
+1283699,2021-03-01,"T-Mobile USA, Inc.",1,017874,firm_size_log,12.2069,12.2069,identical,0.0
+1283699,2021-03-01,"T-Mobile USA, Inc.",1,017874,leverage,0.6735,0.6735,identical,0.0
+1283699,2021-03-01,"T-Mobile USA, Inc.",1,017874,roa,0.0153,0.0153,identical,0.0
+1283699,2021-03-01,"T-Mobile USA, Inc.",1,017874,op_margin,0.3447,0.3447,identical,0.0
+1283699,2021-03-31,T-Mobile,1,017874,firm_size_log,12.2069,12.2069,identical,0.0
+1283699,2021-03-31,T-Mobile,1,017874,leverage,0.6735,0.6735,identical,0.0
+1283699,2021-03-31,T-Mobile,1,017874,roa,0.0153,0.0153,identical,0.0
+1283699,2021-03-31,T-Mobile,1,017874,op_margin,0.3447,0.3447,identical,0.0
+1283699,2021-08-13,"T-Mobile USA, Inc.",1,017874,firm_size_log,12.2069,12.2069,identical,0.0
+1283699,2021-08-13,"T-Mobile USA, Inc.",1,017874,leverage,0.6735,0.6735,identical,0.0
+1283699,2021-08-13,"T-Mobile USA, Inc.",1,017874,roa,0.0153,0.0153,identical,0.0
+1283699,2021-08-13,"T-Mobile USA, Inc.",1,017874,op_margin,0.3447,0.3447,identical,0.0
+1283699,2021-08-17,T-Mobile USA,1,017874,firm_size_log,12.2069,12.2069,identical,0.0
+1283699,2021-08-17,T-Mobile USA,1,017874,leverage,0.6735,0.6735,identical,0.0
+1283699,2021-08-17,T-Mobile USA,1,017874,roa,0.0153,0.0153,identical,0.0
+1283699,2021-08-17,T-Mobile USA,1,017874,op_margin,0.3447,0.3447,identical,0.0
+1283699,2021-08-26,T-Mobile USA,1,017874,firm_size_log,12.2069,12.2069,identical,0.0
+1283699,2021-08-26,T-Mobile USA,1,017874,leverage,0.6735,0.6735,identical,0.0
+1283699,2021-08-26,T-Mobile USA,1,017874,roa,0.0153,0.0153,identical,0.0
+1283699,2021-08-26,T-Mobile USA,1,017874,op_margin,0.3447,0.3447,identical,0.0
+1283699,2022-03-08,T-Mobile,1,017874,firm_size_log,12.2384,12.2384,identical,0.0
+1283699,2022-03-08,T-Mobile,1,017874,leverage,0.6655,0.6655,identical,0.0
+1283699,2022-03-08,T-Mobile,1,017874,roa,0.0146,0.0146,identical,0.0
+1283699,2022-03-08,T-Mobile,1,017874,op_margin,0.3293,0.3293,identical,0.0
+1283699,2022-11-25,T-Mobile USA,1,017874,firm_size_log,12.2384,12.2384,identical,0.0
+1283699,2022-11-25,T-Mobile USA,1,017874,leverage,0.6655,0.6655,identical,0.0
+1283699,2022-11-25,T-Mobile USA,1,017874,roa,0.0146,0.0146,identical,0.0
+1283699,2022-11-25,T-Mobile USA,1,017874,op_margin,0.3293,0.3293,identical,0.0
+1283699,2023-02-01,"T-Mobile USA, Inc.",1,017874,firm_size_log,12.2612,12.2612,identical,0.0
+1283699,2023-02-01,"T-Mobile USA, Inc.",1,017874,leverage,0.6704,0.6704,identical,0.0
+1283699,2023-02-01,"T-Mobile USA, Inc.",1,017874,roa,0.0123,0.0123,identical,0.0
+1283699,2023-02-01,"T-Mobile USA, Inc.",1,017874,op_margin,0.3366,0.3366,identical,0.0
+1283699,2023-02-24,T-Mobile,1,017874,firm_size_log,12.2612,12.2612,identical,0.0
+1283699,2023-02-24,T-Mobile,1,017874,leverage,0.6704,0.6704,identical,0.0
+1283699,2023-02-24,T-Mobile,1,017874,roa,0.0123,0.0123,identical,0.0
+1283699,2023-02-24,T-Mobile,1,017874,op_margin,0.3366,0.3366,identical,0.0
+1283699,2023-04-28,T-Mobile USA,1,017874,firm_size_log,12.2612,12.2612,identical,0.0
+1283699,2023-04-28,T-Mobile USA,1,017874,leverage,0.6704,0.6704,identical,0.0
+1283699,2023-04-28,T-Mobile USA,1,017874,roa,0.0123,0.0123,identical,0.0
+1283699,2023-04-28,T-Mobile USA,1,017874,op_margin,0.3366,0.3366,identical,0.0
+1652044,2008-06-27,"Google, Inc.",0,160329,firm_size_log,,10.14,gained,
+1652044,2008-06-27,"Google, Inc.",0,160329,leverage,,0.1044,gained,
+1652044,2008-06-27,"Google, Inc.",0,160329,roa,,0.1659,gained,
+1652044,2008-06-27,"Google, Inc.",0,160329,op_margin,,0.3649,gained,
+1308161,2009-04-09,Fox Entertainment Group,0,012886,firm_size_log,,11.0398,gained,
+1308161,2009-04-09,Fox Entertainment Group,0,012886,leverage,,0.5247,gained,
+1308161,2009-04-09,Fox Entertainment Group,0,012886,roa,,0.0865,gained,
+1308161,2009-04-09,Fox Entertainment Group,0,012886,op_margin,,0.1964,gained,
+1308161,2009-04-15,Fox Entertainment Group Inc.,0,012886,firm_size_log,,11.0398,gained,
+1308161,2009-04-15,Fox Entertainment Group Inc.,0,012886,leverage,,0.5247,gained,
+1308161,2009-04-15,Fox Entertainment Group Inc.,0,012886,roa,,0.0865,gained,
+1308161,2009-04-15,Fox Entertainment Group Inc.,0,012886,op_margin,,0.1964,gained,
+1316644,2018-10-29,AeroGrow International,0,176083,firm_size_log,,2.8996,gained,
+1316644,2018-10-29,AeroGrow International,0,176083,leverage,,0.2986,gained,
+1316644,2018-10-29,AeroGrow International,0,176083,roa,,-0.0243,gained,
+1316644,2018-10-29,AeroGrow International,0,176083,op_margin,,-0.0032,gained,
+1316644,2019-03-04,"AeroGrow International, Inc.",0,176083,firm_size_log,,2.8996,gained,
+1316644,2019-03-04,"AeroGrow International, Inc.",0,176083,leverage,,0.2986,gained,
+1316644,2019-03-04,"AeroGrow International, Inc.",0,176083,roa,,-0.0243,gained,
+1316644,2019-03-04,"AeroGrow International, Inc.",0,176083,op_margin,,-0.0032,gained,
+1319161,2020-08-05,Warner Music Group,0,163118,firm_size_log,,8.7023,gained,
+1319161,2020-08-05,Warner Music Group,0,163118,leverage,,1.0447,gained,
+1319161,2020-08-05,Warner Music Group,0,163118,roa,,0.0425,gained,
+1319161,2020-08-05,Warner Music Group,0,163118,op_margin,,0.1482,gained,
+1319161,2020-09-09,Warner Music Group,0,163118,firm_size_log,,8.7023,gained,
+1319161,2020-09-09,Warner Music Group,0,163118,leverage,,1.0447,gained,
+1319161,2020-09-09,Warner Music Group,0,163118,roa,,0.0425,gained,
+1319161,2020-09-09,Warner Music Group,0,163118,op_margin,,0.1482,gained,
+1326160,2014-03-24,Duke Energy Corporation,0,004093,firm_size_log,11.6508,11.6508,identical,0.0
+1326160,2014-03-24,Duke Energy Corporation,0,004093,leverage,0.6392,0.6392,identical,0.0
+1326160,2014-03-24,Duke Energy Corporation,0,004093,roa,0.0232,0.0232,identical,0.0
+1326160,2014-03-24,Duke Energy Corporation,0,004093,op_margin,0.3644,0.3644,identical,0.0
+1326160,2017-11-10,Duke Energy,0,004093,firm_size_log,11.7963,11.7963,identical,0.0
+1326160,2017-11-10,Duke Energy,0,004093,leverage,0.6909,0.6909,identical,0.0
+1326160,2017-11-10,Duke Energy,0,004093,roa,0.0162,0.0162,identical,0.0
+1326160,2017-11-10,Duke Energy,0,004093,op_margin,0.3962,0.3962,identical,0.0
+1326160,2021-05-28,Duke Energy Corporation,0,004093,firm_size_log,11.9977,11.9977,identical,0.0
+1326160,2021-05-28,Duke Energy Corporation,0,004093,leverage,0.6971,0.6971,identical,0.0
+1326160,2021-05-28,Duke Energy Corporation,0,004093,roa,0.0085,0.0085,identical,0.0
+1326160,2021-05-28,Duke Energy Corporation,0,004093,op_margin,0.4338,0.4338,identical,0.0
+1326801,2013-11-24,Facebook,0,170617,firm_size_log,,9.6226,gained,
+1326801,2013-11-24,Facebook,0,170617,leverage,,0.2217,gained,
+1326801,2013-11-24,Facebook,0,170617,roa,,0.0035,gained,
+1326801,2013-11-24,Facebook,0,170617,op_margin,,0.2323,gained,
+1326801,2018-03-01,Facebook,0,170617,firm_size_log,,11.3448,gained,
+1326801,2018-03-01,Facebook,0,170617,leverage,,0.1204,gained,
+1326801,2018-03-01,Facebook,0,170617,roa,,0.1885,gained,
+1326801,2018-03-01,Facebook,0,170617,op_margin,,0.5739,gained,
+1326801,2018-09-01,Facebook,0,170617,firm_size_log,,11.3448,gained,
+1326801,2018-09-01,Facebook,0,170617,leverage,,0.1204,gained,
+1326801,2018-09-01,Facebook,0,170617,roa,,0.1885,gained,
+1326801,2018-09-01,Facebook,0,170617,op_margin,,0.5739,gained,
+1327811,2025-08-06,Workday Inc.,0,015044,firm_size_log,9.7968,9.7968,identical,0.0
+1327811,2025-08-06,Workday Inc.,0,015044,leverage,0.4975,0.4975,identical,0.0
+1327811,2025-08-06,Workday Inc.,0,015044,roa,0.0293,0.0293,identical,0.0
+1327811,2025-08-06,Workday Inc.,0,015044,op_margin,0.0997,0.0997,identical,0.0
+1341439,2013-07-10,Oracle Corporation,0,012142,firm_size_log,11.3122,11.3122,identical,0.0
+1341439,2013-07-10,Oracle Corporation,0,012142,leverage,0.4482,0.4482,identical,0.0
+1341439,2013-07-10,Oracle Corporation,0,012142,roa,0.1335,0.1335,identical,0.0
+1341439,2013-07-10,Oracle Corporation,0,012142,op_margin,0.4646,0.4646,identical,0.0
+1373715,2024-05-14,ServiceNow Inc.,0,171007,firm_size_log,9.7635,9.7635,identical,0.0
+1373715,2024-05-14,ServiceNow Inc.,0,171007,leverage,0.5613,0.5613,identical,0.0
+1373715,2024-05-14,ServiceNow Inc.,0,171007,roa,0.0996,0.0996,identical,0.0
+1373715,2024-05-14,ServiceNow Inc.,0,171007,op_margin,0.1401,0.1401,identical,0.0
+1387467,2022-02-22,Alpha & Omega Semiconductor,0,184604,firm_size_log,,6.8228,gained,
+1387467,2022-02-22,Alpha & Omega Semiconductor,0,184604,leverage,,0.4379,gained,
+1387467,2022-02-22,Alpha & Omega Semiconductor,0,184604,roa,,0.0633,gained,
+1387467,2022-02-22,Alpha & Omega Semiconductor,0,184604,op_margin,,0.1824,gained,
+1113169,2007-12-24,"T. Rowe Price Retirement Plan Services, Inc.",0,012138,firm_size_log,,7.9249,gained,
+1113169,2007-12-24,"T. Rowe Price Retirement Plan Services, Inc.",0,012138,leverage,,0.1224,gained,
+1113169,2007-12-24,"T. Rowe Price Retirement Plan Services, Inc.",0,012138,roa,,0.1915,gained,
+1113169,2007-12-24,"T. Rowe Price Retirement Plan Services, Inc.",0,012138,op_margin,,0.4583,gained,
+1113169,2023-05-29,"T. Rowe Price Retirement Plan Services, Inc.",0,012138,firm_size_log,,9.3625,gained,
+1113169,2023-05-29,"T. Rowe Price Retirement Plan Services, Inc.",0,012138,leverage,,0.168,gained,
+1113169,2023-05-29,"T. Rowe Price Retirement Plan Services, Inc.",0,012138,roa,,0.1338,gained,
+1113169,2023-05-29,"T. Rowe Price Retirement Plan Services, Inc.",0,012138,op_margin,,0.4196,gained,
+1397911,2018-07-10,LPL Financial LLC,0,178519,firm_size_log,,8.5865,gained,
+1397911,2018-07-10,LPL Financial LLC,0,178519,leverage,,0.8199,gained,
+1397911,2018-07-10,LPL Financial LLC,0,178519,roa,,0.0446,gained,
+1397911,2018-07-10,LPL Financial LLC,0,178519,op_margin,,0.144,gained,
+1418091,2013-02-01,"Twitter, Inc.",0,018872,firm_size_log,,6.7233,gained,
+1418091,2013-02-01,"Twitter, Inc.",0,018872,leverage,,0.2492,gained,
+1418091,2013-02-01,"Twitter, Inc.",0,018872,roa,,-0.0955,gained,
+1418091,2013-02-01,"Twitter, Inc.",0,018872,op_margin,,-0.0144,gained,
+1428439,2023-12-01,Roku Inc.,0,032382,firm_size_log,8.3922,8.3922,identical,0.0
+1428439,2023-12-01,Roku Inc.,0,032382,leverage,0.4002,0.4002,identical,0.0
+1428439,2023-12-01,Roku Inc.,0,032382,roa,-0.1129,-0.1129,identical,0.0
+1428439,2023-12-01,Roku Inc.,0,032382,op_margin,-0.142,-0.142,identical,0.0
+1428439,2023-12-28,Roku Inc,0,032382,firm_size_log,8.3922,8.3922,identical,0.0
+1428439,2023-12-28,Roku Inc,0,032382,leverage,0.4002,0.4002,identical,0.0
+1428439,2023-12-28,Roku Inc,0,032382,roa,-0.1129,-0.1129,identical,0.0
+1428439,2023-12-28,Roku Inc,0,032382,op_margin,-0.142,-0.142,identical,0.0
+1428439,2024-02-29,"Roku, Inc.",0,032382,firm_size_log,8.3574,8.3574,identical,0.0
+1428439,2024-02-29,"Roku, Inc.",0,032382,leverage,0.4541,0.4541,identical,0.0
+1428439,2024-02-29,"Roku, Inc.",0,032382,roa,-0.1665,-0.1665,identical,0.0
+1428439,2024-02-29,"Roku, Inc.",0,032382,op_margin,-0.105,-0.105,identical,0.0
+1447669,2022-08-04,Twilio,1,027364,firm_size_log,9.4726,9.4726,identical,0.0
+1447669,2022-08-04,Twilio,1,027364,leverage,0.1513,0.1513,identical,0.0
+1447669,2022-08-04,Twilio,1,027364,roa,-0.0731,-0.0731,identical,0.0
+1447669,2022-08-04,Twilio,1,027364,op_margin,-0.2286,-0.2286,identical,0.0
+1447669,2024-04-01,Twilio,1,027364,firm_size_log,9.3596,9.3596,identical,0.0
+1447669,2024-04-01,Twilio,1,027364,leverage,0.1617,0.1617,identical,0.0
+1447669,2024-04-01,Twilio,1,027364,roa,-0.0875,-0.0875,identical,0.0
+1447669,2024-04-01,Twilio,1,027364,op_margin,-0.0164,-0.0164,identical,0.0
+1400891,2024-12-24,"iHeartMedia + Entertainment, Inc.",0,003105,firm_size_log,,8.8469,gained,
+1400891,2024-12-24,"iHeartMedia + Entertainment, Inc.",0,003105,leverage,,1.0553,gained,
+1400891,2024-12-24,"iHeartMedia + Entertainment, Inc.",0,003105,roa,,-0.1586,gained,
+1400891,2024-12-24,"iHeartMedia + Entertainment, Inc.",0,003105,op_margin,,0.1601,gained,
+1400891,2025-04-30,"iHeartMedia + Entertainment, Inc.",0,003105,firm_size_log,,8.6255,gained,
+1400891,2025-04-30,"iHeartMedia + Entertainment, Inc.",0,003105,leverage,,1.2462,gained,
+1400891,2025-04-30,"iHeartMedia + Entertainment, Inc.",0,003105,roa,,-0.1813,gained,
+1400891,2025-04-30,"iHeartMedia + Entertainment, Inc.",0,003105,op_margin,,0.1484,gained,
+1472787,2023-12-18,First American Financial Corporation,0,184899,firm_size_log,,9.6128,gained,
+1472787,2023-12-18,First American Financial Corporation,0,184899,leverage,,0.6865,gained,
+1472787,2023-12-18,First American Financial Corporation,0,184899,roa,,0.0176,gained,
+1472787,2023-12-18,First American Financial Corporation,0,184899,op_margin,,0.0757,gained,
+728535,2020-08-01,"J.B. Hunt Transport, Inc.",0,005783,firm_size_log,,8.6072,gained,
+728535,2020-08-01,"J.B. Hunt Transport, Inc.",0,005783,leverage,,0.5856,gained,
+728535,2020-08-01,"J.B. Hunt Transport, Inc.",0,005783,roa,,0.0944,gained,
+728535,2020-08-01,"J.B. Hunt Transport, Inc.",0,005783,op_margin,,0.1433,gained,
+728535,2020-08-17,"J.B. Hunt Transport, Inc.",0,005783,firm_size_log,,8.6072,gained,
+728535,2020-08-17,"J.B. Hunt Transport, Inc.",0,005783,leverage,,0.5856,gained,
+728535,2020-08-17,"J.B. Hunt Transport, Inc.",0,005783,roa,,0.0944,gained,
+728535,2020-08-17,"J.B. Hunt Transport, Inc.",0,005783,op_margin,,0.1433,gained,
+1501585,2022-03-01,"Huntington Ingalls Industries, Inc.",0,186310,firm_size_log,9.2712,9.2712,identical,0.0
+1501585,2022-03-01,"Huntington Ingalls Industries, Inc.",0,186310,leverage,0.7358,0.7358,identical,0.0
+1501585,2022-03-01,"Huntington Ingalls Industries, Inc.",0,186310,roa,0.0512,0.0512,identical,0.0
+1501585,2022-03-01,"Huntington Ingalls Industries, Inc.",0,186310,op_margin,0.0818,0.0818,identical,0.0
+1510295,2018-11-28,Marathon Petroleum Company LP,0,186989,firm_size_log,10.8005,10.8005,identical,0.0
+1510295,2018-11-28,Marathon Petroleum Company LP,0,186989,leverage,0.555,0.555,identical,0.0
+1510295,2018-11-28,Marathon Petroleum Company LP,0,186989,roa,0.07,0.07,identical,0.0
+1510295,2018-11-28,Marathon Petroleum Company LP,0,186989,op_margin,0.0818,0.0818,identical,0.0
+1512673,2016-02-01,"Block and Company, Inc.",0,026367,firm_size_log,,6.7966,gained,
+1512673,2016-02-01,"Block and Company, Inc.",0,026367,leverage,,0.4322,gained,
+1512673,2016-02-01,"Block and Company, Inc.",0,026367,roa,,-0.201,gained,
+1512673,2016-02-01,"Block and Company, Inc.",0,026367,op_margin,,-0.1119,gained,
+1512673,2016-02-09,"Block and Company, Inc.",0,026367,firm_size_log,,6.7966,gained,
+1512673,2016-02-09,"Block and Company, Inc.",0,026367,leverage,,0.4322,gained,
+1512673,2016-02-09,"Block and Company, Inc.",0,026367,roa,,-0.201,gained,
+1512673,2016-02-09,"Block and Company, Inc.",0,026367,op_margin,,-0.1119,gained,
+1512673,2016-03-21,"Block and Company, Inc.",0,026367,firm_size_log,,6.7966,gained,
+1512673,2016-03-21,"Block and Company, Inc.",0,026367,leverage,,0.4322,gained,
+1512673,2016-03-21,"Block and Company, Inc.",0,026367,roa,,-0.201,gained,
+1512673,2016-03-21,"Block and Company, Inc.",0,026367,op_margin,,-0.1119,gained,
+1512673,2023-01-12,Block Inc,0,026367,firm_size_log,,10.3534,gained,
+1512673,2023-01-12,Block Inc,0,026367,leverage,,0.45,gained,
+1512673,2023-01-12,Block Inc,0,026367,roa,,-0.0172,gained,
+1512673,2023-01-12,Block Inc,0,026367,op_margin,,0.0001,gained,
+1718512,2023-02-07,Gates Corporation,0,032886,firm_size_log,,8.8807,gained,
+1718512,2023-02-07,Gates Corporation,0,032886,leverage,,0.5212,gained,
+1718512,2023-02-07,Gates Corporation,0,032886,roa,,0.0307,gained,
+1718512,2023-02-07,Gates Corporation,0,032886,op_margin,,0.1732,gained,
+1718512,2023-02-11,Gates Corporation,0,032886,firm_size_log,,8.8807,gained,
+1718512,2023-02-11,Gates Corporation,0,032886,leverage,,0.5212,gained,
+1718512,2023-02-11,Gates Corporation,0,032886,roa,,0.0307,gained,
+1718512,2023-02-11,Gates Corporation,0,032886,op_margin,,0.1732,gained,
+1535527,2022-04-01,"CrowdStrike Holdings, Inc.",0,035182,firm_size_log,8.1938,8.1938,identical,0.0
+1535527,2022-04-01,"CrowdStrike Holdings, Inc.",0,035182,leverage,0.7132,0.7132,identical,0.0
+1535527,2022-04-01,"CrowdStrike Holdings, Inc.",0,035182,roa,-0.0649,-0.0649,identical,0.0
+1535527,2022-04-01,"CrowdStrike Holdings, Inc.",0,035182,op_margin,-0.0399,-0.0399,identical,0.0
+1535527,2024-07-19,CrowdStrike Holdings Inc.,0,035182,firm_size_log,8.8018,8.8018,identical,0.0
+1535527,2024-07-19,CrowdStrike Holdings Inc.,0,035182,leverage,0.6484,0.6484,identical,0.0
+1535527,2024-07-19,CrowdStrike Holdings Inc.,0,035182,roa,0.0134,0.0134,identical,0.0
+1535527,2024-07-19,CrowdStrike Holdings Inc.,0,035182,op_margin,0.0509,0.0509,identical,0.0
+1543151,2018-08-30,Uber Technologies Inc.,0,035077,firm_size_log,,9.6438,gained,
+1543151,2018-08-30,Uber Technologies Inc.,0,035077,leverage,,0.7632,gained,
+1543151,2018-08-30,Uber Technologies Inc.,0,035077,roa,,-0.2614,gained,
+1543151,2018-08-30,Uber Technologies Inc.,0,035077,op_margin,,-0.4487,gained,
+1543151,2018-12-06,Uber Technologies Inc,0,035077,firm_size_log,,9.6438,gained,
+1543151,2018-12-06,Uber Technologies Inc,0,035077,leverage,,0.7632,gained,
+1543151,2018-12-06,Uber Technologies Inc,0,035077,roa,,-0.2614,gained,
+1543151,2018-12-06,Uber Technologies Inc,0,035077,op_margin,,-0.4487,gained,
+1543151,2019-10-28,"Uber Technologies, Inc.",0,035077,firm_size_log,10.0853,10.0853,identical,0.0
+1543151,2019-10-28,"Uber Technologies, Inc.",0,035077,leverage,0.7169,0.7169,identical,0.0
+1543151,2019-10-28,"Uber Technologies, Inc.",0,035077,roa,0.0416,0.0416,identical,0.0
+1543151,2019-10-28,"Uber Technologies, Inc.",0,035077,op_margin,-0.2303,-0.2303,identical,0.0
+1543151,2023-01-23,"Uber Technologies, Inc.",0,035077,firm_size_log,10.3769,10.3769,identical,0.0
+1543151,2023-01-23,"Uber Technologies, Inc.",0,035077,leverage,0.7352,0.7352,identical,0.0
+1543151,2023-01-23,"Uber Technologies, Inc.",0,035077,roa,-0.2847,-0.2847,identical,0.0
+1543151,2023-01-23,"Uber Technologies, Inc.",0,035077,op_margin,-0.0236,-0.0236,identical,0.0
+1543151,2023-03-31,"Uber Technologies, Inc.",0,035077,firm_size_log,10.3769,10.3769,identical,0.0
+1543151,2023-03-31,"Uber Technologies, Inc.",0,035077,leverage,0.7352,0.7352,identical,0.0
+1543151,2023-03-31,"Uber Technologies, Inc.",0,035077,roa,-0.2847,-0.2847,identical,0.0
+1543151,2023-03-31,"Uber Technologies, Inc.",0,035077,op_margin,-0.0236,-0.0236,identical,0.0
+1543151,2024-08-23,"Uber Technologies, Inc.",0,035077,firm_size_log,10.5636,10.5636,identical,0.0
+1543151,2024-08-23,"Uber Technologies, Inc.",0,035077,leverage,0.6723,0.6723,identical,0.0
+1543151,2024-08-23,"Uber Technologies, Inc.",0,035077,roa,0.0488,0.0488,identical,0.0
+1543151,2024-08-23,"Uber Technologies, Inc.",0,035077,op_margin,0.0544,0.0544,identical,0.0
+1553023,2017-10-18,"CyrusOne, Inc.",0,016116,firm_size_log,7.9559,7.9559,identical,0.0
+1553023,2017-10-18,"CyrusOne, Inc.",0,016116,leverage,0.5926,0.5926,identical,0.0
+1553023,2017-10-18,"CyrusOne, Inc.",0,016116,roa,0.007,0.007,identical,0.0
+1553023,2017-10-18,"CyrusOne, Inc.",0,016116,op_margin,0.1332,0.1332,identical,0.0
+1564408,2022-03-01,Snap Inc.,0,030091,firm_size_log,8.9275,8.9275,identical,0.0
+1564408,2022-03-01,Snap Inc.,0,030091,leverage,0.4971,0.4971,identical,0.0
+1564408,2022-03-01,Snap Inc.,0,030091,roa,-0.0647,-0.0647,identical,0.0
+1564408,2022-03-01,Snap Inc.,0,030091,op_margin,-0.1416,-0.1416,identical,0.0
+1590895,2023-08-23,"Caesars Entertainment, Inc.",0,021808,firm_size_log,10.4201,10.4201,identical,0.0
+1590895,2023-08-23,"Caesars Entertainment, Inc.",0,021808,leverage,0.8881,0.8881,identical,0.0
+1590895,2023-08-23,"Caesars Entertainment, Inc.",0,021808,roa,-0.0268,-0.0268,identical,0.0
+1590895,2023-08-23,"Caesars Entertainment, Inc.",0,021808,op_margin,0.2833,0.2833,identical,0.0
+1609711,2019-10-16,GoDaddy.com LLC,1,023071,firm_size_log,8.7133,8.7133,identical,0.0
+1609711,2019-10-16,GoDaddy.com LLC,1,023071,leverage,0.8645,0.8645,identical,0.0
+1609711,2019-10-16,GoDaddy.com LLC,1,023071,roa,0.0127,0.0127,identical,0.0
+1609711,2019-10-16,GoDaddy.com LLC,1,023071,op_margin,0.1565,0.1565,identical,0.0
+1609711,2021-09-06,"GoDaddy.com, LLC",1,023071,firm_size_log,8.7692,8.7692,identical,0.0
+1609711,2021-09-06,"GoDaddy.com, LLC",1,023071,leverage,1.0018,1.0018,identical,0.0
+1609711,2021-09-06,"GoDaddy.com, LLC",1,023071,roa,-0.077,-0.077,identical,0.0
+1609711,2021-09-06,"GoDaddy.com, LLC",1,023071,op_margin,0.1527,0.1527,identical,0.0
+1609711,2022-03-14,"GoDaddy.com, LLC",1,023071,firm_size_log,8.9115,8.9115,identical,0.0
+1609711,2022-03-14,"GoDaddy.com, LLC",1,023071,leverage,0.9888,0.9888,identical,0.0
+1609711,2022-03-14,"GoDaddy.com, LLC",1,023071,roa,0.0327,0.0327,identical,0.0
+1609711,2022-03-14,"GoDaddy.com, LLC",1,023071,op_margin,0.1688,0.1688,identical,0.0
+1632127,2019-03-01,"Cable One, Inc.",1,023225,firm_size_log,7.7421,7.7421,identical,0.0
+1632127,2019-03-01,"Cable One, Inc.",1,023225,leverage,0.6634,0.6634,identical,0.0
+1632127,2019-03-01,"Cable One, Inc.",1,023225,roa,0.0715,0.0715,identical,0.0
+1632127,2019-03-01,"Cable One, Inc.",1,023225,op_margin,0.4538,0.4538,identical,0.0
+1632127,2019-08-08,"Cable One, Inc.",1,023225,firm_size_log,7.7421,7.7421,identical,0.0
+1632127,2019-08-08,"Cable One, Inc.",1,023225,leverage,0.6634,0.6634,identical,0.0
+1632127,2019-08-08,"Cable One, Inc.",1,023225,roa,0.0715,0.0715,identical,0.0
+1632127,2019-08-08,"Cable One, Inc.",1,023225,op_margin,0.4538,0.4538,identical,0.0
+1640147,2024-03-01,Snowflake Inc.,0,339965,firm_size_log,9.0147,9.0147,identical,0.0
+1640147,2024-03-01,Snowflake Inc.,0,339965,leverage,0.3688,0.3688,identical,0.0
+1640147,2024-03-01,Snowflake Inc.,0,339965,roa,-0.1017,-0.1017,identical,0.0
+1640147,2024-03-01,Snowflake Inc.,0,339965,op_margin,-0.3448,-0.3448,identical,0.0
+1640147,2024-04-14,Snowflake Inc.,0,339965,firm_size_log,9.0147,9.0147,identical,0.0
+1640147,2024-04-14,Snowflake Inc.,0,339965,leverage,0.3688,0.3688,identical,0.0
+1640147,2024-04-14,Snowflake Inc.,0,339965,roa,-0.1017,-0.1017,identical,0.0
+1640147,2024-04-14,Snowflake Inc.,0,339965,op_margin,-0.3448,-0.3448,identical,0.0
+1645590,2023-12-12,Hewlett Packard Enterprise Company,0,026156,firm_size_log,10.9535,10.9535,identical,0.0
+1645590,2023-12-12,Hewlett Packard Enterprise Company,0,026156,leverage,0.6284,0.6284,identical,0.0
+1645590,2023-12-12,Hewlett Packard Enterprise Company,0,026156,roa,0.0354,0.0354,identical,0.0
+1645590,2023-12-12,Hewlett Packard Enterprise Company,0,026156,op_margin,0.1736,0.1736,identical,0.0
+1645590,2025-02-05,Hewlett Packard Enterprise Company,0,026156,firm_size_log,11.1741,11.1741,identical,0.0
+1645590,2025-02-05,Hewlett Packard Enterprise Company,0,026156,leverage,0.6509,0.6509,identical,0.0
+1645590,2025-02-05,Hewlett Packard Enterprise Company,0,026156,roa,0.0362,0.0362,identical,0.0
+1645590,2025-02-05,Hewlett Packard Enterprise Company,0,026156,op_margin,0.1676,0.1676,identical,0.0
+1647088,2020-11-10,WillScot Mobile Mini Holdings Corp.,0,032771,firm_size_log,,7.9717,gained,
+1647088,2020-11-10,WillScot Mobile Mini Holdings Corp.,0,032771,leverage,,0.7553,gained,
+1647088,2020-11-10,WillScot Mobile Mini Holdings Corp.,0,032771,roa,,-0.0038,gained,
+1647088,2020-11-10,WillScot Mobile Mini Holdings Corp.,0,032771,op_margin,,0.323,gained,
+1652044,2016-03-29,Google Inc.,0,160329,firm_size_log,,11.9013,gained,
+1652044,2016-03-29,Google Inc.,0,160329,leverage,,0.184,gained,
+1652044,2016-03-29,Google Inc.,0,160329,roa,,0.1109,gained,
+1652044,2016-03-29,Google Inc.,0,160329,op_margin,,0.3252,gained,
+1652044,2016-05-06,Google Inc.,0,160329,firm_size_log,,11.9013,gained,
+1652044,2016-05-06,Google Inc.,0,160329,leverage,,0.184,gained,
+1652044,2016-05-06,Google Inc.,0,160329,roa,,0.1109,gained,
+1652044,2016-05-06,Google Inc.,0,160329,op_margin,,0.3252,gained,
+1652044,2016-08-10,Google Inc.,0,160329,firm_size_log,,11.9013,gained,
+1652044,2016-08-10,Google Inc.,0,160329,leverage,,0.184,gained,
+1652044,2016-08-10,Google Inc.,0,160329,roa,,0.1109,gained,
+1652044,2016-08-10,Google Inc.,0,160329,op_margin,,0.3252,gained,
+1652044,2017-06-29,"Google, Inc.",0,160329,firm_size_log,,12.0287,gained,
+1652044,2017-06-29,"Google, Inc.",0,160329,leverage,,0.1699,gained,
+1652044,2017-06-29,"Google, Inc.",0,160329,roa,,0.1163,gained,
+1652044,2017-06-29,"Google, Inc.",0,160329,op_margin,,0.3303,gained,
+1660134,2023-09-23,"Okta, Inc.",0,030736,firm_size_log,9.1385,9.1385,identical,0.0
+1660134,2023-09-23,"Okta, Inc.",0,030736,leverage,0.4127,0.4127,identical,0.0
+1660134,2023-09-23,"Okta, Inc.",0,030736,roa,-0.0876,-0.0876,identical,0.0
+1660134,2023-09-23,"Okta, Inc.",0,030736,op_margin,-0.3614,-0.3614,identical,0.0
+1660134,2023-11-02,Okta Inc,0,030736,firm_size_log,9.1385,9.1385,identical,0.0
+1660134,2023-11-02,Okta Inc,0,030736,leverage,0.4127,0.4127,identical,0.0
+1660134,2023-11-02,Okta Inc,0,030736,roa,-0.0876,-0.0876,identical,0.0
+1660134,2023-11-02,Okta Inc,0,030736,op_margin,-0.3614,-0.3614,identical,0.0
+1660134,2023-11-07,"Okta, Inc.",0,030736,firm_size_log,9.1385,9.1385,identical,0.0
+1660134,2023-11-07,"Okta, Inc.",0,030736,leverage,0.4127,0.4127,identical,0.0
+1660134,2023-11-07,"Okta, Inc.",0,030736,roa,-0.0876,-0.0876,identical,0.0
+1660134,2023-11-07,"Okta, Inc.",0,030736,op_margin,-0.3614,-0.3614,identical,0.0
+1669779,2022-01-14,CWGS Group,0,019071,firm_size_log,,8.3832,gained,
+1669779,2022-01-14,CWGS Group,0,019071,leverage,,0.9465,gained,
+1669779,2022-01-14,CWGS Group,0,019071,roa,,0.0637,gained,
+1669779,2022-01-14,CWGS Group,0,019071,op_margin,,0.1314,gained,
+1702780,2019-11-04,"Altice USA, Inc.",1,012485,firm_size_log,,10.4227,gained,
+1702780,2019-11-04,"Altice USA, Inc.",1,012485,leverage,,0.8866,gained,
+1702780,2019-11-04,"Altice USA, Inc.",1,012485,roa,,0.0006,gained,
+1702780,2019-11-04,"Altice USA, Inc.",1,012485,op_margin,,0.4289,gained,
+1702780,2024-02-29,Altice USA,1,012485,firm_size_log,,10.3711,gained,
+1702780,2024-02-29,Altice USA,1,012485,leverage,,1.0136,gained,
+1702780,2024-02-29,Altice USA,1,012485,roa,,0.0017,gained,
+1702780,2024-02-29,Altice USA,1,012485,op_margin,,0.3855,gained,
+1713683,2018-09-01,"Zscaler, Inc.",0,033037,firm_size_log,6.1043,6.1043,identical,0.0
+1713683,2018-09-01,"Zscaler, Inc.",0,033037,leverage,0.4635,0.4635,identical,0.0
+1713683,2018-09-01,"Zscaler, Inc.",0,033037,roa,-0.0751,-0.0751,identical,0.0
+1713683,2018-09-01,"Zscaler, Inc.",0,033037,op_margin,-0.0978,-0.0978,identical,0.0
+1713683,2025-08-08,Zscaler Inc.,0,033037,firm_size_log,8.7672,8.7672,identical,0.0
+1713683,2025-08-08,Zscaler Inc.,0,033037,leverage,0.7197,0.7197,identical,0.0
+1713683,2025-08-08,Zscaler Inc.,0,033037,roa,-0.0065,-0.0065,identical,0.0
+1713683,2025-08-08,Zscaler Inc.,0,033037,op_margin,-0.0004,-0.0004,identical,0.0
+1792789,2019-05-04,DoorDash Inc.,0,037420,firm_size_log,,6.5265,gained,
+1792789,2019-05-04,DoorDash Inc.,0,037420,leverage,,0.1962,gained,
+1792789,2019-05-04,DoorDash Inc.,0,037420,roa,,-0.2987,gained,
+1792789,2019-05-04,DoorDash Inc.,0,037420,op_margin,,-0.6254,gained,
+315293,2020-12-29,Aon Corporation PLC,0,003221,firm_size_log,10.2889,10.2889,identical,0.0
+315293,2020-12-29,Aon Corporation PLC,0,003221,leverage,0.8827,0.8827,identical,0.0
+315293,2020-12-29,Aon Corporation PLC,0,003221,roa,0.0521,0.0521,identical,0.0
+315293,2020-12-29,Aon Corporation PLC,0,003221,op_margin,0.2891,0.2891,identical,0.0
+315293,2022-02-25,Aon PLC,0,003221,firm_size_log,10.3709,10.3709,identical,0.0
+315293,2022-02-25,Aon PLC,0,003221,leverage,0.9637,0.9637,identical,0.0
+315293,2022-02-25,Aon PLC,0,003221,roa,0.0393,0.0393,identical,0.0
+315293,2022-02-25,Aon PLC,0,003221,op_margin,0.3159,0.3159,identical,0.0
+718877,2012-08-01,"Activision Publishing, Inc.",0,180405,firm_size_log,,9.4938,gained,
+718877,2012-08-01,"Activision Publishing, Inc.",0,180405,leverage,,0.2098,gained,
+718877,2012-08-01,"Activision Publishing, Inc.",0,180405,roa,,0.0817,gained,
+718877,2012-08-01,"Activision Publishing, Inc.",0,180405,op_margin,,0.3725,gained,
+718877,2022-12-02,"Activision Publishing, Inc.",0,180405,firm_size_log,,10.1289,gained,
+718877,2022-12-02,"Activision Publishing, Inc.",0,180405,leverage,,0.2976,gained,
+718877,2022-12-02,"Activision Publishing, Inc.",0,180405,roa,,0.1077,gained,
+718877,2022-12-02,"Activision Publishing, Inc.",0,180405,op_margin,,0.4309,gained,
+1889539,2023-05-29,"Corebridge Financial, Inc.",0,041084,firm_size_log,,12.8055,gained,
+1889539,2023-05-29,"Corebridge Financial, Inc.",0,041084,leverage,,0.9749,gained,
+1889539,2023-05-29,"Corebridge Financial, Inc.",0,041084,roa,,0.0224,gained,
+1889539,2023-05-29,"Corebridge Financial, Inc.",0,041084,op_margin,,0.4504,gained,

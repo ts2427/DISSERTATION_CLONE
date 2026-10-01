@@ -1,0 +1,5 @@
+variable,both_present,identical,differ,gvkey_only,ticker_only,max_abs_diff
+firm_size_log,330,330,0,108,0,0.0
+leverage,330,330,0,106,0,0.0
+roa,330,330,0,108,0,0.0
+op_margin,330,330,0,108,0,0.0

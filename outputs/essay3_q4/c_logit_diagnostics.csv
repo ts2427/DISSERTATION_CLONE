@@ -1,0 +1,10 @@
+window,ame,se_cluster,converged,iterations,nobs,n_supplied,dropped,max_fitted_p,min_fitted_p,separation_flag,n_warnings,warnings_verbatim,solver_output
+30,0.007,0.0311,False,35,405,405,0,0.12416,0.001347,False,1,ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals,"Warning: Maximum number of iterations has been exceeded.
+         Current function value: 0.171512
+         Iterations: 35"
+90,-0.042,0.0468,True,6,405,405,0,0.407248,0.025157,False,0,,"Optimization terminated successfully.
+         Current function value: 0.378802
+         Iterations 6"
+180,0.0197,0.0775,True,5,405,405,0,0.398072,0.109489,False,0,,"Optimization terminated successfully.
+         Current function value: 0.564382
+         Iterations 5"

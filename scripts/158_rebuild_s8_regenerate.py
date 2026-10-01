@@ -88,7 +88,10 @@ for var, lab in labels.items():
     C[f'{lab}_ci'] = [round(ci[0], 4), round(ci[1], 4)]
     C[f'{lab}_mde80'] = round(2.8 * se, 4)
     C[f'{lab}_tost_p'] = round(tost, 4)
-    C[f'{lab}_status'] = 'BOUNDED NULL' if tost < .05 else ('NULL-INCONCLUSIVE' if p > .05 else 'SIGNIFICANT')
+    # G2 2026-09-29: same rule as H5 below - HC3 cannot carry a significance verdict.
+    C[f'{lab}_status'] = ('BOUNDED NULL' if tost < .05 else
+                          ('NULL-INCONCLUSIVE' if p > .05 else
+                           'HC3-ONLY, NOT A VERDICT (disqualified rung)'))
     log(f"  {lab}: {b:+.4f}pp p={p:.4f} | TOST(±2.10) p={tost:.4f} | MDE {2.8 * se:.2f} | {C[f'{lab}_status']}")
 C['ROA_coef'] = round(m.params['roa'], 4)
 C['ROA_p'] = round(m.pvalues['roa'], 4)
@@ -122,31 +125,27 @@ C['H5_coef'] = round(b, 4)
 C['H5_p'] = round(p, 4)
 C['H5_tost_p'] = round(tost2, 4)
 C['H5_mde80'] = round(2.8 * se, 4)
-C['H5_status'] = 'BOUNDED NULL' if tost2 < .05 else ('NULL-INCONCLUSIVE' if p > .05 else 'SIGNIFICANT')
+# G2 2026-09-29: HC3 is DISQUALIFIED as a significance test (run_all.py:77-78), so this
+# label may never read SIGNIFICANT. The third branch now names the rung instead of
+# asserting significance; a real verdict needs CV3 or the wild cluster bootstrap, which
+# this script does not compute. Essay 2's inferential frame is scripts/165.
+C['H5_status'] = ('BOUNDED NULL' if tost2 < .05 else
+                  ('NULL-INCONCLUSIVE' if p > .05 else
+                   'HC3-ONLY, NOT A VERDICT (disqualified rung; see scripts/165)'))
 C['H5_R2'] = round(m2.rsquared, 3)
 log(f"\nEssay 2 (H5, N={len(reg2)}, treated {int(reg2[TREAT].sum())}): FCC {b:+.4f} p={p:.4f} | "
     f"TOST p={tost2:.4f} | MDE {2.8 * se:.2f} | R2={m2.rsquared:.3f} | {C['H5_status']}")
 
-# ---------------- Essay 3: H6 ----------------
-reg3 = crsp.dropna(subset=CONTROLS).copy()
-C['N_essay3'] = len(reg3)
-log(f"\nEssay 3 (H6, N={len(reg3)}, treated {int(reg3[TREAT].sum())}):")
-for w in (30, 90, 180):
-    yv = reg3[f'executive_change_{w}d'].astype(int)
-    X3 = sm.add_constant(reg3[CONTROLS].astype(float))
-    try:
-        m3 = sm.Logit(yv, X3).fit(disp=0)
-        ame = m3.get_margeff().summary_frame()
-        row = ame.loc[TREAT] if TREAT in ame.index else ame.iloc[0]
-        C[f'H6_{w}d_base_rate'] = round(yv.mean(), 4)
-        C[f'H6_{w}d_ame_pp'] = round(row['dy/dx'] * 100, 2)
-        C[f'H6_{w}d_p'] = round(row['Pr(>|z|)'], 4)
-        C[f'H6_{w}d_mde80_pp'] = round(2.8 * row['Std. Err.'] * 100, 2)
-        log(f"  {w}d: base {100 * yv.mean():.1f}% | AME {C[f'H6_{w}d_ame_pp']:+.2f}pp "
-            f"p={C[f'H6_{w}d_p']:.4f} | MDE {C[f'H6_{w}d_mde80_pp']:.1f}pp")
-    except Exception as e:
-        log(f'  {w}d: estimation failed ({str(e)[:60]}) — REPORTED, not hidden')
-
+# ---------------- Essay 3: REMOVED 2026-09-29 ----------------
+# The 13 H6 keys this block used to write into constants_v3.json are GONE:
+#   N_essay3, H6_{30,90,180}d_{base_rate,ame_pp,p,mde80_pp}
+# They were the legacy any-Item-5.02 outcome on the 338-event sample - the outcome the
+# retirement ledger retired and Query 1 found the prose never computed. They sat in the
+# same file as the Essay 1 and 2 constants, under H6 key names, with nothing marking them
+# as superseded, so a reader taking "H6" from constants_v3.json got the retired figure.
+#
+# Essay 3 values live ONLY in outputs/essay3_v4/constants_essay3_v4.json, written by
+# scripts/227. Nothing in this script may write an Essay 3 result again.
 # ---------------- Descriptive first stage ----------------
 d1 = ev.dropna(subset=['disclosure_delay_days'])
 fs = (d1.loc[d1[TREAT] == 1, 'immediate_disclosure'].mean()
@@ -384,7 +383,14 @@ T[14] = pd.DataFrame([{'Variable': v, 'Coef (log turnover)': round(mv.params[v],
 C['volume_fcc_coef'] = round(mv.params[TREAT], 4)
 C['volume_fcc_p'] = round(mv.pvalues[TREAT], 4)
 from sklearn.ensemble import RandomForestRegressor
-rf = RandomForestRegressor(n_estimators=500, random_state=42, n_jobs=-1)
+# n_jobs=1, not -1 (2026-10-01). random_state=42 fixes the trees, but n_jobs=-1
+# parallelises the aggregation of their importances, and the floating-point summation
+# order then depends on the thread count. table_15.csv therefore did not reproduce across
+# machines: firm_size_log came out 0.2386 here and 0.2392 in a clean clone, a spread of
+# about 6e-4. Row order and the top feature were stable, which is why constants_v3.json -
+# whose only dependency here is RF_top_feature - stayed byte-identical and the drift went
+# unnoticed. Single-threaded costs runtime and buys bit-reproducibility.
+rf = RandomForestRegressor(n_estimators=500, random_state=42, n_jobs=1)
 rf.fit(reg[CONTROLS].astype(float), y)
 T[15] = pd.DataFrame(sorted(zip(CONTROLS, rf.feature_importances_), key=lambda x: -x[1]),
                      columns=['Feature', 'Importance']).round(4)

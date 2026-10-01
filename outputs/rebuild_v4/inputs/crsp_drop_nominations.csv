@@ -1,0 +1,106 @@
+org,cik,breach_date,reported_date,parent,ticker,parent_cik,permno,permno_in_extract,n_ret_12m,recoverable,basis
+ABM Industries Incorporated,771497,2018-01-08,2019-03-12,ABM Industries Incorporated,ABM,771497.0,,False,0,N,self
+"Activision Publishing, Inc.",1870564,2012-08-01,2012-08-09,"Activision Blizzard, Inc.",ATVI,,79678.0,True,252,Y,name knowledge: Activision Publishing is the operating sub
+"Activision Publishing, Inc.",1870564,2022-12-02,2023-02-20,"Activision Blizzard, Inc.",ATVI,,79678.0,True,250,Y,name knowledge: Activision Publishing is the operating sub
+AeroGrow International,1316644,2018-10-29,2019-04-04,"AeroGrow International, Inc.",AERO,1561861.0,,False,0,N,self
+"AeroGrow International, Inc.",1316644,2019-03-04,2019-04-05,"AeroGrow International, Inc.",AERO,1561861.0,,False,0,N,self
+Alpha & Omega Semiconductor,1387467,2022-02-22,2022-07-21,Alpha & Omega Semiconductor Ltd,AOSL,1387467.0,,False,0,N,self
+Ariel Corporation,911167,2024-06-20,2024-12-03,,,,,False,0,N,Ariel Corp private
+"Audacy, Inc",1067837,2019-08-04,2020-03-01,"Audacy, Inc.",AUD,,,False,0,N,self; formerly Entercom
+Block Inc,1512673,2023-01-12,2023-09-22,"Block, Inc.",SQ,,15826.0,True,251,Y,"self; 2023 row only, 2016 Block and Company is unrelated"
+"Block and Company, Inc.",1512673,2016-02-01,2016-03-31,"Block, Inc.",SQ,,15826.0,True,89,N,"self; 2023 row only, 2016 Block and Company is unrelated"
+"Block and Company, Inc.",1512673,2016-02-09,2016-03-31,"Block, Inc.",SQ,,15826.0,True,89,N,"self; 2023 row only, 2016 Block and Company is unrelated"
+"Block and Company, Inc.",1512673,2016-03-21,2016-05-13,"Block, Inc.",SQ,,15826.0,True,120,N,"self; 2023 row only, 2016 Block and Company is unrelated"
+"Brown, Lisle/Cummings, Inc.",14745,2018-04-15,2018-06-15,,,,,False,0,N,unknown small entity
+Brown-Forman Corporation,14693,2020-07-28,2021-04-01,Brown-Forman Corporation,BF-B,14693.0,,False,0,N,self; org string is the listed registrant
+CSX Transportation,88128,2013-09-06,2013-10-03,CSX Corporation,CSX,277948.0,62148.0,True,250,Y,name knowledge: CSX Transportation is the rail operating sub
+CSX Transportation,88128,2013-10-07,2013-10-07,CSX Corporation,CSX,277948.0,62148.0,True,249,Y,name knowledge: CSX Transportation is the rail operating sub
+"CSX Transportation, Inc.",88128,2020-12-25,2021-03-16,CSX Corporation,CSX,277948.0,62148.0,True,252,Y,name knowledge: CSX Transportation is the rail operating sub
+CWGS Group,1669779,2022-01-14,2022-11-03,"Camping World Holdings, Inc.",CWH,1669779.0,,False,0,N,name knowledge: CWGS is the LLC group under CWH
+Capital Integration Systems LLC,1497060,2018-02-01,2018-06-25,,,,,False,0,N,CAIS private
+Carnival Corporation & PLC,1125259,2019-04-01,2020-03,Carnival Corporation,CCL,815097.0,75154.0,True,251,Y,name knowledge: dual-listed company with Carnival plc
+Carnival Corporation & PLC,1125259,2019-04-11,2020-03-02,Carnival Corporation,CCL,815097.0,75154.0,True,251,Y,name knowledge: dual-listed company with Carnival plc
+Carnival Corporation & plc,1125259,2020-08-15,2020-10-20,Carnival Corporation,CCL,815097.0,75154.0,True,252,Y,name knowledge: dual-listed company with Carnival plc
+Change Healthcare Inc.,731766,2024-02-12,2024-08-03,UnitedHealth Group Incorporated,UNH,731766.0,,False,0,N,name knowledge: Change Healthcare acquired by Optum 2022
+"Chart Industries, Inc.",892553,2009-07-23,2009-08-10,"Chart Industries, Inc.",GTLS,892553.0,,False,0,N,self
+Citrix Systems,877890,2016-11-15,2016-12-06,"Citrix Systems, Inc.",CTXS,,82686.0,True,252,Y,self
+Citrix Systems Inc.,877890,2013-04-26,2013-06-18,"Citrix Systems, Inc.",CTXS,,82686.0,True,250,Y,self
+"Citrix Systems, Inc.",877890,2018-10-13,2019-04-29,"Citrix Systems, Inc.",CTXS,,82686.0,True,250,Y,self
+Communications & Power Industries LLC,1000564,2020-01-18,2020-04-24,,,,,False,0,N,"CPI private, PE-owned"
+Consolidated Edison Company of New York LLC,23632,2023-05-29,2023-08-04,"Consolidated Edison, Inc.",ED,1047862.0,,False,0,N,name knowledge: NY operating utility of Con Edison Inc
+"Corebridge Financial, Inc.",1889539,2023-05-29,2023-07-25,"Corebridge Financial, Inc.",CRBG,1889539.0,,False,0,N,self
+Dell Inc.,826083,2013-02-26,2013-03-20,Dell Inc.,DELL,1571996.0,11081.0,True,250,Y,"self; listed until Oct 2013, breach Feb 2013"
+Deluxe Corporation,27996,2019-08-13,2019-09-03,Deluxe Corporation,DLX,27996.0,,False,0,N,self
+EMC Corporation,790070,2014-01-07,2014-03-03,EMC Corporation,EMC,,,False,0,N,self; listed at the 2014 breach date
+EatStreet,1560142,2019-05-03,2019-06-14,,,,,False,0,N,EatStreet private
+Entercom Communications Corp.,1067837,2019-09-18,2020-07-24,"Audacy, Inc.",AUD,,,False,0,N,self; formerly Entercom
+Facebook,1326801,2013-11-24,2013-12-03,"Facebook, Inc.",FB,,,False,0,N,"self; listed 2012, breaches 2013-2018"
+Facebook,1326801,2018-03-01,2018-03-17,"Facebook, Inc.",FB,,,False,0,N,"self; listed 2012, breaches 2013-2018"
+Facebook,1326801,2018-09-01,2018-09-28,"Facebook, Inc.",FB,,,False,0,N,"self; listed 2012, breaches 2013-2018"
+First American Financial Corporation,1472787,2023-12-18,2024-06-07,First American Financial Corporation,FAF,1472787.0,,False,0,N,self
+Fiserv,798354,2021-09-25,2021-09-25,"Fiserv, Inc.",FI,,39722.0,False,0,N,self
+Fiserv,798354,2023-12-06,2023-12-06,"Fiserv, Inc.",FI,,39722.0,False,0,N,self
+"Fiserv, Inc.",798354,2008-12-02,2008-12-12,"Fiserv, Inc.",FI,,39722.0,False,0,N,self
+Fluke Corporation,37743,2023-01-25,2024-10-01,Fortive Corporation,FTV,1659166.0,,False,0,N,name knowledge: Fluke brand under Fortive post-2016 spin
+Fox Entertainment Group,1308161,2009-04-09,2009-04-09,News Corporation,NWS,1564708.0,,False,0,N,name knowledge: Fox Entertainment Group was a News Corp sub in 2009
+Fox Entertainment Group Inc.,1308161,2009-04-15,2009-04-15,News Corporation,NWS,1564708.0,,False,0,N,name knowledge: Fox Entertainment Group was a News Corp sub in 2009
+Fox Group,1145813,2010-02-08,2010-02-08,,,,,False,0,N,Fox Group ambiguous
+Gates Corporation,1516658,2023-02-07,2023-07-07,Gates Industrial Corporation plc,GTES,1718512.0,,False,0,N,name knowledge: Gates Corp is the operating sub
+Gates Corporation,1516658,2023-02-11,2023-07-03,Gates Industrial Corporation plc,GTES,1718512.0,,False,0,N,name knowledge: Gates Corp is the operating sub
+"HBP, Inc.",1168812,2023-05-14,2023-07-26,,,,,False,0,N,HBP Inc unidentified
+"Herbalife International of America, Inc.",1205274,2022-02-01,2022-03-17,Herbalife Ltd.,HLF,1180262.0,,False,0,N,name knowledge: Herbalife Intl of America is the US operating sub
+"Home Box Office, Inc.",1105705,2017-05-15,2017-10-30,Time Warner Inc.,TWX,,,False,0,N,name knowledge: HBO is a Time Warner sub
+"Home Box Office, Inc.",1105705,2017-07-23,2017-10-30,Time Warner Inc.,TWX,,,False,0,N,name knowledge: HBO is a Time Warner sub
+"Home Box Office, Inc.",1105705,2017-10-30,2017-10-30,Time Warner Inc.,TWX,,,False,0,N,name knowledge: HBO is a Time Warner sub
+"IMA Financial Group, Inc.",1673769,2022-10-18,2023-07-06,,,,,False,0,N,IMA Financial private
+International Paper Company,1283246,2023-05-30,2023-11-17,International Paper Company,IP,51434.0,21573.0,True,251,Y,self
+"J.B. Hunt Transport, Inc.",1501362,2020-08-01,2021-10-20,"J.B. Hunt Transport Services, Inc.",JBHT,728535.0,42877.0,True,252,Y,name knowledge: Transport Inc is the operating sub
+"J.B. Hunt Transport, Inc.",1501362,2020-08-17,2021-10-20,"J.B. Hunt Transport Services, Inc.",JBHT,728535.0,42877.0,True,252,Y,name knowledge: Transport Inc is the operating sub
+KeraLink International,1826210,2017-04-06,2017-04-25,,,,,False,0,N,KeraLink nonprofit
+LPL Financial LLC,1397911,2018-07-10,2019-03-12,LPL Financial Holdings Inc.,LPLA,1397911.0,,False,0,N,name knowledge: LPL Financial LLC is the operating sub
+"Leidos, Inc.",353394,2022-09-30,2023-06-08,"Leidos Holdings, Inc.",LDOS,1336920.0,91547.0,True,251,Y,name knowledge: Leidos Inc is the operating sub
+Lennar Corporation,58696,2023-07-20,2023-10-10,Lennar Corporation,LEN,920760.0,42411.0,False,0,N,self
+"Marriott International, Inc.",905036,2020-01-01,2020-03-31,"Marriott International, Inc.",MAR,1048286.0,27107.0,False,0,N,self
+"Marsh & McLennan Companies, Inc.",62709,2013-06-01,2013-11-26,"Marsh & McLennan Companies, Inc.",MMC,,33910.0,False,0,N,self
+Mediant Communications Inc.,1567336,2019-04-01,2019-05-28,,,,,False,0,N,Mediant private
+"Motorola, Inc.",68505,2009-01-01,2009-02-06,"Motorola, Inc.",MOT,2099681.0,,False,0,N,self; pre-2011 split
+"Motorola, Inc.",68505,2009-02-17,2009-02-17,"Motorola, Inc.",MOT,2099681.0,,False,0,N,self; pre-2011 split
+NCH Corporation,69960,2016-01-01,2019-01-25,,,,,False,0,N,NCH Corp went private 2002
+NCH Corporation,69960,2018-11-30,2019-01-28,,,,,False,0,N,NCH Corp went private 2002
+NCH Corporation,69960,2021-03-02,2021-07-29,,,,,False,0,N,NCH Corp went private 2002
+"NCO Financial Systems, Inc.",1396897,2014-03-29,2014-04-22,,,,,False,0,N,NCO Financial private
+"NextGen Healthcare, Inc.",708818,2023-03-29,2023-04-28,"NextGen Healthcare, Inc.",NXGN,,,False,0,N,self
+Northrop Grumman Systems Corporation,72945,2016-04-18,2017-04-19,Northrop Grumman Corporation,NOC,1133421.0,24766.0,True,252,Y,name knowledge: Systems Corp is the operating unit
+"Nuance Communications, Inc.",1002517,2014-12-10,2015-03-20,"Nuance Communications, Inc.",NUAN,,,False,0,N,self
+"Oceaneering International, Inc.",73756,2024-01-01,2024-03-01,"Oceaneering International, Inc.",OII,73756.0,,False,0,N,self
+PayPal Inc.,1103415,2019-08-08,2019-09-09,"PayPal Holdings, Inc.",PYPL,1633917.0,89311.0,False,0,N,name knowledge: PayPal Inc is the operating sub
+"PayPal, Inc.",1103415,2022-12-06,2023-01-13,"PayPal Holdings, Inc.",PYPL,1633917.0,89311.0,False,0,N,name knowledge: PayPal Inc is the operating sub
+Prime Communications,1570434,2019-12-11,2020-05-18,,,,,False,0,N,Prime Communications private
+"Professional Compounding Centers of America, Inc.",1558044,2023-12-02,2024-02-01,,,,,False,0,N,PCCA private
+Seagate US LLC,1137785,2016-02-29,2016-03-09,Seagate Technology Holdings plc,STX,1137789.0,14605.0,False,0,N,name knowledge: Seagate US LLC is the US sub
+Seagate US LLC,1137785,2016-03-14,2016-03-14,Seagate Technology Holdings plc,STX,1137789.0,14605.0,False,0,N,name knowledge: Seagate US LLC is the US sub
+Sierra Pacific Industries,90143,2022-06-10,2023-01-11,,,,,False,0,N,Sierra Pacific Industries private
+"Sinclair Broadcast Group, Inc.",912752,2020-05-01,2020-10-05,"Sinclair Broadcast Group, Inc.",SBGI,1971213.0,81740.0,True,251,Y,self
+"Sinclair Broadcast Group, Inc.",912752,2021-06-23,2022-03-24,"Sinclair Broadcast Group, Inc.",SBGI,1971213.0,81740.0,True,253,Y,self
+"Sinclair Broadcast Group, Inc.",912752,2021-12-16,2021-12-16,"Sinclair Broadcast Group, Inc.",SBGI,1971213.0,81740.0,True,252,Y,self
+Sony Corporation of America,1091411,2009-06-02,2009-06-02,Sony Group Corporation,SONY,313838.0,51131.0,True,0,N,name knowledge: SCA is the US holding arm; parent files 20-F
+"T. Rowe Price Retirement Plan Services, Inc.",1387793,2007-12-24,2008-01-23,"T. Rowe Price Group, Inc.",TROW,1113169.0,10138.0,True,252,Y,name knowledge: Retirement Plan Services is a T. Rowe sub
+"T. Rowe Price Retirement Plan Services, Inc.",1387793,2023-05-29,2023-07-27,"T. Rowe Price Group, Inc.",TROW,1113169.0,10138.0,True,251,Y,name knowledge: Retirement Plan Services is a T. Rowe sub
+"The iRemedy Healthcare Companies, Inc.",1691249,2017-10-01,2018-07-09,,,,,False,0,N,iRemedy private
+Time Warner Inc.,1105705,2006-12-01,2007-01-26,Time Warner Inc.,TWX,,,False,0,N,name knowledge: HBO is a Time Warner sub
+Time Warner Inc.,1105705,2015-01-28,2015-02-19,Time Warner Inc.,TWX,,,False,0,N,name knowledge: HBO is a Time Warner sub
+Time Warner Inc.,1105705,2016-08-10,2017-07-20,Time Warner Inc.,TWX,,,False,0,N,name knowledge: HBO is a Time Warner sub
+Time Warner Inc.,1105705,2017-07-20,2017-07-20,Time Warner Inc.,TWX,,,False,0,N,name knowledge: HBO is a Time Warner sub
+TimeWarner,1105705,2015-02-19,2015-02-19,Time Warner Inc.,TWX,,,False,0,N,name knowledge: HBO is a Time Warner sub
+Uber,1431473,2014-05-13,2015-02-27,,,,,False,0,N,Uber pre-IPO; CIK distinct from 1543151
+United Airlines,319687,2013-01-01,2017-07-06,"United Airlines Holdings, Inc.",UAL,100517.0,19596.0,False,0,N,name knowledge: Continental/United merger holdco
+"VMware, Inc.",1124610,2015-07-02,2015-08-19,"VMware, Inc.",VMW,,92257.0,True,252,Y,self; separately listed in 2015
+Vmware Inc,1124610,2015-08-19,2015-08-19,"VMware, Inc.",VMW,,92257.0,True,252,Y,self; separately listed in 2015
+"Volkswagen Group of America, Inc.",1834695,2019-08-01,2021-06-11,Volkswagen AG,VWAGY,,,False,0,N,"name knowledge: VW Group of America is US sub; parent foreign, ADR only"
+Vulcan Industries,1260451,2023-11-01,2024-02-26,,,,,False,0,N,Vulcan Industries unidentified
+"Warn Industries, Inc.",1984463,2018-02-28,2019-03-22,Dover Corporation,DOV,29905.0,,False,0,N,name knowledge: Warn Industries acquired by Dover 2017
+Warner Music Group,1319161,2020-08-05,2020-09-04,Warner Music Group Corp.,WMG,1319161.0,,False,0,N,"self; IPO June 2020, breach Aug 2020"
+Warner Music Group,1319161,2020-09-09,2020-09-09,Warner Music Group Corp.,WMG,1319161.0,,False,0,N,"self; IPO June 2020, breach Aug 2020"
+WillScot Mobile Mini Holdings Corp.,1647088,2020-11-10,2020-11-20,WillScot Mobile Mini Holdings Corp.,WSC,1647088.0,,False,0,N,self
+Xerox Corporation,108772,2023-12-10,2024-02-20,Xerox Holdings Corporation,XRX,1770450.0,,False,0,N,name knowledge: post-2019 holdco
+"iHeartMedia + Entertainment, Inc.",1457738,2024-12-24,2025-04-11,"iHeartMedia, Inc.",IHRT,1400891.0,18845.0,True,183,Y,name knowledge: iHeartMedia + Entertainment is the operating sub

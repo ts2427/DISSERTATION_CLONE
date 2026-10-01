@@ -177,6 +177,12 @@ def outcomes_for(cik, fil, events):
 
 hdr('E1 — helper validation: rebuild every T-Mobile outcome and compare with v2\'s committed outcomes')
 S = pd.read_csv(OUT / 'b_scope_filings.csv', dtype={'accession': str})
+# I2 tripwire (2026-09-29): the filing scope the frozen classifier was validated against.
+# This check belongs to scripts/195 by the ruling, but 195 is frozen (commit 6f7be7a,
+# blob ec32364) and editing it would invalidate the blind validation, so it lives here,
+# in the non-frozen consumer of the same table.
+assert len(S) == 1078, 'Query 2 filing scope changed: %d filings, expected 1078' % len(S)
+assert S['accession'].is_unique, 'duplicate accession in b_scope_filings.csv'
 tm_ev = sc[sc['final_cik'] == 1283699].copy()
 tm_ev['bdt'], tm_ev['rdt'] = pd.to_datetime(tm_ev['breach_date']), pd.to_datetime(tm_ev['reported_date'])
 got = outcomes_for(1283699, S[S['cik'] == 1283699], tm_ev)

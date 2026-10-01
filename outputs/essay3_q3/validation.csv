@@ -1,0 +1,53 @@
+round,source_file,variant,sample,field,n,agreement,kappa,ref_Y,clf_Y,both_Y,clf_only_Y,ref_only_Y,precision,recall,ref_positives,clf_positives,tp,fp,fn,precision_ci95,recall_ci95,scoring,excluded_unclear
+round 1 (80 = 50 calibration + 30 random),outputs/essay3_q2/d3_agreement.csv,A,all 80,exec_departure,80,0.9125,0.8034,29.0,24.0,23.0,1.0,6.0,0.9583,0.7931,,,,,,,,,
+round 1 (80 = 50 calibration + 30 random),outputs/essay3_q2/d3_agreement.csv,A,all 80,ceo_departure,80,0.9625,0.7073,6.0,5.0,4.0,1.0,2.0,0.8,0.6667,,,,,,,,,
+round 1 (80 = 50 calibration + 30 random),outputs/essay3_q2/d3_agreement.csv,A,all 80,director_only_departure,80,0.9625,0.8582,14.0,11.0,11.0,0.0,3.0,1.0,0.7857,,,,,,,,,
+round 1 (80 = 50 calibration + 30 random),outputs/essay3_q2/d3_agreement.csv,A,all 80,pre_announced,80,0.8875,0.698,20.0,12.0,12.0,0.0,8.0,1.0,0.6,,,,,,,,,
+round 1 (80 = 50 calibration + 30 random),outputs/essay3_q2/d3_agreement.csv,A,excl. T-Mobile calibration 7,exec_departure,73,0.9452,0.876,25.0,23.0,22.0,1.0,3.0,0.9565,0.88,,,,,,,,,
+round 1 (80 = 50 calibration + 30 random),outputs/essay3_q2/d3_agreement.csv,A,excl. T-Mobile calibration 7,ceo_departure,73,0.9726,0.7853,5.0,5.0,4.0,1.0,1.0,0.8,0.8,,,,,,,,,
+round 1 (80 = 50 calibration + 30 random),outputs/essay3_q2/d3_agreement.csv,A,excl. T-Mobile calibration 7,director_only_departure,73,0.9589,0.8192,11.0,8.0,8.0,0.0,3.0,1.0,0.7273,,,,,,,,,
+round 1 (80 = 50 calibration + 30 random),outputs/essay3_q2/d3_agreement.csv,A,excl. T-Mobile calibration 7,pre_announced,73,0.8904,0.7191,19.0,12.0,12.0,0.0,7.0,1.0,0.6316,,,,,,,,,
+round 1 (80 = 50 calibration + 30 random),outputs/essay3_q2/d3_agreement.csv,B,all 80,exec_departure,80,0.8875,0.7289,23.0,24.0,19.0,5.0,4.0,0.7917,0.8261,,,,,,,,,
+round 1 (80 = 50 calibration + 30 random),outputs/essay3_q2/d3_agreement.csv,B,all 80,ceo_departure,80,0.95,0.4754,3.0,5.0,2.0,3.0,1.0,0.4,0.6667,,,,,,,,,
+round 1 (80 = 50 calibration + 30 random),outputs/essay3_q2/d3_agreement.csv,B,all 80,director_only_departure,80,0.95,0.8042,13.0,11.0,10.0,1.0,3.0,0.9091,0.7692,,,,,,,,,
+round 1 (80 = 50 calibration + 30 random),outputs/essay3_q2/d3_agreement.csv,B,all 80,pre_announced,80,0.8375,0.5192,17.0,12.0,9.0,3.0,8.0,0.75,0.5294,,,,,,,,,
+round 1 (80 = 50 calibration + 30 random),outputs/essay3_q2/d3_agreement.csv,B,excl. T-Mobile calibration 7,exec_departure,73,0.8904,0.74,21.0,23.0,18.0,5.0,3.0,0.7826,0.8571,,,,,,,,,
+round 1 (80 = 50 calibration + 30 random),outputs/essay3_q2/d3_agreement.csv,B,excl. T-Mobile calibration 7,ceo_departure,73,0.9452,0.4729,3.0,5.0,2.0,3.0,1.0,0.4,0.6667,,,,,,,,,
+round 1 (80 = 50 calibration + 30 random),outputs/essay3_q2/d3_agreement.csv,B,excl. T-Mobile calibration 7,director_only_departure,73,0.9589,0.8192,11.0,8.0,8.0,0.0,3.0,1.0,0.7273,,,,,,,,,
+round 1 (80 = 50 calibration + 30 random),outputs/essay3_q2/d3_agreement.csv,B,excl. T-Mobile calibration 7,pre_announced,73,0.8356,0.5355,16.0,12.0,9.0,3.0,7.0,0.75,0.5625,,,,,,,,,
+round 1 (80 = 50 calibration + 30 random),outputs/essay3_q2/d3_agreement.csv,A-S31blind,all 80,ceo_departure,79,0.9747,0.7865,5.0,5.0,,,,,,,,,,,,,,
+round 1 (80 = 50 calibration + 30 random),outputs/essay3_q2/d3_agreement.csv,A-S31blind,excl. T-Mobile calibration 7,ceo_departure,72,0.9861,0.8816,4.0,5.0,,,,,,,,,,,,,,
+round 2 (30 out-of-sample),outputs/essay3_q2/d3_r2_agreement.csv,,,exec departure (A: any),29,0.931,0.7129,,,,,,1.0,0.6,5.0,3.0,3.0,0.0,2.0,"[0.2924, 1.0]","[0.1466, 0.9473]",,
+round 2 (30 out-of-sample),outputs/essay3_q2/d3_r2_agreement.csv,,,exec departure (B: new only),29,0.8966,0.514,,,,,,0.6667,0.5,4.0,3.0,2.0,1.0,2.0,"[0.0943, 0.9916]","[0.0676, 0.9324]",,
+round 2 (30 out-of-sample),outputs/essay3_q2/d3_r2_agreement.csv,,,CEO departure (A: any),30,1.0,,,,,,,,,0.0,0.0,0.0,0.0,0.0,n/a (no clf positives),n/a (no ref positives),,
+round 2 (30 out-of-sample),outputs/essay3_q2/d3_r2_agreement.csv,,,CEO departure (B: new only),30,1.0,,,,,,,,,0.0,0.0,0.0,0.0,0.0,n/a (no clf positives),n/a (no ref positives),,
+round 2 (30 out-of-sample),outputs/essay3_q2/d3_r2_agreement.csv,,,director-only departure,30,1.0,1.0,,,,,,1.0,1.0,9.0,9.0,9.0,0.0,0.0,"[0.6637, 1.0]","[0.6637, 1.0]",,
+round 2 (30 out-of-sample),outputs/essay3_q2/d3_r2_agreement.csv,,,"pre-announced (sheet 9 verified Y, PRIMARY)",30,0.8667,0.7183,,,,,,1.0,0.6667,12.0,8.0,8.0,0.0,4.0,"[0.6306, 1.0]","[0.3489, 0.9008]",,
+round 2 (30 out-of-sample),outputs/essay3_q2/d3_r2_agreement.csv,,,"pre-announced (sheet 9 blind unclear, SECONDARY)",30,0.9,0.7921,,,,,,1.0,0.7273,11.0,8.0,8.0,0.0,3.0,"[0.6306, 1.0]","[0.3903, 0.9398]",,
+recall audit (80 stratified 40/40),outputs/essay3_q2/d3_audit_agreement.csv,,,exec departure (A),77,0.8961,0.7874,35.0,29.0,,,,0.9655,0.8,,,28.0,1.0,7.0,"[0.822, 0.999]","[0.631, 0.916]",PRIMARY (verified),3.0
+recall audit (80 stratified 40/40),outputs/essay3_q2/d3_audit_agreement.csv,,,exec departure (A),75,0.92,0.8355,33.0,29.0,,,,0.9655,0.8485,,,28.0,1.0,5.0,"[0.822, 0.999]","[0.681, 0.949]",SECONDARY (blind),5.0
+recall audit (80 stratified 40/40),outputs/essay3_q2/d3_audit_agreement.csv,,,exec departure (A),80,0.8625,0.7212,38.0,29.0,,,,0.9655,0.7368,,,28.0,1.0,10.0,"[0.822, 0.999]","[0.569, 0.866]",SENSITIVITY unclear->Y,0.0
+recall audit (80 stratified 40/40),outputs/essay3_q2/d3_audit_agreement.csv,,,exec departure (B: restated->N vs new-only),77,0.9091,0.8053,30.0,27.0,,,,0.9259,0.8333,,,25.0,2.0,5.0,"[0.757, 0.991]","[0.653, 0.944]",PRIMARY (verified),3.0
+recall audit (80 stratified 40/40),outputs/essay3_q2/d3_audit_agreement.csv,,,exec departure (B: restated->N vs new-only),80,0.875,0.7349,33.0,27.0,,,,0.9259,0.7576,,,25.0,2.0,8.0,"[0.757, 0.991]","[0.577, 0.889]",SENSITIVITY unclear->Y,0.0
+recall audit (80 stratified 40/40),outputs/essay3_q2/d3_audit_agreement.csv,,,CEO departure,79,0.9241,0.5298,7.0,7.0,,,,0.5714,0.5714,,,4.0,3.0,3.0,"[0.184, 0.901]","[0.184, 0.901]",PRIMARY (verified),1.0
+recall audit (80 stratified 40/40),outputs/essay3_q2/d3_audit_agreement.csv,,,CEO departure,78,0.9359,0.5806,6.0,7.0,,,,0.5714,0.6667,,,4.0,3.0,2.0,"[0.184, 0.901]","[0.223, 0.957]",SECONDARY (blind),2.0
+recall audit (80 stratified 40/40),outputs/essay3_q2/d3_audit_agreement.csv,,,CEO departure,80,0.9125,0.4853,8.0,7.0,,,,0.5714,0.5,,,4.0,3.0,4.0,"[0.184, 0.901]","[0.157, 0.843]",SENSITIVITY unclear->Y,0.0
+recall audit (80 stratified 40/40),outputs/essay3_q2/d3_audit_agreement.csv,,,director-only departure,80,0.9375,0.7462,12.0,11.0,,,,0.8182,0.75,,,9.0,2.0,3.0,"[0.482, 0.977]","[0.428, 0.945]",PRIMARY (verified),0.0
+recall audit (80 stratified 40/40),outputs/essay3_q2/d3_audit_agreement.csv,,,director-only departure,80,0.9375,0.7462,12.0,11.0,,,,0.8182,0.75,,,9.0,2.0,3.0,"[0.482, 0.977]","[0.428, 0.945]",SENSITIVITY unclear->Y,0.0
+recall audit (80 stratified 40/40),outputs/essay3_q2/d3_audit_agreement.csv,,,pre-announced,80,0.8125,0.632,41.0,29.0,,,,0.9655,0.6829,,,28.0,1.0,13.0,"[0.822, 0.999]","[0.519, 0.819]",PRIMARY (verified),0.0
+recall audit (80 stratified 40/40),outputs/essay3_q2/d3_audit_agreement.csv,,,pre-announced,80,0.825,0.6673,39.0,29.0,,,,0.9655,0.7179,,,28.0,1.0,11.0,"[0.822, 0.999]","[0.551, 0.850]",SECONDARY (blind),0.0
+recall audit (80 stratified 40/40),outputs/essay3_q2/d3_audit_agreement.csv,,,pre-announced,80,0.8125,0.632,41.0,29.0,,,,0.9655,0.6829,,,28.0,1.0,13.0,"[0.822, 0.999]","[0.519, 0.819]",SENSITIVITY unclear->Y,0.0
+v4 final (30 new documents),outputs/essay3_v4/238_new_document_agreement.csv,,,PRIMARY (verified) | exec departure (A: any),30,0.9667,0.8696,,,,,,1.0,0.8,5.0,4.0,4.0,0.0,1.0,"[0.3976, 1.0]","[0.2836, 0.9949]",,
+v4 final (30 new documents),outputs/essay3_v4/238_new_document_agreement.csv,,,PRIMARY (verified) | exec departure (B: new only),30,0.9667,0.8696,,,,,,1.0,0.8,5.0,4.0,4.0,0.0,1.0,"[0.3976, 1.0]","[0.2836, 0.9949]",,
+v4 final (30 new documents),outputs/essay3_v4/238_new_document_agreement.csv,,,PRIMARY (verified) | CEO departure (A: any),30,0.9667,0.0,,,,,,0.0,,0.0,1.0,0.0,1.0,0.0,"[0.0, 0.975]",n/a (no ref positives),,
+v4 final (30 new documents),outputs/essay3_v4/238_new_document_agreement.csv,,,PRIMARY (verified) | CEO departure (B: new only),30,0.9667,0.0,,,,,,0.0,,0.0,1.0,0.0,1.0,0.0,"[0.0, 0.975]",n/a (no ref positives),,
+v4 final (30 new documents),outputs/essay3_v4/238_new_document_agreement.csv,,,PRIMARY (verified) | director-only departure,30,1.0,1.0,,,,,,1.0,1.0,2.0,2.0,2.0,0.0,0.0,"[0.1581, 1.0]","[0.1581, 1.0]",,
+v4 final (30 new documents),outputs/essay3_v4/238_new_document_agreement.csv,,,PRIMARY (verified) | pre-announced (FULL POOL - MECHANICAL),30,0.9667,0.8889,,,,,,1.0,0.8333,6.0,5.0,5.0,0.0,1.0,"[0.4782, 1.0]","[0.3588, 0.9958]",,
+v4 final (30 new documents),outputs/essay3_v4/238_new_document_agreement.csv,,,PRIMARY (verified) | pre-announced (OUTCOME WINDOW ONLY),3,1.0,,,,,,,,,0.0,0.0,0.0,0.0,0.0,n/a (no clf positives),n/a (no ref positives),,
+v4 final (30 new documents),outputs/essay3_v4/238_new_document_agreement.csv,,,SECONDARY (blind) | exec departure (A: any),30,0.9667,0.8696,,,,,,1.0,0.8,5.0,4.0,4.0,0.0,1.0,"[0.3976, 1.0]","[0.2836, 0.9949]",,
+v4 final (30 new documents),outputs/essay3_v4/238_new_document_agreement.csv,,,SECONDARY (blind) | exec departure (B: new only),30,0.9667,0.8696,,,,,,1.0,0.8,5.0,4.0,4.0,0.0,1.0,"[0.3976, 1.0]","[0.2836, 0.9949]",,
+v4 final (30 new documents),outputs/essay3_v4/238_new_document_agreement.csv,,,SECONDARY (blind) | CEO departure (A: any),30,0.9667,0.0,,,,,,0.0,,0.0,1.0,0.0,1.0,0.0,"[0.0, 0.975]",n/a (no ref positives),,
+v4 final (30 new documents),outputs/essay3_v4/238_new_document_agreement.csv,,,SECONDARY (blind) | CEO departure (B: new only),30,0.9667,0.0,,,,,,0.0,,0.0,1.0,0.0,1.0,0.0,"[0.0, 0.975]",n/a (no ref positives),,
+v4 final (30 new documents),outputs/essay3_v4/238_new_document_agreement.csv,,,SECONDARY (blind) | director-only departure,30,1.0,1.0,,,,,,1.0,1.0,2.0,2.0,2.0,0.0,0.0,"[0.1581, 1.0]","[0.1581, 1.0]",,
+v4 final (30 new documents),outputs/essay3_v4/238_new_document_agreement.csv,,,SECONDARY (blind) | pre-announced (FULL POOL - MECHANICAL),30,0.9667,0.8889,,,,,,1.0,0.8333,6.0,5.0,5.0,0.0,1.0,"[0.4782, 1.0]","[0.3588, 0.9958]",,
+v4 final (30 new documents),outputs/essay3_v4/238_new_document_agreement.csv,,,SECONDARY (blind) | pre-announced (OUTCOME WINDOW ONLY),3,1.0,,,,,,,,,0.0,0.0,0.0,0.0,0.0,n/a (no clf positives),n/a (no ref positives),,

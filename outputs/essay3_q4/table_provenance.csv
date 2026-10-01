@@ -1,0 +1,24 @@
+table,panel,column,source_file,source_line_or_key,emitting_script
+1,ledger,N/treated_events/control_events/treated_parent_ciks/treated_parent_entities/pre_rule_*,outputs/essay3_v4/e_ledger.csv,all rows,scripts/224
+1,identity split,identity_gate_split,outputs/rebuild_v4/v4_212_identity_review.csv + v4_212_links.csv,permno isna,scripts/212
+2,clause split,treated_events_clause1/2,Data/processed/rebuild_v4/CANONICAL_V4.csv,treatment_evidence prefix,scripts/154 via scripts/214
+2,family,corporate_family_cik,scripts/224,line 361 FAM = {101830: 1283699},scripts/224
+3,mix,all,Data/processed/rebuild_v4/CANONICAL_V4.csv,breach_type x fcc_form499,scripts/244
+4,covariates,mean/sd/median/min/max/std_diff,outputs/essay3_q3/descriptives.csv,part == C3,scripts/242
+4,anchors,same_day/lag_*/bd180_*,outputs/essay3_q3/descriptives.csv,part == C2,scripts/242
+5,agreement,kappa/precision/recall/CI,outputs/essay3_q3/validation.csv,one block per round,scripts/194/197/201/238
+5,stratified recall,recall/recall_ci95 by stratum,outputs/essay3_q2/d3_audit_recall_by_stratum.csv,field == exec departure (A),scripts/201
+6,rates + crosswalk,all,outputs/essay3_v4/e_analysis_sample.csv,"any_502_*_rd, exec/ceo/director_departure_*_rd",scripts/220 via scripts/224
+7,ladder,coef/se_*/p_*/ci_*,outputs/essay3_v4/f1_ladder.csv,one row per window,scripts/227
+7,ladder,mde80/G_star,outputs/essay3_v4/f1_se_diagnostics.csv,one row per window,scripts/229
+7,logit AME,ame/se_cluster + convergence,outputs/essay3_v4/f1_logit_ame.csv + q4 c_logit_diagnostics.csv,one row per window,scripts/227 / scripts/243
+7,control coefficients,coef/se_cv3/t/p_cv3/ci_*,outputs/essay3_q4/b_control_coefficients.csv,one row per term per window,scripts/243
+8,placebo ladder,all,outputs/essay3_v4/f4_placebo.csv,single row,scripts/227
+8,window rates,events_with_departure/rate,outputs/essay3_v4/e_analysis_sample.csv,placebo_exec_departure_rd,scripts/220
+9,sensitivities,coef/se_cv3/p_cv3/p_wcr/p_bh/row_type,outputs/essay3_q3/sensitivities.csv,27 rows,scripts/227 + scripts/242
+9,SIC cells,sic2/events/treated/control,outputs/essay3_v4/f3_sic2_cells.csv,all rows,scripts/227
+10,LOCO range,full_coef/loco_min/loco_max/sign_flips,outputs/essay3_q3/loo.csv,3 rows,scripts/227
+10,variance shares,final_cik/name/share/sign_flip,outputs/essay3_v4/f1_cv3_variance_shares.csv,top 10 per window,scripts/229
+10,overlap restriction,coef/p_cv3/p_wcr,outputs/essay3_v4/239_v3_overlap_sensitivity.csv,all rows,scripts/239
+11,case rows,windows + flags,outputs/essay3_v4/e_analysis_sample.csv,final_cik == 1283699,scripts/224
+11,persons/accessions,outcome_*/placebo_*,outputs/essay3_v4/c2_departure_events.csv,cik == 1283699 & grp == exec,scripts/220

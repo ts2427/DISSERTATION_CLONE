@@ -1,0 +1,15 @@
+field,n,agreement,kappa,ref_positives,clf_positives,tp,fp,fn,precision,precision_ci95,recall,recall_ci95
+PRIMARY (verified) | exec departure (A: any),30,0.9667,0.8696,5,4,4,0,1,1.0,"[0.3976, 1.0]",0.8,"[0.2836, 0.9949]"
+PRIMARY (verified) | exec departure (B: new only),30,0.9667,0.8696,5,4,4,0,1,1.0,"[0.3976, 1.0]",0.8,"[0.2836, 0.9949]"
+PRIMARY (verified) | CEO departure (A: any),30,0.9667,0.0,0,1,0,1,0,0.0,"[0.0, 0.975]",,n/a (no ref positives)
+PRIMARY (verified) | CEO departure (B: new only),30,0.9667,0.0,0,1,0,1,0,0.0,"[0.0, 0.975]",,n/a (no ref positives)
+PRIMARY (verified) | director-only departure,30,1.0,1.0,2,2,2,0,0,1.0,"[0.1581, 1.0]",1.0,"[0.1581, 1.0]"
+PRIMARY (verified) | pre-announced (FULL POOL - MECHANICAL),30,0.9667,0.8889,6,5,5,0,1,1.0,"[0.4782, 1.0]",0.8333,"[0.3588, 0.9958]"
+PRIMARY (verified) | pre-announced (OUTCOME WINDOW ONLY),3,1.0,,0,0,0,0,0,,n/a (no clf positives),,n/a (no ref positives)
+SECONDARY (blind) | exec departure (A: any),30,0.9667,0.8696,5,4,4,0,1,1.0,"[0.3976, 1.0]",0.8,"[0.2836, 0.9949]"
+SECONDARY (blind) | exec departure (B: new only),30,0.9667,0.8696,5,4,4,0,1,1.0,"[0.3976, 1.0]",0.8,"[0.2836, 0.9949]"
+SECONDARY (blind) | CEO departure (A: any),30,0.9667,0.0,0,1,0,1,0,0.0,"[0.0, 0.975]",,n/a (no ref positives)
+SECONDARY (blind) | CEO departure (B: new only),30,0.9667,0.0,0,1,0,1,0,0.0,"[0.0, 0.975]",,n/a (no ref positives)
+SECONDARY (blind) | director-only departure,30,1.0,1.0,2,2,2,0,0,1.0,"[0.1581, 1.0]",1.0,"[0.1581, 1.0]"
+SECONDARY (blind) | pre-announced (FULL POOL - MECHANICAL),30,0.9667,0.8889,6,5,5,0,1,1.0,"[0.4782, 1.0]",0.8333,"[0.3588, 0.9958]"
+SECONDARY (blind) | pre-announced (OUTCOME WINDOW ONLY),3,1.0,,0,0,0,0,0,,n/a (no clf positives),,n/a (no ref positives)
