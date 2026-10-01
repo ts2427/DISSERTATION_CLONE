@@ -79,6 +79,7 @@ scripts/21_foo.py and scripts/2199_foo.py.
 import argparse
 import csv
 import hashlib
+import os
 import re
 import subprocess
 import sys
@@ -250,9 +251,45 @@ def sha256_bytes(b):
     return hashlib.sha256(b).hexdigest()
 
 
+def long_path(path):
+    """The extended-length form of a path, on Windows.
+
+    Added 2026-10-01. Windows caps ordinary paths at 260 characters, and Python's stat and
+    open obey that cap even when git was given core.longpaths=true and could create the
+    file. In a clean clone at a deep directory, 13 literature PDFs under Data/Articles/
+    with long filenames therefore existed on disk while Path.exists() returned False, so
+    verify() reported them DELETED - which it treats as fatal - and the gate could not
+    pass in any deep-path clone regardless of the pipeline. The \\\\?\\ prefix lifts the cap.
+    """
+    if os.name != "nt":
+        return str(path)
+    p = os.path.abspath(str(path))
+    if p.startswith("\\\\?\\"):
+        return p
+    if p.startswith("\\\\"):                      # UNC share
+        return "\\\\?\\UNC\\" + p.lstrip("\\")
+    return "\\\\?\\" + p
+
+
+def path_exists(path):
+    """Presence, correct for paths over 260 characters on Windows."""
+    if os.path.exists(str(path)):
+        return True
+    return os.path.exists(long_path(path))
+
+
+def path_size(path):
+    return os.stat(long_path(path)).st_size
+
+
+def read_bytes(path):
+    with open(long_path(path), "rb") as f:
+        return f.read()
+
+
 def sha256_file(path):
     h = hashlib.sha256()
-    with open(path, "rb") as f:
+    with open(long_path(path), "rb") as f:
         for chunk in iter(lambda: f.read(1 << 20), b""):
             h.update(chunk)
     return h.hexdigest()
@@ -278,7 +315,8 @@ def create():
     rows = []
     for p, blob in sorted(baseline_tree(commit).items()):
         fp = Path(p)
-        size, sha = (fp.stat().st_size, sha256_file(fp)) if fp.exists() else (-1, "MISSING")
+        size, sha = ((path_size(fp), sha256_file(fp)) if path_exists(fp)
+                     else (-1, "MISSING"))
         row = dict(path=p, size=size, sha256=sha, blob_id=now.get(p, blob),
                    append_only=int(p in APPEND_ONLY), prefix_size="", prefix_sha256="")
         if p in APPEND_ONLY:
@@ -309,9 +347,9 @@ def create():
 
 def check_prefix(path, prefix_size, prefix_sha):
     fp = Path(path)
-    if not fp.exists():
+    if not path_exists(fp):
         return False, "deleted"
-    cur = fp.read_bytes()
+    cur = read_bytes(fp)
     if len(cur) < prefix_size:
         return False, f"SHRANK ({len(cur)} < {prefix_size} bytes)"
     if sha256_bytes(cur[:prefix_size]) != prefix_sha:
@@ -341,7 +379,7 @@ def verify():
             continue
 
         fp = Path(p)
-        if not fp.exists():
+        if not path_exists(fp):
             if rec["sha256"] != "MISSING":
                 deleted.append(p)
             continue
