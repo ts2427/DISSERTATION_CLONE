@@ -94,6 +94,30 @@ EXCLUDE_PREFIXES = ("outputs/rebuild_v4/", "outputs/essay3_v4/")
 
 APPEND_ONLY = (".gitattributes", ".gitignore")
 
+# RUN ARTIFACTS (added 2026-10-01 by ruling). Files already in the baseline that a LIVE
+# pipeline step rewrites every run: its own progress log. Checked for PRESENCE, never for
+# content or blob id, because their bytes legitimately differ run to run (timestamps,
+# fetched byte counts, elapsed seconds) while carrying no analytic result.
+#
+# This is the narrowest exemption that makes the gate stable across runs. It is NOT the v4
+# allowlist, which admits only newly TRACKED files and so can never cover a baseline file
+# that changes. Every entry is a progress log written by one of the eight live Query 2
+# steps that log themselves; no analytic output is listed, and anything absent from this
+# list is still compared byte for byte.
+RUN_ARTIFACTS = (
+    "outputs/essay3_q2/187_fetch.log",                   # scripts/187
+    "outputs/essay3_q2/b_fetch_log.csv",                 # scripts/187, per-document fetch record
+    "outputs/essay3_q2/188_classifier.log",              # scripts/195
+    "outputs/essay3_q2/195_classifier.log",              # scripts/195
+    "outputs/essay3_q2/190_case.log",                    # scripts/190
+    "outputs/essay3_q2/191_tmobile_proxy_periodic.log",  # scripts/191
+    "outputs/essay3_q2/199_sample.log",                  # scripts/199
+    "outputs/essay3_q2/202_estimation.log",              # scripts/202
+    "outputs/essay3_q2/203_case.log",                    # scripts/203
+    "outputs/essay3_q2/b_exhibits_log.csv",              # scripts/203, per-exhibit record
+    "outputs/essay3_q2/204_se_diagnostics.log",          # scripts/204
+)
+
 V4_DIRS = (
     "Data/wrds_v4/",
     "Data/processed/rebuild_v4/",
@@ -417,6 +441,7 @@ def verify():
     exc_hit = []
     cur_oids = lfs_oids()
     lfs_ok, lfs_bad = [], []
+    run_art = []
 
     for p, rec in base.items():
         if int(rec["append_only"]):
@@ -430,6 +455,13 @@ def verify():
         if not path_exists(fp):
             if rec["sha256"] != "MISSING":
                 deleted.append(p)
+            continue
+
+        # A run artifact: its presence was just confirmed above, and that is the whole
+        # check. Content and blob id are deliberately not compared - a live step rewrites
+        # this file on every run, so comparing either would fail the gate for doing its job.
+        if p in RUN_ARTIFACTS:
+            run_art.append(p)
             continue
 
         cur_blob = now.get(p)
@@ -532,6 +564,7 @@ def verify():
     print(f"DELETED / UNTRACKED            : {len(deleted)}")
     for p in deleted[:25]:
         print(f"   {p}")
+    print(f"RUN ARTIFACTS (logs, exempt)   : {len(run_art)} (present-checked; content not compared)")
     print(f"ADDED outside v4 allowlist     : {len(added_bad)}")
     for p in added_bad[:25]:
         print(f"   {p}")

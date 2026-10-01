@@ -254,6 +254,27 @@ REQUIRED_INPUTS = [
 ]
 
 
+# Steps whose declared input is licensed and cannot ship in the repository. When the input
+# is absent the step is recorded as SKIPPED - not failed - because a clean clone is EXPECTED
+# not to have it. Each entry names the missing file and the document that declares it, and
+# both are printed, so a skip can never be mistaken for a silent pass. If the input IS
+# present the step runs normally, so a licensed checkout gets the full pipeline.
+DECLARED_SKIPS = {
+    'scripts/170_essay2_scope_and_bounds.py': (
+        'Data/wrds/crsp_quotes_topup.csv',
+        'docs/claude/REPRODUCE_ESSAY2.md',
+        'intraday quotes for the effective-spread measure; WRDS licence required'),
+}
+
+
+def _declared_skip(script_path):
+    """(missing_input, doc, why) if this step must be skipped, else None."""
+    ent = DECLARED_SKIPS.get(script_path.replace(chr(92), '/'))
+    if ent and not Path(ent[0]).exists():
+        return ent
+    return None
+
+
 def _is_lfs_placeholder(path):
     """True if the file on disk is a git-lfs pointer rather than its content.
 
@@ -532,8 +553,7 @@ Log file: {log_path}
                     ('scripts/156_rebuild_s6_assembly.py', 'Stage 6: keyed covariates (NO positional joins); Item 5.02 from live EDGAR (cached) → CANONICAL_V3.csv'),
                     ('scripts/157_rebuild_s7_verification.py', 'Stage 7: disclosure-date armor, OCR health check (bounded), CRSP-attrition balance'),
                     ('scripts/158_rebuild_s8_regenerate.py', 'Stage 8: all three essays + ROA amendment + appendix v3 + CONSTANTS BLOCK V3 (assertion baseline)'),
-                    # RETIRED 2026-10-01 (publish-ready prune): renders the kept appendix tables to .docx
-                    # ('scripts/160_appendix_v3_to_word.py', 'Essay 1 appendix v3 -> Word: renders the 16 tables 158 writes (must follow 158)'),
+                    ('scripts/160_appendix_v3_to_word.py', 'Essay 1 appendix v3 -> Word: renders the 16 tables 158 writes (must follow 158)'),
                     ('scripts/247_essay1_ledger_attrition_v3.py', 'Essay 1 attrition ledger, computed live from the v3 chain (10 assertions). EXITS NONZERO while constants_v3.json is stale against CANONICAL_V3 - that failure is the pending rebaseline, and the ledger is written either way'),
                 ]
             },
@@ -562,6 +582,16 @@ Log file: {log_path}
                     # Order is REPRODUCE_ESSAY3_V4.md's, which diverges from numeric order in two
                     # places: 232 must precede 224 (224's ledger reads the censoring result) and
                     # 233 must precede 224 (224 aborts unless every reconciliation row says agree).
+                    # HELD 2026-10-01, pending a ruling. Adding ['--out-prefix', 'v4_'] here makes
+                    # 212 regenerate v4_212_links.csv, which 13 live steps read. It was implemented
+                    # and tested: the regenerated file is deterministic (prefixed and unprefixed
+                    # outputs are byte-identical) and it is the COMMITTED file that is stale - it
+                    # carries Lennar at CIK 920760 and Northrop at 1133421 where CANONICAL_V3 now
+                    # has 58696 and 72945, and a Sprint Nextel breach_date of 2009-01-01 that the
+                    # canonical does not contain. But re-running the v4 chain on the corrected
+                    # linkage moves the Essay 3 sample from N=405/G=119 to N=380/G=106 and fails
+                    # scripts/227's baseline assertion, so it is a sample and linkage change. Left
+                    # out until that is ruled on. See outputs/RETIREMENT_LEDGER.md.
                     ('scripts/212_pit_linker_v4.py', 'v4 Stage 2: point-in-time CIK->gvkey->CUSIP->permno linker with the identity gate, v3 pass -> Stage 3 worklist'),
                     ('scripts/214_corrections_v4.py', 'v4 correction ledger -> CANONICAL_V4 (Sprint anchor, Carnival, CIK re-parenting, Gate-2 notification anchor, health indicator)'),
                     ('scripts/215_ledger_v4.py', 'v4 linkage ledger and symmetry report'),
@@ -877,6 +907,20 @@ Log file: {log_path}
                     results[description] = False
                     continue
 
+                # A declared skip: the licensed input is absent, which is the expected
+                # state of a clean clone. Recorded as SKIPPED, not as a failure.
+                skip = _declared_skip(script_path)
+                if skip:
+                    missing_input, doc, why = skip
+                    msg = (f"\n[SKIPPED] {script_path}\n"
+                           f"  declared exception: {missing_input} is not present\n"
+                           f"  reason            : {why}\n"
+                           f"  declared in       : {doc}\n"
+                           f"  This is NOT a failure. Supply the licensed input to run it.\n")
+                    print_to_both(msg, log_file)
+                    results[description] = 'SKIPPED'
+                    continue
+
                 # Run script
                 success = run_script(script_path, description, log_file, script_args)
                 results[description] = success
@@ -888,12 +932,16 @@ Log file: {log_path}
         summary_header = f"\n{'=' * 80}\nPIPELINE SUMMARY\n{'=' * 80}\n"
         print_to_both(summary_header, log_file)
         
-        successful = [name for name, success in results.items() if success]
-        failed = [name for name, success in results.items() if not success]
+        # Identity comparisons, so the SKIPPED marker cannot be counted as a success
+        # by truthiness nor as a failure by falsiness.
+        successful = [name for name, st in results.items() if st is True]
+        skipped = [name for name, st in results.items() if st == 'SKIPPED']
+        failed = [name for name, st in results.items() if st is False]
 
         summary = f"""
 Results:
   [OK] Successful: {len(successful)}/{len(results)}
+  [--] Skipped:    {len(skipped)}/{len(results)} (declared exceptions; not failures)
   [XX] Failed:     {len(failed)}/{len(results)}
 
 Total Execution Time: {total_time/60:.1f} minutes
@@ -903,6 +951,11 @@ Total Execution Time: {total_time/60:.1f} minutes
         if successful:
             success_list = "\n[SUCCESS] Completed:\n" + "\n".join([f"  [+] {s}" for s in successful]) + "\n"
             print_to_both(success_list, log_file)
+
+        if skipped:
+            skip_list = ("\n[SKIPPED] Declared exceptions (not failures):\n"
+                         + "\n".join([f"  [~] {s_}" for s_ in skipped]) + "\n")
+            print_to_both(skip_list, log_file)
 
         if failed:
             fail_list = "\n[FAILED] Incomplete:\n" + "\n".join([f"  [-] {f}" for f in failed]) + "\n"
@@ -1050,12 +1103,14 @@ Complete log saved to: {log_path}
 """
         print_to_both(outputs, log_file)
         
-        # Final status - keyed to the Form 499 primary analyses (match pipeline descriptions)
-        critical_keys = [
-            'H1-H4 Re-estimation with Form 499 Corrected Classification (n=115 treated, authoritative regulatory status)',
-            'H5 Volatility Re-estimation with Form 499 Corrected (First real result, post-deduplication)',
-        ]  # 91m removed from critical_keys 2026-09-11 (Essay 3 Query 2 Part H)
-        critical_scripts_succeeded = all(results.get(k, False) for k in critical_keys)
+        # RETIRED 2026-10-01: the Form 499 "critical keys" gate. It named the descriptions
+        # of scripts 86c and 90b, the pre-rebuild H1-H4 and H5 re-estimations - both retired
+        # by the publish-ready prune. Left in place it would have failed every run from now
+        # on: results.get() on a step that no longer exists is False, so a run with zero
+        # failures still fell through to the "[WARNING] Primary Form 499 analyses did not
+        # all succeed" branch and returned False. The rule that replaced it on 2026-09-11 -
+        # any failure fails the pipeline - already covers what this was for, across all
+        # live steps rather than two hand-picked pre-rebuild ones.
 
         # Verify critical outputs exist regardless of status
         outputs_verified = verify_outputs(log_file, run_start=start_time)
@@ -1077,17 +1132,12 @@ Complete log saved to: {log_path}
             print_to_both(final, log_file)
             return False
 
-        if critical_scripts_succeeded:
-            final = f"\n[***] [SUCCESS] Core dissertation analysis complete and outputs verified.\n{'=' * 80}\n"
-            print_to_both(final, log_file)
-            return True
-
-        missing = [k for k in critical_keys if not results.get(k, False)]
-        final = ("\n[WARNING] Primary Form 499 analyses did not all succeed - review log.\n"
-                 + "\n".join(f"  [-] {k}" for k in missing)
-                 + f"\n{'=' * 80}\n")
+        note = ("" if not skipped else
+                f"  {len(skipped)} declared exception(s) skipped; see the SKIPPED list above.\n")
+        final = (f"\n[***] [SUCCESS] Core dissertation analysis complete and outputs verified.\n"
+                 + note + f"{'=' * 80}\n")
         print_to_both(final, log_file)
-        return False
+        return True
 
 def main():
     """Main entry point"""

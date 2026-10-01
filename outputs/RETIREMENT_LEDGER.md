@@ -423,3 +423,127 @@ retired steps stay in the repository and some are still read: `214`, `163`, `164
 read two pre-rebuild datasets, and `verify_outputs()` still lists
 `outputs/economic_significance/` and `TABLE_GOVERNANCE_HETEROGENEITY_RESULTS.csv` among its
 legacy files. All are committed, so a fresh clone has them and the check still passes.
+
+---
+
+# THE 2026-10-01 RULINGS ROUND
+
+Five rulings on the Part C findings. Four are applied. **One is held**, because carrying it
+out would change the Essay 3 sample, and the ruling's own stop rule says to stop and report.
+
+## 160 — restored as a live step
+
+Un-commented. `run_all.py` goes from 57 live steps to **58**. It renders the kept 16
+`appendix_v3` tables to `APPENDIX_V3_TABLES.docx` and `INTEXT_TABLES_4_5.docx`.
+
+## 212 — HELD, not applied
+
+The ruling was to pass the output-prefix argument so 212 regenerates `v4_212_links.csv`,
+then confirm the result is byte-identical to the committed file, and **stop and report if
+not**. It was implemented and tested. It is not byte-identical, so it is held.
+
+**What was found.** 212's `out()` is `OUT / f"{PREFIX}{name}"`, and `--out-prefix` defaults
+to empty, so the staged step writes the unprefixed `212_*.csv` while **13 live steps read
+`v4_212_links.csv`** — a file no live step produces. With the prefix supplied, 212 writes
+it, deterministically: the prefixed and unprefixed outputs of the same run are
+byte-identical (`9796a1b872967966`), so the prefix is purely a naming switch.
+
+**But 4 of the 6 regenerated files differ from the committed ones, and the committed ones
+are the stale side:**
+
+| row | committed `v4_212_links.csv` | regenerated | `CANONICAL_V3` says |
+|---|---|---|---|
+| Lennar Corporation | CIK 920760, fully linked | CIK 58696, `no gvkey` | `final_cik = 58696` |
+| Northrop Grumman Systems | CIK 1133421, fully linked | CIK 72945, `no gvkey` | `final_cik = 72945` |
+| Sprint Nextel | `breach_date` 2009-01-01 | 2012-08-01 | 2009-02-01 and 2012-08-01 |
+
+28 of 490 rows differ. The committed file predates the CIK re-parenting and the Sprint
+anchor correction, so **the regeneration is the correct one** and the committed artefact is
+a stale input the v4 chain has been consuming.
+
+**Why it is held.** The v4 chain was re-run on the corrected linkage, in a throwaway clone,
+to measure the consequence. `CANONICAL_V4` does **not** change. But the Essay 3 sample does:
+
+| | committed | on the corrected linkage |
+|---|---:|---:|
+| `F1_30_n` | 405 | **380** |
+| `F1_30_G` | 119 | **106** |
+| `F1_30_coef` | 0.0040 | 0.0016 |
+| `F1_30_p_hc3` | .8764 | .9519 |
+
+`scripts/227` failed its own baseline assertion (`ASSERTION FAILURE vs Essay 3 baseline`),
+which is the gate working as designed. Accepting the corrected linkage would re-derive
+`constants_essay3_v4.json`, the 11 Essay 3 tables and the appendix — a sample and linkage
+change, which the standing constraint forbids without a ruling.
+
+The step is therefore left at two elements, with the finding recorded at the call site in
+`run_all.py`. **Three ways forward, all Tim's call:** accept the corrected linkage and
+re-baseline Essay 3; keep the status quo and document `v4_212_links.csv` as a committed
+input that the pipeline does not reproduce; or investigate why the committed file carries
+CIKs the canonical does not before deciding.
+
+## 170 — recorded as SKIPPED, not failed
+
+`DECLARED_SKIPS` in `run_all.py` maps the step to its licensed input
+(`Data/wrds/crsp_quotes_topup.csv`), the document that declares it
+(`docs/claude/REPRODUCE_ESSAY2.md`) and the reason. When the input is absent the step is
+recorded as `'SKIPPED'` and the run prints the missing file, the reason, the declaring
+document and the line `This is NOT a failure.` When the input **is** present the step runs
+normally, so a licensed checkout still gets the full pipeline.
+
+The summary now partitions three ways, by identity comparison (`is True`, `== 'SKIPPED'`,
+`is False`) so the marker string can be miscounted neither by truthiness nor by falsiness.
+
+### A latent bug this exposed
+
+The pipeline's final gate read:
+
+    critical_keys = ['H1-H4 Re-estimation with Form 499 ...', 'H5 Volatility ...']
+    critical_scripts_succeeded = all(results.get(k, False) for k in critical_keys)
+
+Those are the descriptions of **86c and 90b**, both retired by the prune. `results.get()` on
+a step that no longer exists is `False`, so **every future run — even with zero failures —
+would have fallen through to `[WARNING] Primary Form 499 analyses did not all succeed` and
+returned `False`.** The exit-0 requirement could not have been met with it in place. It is
+retired: the 2026-09-11 rule that any failure fails the pipeline already covers what it was
+for, across all live steps rather than two hand-picked pre-rebuild ones.
+
+## 210 — run artifacts exempted
+
+The v4 allowlist could not solve this: it admits only newly **tracked** files, and these are
+baseline files a live step **rewrites**. So `RUN_ARTIFACTS` is a new category — checked for
+presence, never for content or blob id. **Eleven files added, each a progress log written by
+one of the eight live Query 2 steps:**
+
+| file | written by |
+|---|---|
+| `outputs/essay3_q2/187_fetch.log` | `scripts/187` |
+| `outputs/essay3_q2/b_fetch_log.csv` | `scripts/187` (per-document fetch record) |
+| `outputs/essay3_q2/188_classifier.log` | `scripts/195` |
+| `outputs/essay3_q2/195_classifier.log` | `scripts/195` |
+| `outputs/essay3_q2/190_case.log` | `scripts/190` |
+| `outputs/essay3_q2/191_tmobile_proxy_periodic.log` | `scripts/191` |
+| `outputs/essay3_q2/199_sample.log` | `scripts/199` |
+| `outputs/essay3_q2/202_estimation.log` | `scripts/202` |
+| `outputs/essay3_q2/203_case.log` | `scripts/203` |
+| `outputs/essay3_q2/b_exhibits_log.csv` | `scripts/203` (per-exhibit record) |
+| `outputs/essay3_q2/204_se_diagnostics.log` | `scripts/204` |
+
+No analytic output is listed. Anything absent from the list is still compared byte for byte.
+Only two of the eleven actually changed in the Part C run; the other nine are listed because
+the same live steps write them and would trip the gate on a run that touched them.
+
+## t24 — the deadline scan no longer reads its own output
+
+`scripts/164`'s A4 scan globbed `outputs/*.md`, which the pipeline regenerates, and several
+of those reports **quote the scan's own earlier hits**. One of them,
+`ESSAY2_QUERY4_PARTS_ACJ.md`, is rewritten by 164 itself. So the scan was reading its own
+output and t24 moved between runs — 102 rows in the clean clone against 101 committed — with
+no change to any authored file.
+
+Scope is now authored files only: `scripts/*.py`, `Dashboard/**/*.py`, `README.md`.
+**t24 drops from 101 rows to 32** — 15 in `scripts/`, 16 in `Dashboard/`, and the header. All
+69 removed rows were `outputs/*.md` self-references. **Two consecutive runs now produce a
+byte-identical file** (`497db3937f7a3136` both times). Nothing is lost: the fix for a
+mischaracterisation in a generated report is a fix to the script that writes it, and
+`scripts/` remains fully in scope.
