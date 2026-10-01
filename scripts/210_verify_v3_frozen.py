@@ -214,6 +214,30 @@ def tracked_now():
     return out
 
 
+def lfs_oids():
+    """path -> Git-LFS object id, from `git lfs ls-files -l`.
+
+    Added 2026-10-01. The manifest's on-disk sha256 is MACHINE-STATE-DEPENDENT for LFS
+    files: whether a path holds 136 bytes of pointer text or its real content depends on
+    whether that machine has run `git lfs pull`. The authoring repository held pointers
+    for 19 Data/JSON Files/*.json while a clean clone held the real 37 MB content, so 210
+    reported 19 content changes that were nothing of the kind and could not pass in any
+    clone. The oid comes from the index, not the working tree, so it is the same on every
+    machine, and it is what actually identifies the content.
+    """
+    out = {}
+    for line in git("lfs", "ls-files", "-l").splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        # "<oid> <*|-> <path>"; the marker says whether the object is present locally,
+        # which is exactly the machine-dependent fact being factored out.
+        parts = line.split(" ", 2)
+        if len(parts) == 3 and re.fullmatch(r"[0-9a-f]{64}", parts[0]):
+            out[parts[2].strip()] = parts[0]
+    return out
+
+
 EXCEPTIONS = Path("docs/claude/V3_FREEZE_EXCEPTIONS.md")
 
 # One row of the exceptions table:
@@ -328,6 +352,7 @@ def create():
     # which is deliberate and unchanged: a re-freeze re-records the bytes of the frozen
     # file set, it does not widen that set.
     now = tracked_now()
+    oids = lfs_oids()
     rows = []
     for p, blob in sorted(baseline_tree(commit).items()):
         fp = Path(p)
@@ -336,6 +361,7 @@ def create():
         else:
             size, sha, nsha = -1, "MISSING", "MISSING"
         row = dict(path=p, size=size, sha256=sha, sha256_eolnorm=nsha,
+                   lfs_oid=oids.get(p, ""),
                    blob_id=now.get(p, blob),
                    append_only=int(p in APPEND_ONLY), prefix_size="", prefix_sha256="")
         if p in APPEND_ONLY:
@@ -345,8 +371,8 @@ def create():
         rows.append(row)
     with open(MANIFEST, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=["path", "size", "sha256", "sha256_eolnorm",
-                                          "blob_id", "append_only", "prefix_size",
-                                          "prefix_sha256"])
+                                          "lfs_oid", "blob_id", "append_only",
+                                          "prefix_size", "prefix_sha256"])
         w.writeheader()
         w.writerows(rows)
     total = sum(r["size"] for r in rows if r["size"] > 0)
@@ -389,6 +415,8 @@ def verify():
     notes, eol_artifacts = [], []
     exc = load_exceptions()
     exc_hit = []
+    cur_oids = lfs_oids()
+    lfs_ok, lfs_bad = [], []
 
     for p, rec in base.items():
         if int(rec["append_only"]):
@@ -413,6 +441,18 @@ def verify():
                 e["used_blob"] = True
             else:
                 blob_bad.append((p, rec["blob_id"][:12], cur_blob[:12]))
+
+        # LFS paths are adjudicated by OID, not by on-disk bytes. Whether this machine
+        # holds pointer text or real content is a smudge-state fact, not a content fact,
+        # and the oid is identical on every machine.
+        rec_oid = rec.get("lfs_oid") or ""
+        if rec_oid:
+            cur_oid = cur_oids.get(p, "")
+            if cur_oid == rec_oid:
+                lfs_ok.append(p)
+            else:
+                lfs_bad.append((p, rec_oid[:12], (cur_oid or "(not LFS now)")[:12]))
+            continue
 
         cur_sha = sha256_file(fp)
         if cur_sha != rec["sha256"]:
@@ -479,6 +519,10 @@ def verify():
             print(f"      {pth} - the file no longer has the pinned new hash, or it is "
                   f"back at its baseline. Its exception is spent; remove the row or "
                   f"re-record it.")
+    print(f"LFS paths by OID               : {len(lfs_ok)} match, {len(lfs_bad)} changed "
+          f"(machine-independent; on-disk bytes not compared for these)")
+    for p, a, b in lfs_bad[:25]:
+        print(f"   {p}\n      oid was {a}  now {b}")
     print(f"\nSHA256 CHANGED (real content)  : {len(sha_bad)}")
     for p, a, b in sha_bad[:25]:
         print(f"   {p}\n      was {a}  now {b}")
@@ -495,7 +539,7 @@ def verify():
     for p in added_ok[:25]:
         print(f"   {p}")
 
-    fail = bool(sha_bad or blob_bad or deleted or added_bad)
+    fail = bool(sha_bad or blob_bad or deleted or added_bad or lfs_bad)
     print("\nRESULT: " + ("FAIL - v3 baseline changed" if fail else "PASS - v3 baseline intact"))
     return 1 if fail else 0
 
