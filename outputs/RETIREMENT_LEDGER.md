@@ -842,3 +842,88 @@ unique. The raw data files are untouched.
 - `outputs/rebuild/constants_v3.json` was re-written by scripts/158 from the fixed data. Its own baseline mechanism: the file was moved aside, 158 wrote it, and later runs assert against it. The key set is identical apart from the 7 H5 keys removed under G1.
 - `outputs/defense_supplement/constants_defense_supplement.json` was first written by scripts/253 after the fix.
 - Essay 3 baselines unchanged.
+
+---
+
+# 2026-10-02 — SYNTHETIC CONTROL (SCM): RETIRED
+
+**Ruling (Tim, 2026-10-02):** retire the SCM scripts and outputs. The dissertation is descriptive
+and post-2007 cross-sectional by ruling, and it makes no causal claims. SCM is a causal design that
+belongs to none of the three essays. No essay or deck cites it. Retiring a file here unstages it
+from use; it does not delete it. All of the files below stay committed for audit.
+
+**History, for the record.** SCM was framed in June-July 2026 as Essay 1's primary causal
+identification for H2 (n=41 FCC firms, -4.03%, p=0.003). Those figures are from the SIC era,
+before the audit and before the rebuild, so they are stale. On 7/28 the claim that SCM was
+"Affuso-locked" was found to be wrong. A rebuild under scpi with Form 499 membership was
+left pending. The last SCM step in run_all.py (`scm_mahalanobis_distance.py`) was retired
+on 2026-09-29 (Part H) because it read the pre-rebuild dataset.
+
+## Not called by any live step (verified 2026-10-02)
+
+- No live run_all.py step is an SCM script. The only SCM tuple is already commented out, in the
+  category 'CAUSAL IDENTIFICATION: SYNTHETIC CONTROL METHOD' (retired 2026-09-29).
+- No live script reads any file below. A grep of all live steps for scm / synth /
+  data_prepared_for_scm finds only two prose sentences, and neither reads a file:
+  - scripts/164:667 "DiD and synthetic control are ..."
+  - scripts/165:261 "synthetic control unavailable (no treated pre-period)"
+- **Changed in this commit:** run_all.py's end-of-run summary still printed an "Essay 1 - Synthetic
+  Control Matching (PRIMARY CAUSAL ID for H2)" block with the stale n=41 / -4.03% / p=0.003 figures.
+  It also printed an "SCM: rebuild under scpi ... or drop (pending Lambert)" line. Both now point
+  here. No step was commented out, because no SCM step was live.
+
+## Scripts (11) — last commit that touched each
+
+| script | last commit | date |
+|---|---|---|
+| `scripts/firm_by_firm_scm_analysis.py` | `869e2e9` | 2026-07-22 |
+| `scripts/firm_by_firm_scm_analysis_BROKEN_June22.py` | `587cfe5` | 2026-06-30 |
+| `scripts/firm_by_firm_scm_simple_working.py` | `5abe766` | 2026-07-22 |
+| `scripts/scm_breach_event_level.py` | `afa618a` | 2026-07-23 |
+| `scripts/scm_breach_event_nearest_neighbor.py` | `afa618a` | 2026-07-23 |
+| `scripts/scm_breach_event_numpy.py` | `afa618a` | 2026-07-23 |
+| `scripts/scm_breach_event_numpy_fast.py` | `afa618a` | 2026-07-23 |
+| `scripts/scm_data_preparation.py` | `587cfe5` | 2026-06-30 |
+| `scripts/scm_data_preparation_BROKEN_June22.py` | `d3ef2fe` | 2026-06-30 |
+| `scripts/scm_mahalanobis_distance.py` | `afa618a` | 2026-07-23 |
+| `scripts/scpi_scm_implementation.py` | `afa618a` | 2026-07-23 |
+
+## Outputs and data (32) — last commit that touched each
+
+| file | last commit | date |
+|---|---|---|
+| `Data/processed/data_prepared_for_scm.csv` | `f62fe6f` | 2026-06-30 |
+| `outputs/AUDIT_SCM_PVALUE_RESOLUTION.txt` | `91ff277` | 2026-09-11 |
+| `outputs/ESSAY1_SCM_CAUSAL_ID_SUMMARY.txt` | `91ff277` | 2026-09-11 |
+| `outputs/defense_prep/task5_scm_vs_ols_summary.txt` | `91ff277` | 2026-09-11 |
+| `outputs/retired_originals_20260902/AUDIT_SCM_PVALUE_RESOLUTION.txt` | `6e0fbb9` | 2026-09-02 |
+| `outputs/retired_originals_20260902/ESSAY1_SCM_CAUSAL_ID_SUMMARY.txt` | `6e0fbb9` | 2026-09-02 |
+| `outputs/retired_originals_20260902/task5_scm_vs_ols_summary.txt` | `6e0fbb9` | 2026-09-02 |
+| `outputs/scm_breach_event_nn_results.csv` | `afa618a` | 2026-07-23 |
+| `outputs/scm_crsp_comprehensive/firm_effects_with_controls.csv` | `7a0aa91` | 2026-06-22 |
+| `outputs/scm_crsp_comprehensive/scm_crsp_firm_results.csv` | `7a0aa91` | 2026-06-22 |
+| `outputs/scm_crsp_with_sprint/consolidated_by_company.csv` | `7a0aa91` | 2026-06-22 |
+| `outputs/scm_crsp_with_sprint/scm_crsp_sprint_proxy_results.csv` | `7a0aa91` | 2026-06-22 |
+| `outputs/scm_firm_by_firm/TABLE_SCM_AGGREGATE_RESULTS.csv` | `5abe766` | 2026-07-22 |
+| `outputs/scm_firm_by_firm/TABLE_SCM_GAPS_BY_YEAR.csv` | `5abe766` | 2026-07-22 |
+| `outputs/scm_firm_by_firm/TABLE_SCM_TOP_20_FIRMS.csv` | `5abe766` | 2026-07-22 |
+| `outputs/scm_firm_by_firm/scm_aggregate_effect.png` | `7a0aa91` | 2026-06-22 |
+| `outputs/scm_firm_by_firm/scm_aggregate_gaps_over_time.png` | `5abe766` | 2026-07-22 |
+| `outputs/scm_firm_by_firm/scm_aggregate_statistics.csv` | `afa618a` | 2026-07-23 |
+| `outputs/scm_firm_by_firm/scm_all_firm_gaps.csv` | `afa618a` | 2026-07-23 |
+| `outputs/scm_firm_by_firm/scm_effect_distribution.png` | `7a0aa91` | 2026-06-22 |
+| `outputs/scm_firm_by_firm/scm_firm_effects_distribution.png` | `5abe766` | 2026-07-22 |
+| `outputs/scm_firm_by_firm/scm_firm_level_effects.png` | `7a0aa91` | 2026-06-22 |
+| `outputs/scm_firm_by_firm/scm_firm_summary_results.csv` | `afa618a` | 2026-07-23 |
+| `outputs/scm_firm_by_firm/scm_permutation_distribution.csv` | `7a0aa91` | 2026-06-22 |
+| `outputs/scm_firm_by_firm/scm_permutation_distribution.png` | `7a0aa91` | 2026-06-22 |
+| `outputs/scm_firm_by_firm/scm_permutation_test_distribution.png` | `5abe766` | 2026-07-22 |
+| `outputs/scm_firm_by_firm/scm_statistical_inference.csv` | `7a0aa91` | 2026-06-22 |
+| `outputs/scm_firm_level_nn_results.csv` | `afa618a` | 2026-07-23 |
+| `outputs/scm_mahalanobis_firm_level.csv` | `afa618a` | 2026-07-23 |
+| `outputs/scm_mahalanobis_results.csv` | `afa618a` | 2026-07-23 |
+| `outputs/scm_mahalanobis_summary.csv` | `afa618a` | 2026-07-23 |
+| `outputs/scm_summary_nn_results.csv` | `afa618a` | 2026-07-23 |
+
+`outputs/retired_originals_20260902/` holds earlier copies of three of these files, retired on 2026-09-02.
+Root-level SCM notes such as `SCM_*.md` are untracked working documents, not pipeline artefacts.

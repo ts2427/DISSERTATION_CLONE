@@ -1081,10 +1081,9 @@ Essay 2 Regression Tables (Firm-Clustered SEs):
   outputs/tables/essay2/TABLE5_breach_severity.txt
   outputs/tables/essay2/TABLE_APPENDIX_alternative_explanations.txt (CPNI & HHI robustness)
 
-Essay 1 - Synthetic Control Matching (PRIMARY CAUSAL ID for H2):
-  outputs/scm_crsp_with_sprint/scm_crsp_sprint_proxy_results.csv (SCM results: n=41 FCC firms, -4.03% effect, p=0.003)
-  outputs/scm_crsp_with_sprint/consolidated_by_company.csv (Aggregate by company)
-  outputs/ESSAY1_SCM_CAUSAL_ID_SUMMARY.txt (Complete summary of SCM methodology and results)
+Synthetic control (SCM): RETIRED 2026-10-02 - the dissertation is descriptive and makes no
+  causal claims; no essay or deck cites SCM. Scripts and outputs stay committed for audit;
+  see outputs/RETIREMENT_LEDGER.md (2026-10-02, SCM).
 
 Essay 2 Robustness Checks (Post-2007 sample restriction test):
   outputs/tables/essay2/TABLE_B8_post_2007_interaction.txt (Robustness: FCC effect in post-2007 sample)
@@ -1190,8 +1189,8 @@ Data-quality contribution: four documented failure modes
 SIC-as-regulatory-proxy, silent Item 5.02 extraction failure.
 
 Open questions (Dr. Johnson): identification path (descriptive vs state-law
-staggered adoption) and Essay 2 / job-talk center. SCM: rebuild under scpi
-with Form 499 membership or drop (pending Lambert) - not committee-locked.
+staggered adoption) and Essay 2 / job-talk center. SCM: RETIRED 2026-10-02
+(outputs/RETIREMENT_LEDGER.md).
 
 Complete log saved to: {log_path}
 
