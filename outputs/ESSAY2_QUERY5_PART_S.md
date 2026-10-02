@@ -5,26 +5,26 @@ ESSAY 2 QUERY 5 — PART S SPECIFICATION REPAIRS (N=333)
 ==========================================================================================
 
 ## S1 — Abnormal-volatility DV (market-model residual), year FE, two-way cluster (parent x event-month)
-  S1 PRIMARY: abnormal vol, mkt-vol control, year FE, two-way: coef +0.1358 SE 0.1873 95% CI [-0.2370, +0.5086] N=331
-  market-volatility-change control coefficient: +0.1929 (SE 0.0719) — reported per Billings-Jennings-Lev precedent
-  S1 excl. 2008-09 & 2020: coef +0.1095 SE 0.1914 95% CI [-0.2716, +0.4905] N=305
-  raw-vol robustness row (Dai et al., Financial Review): coef +0.0555 SE 0.1903 95% CI [-0.3233, +0.4342] N=331
-  Query-2 headline (raw log-ret DV, CV1 firm) for continuity: coef +0.1863 SE 0.1994 95% CI [-0.2105, +0.5830] N=333
+  S1 PRIMARY: abnormal vol, mkt-vol control, year FE, two-way: coef +0.1757 SE 0.1956 95% CI [-0.2137, +0.5650] N=331
+  market-volatility-change control coefficient: +0.1943 (SE 0.0725) — reported per Billings-Jennings-Lev precedent
+  S1 excl. 2008-09 & 2020: coef +0.1511 SE 0.2000 95% CI [-0.2471, +0.5494] N=305
+  raw-vol robustness row (Dai et al., Financial Review): coef +0.0885 SE 0.1953 95% CI [-0.3001, +0.4772] N=331
+  Query-2 headline (raw log-ret DV, CV1 firm) for continuity: coef +0.2119 SE 0.2024 95% CI [-0.1909, +0.6147] N=333
 
 ## S2 — Distant-baseline leakage test (MAIN TABLE rows)
-  S2 baseline [-120,-60]: coef +0.1118 SE 0.2019 95% CI [-0.2901, +0.5136] N=331
-  S2 baseline [-250,-50]: coef +0.1503 SE 0.2161 95% CI [-0.2798, +0.5805] N=328
-  Stability: distant-baseline coefficients (+0.112, +0.150) vs adjacent (+0.136) — STABLE (within 2 SE). The "leakage biases toward zero, so the nulls are conservative" sentence is now LICENSED as a finding.
+  S2 baseline [-120,-60]: coef +0.1830 SE 0.2252 95% CI [-0.2652, +0.6312] N=331
+  S2 baseline [-250,-50]: coef +0.1908 SE 0.2302 95% CI [-0.2674, +0.6490] N=328
+  Stability: distant-baseline coefficients (+0.183, +0.191) vs adjacent (+0.176) — STABLE (within 2 SE). The "leakage biases toward zero, so the nulls are conservative" sentence is now LICENSED as a finding.
 
 ## S3 — ANCOVA identity, errors-in-variables, split-sample IV
   ANCOVA identity (footnote text): adding sigma_pre to both sides of D = a + g*sigma_pre + XB + e yields identical estimates on X; the specification ABSORBS regression to the mean. The pre-volatility coefficient is arithmetic, not economics — never interpreted.
-  DV distribution: skewness +0.61, kurtosis 8.3
-  S3 split-sample IV (pre-vol instrumented by [-120,-60]): coef -0.0738 SE 0.1868 95% CI [-0.4456, +0.2980] N=331
-  first-stage F on the instrument: 125.6 (t^2). NOTE: second-stage SEs are the plug-in two-step ones (generated-regressor caveat stated); the point is covariate stability, shown below.
-  S3 no pre-vol control (covariate movement visible): coef -0.0867 SE 0.1518 95% CI [-0.3889, +0.2154] N=331
+  DV distribution: skewness +0.61, kurtosis 8.1
+  S3 split-sample IV (pre-vol instrumented by [-120,-60]): coef -0.0219 SE 0.1951 95% CI [-0.4103, +0.3664] N=331
+  first-stage F on the instrument: 113.5 (t^2). NOTE: second-stage SEs are the plug-in two-step ones (generated-regressor caveat stated); the point is covariate stability, shown below.
+  S3 no pre-vol control (covariate movement visible): coef -0.0320 SE 0.1640 95% CI [-0.3584, +0.2944] N=331
 
 ## S4 — Log variance ratio ln(sd_post^2/sd_pre^2)
-  S4 log variance ratio (Ohlson-Penman): coef +0.0733 SE 0.1882 95% CI [-0.3012, +0.4478] N=331
+  S4 log variance ratio (Ohlson-Penman): coef +0.0910 SE 0.1904 95% CI [-0.2878, +0.4698] N=331
   If sign/inference differ from the level DV, the level results are driven by high-volatility firms and the log specification leads.
 
 ## S5 — Lineage (text): with the announcement window excluded this design measures a PERSISTENT shift in firm-specific uncertainty (Ohlson & Penman variance-change ancestry), not announcement information content; the Beaver (1968)/Patell (1976) U statistic tests the announcement window itself and is therefore not the right test for the question asked. All "market reaction to the announcement" language attached to this DV is purged.
@@ -32,11 +32,11 @@ ESSAY 2 QUERY 5 — PART S SPECIFICATION REPAIRS (N=333)
 ## H4 — Calendar clustering
   Treated share varies by year: chi2(17)=60.6 (p=0.0000) — treated events DO cluster differently in calendar time; the event-year FE and two-way clustering in S1 are the structural fix (matching the microstructure spec's month FE). Kolari-Pynnonen corrections do not directly bind: they fix pooled tests of mean abnormal returns, not cross-sectional regressions on event-window outcomes (stated choice).
   Window-overlap rule: 163 events fall within 75 calendar days of the same firm's previous event (48.9% overlap rate). Rule: both retained in the main sample (each is a distinct disclosure); sensitivity dropping the later of each overlapping pair:
-  H4 drop-overlaps sensitivity: coef -0.0680 SE 0.2112 95% CI [-0.4884, +0.3523] N=168
+  H4 drop-overlaps sensitivity: coef -0.0052 SE 0.2263 95% CI [-0.4555, +0.4451] N=168
 
 ## H6 — Positive control first, placebo second
   IMPORTANT SCOPE NOTE: the valid positive control specified in the directive — the identical pipeline applied to QUARTERLY EARNINGS announcements, where a volatility spike is among the most robust facts in accounting — requires earnings announcement dates (Compustat RDQ / IBES ANNDATS), which the committed extracts do not carry. It is specified and BLOCKED on a one-line WRDS pull (add rdq to the quotes pull; scripts/167 pattern). The check below is NOT a pipeline validation — applying the pipeline to the breach announcement window tests the breach effect itself, not the instrument.
-  Breach announcement-window check (descriptive): abnormal SD over [-4,+4] minus baseline [-25,-5]: -0.0935 daily pp (t=-1.87, p=0.063, N=331) — breach notifications produce NO detectable announcement-window volatility elevation (point estimate slightly negative). This is consistent with the H1/H2 CAR nulls and with the essay's overall story — the market does not visibly reprice at breach notification — but it CANNOT validate the pipeline, and is not claimed to.
+  Breach announcement-window check (descriptive): abnormal SD over [-4,+4] minus baseline [-25,-5]: -0.0857 daily pp (t=-1.71, p=0.089, N=331) — breach notifications produce NO detectable announcement-window volatility elevation (point estimate slightly negative). This is consistent with the H1/H2 CAR nulls and with the essay's overall story — the market does not visibly reprice at breach notification — but it CANNOT validate the pipeline, and is not claimed to.
   PLACEBO-TREATMENT diagnostic (10,000 parent-level reassignments, 11 treated parents held fixed, CV1 t vs t(81)): rejection rate at alpha=.05 = 11.6%. MATERIALLY ABOVE 5%: the analytic SEs are too small — that is itself the finding. Framed as a diagnostic of the inference procedure, NOT a p-value (exchangeability is false: Form 499 status correlates with size and return variance; Eggers, Tunon & Dafoe 2024). Actual-estimate percentile in the placebo t distribution: 76% (t_actual=0.799, CV1).
 
 ## P — PRC provenance diagnostic
@@ -73,12 +73,12 @@ ESSAY 2 QUERY 5 — PART S SPECIFICATION REPAIRS (N=333)
 firm_size_log  11.609   9.621                1.530                       1.082           0.807
      leverage   0.722   0.641                0.418                       0.296           0.564
           roa   0.024   0.077               -0.564                      -0.399           0.144
-    e2_pre_sd   1.771   1.688                0.072                       0.051           1.378
+    e2_pre_sd   1.761   1.688                0.065                       0.046           1.338
       delay_w  82.460  70.327                0.086                       0.061           1.748
  prior_events  10.029  13.904               -0.238                      -0.168           0.188
 health_breach   0.000   0.066               -0.374                      -0.264           0.000
   Note: denominators stated — Imbens (2015) sqrt((S2t+S2c)/2) vs Imbens-Wooldridge sqrt(S2t+S2c); they differ by sqrt(2). Thresholds: 0.25 economics convention, 0.10 biostatistics. NO t-tests or p-values (sample-size dependent). Variance ratios per Rubin (2001). TREATED CLUSTER COUNT: G1 = 11 parent CIKs (on the face of the table). Matching is NOT performed: 11 treated parents; wild-bootstrap inference fails under matching (Abadie-Imbens 2008); PSM design sensitivity documented (Shipman-Swanquist-Whited 2017); with limited overlap "there may in fact be no estimation method that leads to robust estimates" (Imbens 2015). Equivalence framing per Hartman-Hidalgo (2018).
-  H3 common-support (controls in treated size range; CHANGE OF ESTIMAND, N=327): coef +0.1277 SE 0.1842 95% CI [-0.2391, +0.4944] N=326
+  H3 common-support (controls in treated size range; CHANGE OF ESTIMAND, N=327): coef +0.1673 SE 0.1927 95% CI [-0.2164, +0.5510] N=326
 
 ==========================================================================================
 Tests this script: 12 — S-main: 7; H4: 2; H6: 1; P: 1; H3: 1

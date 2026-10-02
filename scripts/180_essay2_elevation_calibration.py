@@ -22,13 +22,12 @@ fin = pd.read_csv(OUTDIR / 't42_final_sample_with_repairs.csv',
 fin['rdt'] = pd.to_datetime(fin['reported_date'])
 CTRL = ['delay_w', 'firm_size_log', 'leverage', 'roa', 'health_breach',
         'prior_events']
-crsp = pd.read_csv('Data/wrds/crsp_daily_returns.csv',
-                   usecols=['permno', 'date', 'ret'])
-for tp in ['Data/wrds/crsp_daily_topup.csv',
-           'Data/wrds/crsp_daily_topup_dish.csv']:
-    crsp = pd.concat([crsp, pd.read_csv(tp, usecols=['permno', 'date',
-                                                     'ret'])],
-                     ignore_index=True)
+import importlib.util as _ilu
+_s = _ilu.spec_from_file_location('crsp_daily', 'scripts/254_crsp_daily.py')
+crsp_daily = _ilu.module_from_spec(_s); _s.loader.exec_module(crsp_daily)
+# De-duplicated on (permno, date) by the shared loader (2026-10-02): the top-ups repeat
+# 405 permno-dates already in the main file, which positional windows double-counted.
+crsp = crsp_daily.load(['permno', 'date', 'ret'])
 crsp['date'] = pd.to_datetime(crsp['date'])
 mkt = pd.read_csv('Data/wrds/market_indices.csv', usecols=['date', 'vwretd'])
 mkt['date'] = pd.to_datetime(mkt['date'])
@@ -219,8 +218,13 @@ print(f'PLACEBO TREATMENT DIFFERENTIAL across {B} draws: mean '
       f'[q05 {np.quantile(diffs, .05):+.4f}, median '
       f'{np.median(diffs):+.4f}, q95 {np.quantile(diffs, .95):+.4f}], '
       f'max |diff| {np.abs(diffs).max():.4f}')
-print(f'draws with |placebo differential| >= 0.4475 (the actual): '
-      f'{int((np.abs(diffs) >= 0.4475).sum())} of {B}')
+# The actual differential is READ from scripts/175's t50 (2026-10-02). It was typed in as
+# 0.4475; the CRSP de-duplication fix moved it, and a typed copy would silently compare the
+# placebo draws against a superseded estimate.
+_t50 = pd.read_csv(OUTDIR / 't50_announcement_contrast.csv')
+ACTUAL = float(_t50.loc[_t50['level'] == 'L3', 'coef'].iloc[0])
+print(f'draws with |placebo differential| >= {ACTUAL:.4f} (the actual): '
+      f'{int((np.abs(diffs) >= ACTUAL).sum())} of {B}')
 print(f'draws with CV3 p < .05: {int((ps < .05).sum())} of {B} '
       f'({100 * (ps < .05).mean():.1f}%)')
 
@@ -290,8 +294,8 @@ rows_out = [
                 f'{np.quantile(diffs, .95):+.4f}, max abs '
                 f'{np.abs(diffs).max():.4f}'),
     dict(panel='placebo', item='draws_reaching_actual',
-         value=int((np.abs(diffs) >= 0.4475).sum()),
-         detail='of 200; actual differential +0.4475'),
+         value=int((np.abs(diffs) >= ACTUAL).sum()),
+         detail=f'of 200; actual differential {ACTUAL:+.4f}'),
     dict(panel='placebo', item='draws_cv3_rejecting',
          value=int((ps < .05).sum()), detail='of 200 at p < .05'),
     dict(panel='earnings_benchmark', item='earnings_elevation_mean',

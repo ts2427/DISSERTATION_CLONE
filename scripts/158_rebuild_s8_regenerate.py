@@ -88,7 +88,7 @@ for var, lab in labels.items():
     C[f'{lab}_ci'] = [round(ci[0], 4), round(ci[1], 4)]
     C[f'{lab}_mde80'] = round(2.8 * se, 4)
     C[f'{lab}_tost_p'] = round(tost, 4)
-    # G2 2026-09-29: same rule as H5 below - HC3 cannot carry a significance verdict.
+    # G2 2026-09-29: same rule the retired H5 block applied - HC3 cannot carry a significance verdict.
     C[f'{lab}_status'] = ('BOUNDED NULL' if tost < .05 else
                           ('NULL-INCONCLUSIVE' if p > .05 else
                            'HC3-ONLY, NOT A VERDICT (disqualified rung)'))
@@ -113,28 +113,14 @@ log(f"\nROA amendment: op_margin {C['AMEND_opmargin_coef']:+.4f} p={C['AMEND_opm
     f"(N={int(mm.nobs)}); both-spec roa p={C['AMEND_both_roa_p']:.4f} / "
     f"op_margin p={C['AMEND_both_opmargin_p']:.4f}; hypothesis nulls unchanged: {C['AMEND_nulls_unchanged']}")
 
-# ---------------- Essay 2: H5 ----------------
-reg2 = crsp.dropna(subset=['volatility_change', 'return_volatility_pre'] + CONTROLS).copy()
-X2 = sm.add_constant(reg2[CONTROLS + ['return_volatility_pre']].astype(float))
-m2 = sm.OLS(reg2['volatility_change'], X2).fit(cov_type='HC3')
-b, se, p = m2.params[TREAT], m2.bse[TREAT], m2.pvalues[TREAT]
-dof2 = int(m2.df_resid)
-tost2 = max(1 - stats.t.cdf((b + EQ) / se, dof2), stats.t.cdf((b - EQ) / se, dof2))
-C['N_essay2'] = len(reg2)
-C['H5_coef'] = round(b, 4)
-C['H5_p'] = round(p, 4)
-C['H5_tost_p'] = round(tost2, 4)
-C['H5_mde80'] = round(2.8 * se, 4)
-# G2 2026-09-29: HC3 is DISQUALIFIED as a significance test (run_all.py:77-78), so this
-# label may never read SIGNIFICANT. The third branch now names the rung instead of
-# asserting significance; a real verdict needs CV3 or the wild cluster bootstrap, which
-# this script does not compute. Essay 2's inferential frame is scripts/165.
-C['H5_status'] = ('BOUNDED NULL' if tost2 < .05 else
-                  ('NULL-INCONCLUSIVE' if p > .05 else
-                   'HC3-ONLY, NOT A VERDICT (disqualified rung; see scripts/165)'))
-C['H5_R2'] = round(m2.rsquared, 3)
-log(f"\nEssay 2 (H5, N={len(reg2)}, treated {int(reg2[TREAT].sum())}): FCC {b:+.4f} p={p:.4f} | "
-    f"TOST p={tost2:.4f} | MDE {2.8 * se:.2f} | R2={m2.rsquared:.3f} | {C['H5_status']}")
+# ---------------- Essay 2: H5 - REMOVED 2026-10-02 ----------------
+# The 7 keys this block wrote (N_essay2, H5_coef/_p/_tost_p/_mde80/_status/_R2) are
+# GONE from constants_v3.json (defense supplement, Part G1). They came from an HC3-only
+# breach-anchored annualized-volatility spec on N=339 - a disqualified rung on a
+# non-canonical sample - and were the only Essay 2 figures in this file. Essay 2's
+# verdict of record is scripts/165 on N=333 (104 treated events, G=82, G1=12).
+RETIRED_KEYS = {'N_essay2', 'H5_coef', 'H5_p', 'H5_tost_p', 'H5_mde80', 'H5_status',
+                'H5_R2'}
 
 # ---------------- Essay 3: REMOVED 2026-09-29 ----------------
 # The 13 H6 keys this block used to write into constants_v3.json are GONE:
@@ -403,11 +389,12 @@ C['RF_top_feature'] = T[15].iloc[0]['Feature']
 # wrong-field flag (delay_invalid=1, Fix 3) are excluded from that panel.
 # Inclusion is listwise per panel: all 30 pre-anchor trading days must exist
 # with non-missing abnormal returns, else the event is excluded and counted.
-cd13 = pd.read_csv('Data/wrds/crsp_daily_returns.csv', usecols=['permno', 'date', 'ret'])
-tp13 = Path('Data/wrds/crsp_daily_topup.csv')
-if tp13.exists():
-    cd13 = pd.concat([cd13, pd.read_csv(tp13, usecols=['permno', 'date', 'ret'])],
-                     ignore_index=True)
+import importlib.util as _ilu
+_s = _ilu.spec_from_file_location('crsp_daily', 'scripts/254_crsp_daily.py')
+crsp_daily = _ilu.module_from_spec(_s); _s.loader.exec_module(crsp_daily)
+# De-duplicated on (permno, date) by the shared loader (2026-10-02): the top-ups repeat
+# 405 permno-dates already in the main file, which positional windows double-counted.
+cd13 = crsp_daily.load(['permno', 'date', 'ret'])
 mkt13 = pd.read_csv('Data/wrds/market_indices.csv', usecols=['date', 'vwretd'])
 cd13['date'] = pd.to_datetime(cd13['date'])
 mkt13['date'] = pd.to_datetime(mkt13['date'])
@@ -575,7 +562,8 @@ if cpath.exists():
             if k in old and old[k] != v and not isinstance(v, list)}
     assert not mism, f'ASSERTION FAILURE vs baseline: {list(mism.items())[:5]}'
     log('\nAssertion check vs existing baseline: PASS')
-    cpath.write_text(json.dumps({**old, **C}, indent=1))  # persist NEW keys only; existing asserted above
+    merged = {k: v for k, v in {**old, **C}.items() if k not in RETIRED_KEYS}
+    cpath.write_text(json.dumps(merged, indent=1))  # persist NEW keys only; existing asserted above; retired keys dropped
 else:
     cpath.write_text(json.dumps(C, indent=1))
     log('\nBaseline constants_v3.json WRITTEN (future runs assert against it)')

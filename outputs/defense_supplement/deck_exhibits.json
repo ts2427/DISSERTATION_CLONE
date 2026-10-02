@@ -1,0 +1,2713 @@
+{
+  "_meta": {
+    "script": "scripts/252_defsup_deck_exhibits.py",
+    "assert_policy": "each value checked against an independent committed input or an independent recomputation path; tol = half-unit of committed rounding + input-rounding propagation + 1e-9; identities at 1e-9/1e-12; hard failure, nothing written",
+    "n_asserts": 220,
+    "inputs": [
+      "Data/processed/rebuild/CANONICAL_V3.csv",
+      "Data/wrds/crsp_daily_returns.csv",
+      "Data/wrds/crsp_daily_topup.csv",
+      "Data/wrds/crsp_daily_topup_dish.csv",
+      "Data/wrds/market_indices.csv",
+      "outputs/rebuild/constants_v3.json",
+      "outputs/rebuild/appendix_v3/table_3.csv",
+      "outputs/rebuild/appendix_v3/table_4.csv",
+      "outputs/tables/essay2_v2/t1_final_sample.csv",
+      "outputs/tables/essay2_v2/t2_descriptives_by_treatment.csv",
+      "outputs/tables/essay2_v2/t26_inference_ladder.csv",
+      "outputs/tables/essay2_v2/t28_design_resolution.csv",
+      "outputs/essay3_v4/constants_essay3_v4.json",
+      "outputs/essay3_v4/f1_ladder.csv",
+      "outputs/essay3_v4/f1_se_diagnostics.csv"
+    ],
+    "note": "Arithmetic only on git-tracked inputs; crsp_quotes_topup.csv (untracked) not used, so treated mcap covers 91 of 106 events. 3 car_30d values summed duplicated top-up rows before the 2026-10-02 fix (E1_dup_diagnostic)."
+  },
+  "E1_ci90_essay1": {
+    "H1_timing_coef": {
+      "value": 1.15,
+      "unit": "pp of 30d CAR",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 340,
+      "formula": "coef +/- z(.95)*HC3 SE, z=1.644854 (158 conf_int convention: normal)",
+      "source": "outputs/rebuild/constants_v3.json; outputs/rebuild/appendix_v3/table_4.csv"
+    },
+    "H1_timing_se_hc3": {
+      "value": 1.0051,
+      "unit": "pp of 30d CAR",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 340,
+      "formula": "coef +/- z(.95)*HC3 SE, z=1.644854 (158 conf_int convention: normal)",
+      "source": "outputs/rebuild/constants_v3.json; outputs/rebuild/appendix_v3/table_4.csv"
+    },
+    "H1_timing_ci90_lo": {
+      "value": -0.503242,
+      "unit": "pp of 30d CAR",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 340,
+      "formula": "coef +/- z(.95)*HC3 SE, z=1.644854 (158 conf_int convention: normal)",
+      "source": "outputs/rebuild/constants_v3.json; outputs/rebuild/appendix_v3/table_4.csv"
+    },
+    "H1_timing_ci90_hi": {
+      "value": 2.803242,
+      "unit": "pp of 30d CAR",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 340,
+      "formula": "coef +/- z(.95)*HC3 SE, z=1.644854 (158 conf_int convention: normal)",
+      "source": "outputs/rebuild/constants_v3.json; outputs/rebuild/appendix_v3/table_4.csv"
+    },
+    "H2_FCC_coef": {
+      "value": -0.8051,
+      "unit": "pp of 30d CAR",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 340,
+      "formula": "coef +/- z(.95)*HC3 SE, z=1.644854 (158 conf_int convention: normal)",
+      "source": "outputs/rebuild/constants_v3.json; outputs/rebuild/appendix_v3/table_4.csv"
+    },
+    "H2_FCC_se_hc3": {
+      "value": 1.4026,
+      "unit": "pp of 30d CAR",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 340,
+      "formula": "coef +/- z(.95)*HC3 SE, z=1.644854 (158 conf_int convention: normal)",
+      "source": "outputs/rebuild/constants_v3.json; outputs/rebuild/appendix_v3/table_4.csv"
+    },
+    "H2_FCC_ci90_lo": {
+      "value": -3.112172,
+      "unit": "pp of 30d CAR",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 340,
+      "formula": "coef +/- z(.95)*HC3 SE, z=1.644854 (158 conf_int convention: normal)",
+      "source": "outputs/rebuild/constants_v3.json; outputs/rebuild/appendix_v3/table_4.csv"
+    },
+    "H2_FCC_ci90_hi": {
+      "value": 1.501972,
+      "unit": "pp of 30d CAR",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 340,
+      "formula": "coef +/- z(.95)*HC3 SE, z=1.644854 (158 conf_int convention: normal)",
+      "source": "outputs/rebuild/constants_v3.json; outputs/rebuild/appendix_v3/table_4.csv"
+    },
+    "H3_prior_coef": {
+      "value": 0.0332,
+      "unit": "pp of 30d CAR",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 340,
+      "formula": "coef +/- z(.95)*HC3 SE, z=1.644854 (158 conf_int convention: normal)",
+      "source": "outputs/rebuild/constants_v3.json; outputs/rebuild/appendix_v3/table_4.csv"
+    },
+    "H3_prior_se_hc3": {
+      "value": 0.0644,
+      "unit": "pp of 30d CAR",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 340,
+      "formula": "coef +/- z(.95)*HC3 SE, z=1.644854 (158 conf_int convention: normal)",
+      "source": "outputs/rebuild/constants_v3.json; outputs/rebuild/appendix_v3/table_4.csv"
+    },
+    "H3_prior_ci90_lo": {
+      "value": -0.072729,
+      "unit": "pp of 30d CAR",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 340,
+      "formula": "coef +/- z(.95)*HC3 SE, z=1.644854 (158 conf_int convention: normal)",
+      "source": "outputs/rebuild/constants_v3.json; outputs/rebuild/appendix_v3/table_4.csv"
+    },
+    "H3_prior_ci90_hi": {
+      "value": 0.139129,
+      "unit": "pp of 30d CAR",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 340,
+      "formula": "coef +/- z(.95)*HC3 SE, z=1.644854 (158 conf_int convention: normal)",
+      "source": "outputs/rebuild/constants_v3.json; outputs/rebuild/appendix_v3/table_4.csv"
+    },
+    "H4_health_coef": {
+      "value": -1.0247,
+      "unit": "pp of 30d CAR",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 340,
+      "formula": "coef +/- z(.95)*HC3 SE, z=1.644854 (158 conf_int convention: normal)",
+      "source": "outputs/rebuild/constants_v3.json; outputs/rebuild/appendix_v3/table_4.csv"
+    },
+    "H4_health_se_hc3": {
+      "value": 2.6083,
+      "unit": "pp of 30d CAR",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 340,
+      "formula": "coef +/- z(.95)*HC3 SE, z=1.644854 (158 conf_int convention: normal)",
+      "source": "outputs/rebuild/constants_v3.json; outputs/rebuild/appendix_v3/table_4.csv"
+    },
+    "H4_health_ci90_lo": {
+      "value": -5.314972,
+      "unit": "pp of 30d CAR",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 340,
+      "formula": "coef +/- z(.95)*HC3 SE, z=1.644854 (158 conf_int convention: normal)",
+      "source": "outputs/rebuild/constants_v3.json; outputs/rebuild/appendix_v3/table_4.csv"
+    },
+    "H4_health_ci90_hi": {
+      "value": 3.265572,
+      "unit": "pp of 30d CAR",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 340,
+      "formula": "coef +/- z(.95)*HC3 SE, z=1.644854 (158 conf_int convention: normal)",
+      "source": "outputs/rebuild/constants_v3.json; outputs/rebuild/appendix_v3/table_4.csv"
+    }
+  },
+  "E1_ci90_essay3": {
+    "w30_coef": {
+      "value": 0.4,
+      "unit": "pp (exec departure probability)",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "coef +/- t(.95, G-1=118)*CV3 SE (227 convention), x100",
+      "source": "outputs/essay3_v4/f1_ladder.csv"
+    },
+    "w30_se_cv3": {
+      "value": 3.34,
+      "unit": "pp (exec departure probability)",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "coef +/- t(.95, G-1=118)*CV3 SE (227 convention), x100",
+      "source": "outputs/essay3_v4/f1_ladder.csv"
+    },
+    "w30_ci90_lo": {
+      "value": -5.137284,
+      "unit": "pp (exec departure probability)",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "coef +/- t(.95, G-1=118)*CV3 SE (227 convention), x100",
+      "source": "outputs/essay3_v4/f1_ladder.csv"
+    },
+    "w30_ci90_hi": {
+      "value": 5.937284,
+      "unit": "pp (exec departure probability)",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "coef +/- t(.95, G-1=118)*CV3 SE (227 convention), x100",
+      "source": "outputs/essay3_v4/f1_ladder.csv"
+    },
+    "w90_coef": {
+      "value": -4.1,
+      "unit": "pp (exec departure probability)",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "coef +/- t(.95, G-1=118)*CV3 SE (227 convention), x100",
+      "source": "outputs/essay3_v4/f1_ladder.csv"
+    },
+    "w90_se_cv3": {
+      "value": 7.91,
+      "unit": "pp (exec departure probability)",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "coef +/- t(.95, G-1=118)*CV3 SE (227 convention), x100",
+      "source": "outputs/essay3_v4/f1_ladder.csv"
+    },
+    "w90_ci90_lo": {
+      "value": -17.213748,
+      "unit": "pp (exec departure probability)",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "coef +/- t(.95, G-1=118)*CV3 SE (227 convention), x100",
+      "source": "outputs/essay3_v4/f1_ladder.csv"
+    },
+    "w90_ci90_hi": {
+      "value": 9.013748,
+      "unit": "pp (exec departure probability)",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "coef +/- t(.95, G-1=118)*CV3 SE (227 convention), x100",
+      "source": "outputs/essay3_v4/f1_ladder.csv"
+    },
+    "w180_coef": {
+      "value": 2.33,
+      "unit": "pp (exec departure probability)",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "coef +/- t(.95, G-1=118)*CV3 SE (227 convention), x100",
+      "source": "outputs/essay3_v4/f1_ladder.csv"
+    },
+    "w180_se_cv3": {
+      "value": 9.96,
+      "unit": "pp (exec departure probability)",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "coef +/- t(.95, G-1=118)*CV3 SE (227 convention), x100",
+      "source": "outputs/essay3_v4/f1_ladder.csv"
+    },
+    "w180_ci90_lo": {
+      "value": -14.18238,
+      "unit": "pp (exec departure probability)",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "coef +/- t(.95, G-1=118)*CV3 SE (227 convention), x100",
+      "source": "outputs/essay3_v4/f1_ladder.csv"
+    },
+    "w180_ci90_hi": {
+      "value": 18.84238,
+      "unit": "pp (exec departure probability)",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "coef +/- t(.95, G-1=118)*CV3 SE (227 convention), x100",
+      "source": "outputs/essay3_v4/f1_ladder.csv"
+    }
+  },
+  "E1_dup_diagnostic": {
+    "n_duplicate_rows": {
+      "value": 405,
+      "unit": "rows",
+      "sample": "CRSP concat",
+      "n": 405,
+      "formula": "top-up rows whose permno-date already exists in crsp_daily_returns.csv",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "n_events_affected": {
+      "value": 3,
+      "unit": "events",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 340,
+      "formula": "events whose pre-fix 31-row window summed duplicated rows",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "60599_2020-08-20_car_30d_prefix": {
+      "value": -9.9072,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 1,
+      "formula": "pre-fix car_30d: 31-row positional window over the duplicated raw panel",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "60599_2020-08-20_car_30d_committed": {
+      "value": -9.0422,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 1,
+      "formula": "committed (fixed) car_30d (CenturyLink Communications; fcc_form499=1)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv"
+    },
+    "81696_2023-02-22_car_30d_prefix": {
+      "value": -44.2702,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 1,
+      "formula": "pre-fix car_30d: 31-row positional window over the duplicated raw panel",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "81696_2023-02-22_car_30d_committed": {
+      "value": -40.6017,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 1,
+      "formula": "committed (fixed) car_30d (DISH Network, LLC; fcc_form499=1)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv"
+    },
+    "81696_2023-05-17_car_30d_prefix": {
+      "value": 27.939,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 1,
+      "formula": "pre-fix car_30d: 31-row positional window over the duplicated raw panel",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "81696_2023-05-17_car_30d_committed": {
+      "value": -2.3845,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 1,
+      "formula": "committed (fixed) car_30d (DISH Network, LLC; fcc_form499=1)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv"
+    }
+  },
+  "E1_dollar": {
+    "mcap_all_n_covered": {
+      "value": 325,
+      "unit": "events",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 340,
+      "formula": "|prc| x shrout x 1000 on last trading day before scripts/155 day 0",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv (prc, shrout)"
+    },
+    "mcap_all_n_missing": {
+      "value": 15,
+      "unit": "events",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 340,
+      "formula": "|prc| x shrout x 1000 on last trading day before scripts/155 day 0",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv (prc, shrout)"
+    },
+    "mcap_all_median": {
+      "value": 36.066072,
+      "unit": "$B",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 325,
+      "formula": "|prc| x shrout x 1000 on last trading day before scripts/155 day 0",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv (prc, shrout)"
+    },
+    "mcap_all_mean": {
+      "value": 106.975661,
+      "unit": "$B",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 325,
+      "formula": "|prc| x shrout x 1000 on last trading day before scripts/155 day 0",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv (prc, shrout)"
+    },
+    "mcap_treated_n_covered": {
+      "value": 91,
+      "unit": "events",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "|prc| x shrout x 1000 on last trading day before scripts/155 day 0",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv (prc, shrout)"
+    },
+    "mcap_treated_n_missing": {
+      "value": 15,
+      "unit": "events",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "|prc| x shrout x 1000 on last trading day before scripts/155 day 0",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv (prc, shrout)"
+    },
+    "mcap_treated_median": {
+      "value": 138.281,
+      "unit": "$B",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 91,
+      "formula": "|prc| x shrout x 1000 on last trading day before scripts/155 day 0",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv (prc, shrout)"
+    },
+    "mcap_treated_mean": {
+      "value": 117.051703,
+      "unit": "$B",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 91,
+      "formula": "|prc| x shrout x 1000 on last trading day before scripts/155 day 0",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv (prc, shrout)"
+    },
+    "mcap_control_n_covered": {
+      "value": 234,
+      "unit": "events",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "|prc| x shrout x 1000 on last trading day before scripts/155 day 0",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv (prc, shrout)"
+    },
+    "mcap_control_n_missing": {
+      "value": 0,
+      "unit": "events",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "|prc| x shrout x 1000 on last trading day before scripts/155 day 0",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv (prc, shrout)"
+    },
+    "mcap_control_median": {
+      "value": 32.210901,
+      "unit": "$B",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "|prc| x shrout x 1000 on last trading day before scripts/155 day 0",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv (prc, shrout)"
+    },
+    "mcap_control_mean": {
+      "value": 103.057201,
+      "unit": "$B",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "|prc| x shrout x 1000 on last trading day before scripts/155 day 0",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv (prc, shrout)"
+    },
+    "tost_bound_pos_at_median_mcap": {
+      "value": 757.3875,
+      "unit": "$M",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 325,
+      "formula": "pp/100 x N=340 median mcap (36066.07 $M); pp = 2.1",
+      "source": "outputs/rebuild/constants_v3.json; Data/wrds/crsp_daily_returns.csv"
+    },
+    "tost_bound_neg_at_median_mcap": {
+      "value": -757.3875,
+      "unit": "$M",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 325,
+      "formula": "pp/100 x N=340 median mcap (36066.07 $M); pp = -2.1",
+      "source": "outputs/rebuild/constants_v3.json; Data/wrds/crsp_daily_returns.csv"
+    },
+    "H1_coef_at_median_mcap": {
+      "value": 414.7598,
+      "unit": "$M",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 325,
+      "formula": "pp/100 x N=340 median mcap (36066.07 $M); pp = 1.15",
+      "source": "outputs/rebuild/constants_v3.json; Data/wrds/crsp_daily_returns.csv"
+    },
+    "H1_ci95_lo_at_median_mcap": {
+      "value": -295.7418,
+      "unit": "$M",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 325,
+      "formula": "pp/100 x N=340 median mcap (36066.07 $M); pp = -0.82",
+      "source": "outputs/rebuild/constants_v3.json; Data/wrds/crsp_daily_returns.csv"
+    },
+    "H1_ci95_hi_at_median_mcap": {
+      "value": 1125.2615,
+      "unit": "$M",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 325,
+      "formula": "pp/100 x N=340 median mcap (36066.07 $M); pp = 3.12",
+      "source": "outputs/rebuild/constants_v3.json; Data/wrds/crsp_daily_returns.csv"
+    },
+    "H1_ci90_lo_at_median_mcap": {
+      "value": -181.4998,
+      "unit": "$M",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 325,
+      "formula": "pp/100 x N=340 median mcap (36066.07 $M); pp = -0.503242",
+      "source": "outputs/rebuild/constants_v3.json; Data/wrds/crsp_daily_returns.csv"
+    },
+    "H1_ci90_hi_at_median_mcap": {
+      "value": 1011.0194,
+      "unit": "$M",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 325,
+      "formula": "pp/100 x N=340 median mcap (36066.07 $M); pp = 2.80324",
+      "source": "outputs/rebuild/constants_v3.json; Data/wrds/crsp_daily_returns.csv"
+    },
+    "H2_coef_at_median_mcap": {
+      "value": -290.3679,
+      "unit": "$M",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 325,
+      "formula": "pp/100 x N=340 median mcap (36066.07 $M); pp = -0.8051",
+      "source": "outputs/rebuild/constants_v3.json; Data/wrds/crsp_daily_returns.csv"
+    },
+    "H2_ci95_lo_at_median_mcap": {
+      "value": -1281.8243,
+      "unit": "$M",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 325,
+      "formula": "pp/100 x N=340 median mcap (36066.07 $M); pp = -3.5541",
+      "source": "outputs/rebuild/constants_v3.json; Data/wrds/crsp_daily_returns.csv"
+    },
+    "H2_ci95_hi_at_median_mcap": {
+      "value": 701.0523,
+      "unit": "$M",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 325,
+      "formula": "pp/100 x N=340 median mcap (36066.07 $M); pp = 1.9438",
+      "source": "outputs/rebuild/constants_v3.json; Data/wrds/crsp_daily_returns.csv"
+    },
+    "H2_ci90_lo_at_median_mcap": {
+      "value": -1122.4381,
+      "unit": "$M",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 325,
+      "formula": "pp/100 x N=340 median mcap (36066.07 $M); pp = -3.11217",
+      "source": "outputs/rebuild/constants_v3.json; Data/wrds/crsp_daily_returns.csv"
+    },
+    "H2_ci90_hi_at_median_mcap": {
+      "value": 541.7022,
+      "unit": "$M",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 325,
+      "formula": "pp/100 x N=340 median mcap (36066.07 $M); pp = 1.50197",
+      "source": "outputs/rebuild/constants_v3.json; Data/wrds/crsp_daily_returns.csv"
+    },
+    "tost_bound_at_treated_median_mcap": {
+      "value": 2.903901,
+      "unit": "$B",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 91,
+      "formula": "2.10/100 x treated median mcap (91 of 106 covered)",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    }
+  },
+  "E2_vol_scaling": {
+    "coef_pct_of_pre_sd": {
+      "value": 12.386265,
+      "unit": "% of mean pooled pre-window daily vol",
+      "sample": "E2 analytical N=333 (104 treated; G=82, G1=12)",
+      "n": 333,
+      "formula": "0.2119 / e2_pre_sd pooled mean (t1, full precision 1.710766) x 100",
+      "source": "outputs/tables/essay2_v2/t26_inference_ladder.csv; outputs/tables/essay2_v2/t28_design_resolution.csv; outputs/tables/essay2_v2/t1_final_sample.csv"
+    },
+    "cv3_ci_lo_pct": {
+      "value": -15.905157,
+      "unit": "% of mean pooled pre-window daily vol",
+      "sample": "E2 analytical N=333 (104 treated; G=82, G1=12)",
+      "n": 333,
+      "formula": "-0.2721 / e2_pre_sd pooled mean (t1, full precision 1.710766) x 100",
+      "source": "outputs/tables/essay2_v2/t26_inference_ladder.csv; outputs/tables/essay2_v2/t28_design_resolution.csv; outputs/tables/essay2_v2/t1_final_sample.csv"
+    },
+    "cv3_ci_hi_pct": {
+      "value": 40.677688,
+      "unit": "% of mean pooled pre-window daily vol",
+      "sample": "E2 analytical N=333 (104 treated; G=82, G1=12)",
+      "n": 333,
+      "formula": "0.6959 / e2_pre_sd pooled mean (t1, full precision 1.710766) x 100",
+      "source": "outputs/tables/essay2_v2/t26_inference_ladder.csv; outputs/tables/essay2_v2/t28_design_resolution.csv; outputs/tables/essay2_v2/t1_final_sample.csv"
+    },
+    "mde_pct_of_pre_sd": {
+      "value": 40.321123,
+      "unit": "% of mean pooled pre-window daily vol",
+      "sample": "E2 analytical N=333 (104 treated; G=82, G1=12)",
+      "n": 333,
+      "formula": "0.6898 / e2_pre_sd pooled mean (t1, full precision 1.710766) x 100",
+      "source": "outputs/tables/essay2_v2/t26_inference_ladder.csv; outputs/tables/essay2_v2/t28_design_resolution.csv; outputs/tables/essay2_v2/t1_final_sample.csv"
+    },
+    "sesoi_pct_of_pre_sd": {
+      "value": 16.092208,
+      "unit": "% of mean pooled pre-window daily vol",
+      "sample": "E2 analytical N=333 (104 treated; G=82, G1=12)",
+      "n": 333,
+      "formula": "0.2753 / e2_pre_sd pooled mean (t1, full precision 1.710766) x 100",
+      "source": "outputs/tables/essay2_v2/t26_inference_ladder.csv; outputs/tables/essay2_v2/t28_design_resolution.csv; outputs/tables/essay2_v2/t1_final_sample.csv"
+    },
+    "coef_pct_of_control_pre_sd": {
+      "value": 12.554929,
+      "unit": "% of control pre-window daily vol",
+      "sample": "E2 analytical N=333 (104 treated; G=82, G1=12)",
+      "n": 229,
+      "formula": "coef / e2_pre_sd control mean (t1, full precision 1.687783) x 100",
+      "source": "outputs/tables/essay2_v2/t26_inference_ladder.csv; outputs/tables/essay2_v2/t1_final_sample.csv"
+    },
+    "coef": {
+      "value": 0.2119,
+      "unit": "daily pp",
+      "sample": "E2 analytical N=333 (104 treated; G=82, G1=12)",
+      "n": 333,
+      "formula": "committed value",
+      "source": "outputs/tables/essay2_v2/t26_inference_ladder.csv; outputs/tables/essay2_v2/t28_design_resolution.csv; outputs/tables/essay2_v2/t2_descriptives_by_treatment.csv"
+    },
+    "cv3_p": {
+      "value": 0.3863,
+      "unit": "p",
+      "sample": "E2 analytical N=333 (104 treated; G=82, G1=12)",
+      "n": 333,
+      "formula": "committed value",
+      "source": "outputs/tables/essay2_v2/t26_inference_ladder.csv; outputs/tables/essay2_v2/t28_design_resolution.csv; outputs/tables/essay2_v2/t2_descriptives_by_treatment.csv"
+    },
+    "mde80": {
+      "value": 0.6898,
+      "unit": "daily pp",
+      "sample": "E2 analytical N=333 (104 treated; G=82, G1=12)",
+      "n": 333,
+      "formula": "committed value",
+      "source": "outputs/tables/essay2_v2/t26_inference_ladder.csv; outputs/tables/essay2_v2/t28_design_resolution.csv; outputs/tables/essay2_v2/t2_descriptives_by_treatment.csv"
+    },
+    "pre_sd_pooled": {
+      "value": 1.7108,
+      "unit": "daily pp",
+      "sample": "E2 analytical N=333 (104 treated; G=82, G1=12)",
+      "n": 333,
+      "formula": "committed value",
+      "source": "outputs/tables/essay2_v2/t26_inference_ladder.csv; outputs/tables/essay2_v2/t28_design_resolution.csv; outputs/tables/essay2_v2/t2_descriptives_by_treatment.csv"
+    }
+  },
+  "E3_mde_departures": {
+    "w30_mde80_pp": {
+      "value": 9.44,
+      "unit": "pp",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 109,
+      "formula": "committed mde80_cv3 x100",
+      "source": "outputs/essay3_v4/f1_ladder.csv; outputs/essay3_v4/f1_se_diagnostics.csv"
+    },
+    "w30_extra_departures": {
+      "value": 10.2896,
+      "unit": "departures among 109 treated",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 109,
+      "formula": "mde80 x 109",
+      "source": "outputs/essay3_v4/f1_ladder.csv; outputs/essay3_v4/f1_se_diagnostics.csv"
+    },
+    "w30_implied_treated_rate_pct": {
+      "value": 13.831892,
+      "unit": "%",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 109,
+      "formula": "(control_events/control_n + mde80) x 100",
+      "source": "outputs/essay3_v4/f1_ladder.csv; outputs/essay3_v4/f1_se_diagnostics.csv"
+    },
+    "w30_control_rate_pct": {
+      "value": 4.391892,
+      "unit": "%",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 109,
+      "formula": "control_events/control_n x 100 (full precision)",
+      "source": "outputs/essay3_v4/f1_ladder.csv; outputs/essay3_v4/f1_se_diagnostics.csv"
+    },
+    "w30_implied_rate_ratio": {
+      "value": 3.149415,
+      "unit": "x",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 109,
+      "formula": "(control rate + mde80)/control rate, full precision",
+      "source": "outputs/essay3_v4/f1_ladder.csv; outputs/essay3_v4/f1_se_diagnostics.csv"
+    },
+    "w30_departures_at_control_rate": {
+      "value": 4.787162,
+      "unit": "departures",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 109,
+      "formula": "control_events/control_n x 109",
+      "source": "outputs/essay3_v4/f1_ladder.csv; outputs/essay3_v4/f1_se_diagnostics.csv"
+    },
+    "w30_committed_treated_departures": {
+      "value": 4,
+      "unit": "departures",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 109,
+      "formula": "committed",
+      "source": "outputs/essay3_v4/f1_ladder.csv; outputs/essay3_v4/f1_se_diagnostics.csv"
+    },
+    "w90_mde80_pp": {
+      "value": 22.34,
+      "unit": "pp",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 109,
+      "formula": "committed mde80_cv3 x100",
+      "source": "outputs/essay3_v4/f1_ladder.csv; outputs/essay3_v4/f1_se_diagnostics.csv"
+    },
+    "w90_extra_departures": {
+      "value": 24.3506,
+      "unit": "departures among 109 treated",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 109,
+      "formula": "mde80 x 109",
+      "source": "outputs/essay3_v4/f1_ladder.csv; outputs/essay3_v4/f1_se_diagnostics.csv"
+    },
+    "w90_implied_treated_rate_pct": {
+      "value": 36.867027,
+      "unit": "%",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 109,
+      "formula": "(control_events/control_n + mde80) x 100",
+      "source": "outputs/essay3_v4/f1_ladder.csv; outputs/essay3_v4/f1_se_diagnostics.csv"
+    },
+    "w90_control_rate_pct": {
+      "value": 14.527027,
+      "unit": "%",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 109,
+      "formula": "control_events/control_n x 100 (full precision)",
+      "source": "outputs/essay3_v4/f1_ladder.csv; outputs/essay3_v4/f1_se_diagnostics.csv"
+    },
+    "w90_implied_rate_ratio": {
+      "value": 2.537823,
+      "unit": "x",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 109,
+      "formula": "(control rate + mde80)/control rate, full precision",
+      "source": "outputs/essay3_v4/f1_ladder.csv; outputs/essay3_v4/f1_se_diagnostics.csv"
+    },
+    "w90_departures_at_control_rate": {
+      "value": 15.834459,
+      "unit": "departures",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 109,
+      "formula": "control_events/control_n x 109",
+      "source": "outputs/essay3_v4/f1_ladder.csv; outputs/essay3_v4/f1_se_diagnostics.csv"
+    },
+    "w90_committed_treated_departures": {
+      "value": 11,
+      "unit": "departures",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 109,
+      "formula": "committed",
+      "source": "outputs/essay3_v4/f1_ladder.csv; outputs/essay3_v4/f1_se_diagnostics.csv"
+    },
+    "w180_mde80_pp": {
+      "value": 28.15,
+      "unit": "pp",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 109,
+      "formula": "committed mde80_cv3 x100",
+      "source": "outputs/essay3_v4/f1_ladder.csv; outputs/essay3_v4/f1_se_diagnostics.csv"
+    },
+    "w180_extra_departures": {
+      "value": 30.6835,
+      "unit": "departures among 109 treated",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 109,
+      "formula": "mde80 x 109",
+      "source": "outputs/essay3_v4/f1_ladder.csv; outputs/essay3_v4/f1_se_diagnostics.csv"
+    },
+    "w180_implied_treated_rate_pct": {
+      "value": 52.812162,
+      "unit": "%",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 109,
+      "formula": "(control_events/control_n + mde80) x 100",
+      "source": "outputs/essay3_v4/f1_ladder.csv; outputs/essay3_v4/f1_se_diagnostics.csv"
+    },
+    "w180_control_rate_pct": {
+      "value": 24.662162,
+      "unit": "%",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 109,
+      "formula": "control_events/control_n x 100 (full precision)",
+      "source": "outputs/essay3_v4/f1_ladder.csv; outputs/essay3_v4/f1_se_diagnostics.csv"
+    },
+    "w180_implied_rate_ratio": {
+      "value": 2.141425,
+      "unit": "x",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 109,
+      "formula": "(control rate + mde80)/control rate, full precision",
+      "source": "outputs/essay3_v4/f1_ladder.csv; outputs/essay3_v4/f1_se_diagnostics.csv"
+    },
+    "w180_departures_at_control_rate": {
+      "value": 26.881757,
+      "unit": "departures",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 109,
+      "formula": "control_events/control_n x 109",
+      "source": "outputs/essay3_v4/f1_ladder.csv; outputs/essay3_v4/f1_se_diagnostics.csv"
+    },
+    "w180_committed_treated_departures": {
+      "value": 33,
+      "unit": "departures",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 109,
+      "formula": "committed",
+      "source": "outputs/essay3_v4/f1_ladder.csv; outputs/essay3_v4/f1_se_diagnostics.csv"
+    }
+  },
+  "E1_tmobile": {
+    "ar_day00_2021-08-17": {
+      "value": 0.7395,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day00": {
+      "value": 0.7395,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day01_2021-08-18": {
+      "value": 0.2887,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day01": {
+      "value": 1.0282,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day02_2021-08-19": {
+      "value": 0.984,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day02": {
+      "value": 2.0122,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day03_2021-08-20": {
+      "value": -0.2149,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day03": {
+      "value": 1.7973,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day04_2021-08-23": {
+      "value": -0.537,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day04": {
+      "value": 1.2603,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day05_2021-08-24": {
+      "value": -0.4513,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day05": {
+      "value": 0.809,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day06_2021-08-25": {
+      "value": -2.1119,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day06": {
+      "value": -1.3029,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day07_2021-08-26": {
+      "value": -0.9833,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day07": {
+      "value": -2.2862,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day08_2021-08-27": {
+      "value": -0.515,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day08": {
+      "value": -2.8012,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day09_2021-08-30": {
+      "value": -0.6496,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day09": {
+      "value": -3.4508,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day10_2021-08-31": {
+      "value": -0.5318,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day10": {
+      "value": -3.9826,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day11_2021-09-01": {
+      "value": 0.327,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day11": {
+      "value": -3.6556,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day12_2021-09-02": {
+      "value": -1.5814,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day12": {
+      "value": -5.237,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day13_2021-09-03": {
+      "value": -0.0877,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day13": {
+      "value": -5.3247,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day14_2021-09-07": {
+      "value": -0.7087,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day14": {
+      "value": -6.0334,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day15_2021-09-08": {
+      "value": -0.2458,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day15": {
+      "value": -6.2792,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day16_2021-09-09": {
+      "value": -1.3821,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day16": {
+      "value": -7.6613,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day17_2021-09-10": {
+      "value": 0.2516,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day17": {
+      "value": -7.4097,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day18_2021-09-13": {
+      "value": -0.7996,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day18": {
+      "value": -8.2093,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day19_2021-09-14": {
+      "value": -0.2234,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day19": {
+      "value": -8.4327,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day20_2021-09-15": {
+      "value": -2.2868,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day20": {
+      "value": -10.7195,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day21_2021-09-16": {
+      "value": 1.5357,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day21": {
+      "value": -9.1838,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day22_2021-09-17": {
+      "value": 0.0338,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day22": {
+      "value": -9.15,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day23_2021-09-20": {
+      "value": -0.0294,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day23": {
+      "value": -9.1794,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day24_2021-09-21": {
+      "value": -0.6667,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day24": {
+      "value": -9.8461,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day25_2021-09-22": {
+      "value": 1.2693,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day25": {
+      "value": -8.5768,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day26_2021-09-23": {
+      "value": 1.3071,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day26": {
+      "value": -7.2697,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day27_2021-09-24": {
+      "value": -1.1421,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day27": {
+      "value": -8.4118,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day28_2021-09-27": {
+      "value": -1.1768,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day28": {
+      "value": -9.5886,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day29_2021-09-28": {
+      "value": 0.9265,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day29": {
+      "value": -8.6621,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "ar_day30_2021-09-29": {
+      "value": 1.4241,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "(ret - vwretd) x 100",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "cum_day30": {
+      "value": -7.238,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "cumulative sum of AR from day 0",
+      "source": "Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "event_date_day0": {
+      "value": "2021-08-17",
+      "unit": "date",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "scripts/155 anchor (nearest trading day to breach_date)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "reported_date": {
+      "value": "2021-08-19",
+      "unit": "date",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "CANONICAL_V3",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "car_30d": {
+      "value": -7.238,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "sum AR day 0..+30 (== committed car_30d)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "car_0_5": {
+      "value": 0.809,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "sum AR day 0..+5 (== car_5d)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "car_0_1": {
+      "value": 1.0282,
+      "unit": "pp",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "sum AR day 0..+1",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "mcap_date": {
+      "value": "2021-08-16",
+      "unit": "date",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "last trading day before day 0",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "mcap_prc": {
+      "value": 140.73,
+      "unit": "$",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "committed prc",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "mcap_shrout_thousands": {
+      "value": 1247966.0,
+      "unit": "thousand shares",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "committed shrout",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "mcap": {
+      "value": 175.626255,
+      "unit": "$B",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "|prc| x shrout x 1000",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    },
+    "dollar_car_30d": {
+      "value": -12.711828,
+      "unit": "$B",
+      "sample": "T-Mobile 2021-08-17",
+      "n": 1,
+      "formula": "car_30d/100 x mcap",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/market_indices.csv"
+    }
+  },
+  "E1_caar": {
+    "treated_day-10_caar": {
+      "value": 0.371594,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day-10_aar": {
+      "value": 0.371594,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day-9_caar": {
+      "value": 0.52975,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day-9_aar": {
+      "value": 0.158156,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day-8_caar": {
+      "value": 0.61757,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day-8_aar": {
+      "value": 0.08782,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day-7_caar": {
+      "value": 0.66923,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day-7_aar": {
+      "value": 0.05166,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day-6_caar": {
+      "value": 0.693943,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day-6_aar": {
+      "value": 0.024713,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day-5_caar": {
+      "value": 0.624859,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day-5_aar": {
+      "value": -0.069084,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day-4_caar": {
+      "value": 0.442871,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day-4_aar": {
+      "value": -0.181989,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day-3_caar": {
+      "value": 0.282489,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day-3_aar": {
+      "value": -0.160382,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day-2_caar": {
+      "value": 0.498069,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day-2_aar": {
+      "value": 0.21558,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day-1_caar": {
+      "value": 0.527542,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day-1_aar": {
+      "value": 0.029474,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+0_caar": {
+      "value": 0.541727,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+0_aar": {
+      "value": 0.014185,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+1_caar": {
+      "value": 0.449042,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+1_aar": {
+      "value": -0.092685,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+2_caar": {
+      "value": 0.288521,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+2_aar": {
+      "value": -0.160522,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+3_caar": {
+      "value": -0.04401,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+3_aar": {
+      "value": -0.332531,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+4_caar": {
+      "value": 0.034492,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+4_aar": {
+      "value": 0.078503,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+5_caar": {
+      "value": -0.172326,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+5_aar": {
+      "value": -0.206819,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+6_caar": {
+      "value": -0.246952,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+6_aar": {
+      "value": -0.074625,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+7_caar": {
+      "value": 0.204892,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+7_aar": {
+      "value": 0.451843,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+8_caar": {
+      "value": 0.237594,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+8_aar": {
+      "value": 0.032703,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+9_caar": {
+      "value": 0.150429,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+9_aar": {
+      "value": -0.087165,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+10_caar": {
+      "value": -0.235892,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+10_aar": {
+      "value": -0.386322,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+11_caar": {
+      "value": 0.030242,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+11_aar": {
+      "value": 0.266134,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+12_caar": {
+      "value": 0.151338,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+12_aar": {
+      "value": 0.121096,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+13_caar": {
+      "value": 0.17239,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+13_aar": {
+      "value": 0.021052,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+14_caar": {
+      "value": 0.019929,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+14_aar": {
+      "value": -0.15246,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+15_caar": {
+      "value": -0.043776,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+15_aar": {
+      "value": -0.063706,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+16_caar": {
+      "value": -0.024721,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+16_aar": {
+      "value": 0.019056,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+17_caar": {
+      "value": -0.070864,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+17_aar": {
+      "value": -0.046143,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+18_caar": {
+      "value": -0.312274,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+18_aar": {
+      "value": -0.241409,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+19_caar": {
+      "value": -0.291947,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+19_aar": {
+      "value": 0.020326,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+20_caar": {
+      "value": -0.494742,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+20_aar": {
+      "value": -0.202795,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+21_caar": {
+      "value": -0.375267,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+21_aar": {
+      "value": 0.119475,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+22_caar": {
+      "value": -0.353961,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+22_aar": {
+      "value": 0.021306,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+23_caar": {
+      "value": -0.327164,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+23_aar": {
+      "value": 0.026797,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+24_caar": {
+      "value": -0.397629,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+24_aar": {
+      "value": -0.070465,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+25_caar": {
+      "value": -0.21692,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+25_aar": {
+      "value": 0.180709,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+26_caar": {
+      "value": -0.06974,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+26_aar": {
+      "value": 0.14718,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+27_caar": {
+      "value": -0.006376,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+27_aar": {
+      "value": 0.063363,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+28_caar": {
+      "value": -0.009979,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+28_aar": {
+      "value": -0.003603,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+29_caar": {
+      "value": -0.250584,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+29_aar": {
+      "value": -0.240605,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_day+30_caar": {
+      "value": -0.404962,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "treated_day+30_aar": {
+      "value": -0.154378,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_caar30_minus_caarm1": {
+      "value": -0.932505,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "CAAR(+30) - CAAR(-1)",
+      "source": "outputs/rebuild/appendix_v3/table_3.csv check: -0.933"
+    },
+    "treated_car_0_1": {
+      "value": -0.0785,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "CAAR(+1) - CAAR(-1)",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "treated_car_0_5": {
+      "value": -0.699869,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 106,
+      "formula": "CAAR(+5) - CAAR(-1)",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day-10_caar": {
+      "value": 0.001514,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day-10_aar": {
+      "value": 0.001514,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day-9_caar": {
+      "value": -0.112806,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day-9_aar": {
+      "value": -0.11432,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day-8_caar": {
+      "value": -0.310981,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day-8_aar": {
+      "value": -0.198175,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day-7_caar": {
+      "value": -0.405729,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day-7_aar": {
+      "value": -0.094749,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day-6_caar": {
+      "value": -0.571096,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day-6_aar": {
+      "value": -0.165366,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day-5_caar": {
+      "value": -0.463365,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day-5_aar": {
+      "value": 0.107731,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day-4_caar": {
+      "value": -0.428639,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day-4_aar": {
+      "value": 0.034726,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day-3_caar": {
+      "value": -0.393032,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day-3_aar": {
+      "value": 0.035606,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day-2_caar": {
+      "value": -0.336488,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day-2_aar": {
+      "value": 0.056544,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day-1_caar": {
+      "value": -0.4092,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day-1_aar": {
+      "value": -0.072712,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+0_caar": {
+      "value": -0.425104,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+0_aar": {
+      "value": -0.015903,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+1_caar": {
+      "value": -0.638382,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+1_aar": {
+      "value": -0.213278,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+2_caar": {
+      "value": -0.795071,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+2_aar": {
+      "value": -0.156689,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+3_caar": {
+      "value": -0.912437,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+3_aar": {
+      "value": -0.117365,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+4_caar": {
+      "value": -0.761112,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+4_aar": {
+      "value": 0.151325,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+5_caar": {
+      "value": -0.734417,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+5_aar": {
+      "value": 0.026695,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+6_caar": {
+      "value": -0.784379,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+6_aar": {
+      "value": -0.049963,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+7_caar": {
+      "value": -0.847676,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+7_aar": {
+      "value": -0.063297,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+8_caar": {
+      "value": -0.772528,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+8_aar": {
+      "value": 0.075149,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+9_caar": {
+      "value": -0.802197,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+9_aar": {
+      "value": -0.029669,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+10_caar": {
+      "value": -0.743439,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+10_aar": {
+      "value": 0.058758,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+11_caar": {
+      "value": -0.66808,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+11_aar": {
+      "value": 0.075359,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+12_caar": {
+      "value": -0.58917,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+12_aar": {
+      "value": 0.07891,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+13_caar": {
+      "value": -0.655168,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+13_aar": {
+      "value": -0.065998,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+14_caar": {
+      "value": -0.539828,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+14_aar": {
+      "value": 0.115339,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+15_caar": {
+      "value": -0.697933,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+15_aar": {
+      "value": -0.158105,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+16_caar": {
+      "value": -0.693993,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+16_aar": {
+      "value": 0.00394,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+17_caar": {
+      "value": -0.599545,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+17_aar": {
+      "value": 0.094448,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+18_caar": {
+      "value": -0.600875,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+18_aar": {
+      "value": -0.00133,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+19_caar": {
+      "value": -0.556325,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+19_aar": {
+      "value": 0.04455,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+20_caar": {
+      "value": -0.570509,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+20_aar": {
+      "value": -0.014184,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+21_caar": {
+      "value": -0.637737,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+21_aar": {
+      "value": -0.067228,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+22_caar": {
+      "value": -0.511876,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+22_aar": {
+      "value": 0.125861,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+23_caar": {
+      "value": -0.580752,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+23_aar": {
+      "value": -0.068876,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+24_caar": {
+      "value": -0.592024,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+24_aar": {
+      "value": -0.011272,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+25_caar": {
+      "value": -0.626258,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+25_aar": {
+      "value": -0.034235,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+26_caar": {
+      "value": -0.73102,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+26_aar": {
+      "value": -0.104761,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+27_caar": {
+      "value": -0.716798,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+27_aar": {
+      "value": 0.014222,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+28_caar": {
+      "value": -0.622727,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+28_aar": {
+      "value": 0.094071,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+29_caar": {
+      "value": -0.563146,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+29_aar": {
+      "value": 0.059581,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_day+30_caar": {
+      "value": -0.393475,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "cumsum from day -10 of mean AR across events at trading day t (scripts/155 day 0)",
+      "source": "Data/processed/rebuild/CANONICAL_V3.csv; Data/wrds/crsp_daily_returns.csv; Data/wrds/crsp_daily_topup.csv; Data/wrds/crsp_daily_topup_dish.csv; Data/wrds/market_indices.csv"
+    },
+    "control_day+30_aar": {
+      "value": 0.169671,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "mean AR across events at trading day t",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_caar30_minus_caarm1": {
+      "value": 0.015726,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 233,
+      "formula": "CAAR(+30) - CAAR(-1)",
+      "source": "outputs/rebuild/appendix_v3/table_3.csv check: 0.014"
+    },
+    "control_car_0_1": {
+      "value": -0.229182,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "CAAR(+1) - CAAR(-1)",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    },
+    "control_car_0_5": {
+      "value": -0.325216,
+      "unit": "pp",
+      "sample": "E1 regression N=340 (106 treated)",
+      "n": 234,
+      "formula": "CAAR(+5) - CAAR(-1)",
+      "source": "Data/wrds/crsp_daily_returns.csv"
+    }
+  }
+}

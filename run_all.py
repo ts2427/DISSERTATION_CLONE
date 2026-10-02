@@ -42,8 +42,8 @@ sample. Those are PRE-REBUILD figures, superseded by the v3 rebuild (1,054 notif
 records -> 758 -> 524 -> 489 events). The live sample sizes are not restated here, so
 that this docstring cannot go stale again: read them from
 outputs/rebuild/constants_v3.json (Essay 1) and outputs/tables/essay2_v2/ (Essay 2).
-Note that constants_v3.json is itself STALE against today's CANONICAL_V3 pending the
-rebaseline; scripts/247 prints both values and says so.
+The rebaseline is done (tag v3-rebaseline-final): constants_v3.json agrees with
+CANONICAL_V3, and scripts/247 asserts that on every run.
 
 The old regeneration chain named here was 46 -> 53 -> 99 -> 98 -> 121a-c -> 122.
 Scripts 46 and 99 were retired on 2026-09-29 (Part H): both read the pre-rebuild dataset
@@ -460,6 +460,12 @@ def verify_outputs(log_file, run_start=None):
         Path('outputs/essay3_q3/tmobile_case.csv'),
     ] + [Path('outputs/essay3_q4/table%02d.csv' % i) for i in range(1, 12)] + [
         Path('outputs/essay3_appendix/ESSAY3_APPENDIX_TABLES.md'),
+        # Defense supplement (scripts 249-252, added 2026-10-02)
+        Path('outputs/defense_supplement/e2_delay_ladder.csv'),
+        Path('outputs/defense_supplement/e3_randomization_inference.csv'),
+        Path('outputs/defense_supplement/e1_notification_anchored.csv'),
+        Path('outputs/defense_supplement/deck_exhibits.csv'),
+        Path('outputs/defense_supplement/deck_exhibits.json'),
     ]
 
     # ---- 2. PRESENCE ONLY --------------------------------------------------------
@@ -469,6 +475,8 @@ def verify_outputs(log_file, run_start=None):
          'assertion baseline; scripts/202 asserts against it and writes it only if absent'),
         (Path('outputs/essay3_v4/constants_essay3_v4.json'),
          'assertion baseline; scripts/227 asserts against it and writes it only if absent'),
+        (Path('outputs/defense_supplement/constants_defense_supplement.json'),
+         'assertion baseline; scripts/253 asserts against it and writes it only if absent'),
         # An input, not an output: no live step writes it; scripts/245 reads it.
         (Path('outputs/essay3_q4/tmobile_502_text.md'),
          'committed input to scripts/245; written by no live step (184/185 are retired)'),
@@ -502,6 +510,7 @@ def verify_outputs(log_file, run_start=None):
     #                outputs/tables/essay3/TABLE2_volatility_changes.txt
     #                outputs/tables/essay3/TABLE3_information_asymmetry.txt
     # 22 entries dropped, 11 retained; 33 -> 54 entries (51 freshness + 3 presence-only).
+    # 2026-10-02 defense supplement: +5 freshness, +1 presence-only -> 60 entries (56 + 4).
 
     critical_files = CRITICAL_FRESH + [f for f, _ in CRITICAL_PRESENT]
 
@@ -614,7 +623,7 @@ Log file: {log_path}
                     ('scripts/157_rebuild_s7_verification.py', 'Stage 7: disclosure-date armor, OCR health check (bounded), CRSP-attrition balance'),
                     ('scripts/158_rebuild_s8_regenerate.py', 'Stage 8: all three essays + ROA amendment + appendix v3 + CONSTANTS BLOCK V3 (assertion baseline)'),
                     ('scripts/160_appendix_v3_to_word.py', 'Essay 1 appendix v3 -> Word: renders the 16 tables 158 writes (must follow 158)'),
-                    ('scripts/247_essay1_ledger_attrition_v3.py', 'Essay 1 attrition ledger, computed live from the v3 chain (10 assertions). EXITS NONZERO while constants_v3.json is stale against CANONICAL_V3 - that failure is the pending rebaseline, and the ledger is written either way'),
+                    ('scripts/247_essay1_ledger_attrition_v3.py', 'Essay 1 attrition ledger, computed live from the v3 chain (10 assertions against constants_v3.json; the rebaseline is done - tag v3-rebaseline-final - so all 10 pass and a nonzero exit is a real regression)'),
                 ]
             },
             {
@@ -622,6 +631,14 @@ Log file: {log_path}
                 'scripts': [
                     ('scripts/187_essay3_q2_fetch_502_text.py', 'Essay 3 B: Item 5.02 filing text for the scope events (cached; asserts the fixed validation/dev draws reproduce)'),
                     ('scripts/195_essay3_q2_classifier_v2.py', 'Essay 3 C: FINAL classifier v2 (6f7be7a) -> c2_* codes, one-departure-per-person events, outcomes'),
+                    # Added 2026-10-02 (defense supplement G4): the two classifier-validation scorers that
+                    # reproduce byte-identically offline from committed inputs. 194 scores frozen classifier
+                    # v1 against the round-1 reference codes; 198 tabulates misses and recall by treatment
+                    # across both rounds (imports 195's functions, so it follows 195). 197 and 201 also
+                    # reproduce every CSV and log, but rewrite ADJUDICATION.xlsx, whose bytes openpyxl
+                    # cannot reproduce (docProps timestamp) - documented in REPRODUCE_ESSAY3_V4.md instead.
+                    ('scripts/194_essay3_q2_validation_agreement.py', 'Essay 3 D3 round 1: frozen classifier v1 vs reference codes R1 -> d3_agreement / d3_disagreements (committed blind sheet; offline)'),
+                    ('scripts/198_essay3_q2_differential_recall.py', 'Essay 3 D3: classifier misses and recall by treatment status across both validation rounds (offline)'),
                     ('scripts/199_essay3_q2_sample_e.py', 'Essay 3 E: outcome-data requirement, CIK fixes, prior-return control, ledger (asserts its outcome helper reproduces v2 for every T-Mobile event)'),
                     ('scripts/202_essay3_q2_estimation.py', 'Essay 3 F/I: H6 inference ladder, placebo, sensitivities, tests (asserts against outputs/essay3_q2/constants_essay3_q2.json)'),
                     ('scripts/190_essay3_q2_tmobile_sprint_case.py', 'Essay 3 G1/G2/G5: T-Mobile and Sprint data collection (cached)'),
@@ -721,6 +738,20 @@ Log file: {log_path}
                     #   clean clone without a WRDS login.
                     # NOT REGENERABLE - outputs/tables/essay2_appendix/*.csv has no committed generator;
                     #   scripts/178 only renders those CSVs into ESSAY2_APPENDIX.docx.
+                ]
+            },
+            {
+                'category': 'DEFENSE SUPPLEMENT (2026-10-02) - supplementary estimates on the frozen samples',
+                'scripts': [
+                    # Every step asserts its sample against the committed ledgers before estimating and
+                    # writes only to outputs/defense_supplement/. None replaces a primary estimate. They
+                    # run last because 252 reads all three essays' outputs; 249 follows 164/165 (t16,
+                    # t26, t28), 250 follows 227, 251 follows 155/158.
+                    ('scripts/249_defsup_e2_delay_ladder.py', 'Essay 2: full inference ladder (HC3/CV1/CV3/WCR/WCU/Webb, MDE80) for Form 499 on disclosure delay; 165 ladder code lifted by ast, gated on reproducing t26/t28 and t16 exactly'),
+                    ('scripts/250_defsup_e3_randomization_inference.py', 'Essay 3: parent-CIK randomization inference (13 of 119, 9,999 draws, seed 250) for the 30/90/180-day LPM and the placebo; all-parents and size-matched variants'),
+                    ('scripts/251_defsup_e1_notification_anchored.py', 'Essay 1: notification-anchored CARs (0,+1)/(0,+5)/(0,+30) and the baseline H1-H4 spec on each (HC3, TOST +/-2.10, MDE80, CV1 parent CIK)'),
+                    ('scripts/252_defsup_deck_exhibits.py', 'Deck exhibits: 90% CIs, dollar translation, Essay 2 volatility scaling, Essay 3 MDEs as departures, T-Mobile 2021-08-17 worked example, CAAR -10..+30 (arithmetic on committed outputs; hard asserts)'),
+                    ('scripts/253_defsup_constants.py', 'Defense-supplement constants block + assertion baseline (constants_defense_supplement.json; asserts against it, writes it only if absent)'),
                 ]
             },
             {

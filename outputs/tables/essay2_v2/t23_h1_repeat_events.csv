@@ -1,4 +1,4 @@
 spec,coef,se,ci_lo,ci_hi,n,n_treated
-first event per parent,0.0184,0.3614,-0.7018,0.7386,82,12
-most recent event per parent,0.376,0.4523,-0.5254,1.2773,82,12
-parent FE,0.7187,0.2313,0.2631,1.1743,333,104
+first event per parent,0.1639,0.4029,-0.6391,0.967,82,12
+most recent event per parent,0.3462,0.4313,-0.5134,1.2058,82,12
+parent FE,0.7186,0.2311,0.2633,1.1738,333,104

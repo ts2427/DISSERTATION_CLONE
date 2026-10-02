@@ -1,5 +1,5 @@
 """
-QUERY 7 — (1) Is the +0.446 announcement-window differential composition?
+QUERY 7 — (1) Is the announcement-window differential (scripts/175, t50) composition?
           (2) Where does T-Mobile sit on announcement-window elevation?
 ==========================================================================
 Pre-specified hypothesis (stated before running): the differential
@@ -98,7 +98,7 @@ def run(extra_cols, extra_frames, label, data=None):
     return b, se
 
 
-b0, se0 = run([], [], 'BASE (the +0.446 spec)')
+b0, se0 = run([], [], 'BASE (the scripts/175 announcement-window spec)')
 b_sev, _ = run(['ln_recs', 'recs_missing'], [vec_d],
                '+ severity (ln records winsor p99 + vector FE)')
 b_sz, _ = run(['size2'], [szq_d], '+ flexible size (quartile FE + size^2)')
@@ -114,9 +114,13 @@ log(f'\n  ATTENUATION vs base: severity {att(b_sev):+.0f}% | flexible size '
     f'{att(b_cs):+.0f}%')
 
 # ---------------- 1.5 multiplicity position ----------------
-log('\n## 1.5 — Multiplicity position of +0.446')
+log(f'\n## 1.5 — Multiplicity position of {b0:+.4f}')
+# The treatment test's CV3 p is READ from scripts/175's t50 (defense supplement G7,
+# 2026-10-02); it was typed in as 0.0249, a pre-repair vintage, while 175 reports 0.0260.
+_t50 = pd.read_csv(OUTDIR / 't50_announcement_contrast.csv')
+_p_cv3 = float(_t50.loc[_t50['level'] == 'L3', 'p_cv3'].iloc[0])
 fam = {'earnings elevation': 1e-40, 'contrast': 1e-20,
-       'treatment on elevation (CV3)': 0.0249, 'breach elevation': 0.073}
+       'treatment on elevation (CV3)': _p_cv3, 'breach elevation': 0.073}
 ps = sorted(fam.items(), key=lambda kv: kv[1])
 m = len(ps)
 log('  Family: the 4-test announcement-window family (scripts/175, '
@@ -128,7 +132,7 @@ for i, (k, p) in enumerate(ps):
     rej.append(p <= thr)
     log(f'    {k}: p={p:.3g} vs threshold {thr:.4f} -> '
         f'{"reject" if p <= thr else "fail"}')
-log(f'  +0.446 {"SURVIVES" if rej[2] else "FAILS"} BH within its family at '
+log(f'  {b0:+.4f} {"SURVIVES" if rej[2] else "FAILS"} BH within its family at '
     f'the CV3 p-value. Cumulative program tests through Query 6: 56 '
     f'(enumerated per test in scripts/182, t53_test_ledger.csv; the '
     f'earlier ~61 was an unenumerated estimate); '

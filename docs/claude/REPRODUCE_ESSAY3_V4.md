@@ -136,3 +136,33 @@ because v3 blobs must not be renormalised — `scripts/210` compares them byte f
 `constants_essay3_v4.json` on its first run and **asserts against it** on every later
 run, and `229` independently recomputes the HC3/CV1/CV3 SEs and coefficients and checks
 them against the committed `f1_ladder.csv`.
+
+## Classifier validation: hand-coding steps with committed outputs (2026-10-02)
+
+The validation pipeline behind the classifier precision, recall and kappa figures
+(`outputs/essay3_q2/d3_*.csv`) has two kinds of step.
+
+**Sheet builders, never rerun.** `scripts/189`, `196` and `200` each drew a blind
+validation sample once and wrote the coding sheets and hidden-code files. Re-running them
+would draw a new sample. Their outputs are committed static inputs.
+
+**Scorers.** These score the committed sheets against the committed reference codes
+(`VALIDATION_REFERENCE_CODES_{R1,R2,AUDIT}.psv`, cross-checked cell by cell against the
+`*_CLAUDE_RATER.xlsx` workbooks). Checked on 2026-10-02 in an isolated worktree with the
+network disabled. All four run offline from committed inputs, and every input is git-tracked.
+
+| script | in `run_all.py`? | result |
+|---|---|---|
+| `194_essay3_q2_validation_agreement.py` | **yes** | CSVs byte-identical. Its committed log predated a `hand:` → `ref :` relabel (17 lines, values unchanged); the regenerated log is committed, and the step is now byte-identical. |
+| `198_essay3_q2_differential_recall.py` | **yes** | CSVs and log byte-identical. |
+| `197_essay3_q2_validation_r2_flag_changes.py` | no | Every CSV and its log byte-identical. It also rewrites `ADJUDICATION.xlsx`. |
+| `201_essay3_q2_recall_audit_scoring.py` | no | Every CSV and its log byte-identical. It also rewrites `ADJUDICATION.xlsx` (adds tab `audit_v2`) and must follow 197. |
+
+**Why 197 and 201 stay out of `run_all.py`.** No input is missing. The exception is the
+one output, `ADJUDICATION.xlsx`, which openpyxl cannot reproduce byte for byte: it stamps
+the write time into `docProps/core.xml` and serialises XML whitespace differently across
+versions. The regenerated workbook has the same five tabs with identical cells, compared
+with pandas, but differs in bytes (32,974 vs 32,917 committed). To reproduce by hand, run
+`194`, `197`, `198`, `201` in that order (201 reads the workbook 197 writes), then compare
+`ADJUDICATION.xlsx` by content, not bytes. The v4 counterparts (`221`-`226`) were not
+part of this check.

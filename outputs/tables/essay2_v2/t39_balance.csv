@@ -2,7 +2,7 @@ variable,mean_t,mean_c,std_diff_imbens2015,std_diff_imbens_wooldridge,variance_r
 firm_size_log,11.609,9.621,1.53,1.082,0.807
 leverage,0.722,0.641,0.418,0.296,0.564
 roa,0.024,0.077,-0.564,-0.399,0.144
-e2_pre_sd,1.771,1.688,0.072,0.051,1.378
+e2_pre_sd,1.761,1.688,0.065,0.046,1.338
 delay_w,82.46,70.327,0.086,0.061,1.748
 prior_events,10.029,13.904,-0.238,-0.168,0.188
 health_breach,0.0,0.066,-0.374,-0.264,0.0

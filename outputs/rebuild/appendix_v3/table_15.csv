@@ -1,9 +1,9 @@
 Feature,Importance
-roa,0.3371
-firm_size_log,0.2386
-leverage,0.2068
-prior_breaches_1yr,0.1359
-immediate_disclosure,0.0456
-fcc_form499,0.0247
-health_breach,0.0112
+roa,0.3405
+firm_size_log,0.2364
+leverage,0.2019
+prior_breaches_1yr,0.1416
+immediate_disclosure,0.0485
+fcc_form499,0.0202
+health_breach,0.0109
 CAPTION,"This table reports random forest feature importances (500 trees, fixed seed 42) for the seven baseline covariates predicting the 30-day CAR on the regression sample (N = 340). Importances are descriptive and carry no causal interpretation."

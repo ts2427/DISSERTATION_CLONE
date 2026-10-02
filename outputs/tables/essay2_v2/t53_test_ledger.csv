@@ -51,12 +51,12 @@ script,family,test
 170_essay2_scope_and_bounds.py,A,TOST EDGE (fraction)
 170_essay2_scope_and_bounds.py,A,TOST log-OCAM
 174_q6_closeout.py,poscontrol,earnings decline
-175_essay2_announcement_contrast.py,L1,earnings elevation
-175_essay2_announcement_contrast.py,L1,breach elevation
-175_essay2_announcement_contrast.py,L1,contrast
-175_essay2_announcement_contrast.py,L3,treatment on announcement elevation
+175_essay2_announcement_contrast.py,L1+L3 announcement window (pre-specified 8/31),earnings elevation
+175_essay2_announcement_contrast.py,L1+L3 announcement window (pre-specified 8/31),breach elevation
+175_essay2_announcement_contrast.py,L1+L3 announcement window (pre-specified 8/31),contrast
+175_essay2_announcement_contrast.py,L1+L3 announcement window (pre-specified 8/31),treatment on announcement elevation
 176_q7_composition_check.py,Q7-composition,KS severity
-176_q7_composition_check.py,Q7-composition,BASE (the +0.446 spec)
+176_q7_composition_check.py,Q7-composition,BASE (the scripts/175 announcement-window spec)
 176_q7_composition_check.py,Q7-composition,+ severity (ln records winsor p99 + vector FE)
 176_q7_composition_check.py,Q7-composition,+ flexible size (quartile FE + size^2)
 176_q7_composition_check.py,Q7-composition,+ severity AND flexible size (joint)

@@ -242,7 +242,7 @@ further case. Two name matches were adjudicated and are **not** errors:
 
 **Essay 3 is unaffected.** Its chain reads `CANONICAL_V4`, whose `final_cik` is already the
 re-parented registrant — 27 of its rows have `final_cik != orig_cik`. Its analysis sample
-(N=412) spans 121 clusters and contains **zero** firms under more than one `final_cik`.
+(N=405) spans 119 clusters and contains **zero** firms under more than one `final_cik`.
 
 The samples are frozen, so this is disclosed and not corrected. The direction of the bias
 is known: splitting one firm into two clusters overstates the number of independent
@@ -277,7 +277,7 @@ lands on the breach date rather than the notification date.
 | Essay 1 CRSP (356) | **yes** | `has_crsp_data = 1`, permno 39087, and it carries `car_30d = 12.0426` — a 30-day CAR computed on the wrong anchor |
 | **Essay 1 regression (340)** | **no** | dropped by the control filter, for a missing `immediate_disclosure` |
 | **Essay 2 (333)** | **no** | not in the final sample |
-| Essay 3 v4 (412) | yes, **at the corrected date** | treated; enters as 2009-01-01 |
+| Essay 3 v4 (405) | yes, **at the corrected date** | treated; enters as 2009-01-01 |
 
 So it reaches no regression of record. It does sit inside the 356-event CRSP sample, which
 the descriptive and Table 16 panels are drawn from, carrying a CAR measured on a date the

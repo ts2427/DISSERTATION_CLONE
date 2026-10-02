@@ -90,18 +90,14 @@ pmap['namedt'] = pd.to_datetime(pmap['namedt'])
 pmap['nameendt'] = pd.to_datetime(pmap['nameendt'])
 by_ticker = {t: g.sort_values('namedt') for t, g in pmap.groupby('ticker')}
 
-crsp = pd.read_csv('Data/wrds/crsp_daily_returns.csv',
-                   usecols=['permno', 'date', 'ret', 'vol'])
-tp_daily = Path('Data/wrds/crsp_daily_topup.csv')
-if tp_daily.exists():
-    crsp = pd.concat([crsp, pd.read_csv(tp_daily, usecols=['permno', 'date', 'ret', 'vol'])],
-                     ignore_index=True)
-    log('  WRDS top-up daily rows merged')
-tp_dish = Path('Data/wrds/crsp_daily_topup_dish.csv')
-if tp_dish.exists():
-    crsp = pd.concat([crsp, pd.read_csv(tp_dish, usecols=['permno', 'date', 'ret', 'vol'])],
-                     ignore_index=True)
-    log('  DISH top-up daily rows merged (permno 81696, scripts/179)')
+import importlib.util as _ilu
+_s = _ilu.spec_from_file_location('crsp_daily', 'scripts/254_crsp_daily.py')
+crsp_daily = _ilu.module_from_spec(_s); _s.loader.exec_module(crsp_daily)
+# De-duplicated on (permno, date) by the shared loader (2026-10-02): the top-ups repeat
+# 405 permno-dates already in the main file, which positional windows double-counted.
+crsp = crsp_daily.load(['permno', 'date', 'ret', 'vol'])
+log('  WRDS top-up daily rows merged (scripts/159, and DISH permno 81696 from scripts/179), '
+    'de-duplicated on (permno, date)')
 mkt = pd.read_csv('Data/wrds/market_indices.csv', usecols=['date', 'vwretd'])
 crsp['date'] = pd.to_datetime(crsp['date'])
 mkt['date'] = pd.to_datetime(mkt['date'])
