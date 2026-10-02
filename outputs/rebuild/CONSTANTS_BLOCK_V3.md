@@ -127,4 +127,4 @@ Appendix v3 tables...
   Table 16 leakage: breach panel N=356 (excl 0 history); ann panel N=355 (excl 1 no-reported + 0 history)
   16 tables (citation order, captioned) -> outputs/rebuild/appendix_v3/
 
-Baseline constants_v3.json WRITTEN (future runs assert against it)
+Assertion check vs existing baseline: PASS
