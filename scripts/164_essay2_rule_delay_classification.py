@@ -569,6 +569,12 @@ log('  3. Stage 4 (scripts/154) ASSIGNED TREATMENT AS OF THE BREACH DATE '
 FAMILY = {
     18926: ['CENTURYLINK', 'CENTURYTEL', 'LUMEN', 'QWEST', 'EMBARQ'],
     20520: ['FRONTIER COMMUNICATIONS', 'CITIZENS TELECOM'],
+    # DISH added 2026-10-02 (defense supplement G5). The family list predated the 9/4
+    # DISH re-adjudication and CRSP top-up, which made DISH Network the 12th treated
+    # parent (2 events, 2023): scripts/154 rule 'DISH Network' (date-conditional,
+    # on/after 2020-07-01) on DISH Wireless L.L.C. FRN 0027852722 (dba Boost Mobile) and
+    # DISH Wireless Puerto Rico L.L.C. FRN 0029666096.
+    1001082: ['DISH WIRELESS', 'DISH NETWORK'],
     101830: ['SPRINT'],
     732712: ['VERIZON', 'MCI COMMUNICATIONS', 'BELL ATLANTIC', 'GTE '],
     732717: ['AT&T', 'SBC ', 'SOUTHWESTERN BELL', 'BELLSOUTH', 'AMERITECH',

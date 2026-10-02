@@ -179,3 +179,6 @@ outputs/essay3_q2/*_stdout.txt
 # !docs/claude/** and !outputs/essay3_q2/** negations above. Appended only.
 !outputs/rebuild_v4/**
 !outputs/essay3_v4/**
+
+# Defense supplement run logs (runtime lines differ run to run)
+outputs/defense_supplement/*.log

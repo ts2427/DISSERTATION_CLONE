@@ -1,7 +1,7 @@
 Specification,Term,Coef,SE,p,N
-Treated only (fcc_form499=1),immediate_disclosure,0.5562,2.0246,0.7835,106
+Treated only (fcc_form499=1),immediate_disclosure,-0.2202,1.8879,0.9071,106
 Untreated only (fcc_form499=0),immediate_disclosure,1.9307,1.1916,0.1052,234
-Pooled with interaction,immediate_disclosure (main effect),1.9748,1.1937,0.0981,340
-Pooled with interaction,fcc_form499 (main effect),0.1644,1.8028,0.9273,340
-Pooled with interaction,immediate_disclosure x fcc_form499,-1.6411,2.2995,0.4754,340
+Pooled with interaction,immediate_disclosure (main effect),1.962,1.1936,0.1002,340
+Pooled with interaction,fcc_form499 (main effect),0.1567,1.7639,0.9292,340
+Pooled with interaction,immediate_disclosure x fcc_form499,-2.3776,2.1868,0.2769,340
 CAPTION,"This table estimates the disclosure-timing effect separately by regulatory regime, with HC3 standard errors throughout. The baseline specification is estimated on treated events only (fcc_form499 = 1, N = 106), on untreated events only (N = 234), and pooled on the full regression sample (N = 340) with an immediate_disclosure-by-fcc_form499 interaction. fcc_form499 is dropped from the subsample specifications because it is constant within each subsample; any other control without variation within a subsample is likewise dropped.",,,,

@@ -49,6 +49,11 @@ def log(m=''):
 
 
 TREAT = 'fcc_form499'
+# One family for the four announcement-window tests (defense supplement G7, 2026-10-02).
+# They were pre-specified together by the 8/31 rescope and are BH-adjusted together
+# (ESSAY2_QUERY7_REPORT.md 1.5; this script's own multiplicity sentence). The ledger had
+# filed the treatment test alone as 'L3' and the other three as 'L1'.
+FAM_ANN = 'L1+L3 announcement window (pre-specified 8/31)'
 fin = pd.read_csv(OUTDIR / 't42_final_sample_with_repairs.csv', low_memory=False)
 fin['rdt'] = pd.to_datetime(fin['reported_date'])
 log('=' * 90)
@@ -121,10 +126,10 @@ log('\n## LEVEL 1 — Announcement window (information content): abnormal-vol '
     'elevation [-4,+4] vs [-25,-5], identical machinery, same firms')
 br['permno'] = br['permno'].astype(int)
 b_e, se_e, n_e = mean_cl(EA, 'EARNINGS announcements')
-N_TESTS.append(('L1', 'earnings elevation'))
+N_TESTS.append((FAM_ANN, 'earnings elevation'))
 b_b, se_b, n_b = mean_cl(br.rename(columns={'elev': 'elev'}),
                          'BREACH notifications')
-N_TESTS.append(('L1', 'breach elevation'))
+N_TESTS.append((FAM_ANN, 'breach elevation'))
 stack = pd.concat([EA.assign(is_breach=0.0),
                    br[['permno', 'elev']].assign(is_breach=1.0)],
                   ignore_index=True)
@@ -136,7 +141,7 @@ ci_c = fc.conf_int().loc['is_breach']
 log(f"  CONTRAST (breach minus earnings, firm-clustered): "
     f"{fc.params['is_breach']:+.4f} (SE {fc.bse['is_breach']:.4f}, 95% CI "
     f"[{ci_c[0]:+.4f}, {ci_c[1]:+.4f}], t={fc.tvalues['is_breach']:+.1f})")
-N_TESTS.append(('L1', 'contrast'))
+N_TESTS.append((FAM_ANN, 'contrast'))
 fd = pd.get_dummies(stack['permno'], drop_first=True).astype(float)
 Xf = sm.add_constant(pd.concat([stack[['is_breach']].astype(float), fd], axis=1))
 ff = sm.OLS(stack['elev'].astype(float), Xf).fit(
@@ -156,8 +161,16 @@ log('  The breach point estimate is slightly NEGATIVE — one sentence, not '
 # ---- LEVEL 2 ----
 log('\n## LEVEL 2 — Shock-excluded persistent window (regime shift, '
     'Ohlson-Penman sense)')
-log('  Breach estimate (scripts/169 S1, abnormal DV, mkt-vol control, year '
-    'FE, two-way cluster): +0.086, 95% CI [-0.284, +0.455] — null.')
+# S1 is READ from scripts/169's t37, not typed in (defense supplement G6, 2026-10-02).
+# The hard-coded "+0.086, 95% CI [-0.284, +0.455]" it replaces was a pre-repair figure
+# that t37 no longer carries.
+_t37 = pd.read_csv(OUTDIR / 't37_s1_s2_main.csv')
+S1 = _t37.loc[_t37['spec'].str.startswith('S1 PRIMARY')].iloc[0]
+assert int(S1['n']) == 331 and int(S1['n_treated']) == 104, \
+    'S1 row is N=%s / %s treated, expected 331 / 104' % (S1['n'], S1['n_treated'])
+log(f"  Breach estimate (scripts/169 S1, abnormal DV, mkt-vol control, year "
+    f"FE, two-way cluster; t37): {S1['coef']:+.3f}, 95% CI [{S1['ci_lo']:+.3f}, "
+    f"{S1['ci_hi']:+.3f}], N={int(S1['n'])} — null.")
 X2 = np.ones((n_e, 1))
 E2 = pd.read_csv(OUTDIR / 't49_positive_control.csv', index_col=0)
 log('  EARNINGS REFERENCE BOUND (t49): post-pre = -0.003, 95% CI '
@@ -179,7 +192,7 @@ X3 = sm.add_constant(d3[[TREAT, 'abn_pre'] + CTRL].astype(float))
 f3 = sm.OLS(d3['elev'].astype(float), X3).fit(
     cov_type='cluster', cov_kwds={'groups': d3['final_cik']}, use_t=True)
 ci3 = f3.conf_int().loc[TREAT]
-N_TESTS.append(('L3', 'treatment on announcement elevation'))
+N_TESTS.append((FAM_ANN, 'treatment on announcement elevation'))
 # ---- FULL LADDER on this coefficient (the program's standard) ----
 Yl = d3['elev'].astype(float).to_numpy()
 Xl = X3.to_numpy()
@@ -235,7 +248,7 @@ log(f"  NEW, AND IT SURVIVES THE LADDER — announcement-window elevation ~ "
     f"pre-specified by the 8/31 rescoping directive ('no Form 499 "
     f"differential on any measure'), not searched for. FLAGGED AND "
     f"STOPPED: interpretation and promotion are the author's decision.")
-log('  Persistent window: +0.086 [-0.28, +0.45] (S1); channels: CPQS '
+log(f"  Persistent window: {S1['coef']:+.3f} [{S1['ci_lo']:+.2f}, {S1['ci_hi']:+.2f}] (S1, t37); channels: CPQS "
     '+0.5bp [-0.2, +1.1], EDGE and log-OCAM CIs span zero (t35); '
     'delay behavior: null (Part A2). No differential anywhere.')
 
@@ -266,7 +279,10 @@ rows = [dict(level='L1', row='earnings elevation', coef=round(b_e, 4),
              se=round(float(ff.bse['is_breach']), 4), n=len(stack)),
         dict(level='L3', row='Form 499 on elevation',
              coef=round(float(f3.params[TREAT]), 4),
-             se=round(float(f3.bse[TREAT]), 4), n=int(f3.nobs))]
+             se=round(float(f3.bse[TREAT]), 4), n=int(f3.nobs),
+             # the calibrated rungs, so that 176's BH reads them rather than a typed copy
+             p_cv1=round(float(f3.pvalues[TREAT]), 4), se_cv3=round(float(se3l), 4),
+             p_cv3=round(float(p3l), 4), p_wcr=round(float(p_wcr3), 4), B_wcr=Bl)]
 pd.DataFrame(rows).to_csv(OUTDIR / 't50_announcement_contrast.csv',
                           index=False)
 log(f'\nTests this script: {len(N_TESTS)} (one pre-specified family; the '

@@ -1,6 +1,7 @@
 parent_cik,family_types,non_covered_types
 18926,CAP/LEC; Cellular/PCS/SMR; Incumbent Local Exchange Carrier; Interexchange Carrier (IXC); Operator Service Provider (OSP); Toll Reseller,(none)
 20520,CAP/LEC; Incumbent Local Exchange Carrier; Interexchange Carrier (IXC); Local Reseller; Toll Reseller,(none)
+1001082,CAP/LEC; Cellular/PCS/SMR; Satellite,(none)
 101830,Cellular/PCS/SMR; Incumbent Local Exchange Carrier; Interexchange Carrier (IXC); Local Reseller; Private Service Provider; Toll Reseller,Private Service Provider
 732712,CAP/LEC; Cellular/PCS/SMR; Incumbent Local Exchange Carrier; Interexchange Carrier (IXC); Private Service Provider; Toll Reseller,Private Service Provider
 732717,CAP/LEC; Cellular/PCS/SMR; Incumbent Local Exchange Carrier; Interconnected VoIP; Interexchange Carrier (IXC); Toll Reseller,(none)

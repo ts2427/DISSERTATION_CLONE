@@ -19,13 +19,12 @@ fin = fin.reset_index(drop=True)
 N = len(fin)
 assert N == 333
 
-crsp = pd.read_csv('Data/wrds/crsp_daily_returns.csv',
-                   usecols=['permno', 'date', 'ret'])
-for tp in ['Data/wrds/crsp_daily_topup.csv',
-           'Data/wrds/crsp_daily_topup_dish.csv']:
-    crsp = pd.concat([crsp, pd.read_csv(tp, usecols=['permno', 'date',
-                                                     'ret'])],
-                     ignore_index=True)
+import importlib.util as _ilu
+_s = _ilu.spec_from_file_location('crsp_daily', 'scripts/254_crsp_daily.py')
+crsp_daily = _ilu.module_from_spec(_s); _s.loader.exec_module(crsp_daily)
+# De-duplicated on (permno, date) by the shared loader (2026-10-02): the top-ups repeat
+# 405 permno-dates already in the main file, which positional windows double-counted.
+crsp = crsp_daily.load(['permno', 'date', 'ret'])
 crsp['date'] = pd.to_datetime(crsp['date'])
 crsp['ret'] = pd.to_numeric(crsp['ret'], errors='coerce')
 crsp = crsp.dropna(subset=['ret'])

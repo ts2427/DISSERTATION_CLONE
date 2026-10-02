@@ -7,23 +7,23 @@ ESSAY 2 QUERY 5 — H1 INTENT SCOPE + PART A BOUNDS
 ## H1 — Intent-scope restriction (64.2011(e); FCC 22-102 para.12; FCC 23-111 para.21)
   Treated breach vectors (N=104): {'HACK': np.int64(60), 'INSD': np.int64(21), 'PHYS': np.int64(12), 'PORT': np.int64(5), 'HACK+INSD': np.int64(3), 'DISC': np.int64(2), 'HACK+PORT': np.int64(1)}
   NOTE: the canonical data carry only legacy vector codes; the current PRC schema's 36 breach-method subtypes are absent, so theft vs loss inside PHYS/PORT/STAT cannot be separated (checked, stated).
-  ITT (entity-level, all treated events) [e2_vol_change]: coef +0.1863 SE 0.1994 CI [-0.2105, +0.5830] N=333 (treated 104/36 orgs/12 parents) MDE80 0.565
-  STRICT intent scope (HACK/INSD/CARD; DISC & PHYS/PORT/STAT dropped) [e2_vol_change]: coef +0.1791 SE 0.2229 CI [-0.2643, +0.6226] N=314 (treated 85/32 orgs/12 parents) MDE80 0.632
-  LENIENT intent scope (+ PHYS/PORT/STAT; DISC dropped) [e2_vol_change]: coef +0.1739 SE 0.2004 CI [-0.2247, +0.5726] N=331 (treated 102/35 orgs/12 parents) MDE80 0.568
+  ITT (entity-level, all treated events) [e2_vol_change]: coef +0.2119 SE 0.2024 CI [-0.1909, +0.6147] N=333 (treated 104/36 orgs/12 parents) MDE80 0.574
+  STRICT intent scope (HACK/INSD/CARD; DISC & PHYS/PORT/STAT dropped) [e2_vol_change]: coef +0.2098 SE 0.2265 CI [-0.2409, +0.6606] N=314 (treated 85/32 orgs/12 parents) MDE80 0.642
+  LENIENT intent scope (+ PHYS/PORT/STAT; DISC dropped) [e2_vol_change]: coef +0.1998 SE 0.2034 CI [-0.2050, +0.6046] N=331 (treated 102/35 orgs/12 parents) MDE80 0.577
 
   Channels on the restricted sets:
   STRICT intent scope (HACK/INSD/CARD; DISC & PHYS/PORT/STAT dropped) [cpqs_chg]: coef +0.0000 SE 0.0000 CI [-0.0000, +0.0001] N=312 (treated 83/31 orgs/11 parents) MDE80 0.000
-  STRICT intent scope (HACK/INSD/CARD; DISC & PHYS/PORT/STAT dropped) [edge_chg]: coef +0.0007 SE 0.0021 CI [-0.0035, +0.0050] N=312 (treated 83/31 orgs/11 parents) MDE80 0.006
-  STRICT intent scope (HACK/INSD/CARD; DISC & PHYS/PORT/STAT dropped) [ocam_chg]: coef -0.0270 SE 0.0724 CI [-0.1710, +0.1170] N=312 (treated 83/31 orgs/11 parents) MDE80 0.205
+  STRICT intent scope (HACK/INSD/CARD; DISC & PHYS/PORT/STAT dropped) [edge_chg]: coef +0.0007 SE 0.0021 CI [-0.0036, +0.0050] N=312 (treated 83/31 orgs/11 parents) MDE80 0.006
+  STRICT intent scope (HACK/INSD/CARD; DISC & PHYS/PORT/STAT dropped) [ocam_chg]: coef -0.0269 SE 0.0724 CI [-0.1709, +0.1171] N=312 (treated 83/31 orgs/11 parents) MDE80 0.205
   LENIENT intent scope (+ PHYS/PORT/STAT; DISC dropped) [cpqs_chg]: coef +0.0001 SE 0.0001 CI [-0.0000, +0.0002] N=329 (treated 100/34 orgs/11 parents) MDE80 0.000
   LENIENT intent scope (+ PHYS/PORT/STAT; DISC dropped) [edge_chg]: coef +0.0019 SE 0.0024 CI [-0.0029, +0.0066] N=329 (treated 100/34 orgs/11 parents) MDE80 0.007
-  LENIENT intent scope (+ PHYS/PORT/STAT; DISC dropped) [ocam_chg]: coef -0.0460 SE 0.0680 CI [-0.1813, +0.0893] N=329 (treated 100/34 orgs/11 parents) MDE80 0.193
+  LENIENT intent scope (+ PHYS/PORT/STAT; DISC dropped) [ocam_chg]: coef -0.0459 SE 0.0680 CI [-0.1812, +0.0894] N=329 (treated 100/34 orgs/11 parents) MDE80 0.193
 
   ITT-vs-effective-treatment framing: entity-level assignment where the rule applies event-level is one-sided misclassification of a binary regressor -> attenuation toward zero (Aigner 1973; Bound et al. 2001; Mahajan 2006). The entity-level null is therefore the WEAK null and the scope-restricted rows are the sharper tests; equivalence bounds estimated on the diluted treatment are NOT bounds on the scope-restricted effect. CPNI hand-coding from the 102 notification letters (double-coded subsample, inter-rater reliability) is the remaining option and was NOT attempted — stated in limitations; no field-based approximation is offered.
 
 ## PART A — Equivalence bounds
   A1: sample median share price at notification P = $76.09; one tick = 100/P = 1.31 bp; SESOI(spread) = one HALF-TICK = 0.66 bp = 0.000066 in CPQS units (Reg NMS Rule 612; a spread change below the market's own pricing granularity cannot be implemented by any trader). EDGE shares the spread SESOI. log-OCAM: proportional +/-10%% bound (0.0953 log points) — ILLIQ has no natural cardinal scale. Volatility: no institutional increment exists; the equivalence CI leads, with the quarter-SD (0.2742) and Wellek 0.36-sigma (0.3948) distributional references reported for context only. One rule per outcome, derived, deliberately NOT uniform.
-  volatility (daily pp): coef +0.186274 (SE 0.199406, 90% CI [-0.145514, +0.518063]) | SESOI ±0.274200 | TOST p=0.3302 | equivalence CI (smallest concludable bound) = 0.518063 | MDE80 0.565469 | MDE/SESOI 2.06 | **INCONCLUSIVE**
+  volatility (daily pp): coef +0.211906 (SE 0.202439, 90% CI [-0.124930, +0.548741]) | SESOI ±0.274200 | TOST p=0.3795 | equivalence CI (smallest concludable bound) = 0.548741 | MDE80 0.574071 | MDE/SESOI 2.09 | **INCONCLUSIVE**
   CPQS (fraction): coef +0.000050 (SE 0.000035, 90% CI [-0.000009, +0.000108]) | SESOI ±0.000066 | TOST p=0.3242 | equivalence CI (smallest concludable bound) = 0.000108 | MDE80 0.000099 | MDE/SESOI 1.51 | **INCONCLUSIVE**
   EDGE (fraction): coef +0.002225 (SE 0.003090, 90% CI [-0.002917, +0.007367]) | SESOI ±0.000066 | TOST p=0.7566 | equivalence CI (smallest concludable bound) = 0.007367 | MDE80 0.008764 | MDE/SESOI 133.37 | **INCONCLUSIVE**
   log-OCAM: coef -0.069270 (SE 0.096331, 90% CI [-0.229577, +0.091038]) | SESOI ±0.095300 | TOST p=0.3938 | equivalence CI (smallest concludable bound) = 0.229577 | MDE80 0.273215 | MDE/SESOI 2.87 | **INCONCLUSIVE**

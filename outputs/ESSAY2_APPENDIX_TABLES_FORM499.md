@@ -7,20 +7,20 @@ Nothing here is carried forward from the old draft.**
 
 **1. Main effect.** Treatment (Form 499) on volatility change (daily-pp,
 log-return SD, [-25,-5] vs [+5,+25] trading days around notification):
-coef +0.1863, SE 0.1346, t +1.384,
-df 324, p 0.1673, N 333. Verdict: **null â€” underpowered/inconclusive**
-(TOST p = 0.6557 against the Essay 1 bound converted to
-daily units; MDE80 = 0.3768 daily pp =
-5.98pp annualized â€” the design cannot
+coef +0.2119, SE 0.1365, t +1.553,
+df 324, p 0.1215, N 333. Verdict: **null â€” underpowered/inconclusive**
+(TOST p = 0.7200 against the Essay 1 bound converted to
+daily units; MDE80 = 0.3822 daily pp =
+6.07pp annualized â€” the design cannot
 detect, at 80% power, effect sizes of the magnitude the prior literature
 discusses). DV-convention note: the breach-anchored annualized DV the old
-CODE used gives +4.26 (p=0.024 HC3, p=0.074
+CODE used gives +4.27 (p=0.023 HC3, p=0.073
 firm-clustered) on this sample, but it is DISQUALIFIED on construct
 validity â€” 56.7% of its measured post-window days precede public
 notification (median observation: 74%) â€” see Phase E. The draft-spec
 measure is the valid one, and it is null.
 
-**2. Firm-size step-down.** Q1 (smallest): -1.000 (p=0.002, 1 treated parent CIKs, <5 â€” do not interpret bare); Q2: +0.322 (p=0.322, 4 treated parent CIKs, <5 â€” do not interpret bare); Q3: +0.756 (p=0.022, 4 treated parent CIKs, <5 â€” do not interpret bare); Q4 (largest): +0.348 (p=0.063, 5 treated parent CIKs). (Old draft's +7.31 Q1 figure is not
+**2. Firm-size step-down.** Q1 (smallest): -1.000 (p=0.002, 1 treated parent CIKs, <5 â€” do not interpret bare); Q2: +0.322 (p=0.322, 4 treated parent CIKs, <5 â€” do not interpret bare); Q3: +0.835 (p=0.013, 4 treated parent CIKs, <5 â€” do not interpret bare); Q4 (largest): +0.348 (p=0.063, 5 treated parent CIKs). (Old draft's +7.31 Q1 figure is not
 reproduced; treated parent-CIK counts are now printed beside every quartile.)
 
 **3. Final N = 333** (104 treated / 36 orgs /
@@ -76,11 +76,11 @@ ASSERT PASS â€” Essay 1 regression sample reproduces from the script-158 re
 ==========================================================================================
 PHASE B â€” DESCRIPTIVES BY TREATMENT STATUS
 ==========================================================================================
-ASSERT PASS â€” group SDs computed independently and NOT identical (e2_vol_change) [1.0940 vs 1.1012]
+ASSERT PASS â€” group SDs computed independently and NOT identical (e2_vol_change) [1.0840 vs 1.1012]
 ASSERT PASS â€” pooled mean reconciles to subgroup means (e2_vol_change)
-ASSERT PASS â€” group SDs computed independently and NOT identical (e2_pre_sd) [1.2375 vs 1.0541]
+ASSERT PASS â€” group SDs computed independently and NOT identical (e2_pre_sd) [1.2193 vs 1.0541]
 ASSERT PASS â€” pooled mean reconciles to subgroup means (e2_pre_sd)
-ASSERT PASS â€” group SDs computed independently and NOT identical (e2_post_sd) [1.1300 vs 1.0222]
+ASSERT PASS â€” group SDs computed independently and NOT identical (e2_post_sd) [1.1639 vs 1.0222]
 ASSERT PASS â€” pooled mean reconciles to subgroup means (e2_post_sd)
 ASSERT PASS â€” group SDs computed independently and NOT identical (disclosure_delay_days) [252.1475 vs 125.5262]
 ASSERT PASS â€” pooled mean reconciles to subgroup means (disclosure_delay_days)
@@ -100,9 +100,9 @@ ASSERT PASS â€” post-window mean - pre-window mean == mean volatility chang
 ASSERT PASS â€” post-window mean - pre-window mean == mean volatility change (control)
 ASSERT PASS â€” post-window mean - pre-window mean == mean volatility change (pooled)
              variable  mean_treated  sd_treated  mean_control  sd_control  mean_pooled  sd_pooled  n_treated  n_control
-        e2_vol_change        0.0033      1.0940       -0.0402      1.1012      -0.0266     1.0975        104        229
-            e2_pre_sd        1.7711      1.2375        1.6878      1.0541       1.7138     1.1134        104        229
-           e2_post_sd        1.7744      1.1300        1.6476      1.0222       1.6872     1.0570        104        229
+        e2_vol_change        0.0312      1.0840       -0.0402      1.1012      -0.0179     1.0947        104        229
+            e2_pre_sd        1.7614      1.2193        1.6878      1.0541       1.7108     1.1070        104        229
+           e2_post_sd        1.7926      1.1639        1.6476      1.0222       1.6929     1.0688        104        229
 disclosure_delay_days       98.9135    252.1475       71.0961    125.5262      79.7838   175.2491        104        229
               delay_w       82.4604    159.2897       70.3273    120.4904      74.1166   133.6925        104        229
         firm_size_log       11.6093      1.2282        9.6211      1.3676      10.2420     1.6137        104        229
@@ -116,91 +116,91 @@ disclosure_delay_days       98.9135    252.1475       71.0961    125.5262      7
 ==========================================================================================
 PHASE C â€” MAIN EFFECT, NESTED MODELS, SE SPECIFICATIONS
 ==========================================================================================
-ASSERT PASS â€” t == coef/se (M1 timing + pre-vol :: delay_w) [t=0.061866 coef/se=0.061866]
-ASSERT PASS â€” p follows from t and df (M1 timing + pre-vol :: delay_w) [p=0.950707 implied=0.950707 df=330]
-ASSERT PASS â€” t == coef/se (M1 timing + pre-vol :: e2_pre_sd) [t=-8.095339 coef/se=-8.095339]
+ASSERT PASS â€” t == coef/se (M1 timing + pre-vol :: delay_w) [t=0.125492 coef/se=0.125492]
+ASSERT PASS â€” p follows from t and df (M1 timing + pre-vol :: delay_w) [p=0.900211 implied=0.900211 df=330]
+ASSERT PASS â€” t == coef/se (M1 timing + pre-vol :: e2_pre_sd) [t=-7.453679 coef/se=-7.453679]
 ASSERT PASS â€” p follows from t and df (M1 timing + pre-vol :: e2_pre_sd) [p=0.000000 implied=0.000000 df=330]
 
-M1 timing + pre-vol: N=333 df_resid=330 R2=0.2948
-ASSERT PASS â€” t == coef/se (M2 + financial controls :: delay_w) [t=0.012676 coef/se=0.012676]
-ASSERT PASS â€” p follows from t and df (M2 + financial controls :: delay_w) [p=0.989894 implied=0.989894 df=327]
-ASSERT PASS â€” t == coef/se (M2 + financial controls :: e2_pre_sd) [t=-8.466760 coef/se=-8.466760]
+M1 timing + pre-vol: N=333 df_resid=330 R2=0.2796
+ASSERT PASS â€” t == coef/se (M2 + financial controls :: delay_w) [t=0.067453 coef/se=0.067453]
+ASSERT PASS â€” p follows from t and df (M2 + financial controls :: delay_w) [p=0.946262 implied=0.946262 df=327]
+ASSERT PASS â€” t == coef/se (M2 + financial controls :: e2_pre_sd) [t=-7.717481 coef/se=-7.717481]
 ASSERT PASS â€” p follows from t and df (M2 + financial controls :: e2_pre_sd) [p=0.000000 implied=0.000000 df=327]
-ASSERT PASS â€” t == coef/se (M2 + financial controls :: firm_size_log) [t=-0.792033 coef/se=-0.792033]
-ASSERT PASS â€” p follows from t and df (M2 + financial controls :: firm_size_log) [p=0.428916 implied=0.428916 df=327]
-ASSERT PASS â€” t == coef/se (M2 + financial controls :: leverage) [t=-0.984771 coef/se=-0.984771]
-ASSERT PASS â€” p follows from t and df (M2 + financial controls :: leverage) [p=0.325465 implied=0.325465 df=327]
-ASSERT PASS â€” t == coef/se (M2 + financial controls :: roa) [t=-1.185825 coef/se=-1.185825]
-ASSERT PASS â€” p follows from t and df (M2 + financial controls :: roa) [p=0.236552 implied=0.236552 df=327]
+ASSERT PASS â€” t == coef/se (M2 + financial controls :: firm_size_log) [t=-0.672628 coef/se=-0.672628]
+ASSERT PASS â€” p follows from t and df (M2 + financial controls :: firm_size_log) [p=0.501659 implied=0.501659 df=327]
+ASSERT PASS â€” t == coef/se (M2 + financial controls :: leverage) [t=-0.939125 coef/se=-0.939125]
+ASSERT PASS â€” p follows from t and df (M2 + financial controls :: leverage) [p=0.348360 implied=0.348360 df=327]
+ASSERT PASS â€” t == coef/se (M2 + financial controls :: roa) [t=-1.130398 coef/se=-1.130398]
+ASSERT PASS â€” p follows from t and df (M2 + financial controls :: roa) [p=0.259137 implied=0.259137 df=327]
 
-M2 + financial controls: N=333 df_resid=327 R2=0.2996
-ASSERT PASS â€” t == coef/se (M3 + treatment :: delay_w) [t=0.020916 coef/se=0.020916]
-ASSERT PASS â€” p follows from t and df (M3 + treatment :: delay_w) [p=0.983325 implied=0.983325 df=326]
-ASSERT PASS â€” t == coef/se (M3 + treatment :: e2_pre_sd) [t=-8.665710 coef/se=-8.665710]
+M2 + financial controls: N=333 df_resid=327 R2=0.2839
+ASSERT PASS â€” t == coef/se (M3 + treatment :: delay_w) [t=0.075767 coef/se=0.075767]
+ASSERT PASS â€” p follows from t and df (M3 + treatment :: delay_w) [p=0.939651 implied=0.939651 df=326]
+ASSERT PASS â€” t == coef/se (M3 + treatment :: e2_pre_sd) [t=-7.952358 coef/se=-7.952358]
 ASSERT PASS â€” p follows from t and df (M3 + treatment :: e2_pre_sd) [p=0.000000 implied=0.000000 df=326]
-ASSERT PASS â€” t == coef/se (M3 + treatment :: firm_size_log) [t=-1.670909 coef/se=-1.670909]
-ASSERT PASS â€” p follows from t and df (M3 + treatment :: firm_size_log) [p=0.095699 implied=0.095699 df=326]
-ASSERT PASS â€” t == coef/se (M3 + treatment :: leverage) [t=-1.239265 coef/se=-1.239265]
-ASSERT PASS â€” p follows from t and df (M3 + treatment :: leverage) [p=0.216139 implied=0.216139 df=326]
-ASSERT PASS â€” t == coef/se (M3 + treatment :: roa) [t=-1.108095 coef/se=-1.108095]
-ASSERT PASS â€” p follows from t and df (M3 + treatment :: roa) [p=0.268637 implied=0.268637 df=326]
-ASSERT PASS â€” t == coef/se (M3 + treatment :: fcc_form499) [t=1.417119 coef/se=1.417119]
-ASSERT PASS â€” p follows from t and df (M3 + treatment :: fcc_form499) [p=0.157403 implied=0.157403 df=326]
+ASSERT PASS â€” t == coef/se (M3 + treatment :: firm_size_log) [t=-1.690389 coef/se=-1.690389]
+ASSERT PASS â€” p follows from t and df (M3 + treatment :: firm_size_log) [p=0.091909 implied=0.091909 df=326]
+ASSERT PASS â€” t == coef/se (M3 + treatment :: leverage) [t=-1.228082 coef/se=-1.228082]
+ASSERT PASS â€” p follows from t and df (M3 + treatment :: leverage) [p=0.220302 implied=0.220302 df=326]
+ASSERT PASS â€” t == coef/se (M3 + treatment :: roa) [t=-1.042726 coef/se=-1.042726]
+ASSERT PASS â€” p follows from t and df (M3 + treatment :: roa) [p=0.297848 implied=0.297848 df=326]
+ASSERT PASS â€” t == coef/se (M3 + treatment :: fcc_form499) [t=1.587268 coef/se=1.587268]
+ASSERT PASS â€” p follows from t and df (M3 + treatment :: fcc_form499) [p=0.113421 implied=0.113421 df=326]
 
-M3 + treatment: N=333 df_resid=326 R2=0.3033
-  M3 + treatment :: fcc_form499: coef +0.1809  SE 0.1276  t +1.417  df 326  p 0.1574  N 333
-ASSERT PASS â€” t == coef/se (M4 + breach controls (HEADLINE) :: delay_w) [t=-0.026520 coef/se=-0.026520]
-ASSERT PASS â€” p follows from t and df (M4 + breach controls (HEADLINE) :: delay_w) [p=0.978859 implied=0.978859 df=324]
-ASSERT PASS â€” t == coef/se (M4 + breach controls (HEADLINE) :: e2_pre_sd) [t=-8.569055 coef/se=-8.569055]
+M3 + treatment: N=333 df_resid=326 R2=0.2887
+  M3 + treatment :: fcc_form499: coef +0.2055  SE 0.1295  t +1.587  df 326  p 0.1134  N 333
+ASSERT PASS â€” t == coef/se (M4 + breach controls (HEADLINE) :: delay_w) [t=0.014064 coef/se=0.014064]
+ASSERT PASS â€” p follows from t and df (M4 + breach controls (HEADLINE) :: delay_w) [p=0.988788 implied=0.988788 df=324]
+ASSERT PASS â€” t == coef/se (M4 + breach controls (HEADLINE) :: e2_pre_sd) [t=-7.876860 coef/se=-7.876860]
 ASSERT PASS â€” p follows from t and df (M4 + breach controls (HEADLINE) :: e2_pre_sd) [p=0.000000 implied=0.000000 df=324]
-ASSERT PASS â€” t == coef/se (M4 + breach controls (HEADLINE) :: firm_size_log) [t=-1.699382 coef/se=-1.699382]
-ASSERT PASS â€” p follows from t and df (M4 + breach controls (HEADLINE) :: firm_size_log) [p=0.090207 implied=0.090207 df=324]
-ASSERT PASS â€” t == coef/se (M4 + breach controls (HEADLINE) :: leverage) [t=-1.407567 coef/se=-1.407567]
-ASSERT PASS â€” p follows from t and df (M4 + breach controls (HEADLINE) :: leverage) [p=0.160218 implied=0.160218 df=324]
-ASSERT PASS â€” t == coef/se (M4 + breach controls (HEADLINE) :: roa) [t=-0.930276 coef/se=-0.930276]
-ASSERT PASS â€” p follows from t and df (M4 + breach controls (HEADLINE) :: roa) [p=0.352921 implied=0.352921 df=324]
-ASSERT PASS â€” t == coef/se (M4 + breach controls (HEADLINE) :: fcc_form499) [t=1.384191 coef/se=1.384191]
-ASSERT PASS â€” p follows from t and df (M4 + breach controls (HEADLINE) :: fcc_form499) [p=0.167253 implied=0.167253 df=324]
-ASSERT PASS â€” t == coef/se (M4 + breach controls (HEADLINE) :: health_breach) [t=-0.043459 coef/se=-0.043459]
-ASSERT PASS â€” p follows from t and df (M4 + breach controls (HEADLINE) :: health_breach) [p=0.965362 implied=0.965362 df=324]
-ASSERT PASS â€” t == coef/se (M4 + breach controls (HEADLINE) :: prior_events) [t=-0.242141 coef/se=-0.242141]
-ASSERT PASS â€” p follows from t and df (M4 + breach controls (HEADLINE) :: prior_events) [p=0.808824 implied=0.808824 df=324]
+ASSERT PASS â€” t == coef/se (M4 + breach controls (HEADLINE) :: firm_size_log) [t=-1.735350 coef/se=-1.735350]
+ASSERT PASS â€” p follows from t and df (M4 + breach controls (HEADLINE) :: firm_size_log) [p=0.083630 implied=0.083630 df=324]
+ASSERT PASS â€” t == coef/se (M4 + breach controls (HEADLINE) :: leverage) [t=-1.401724 coef/se=-1.401724]
+ASSERT PASS â€” p follows from t and df (M4 + breach controls (HEADLINE) :: leverage) [p=0.161955 implied=0.161955 df=324]
+ASSERT PASS â€” t == coef/se (M4 + breach controls (HEADLINE) :: roa) [t=-0.823570 coef/se=-0.823570]
+ASSERT PASS â€” p follows from t and df (M4 + breach controls (HEADLINE) :: roa) [p=0.410790 implied=0.410790 df=324]
+ASSERT PASS â€” t == coef/se (M4 + breach controls (HEADLINE) :: fcc_form499) [t=1.552544 coef/se=1.552544]
+ASSERT PASS â€” p follows from t and df (M4 + breach controls (HEADLINE) :: fcc_form499) [p=0.121508 implied=0.121508 df=324]
+ASSERT PASS â€” t == coef/se (M4 + breach controls (HEADLINE) :: health_breach) [t=-0.089635 coef/se=-0.089635]
+ASSERT PASS â€” p follows from t and df (M4 + breach controls (HEADLINE) :: health_breach) [p=0.928633 implied=0.928633 df=324]
+ASSERT PASS â€” t == coef/se (M4 + breach controls (HEADLINE) :: prior_events) [t=-0.309046 coef/se=-0.309046]
+ASSERT PASS â€” p follows from t and df (M4 + breach controls (HEADLINE) :: prior_events) [p=0.757485 implied=0.757485 df=324]
 
-M4 + breach controls (HEADLINE): N=333 df_resid=324 R2=0.3035
-  M4 + breach controls (HEADLINE) :: fcc_form499: coef +0.1863  SE 0.1346  t +1.384  df 324  p 0.1673  N 333
-ASSERT PASS â€” t == coef/se (MAIN EFFECT (M4, HC3)) [t=1.384191 coef/se=1.384191]
-ASSERT PASS â€” p follows from t and df (MAIN EFFECT (M4, HC3)) [p=0.167253 implied=0.167253 df=324]
+M4 + breach controls (HEADLINE): N=333 df_resid=324 R2=0.2891
+  M4 + breach controls (HEADLINE) :: fcc_form499: coef +0.2119  SE 0.1365  t +1.553  df 324  p 0.1215  N 333
+ASSERT PASS â€” t == coef/se (MAIN EFFECT (M4, HC3)) [t=1.552544 coef/se=1.552544]
+ASSERT PASS â€” p follows from t and df (MAIN EFFECT (M4, HC3)) [p=0.121508 implied=0.121508 df=324]
 
-HEADLINE: MAIN EFFECT (M4, HC3): coef +0.1863  SE 0.1346  t +1.384  df 324  p 0.1673  N 333
-ASSERT PASS â€” t == coef/se (MAIN EFFECT (untrimmed delay)) [t=1.389121 coef/se=1.389121]
-ASSERT PASS â€” p follows from t and df (MAIN EFFECT (untrimmed delay)) [p=0.165750 implied=0.165750 df=324]
-ASSERT PASS â€” t == coef/se (delay (winsorized p99)) [t=-0.026520 coef/se=-0.026520]
-ASSERT PASS â€” p follows from t and df (delay (winsorized p99)) [p=0.978859 implied=0.978859 df=324]
-ASSERT PASS â€” t == coef/se (delay (untrimmed)) [t=-0.322927 coef/se=-0.322927]
-ASSERT PASS â€” p follows from t and df (delay (untrimmed)) [p=0.746959 implied=0.746959 df=324]
+HEADLINE: MAIN EFFECT (M4, HC3): coef +0.2119  SE 0.1365  t +1.553  df 324  p 0.1215  N 333
+ASSERT PASS â€” t == coef/se (MAIN EFFECT (untrimmed delay)) [t=1.556973 coef/se=1.556973]
+ASSERT PASS â€” p follows from t and df (MAIN EFFECT (untrimmed delay)) [p=0.120453 implied=0.120453 df=324]
+ASSERT PASS â€” t == coef/se (delay (winsorized p99)) [t=0.014064 coef/se=0.014064]
+ASSERT PASS â€” p follows from t and df (delay (winsorized p99)) [p=0.988788 implied=0.988788 df=324]
+ASSERT PASS â€” t == coef/se (delay (untrimmed)) [t=-0.292853 coef/se=-0.292853]
+ASSERT PASS â€” p follows from t and df (delay (untrimmed)) [p=0.769822 implied=0.769822 df=324]
 
 Winsorization rule: delay capped at in-sample p99 = 785 days (documented). Clock note: 47 CFR 64.2011(b) starts its seven-BUSINESS-day law-enforcement clock at "reasonable determination" of the breach, not discovery, and customer notice waits a further seven business days; days_to_disclosure here is reported_date minus breach OCCURRENCE date, which measures neither statutory clock â€” it proxies total public-notification lag, and the theory should be read against that. With vs without winsorization:
-  MAIN EFFECT (M4, HC3): coef +0.1863  SE 0.1346  t +1.384  df 324  p 0.1673  N 333
-  MAIN EFFECT (untrimmed delay): coef +0.1877  SE 0.1351  t +1.389  df 324  p 0.1657  N 333
-  delay (winsorized p99): coef -0.0000  SE 0.0003  t -0.027  df 324  p 0.9789  N 333
-  delay (untrimmed): coef -0.0001  SE 0.0002  t -0.323  df 324  p 0.7470  N 333
+  MAIN EFFECT (M4, HC3): coef +0.2119  SE 0.1365  t +1.553  df 324  p 0.1215  N 333
+  MAIN EFFECT (untrimmed delay): coef +0.2133  SE 0.1370  t +1.557  df 324  p 0.1205  N 333
+  delay (winsorized p99): coef +0.0000  SE 0.0003  t +0.014  df 324  p 0.9888  N 333
+  delay (untrimmed): coef -0.0001  SE 0.0002  t -0.293  df 324  p 0.7698  N 333
 
 SE specifications for the M4 treatment coefficient (the old draft scaled every t by 0.8806 â€” coef and t/p came from different runs; here each row is one fit):
-ASSERT PASS â€” t == coef/se (classical OLS) [t=1.324027 coef/se=1.324027]
-ASSERT PASS â€” p follows from t and df (classical OLS) [p=0.186427 implied=0.186427 df=324]
-ASSERT PASS â€” t == coef/se (HC1) [t=1.404560 coef/se=1.404560]
-ASSERT PASS â€” p follows from t and df (HC1) [p=0.161110 implied=0.161110 df=324]
-ASSERT PASS â€” t == coef/se (HC3) [t=1.384191 coef/se=1.384191]
-ASSERT PASS â€” p follows from t and df (HC3) [p=0.167253 implied=0.167253 df=324]
-ASSERT PASS â€” t == coef/se (firm-clustered) [t=0.934146 coef/se=0.934146]
-ASSERT PASS â€” p follows from t and df (firm-clustered) [p=0.353005 implied=0.353005 df=81]
-ASSERT PASS â€” t == coef/se (industry-clustered (N=333)) [t=1.128460 coef/se=1.128460]
-ASSERT PASS â€” p follows from t and df (industry-clustered (N=333)) [p=0.270280 implied=0.270280 df=24]
-  classical OLS: coef +0.1863  SE 0.1407  t +1.324  df 324  p 0.1864  N 333
-  HC1: coef +0.1863  SE 0.1326  t +1.405  df 324  p 0.1611  N 333
-  HC3: coef +0.1863  SE 0.1346  t +1.384  df 324  p 0.1673  N 333
-  firm-clustered: coef +0.1863  SE 0.1994  t +0.934  df 81  p 0.3530  N 333  clusters=82
-  industry-clustered (N=333): coef +0.1863  SE 0.1651  t +1.128  df 24  p 0.2703  N 333  clusters=25
+ASSERT PASS â€” t == coef/se (classical OLS) [t=1.495360 coef/se=1.495360]
+ASSERT PASS â€” p follows from t and df (classical OLS) [p=0.135794 implied=0.135794 df=324]
+ASSERT PASS â€” t == coef/se (HC1) [t=1.576206 coef/se=1.576206]
+ASSERT PASS â€” p follows from t and df (HC1) [p=0.115954 implied=0.115954 df=324]
+ASSERT PASS â€” t == coef/se (HC3) [t=1.552544 coef/se=1.552544]
+ASSERT PASS â€” p follows from t and df (HC3) [p=0.121508 implied=0.121508 df=324]
+ASSERT PASS â€” t == coef/se (firm-clustered) [t=1.046761 coef/se=1.046761]
+ASSERT PASS â€” p follows from t and df (firm-clustered) [p=0.298323 implied=0.298323 df=81]
+ASSERT PASS â€” t == coef/se (industry-clustered (N=333)) [t=1.233601 coef/se=1.233601]
+ASSERT PASS â€” p follows from t and df (industry-clustered (N=333)) [p=0.229297 implied=0.229297 df=24]
+  classical OLS: coef +0.2119  SE 0.1417  t +1.495  df 324  p 0.1358  N 333
+  HC1: coef +0.2119  SE 0.1344  t +1.576  df 324  p 0.1160  N 333
+  HC3: coef +0.2119  SE 0.1365  t +1.553  df 324  p 0.1215  N 333
+  firm-clustered: coef +0.2119  SE 0.2024  t +1.047  df 81  p 0.2983  N 333  clusters=82
+  industry-clustered (N=333): coef +0.2119  SE 0.1718  t +1.234  df 24  p 0.2293  N 333  clusters=25
   Cluster counts: firm 82 (meets the ~40-50 convention), industry 25 2-digit-SIC clusters (BELOW the conventional ~40-50 threshold for asymptotic cluster-robust inference â€” treat industry-clustered p with caution).
 
 ==========================================================================================
@@ -212,9 +212,9 @@ ASSERT PASS â€” p follows from t and df (quartile Q1 (smallest)) [p=0.00222
 ASSERT PASS â€” t == coef/se (quartile Q2) [t=0.997380 coef/se=0.997380]
 ASSERT PASS â€” p follows from t and df (quartile Q2) [p=0.321920 implied=0.321920 df=72]
   quartile Q2: coef +0.3216  SE 0.3225  t +0.997  df 72  p 0.3219  N 81  treated 14 obs / 8 orgs / 4 parent CIKs  MDE80 0.90pp  FEWER THAN 5 TREATED PARENT CIKs (4) â€” do not interpret bare
-ASSERT PASS â€” t == coef/se (quartile Q3) [t=2.344455 coef/se=2.344455]
-ASSERT PASS â€” p follows from t and df (quartile Q3) [p=0.021741 implied=0.021741 df=74]
-  quartile Q3: coef +0.7560  SE 0.3225  t +2.344  df 74  p 0.0217  N 83  treated 29 obs / 13 orgs / 4 parent CIKs  MDE80 0.90pp  FEWER THAN 5 TREATED PARENT CIKs (4) â€” do not interpret bare
+ASSERT PASS â€” t == coef/se (quartile Q3) [t=2.550205 coef/se=2.550205]
+ASSERT PASS â€” p follows from t and df (quartile Q3) [p=0.012834 implied=0.012834 df=74]
+  quartile Q3: coef +0.8353  SE 0.3275  t +2.550  df 74  p 0.0128  N 83  treated 29 obs / 13 orgs / 4 parent CIKs  MDE80 0.92pp  FEWER THAN 5 TREATED PARENT CIKs (4) â€” do not interpret bare
 ASSERT PASS â€” t == coef/se (quartile Q4 (largest)) [t=1.889915 coef/se=1.889915]
 ASSERT PASS â€” p follows from t and df (quartile Q4 (largest)) [p=0.062686 implied=0.062686 df=74]
   quartile Q4 (largest): coef +0.3485  SE 0.1844  t +1.890  df 74  p 0.0627  N 83  treated 59 obs / 19 orgs / 5 parent CIKs  MDE80 0.52pp  
@@ -236,49 +236,49 @@ PHASE E â€” MODERATORS AND ROBUSTNESS
 Governance quality (SOX 404 proxy) NOT REGENERABLE 0                                                                                                                                                                                Old-draft construct; no source data in canonical chain.
  Information-environment composite NOT REGENERABLE 0                                                  Script 106 construct on pre-audit base. The old draft reported p=.275 in prose vs p=.0589 in the table for this interaction â€” neither value survives; retired, not carried forward.
                Reputation weakness NOT REGENERABLE 0                                                                                        Old-draft construct (its table row also printed R2=.0156 against ~.39 for every other row â€” a different-model artifact); no canonical source.
-ASSERT PASS â€” t == coef/se (year FE) [t=1.155486 coef/se=1.155486]
-ASSERT PASS â€” p follows from t and df (year FE) [p=0.248790 implied=0.248790 df=307]
-  year FE: coef +0.1794  SE 0.1553  t +1.155  df 307  p 0.2488  N 333  R2=0.4172
-ASSERT PASS â€” t == coef/se (industry FE (2-digit SIC)) [t=2.138509 coef/se=2.138509]
-ASSERT PASS â€” p follows from t and df (industry FE (2-digit SIC)) [p=0.033283 implied=0.033283 df=300]
-  industry FE (2-digit SIC): coef +0.3963  SE 0.1853  t +2.139  df 300  p 0.0333  N 333  R2=0.3606
-ASSERT PASS â€” t == coef/se (year + industry FE) [t=1.055577 coef/se=1.055577]
-ASSERT PASS â€” p follows from t and df (year + industry FE) [p=0.292062 implied=0.292062 df=283]
-  year + industry FE: coef +0.2086  SE 0.1976  t +1.056  df 283  p 0.2921  N 333  R2=0.4821
-  Identification check: the combined year+industry FE treatment coefficient is IDENTIFIED (SE finite at 0.198) â€” an improvement over the old draft, whose combined specification collapsed because SIC-based treatment was a function of three SIC codes. BUT the identification is THIN: only 2 of 25 2-digit-SIC cells contain both treated and control events, so the within-industry comparison rests on those 2 cells. The industry-FE-only estimate (p=0.0333) leans on the same thin variation and on 25 clusters (below the ~40-50 convention) â€” do not headline it.
+ASSERT PASS â€” t == coef/se (year FE) [t=1.333066 coef/se=1.333066]
+ASSERT PASS â€” p follows from t and df (year FE) [p=0.183499 implied=0.183499 df=307]
+  year FE: coef +0.2144  SE 0.1608  t +1.333  df 307  p 0.1835  N 333  R2=0.4049
+ASSERT PASS â€” t == coef/se (industry FE (2-digit SIC)) [t=2.209165 coef/se=2.209165]
+ASSERT PASS â€” p follows from t and df (industry FE (2-digit SIC)) [p=0.027919 implied=0.027919 df=300]
+  industry FE (2-digit SIC): coef +0.4176  SE 0.1890  t +2.209  df 300  p 0.0279  N 333  R2=0.3458
+ASSERT PASS â€” t == coef/se (year + industry FE) [t=1.163038 coef/se=1.163038]
+ASSERT PASS â€” p follows from t and df (year + industry FE) [p=0.245794 implied=0.245794 df=283]
+  year + industry FE: coef +0.2366  SE 0.2034  t +1.163  df 283  p 0.2458  N 333  R2=0.4693
+  Identification check: the combined year+industry FE treatment coefficient is IDENTIFIED (SE finite at 0.203) â€” an improvement over the old draft, whose combined specification collapsed because SIC-based treatment was a function of three SIC codes. BUT the identification is THIN: only 2 of 25 2-digit-SIC cells contain both treated and control events, so the within-industry comparison rests on those 2 cells. The industry-FE-only estimate (p=0.0279) leans on the same thin variation and on 25 clusters (below the ~40-50 convention) â€” do not headline it.
 
 VIF (M4 design):
      variable  VIF
       delay_w 1.05
     e2_pre_sd 1.16
-firm_size_log 1.68
+firm_size_log 1.67
      leverage 1.11
           roa 1.48
   fcc_form499 1.65
 health_breach 1.09
  prior_events 1.41
 
-Breusch-Pagan (stated ONCE, used everywhere): chi2(8) = 10.0768, p = 0.2597. (The old draft printed chi2=3.92/p=.049 in prose and 15.5838/p=.0487 in its table â€” both retired.)
-Jarque-Bera residual normality: JB = 2007.5, p = 0.00e+00, skew 2.56, kurtosis 13.89 â€” heavy-tailed; HC3 primary inference stands, normality rejected as expected for volatility data.
-ASSERT PASS â€” t == coef/se (M4 excl. Cook's D > 4/N (17 obs)) [t=1.275787 coef/se=1.275787]
-ASSERT PASS â€” p follows from t and df (M4 excl. Cook's D > 4/N (17 obs)) [p=0.202995 implied=0.202995 df=307]
+Breusch-Pagan (stated ONCE, used everywhere): chi2(8) = 11.7532, p = 0.1626. (The old draft printed chi2=3.92/p=.049 in prose and 15.5838/p=.0487 in its table â€” both retired.)
+Jarque-Bera residual normality: JB = 1876.1, p = 0.00e+00, skew 2.50, kurtosis 13.50 â€” heavy-tailed; HC3 primary inference stands, normality rejected as expected for volatility data.
+ASSERT PASS â€” t == coef/se (M4 excl. Cook's D > 4/N (17 obs)) [t=1.176469 coef/se=1.176469]
+ASSERT PASS â€” p follows from t and df (M4 excl. Cook's D > 4/N (17 obs)) [p=0.240319 implied=0.240319 df=307]
 
-Influence: 17 obs with Cook's D > 4/N (0.0120); 17 with |DFFITS| > 0.329.
-  M4 excl. Cook's D > 4/N (17 obs): coef +0.1172  SE 0.0918  t +1.276  df 307  p 0.2030  N 316
+Influence: 17 obs with Cook's D > 4/N (0.0120); 18 with |DFFITS| > 0.329.
+  M4 excl. Cook's D > 4/N (17 obs): coef +0.1086  SE 0.0923  t +1.176  df 307  p 0.2403  N 316
 
 GARCH(1,1) conditional-volatility DV (Gaussian MLE, Nelder-Mead; estimation window trading days [-250,+25] around the anchor, min 200 obs; DV = mean conditional SD over [+5,+25] minus [-25,-5], daily pp):
-ASSERT PASS â€” t == coef/se (GARCH(1,1) DV (N=330)) [t=0.830762 coef/se=0.830762]
-ASSERT PASS â€” p follows from t and df (GARCH(1,1) DV (N=330)) [p=0.406726 implied=0.406726 df=321]
-  GARCH(1,1) DV (N=330): coef +0.0600  SE 0.0722  t +0.831  df 321  p 0.4067  N 330
-ASSERT PASS â€” t == coef/se (canonical DV, HC3 (N=333)) [t=2.273994 coef/se=2.273994]
-ASSERT PASS â€” p follows from t and df (canonical DV, HC3 (N=333)) [p=0.023620 implied=0.023620 df=324]
-ASSERT PASS â€” t == coef/se (canonical DV, firm-clustered) [t=1.812227 coef/se=1.812227]
-ASSERT PASS â€” p follows from t and df (canonical DV, firm-clustered) [p=0.073657 implied=0.073657 df=81]
+ASSERT PASS â€” t == coef/se (GARCH(1,1) DV (N=330)) [t=0.868263 coef/se=0.868263]
+ASSERT PASS â€” p follows from t and df (GARCH(1,1) DV (N=330)) [p=0.385899 implied=0.385899 df=321]
+  GARCH(1,1) DV (N=330): coef +0.0627  SE 0.0722  t +0.868  df 321  p 0.3859  N 330
+ASSERT PASS â€” t == coef/se (canonical DV, HC3 (N=333)) [t=2.276569 coef/se=2.276569]
+ASSERT PASS â€” p follows from t and df (canonical DV, HC3 (N=333)) [p=0.023464 implied=0.023464 df=324]
+ASSERT PASS â€” t == coef/se (canonical DV, firm-clustered) [t=1.814522 coef/se=1.814522]
+ASSERT PASS â€” p follows from t and df (canonical DV, firm-clustered) [p=0.073300 implied=0.073300 df=81]
 
-DV-convention sensitivity (canonical breach-anchored annualized DV, the convention the old CODE actually used, on THIS sample and control set; corr with the draft-spec DV = 0.451):
-  canonical DV, HC3 (N=333): coef +4.2595  SE 1.8731  t +2.274  df 324  p 0.0236  N 333
-  canonical DV, firm-clustered: coef +4.2595  SE 2.3504  t +1.812  df 81  p 0.0737  N 333  clusters=82
-  Under the old code's convention the effect is +4.26 annualized pp (p=0.0236 HC3) but dies under firm clustering (p=0.0737) â€” the same pattern as the v3 baseline H5 (Essay 2's hypothesis in constants_v3: +3.29, p=.063, estimated under this same breach-anchored convention).
+DV-convention sensitivity (canonical breach-anchored annualized DV, the convention the old CODE actually used, on THIS sample and control set; corr with the draft-spec DV = 0.453):
+  canonical DV, HC3 (N=333): coef +4.2700  SE 1.8756  t +2.277  df 324  p 0.0235  N 333
+  canonical DV, firm-clustered: coef +4.2700  SE 2.3532  t +1.815  df 81  p 0.0733  N 333  clusters=82
+  Under the old code's convention the effect is +4.27 annualized pp (p=0.0235 HC3) but dies under firm clustering (p=0.0733) â€” the same pattern as the v3 baseline H5 (Essay 2's hypothesis in constants_v3: +3.29, p=.063, estimated under this same breach-anchored convention).
 
   Breach-to-notification delay (N=333): min 0 | p10 0 | p25 0 | median 23 | p75 80 | p90 201 | max 1917 | mean 79.8 | SD 175.2
   all: window fully pre-notification 45.3% | contains notification 54.7% | mean 56.4% (median 74.2%) of window days precede notification
@@ -289,21 +289,21 @@ DV-convention sensitivity (canonical breach-anchored annualized DV, the conventi
 ==========================================================================================
 PHASE F â€” INFERENCE QUALITY
 ==========================================================================================
-  MAIN EFFECT (M4, HC3): TOST(Â±0.1323 daily pp = Â±2.10 annualized) p=0.6557  MDE80=0.3768pp  -> NULL â€” UNDERPOWERED (inconclusive)
+  MAIN EFFECT (M4, HC3): TOST(Â±0.1323 daily pp = Â±2.10 annualized) p=0.7200  MDE80=0.3822pp  -> NULL â€” UNDERPOWERED (inconclusive)
   quartile Q1 (smallest): TOST(Â±0.1323 daily pp = Â±2.10 annualized) p=0.9962  MDE80=0.8855pp  -> SIGNIFICANT [1 treated parent CIKs â€” do not interpret bare]
   quartile Q2: TOST(Â±0.1323 daily pp = Â±2.10 annualized) p=0.7205  MDE80=0.9029pp  -> NULL â€” UNDERPOWERED (inconclusive) [4 treated parent CIKs â€” do not interpret bare]
-  quartile Q3: TOST(Â±0.1323 daily pp = Â±2.10 annualized) p=0.9715  MDE80=0.9029pp  -> SIGNIFICANT [4 treated parent CIKs â€” do not interpret bare]
+  quartile Q3: TOST(Â±0.1323 daily pp = Â±2.10 annualized) p=0.9824  MDE80=0.9171pp  -> SIGNIFICANT [4 treated parent CIKs â€” do not interpret bare]
   quartile Q4 (largest): TOST(Â±0.1323 daily pp = Â±2.10 annualized) p=0.8776  MDE80=0.5163pp  -> NULL â€” UNDERPOWERED (inconclusive)
 
   BOUND PROVENANCE: the Â±2.10pp bound was pre-specified for Essay 1's CAR outcome ("fixed from literature before rebuilt estimates existed", scripts/158) and was never independently justified as a smallest volatility effect of interest â€” its use here is a unit conversion only, stated as such.
-  LITERATURE-ANCHORED CHECK (conditional): against a candidate SESOI of 4.2pp annualized (0.2646 daily pp), TOST p=0.2805 â€” still not equivalence-bounded. MDE80 = 0.3768 daily pp = 5.98pp annualized, which EXCEEDS 4.2pp: this design cannot detect, at 80% power, even the effect size used as the literature anchor. CAVEAT: the 4.2pp figure attributed to Obaydin, Xu & Zurbruegg (2024) could not be verified in the repository's article summary â€” their JBFA 2024 paper reports crash-risk effects (NSKEW/DUVOL/COUNT, >=5% of a SD) and bad-news-hoarding proxies, not a post-breach volatility change in pp. No commensurable volatility-native SESOI has been located in the prior literature on file; until one is, the defensible sentence is the MDE one, not any TOST verdict.
+  LITERATURE-ANCHORED CHECK (conditional): against a candidate SESOI of 4.2pp annualized (0.2646 daily pp), TOST p=0.3499 â€” still not equivalence-bounded. MDE80 = 0.3822 daily pp = 6.07pp annualized, which EXCEEDS 4.2pp: this design cannot detect, at 80% power, even the effect size used as the literature anchor. CAVEAT: the 4.2pp figure attributed to Obaydin, Xu & Zurbruegg (2024) could not be verified in the repository's article summary â€” their JBFA 2024 paper reports crash-risk effects (NSKEW/DUVOL/COUNT, >=5% of a SD) and bad-news-hoarding proxies, not a post-breach volatility change in pp. No commensurable volatility-native SESOI has been located in the prior literature on file; until one is, the defensible sentence is the MDE one, not any TOST verdict.
 
-Economic significance: main effect +0.1863 daily pp = +11.0% of mean post-breach volatility (1.6872 daily pp). Incremental R2 from the treatment indicator: +0.0038 (M4 0.3035 vs without-treatment 0.2998). (Old draft: .3922 vs .3896 â€” about a quarter of one percent.)
+Economic significance: main effect +0.2119 daily pp = +12.5% of mean post-breach volatility (1.6929 daily pp). Incremental R2 from the treatment indicator: +0.0049 (M4 0.2891 vs without-treatment 0.2842). (Old draft: .3922 vs .3896 â€” about a quarter of one percent.)
 
 ==========================================================================================
 OLD-DRAFT LEAK CHECK AND CODEBASE FLAGS
 ==========================================================================================
-No regenerated coefficient reproduces any old-draft value (+1.83, +7.31, +3.64, -3.39, -0.54, +1.763, +2.48, +4.074, +1.894, +0.7956) to within 0.005 â€” no evidence of old-number leakage.
+LEAK FLAG: M2 + financial controls :: e2_pre_sd = -0.5445 matches old-draft -0.54 â€” investigate leakage
 
 FORENSIC â€” old-draft provenance closure (nothing here is a result; pre-dedup data, SIC-based fcc_reportable treatment, both retired):
   N=891 (reproduces the old draft's 891 exactly from the PRE-dedup ENRICHED file) | main FCC +1.6121 p=0.0772 (old draft: +1.83 / +1.763)

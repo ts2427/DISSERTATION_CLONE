@@ -136,16 +136,12 @@ A('treatment column is fcc_form499 (Form 499), not SIC',
 # ===================== ESSAY 2 DV: fresh computation =========================
 log('\nComputing Essay 2 volatility DV (log-return SD, trading days '
     '[-25,-5]/[+5,+25], notification-anchored)...')
-crsp = pd.read_csv('Data/wrds/crsp_daily_returns.csv',
-                   usecols=['permno', 'date', 'ret'])
-tp = Path('Data/wrds/crsp_daily_topup.csv')
-if tp.exists():
-    crsp = pd.concat([crsp, pd.read_csv(tp, usecols=['permno', 'date', 'ret'])],
-                     ignore_index=True)
-tp_dish = Path('Data/wrds/crsp_daily_topup_dish.csv')
-if tp_dish.exists():
-    crsp = pd.concat([crsp, pd.read_csv(tp_dish, usecols=['permno', 'date', 'ret'])],
-                     ignore_index=True)
+import importlib.util as _ilu
+_s = _ilu.spec_from_file_location('crsp_daily', 'scripts/254_crsp_daily.py')
+crsp_daily = _ilu.module_from_spec(_s); _s.loader.exec_module(crsp_daily)
+# De-duplicated on (permno, date) by the shared loader (2026-10-02): the top-ups repeat
+# 405 permno-dates already in the main file, which positional windows double-counted.
+crsp = crsp_daily.load(['permno', 'date', 'ret'])
 crsp['date'] = pd.to_datetime(crsp['date'])
 crsp['ret'] = pd.to_numeric(crsp['ret'], errors='coerce')
 crsp = crsp.dropna(subset=['ret'])

@@ -70,7 +70,7 @@ Directories, matched at a path boundary only:
 Data/edgar/item5_02_text/ is shared with v3: v4 adds documents alongside v3's.
 Only ADDITIONS are admitted - any change to a baseline file there still fails on
 the sha256/blob comparison, which does not consult this list.
-Scripts, by parsed leading number only, 210 <= n <= 249:  scripts/<n>_*.py
+Scripts, by parsed leading number only, 210 <= n <= 254:  scripts/<n>_*.py
 Documents, by exact path:
     docs/claude/REBUILD_V4_QUERY.md, docs/claude/REPRODUCE_ESSAY3_V4.md
 Prefix matching is deliberately NOT used for scripts: "scripts/21" would also admit
@@ -205,6 +205,9 @@ V4_DIRS = (
     # from the q3/q4 CSVs; nothing here is estimated and no v3 path is touched.
     # Added 2026-09-25.
     "outputs/essay3_appendix/",
+    # Defense supplement (2026-10-02, scripts 249-253). Supplementary estimates on the
+    # frozen samples, written only here; no v3 path is touched by these steps.
+    "outputs/defense_supplement/",
 )
 V4_DOCS = (
     "docs/claude/REBUILD_V4_QUERY.md",
@@ -241,7 +244,7 @@ V4_DOCS = (
     "outputs/rebuild/STAGE7_VERIFICATION.md",
 )
 SCRIPT_RE = re.compile(r"^scripts/(\d+)_[^/]*\.py$")
-SCRIPT_LO, SCRIPT_HI = 210, 249
+SCRIPT_LO, SCRIPT_HI = 210, 254  # 250-253: defense supplement; 254: shared CRSP loader (2026-10-02)
 
 
 def git(*args, binary=False):

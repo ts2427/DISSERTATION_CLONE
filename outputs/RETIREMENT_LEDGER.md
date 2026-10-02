@@ -705,3 +705,140 @@ Written only by retired steps. The files stay committed; nothing live reads them
 This is the third pre-prune gate the prune exposed, after the `critical_keys` gate and the
 two obsolete `REQUIRED_INPUTS`. All three failed the same way: they asserted on steps that
 no longer run.
+
+---
+
+# 2026-10-02 — CRSP TOP-UP DUPLICATE ROWS: FOUND, FIXED, RE-RUN
+
+**Status: FIXED** (Tim's ruling, 2026-10-02: a computational defect, not a sample or
+measurement change). Recorded here, not in `KNOWN_LIMITATIONS.md`, because it is fixed, not
+disclosed.
+
+## The defect
+
+Two top-up return files repeat (permno, date) rows that `Data/wrds/crsp_daily_returns.csv`
+already carries. Every repeated row has the same `ret` and `vol` as the main-file row; there
+are no conflicts.
+
+| top-up file | written by | duplicated rows | permno | dates |
+|---|---|---|---|---|
+| `Data/wrds/crsp_daily_topup.csv` | scripts/159 | 92 | 60599 (CenturyLink) | 2020-09-18 .. 2021-01-29 |
+| `Data/wrds/crsp_daily_topup_dish.csv` | scripts/179 | 313 | 81696 (DISH) | 2022-10-03 .. 2023-12-29 |
+
+The main file already covered DISH from 2005-05-02 to 2023-12-29, so the DISH top-up added
+no new dates. Consumers concatenated main + top-ups without de-duplicating and then took
+event windows **by row position**. A "31-trading-day" window that touched those dates
+spanned about 16 distinct days, each counted twice. Found by the G8 rewrite of
+scripts/252 (defense supplement) and reproduced by hand before any change was made.
+
+**The other top-up files were checked** and are clean:
+- `compustat_annual_topup.csv`: no (tic, datadate) overlap with the main file.
+- The v4 `crsp_dsf_topup_*.csv` files (3): no overlap with `crsp_dsf.csv` or with each other.
+- `ticker_permno_topup.csv` is a name map, not a return panel.
+
+## The three affected events (all treated)
+
+| event | car_30d before | car_30d after |
+|---|---|---|
+| CenturyLink Communications, breach 2020-08-20 | -9.9072 | -9.0422 |
+| DISH Network, LLC, breach 2023-02-22 | -44.2702 | -40.6017 |
+| DISH Network, LLC, breach 2023-05-17 | **+27.9390** | **-2.3845** |
+
+Their Essay 2 volatility measures moved too (`e2_vol_change`): CenturyLink -0.891 -> -0.289,
+DISH 2023-05-15 -1.472 -> +1.260, DISH 2023-05-17 +1.206 -> +0.773.
+
+## Which scripts loaded the files
+
+**Concatenated without de-duplicating (fixed):**
+- 155: Essay 1 CARs.
+- 158: the Table 16 leakage panel; it read `crsp_daily_topup.csv` only.
+- 163, 166, 169, 180, 181: Essay 2.
+- 251, 252: defense supplement.
+
+All of them now load through ONE shared helper, `scripts/254_crsp_daily.py`. The helper
+concatenates main first, drops duplicate (permno, date) rows keeping the main-file row,
+stops if any duplicated pair disagrees on a loaded value, and asserts (permno, date) is
+unique. The raw data files are untouched.
+
+**Already de-duplicated, keeping the main row (unchanged):**
+- 199: Essay 3 Query 2, `drop_duplicates(['permno','date'])` after main + both top-ups.
+- 224: Essay 3 v4, its own v4 files, which do not overlap.
+
+**Read the main file only:**
+- 158: the turnover panel (`vol`/`shrout`).
+- 174, 175: the earnings side.
+
+## Before -> after (verdict gate: PASSED - no status, governing-rung, BH or TOST call changed)
+
+**Essay 1** (N = 340; 106 treated events; 12 treated parent CIKs; HC3):
+
+| | before | after |
+|---|---|---|
+| H1 timing | +1.4143 [-0.6117, 3.4402] p .1712, MDE 2.8942, TOST .2538 | +1.1500 [-0.8200, 3.1200] p .2526, MDE 2.8143, TOST .1726 |
+| H2 Form 499 | -0.4994 [-3.3642, 2.3653] p .7326, MDE 4.0926, TOST .1371 | -0.8051 [-3.5541, 1.9438] p .5659, MDE 3.9272, TOST .1783 |
+| H3 prior | +0.0258 [-0.1015, 0.1530] p .6916, MDE 0.1818, TOST <.001 | +0.0332 [-0.0931, 0.1594] p .6063, MDE 0.1804, TOST <.001 |
+| H4 health | -0.9405 [-6.0366, 4.1556] p .7176, MDE 7.2803, TOST .3280 | -1.0247 [-6.1370, 4.0875] p .6944, MDE 7.3034, TOST .3402 |
+
+- **Status labels unchanged:** H1, H2, H4 NULL-INCONCLUSIVE; H3 BOUNDED NULL.
+- **Turnover unchanged:** Form 499 +0.1064, p .0446. It reads the main file only.
+- **Leakage (Table 16):**
+  - breach-anchored [-10, -1] difference p .0506 -> .0506 (unchanged)
+  - announcement-anchored [-10, -1] difference p .0401 -> .0301
+  - announcement-anchored [-20, -11] difference p .0739 -> .0580
+- **Descriptive CAR stats:**
+  - car_30d mean -0.2052 -> -0.2810
+  - car_30d median 0.1911 -> 0.1423
+  - Table 3 filer median -0.2416 -> -0.4370
+- **Other models:**
+  - ROA +7.7592 p .1533 -> +7.3530 p .1750
+  - op-margin amendment +7.8076 p .0773 -> +8.2816 p .0580
+  - treated-only timing +0.5562 p .7835 -> -0.2202 p .9071
+  - interaction -1.6411 p .4754 -> -2.3776 p .2769
+
+**Essay 2** (N = 333; 104 treated events; G = 82; G1 = 12):
+
+| | before | after |
+|---|---|---|
+| volatility change coefficient | +0.1863 | +0.2119 |
+| HC3 p | .1673 | .1215 |
+| CV1 p | .3530 | .2983 |
+| **CV3 p** (governing) | **.4359** | **.3863** |
+| WCR p | .3942 | .3325 |
+| WCU p | .5415 | .5302 |
+| Webb p | .3964 | .3325 |
+| CV3 95% CI | [-0.2870, 0.6596] | [-0.2721, 0.6959] |
+| MDE80 | 0.6745 daily (10.71 ann.) | 0.6898 daily (10.95 ann.) |
+
+**Announcement-window elevation** (N = 331, G = 81, G1 = 12):
+
+| | before | after |
+|---|---|---|
+| coefficient | +0.4475 | +0.4717 |
+| CV1 p | .0063 | .0040 |
+| CV3 p | .0260 | .0208 |
+| WCR p | .0093 | .0060 |
+| BH in the 4-test family | reject | **reject** (unchanged) |
+
+- **Other Essay 2 values:**
+  - Breach elevation -0.0935 -> -0.0857.
+  - S1 +0.1358 [-0.2370, 0.5086] -> +0.1757 [-0.2137, 0.5650].
+  - The placebo comparison in scripts/180 now reads the actual differential from t50; it had been typed in as 0.4475.
+
+**Defense supplement:**
+- **E2 delay** (raw days): +25.692 CV3 p .6065 / WCR .5719 -> +25.509 CV3 .6083 / WCR .5742. It moved because `e2_pre_sd` is a control.
+- **E1 notification-anchored:** no HC3 or CV1 p below .05 before or after, and 0 of 16 TOST calls flip. H2 (0, +30) -1.0416 p .4436 -> -1.7521 p .1564.
+- **E3 randomization inference:** byte-identical.
+- **Deck exhibits:**
+  - H2 at the median market cap: -$180.1M -> -$290.4M.
+  - E2 volatility coefficient as a share of pre-window SD: 10.87% -> 12.39%.
+
+**Essay 3: no verdict and no estimate moves.**
+- No Essay 3 estimation script reads the changed CAR or volatility columns.
+- `CANONICAL_V4.csv` carries them from `CANONICAL_V3` (scripts/214), so its 3 rows change and nothing downstream reads them.
+- `constants_essay3_v4.json` and `constants_essay3_q2.json` assert unchanged.
+
+## Rebaselined
+
+- `outputs/rebuild/constants_v3.json` was re-written by scripts/158 from the fixed data. Its own baseline mechanism: the file was moved aside, 158 wrote it, and later runs assert against it. The key set is identical apart from the 7 H5 keys removed under G1.
+- `outputs/defense_supplement/constants_defense_supplement.json` was first written by scripts/253 after the fix.
+- Essay 3 baselines unchanged.

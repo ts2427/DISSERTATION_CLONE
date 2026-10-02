@@ -56,9 +56,9 @@ delays for covered carriers.
 ==========================================================================================
 ## A2 — NEW PRIMARY TEST: does Form 499 treatment predict disclosure delay? (N=333)
 ==========================================================================================
-  delay (raw days): coef +25.692  SE 38.789  95% CI [-51.486, +102.870]  (G=82, G1=12, CV1 parent-CIK, t(81))
-  delay (winsorized p99): coef +10.169  SE 29.430  95% CI [-48.388, +68.726]  (G=82, G1=12, CV1 parent-CIK, t(81))
-  log(1+delay): coef -0.086  SE 0.471  95% CI [-1.024, +0.851]  (G=82, G1=12, CV1 parent-CIK, t(81))
+  delay (raw days): coef +25.509  SE 38.720  95% CI [-51.532, +102.549]  (G=82, G1=12, CV1 parent-CIK, t(81))
+  delay (winsorized p99): coef +10.026  SE 29.376  95% CI [-48.422, +68.474]  (G=82, G1=12, CV1 parent-CIK, t(81))
+  log(1+delay): coef -0.086  SE 0.471  95% CI [-1.023, +0.850]  (G=82, G1=12, CV1 parent-CIK, t(81))
 
   Dispersion: treated SD 252.1, IQR 83, CV 2.55 | control SD 125.5, IQR 76, CV 1.77 | Brown-Forsythe W=2.361 (p=0.1253)
   The floor prediction (treated delays longer AND more homogeneous, compressed against a regulatory floor) requires treated dispersion BELOW control.
@@ -66,16 +66,16 @@ delays for covered carriers.
   ZERO-DELAY CONTAMINATION: 42/104 treated and 75/229 control delays are EXACTLY zero (35.1% of the sample). Same-day public notification at scale is implausible; these are almost certainly records whose occurrence date defaulted to the notification date in the source. The share-of-treated-below-the-regulatory-floor statistic is therefore measuring MISSING DATA, not non-compliance, and no compliance claim is made from it. Among NON-ZERO delays, 7/62 treated (11.3%) fall below ~20 calendar days — still diagnostic only (the clock measured is occurrence-to-notification, not determination-to-notification).
 
   A2 EXCLUDING ZERO DELAYS (N=216: 62 treated / 154 control):
-    delay (raw days): coef +47.142  SE 57.290  95% CI [-67.011, +161.295]
-    log(delay): coef +0.038  SE 0.333  95% CI [-0.627, +0.702]
+    delay (raw days): coef +46.512  SE 57.130  95% CI [-67.322, +160.346]
+    log(delay): coef +0.036  SE 0.332  95% CI [-0.626, +0.698]
     medians: treated 66d vs control 50d | dispersion: treated SD 309.9 CV 1.87 vs control SD 140.7 CV 1.33 | Brown-Forsythe W=3.068 (p=0.0813) | KS D=0.1573 (p=0.1973) | log-rank chi2=2.791 (p=0.0948)
 
   Quantile regressions (delay ~ treatment + controls; treatment coefficient; iid-kernel SEs, descriptive):
-    q10: -0.00 (SE 7.48)
-    q25: -0.00 (SE 6.64)
-    q50: -4.56 (SE 7.35)
-    q75: +12.28 (SE 16.55)
-    q90: +0.61 (SE 45.92)
+    q10: -0.00 (SE 7.47)
+    q25: -0.00 (SE 6.62)
+    q50: -4.55 (SE 7.35)
+    q75: +13.63 (SE 16.29)
+    q90: +0.61 (SE 45.85)
 
   Kaplan-Meier time-to-notification (no censoring — the sample conditions on an observed notification): median treated 22d vs control 24d; log-rank chi2=0.556 (p=0.4558)
 
@@ -144,7 +144,7 @@ Q4      1.448276     1.0    8     87
   registered, NOT SIC-treated (missed by SIC): n=7 (4 orgs) | ln(assets) mean 10.04 median 9.36 | pre-vol 35.9 | vol-change -3.52
   neither (concordant control): n=228 (91 orgs) | ln(assets) mean 9.59 median 9.01 | pre-vol 28.6 | vol-change -2.95
 
-  Welch tests: SIC-treated-but-unregistered vs concordant treated — ln(assets) t=+3.45 (p=0.0030); pre-breach volatility t=-5.59 (p=0.0000). Volatility change, SIC-only vs all others: t=+0.83 (p=0.4289).
+  Welch tests: SIC-treated-but-unregistered vs concordant treated — ln(assets) t=+3.45 (p=0.0030); pre-breach volatility t=-5.60 (p=0.0000). Volatility change, SIC-only vs all others: t=+0.82 (p=0.4292).
   On CORRECTED data the discordant cell is nearly empty (6 events / 3 orgs — post-resolution SIC and Form 499 almost coincide), so the mechanism must be tested where the artifact was produced: the OLD record-level data.
   OLD DATA — SIC-treated, NOT registered (manufactured): n=9 (8 orgs) | ln(assets) 11.33 | pre-vol 21.3 | vol-change +4.59
   OLD DATA — SIC-treated AND registered (concordant): n=175 (41 orgs) | ln(assets) 11.06 | pre-vol 25.9 | vol-change -0.12
@@ -166,6 +166,7 @@ Q4      1.448276     1.0    8     87
  parent_cik  family_records  treated_events  date_covered
       18926              95               5             5
       20520              61               4             4
+    1001082               5               2             2
      101830              39               9             9
      732712             202              10            10
      732717             114              24            24
@@ -175,7 +176,7 @@ Q4      1.448276     1.0    8     87
     1447669               2               2             2
     1609711               2               3             3
     1632127              13               2             2
-  => 102/102 treated observations have a date-valid family filer record at the breach date (0 not covered by this keyword check). Control->treated flips: stage 2/4 ran name resolution with abstain against the full registry; an exact-normalized-name rescan of the 231 control orgs is part of the J funnel below.
+  => 104/104 treated observations have a date-valid family filer record at the breach date (0 not covered by this keyword check). Control->treated flips: stage 2/4 ran name resolution with abstain against the full registry; an exact-normalized-name rescan of the 231 control orgs is part of the J funnel below.
   5. Headline re-estimation: unnecessary if 102/102 survive; otherwise rerun flagged.
 
 ==========================================================================================
@@ -183,6 +184,7 @@ Q4      1.448276     1.0    8     87
 ==========================================================================================
   18926: types ['CAP/LEC', 'Cellular/PCS/SMR', 'Incumbent Local Exchange Carrier', 'Interexchange Carrier (IXC)', 'Operator Service Provider (OSP)', 'Toll Reseller'] | non-covered: none
   20520: types ['CAP/LEC', 'Incumbent Local Exchange Carrier', 'Interexchange Carrier (IXC)', 'Local Reseller', 'Toll Reseller'] | non-covered: none
+  1001082: types ['CAP/LEC', 'Cellular/PCS/SMR', 'Satellite'] | non-covered: none
   101830: types ['Cellular/PCS/SMR', 'Incumbent Local Exchange Carrier', 'Interexchange Carrier (IXC)', 'Local Reseller', 'Private Service Provider', 'Toll Reseller'] | non-covered: ['Private Service Provider']
   732712: types ['CAP/LEC', 'Cellular/PCS/SMR', 'Incumbent Local Exchange Carrier', 'Interexchange Carrier (IXC)', 'Private Service Provider', 'Toll Reseller'] | non-covered: ['Private Service Provider']
   732717: types ['CAP/LEC', 'Cellular/PCS/SMR', 'Incumbent Local Exchange Carrier', 'Interconnected VoIP', 'Interexchange Carrier (IXC)', 'Toll Reseller'] | non-covered: none
@@ -224,9 +226,9 @@ year
 ==========================================================================================
   treated: 12 parents, events/parent mean 8.7, median 6, max 26
   control: 72 parents, events/parent mean 3.2, median 1, max 76
-  first event per parent: coef +0.0184 SE 0.3614 95% CI [-0.7018, +0.7386] N=82 (12 treated)
-  most recent event per parent: coef +0.3760 SE 0.4523 95% CI [-0.5254, +1.2773] N=82 (12 treated)
-  parent fixed effects: coef +0.7187 SE 0.2313 95% CI [+0.2631, +1.1743] — identified off only 2 parents whose treatment status varies across their own events (AT&T-family and Comcast coverage-window cases); interpret accordingly.
+  first event per parent: coef +0.1639 SE 0.4029 95% CI [-0.6391, +0.9670] N=82 (12 treated)
+  most recent event per parent: coef +0.3462 SE 0.4313 95% CI [-0.5134, +1.2058] N=82 (12 treated)
+  parent fixed effects: coef +0.7186 SE 0.2311 95% CI [+0.2633, +1.1738] — identified off only 2 parents whose treatment status varies across their own events (AT&T-family and Comcast coverage-window cases); interpret accordingly.
 
 ## H3 — Sample period
   The WRDS extract ends 2024-12-31; the final sample's latest notification year is 2024. SAMPLE PERIOD IS 2006-2024 everywhere. 9 events in the 489-event universe carry 2025 notification dates; the five with matched securities (Nucor, Intuit, Workday, HPE, Zscaler) drop at the volatility-window step because the extract ends — stated in the attrition ledger.
