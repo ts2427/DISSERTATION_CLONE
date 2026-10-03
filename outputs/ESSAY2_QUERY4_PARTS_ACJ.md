@@ -103,23 +103,7 @@ control 229     75  0.0  0.0  0.0 24.0 76.0 199.4 313.20  961.0  71.1 125.5
   scripts\update_existing_proposal.py:190: "Only 17.6% of firms disclose within 7 days. This non-compliance puzzle is explained by "
   scripts\update_proposal_documents.py:621: FCC 7-Day Rule Impacts:
   scripts\update_proposal_documents.py:660: Current Rule: 7-day disclosure mandate (effective 2007)
-  Dashboard\app.py:225: - Interpretation: Forced 7-day disclosure INCREASES rather than decreases asymmetry
-  Dashboard\app.py:391: <b>Essay 2:</b> FCC firms experience HIGHER volatility (+1.83%**) even with forced 7-day disclosure. Information asymmet
-  Dashboard\app.py:409: before the 2007 FCC 7-Day Rule implementation. This figure provides visual proof of that assumption.
-  Dashboard\app.py:422: Pre-2007 (before FCC 7-Day Rule): FCC and non-FCC firms show similar CAR patterns (no significant difference, p=0.88)
-  Dashboard\app.py:427: the regulation takes effect, not before. This is the core evidence that FCC 7-Day Rule causally affects market outcomes.
-  Dashboard\pages\0_Research_Story.py:103: Regulator forces 7-day disclosure
-  Dashboard\pages\0_Research_Story.py:283: FCC-regulated firms (telecom, cable, VoIP, satellite) → FORCED to disclose within 7 days
-  Dashboard\pages\1_Natural_Experiment.py:66: 'Regulation passed\n(Mandatory 7-day rule)',
-  Dashboard\pages\1_Natural_Experiment.py:111: <li><b>Requirement:</b> Disclose within 7 days (FCC 7-Day Rule)</li>
-  Dashboard\pages\3_Data_Landscape.py:89: - After 2007: FCC firms forced to disclose within 7 days
-  Dashboard\pages\5_Essay2_InformationAsymmetry.py:327: - Forced 7-day disclosure → Incomplete information → Market uncertainty INCREASES
-  Dashboard\pages\5_Essay2_InformationAsymmetry.py:473: **47 CFR 64.2011 became effective December 8, 2007; it sets a 7-business-day law-enforcement notification clock and emba
-  Dashboard\pages\6_Essay3_GovernanceResponse.py:272: **47 CFR 64.2011 became effective December 8, 2007; it sets a 7-business-day law-enforcement notification clock and emba
-  Dashboard\pages\8_Key_Findings.py:287: FCC PATH (Forced 7-day disclosure):
-  Dashboard\pages\8_Key_Findings.py:359: - Market EXPECTS 7-day disclosure (it's required)
-  Dashboard\pages\9_Conclusion.py:144: - After 2007: FCC firms forced to disclose within 7 days; non-FCC still free
-  (27 locations; every one describes a customer-disclosure deadline or ceiling the rule does not contain — these are deletions.)
+  (11 locations; every one describes a customer-disclosure deadline or ceiling the rule does not contain — these are deletions.)
 
 ==========================================================================================
 ## B2 — Is duplication non-random in firm size? (489-event universe)

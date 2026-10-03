@@ -949,3 +949,25 @@ Root-level SCM notes such as `SCM_*.md` are untracked working documents, not pip
 - **README revised:** `defense-final` and `repo-clean`, where the audit trail lives, `requirements.txt` as the environment, and the ARCHIVE_MAP note. Two stale claims removed.
 - **`.gitignore` (appended):** `Data/Articles/`, `!outputs/**/*.md` and `!docs/**/*.md`.
 - **Branches deleted:** 8 branches, all fully merged into `main`, removed locally and on origin. `main`, `rebuild-v4` and every tag are kept.
+
+---
+
+# 2026-10-03 — DASHBOARD REBUILT; t24 REGENERATED
+
+**Ruling (Tim, 2026-10-03):** rebuild `Dashboard/` in place so it shows what is actually in the three essays. It is for local use (defense and committee) and has six pages.
+
+**Old dashboard archived.** The 8 remaining files (`app.py` and pages 0, 1, 3, 5, 6, 8, 9) moved to `archive/Dashboard/` and were appended to `archive/ARCHIVE_MAP.csv`. The pages archived in the 2026-10-03 cleanup were already there. The old app could no longer start anyway, because its `utils.py` had been archived. Its content was the retired framing (natural experiment, SIC-era treatment, pre-rebuild numbers).
+
+**New dashboard.**
+- `Dashboard/data.py` holds the loaders.
+- `Dashboard/app.py` is the overview and data chain.
+- `pages/1`-`3` cover one essay each, `pages/4` is robustness and the defense supplement, and `pages/5` is the limitations and audit trail.
+- It computes nothing and types no results: every number is read at run time from a committed output, and the file is named under each chart.
+- It reads nothing under `Data/`, so no raw CRSP or Compustat rows. The one per-event return series shown is the committed T-Mobile worked example in `defense_supplement/deck_exhibits.csv`.
+- Checks: all six pages run without exception in Streamlit's AppTest, and the server starts and passes its health check.
+
+**t24 changed (a cited Essay 2 table; recorded here by ruling).** `scripts/164`'s A4 scan reads `Dashboard/**/*.py`.
+- `t24_a4_deadline_scan.csv` goes from 31 rows to 15. The 16 rows removed all pointed at the old dashboard files; they were its claims that the rule forced public notice within seven days and that it was a natural experiment. No row was added, because the new pages were checked against the scan's patterns.
+- `outputs/ESSAY2_QUERY4_PARTS_ACJ.md`, 164's own report, changes to match.
+- No estimate, sample or other output moved.
+- The freeze manifest was re-created after both changes.
