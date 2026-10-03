@@ -258,6 +258,8 @@ V4_DOCS = (
     "outputs/rebuild/GATE2_ADJACENCY_SHEET.md",
     "outputs/rebuild/STAGE5_REPORT.md",
     "outputs/rebuild/STAGE6_REPORT.md",
+    # Reviewer guide for the committee's pipeline review (2026-10-03).
+    "REVIEWER_GUIDE.md",
 )
 SCRIPT_RE = re.compile(r"^scripts/(\d+)_[^/]*\.py$")
 SCRIPT_LO, SCRIPT_HI = 210, 254  # 250-253: defense supplement; 254: shared CRSP loader (2026-10-02)
