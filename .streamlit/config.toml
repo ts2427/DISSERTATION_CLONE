@@ -1,0 +1,16 @@
+# Streamlit settings for the dissertation dashboard (streamlit run Dashboard/app.py, from the repo root).
+
+[theme]
+base = "light"
+primaryColor = "#00205B"              # navy
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F3F5F8"  # sidebar, cards
+textColor = "#1C2430"
+font = "sans serif"
+
+[client]
+toolbarMode = "minimal"               # local app: no Deploy button
+showErrorDetails = true
+
+[browser]
+gatherUsageStats = false

@@ -119,8 +119,10 @@ def supp_constants() -> dict:
 
 # ------------------------------------------------------------------ helpers for pages
 def source(*paths: str) -> None:
-    """Small 'Source:' caption under a chart or table, naming the committed file(s)."""
-    st.caption('Source: ' + '; '.join(f'`{p}`' for p in paths))
+    """Small grey 'Source:' note under a chart or table, naming the committed file(s)."""
+    names = ' · '.join(str(p).replace('`', '') for p in paths)
+    st.markdown(f'<p style="color:#6B7385;font-size:0.8rem;margin-top:-0.4rem">Source: {names}</p>',
+                unsafe_allow_html=True)
 
 
 def guard(fn):
