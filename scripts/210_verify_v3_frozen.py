@@ -208,6 +208,10 @@ V4_DIRS = (
     # Defense supplement (2026-10-02, scripts 249-253). Supplementary estimates on the
     # frozen samples, written only here; no v3 path is touched by these steps.
     "outputs/defense_supplement/",
+    # Repo cleanup (2026-10-03, Tim): superseded files moved here with their relative paths
+    # (archive/ARCHIVE_MAP.csv). A move removes the baseline path (recorded MISSING when the
+    # manifest is re-created) and adds the archive path, which this entry admits.
+    "archive/",
 )
 V4_DOCS = (
     "docs/claude/REBUILD_V4_QUERY.md",
@@ -242,6 +246,10 @@ V4_DOCS = (
     # Written by scripts/157 beside the stage-7 CSVs; never committed before the
     # 2026-10-01 stage-7 regeneration (outputs/*.md is gitignored).
     "outputs/rebuild/STAGE7_VERIFICATION.md",
+    # Repo cleanup Stage 1 (2026-10-03): the inventory, its summary and the cleanup report.
+    "outputs/REPO_INVENTORY.csv",
+    "outputs/REPO_INVENTORY_SUMMARY.md",
+    "outputs/REPO_CLEANUP_REPORT.md",
 )
 SCRIPT_RE = re.compile(r"^scripts/(\d+)_[^/]*\.py$")
 SCRIPT_LO, SCRIPT_HI = 210, 254  # 250-253: defense supplement; 254: shared CRSP loader (2026-10-02)
