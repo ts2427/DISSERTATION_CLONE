@@ -182,3 +182,8 @@ outputs/essay3_q2/*_stdout.txt
 
 # Defense supplement run logs (runtime lines differ run to run)
 outputs/defense_supplement/*.log
+
+# Repo cleanup 2026-10-03 (Tim): literature PDFs are local-only; keep kept reports trackable.
+Data/Articles/
+!outputs/**/*.md
+!docs/**/*.md
