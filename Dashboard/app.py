@@ -1,486 +1,263 @@
 """
-Data Breach Disclosure Timing and Market Reactions
-Interactive Committee-Focused Dashboard
+Overview page of the dissertation dashboard.
 
-Central Research Question:
-"Is there any benefit to disclosing a data breach immediately,
-or should it be delayed?"
+Shows the setting, the data chain from notification records to each essay's analysis sample,
+and one headline card per essay. Every number on this page is read at run time from a
+committed pipeline output (named in a caption under each element); none is typed here.
 
-Framework: Information Asymmetry Theory
-Natural Experiment: FCC Regulation (2007)
-
-This dashboard tells the complete story: Problem → Theory → Evidence → Implications
+Run from the repository root:
+    streamlit run Dashboard/app.py
 """
-
-import streamlit as st
-import pandas as pd
-import numpy as np
-import plotly.express as px
-import plotly.graph_objects as go
+import re
+import sys
 from pathlib import Path
-import json
-from utils import load_main_dataset
 
-# ===============================
-# PAGE CONFIGURATION
-# ===============================
-st.set_page_config(
-    page_title="Data Breach Analytics - Committee View",
-    page_icon="🔒",
-    layout="wide",
-    initial_sidebar_state="expanded"
+import pandas as pd
+import plotly.graph_objects as go
+import streamlit as st
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from data import (FRAMING, e1_constants, e1_ledger_md, e2_ledger_md, e2_table,  # noqa: E402
+                  e3_constants, guard, read_csv, source, supp_table)
+
+st.set_page_config(page_title='Breach disclosure dissertation', layout='wide')
+
+BLUE = '#2a78d6'
+ORANGE = '#eb6834'
+GRAY = '#8a8984'
+
+
+# ------------------------------------------------------------------ helpers
+def md_tables(text: str) -> list:
+    """Every pipe table in a markdown document, as (heading, DataFrame of strings)."""
+    out, heading, block = [], '', []
+
+    def flush():
+        if len(block) >= 2:
+            rows = [[c.strip() for c in ln.strip().strip('|').split('|')] for ln in block]
+            hdr, body = rows[0], [r for r in rows[1:] if not set(''.join(r)) <= set('-: ')]
+            body = [r + [''] * (len(hdr) - len(r)) for r in body]
+            out.append((heading, pd.DataFrame([r[:len(hdr)] for r in body], columns=hdr)))
+        block.clear()
+
+    for ln in text.splitlines():
+        if ln.strip().startswith('|'):
+            block.append(ln)
+            continue
+        flush()
+        if ln.startswith('#'):
+            heading = ln.lstrip('#').strip()
+    flush()
+    return out
+
+
+def num(s) -> int:
+    """'**1,054**' -> 1054."""
+    return int(re.sub(r'[^\d-]', '', str(s)))
+
+
+def find_table(tables, col_must: str, heading_has: str = ''):
+    for h, df in tables:
+        if col_must in df.columns and heading_has.lower() in h.lower():
+            return df
+    raise KeyError(f'no table with column {col_must!r} under a heading containing {heading_has!r}')
+
+
+def row_starting(df: pd.DataFrame, col: str, prefix: str) -> pd.Series:
+    hit = df[df[col].astype(str).str.strip().str.startswith(prefix)]
+    if hit.empty:
+        raise KeyError(f'no row whose {col!r} starts with {prefix!r}')
+    return hit.iloc[0]
+
+
+# ------------------------------------------------------------------ header
+st.title('Data Breach Disclosure Timing and Market Reactions')
+st.markdown('**Timothy D. Spivey** · University of South Alabama · Doctoral dissertation, three essays')
+st.info(FRAMING)
+
+st.markdown(
+    '**The setting.** The FCC rule at **47 CFR 64.2011** governs breaches of customer proprietary '
+    'network information at telecommunications carriers. It sets two things: a clock for '
+    'notifying *law enforcement* (through the federal reporting facility), and an *embargo* that '
+    'bars the carrier from telling customers or the public until a waiting period after that '
+    'law-enforcement report has run (law enforcement can extend it). That makes the rule a '
+    '**floor on public notice, not a ceiling**: it says when a carrier may first speak, not how '
+    'quickly it must. It sets no time limit at all on customer notification. Carriers are '
+    'identified by FCC Form 499 registration, so "treated" throughout means a breach at a Form 499 '
+    'registrant, compared against breaches at other public firms in the same post-2007 period.'
 )
 
-# ===============================
-# CUSTOM STYLING
-# ===============================
-st.markdown("""
-<style>
-/* Research story color scheme */
-.research-header {
-    font-size: 2.8rem;
-    font-weight: bold;
-    color: #1f77b4;
-    text-align: center;
-    padding: 1rem 0;
-    margin-bottom: 2rem;
-    border-bottom: 3px solid #1f77b4;
-}
-
-.research-question {
-    font-size: 1.6rem;
-    color: #d62728;
-    font-weight: bold;
-    margin: 1.5rem 0 1rem 0;
-    padding: 1rem;
-    background-color: #ffe6e6;
-    border-left: 5px solid #d62728;
-    border-radius: 5px;
-}
-
-.research-question p, .research-question li {
-    color: #333;
-}
-
-.key-finding {
-    font-size: 1.2rem;
-    color: #2ca02c;
-    font-weight: bold;
-    margin: 1rem 0;
-    padding: 1rem;
-    background-color: #e6ffe6;
-    border-left: 5px solid #2ca02c;
-    border-radius: 5px;
-}
-
-.evidence-box {
-    background-color: #f0f2f6;
-    padding: 1.5rem;
-    border-radius: 10px;
-    border-left: 5px solid #1f77b4;
-    margin: 1rem 0;
-    color: #333;
-}
-
-.evidence-box p, .evidence-box li, .evidence-box span {
-    color: #333 !important;
-}
-
-/* Ensure all text in light boxes is dark */
-[style*="background-color: #e6f2ff"] { color: #333; }
-[style*="background-color: #ffe6e6"] { color: #333; }
-[style*="background-color: #f0f2f6"] { color: #333; }
-[style*="background-color: #e6ffe6"] { color: #333; }
-[style*="background-color: #fff4e6"] { color: #333; }
-[style*="background-color: #e6f2ff"] p { color: #333; }
-[style*="background-color: #ffe6e6"] p { color: #333; }
-[style*="background-color: #f0f2f6"] p { color: #333; }
-[style*="background-color: #e6ffe6"] p { color: #333; }
-[style*="background-color: #fff4e6"] p { color: #333; }
-
-.implication-box {
-    background-color: #fff4e6;
-    padding: 1.5rem;
-    border-radius: 10px;
-    border-left: 5px solid #ff7f0e;
-    margin: 1rem 0;
-}
-
-.metric-card {
-    background-color: #f8f9fa;
-    padding: 1rem;
-    border-radius: 8px;
-    border: 1px solid #dee2e6;
-    margin: 0.5rem 0;
-    text-align: center;
-}
-
-.tab-container {
-    margin: 2rem 0;
-}
-
-.stTabs [data-baseweb="tab-list"] { gap: 2rem; }
-</style>
-""", unsafe_allow_html=True)
-
-# ===============================
-# LOAD DATA WITH CACHING
-# ===============================
-@st.cache_data
-def load_ml_results():
-    """Load ML validation results"""
-    try:
-        root_dir = Path(__file__).parent.parent
-        ml_path = root_dir / 'outputs' / 'ml_models' / 'ml_model_results.json'
-        with open(ml_path, 'r') as f:
-            return json.load(f)
-    except FileNotFoundError:
-        return None
-
-@st.cache_data
-def load_sample_attrition():
-    """Load sample attrition analysis"""
-    try:
-        root_dir = Path(__file__).parent.parent
-        attrition_path = root_dir / 'outputs' / 'tables' / 'sample_attrition.csv'
-        return pd.read_csv(attrition_path)
-    except FileNotFoundError:
-        return None
-
-# Load all data (using smart local + cloud fallback)
-df = load_main_dataset()
-ml_results = load_ml_results()
-sample_attrition = load_sample_attrition()
-
-if df is None:
-    st.error("❌ Data not found! Ensure data files are in Data/processed/")
-    st.stop()
-
-# ===============================
-# EXPORT FUNCTIONALITY
-# ===============================
-def generate_dissertation_report():
-    """Generate downloadable dissertation findings summary report"""
-
-    # Get essay statistics from the dataframe
-    essay1_n = 926  # CRSP sample with market reaction data
-    essay2_n = df['return_volatility_pre'].notna().sum() if 'return_volatility_pre' in df.columns else 916
-    essay3_n = df['executive_change_30d'].notna().sum() if 'executive_change_30d' in df.columns else 896
-
-    # Calculate key statistics
-    car_5day_mean = df['car_5d'].mean() if 'car_5d' in df.columns else -0.01
-    volatility_post_mean = df['return_volatility_post'].mean() if 'return_volatility_post' in df.columns else 26.46
-    exec_change_30d_pct = (df['executive_change_30d'].sum() / essay3_n * 100) if essay3_n > 0 else 46.4
-    fcc_car_coef = -2.19  # From TABLE B8
-
-    report = f"""DISSERTATION FINDINGS SUMMARY REPORT
-====================================================================================================
-
-Generated: {pd.Timestamp.now().strftime('%B %d, %Y')}
-Research Question: Is there any benefit to disclosing a data breach immediately, or should it be delayed?
-
-====================================================================================================
-ESSAY 1: MARKET REACTIONS TO DATA BREACHES
-====================================================================================================
-
-Research Question:
-Do markets react negatively to forced disclosure under FCC regulation?
-
-Key Findings:
-- FCC-regulated firms experience WORSE market reactions to disclosures
-- Effect is robust across multiple model specifications and robustness checks
-- Main coefficient suggests significant negative abnormal returns for regulated firms
-
-Sample Size: {essay1_n} breached firms with CRSP stock market data
-Study Period: 2004-2019
-
-Main Results:
-- Average 5-day CAR (all firms): {car_5day_mean:.2f}%
-- FCC Regulation Effect: {fcc_car_coef:.2f}% (significant at p<0.05)
-- Robustness: Effect remains significant controlling for firm size, leverage, prior breaches
-- Post-2007 Interaction Test: Effect is FCC-specific (p=0.0125, coef=-2.26%)
-
-Implication:
-FCC-mandated immediate disclosure does not reduce information asymmetry but increases market concerns.
-Forced timing (7-day requirement) may sacrifice disclosure quality for speed.
-
-====================================================================================================
-ESSAY 2: INFORMATION ASYMMETRY AND VOLATILITY RESPONSE
-====================================================================================================
-
-Research Question:
-Does forced early disclosure increase market volatility (information asymmetry)?
-
-Key Findings:
-- FCC firms experience HIGHER post-breach volatility despite forced disclosure
-- Volatility increases rather than decreases, suggesting information quality issues
-- Early forced disclosure creates uncertainty rather than clarity
-
-Sample Size: {essay2_n} breached firms with complete volatility data
-Study Period: 2004-2019
-
-Main Results:
-- Average post-breach volatility (all firms): {volatility_post_mean:.2f}%
-- FCC Regulation Effect on Volatility: +1.83% (significant at p<0.05)
-- Interpretation: Forced 7-day disclosure INCREASES rather than decreases asymmetry
-- Mechanism: Speed over substance reduces information quality
-
-Implication:
-Regulatory pressure for speed may force incomplete or hastily prepared disclosures, increasing
-rather than decreasing information asymmetry. Quality of disclosure matters more than timing.
-
-====================================================================================================
-ESSAY 3: GOVERNANCE RESPONSE AND EXECUTIVE TURNOVER
-====================================================================================================
-
-Research Question:
-Do firms respond to breach disclosure with executive leadership changes?
-
-Key Findings:
-- {exec_change_30d_pct:.1f}% of breaches trigger executive turnover within 30 days
-- Governance response is the primary firm response (not regulatory enforcement)
-- Regulatory enforcement rare (only 0.6% of cases → FCC enforcement)
-
-Sample Size: {essay3_n} breached firms with executive composition data
-Study Period: 2004-2019
-
-Main Results:
-- Executive turnover (30 days): {exec_change_30d_pct:.1f}% of breaches
-- Executive turnover (90 days): 62% of breaches
-- Regulatory enforcement cases: 0.6% of breaches
-- Governance response >> Regulatory response
-
-Implication:
-Firms' primary response to breaches is governance restructuring (board/executive changes),
-not regulatory penalties. This suggests boards view breach response as critical to firm credibility.
-
-====================================================================================================
-THE DISCLOSURE PARADOX: THREE-ESSAY SYNTHESIS
-====================================================================================================
-
-Central Finding:
-Faster disclosure ≠ Better market outcomes or reduced information asymmetry
-
-Why This Matters:
-1. FOR COMPANIES: Fast disclosure under regulatory pressure may backfire if preparation is rushed
-2. FOR REGULATORS: Timing requirements must balance speed with disclosure quality
-3. FOR THEORY: Information asymmetry theory requires quality, not just speed
-4. FOR MARKETS: Volatility reflects investor uncertainty, not regulatory compliance
-
-====================================================================================================
-DATA SOURCE
-====================================================================================================
-
-Complete Descriptive Statistics: outputs/tables/TABLE1_COMBINED.txt
-- Panel A: Full Sample (N=1,054)
-- Panel B: CRSP Sample (N=926, with market reaction data)
-- Panel C: By FCC Regulation (N=926)
-- Panel D: By Disclosure Timing (N=926)
-
-All continuous variables winsorized at 1% and 99% levels.
-
-====================================================================================================
-END OF REPORT
-====================================================================================================
-"""
-    return report
-
-# Add export button in sidebar
-with st.sidebar:
-    st.markdown("---")
-    st.markdown("### 📥 Export Findings")
-
-    # Generate the report
-    report_text = generate_dissertation_report()
-
-    # Create download button
-    st.download_button(
-        label="📥 Download Summary Report",
-        data=report_text,
-        file_name="Dissertation_Summary_Report.txt",
-        mime="text/plain",
-        use_container_width=True
-    )
-
-    st.caption("📄 Generate a downloadable summary of all dissertation findings.")
-    st.markdown("---")
-
-# ===============================
-# MAIN WELCOME PAGE
-# ===============================
-st.markdown("<div class='research-header'>🔒 Data Breach Disclosure Timing and Market Reactions</div>", unsafe_allow_html=True)
-
-st.markdown("""
-<div class='evidence-box'>
-<h3>Central Research Question</h3>
-<p style='font-size: 1.3rem; color: #d62728; font-weight: bold;'>
-"Is there any benefit to disclosing a data breach immediately, or should it be delayed?"
-</p>
-<p style='margin-top: 1rem;'>
-This is a <b>practical question</b> every breached company faces with real financial and reputational stakes.<br>
-This is a <b>theoretical puzzle</b> that information asymmetry theory helps solve.<br>
-This is a <b>policy question</b> that regulators actively debate.
-</p>
-</div>
-""", unsafe_allow_html=True)
-
-# Key statistics
-st.markdown("## 📊 The Dataset")
-col1, col2, col3, col4, col5 = st.columns(5)
-
-with col1:
-    st.metric("Total Breaches", f"{len(df):,}")
-with col2:
-    st.metric("Study Period", f"{int(df['breach_year'].min())}-{int(df['breach_year'].max())}")
-with col3:
-    essay2_n = df['return_volatility_pre'].notna().sum()
-    essay2_pct = (essay2_n / len(df)) * 100
-    st.metric("Essay 2 Sample", f"{essay2_n} ({essay2_pct:.1f}%)")
-with col4:
-    essay3_n = df['executive_change_30d'].notna().sum()
-    essay3_pct = (essay3_n / len(df)) * 100
-    st.metric("Essay 3 Sample", f"{essay3_n} ({essay3_pct:.1f}%)")
-with col5:
-    st.metric("Unique Companies", f"{df['org_name'].nunique():,}")
-
-# Navigation guide
-st.markdown("---")
-st.markdown("""
-## 🗺️ How to Use This Dashboard
-
-This dashboard tells a complete three-essay research story. Navigate through pages in order:
-
-1. **📖 Welcome** (you are here) - Research questions and context
-2. **🔬 Natural Experiment** - FCC regulation as treatment and identification strategy
-3. **📋 Sample Validation** - Proof that sample is defensible
-4. **🌍 Data Landscape** - What are we analyzing?
-5. **📈 Essay 1: Market Reactions** - Do markets react negatively to forced disclosure?
-6. **💨 Essay 2: Information Asymmetry** - Does forced timing increase volatility?
-7. **👔 Essay 3: Governance Response** - Do firms respond with executive turnover?
-8. **💡 Key Findings** - Three-essay synthesis and the Disclosure Paradox
-9. **✅ Conclusion** - Cross-essay implications for business, policy, research
-10. **📂 Raw Data Explorer** - Search, filter, explore all data yourself
-11. **📚 Data Dictionary** - All variables documented
-
-Each section shows: **Research Question → Evidence → Finding → Implication**
-
----
-
-### Quick Context
-
-**Why does this research matter?**
-
-- **For Companies**: Understanding market reactions helps with crisis management and disclosure strategy
-- **For Regulators**: FCC and other agencies set disclosure timelines; this research shows the market consequences
-- **For Theory**: Tests information asymmetry theory in the real-world context of data breaches
-- **For Your Committee**: Demonstrates rigorous research combining theory, natural experiments, and ML validation
-
----
-
-### Preview of Key Findings
-
-This research reveals a **counterintuitive result**:
-""", unsafe_allow_html=True)
-
-st.markdown("""
-<div class='key-finding'>
-✨ THREE KEY FINDINGS - THE DISCLOSURE PARADOX
-
-<b>Essay 1:</b> FCC-regulated firms have WORSE market reactions (-2.19% CAR). FCC penalty is robust to CPNI and market concentration controls (remains significant at -1.15% to -2.44%).
-
-<b>Essay 2:</b> FCC firms experience HIGHER volatility (+1.83%**) even with forced 7-day disclosure. Information asymmetry INCREASES rather than decreases - forced early disclosure sacrifices quality for speed.
-
-<b>Essay 3:</b> 46.4% of breaches trigger executive turnover within 30 days (416/896 breaches). Firms respond organizationally; 6 enforcement cases (0.6%) - governance response exceeds regulatory response.
-
-This challenges the assumption that "faster disclosure = better outcomes". The answer depends critically on regulatory context AND impacts multiple stakeholders (market, management, boards).
-</div>
-""", unsafe_allow_html=True)
-
-# ===============================
-# NATURAL EXPERIMENT VALIDATION
-# ===============================
-st.markdown("---")
-st.markdown("""
-## 🔬 Natural Experiment Validation
-
-### Parallel Trends: Evidence of Causal Identification
-
-For a natural experiment design to be credible, FCC-regulated and non-FCC firms must show **parallel trends**
-before the 2007 FCC 7-Day Rule implementation. This figure provides visual proof of that assumption.
-""")
-
-# Load and display parallel trends figure
-try:
-    from pathlib import Path
-    root_dir = Path(__file__).parent.parent
-    figure_path = root_dir / 'outputs' / 'figures' / 'FIGURE_PARALLEL_TRENDS.png'
-
-    if figure_path.exists():
-        st.image(str(figure_path), caption="""
-        **Figure 1: Parallel Trends in Cumulative Abnormal Returns (CAR)**
-
-        Pre-2007 (before FCC 7-Day Rule): FCC and non-FCC firms show similar CAR patterns (no significant difference, p=0.88)
-
-        Post-2007 (after regulation): FCC firms experience worse market reactions (-2.26%, p=0.0125)
-
-        This temporal pattern is consistent with causal interpretation: the treatment effect emerges exactly when
-        the regulation takes effect, not before. This is the core evidence that FCC 7-Day Rule causally affects market outcomes.
-        """, use_column_width=True)
-
-        st.markdown("""
-        ### What This Validates
-
-        ✅ **Temporal Validity**: FCC effect appears post-2007 (when regulation took effect), not pre-2007
-
-        ✅ **Causal Identification**: The timing of effect emergence matches the timing of regulation implementation
-
-        ✅ **Natural Experiment Strength**: This is exactly the pattern expected from a true causal shock
-
-        ✅ **Robustness**: Three additional validation tests support causal interpretation:
-        - Industry fixed effects (effect strengthens, not weakens, with industry controls)
-        - Size sensitivity (effects vary by firm size in mechanistically consistent ways)
-        - Multi-outcome consistency (FCC affects returns, volatility, AND governance)
-        """)
-    else:
-        st.warning("⚠️ Parallel trends figure not found. Run `python scripts/create_parallel_trends_figure.py` to generate.")
-
-except Exception as e:
-    st.warning(f"⚠️ Could not load parallel trends figure: {str(e)}")
-
-# Balance Test Reference
-st.markdown("""
-### Balance Test: Pre-Treatment Covariate Parity
-
-Before 2007, FCC-regulated and non-FCC firms should be balanced on observable characteristics
-(firm size, leverage, profitability). This strengthens the parallel trends assumption.
-
-**Table A1 (Balance Test Results):**
-- Log(Total Assets): p=0.330 (balanced)
-- Leverage (Debt/Assets): p=0.126 (balanced)
-- Return on Assets: p=0.474 (balanced)
-
-**Conclusion:** FCC ≈ non-FCC on all observables pre-2007. Parallel trends assumption is plausible.
-
-See `outputs/tables/TABLE_BALANCE_TEST.csv` for detailed results.
-""")
-
-# Footer with navigation
-st.markdown("---")
-st.info("""
-👈 **Use the sidebar to navigate** to different analysis pages.
-
-Each page builds on previous insights.
-Start with "Natural Experiment" to understand the framework.
-Then progress through Essays 1, 2, and 3 evidence.
-End with "Conclusion" for the full three-essay synthesis.
-""")
-
-st.markdown(f"""
-<div style='text-align: center; color: #666; padding: 2rem 0;'>
-    <p><b>Committee-Focused Research Dashboard</b> | Dissertation in Progress</p>
-    <p>{len(df):,} breaches • {int(df['breach_year'].max()) - int(df['breach_year'].min()) + 1} years ({int(df['breach_year'].min())}-{int(df['breach_year'].max())}) • {len(df.columns)} variables</p>
-    <p style='font-size: 0.9rem; margin-top: 1rem;'>
-        Built with Streamlit | Data analysis with Pandas, Statsmodels, Scikit-learn | Visualizations with Plotly
-    </p>
-</div>
-""", unsafe_allow_html=True)
+st.divider()
+
+# ------------------------------------------------------------------ data chain
+st.header('The data chain')
+st.markdown(
+    'The unit changes along the way. The source is a set of public breach **notification records**; '
+    'entity resolution (Gate 1) keeps records that resolve to an SEC registrant, de-duplication on '
+    'parent CIK and breach date turns records into **firm-day events**, and the rolling-campaign rule '
+    '(Gate 2) folds chained refilings into one **canonical event**. Each essay then builds its own '
+    'analysis sample from the canonical events. The three essay samples overlap heavily but are '
+    '**not nested**: each applies its own data requirements (returns around the breach date, returns '
+    'around the public notification date, or executive-departure filings).'
+)
+
+
+def chain_section():
+    t1 = md_tables(e1_ledger_md())
+    t2 = md_tables(e2_ledger_md())
+    chain = find_table(t1, 'Step', 'chain')
+    g1 = row_starting(chain, 'Step', 'Gate 1')
+    s3 = row_starting(chain, 'Step', 'Stage 3')
+    g2 = row_starting(chain, 'Step', 'Gate 2')
+
+    stages = ['Notification records', 'After Gate 1 (entity resolution)',
+              'Firm-day events (CIK + breach date)', 'Canonical events (after Gate 2)']
+    values = [num(g1['In']), num(g1['Out']), num(s3['Out']), num(g2['Out'])]
+
+    ev2 = find_table(t2, 'Treated parent CIKs', 'event-level')
+    canon = row_starting(ev2, 'Level', 'Canonical events')
+    final2 = ev2.iloc[-1]
+
+    tr1 = find_table(t1, 'Treated parent CIKs', 'treated counts')
+    reg1 = row_starting(tr1, 'Stage', 'Essay 1 regression')
+    c1 = e1_constants()
+    c3 = e3_constants()
+
+    left, right = st.columns([3, 2])
+    with left:
+        fig = go.Figure(go.Funnel(
+            y=stages, x=values, textinfo='value+percent initial',
+            marker=dict(color=[GRAY, GRAY, GRAY, BLUE]),
+            hovertemplate='%{y}<br>%{x:,}<br>%{percentInitial:.1%} of records<extra></extra>'))
+        fig.update_layout(height=360, margin=dict(l=10, r=10, t=10, b=10))
+        st.plotly_chart(fig, width='stretch')
+        st.caption(f"Canonical events: **{num(canon['Treated'])} treated events** "
+                   f"at **{num(canon['Treated parent CIKs'])} treated parent CIKs** "
+                   f"({num(canon['Treated orgs'])} treated organisations); "
+                   f"{num(canon['Control'])} control events.")
+        source('outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md (chain table)',
+               'outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md (event-level table)')
+
+    with right:
+        samples = pd.DataFrame([
+            dict(Sample='Essay 1 regression (breach-anchored CARs)',
+                 N=int(c1['N_regression']), treated=int(c1['treated_regression']),
+                 parents=int(c1['treated_parent_ciks_regression'])),
+            dict(Sample='Essay 2 analytic (notification-anchored volatility)',
+                 N=num(final2['N']), treated=num(final2['Treated']),
+                 parents=num(final2['Treated parent CIKs'])),
+            dict(Sample='Essay 3 v4 analysis (executive departures)',
+                 N=int(c3['N']), treated=int(c3['treated']),
+                 parents=int(c3['treated_parent_ciks'])),
+        ])
+        samples['control'] = samples['N'] - samples['treated']
+        fig = go.Figure()
+        fig.add_bar(y=samples['Sample'], x=samples['treated'], name='Treated events',
+                    orientation='h', marker_color=BLUE,
+                    customdata=samples['parents'],
+                    hovertemplate='%{x} treated events<br>%{customdata} treated parent CIKs<extra></extra>')
+        fig.add_bar(y=samples['Sample'], x=samples['control'], name='Control events',
+                    orientation='h', marker_color=GRAY,
+                    hovertemplate='%{x} control events<extra></extra>')
+        fig.update_layout(barmode='stack', height=360, margin=dict(l=10, r=10, t=30, b=10),
+                          legend=dict(orientation='h', y=1.08), bargap=0.45,
+                          yaxis=dict(autorange='reversed'), xaxis_title='events')
+        st.plotly_chart(fig, width='stretch')
+        show = samples.rename(columns={'N': 'N (events)', 'treated': 'Treated events',
+                                       'parents': 'Treated parent CIKs',
+                                       'control': 'Control events'})
+        st.dataframe(show, hide_index=True, width='stretch')
+        st.caption(f"Essay 1 treated events sit in {num(reg1['Treated organisations'])} treated "
+                   'organisations. Inference clusters on the parent CIK, so the parent-CIK count '
+                   '(not the event count) is the effective number of treated units.')
+        source('outputs/rebuild/constants_v3.json', 'outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md',
+               'outputs/essay3_v4/constants_essay3_v4.json')
+
+
+guard(chain_section)
+
+st.divider()
+
+# ------------------------------------------------------------------ result cards
+st.header('Headline results')
+st.markdown('Each essay\'s primary hypothesis is **null**. The cards give the headline estimate and '
+            'the governing p-value; the essay pages carry the full tables.')
+
+col1, col2, col3 = st.columns(3)
+
+
+def card_e1():
+    c = e1_constants()
+    na = supp_table('e1_notification_anchored')
+    base = na[na['anchor'].astype(str).str.startswith('breach') & (na['hypothesis'] == 'H2_FCC')]
+    with col1, st.container(border=True):
+        st.subheader('Essay 1 · Market reaction')
+        st.markdown('**H2: Form 499 registrant vs other firms**, 30-day CAR (pp)')
+        st.metric('Coefficient (pp)', f"{c['H2_FCC_coef']:+.2f}")
+        lo, hi = c['H2_FCC_ci']
+        st.markdown(f"95% CI [{lo:+.2f}, {hi:+.2f}] · HC3 p = {c['H2_FCC_p']:.3f}")
+        if not base.empty:
+            st.markdown(f"Parent-CIK clustered p = {float(base['p_cv1_parentcik'].iloc[0]):.3f}")
+        st.markdown(f"Status: **{c['H2_FCC_status']}** · N = {c['N_regression']} "
+                    f"({c['treated_regression']} treated events, "
+                    f"{c['treated_parent_ciks_regression']} treated parent CIKs)")
+        st.caption('Detail: **Essay 1 - Market Reaction** page.')
+        source('outputs/rebuild/constants_v3.json', 'outputs/defense_supplement/e1_notification_anchored.csv')
+
+
+def card_e2():
+    lad = e2_table('t26_inference_ladder')
+    r = row_starting(lad, 'procedure', 'CV3')
+    dl = supp_table('e2_delay_ladder')
+    d = dl[(dl['outcome'] == 'delay (raw days)') & dl['rung'].astype(str).str.startswith('CV3')].iloc[0]
+    with col2, st.container(border=True):
+        st.subheader('Essay 2 · Information environment')
+        st.markdown('**Return volatility after notification**, Form 499 vs others (daily pp)')
+        st.metric('Coefficient (daily pp)', f"{r['coef']:+.3f}")
+        st.markdown(f"CV3 95% CI [{r['ci_lo']:+.3f}, {r['ci_hi']:+.3f}] · **CV3 p = {r['p']:.3f}**")
+        st.markdown(f"**Disclosure delay (raw days):** {d['coef']:+.1f} days, "
+                    f"CV3 p = {d['p']:.3f} (N = {int(d['N'])}, {int(d['n_treated_events'])} treated "
+                    f"events, {int(d['G1'])} treated parent CIKs)")
+        st.markdown('The announcement-window elevation is a pre-specified **secondary** result, '
+                    'reported on the Essay 2 page.')
+        st.caption('Detail: **Essay 2 - Information Environment** page.')
+        source('outputs/tables/essay2_v2/t26_inference_ladder.csv',
+               'outputs/defense_supplement/e2_delay_ladder.csv')
+
+
+def card_e3():
+    c = e3_constants()
+    with col3, st.container(border=True):
+        st.subheader('Essay 3 · Governance response')
+        st.markdown('**Executive departure** after the breach, Form 499 vs others (pp)')
+        rows = []
+        for w in (30, 90, 180):
+            rows.append({'Window (days)': w, 'Coefficient (pp)': round(100 * c[f'F1_{w}_coef'], 2),
+                         'CV3 p': round(c[f'F1_{w}_p_cv3'], 3),
+                         'MDE80 (pp)': round(100 * c[f'F1_{w}_mde80_cv3'], 1)})
+        st.dataframe(pd.DataFrame(rows), hide_index=True, width='stretch')
+        st.markdown(f"N = {c['N']} ({c['treated']} treated events, "
+                    f"{c['treated_parent_ciks']} treated parent CIKs; {c['parent_ciks']} clusters)")
+        st.caption('Detail: **Essay 3 - Governance Response** page.')
+        source('outputs/essay3_v4/constants_essay3_v4.json')
+
+
+guard(card_e1)
+guard(card_e2)
+guard(card_e3)
+
+st.divider()
+st.subheader('How to read this dashboard')
+st.markdown(
+    '- Every number is **read at run time from a committed pipeline output**; the file is named in '
+    'the "Source:" caption under each chart or table. Nothing is typed into the page code, so the '
+    'dashboard cannot drift from the essays.\n'
+    '- The verified state of every result is the git tag **`defense-final`**.\n'
+    '- Treated counts always name their level: events, organisations, or parent CIKs.\n'
+    '- Essays 2 and 3 are governed by CV3 (cluster jackknife) with the wild cluster bootstrap as '
+    'corroboration; HC3 is shown only as a lower bound on the standard error. Essay 1 reports HC3 '
+    'with parent-CIK clustered p-values alongside.\n'
+    '- No raw licensed data (CRSP or Compustat rows) is loaded; only results and documentation.\n'
+    '- Pages: three essay pages, a **Robustness and Defense Supplement**, and **Limitations and '
+    'Audit Trail**.'
+)

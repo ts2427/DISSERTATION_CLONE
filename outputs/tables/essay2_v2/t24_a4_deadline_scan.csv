@@ -14,19 +14,3 @@ scripts\h1_comprehensive_power_analysis.py,385,only {immediate_7d/len(analysis_d
 scripts\update_existing_proposal.py,190,"""Only 17.6% of firms disclose within 7 days. This non-compliance puzzle is explained by """,[Dd]isclose within
 scripts\update_proposal_documents.py,621,FCC 7-Day Rule Impacts:,7-Day Rule
 scripts\update_proposal_documents.py,660,Current Rule: 7-day disclosure mandate (effective 2007),7-day disclosure
-Dashboard\app.py,225,- Interpretation: Forced 7-day disclosure INCREASES rather than decreases asymmetry,7-day disclosure
-Dashboard\app.py,391,<b>Essay 2:</b> FCC firms experience HIGHER volatility (+1.83%**) even with forced 7-day disclosure. Information asymmet,7-day disclosure
-Dashboard\app.py,409,before the 2007 FCC 7-Day Rule implementation. This figure provides visual proof of that assumption.,7-Day Rule
-Dashboard\app.py,422,"Pre-2007 (before FCC 7-Day Rule): FCC and non-FCC firms show similar CAR patterns (no significant difference, p=0.88)",7-Day Rule
-Dashboard\app.py,427,"the regulation takes effect, not before. This is the core evidence that FCC 7-Day Rule causally affects market outcomes.",7-Day Rule
-Dashboard\pages\0_Research_Story.py,103,Regulator forces 7-day disclosure,7-day disclosure
-Dashboard\pages\0_Research_Story.py,283,"FCC-regulated firms (telecom, cable, VoIP, satellite) → FORCED to disclose within 7 days",[Dd]isclose within
-Dashboard\pages\1_Natural_Experiment.py,66,"'Regulation passed\n(Mandatory 7-day rule)',",[Mm]andatory 7
-Dashboard\pages\1_Natural_Experiment.py,111,<li><b>Requirement:</b> Disclose within 7 days (FCC 7-Day Rule)</li>,7-Day Rule
-Dashboard\pages\3_Data_Landscape.py,89,- After 2007: FCC firms forced to disclose within 7 days,[Dd]isclose within
-Dashboard\pages\5_Essay2_InformationAsymmetry.py,327,- Forced 7-day disclosure → Incomplete information → Market uncertainty INCREASES,7-day disclosure
-Dashboard\pages\5_Essay2_InformationAsymmetry.py,473,"**47 CFR 64.2011 became effective December 8, 2007; it sets a 7-business-day law-enforcement notification clock and emba",disclosure deadline
-Dashboard\pages\6_Essay3_GovernanceResponse.py,272,"**47 CFR 64.2011 became effective December 8, 2007; it sets a 7-business-day law-enforcement notification clock and emba",disclosure deadline
-Dashboard\pages\8_Key_Findings.py,287,FCC PATH (Forced 7-day disclosure):,7-day disclosure
-Dashboard\pages\8_Key_Findings.py,359,- Market EXPECTS 7-day disclosure (it's required),7-day disclosure
-Dashboard\pages\9_Conclusion.py,144,- After 2007: FCC firms forced to disclose within 7 days; non-FCC still free,[Dd]isclose within

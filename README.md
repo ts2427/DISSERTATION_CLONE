@@ -141,7 +141,7 @@ Data/                Inputs (see Git LFS and Data sections above)
 outputs/             Committed results, tables, reports, ledgers
 docs/                Methods documentation, data quality, audit records
 archive/             Superseded material at its original paths (archive/ARCHIVE_MAP.csv)
-Dashboard/           Streamlit app (stale; see note below)
+Dashboard/           Streamlit app reading the committed outputs (see Dashboard below)
 ```
 
 Working notes and query documents live in `docs/claude/`.
@@ -152,7 +152,11 @@ Working notes and query documents live in `docs/claude/`.
 
 ## Dashboard
 
-**The dashboard has not been updated to the current chain**, and most of its pages are archived. It still presents the retired natural-experiment framing and pre-rebuild results. Do not use it to read current findings.
+```bash
+streamlit run Dashboard/app.py
+```
+
+A local Streamlit app that presents the three essays as they stand at `defense-final`: an overview and the data chain, one page per essay, robustness and the defense supplement, and the limitations and audit trail. **It computes nothing and types no results.** Every number is read at run time from a committed output (constants files, appendix and essay tables, the defense supplement), and the file is named under each chart. It reads no raw CRSP or Compustat rows. Rebuilt 2026-10-03; the previous dashboard, with its retired framing and pre-rebuild numbers, is in `archive/Dashboard/`.
 
 ---
 
