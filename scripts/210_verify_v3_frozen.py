@@ -250,6 +250,14 @@ V4_DOCS = (
     "outputs/REPO_INVENTORY.csv",
     "outputs/REPO_INVENTORY_SUMMARY.md",
     "outputs/REPO_CLEANUP_REPORT.md",
+    # Newly tracked 2026-10-03: pipeline reports written by live steps 150-156, never committed
+    # while *.md was ignored, each byte-identical across two clean-clone runs. Not tracked:
+    # STAGE4_TREATMENT_REPORT.md, which prints the registry snapshot's file date.
+    "outputs/rebuild/GATE1_APPLICATION_REPORT.md",
+    "outputs/rebuild/GATE1_SUMMARY.md",
+    "outputs/rebuild/GATE2_ADJACENCY_SHEET.md",
+    "outputs/rebuild/STAGE5_REPORT.md",
+    "outputs/rebuild/STAGE6_REPORT.md",
 )
 SCRIPT_RE = re.compile(r"^scripts/(\d+)_[^/]*\.py$")
 SCRIPT_LO, SCRIPT_HI = 210, 254  # 250-253: defense supplement; 254: shared CRSP loader (2026-10-02)
