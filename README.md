@@ -20,6 +20,8 @@ Code, data-construction pipeline, and committed outputs for a three-essay disser
 
 **Treatment** is FCC Form 499 registration status, established by a documented two-clause rule with adjudications. It is never SIC code.
 
+**Reviewing the pipeline?** Start with [`REVIEWER_GUIDE.md`](REVIEWER_GUIDE.md): one page on setup, the expected run, where every result lives, and how to verify it.
+
 **Inference frame.** Cluster-jackknife (CV3) standard errors on parent CIK, with a restricted wild cluster bootstrap. HC3 is reported for comparison only and is **disqualified**: it ignores within-parent clustering. No HC3 p-value should be read as significance anywhere in this project.
 
 ---
@@ -27,7 +29,8 @@ Code, data-construction pipeline, and committed outputs for a three-essay disser
 ## Verified states (tags)
 
 - **`defense-final`** (`902a8ea`) — the verified state of every result. A clean clone of this tag runs `run_all.py` to exit 0 (one declared skip, `scripts/170`, which needs a licensed quote file), the freeze gate `scripts/210` passes, and every essay and supplement output reproduces byte for byte. Every file ever committed, including everything later archived or removed, is intact at this tag.
-- **`repo-clean`** — the same results after the repository cleanup: superseded material moved to `archive/`, nothing in the pipeline changed, verified again from a clean clone.
+- **`repo-clean`** (`0184898`) — the same results after the repository cleanup: superseded material moved to `archive/`, nothing in the pipeline changed, verified again from a clean clone.
+- **`main`** — `repo-clean` plus the reviewer guide and a pinned `requirements.txt`. Same pipeline, same outputs. Use `main`'s `requirements.txt` even when checking out `defense-final` (see Setup).
 
 ---
 
@@ -44,7 +47,10 @@ source .venv/Scripts/activate   # Windows (Git Bash); use .venv/bin/activate on 
 pip install -r requirements.txt
 ```
 
-**The environment is defined by `requirements.txt`.**
+**The environment is defined by `requirements.txt`**, which pins the exact package versions that produced the committed outputs (tested on Python 3.13.2). Two lessons from a from-scratch test on 2026-10-03:
+
+- **Use exact pins.** With minimum versions only (the file at `defense-final`), a fresh install pulls newer releases. Those reproduce every primary result but move a few non-primary digits and figure pixels. The `defense-final` file also lacked `python-docx`. With `main`'s pinned file, a brand-new environment reproduces every output byte for byte.
+- **Keep the virtual environment's path short on Windows.** Under a long directory path, `pip install` fails partway when a file inside statsmodels exceeds Windows' 260-character limit. Packages after it, such as `lifelines`, never install. Either use a short path or enable Windows long paths.
 
 ### Git LFS
 
@@ -56,7 +62,7 @@ head -c 60 <file>   # a placeholder begins: version https://git-lfs.github.com/s
 
 ### Data not in Git
 
-Licensed and bulk inputs (CRSP, Compustat, and other WRDS extracts) beyond the committed extracts are not redistributed here. See `docs/WRDS_EXTRACT_RECIPE.md` for how each extract was pulled and how to reproduce it with your own WRDS credentials. Public EDGAR inputs, including the Item 5.02 filing texts, are committed. The literature PDFs under `Data/Articles/` are local-only and not tracked.
+Licensed and bulk inputs (CRSP, Compustat, and other WRDS extracts) beyond the committed extracts are not redistributed here. See `docs/WRDS_EXTRACT_RECIPE.md` for how each extract was pulled and how to reproduce it with your own WRDS credentials. Public EDGAR inputs, including the Item 5.02 filing texts, are committed. The literature PDFs are kept outside the repository and are not tracked (`Data/Articles/` is ignored).
 
 ---
 
@@ -65,6 +71,8 @@ Licensed and bulk inputs (CRSP, Compustat, and other WRDS extracts) beyond the c
 ```bash
 python run_all.py          # full pipeline, all three essays and the defense supplement
 ```
+
+**Expected result:** about 10 minutes on a laptop, exit code 0, and one declared skip. The skip is `scripts/170`, which needs a licensed CRSP quote file that is not redistributed; its committed outputs come from the licensed run (`docs/claude/REPRODUCE_ESSAY2.md`). Any other failed step means the run is not clean.
 
 `run_all.py` is the authority on stage order, which scripts are current, and which are retired. Read its docstring before running anything. It runs the Essay 1 chain (`scripts/150`-`160`, `247`), the Essay 3 v4 chain (`scripts/212`-`246`, with the freeze gate `210`), the Essay 2 chain (`scripts/163`-`182`) and the defense supplement (`scripts/249`-`253`). Every chain asserts its results against a committed baseline, so a silent change in an estimate fails the run.
 
@@ -126,7 +134,8 @@ The lesson is recorded in `docs/DATA_QUALITY_DOCUMENTATION.md`: verify a pipelin
 
 ```
 run_all.py           Pipeline entry point and stage authority
-requirements.txt     The environment
+requirements.txt     The environment (pinned)
+REVIEWER_GUIDE.md    One-page guide for reviewing and reproducing the pipeline
 scripts/             Data construction, estimation, validation (live steps listed in run_all.py)
 Data/                Inputs (see Git LFS and Data sections above)
 outputs/             Committed results, tables, reports, ledgers
