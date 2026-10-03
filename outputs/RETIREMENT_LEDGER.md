@@ -927,3 +927,25 @@ on 2026-09-29 (Part H) because it read the pre-rebuild dataset.
 
 `outputs/retired_originals_20260902/` holds earlier copies of three of these files, retired on 2026-09-02.
 Root-level SCM notes such as `SCM_*.md` are untracked working documents, not pipeline artefacts.
+
+---
+
+# 2026-10-03 — REPO CLEANUP: ARCHIVED, REMOVED, UNTRACKED
+
+**Ruling (Tim, 2026-10-03).** `main` should hold only three kinds of file: what `run_all.py` needs, what the essays cite, and the audit trail. **Every file below is still intact at `defense-final` (902a8ea)**, and still in history. No script's logic changed, and `CANONICAL_V3.csv` and `CANONICAL_V4.csv` were not touched. Inventory and classification: `outputs/REPO_INVENTORY.csv`, `outputs/REPO_CLEANUP_REPORT.md`.
+
+| action | files | detail |
+|---|---|---|
+| **archived** (`git mv` to `archive/<same path>`) | 708 | the 716 Stage 1 ARCHIVE files minus the 19 NVD feeds (697), plus `tests/` and `validation/` (11). 69 of them are LFS objects; their LFS rules were appended to `.gitattributes` under the new paths. Old to new: `archive/ARCHIVE_MAP.csv`. |
+| **removed** (`git rm`) | 19 | `Data/JSON Files/nvdcve-2.0-2007..2025.json` (1,818 MB, LFS). These are **public NIST NVD CVE feeds, re-downloadable** from nvd.nist.gov, and no live step reads them (they fed the retired CVSS heterogeneity analyses). Preserved at `defense-final`. |
+| **untracked** (`git rm --cached`) | 75 | `Data/Articles/*.pdf`, the literature PDFs. They stay on disk locally, and `Data/Articles/` is now in `.gitignore`. Preserved at `defense-final`. |
+| kept in place (Stage 1 ASK) | 76 | the 35 run logs that kept docs cite; the 18 files that `scripts/164`'s `t24` scan reads (`t24` must stay byte-identical); the 18 files named in kept scripts; the 5 tooling configs |
+
+**Gate change (allowlist entries only).** `scripts/210_verify_v3_frozen.py` gains `"archive/"` in `V4_DIRS` and the three Stage 1 report files in `V4_DOCS`. Nothing else in 210 changed. An archive move removes a baseline path, which the re-created manifest records as MISSING, and adds a path under `archive/`, which the new entry admits. The manifest was re-created last.
+
+**Citing documents were not edited** (ruling). Paths cited in documents dated before 2026-10-03 refer to pre-archive locations and resolve through `archive/ARCHIVE_MAP.csv`. The README says so.
+
+**Also in this cleanup.**
+- **README revised:** `defense-final` and `repo-clean`, where the audit trail lives, `requirements.txt` as the environment, and the ARCHIVE_MAP note. Two stale claims removed.
+- **`.gitignore` (appended):** `Data/Articles/`, `!outputs/**/*.md` and `!docs/**/*.md`.
+- **Branches deleted:** 8 branches, all fully merged into `main`, removed locally and on origin. `main`, `rebuild-v4` and every tag are kept.
