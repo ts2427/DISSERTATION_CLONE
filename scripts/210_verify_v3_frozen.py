@@ -212,6 +212,9 @@ V4_DIRS = (
     # (archive/ARCHIVE_MAP.csv). A move removes the baseline path (recorded MISSING when the
     # manifest is re-created) and adds the archive path, which this entry admits.
     "archive/",
+    # R replication package for the committee (2026-10-04): exported estimation samples and
+    # an R script that reproduces the headline estimates. New folder; touches no v3 path.
+    "r_replication/",
 )
 V4_DOCS = (
     "docs/claude/REBUILD_V4_QUERY.md",
