@@ -13,6 +13,7 @@ Inputs (all written earlier in the same run):
   e3_randomization_inference.csv scripts/250 (Essay 3, N=405)
   e1_notification_anchored.csv   scripts/251 (Essay 1, N=340)
   deck_exhibits.csv              scripts/252 (arithmetic on committed outputs)
+  e1_cluster_ladder.csv          scripts/255 (Essay 1, N=340; added 2026-10-04)
 """
 
 import json
@@ -75,6 +76,22 @@ for _, r in d2.iterrows():
     put(f"E1_notif_{WIN[r['window']]}_N", int(r['N']))
     put(f"E1_notif_{WIN[r['window']]}_treated_events", int(r['n_treated']))
 C['E1_notif_any_p_lt_05'] = bool(((d2['p_hc3'] < .05) | (d2['p_cv1_parentcik'] < .05)).any())
+
+# ---- Essay 1: cluster ladder (scripts/255, added 2026-10-04) ----
+el = pd.read_csv(OUT / 'e1_cluster_ladder.csv')
+assert set(el['N']) == {340} and set(el['G']) == {83} and set(el['G1_treated_parent_ciks']) == {12}, 'E1 ladder sample'
+RUNG1 = {'CV1 parent CIK, t(G-1)': 'cv1', 'CV3 jackknife, t(G-1)': 'cv3', 'WCR restricted Rademacher': 'wcr'}
+for _, r in el[el['rung'].isin(RUNG1)].iterrows():
+    kk = f"E1_ladder_{r['hypothesis']}_{RUNG1[r['rung']]}"
+    put(kk + '_p', float(r['p']))
+    if RUNG1[r['rung']] == 'cv3':
+        put(kk + '_se', float(r['se']))
+        put(kk + '_ci95_lo', float(r['ci95_lo'])); put(kk + '_ci95_hi', float(r['ci95_hi']))
+        put(kk + '_mde80', float(r['mde80'])); put(kk + '_tost_p', float(r['tost_p']))
+        C[kk + '_status'] = str(r['status'])
+C['E1_ladder_any_status_change_under_cv3'] = bool(
+    (el.loc[el['rung'] == 'CV3 jackknife, t(G-1)', 'status'].values !=
+     el.loc[el['rung'].str.startswith('HC3'), 'status'].values).any())
 
 # ---- deck exhibits (scripts/252): row count + every value, hashed by key ----
 dx = pd.read_csv(OUT / 'deck_exhibits.csv')

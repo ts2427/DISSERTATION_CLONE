@@ -1,0 +1,21 @@
+hypothesis,variable,rung,coef,se,p,ci95_lo,ci95_hi,ci90_lo,ci90_hi,df,B,mde80,tost_p,status,N,n_treated_events,G,G1_treated_parent_ciks,seed,note
+H2_FCC,fcc_form499,HC3 (normal; Essay 1 table 4),-0.8051,1.4026,0.5659,-3.5541,1.9438,,,,,,0.1783,NULL-INCONCLUSIVE,340,106,83,12,499,committed primary rung
+H2_FCC,fcc_form499,CV1 parent CIK (normal; Essay 1 table 8),-0.8051,1.2931,0.5335,,,,,,,,,,340,106,83,12,499,
+H2_FCC,fcc_form499,"CV1 parent CIK, t(G-1)",-0.8051,1.2931,0.5353,-3.3776,1.7673,,,82.0,,,,,340,106,83,12,499,
+H2_FCC,fcc_form499,"CV3 jackknife, t(G-1)",-0.8051,1.3836,0.5622,-3.5575,1.9473,-3.1069,1.4967,82.0,,3.923,0.176,NULL-INCONCLUSIVE,340,106,83,12,499,
+H2_FCC,fcc_form499,WCR restricted Rademacher,-0.8051,,0.538,-3.3625,1.9301,,,,99999.0,,,,340,106,83,12,499,"p B=99,999; CI by inversion B=9,999 per evaluation"
+H1_timing,immediate_disclosure,HC3 (normal; Essay 1 table 4),1.15,1.0051,0.2526,-0.82,3.12,,,,,,0.1726,NULL-INCONCLUSIVE,340,106,83,12,499,committed primary rung
+H1_timing,immediate_disclosure,CV1 parent CIK (normal; Essay 1 table 8),1.15,0.8675,0.1849,,,,,,,,,,340,106,83,12,499,
+H1_timing,immediate_disclosure,"CV1 parent CIK, t(G-1)",1.15,0.8675,0.1886,-0.5757,2.8757,,,82.0,,,,,340,106,83,12,499,
+H1_timing,immediate_disclosure,"CV3 jackknife, t(G-1)",1.15,0.9083,0.2091,-0.657,2.957,-0.3612,2.6612,82.0,,2.5755,0.1494,NULL-INCONCLUSIVE,340,106,83,12,499,
+H1_timing,immediate_disclosure,WCR restricted Rademacher,1.15,,0.1813,-0.6868,3.3179,,,,99999.0,,,,340,106,83,12,499,"p B=99,999; CI by inversion B=9,999 per evaluation"
+H3_prior,prior_breaches_1yr,HC3 (normal; Essay 1 table 4),0.0332,0.0644,0.6063,-0.0931,0.1594,,,,,,0.0,BOUNDED NULL,340,106,83,12,499,committed primary rung
+H3_prior,prior_breaches_1yr,CV1 parent CIK (normal; Essay 1 table 8),0.0332,0.0627,0.5963,,,,,,,,,,340,106,83,12,499,
+H3_prior,prior_breaches_1yr,"CV1 parent CIK, t(G-1)",0.0332,0.0627,0.5978,-0.0915,0.1579,,,82.0,,,,,340,106,83,12,499,
+H3_prior,prior_breaches_1yr,"CV3 jackknife, t(G-1)",0.0332,0.0877,0.7062,-0.1414,0.2077,-0.1128,0.1792,82.0,,0.2488,0.0,BOUNDED NULL,340,106,83,12,499,
+H3_prior,prior_breaches_1yr,WCR restricted Rademacher,0.0332,,0.5677,-0.1332,0.2943,,,,99999.0,,,,340,106,83,12,499,"p B=99,999; CI by inversion B=9,999 per evaluation"
+H4_health,health_breach,HC3 (normal; Essay 1 table 4),-1.0247,2.6083,0.6944,-6.137,4.0875,,,,,,0.3402,NULL-INCONCLUSIVE,340,106,83,12,499,committed primary rung
+H4_health,health_breach,CV1 parent CIK (normal; Essay 1 table 8),-1.0247,2.4536,0.6762,,,,,,,,,,340,106,83,12,499,
+H4_health,health_breach,"CV1 parent CIK, t(G-1)",-1.0247,2.4536,0.6773,-5.9056,3.8562,,,82.0,,,,,340,106,83,12,499,
+H4_health,health_breach,"CV3 jackknife, t(G-1)",-1.0247,2.6179,0.6965,-6.2325,4.183,-5.38,3.3305,82.0,,7.4226,0.3412,NULL-INCONCLUSIVE,340,106,83,12,499,
+H4_health,health_breach,WCR restricted Rademacher,-1.0247,,0.6935,-6.3155,4.4789,,,,99999.0,,,,340,106,83,12,499,"p B=99,999; CI by inversion B=9,999 per evaluation"

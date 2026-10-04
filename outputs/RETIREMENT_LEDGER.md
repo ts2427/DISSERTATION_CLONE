@@ -971,3 +971,29 @@ Root-level SCM notes such as `SCM_*.md` are untracked working documents, not pip
 - `outputs/ESSAY2_QUERY4_PARTS_ACJ.md`, 164's own report, changes to match.
 - No estimate, sample or other output moved.
 - The freeze manifest was re-created after both changes.
+
+---
+
+# 2026-10-04 — ESSAY 1 CLUSTER LADDER ADDED (SUPPLEMENT)
+
+**Ruling (Tim, 2026-10-04):** add the CV3 jackknife and restricted wild cluster bootstrap rungs for Essay 1 as a supplement. **Essay 1's primary specification and every Essay 1 output are unchanged.** Nothing was retired; this entry records an addition to the pipeline and a rebuilt baseline.
+
+- **New script:** `scripts/255_defsup_e1_cluster_ladder.py` writes `outputs/defense_supplement/e1_cluster_ladder.csv`.
+  - Same sample and specification as `scripts/158` (N = 340 events; 106 treated events; 83 parent-CIK clusters, 12 treated).
+  - The ladder code is lifted from `scripts/165` by AST, as `scripts/249` does.
+  - The script stops unless its HC3 and CV1 values reproduce appendix tables 4 and 8 exactly; they do.
+- **Result: no bounded/inconclusive call changes under CV3.** H1, H2 and H4 stay NULL-INCONCLUSIVE and H3 stays BOUNDED NULL.
+
+| | CV3 p (t, 82 df) | WCR p (B = 99,999) | TOST p on the CV3 SE |
+|---|---|---|---|
+| H1 timing | .2091 | .1813 | .1494 |
+| H2 Form 499 | .5622 | .5380 | .1760 |
+| H3 prior | .7062 | .5677 | < .001 |
+| H4 health | .6965 | .6935 | .3412 |
+
+- **Baseline rebuilt:** `constants_defense_supplement.json` gained 37 `E1_ladder_*` keys (`scripts/253`). The file was removed and re-written by 253; all 140 earlier keys are identical.
+- **Pipeline and gate:**
+  - `run_all.py` gains the step (67 live steps), and `verify_outputs()` gains one freshness file.
+  - `scripts/210` allowlist: `SCRIPT_HI` 254 -> 255. `scripts/217`'s test bounds follow.
+  - Manifest re-created last.
+- **R replication:** `r_replication/replicate.R` reproduces the new block. 143 of 143 analytic values match to 4 decimals, and all 12 bootstrap p-values are within Monte Carlo error.

@@ -6,7 +6,7 @@
 #
 # R version used : R 4.5.0 (2025-04-11 ucrt), Windows x64
 # Packages       : base R for every estimate; sandwich 3.1.1 and lmtest 0.9.40 for the HC3 rows
-# Run time       : about 5 seconds on a laptop (almost all of it the wild cluster bootstrap)
+# Run time       : about 8 seconds on a laptop (almost all of it the wild cluster bootstrap)
 #
 # The full pipeline is in Python. This script re-implements ONLY the headline models and the
 # inference methods they use, formula for formula, so each number can be read off the code:
@@ -18,6 +18,7 @@
 #         CIK, CV1 t-statistic recomputed each draw
 #   TOST  two one-sided tests against +/- 2.10 pp (Essay 1)
 #   MDE80 minimum detectable effect at 80% power
+# The last block adds the same cluster rungs for Essay 1's four hypothesis coefficients.
 # Each function names the Python file and lines it mirrors (repository tag defense-final).
 #
 # The bootstrap uses R's random numbers, not numpy's, so bootstrap p-values agree with the
@@ -125,9 +126,9 @@ wcr_p <- function(X, y, cl, ti, B, chunk = 20000) {
 
 # The cluster ladder for one coefficient: CV1, CV3 (t with G-1 df), WCR, CV3 CI and MDE80.
 #   MDE80 = (t_.975 + t_.80, df = G-1) * SE_CV3      (scripts/165:268-269; scripts/227:122)
-ladder <- function(d, yvar, xvars, B, hc3 = FALSE) {
+ladder <- function(d, yvar, xvars, B, hc3 = FALSE, term = TREAT) {
   X <- design(d, xvars); y <- as.numeric(d[[yvar]]); cl <- d$parent_cik
-  ti <- match(TREAT, colnames(X))
+  ti <- match(term, colnames(X))
   f <- ols(X, y); n <- nrow(X); k <- ncol(X)
   c1 <- cv1(X, f$u, cl, f$XtXi); G <- c1$G
   se1 <- sqrt(c1$V[ti, ti])
@@ -230,6 +231,32 @@ for (w in names(e3_models)) {
   cat(sprintf("  %-34s HC3 SE %.4f p %.4f | CV3 95%% CI [%+.4f, %+.4f]\n", "", r$se_hc3, r$p_hc3,
               r$ci_cv3_lo, r$ci_cv3_hi))
   do.call(add, c(list("Essay 3", paste("Executive departure,", w), TREAT), r))
+}
+
+# =====================================================================================
+# ESSAY 1 SUPPLEMENT - cluster rungs for the four hypothesis coefficients
+#   Same specification and sample as the Essay 1 block above; nothing there changes. For
+#   each hypothesis variable in turn: CV1 and the CV3 jackknife with t(G-1), the restricted
+#   wild cluster bootstrap (B = 99,999), CV3 95% and 90% CIs, the CV3 MDE80, and TOST against
+#   +/- 2.10 pp using the CV3 SE and G-1 df.            (scripts/255_defsup_e1_cluster_ladder.py)
+#   Placed last so the bootstrap draws of the blocks above are unaffected.
+# =====================================================================================
+cat("
+ESSAY 1 SUPPLEMENT - cluster-robust rungs (parent CIK)
+")
+X_E1 <- c("fcc_form499", "immediate_disclosure", "prior_breaches_1yr", "health_breach",
+          "firm_size_log", "leverage", "roa")
+for (v in names(H1)) {
+  r <- ladder(e1, "car_30d", X_E1, 99999, term = v)
+  G <- r$G
+  r$ci90_cv3_lo <- r$coef - qt(0.95, G - 1) * r$se_cv3
+  r$ci90_cv3_hi <- r$coef + qt(0.95, G - 1) * r$se_cv3
+  r$tost_p_cv3 <- max(1 - pt((r$coef + EQ) / r$se_cv3, G - 1), pt((r$coef - EQ) / r$se_cv3, G - 1))
+  show(paste("30-day CAR,", H1[[v]]), r)
+  cat(sprintf("  %-34s CV3 95%% CI [%+.4f, %+.4f] | 90%% CI [%+.4f, %+.4f] | TOST p (CV3) %.4f
+", "",
+              r$ci_cv3_lo, r$ci_cv3_hi, r$ci90_cv3_lo, r$ci90_cv3_hi, r$tost_p_cv3))
+  do.call(add, c(list("Essay 1 supplement", "30-day CAR, cluster ladder", H1[[v]]), r))
 }
 
 # -------------------------------------------------------------------------------------

@@ -464,6 +464,7 @@ def verify_outputs(log_file, run_start=None):
         Path('outputs/defense_supplement/e2_delay_ladder.csv'),
         Path('outputs/defense_supplement/e3_randomization_inference.csv'),
         Path('outputs/defense_supplement/e1_notification_anchored.csv'),
+        Path('outputs/defense_supplement/e1_cluster_ladder.csv'),    # scripts/255 (added 2026-10-04)
         Path('outputs/defense_supplement/deck_exhibits.csv'),
         Path('outputs/defense_supplement/deck_exhibits.json'),
     ]
@@ -511,6 +512,7 @@ def verify_outputs(log_file, run_start=None):
     #                outputs/tables/essay3/TABLE3_information_asymmetry.txt
     # 22 entries dropped, 11 retained; 33 -> 54 entries (51 freshness + 3 presence-only).
     # 2026-10-02 defense supplement: +5 freshness, +1 presence-only -> 60 entries (56 + 4).
+    # 2026-10-04 Essay 1 cluster ladder (scripts/255): +1 freshness -> 61 entries (57 + 4).
 
     critical_files = CRITICAL_FRESH + [f for f, _ in CRITICAL_PRESENT]
 
@@ -750,6 +752,7 @@ Log file: {log_path}
                     ('scripts/249_defsup_e2_delay_ladder.py', 'Essay 2: full inference ladder (HC3/CV1/CV3/WCR/WCU/Webb, MDE80) for Form 499 on disclosure delay; 165 ladder code lifted by ast, gated on reproducing t26/t28 and t16 exactly'),
                     ('scripts/250_defsup_e3_randomization_inference.py', 'Essay 3: parent-CIK randomization inference (13 of 119, 9,999 draws, seed 250) for the 30/90/180-day LPM and the placebo; all-parents and size-matched variants'),
                     ('scripts/251_defsup_e1_notification_anchored.py', 'Essay 1: notification-anchored CARs (0,+1)/(0,+5)/(0,+30) and the baseline H1-H4 spec on each (HC3, TOST +/-2.10, MDE80, CV1 parent CIK)'),
+                    ('scripts/255_defsup_e1_cluster_ladder.py', 'Essay 1: cluster rungs for H1-H4 on the unchanged baseline spec (CV1, CV3 jackknife, restricted wild cluster bootstrap B=99,999, CV3 CIs/MDE80/TOST); 165 ladder code lifted by ast; gated on reproducing appendix tables 4 and 8 exactly'),
                     ('scripts/252_defsup_deck_exhibits.py', 'Deck exhibits: 90% CIs, dollar translation, Essay 2 volatility scaling, Essay 3 MDEs as departures, T-Mobile 2021-08-17 worked example, CAAR -10..+30 (arithmetic on committed outputs; hard asserts)'),
                     ('scripts/253_defsup_constants.py', 'Defense-supplement constants block + assertion baseline (constants_defense_supplement.json; asserts against it, writes it only if absent)'),
                 ]

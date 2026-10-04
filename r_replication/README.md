@@ -2,7 +2,7 @@
 
 For Dr. Affuso. This folder reproduces, in R, the headline estimates of the dissertation *Data Breach Disclosure Timing and Market Reactions* (Timothy D. Spivey), and checks them against the Python results frozen at the repository tag `defense-final` (`902a8ea`).
 
-**The full pipeline is in Python.** Data construction, every robustness table and the appendix are in the main repository. These files reproduce the headline estimates only: one baseline model for Essay 1, four models for Essay 2 and four for Essay 3.
+**The full pipeline is in Python.** Data construction, every robustness table and the appendix are in the main repository. These files reproduce the headline estimates only: one baseline model for Essay 1 (plus its cluster-robust supplement), four models for Essay 2 and four for Essay 3.
 
 ## What is here
 
@@ -29,7 +29,7 @@ Rscript replicate.R
 
 - **R version:** 4.5.0 (any recent R should work).
 - **Packages:** `sandwich` and `lmtest`, used only for the HC3 rows (`install.packages(c("sandwich", "lmtest"))`). Everything else is base R.
-- **Run time:** about 5 seconds.
+- **Run time:** about 8 seconds.
 - **Output:** a summary printed to the console, and `r_results.csv`.
 
 ## What it estimates
@@ -37,6 +37,7 @@ Rscript replicate.R
 - **Essay 1:** OLS of the 30-day CAR on the four hypothesis variables and three controls. Reports HC3 standard errors and p-values, 95% and 90% CIs, the TOST p-value against ±2.10 percentage points, MDE80 = 2.8 × SE, and the parent-CIK clustered p-value.
 - **Essay 2:** the Form 499 coefficient on the volatility change, on disclosure delay (raw and winsorized), and on the announcement-window elevation. Each has CV1, the CV3 jackknife (t with G − 1 df) and the restricted wild cluster bootstrap (Rademacher), plus the CV3 MDE80.
 - **Essay 3:** the linear probability model of executive departure at 30, 90 and 180 days, and the placebo. Each has HC3, CV1, CV3 and the wild cluster bootstrap, plus the CV3 confidence interval and MDE80.
+- **Essay 1 supplement:** the same Essay 1 specification, with the cluster rungs added for all four hypothesis coefficients. It reports CV1, the CV3 jackknife, the wild cluster bootstrap, CV3 95% and 90% CIs, the CV3 MDE80, and TOST against ±2.10 pp from the CV3 standard error. No bounded or inconclusive call changes under CV3. This block was added after `defense-final`, so it is checked against `outputs/defense_supplement/e1_cluster_ladder.csv` on `main`; it changes nothing in Essay 1's reported results.
 
 Each R function names the Python file and lines it mirrors.
 

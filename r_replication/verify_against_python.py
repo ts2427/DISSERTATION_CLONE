@@ -128,6 +128,25 @@ for label, src, s in [('30-day', f1.loc[30], 'outputs/essay3_v4/f1_ladder.csv'),
         analytic(E3, m, T, st, float(src[st]), s)
     boot(E3, m, T, 'p_wcr', float(src['p_wcr']), int(src['B_wcr']), s)
 
+# ------------------------------------------------------------------ Essay 1 supplement (scripts/255)
+el = pd.read_csv('outputs/defense_supplement/e1_cluster_ladder.csv')
+SL, ES, ML = 'outputs/defense_supplement/e1_cluster_ladder.csv', 'Essay 1 supplement', '30-day CAR, cluster ladder'
+for h in VAR:
+    g = el[el.hypothesis == h].set_index('rung')
+    cv1r, cv3r, wr = g.loc['CV1 parent CIK, t(G-1)'], g.loc['CV3 jackknife, t(G-1)'], g.loc['WCR restricted Rademacher']
+    analytic(ES, ML, h, 'coef', float(cv3r.coef), SL)
+    analytic(ES, ML, h, 'se_cv1', float(cv1r.se), SL)
+    analytic(ES, ML, h, 'p_cv1', float(cv1r.p), SL)
+    analytic(ES, ML, h, 'se_cv3', float(cv3r.se), SL)
+    analytic(ES, ML, h, 'p_cv3', float(cv3r.p), SL)
+    analytic(ES, ML, h, 'ci_cv3_lo', float(cv3r.ci95_lo), SL)
+    analytic(ES, ML, h, 'ci_cv3_hi', float(cv3r.ci95_hi), SL)
+    analytic(ES, ML, h, 'ci90_cv3_lo', float(cv3r.ci90_lo), SL)
+    analytic(ES, ML, h, 'ci90_cv3_hi', float(cv3r.ci90_hi), SL)
+    analytic(ES, ML, h, 'mde80_cv3', float(cv3r.mde80), SL)
+    analytic(ES, ML, h, 'tost_p_cv3', float(cv3r.tost_p), SL)
+    boot(ES, ML, h, 'p_wcr', float(wr.p), int(wr.B), SL)
+
 # ------------------------------------------------------------------ report
 df = pd.DataFrame(rows)
 an = df[df.kind == 'analytic']

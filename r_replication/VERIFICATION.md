@@ -6,9 +6,9 @@ R values: `r_results.csv`, written by `replicate.R` (R 4.5.0, seed 499). Python 
 
 | Check | Values | Match | Rule |
 |---|---|---|---|
-| Analytic values (coefficients, SEs, p-values, CIs, TOST, MDE) | 99 | **99 of 99** | R rounded to 4 decimals equals the committed Python value |
+| Analytic values (coefficients, SEs, p-values, CIs, TOST, MDE) | 143 | **143 of 143** | R rounded to 4 decimals equals the committed Python value |
 | 90% CIs (Essay 1) | 8 | **8 of 8** | within 0.0002: the Python figure was built from 4-decimal inputs |
-| Bootstrap p-values (restricted wild cluster) | 8 | **8 of 8** | \|R − Python\| ≤ 3·√(p(1−p)/B) |
+| Bootstrap p-values (restricted wild cluster) | 12 | **12 of 12** | \|R − Python\| ≤ 3·√(p(1−p)/B) |
 
 Bootstrap p-values cannot match exactly: R and numpy draw different random numbers. The rule above is the Monte Carlo error of ONE simulation; the difference of two independent simulations has √2 times that standard error, so the rule is the stricter of the two natural choices.
 
@@ -115,6 +115,50 @@ Bootstrap p-values cannot match exactly: R and numpy draw different random numbe
 | Essay 3 | Executive departure, Placebo | fcc_form499 | ci_cv3_lo | -0.254303 | -0.2543 | -0.000003 | 4 dp | yes | `outputs/essay3_v4/f4_placebo.csv` |
 | Essay 3 | Executive departure, Placebo | fcc_form499 | ci_cv3_hi | 0.081816 | 0.0818 | +0.000016 | 4 dp | yes | `outputs/essay3_v4/f4_placebo.csv` |
 | Essay 3 | Executive departure, Placebo | fcc_form499 | mde80_cv3 | 0.239745 | 0.2397 | +0.000045 | 4 dp | yes | `outputs/essay3_v4/f4_placebo.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H1_timing | coef | 1.150012 | 1.1500 | +0.000012 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H1_timing | se_cv1 | 0.867471 | 0.8675 | -0.000029 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H1_timing | p_cv1 | 0.188618 | 0.1886 | +0.000018 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H1_timing | se_cv3 | 0.908342 | 0.9083 | +0.000042 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H1_timing | p_cv3 | 0.209078 | 0.2091 | -0.000022 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H1_timing | ci_cv3_lo | -0.656970 | -0.6570 | +0.000030 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H1_timing | ci_cv3_hi | 2.956995 | 2.9570 | -0.000005 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H1_timing | ci90_cv3_lo | -0.361151 | -0.3612 | +0.000049 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H1_timing | ci90_cv3_hi | 2.661175 | 2.6612 | -0.000025 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H1_timing | mde80_cv3 | 2.575464 | 2.5755 | -0.000036 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H1_timing | tost_p_cv3 | 0.149352 | 0.1494 | -0.000048 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H2_FCC | coef | -0.805128 | -0.8051 | -0.000028 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H2_FCC | se_cv1 | 1.293131 | 1.2931 | +0.000031 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H2_FCC | p_cv1 | 0.535263 | 0.5353 | -0.000037 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H2_FCC | se_cv3 | 1.383596 | 1.3836 | -0.000004 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H2_FCC | p_cv3 | 0.562224 | 0.5622 | +0.000024 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H2_FCC | ci_cv3_lo | -3.557541 | -3.5575 | -0.000041 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H2_FCC | ci_cv3_hi | 1.947286 | 1.9473 | -0.000014 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H2_FCC | ci90_cv3_lo | -3.106946 | -3.1069 | -0.000046 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H2_FCC | ci90_cv3_hi | 1.496691 | 1.4967 | -0.000009 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H2_FCC | mde80_cv3 | 3.922973 | 3.9230 | -0.000027 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H2_FCC | tost_p_cv3 | 0.176043 | 0.1760 | +0.000043 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H3_prior | coef | 0.033195 | 0.0332 | -0.000005 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H3_prior | se_cv1 | 0.062669 | 0.0627 | -0.000031 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H3_prior | p_cv1 | 0.597758 | 0.5978 | -0.000042 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H3_prior | se_cv3 | 0.087744 | 0.0877 | +0.000044 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H3_prior | p_cv3 | 0.706173 | 0.7062 | -0.000027 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H3_prior | ci_cv3_lo | -0.141356 | -0.1414 | +0.000044 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H3_prior | ci_cv3_hi | 0.207746 | 0.2077 | +0.000046 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H3_prior | ci90_cv3_lo | -0.112780 | -0.1128 | +0.000020 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H3_prior | ci90_cv3_hi | 0.179171 | 0.1792 | -0.000029 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H3_prior | mde80_cv3 | 0.248785 | 0.2488 | -0.000015 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H3_prior | tost_p_cv3 | 0.000000 | 0.0000 | +0.000000 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H4_health | coef | -1.024734 | -1.0247 | -0.000034 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H4_health | se_cv1 | 2.453557 | 2.4536 | -0.000043 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H4_health | p_cv1 | 0.677293 | 0.6773 | -0.000007 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H4_health | se_cv3 | 2.617872 | 2.6179 | -0.000028 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H4_health | p_cv3 | 0.696489 | 0.6965 | -0.000011 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H4_health | ci_cv3_lo | -6.232515 | -6.2325 | -0.000015 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H4_health | ci_cv3_hi | 4.183046 | 4.1830 | +0.000046 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H4_health | ci90_cv3_lo | -5.379954 | -5.3800 | +0.000046 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H4_health | ci90_cv3_hi | 3.330486 | 3.3305 | -0.000014 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H4_health | mde80_cv3 | 7.422569 | 7.4226 | -0.000031 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H4_health | tost_p_cv3 | 0.341167 | 0.3412 | -0.000033 | 4 dp | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
 
 ## 90% confidence intervals (Essay 1)
 
@@ -143,3 +187,7 @@ Note: Python 90% CI = committed 4-dp coef +/- 1.645 x committed 4-dp SE; R uses 
 | Essay 3 | Executive departure, 90-day | fcc_form499 | p_wcr | 0.510820 | 0.5136 | -0.002780 | 0.00474 (B=99,999) | yes | `outputs/essay3_v4/f1_ladder.csv` |
 | Essay 3 | Executive departure, 180-day | fcc_form499 | p_wcr | 0.788210 | 0.7901 | -0.001890 | 0.00386 (B=99,999) | yes | `outputs/essay3_v4/f1_ladder.csv` |
 | Essay 3 | Executive departure, Placebo | fcc_form499 | p_wcr | 0.234320 | 0.2308 | +0.003520 | 0.00400 (B=99,999) | yes | `outputs/essay3_v4/f4_placebo.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H1_timing | p_wcr | 0.178800 | 0.1813 | -0.002500 | 0.00365 (B=99,999) | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H2_FCC | p_wcr | 0.541890 | 0.5380 | +0.003890 | 0.00473 (B=99,999) | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H3_prior | p_wcr | 0.568930 | 0.5677 | +0.001230 | 0.00470 (B=99,999) | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
+| Essay 1 supplement | 30-day CAR, cluster ladder | H4_health | p_wcr | 0.690040 | 0.6935 | -0.003460 | 0.00437 (B=99,999) | yes | `outputs/defense_supplement/e1_cluster_ladder.csv` |
