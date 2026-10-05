@@ -295,6 +295,36 @@ now correctly precedes it within 365 days.
 
 ---
 
+## 9. Three canonical events belong to a private company resolved to the wrong registrant
+
+Three of the 489 canonical events carry the organisation name **"Block and Company, Inc."** (breach dates 2016-02-01, 2016-02-09 and 2016-03-21; notifications 2016-03-31, 2016-03-31 and 2016-05-13). All three are **control** events. Entity resolution assigned them parent CIK **1512673**, which is **Block, Inc. — named Square, Inc. until December 2021**. The Gate 1 evidence string reads:
+
+> *"SEC EDGAR: Block Inc. (formerly Square Inc.) CIK 1512673 verified. Name changed Dec 2021 | EDGAR-confirmed"*
+
+The records themselves describe a different firm. One of them reads:
+
+> *"…notified by MMF Industries, a division of Block and Company, about a computer security incident…"*
+
+Block and Company, Inc., the parent of MMF Industries, appears to be a privately held manufacturer with no SEC registrant. In 2016 the public company at CIK 1512673 was called Square, Inc., so no 2016 record could have named it "Block". This is the name-token collision failure mode of `docs/DATA_QUALITY_DOCUMENTATION.md`: the CIK is real and verified, but it is the wrong company's. A fourth event under the same CIK, "Block Inc" (breach 2023-01-12), is correctly resolved.
+
+**Which samples contain the three events:**
+
+| sample | contains them? | why |
+|---|---|---|
+| Canonical events (489; 371 control) | **yes** | they passed Gate 1 on the mistaken match |
+| Essay 1 CRSP (356) and regression (340) | **no** | the v3 link found no security for them (`has_crsp_data = 0`) |
+| Essay 2 (333) and announcement sample (331) | **no** | same reason |
+| Essay 3 v4, CRSP-linked (414) and through the outcome-data step (412) | **yes** | the v4 relink attached them to Square's security (PERMNO 15826) |
+| **Essay 3 v4 analysis sample (405)** | **no** | dropped at the last step: Square listed in November 2015, so the events have 88, 88 and 119 prior daily returns against the 150 required |
+
+So they reach no regression of record in any essay. They are counted in the canonical totals (489 events, 371 control) and in the Essay 3 attrition ledger down to the 412 step; three of the seven events lost at the final Essay 3 step are these. Had Square's listing been a few months earlier, they would have entered the Essay 3 control group carrying Square's executive departures.
+
+The correctly resolved 2023 Block Inc event is in the Essay 3 analysis sample as a control. Its one-year prior-breach count is unaffected, because the 2016 events fall outside the window.
+
+The samples are frozen, so this is disclosed and not corrected. The correct treatment would have excluded the three records at Gate 1 as an unlisted private company, leaving 486 canonical events and 368 controls.
+
+---
+
 ## What has been fixed, for contrast
 
 So that this ledger is not read as a list of open defects: the LFS placeholder problem
@@ -303,6 +333,7 @@ So that this ledger is not read as a list of open defects: the LFS placeholder p
 *were* removed from `constants_v3.json` at the rebaseline; and the HC3 significance label
 *was* disqualified before it could ever read `SIGNIFICANT`; and the v4 linker's second
 pass *was* staged in `run_all.py`, so the v4 linkage is now derived from the canonical data
-rather than read from a committed artefact. The eight entries above are different in kind —
-they are properties of the source records and of anchoring decisions, and correcting any of
+rather than read from a committed artefact. The nine entries above are different in kind —
+they are properties of the source records, of anchoring decisions and, in entry 9, of one
+entity-resolution match, and correcting any of
 them would change the samples, which is the thing this project has decided not to do.
