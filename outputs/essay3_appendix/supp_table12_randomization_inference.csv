@@ -1,0 +1,9 @@
+Outcome window,Reassignment pool,Eligible parent CIKs,Coefficient (pp),CV3 t,RI p (coefficient),RI p (CV3 t)
+30 days,All parent CIKs,119,+0.4,+0.12,.904,.880
+90 days,All parent CIKs,119,−4.1,−0.52,.596,.587
+180 days,All parent CIKs,119,+2.3,+0.23,.846,.810
+Placebo (180 days before),All parent CIKs,119,−8.6,−1.02,.408,.287
+30 days,Size-matched parent CIKs,57,+0.4,+0.12,.929,.921
+90 days,Size-matched parent CIKs,57,−4.1,−0.52,.546,.587
+180 days,Size-matched parent CIKs,57,+2.3,+0.23,.832,.806
+Placebo (180 days before),Size-matched parent CIKs,57,−8.6,−1.02,.323,.270

@@ -465,6 +465,7 @@ def verify_outputs(log_file, run_start=None):
         Path('outputs/defense_supplement/e3_randomization_inference.csv'),
         Path('outputs/defense_supplement/e1_notification_anchored.csv'),
         Path('outputs/defense_supplement/e1_cluster_ladder.csv'),    # scripts/255 (added 2026-10-04)
+        Path('outputs/essay3_appendix/ESSAY3_APPENDIX_SUPPLEMENT.md'),  # scripts/256 (added 2026-10-05)
         Path('outputs/defense_supplement/deck_exhibits.csv'),
         Path('outputs/defense_supplement/deck_exhibits.json'),
     ]
@@ -513,6 +514,7 @@ def verify_outputs(log_file, run_start=None):
     # 22 entries dropped, 11 retained; 33 -> 54 entries (51 freshness + 3 presence-only).
     # 2026-10-02 defense supplement: +5 freshness, +1 presence-only -> 60 entries (56 + 4).
     # 2026-10-04 Essay 1 cluster ladder (scripts/255): +1 freshness -> 61 entries (57 + 4).
+    # 2026-10-05 Essay 3 appendix supplement (scripts/256): +1 freshness -> 62 entries (58 + 4).
 
     critical_files = CRITICAL_FRESH + [f for f, _ in CRITICAL_PRESENT]
 
@@ -754,6 +756,7 @@ Log file: {log_path}
                     ('scripts/251_defsup_e1_notification_anchored.py', 'Essay 1: notification-anchored CARs (0,+1)/(0,+5)/(0,+30) and the baseline H1-H4 spec on each (HC3, TOST +/-2.10, MDE80, CV1 parent CIK)'),
                     ('scripts/255_defsup_e1_cluster_ladder.py', 'Essay 1: cluster rungs for H1-H4 on the unchanged baseline spec (CV1, CV3 jackknife, restricted wild cluster bootstrap B=99,999, CV3 CIs/MDE80/TOST); 165 ladder code lifted by ast; gated on reproducing appendix tables 4 and 8 exactly'),
                     ('scripts/252_defsup_deck_exhibits.py', 'Deck exhibits: 90% CIs, dollar translation, Essay 2 volatility scaling, Essay 3 MDEs as departures, T-Mobile 2021-08-17 worked example, CAAR -10..+30 (arithmetic on committed outputs; hard asserts)'),
+                    ('scripts/256_essay3_appendix_supplement.py', 'Essay 3 appendix supplement: Tables 12-15 (randomization inference, CEO counts, director-only counts, T-Mobile filings quoted verbatim) and the Table 5 classifier-provenance note; reads committed outputs only, adds after the Tables 1-11 that 245 writes, without touching them (follows 250, whose output it reads)'),
                     ('scripts/253_defsup_constants.py', 'Defense-supplement constants block + assertion baseline (constants_defense_supplement.json; asserts against it, writes it only if absent)'),
                 ]
             },

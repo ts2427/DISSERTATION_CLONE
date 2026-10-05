@@ -997,3 +997,17 @@ Root-level SCM notes such as `SCM_*.md` are untracked working documents, not pip
   - `scripts/210` allowlist: `SCRIPT_HI` 254 -> 255. `scripts/217`'s test bounds follow.
   - Manifest re-created last.
 - **R replication:** `r_replication/replicate.R` reproduces the new block. 143 of 143 analytic values match to 4 decimals, and all 12 bootstrap p-values are within Monte Carlo error.
+
+---
+
+# 2026-10-05 — ESSAY 3 APPENDIX SUPPLEMENT ADDED (TABLES 12–15)
+
+**Ruling (Tim, 2026-10-05):** Essay 3 Python pass of the essay-revision plan, done with new scripts so that every existing output stays byte-identical. Nothing was retired; this entry records an addition.
+
+- **New script:** `scripts/256_essay3_appendix_supplement.py` writes `outputs/essay3_appendix/ESSAY3_APPENDIX_SUPPLEMENT.md` and four `supp_table12..15_*.csv` files. It estimates nothing; every value is read from a committed output. `scripts/245` and Appendix Tables 1–11 are untouched.
+- **Table 12:** randomization inference, both reassignment pools, three windows and the placebo, with the treated-events-per-draw distribution (from `defense_supplement/e3_randomization_inference.csv`).
+- **Table 13:** chief-executive departures, counts only (`f5_ceo.csv`; not estimable).
+- **Table 14:** director-only departures, descriptive counts (`f6_director.csv`).
+- **Table 15:** the four T-Mobile executive departures inside an outcome window, each with its filing date, accession number and Item 5.02 text quoted verbatim, plus the 2019-11-18 succession filing (0001193125-19-294093), marked placebo-window. No classifier context flags are reported; the "health" flag on the Ray and Ewens filings is a known false positive.
+- **Note to Table 5:** the recall audit (`essay3_q2/d3_audit_recall_by_stratum.csv`, `scripts/201`) scored `scripts/195` v2 (commit 6f7be7a, blob ec32364), and that is the classifier the v4 chain uses. `scripts/256` checks this on every run and stops if it fails: the 195 blob matches the v4 constants, the 15 classifier functions in `scripts/220` are identical to 195's by AST, and 201 loads 195.
+- **Pipeline and gate:** `run_all.py` gains the step (68 live steps) and `verify_outputs()` one freshness file. `scripts/210` allowlist: `SCRIPT_HI` 255 -> 256 (entry only), with `scripts/217`'s test bounds following. Logged in `docs/claude/POST_DEFENSE.md`. Manifest re-created last.
