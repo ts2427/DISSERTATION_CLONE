@@ -187,3 +187,6 @@ outputs/defense_supplement/*.log
 Data/Articles/
 !outputs/**/*.md
 !docs/**/*.md
+
+# Essay 2 planning files (Tim, 2026-10-05): local working documents, never committed.
+docs/claude/claude_ESSAY2_*.md
