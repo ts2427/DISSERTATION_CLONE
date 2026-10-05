@@ -263,6 +263,8 @@ V4_DOCS = (
     "outputs/rebuild/STAGE6_REPORT.md",
     # Reviewer guide for the committee's pipeline review (2026-10-03).
     "REVIEWER_GUIDE.md",
+    # Provenance check of the Essay 3 section drafts against the committed outputs (2026-10-05).
+    "outputs/ESSAY3_DRAFTS_PROVENANCE_CHECK.md",
 )
 SCRIPT_RE = re.compile(r"^scripts/(\d+)_[^/]*\.py$")
 SCRIPT_LO, SCRIPT_HI = 210, 256  # 250-253, 255: defense supplement; 254: CRSP loader; 256: Essay 3 appendix supplement
