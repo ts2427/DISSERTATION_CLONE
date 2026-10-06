@@ -1,5 +1,7 @@
 # Essay 3 — Handoff Document
 
+Read the October 6, 2026 addendum at the end first. Where it conflicts with the text below, the addendum and the v4 state file govern.
+
 Written September 11, 2026. Purpose: let any new chat pick up Essay 3 without reconstructing this session.
 
 **Read these three files first, in order:**
@@ -155,3 +157,34 @@ Last. No cross-references to Essays 1 and 2.
 ## PART 7 — The purge list, Essay 3 specifics
 
 Never write: Rule 37.3; September 28, 2007; June 8, 2007 as an effective date; "1,054 breaches"; any characterization of § 64.2011 as a customer- or public-disclosure deadline; 14.52 pp, 16.71 pp, or 15.05 pp as a first stage; N = 651 or 648; 140 or 115 treated; SIC 4810 treatment; BoardEx cross-validation; any Item 5.02 incidence rate called turnover; the "health" flag on Ray and Ewens; any equivalence or TOST claim; any HC3 p-value presented as significant.
+
+---
+
+## ADDENDUM — October 6, 2026: the appendix of record
+
+Added after the v4 rebuild and the appendix pass. Where this addendum and the text above disagree, this addendum and `ESSAY3_V4_STATE.md` govern; the September figures above are the earlier build.
+
+- **One appendix, 13 tables.** `outputs/essay3_appendix/ESSAY3_APPENDIX.md` (and `.docx`), written by `scripts/257`, is the appendix of record. The files written by `scripts/245` and `scripts/256` are internal sources under their old numbers; `TABLE_NUMBER_CROSSWALK.csv` maps old to new.
+
+  | Table | Content |
+  |---|---|
+  | 1 | Sample construction |
+  | 2 | Treated parent CIKs and cluster structure |
+  | 3 | Breach type by treatment group |
+  | 4 | Covariate balance, common support, date anchors |
+  | 5 | Classifier validation |
+  | 6 | Item 5.02 filings and departures by window |
+  | 7 | Primary estimates |
+  | 8 | Randomization inference |
+  | 9 | Pre-disclosure placebo |
+  | 10 | Sensitivity analyses |
+  | 11 | Cluster concentration |
+  | 12 | T-Mobile events and executive departures |
+  | 13 | T-Mobile filings quoted |
+
+  The separate chief-executive and director-only count tables are not in the appendix; those counts are columns of Table 6.
+- **No "H6" label.** The appendix carries no numbered hypothesis label; `scripts/257` fails if one appears. Write "the hypothesis test".
+- **Randomization inference is reported on the CV3 t-statistic:** p = .880 / .587 / .810 at 30 / 90 / 180 days; size-matched pool .921 / .587 / .806. The coefficient version (.904 / .596 / .846; size-matched .929 / .546 / .832) sits beside it in Table 8 and is not the headline, because few draws reach the observed treated-event count.
+- **T-Mobile and director-only departures.** T-Mobile events are 5 of 8, 12 of 18 and 13 of 21 treated events with a director-only departure at 30 / 90 / 180 days, and they rest on **3, 8 and 8** distinct first-disclosure filings, not 3, 9 and 9. At 30 days, 3 of the 83 treated events outside T-Mobile have one. Computed and asserted in `scripts/257`; stated in the Table 6 note.
+- **Sample construction:** 758 records resolve to 489 events (1,054 notification records; 758 assigned a parent CIK; 489 canonical events).
+- **One miscoded T-Mobile filing** (8-K of 2018-04-30) is disclosed in `KNOWN_LIMITATIONS.md` section 10, with a placebo sensitivity from `scripts/258` that is outside the analysis plan.

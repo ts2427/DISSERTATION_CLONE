@@ -1,0 +1,16 @@
+new_number,old_number,source_script,source_document,internal_id,title,status
+1,1,scripts/245,outputs/essay3_appendix/ESSAY3_APPENDIX_TABLES.md,outputs/essay3_q4/table01.csv,Sample Construction From Notification Records to the Analysis Sample,in the appendix of record
+2,2,scripts/245,outputs/essay3_appendix/ESSAY3_APPENDIX_TABLES.md,outputs/essay3_q4/table02.csv,Treated Parent CIKs and Cluster Structure,in the appendix of record
+3,3,scripts/245,outputs/essay3_appendix/ESSAY3_APPENDIX_TABLES.md,outputs/essay3_q4/table03.csv,Breach Type by Treatment Group,in the appendix of record
+4,4,scripts/245,outputs/essay3_appendix/ESSAY3_APPENDIX_TABLES.md,outputs/essay3_q4/table04.csv,"Covariate Balance, Common Support, and Date Anchors",in the appendix of record
+5,5,scripts/245,outputs/essay3_appendix/ESSAY3_APPENDIX_TABLES.md,outputs/essay3_q4/table05.csv,Classifier Validation,in the appendix of record
+6,6,scripts/245,outputs/essay3_appendix/ESSAY3_APPENDIX_TABLES.md,outputs/essay3_q4/table06.csv,Item 5.02 Filings and Disclosed Departures by Window,in the appendix of record
+7,7,scripts/245,outputs/essay3_appendix/ESSAY3_APPENDIX_TABLES.md,outputs/essay3_q4/table07.csv,"Primary Estimates: Inference Ladder, Minimum Detectable Effects, Logit Check, and Controls",in the appendix of record
+8,12,scripts/256,outputs/essay3_appendix/ESSAY3_APPENDIX_SUPPLEMENT.md,outputs/essay3_appendix/supp_table12_randomization_inference.csv,Randomization Inference: Reassigning Treatment Across Parent CIKs,in the appendix of record
+9,8,scripts/245,outputs/essay3_appendix/ESSAY3_APPENDIX_TABLES.md,outputs/essay3_q4/table08.csv,Pre-Disclosure Placebo,in the appendix of record
+10,9,scripts/245,outputs/essay3_appendix/ESSAY3_APPENDIX_TABLES.md,outputs/essay3_q4/table09.csv,Sensitivity Analyses,in the appendix of record
+11,10,scripts/245,outputs/essay3_appendix/ESSAY3_APPENDIX_TABLES.md,outputs/essay3_q4/table10.csv,Cluster Concentration,in the appendix of record
+12,11,scripts/245,outputs/essay3_appendix/ESSAY3_APPENDIX_TABLES.md,outputs/essay3_q4/table11.csv,T-Mobile Events and Executive Departures,in the appendix of record
+13,15,scripts/256,outputs/essay3_appendix/ESSAY3_APPENDIX_SUPPLEMENT.md,outputs/essay3_appendix/supp_table15_tmobile_departures.csv,"T-Mobile: Executive Departures Disclosed Within the Outcome Windows, and the Placebo-Window Succession Filing",in the appendix of record
+,13,scripts/256,outputs/essay3_appendix/ESSAY3_APPENDIX_SUPPLEMENT.md,outputs/essay3_appendix/supp_table13_ceo_departure_counts.csv,Chief Executive Departures by Window: Counts Only,not in the appendix of record: duplicates the chief executive column of Table 6
+,14,scripts/256,outputs/essay3_appendix/ESSAY3_APPENDIX_SUPPLEMENT.md,outputs/essay3_appendix/supp_table14_director_departure_counts.csv,Director-Only Departures by Window: Descriptive Counts,not in the appendix of record: duplicates the director-only column of Table 6

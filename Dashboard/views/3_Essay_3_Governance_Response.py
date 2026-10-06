@@ -405,7 +405,7 @@ def loco_tab():
     ui.table(t, formats={c: pp_s for c in pp_cols})
     source(f'{V4}/f3_loco.csv', f'{V4}/f1_cluster_diagnostics.csv')
 
-    with st.expander('Which clusters carry the CV3 variance (Essay 3 Table 10, top-ten variance shares)'):
+    with st.expander('Which clusters carry the CV3 variance (Essay 3 Table 11, top-ten variance shares)'):
         t10 = e3_q4_table('table10')
         t10 = t10[t10['panel'] == 'top-ten variance shares'].copy()
         t10['window'] = t10['window'].map(wlabel)

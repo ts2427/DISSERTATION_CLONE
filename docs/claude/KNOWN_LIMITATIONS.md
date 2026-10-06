@@ -325,6 +325,43 @@ The samples are frozen, so this is disclosed and not corrected. The correct trea
 
 ---
 
+## 10. One T-Mobile filing is coded as two executive departures that did not happen
+
+T-Mobile's Form 8-K filed **2018-04-30** (accession **0001104659-18-028086**; Items 1.01, 5.02, 8.01 and 9.01) is coded by the Essay 3 classifier as two executive departures. Neither is one.
+
+| person | coded role | sentence the code rests on | what the filing says |
+|---|---|---|---|
+| John J. Legere | President | *"…T-Mobile announced that Mr. Sievert will succeed Mr. Legere as President upon ratification by the T-Mobile board of directors."* | The title of President passes to Mr. Sievert. Mr. Legere stays chief executive: the 8-K of 2018-06-14 (accession 0001283699-18-000031) says he "continues to serve as the Company's Chief Executive Officer". |
+| Michael Sievert | Chief Operating Officer | *"…upon Mr. Sievert's termination of the employment by T-Mobile without 'cause' or due to a 'constructive termination'…"* | A severance clause in an amended term sheet. Mr. Sievert is being promoted, not leaving. |
+
+The first is a succession-of-title phrase read as a departure; the second is a conditional severance clause read as a termination. Both are false positives of the kind the precision figures in the classifier-validation table measure.
+
+**Which events the two codes touch.** Four, all T-Mobile (parent CIK 1283699), all in the Essay 3 analysis sample, and the placement is the same under the notification and the breach anchor:
+
+| breach date | notification date | filing falls in | days from notification | effect |
+|---|---|---|---|---|
+| 2018-08-20 | 2018-08-23 | placebo window | -115 | sets the event's placebo outcome to 1; no other coded departure does |
+| 2019-11-26 | 2020-03-02 | baseline window | -672 | the event's entire baseline count (2 departures, 1.3273 per year) |
+| 2020-04-02 | 2020-04-02 | baseline window | -703 | same |
+| 2020-04-15 | 2020-04-15 | baseline window | -716 | same |
+
+The filing falls in **no outcome window**, so no 30-, 90- or 180-day outcome of any event rests on it. It reaches the primary models only through the baseline departure rate, a control, for the three later events; that channel has not been re-estimated.
+
+**Placebo sensitivity.** `scripts/258` re-runs the placebo specification with the 2018-08-20 event's placebo outcome set to 0 (`outputs/defense_supplement/e3_placebo_2018_flag.csv`; bootstrap B = 99,999, seed 258). It is outside the analysis plan and is not in the test ledger.
+
+| | coefficient (pp) | CV3 SE (pp) | CV3 p | bootstrap p | treated events flagged |
+|---|---|---|---|---|---|
+| committed placebo | -8.62 | 8.49 | .312 | .231 | 25 of 109 |
+| 2018-08-20 flag set to 0 | -9.75 | 8.02 | .226 | .157 | 24 of 109 |
+
+The placebo stays a null on every rung. The committed bootstrap p is .231; the same specification re-run under seed 258 gives .234, so the .157 carries that Monte Carlo tolerance.
+
+**Related, and not an error of the same kind.** The Essay 3 appendix lists six T-Mobile persons in Panel B of its T-Mobile table. Three coded departures fall only in placebo windows and are not listed there: the two above, and David Carey (8-K of 2020-02-19, accession 0001193125-20-041926), whose filing does state a dated end of employment. Only the 2018-08-20 placebo flag depends on an unlisted code; the appendix note says so.
+
+The samples and outcomes are frozen, so this is disclosed and not corrected. The correct treatment would code the 2018-04-30 filing as no departure, which would clear one placebo flag and set the baseline count of three events to zero.
+
+---
+
 ## What has been fixed, for contrast
 
 So that this ledger is not read as a list of open defects: the LFS placeholder problem
@@ -333,7 +370,7 @@ So that this ledger is not read as a list of open defects: the LFS placeholder p
 *were* removed from `constants_v3.json` at the rebaseline; and the HC3 significance label
 *was* disqualified before it could ever read `SIGNIFICANT`; and the v4 linker's second
 pass *was* staged in `run_all.py`, so the v4 linkage is now derived from the canonical data
-rather than read from a committed artefact. The nine entries above are different in kind —
-they are properties of the source records, of anchoring decisions and, in entry 9, of one
-entity-resolution match, and correcting any of
+rather than read from a committed artefact. The ten entries above are different in kind —
+they are properties of the source records, of anchoring decisions and, in entries 9 and 10, of one
+entity-resolution match and one classifier code, and correcting any of
 them would change the samples, which is the thing this project has decided not to do.
