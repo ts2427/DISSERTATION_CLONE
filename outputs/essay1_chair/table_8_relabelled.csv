@@ -1,0 +1,5 @@
+Standard-error method,p: Disclosed within 7 days,p: Form 499 filer,p: Return on assets
+Classical OLS,.242,.520,.133
+HC1 (robust),.247,.562,.164
+HC3 (robust; primary),.253,.566,.175
+Clustered by parent company (CIK),.185,.533,.199

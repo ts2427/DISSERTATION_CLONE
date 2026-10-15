@@ -1,0 +1,582 @@
+file,key,column,old,new,changed
+outputs/rebuild/constants_v3.json,AMEND_both_opmargin_p,,0.134,0.087,True
+outputs/rebuild/constants_v3.json,AMEND_both_roa_p,,0.3868,0.4776,True
+outputs/rebuild/constants_v3.json,AMEND_nulls_unchanged,,True,True,False
+outputs/rebuild/constants_v3.json,AMEND_opmargin_coef,,7.5,8.2816,True
+outputs/rebuild/constants_v3.json,AMEND_opmargin_p,,0.0851,0.058,True
+outputs/rebuild/constants_v3.json,H1_timing_ci,,"[-0.975, 2.9032]","[-0.82, 3.12]",True
+outputs/rebuild/constants_v3.json,H1_timing_coef,,0.9641,1.15,True
+outputs/rebuild/constants_v3.json,H1_timing_mde80,,2.7702,2.8143,True
+outputs/rebuild/constants_v3.json,H1_timing_p,,0.3298,0.2526,True
+outputs/rebuild/constants_v3.json,H1_timing_status,,NULL-INCONCLUSIVE,NULL-INCONCLUSIVE,False
+outputs/rebuild/constants_v3.json,H1_timing_tost_p,,0.1259,0.1726,True
+outputs/rebuild/constants_v3.json,H2_FCC_ci,,"[-2.8583, 2.3258]","[-3.5541, 1.9438]",True
+outputs/rebuild/constants_v3.json,H2_FCC_coef,,-0.2663,-0.8051,True
+outputs/rebuild/constants_v3.json,H2_FCC_mde80,,3.703,3.9272,True
+outputs/rebuild/constants_v3.json,H2_FCC_p,,0.8404,0.5659,True
+outputs/rebuild/constants_v3.json,H2_FCC_status,,NULL-INCONCLUSIVE,NULL-INCONCLUSIVE,False
+outputs/rebuild/constants_v3.json,H2_FCC_tost_p,,0.0833,0.1783,True
+outputs/rebuild/constants_v3.json,H3_prior_ci,,"[-0.1012, 0.1488]","[-0.0931, 0.1594]",True
+outputs/rebuild/constants_v3.json,H3_prior_coef,,0.0238,0.0332,True
+outputs/rebuild/constants_v3.json,H3_prior_mde80,,0.1786,0.1804,True
+outputs/rebuild/constants_v3.json,H3_prior_p,,0.7092,0.6063,True
+outputs/rebuild/constants_v3.json,H3_prior_status,,BOUNDED NULL,BOUNDED NULL,False
+outputs/rebuild/constants_v3.json,H3_prior_tost_p,,0.0,0.0,False
+outputs/rebuild/constants_v3.json,H4_health_ci,,"[-6.1892, 4.0787]","[-6.137, 4.0875]",True
+outputs/rebuild/constants_v3.json,H4_health_coef,,-1.0553,-1.0247,True
+outputs/rebuild/constants_v3.json,H4_health_mde80,,7.3343,7.3034,True
+outputs/rebuild/constants_v3.json,H4_health_p,,0.687,0.6944,True
+outputs/rebuild/constants_v3.json,H4_health_status,,NULL-INCONCLUSIVE,NULL-INCONCLUSIVE,False
+outputs/rebuild/constants_v3.json,H4_health_tost_p,,0.3451,0.3402,True
+outputs/rebuild/constants_v3.json,H5_R2,,0.551,(absent),True
+outputs/rebuild/constants_v3.json,H5_coef,,3.2897,(absent),True
+outputs/rebuild/constants_v3.json,H5_mde80,,4.9536,(absent),True
+outputs/rebuild/constants_v3.json,H5_p,,0.063,(absent),True
+outputs/rebuild/constants_v3.json,H5_status,,NULL-INCONCLUSIVE,(absent),True
+outputs/rebuild/constants_v3.json,H5_tost_p,,0.7491,(absent),True
+outputs/rebuild/constants_v3.json,H6_180d_ame_pp,,4.77,(absent),True
+outputs/rebuild/constants_v3.json,H6_180d_base_rate,,0.6982,(absent),True
+outputs/rebuild/constants_v3.json,H6_180d_mde80_pp,,19.51,(absent),True
+outputs/rebuild/constants_v3.json,H6_180d_p,,0.4941,(absent),True
+outputs/rebuild/constants_v3.json,H6_30d_ame_pp,,7.37,(absent),True
+outputs/rebuild/constants_v3.json,H6_30d_base_rate,,0.1716,(absent),True
+outputs/rebuild/constants_v3.json,H6_30d_mde80_pp,,15.19,(absent),True
+outputs/rebuild/constants_v3.json,H6_30d_p,,0.1741,(absent),True
+outputs/rebuild/constants_v3.json,H6_90d_ame_pp,,9.97,(absent),True
+outputs/rebuild/constants_v3.json,H6_90d_base_rate,,0.432,(absent),True
+outputs/rebuild/constants_v3.json,H6_90d_mde80_pp,,19.67,(absent),True
+outputs/rebuild/constants_v3.json,H6_90d_p,,0.156,(absent),True
+outputs/rebuild/constants_v3.json,N_essay2,,337,(absent),True
+outputs/rebuild/constants_v3.json,N_essay3,,338,(absent),True
+outputs/rebuild/constants_v3.json,N_regression,,338,340,True
+outputs/rebuild/constants_v3.json,RF_top_feature,,roa,roa,False
+outputs/rebuild/constants_v3.json,ROA_coef,,7.6509,7.353,True
+outputs/rebuild/constants_v3.json,ROA_p,,0.1596,0.175,True
+outputs/rebuild/constants_v3.json,T16_ann_N,,353,355,True
+outputs/rebuild/constants_v3.json,T16_ann_excluded_history,,0,0,False
+outputs/rebuild/constants_v3.json,T16_ann_excluded_no_reported,,1,1,False
+outputs/rebuild/constants_v3.json,T16_ann_m10_m1_diff_p,,0.015,0.0301,True
+outputs/rebuild/constants_v3.json,T16_ann_m10_m1_mean,,-0.2905,-0.3361,True
+outputs/rebuild/constants_v3.json,T16_ann_m10_m1_p,,0.3223,0.2555,True
+outputs/rebuild/constants_v3.json,T16_ann_m20_m11_diff_p,,0.108,0.058,True
+outputs/rebuild/constants_v3.json,T16_ann_m20_m11_mean,,0.3571,0.303,True
+outputs/rebuild/constants_v3.json,T16_ann_m20_m11_p,,0.1911,0.2658,True
+outputs/rebuild/constants_v3.json,T16_ann_m30_m21_diff_p,,0.5794,0.8173,True
+outputs/rebuild/constants_v3.json,T16_ann_m30_m21_mean,,0.0436,-0.0183,True
+outputs/rebuild/constants_v3.json,T16_ann_m30_m21_p,,0.8686,0.9456,True
+outputs/rebuild/constants_v3.json,T16_breach_N,,354,356,True
+outputs/rebuild/constants_v3.json,T16_breach_excluded_history,,0,0,False
+outputs/rebuild/constants_v3.json,T16_breach_m10_m1_diff_p,,0.0301,0.0506,True
+outputs/rebuild/constants_v3.json,T16_breach_m10_m1_mean,,0.0876,0.0414,True
+outputs/rebuild/constants_v3.json,T16_breach_m10_m1_p,,0.7781,0.8941,True
+outputs/rebuild/constants_v3.json,T16_breach_m20_m11_diff_p,,0.3943,0.3258,True
+outputs/rebuild/constants_v3.json,T16_breach_m20_m11_mean,,0.8012,0.7709,True
+outputs/rebuild/constants_v3.json,T16_breach_m20_m11_p,,0.0131,0.0167,True
+outputs/rebuild/constants_v3.json,T16_breach_m30_m21_diff_p,,0.8738,0.6208,True
+outputs/rebuild/constants_v3.json,T16_breach_m30_m21_mean,,-0.0733,-0.143,True
+outputs/rebuild/constants_v3.json,T16_breach_m30_m21_p,,0.7854,0.5999,True
+outputs/rebuild/constants_v3.json,T2_treated_N,,116,118,True
+outputs/rebuild/constants_v3.json,T2_treated_mean_gap,,22.46,22.44,True
+outputs/rebuild/constants_v3.json,T2_treated_median_gap,,15.0,15.0,False
+outputs/rebuild/constants_v3.json,T2_treated_share_8k_90d,,0.9914,0.9915,True
+outputs/rebuild/constants_v3.json,T2_untreated_N,,219,219,False
+outputs/rebuild/constants_v3.json,T2_untreated_mean_gap,,30.16,30.16,False
+outputs/rebuild/constants_v3.json,T2_untreated_median_gap,,26.0,26.0,False
+outputs/rebuild/constants_v3.json,T2_untreated_share_8k_90d,,0.9178,0.9178,False
+outputs/rebuild/constants_v3.json,T3_any_prior_median,,0.4465,0.4212,True
+outputs/rebuild/constants_v3.json,T3_delayed_median,,-0.4593,-0.461,True
+outputs/rebuild/constants_v3.json,T3_filer_median,,-0.2416,-0.437,True
+outputs/rebuild/constants_v3.json,T3_health_median,,0.4276,0.4276,False
+outputs/rebuild/constants_v3.json,T3_immediate_median,,1.3985,1.0849,True
+outputs/rebuild/constants_v3.json,T3_no_prior_median,,-0.5372,-0.6034,True
+outputs/rebuild/constants_v3.json,T3_nonfiler_median,,0.4118,0.4118,False
+outputs/rebuild/constants_v3.json,T3_nonhealth_median,,0.1446,0.14,True
+outputs/rebuild/constants_v3.json,T6_interaction_coef,,-3.0166,-2.3776,True
+outputs/rebuild/constants_v3.json,T6_interaction_p,,0.1516,0.2769,True
+outputs/rebuild/constants_v3.json,T6_interaction_se,,2.1039,2.1868,True
+outputs/rebuild/constants_v3.json,T6_treated_N,,104,106,True
+outputs/rebuild/constants_v3.json,T6_treated_timing_coef,,-0.7835,-0.2202,True
+outputs/rebuild/constants_v3.json,T6_treated_timing_p,,0.6648,0.9071,True
+outputs/rebuild/constants_v3.json,T6_treated_timing_se,,1.8085,1.8879,True
+outputs/rebuild/constants_v3.json,T6_untreated_N,,234,234,False
+outputs/rebuild/constants_v3.json,T6_untreated_timing_coef,,1.9307,1.9307,False
+outputs/rebuild/constants_v3.json,T6_untreated_timing_p,,0.1052,0.1052,False
+outputs/rebuild/constants_v3.json,T6_untreated_timing_se,,1.1916,1.1916,False
+outputs/rebuild/constants_v3.json,car30d_regression_mean,,-0.1581,-0.281,True
+outputs/rebuild/constants_v3.json,car30d_regression_median,,0.1911,0.1423,True
+outputs/rebuild/constants_v3.json,events_crsp,,354,356,True
+outputs/rebuild/constants_v3.json,events_total,,489,489,False
+outputs/rebuild/constants_v3.json,first_stage_pp,,15.05,15.26,True
+outputs/rebuild/constants_v3.json,health_events_crsp,,15,15,False
+outputs/rebuild/constants_v3.json,immediate_share_crsp,,0.3654,0.3662,True
+outputs/rebuild/constants_v3.json,immediate_share_full,,0.3285,0.3285,False
+outputs/rebuild/constants_v3.json,immediate_share_regression,,0.3639,0.3647,True
+outputs/rebuild/constants_v3.json,prior_breach_firm_share,,0.5402,0.5455,True
+outputs/rebuild/constants_v3.json,prior_breach_obs_share,,0.7599,0.7584,True
+outputs/rebuild/constants_v3.json,treated_crsp,,109,111,True
+outputs/rebuild/constants_v3.json,treated_orgs_regression,,35,36,True
+outputs/rebuild/constants_v3.json,treated_parent_ciks_regression,,11,12,True
+outputs/rebuild/constants_v3.json,treated_regression,,104,106,True
+outputs/rebuild/constants_v3.json,treated_total,,116,118,True
+outputs/rebuild/constants_v3.json,volume_fcc_coef,,0.0779,0.1064,True
+outputs/rebuild/constants_v3.json,volume_fcc_p,,0.1167,0.0446,True
+outputs/rebuild/appendix_v3/table_1.csv,car_30d,N,354,356,True
+outputs/rebuild/appendix_v3/table_1.csv,car_30d,Mean,-0.262,-0.378,True
+outputs/rebuild/appendix_v3/table_1.csv,car_30d,SD,8.538,8.776,True
+outputs/rebuild/appendix_v3/table_1.csv,car_30d,Median,0.087,-0.031,True
+outputs/rebuild/appendix_v3/table_1.csv,car_5d,N,354,356,True
+outputs/rebuild/appendix_v3/table_1.csv,car_5d,Mean,-0.412,-0.457,True
+outputs/rebuild/appendix_v3/table_1.csv,car_5d,SD,4.252,4.295,True
+outputs/rebuild/appendix_v3/table_1.csv,car_5d,Median,-0.206,-0.218,True
+outputs/rebuild/appendix_v3/table_1.csv,firm_size_log,N,339,341,True
+outputs/rebuild/appendix_v3/table_1.csv,firm_size_log,Mean,10.262,10.266,True
+outputs/rebuild/appendix_v3/table_1.csv,firm_size_log,SD,1.611,1.607,True
+outputs/rebuild/appendix_v3/table_1.csv,firm_size_log,Median,10.232,10.287,True
+outputs/rebuild/appendix_v3/table_1.csv,leverage,N,339,341,True
+outputs/rebuild/appendix_v3/table_1.csv,leverage,Mean,0.665,0.665,False
+outputs/rebuild/appendix_v3/table_1.csv,leverage,SD,0.205,0.204,True
+outputs/rebuild/appendix_v3/table_1.csv,leverage,Median,0.669,0.669,False
+outputs/rebuild/appendix_v3/table_1.csv,roa,N,339,341,True
+outputs/rebuild/appendix_v3/table_1.csv,roa,Mean,0.06,0.06,False
+outputs/rebuild/appendix_v3/table_1.csv,roa,SD,0.108,0.108,False
+outputs/rebuild/appendix_v3/table_1.csv,roa,Median,0.063,0.063,False
+outputs/rebuild/appendix_v3/table_1.csv,disclosure_delay_days,N,353,355,True
+outputs/rebuild/appendix_v3/table_1.csv,disclosure_delay_days,Mean,90.836,90.555,True
+outputs/rebuild/appendix_v3/table_1.csv,disclosure_delay_days,SD,204.7,204.178,True
+outputs/rebuild/appendix_v3/table_1.csv,disclosure_delay_days,Median,24.0,24.0,False
+outputs/rebuild/appendix_v3/table_1.csv,CAPTION,N,This table reports summary statistics for the key continuous variables on the CRSP-covered sample (N = 354 events). Row-level N varies because Compustat covariates are available for 339 events and the disclosure delay for 353. CAR variables are cumulative market-adjusted abnormal returns in percentage points.,This table reports summary statistics for the key continuous variables on the CRSP-covered sample (N = 356 events). Row-level N varies because Compustat covariates are available for 341 events and the disclosure delay for 355. CAR variables are cumulative market-adjusted abnormal returns in percentage points.,True
+outputs/rebuild/appendix_v3/table_2.csv,Treated (Form 499),N,116,118,True
+outputs/rebuild/appendix_v3/table_2.csv,Treated (Form 499),Median gap (days),15.0,15.0,False
+outputs/rebuild/appendix_v3/table_2.csv,Treated (Form 499),Mean gap (days),22.46,22.44,True
+outputs/rebuild/appendix_v3/table_2.csv,Treated (Form 499),Share with 8-K in 90d,0.9914,0.9915,True
+outputs/rebuild/appendix_v3/table_2.csv,"Untreated (control CIKs, 3+ events)",N,219,219,False
+outputs/rebuild/appendix_v3/table_2.csv,"Untreated (control CIKs, 3+ events)",Median gap (days),26.0,26.0,False
+outputs/rebuild/appendix_v3/table_2.csv,"Untreated (control CIKs, 3+ events)",Mean gap (days),30.16,30.16,False
+outputs/rebuild/appendix_v3/table_2.csv,"Untreated (control CIKs, 3+ events)",Share with 8-K in 90d,0.9178,0.9178,False
+outputs/rebuild/appendix_v3/table_2.csv,CAPTION,N,"This table promotes the Stage 7 disclosure-date verification to the appendix. For every treated event and every untreated event at parent CIKs with three or more events in the sample (the documented control group), it reports the gap in days from the PRC breach date to the firm's first 8-K filed within ninety days after the breach, read from the cached SEC EDGAR submissions (treated N = 116; untreated N = 219). Gap statistics are computed over events with such a filing; the share column reports how many have one. A nearby 8-K need not reference the breach, so this verifies filing activity rather than breach disclosure, and no dates were changed on its basis.","This table promotes the Stage 7 disclosure-date verification to the appendix. For every treated event and every untreated event at parent CIKs with three or more events in the sample (the documented control group), it reports the gap in days from the PRC breach date to the firm's first 8-K filed within ninety days after the breach, read from the cached SEC EDGAR submissions (treated N = 118; untreated N = 219). Gap statistics are computed over events with such a filing; the share column reports how many have one. A nearby 8-K need not reference the breach, so this verifies filing activity rather than breach disclosure, and no dates were changed on its basis.",True
+outputs/rebuild/appendix_v3/table_3.csv,Form 499 | Filer,Mean CAR,-0.545,-0.933,True
+outputs/rebuild/appendix_v3/table_3.csv,Form 499 | Filer,Median CAR,-0.242,-0.437,True
+outputs/rebuild/appendix_v3/table_3.csv,Form 499 | Filer,N,104,106,True
+outputs/rebuild/appendix_v3/table_3.csv,Form 499 | Filer,Welch diff,,,False
+outputs/rebuild/appendix_v3/table_3.csv,Form 499 | Filer,Welch p,,,False
+outputs/rebuild/appendix_v3/table_3.csv,Form 499 | Non-filer,Mean CAR,0.014,0.014,False
+outputs/rebuild/appendix_v3/table_3.csv,Form 499 | Non-filer,Median CAR,0.412,0.412,False
+outputs/rebuild/appendix_v3/table_3.csv,Form 499 | Non-filer,N,234,234,False
+outputs/rebuild/appendix_v3/table_3.csv,Form 499 | Non-filer,Welch diff,,,False
+outputs/rebuild/appendix_v3/table_3.csv,Form 499 | Non-filer,Welch p,,,False
+outputs/rebuild/appendix_v3/table_3.csv,Form 499 | Difference,Mean CAR,-0.559,-0.947,True
+outputs/rebuild/appendix_v3/table_3.csv,Form 499 | Difference,Median CAR,,,False
+outputs/rebuild/appendix_v3/table_3.csv,Form 499 | Difference,N,,,False
+outputs/rebuild/appendix_v3/table_3.csv,Form 499 | Difference,Welch diff,-0.557,-0.894,True
+outputs/rebuild/appendix_v3/table_3.csv,Form 499 | Difference,Welch p,0.578,0.3727,True
+outputs/rebuild/appendix_v3/table_3.csv,Timing | Immediate,Mean CAR,0.387,0.365,True
+outputs/rebuild/appendix_v3/table_3.csv,Timing | Immediate,Median CAR,1.398,1.085,True
+outputs/rebuild/appendix_v3/table_3.csv,Timing | Immediate,N,123,124,True
+outputs/rebuild/appendix_v3/table_3.csv,Timing | Immediate,Welch diff,,,False
+outputs/rebuild/appendix_v3/table_3.csv,Timing | Immediate,Welch p,,,False
+outputs/rebuild/appendix_v3/table_3.csv,Timing | Delayed,Mean CAR,-0.47,-0.652,True
+outputs/rebuild/appendix_v3/table_3.csv,Timing | Delayed,Median CAR,-0.459,-0.461,True
+outputs/rebuild/appendix_v3/table_3.csv,Timing | Delayed,N,215,216,True
+outputs/rebuild/appendix_v3/table_3.csv,Timing | Delayed,Welch diff,,,False
+outputs/rebuild/appendix_v3/table_3.csv,Timing | Delayed,Welch p,,,False
+outputs/rebuild/appendix_v3/table_3.csv,Timing | Difference,Mean CAR,0.858,1.017,True
+outputs/rebuild/appendix_v3/table_3.csv,Timing | Difference,Median CAR,,,False
+outputs/rebuild/appendix_v3/table_3.csv,Timing | Difference,N,,,False
+outputs/rebuild/appendix_v3/table_3.csv,Timing | Difference,Welch diff,0.912,1.067,True
+outputs/rebuild/appendix_v3/table_3.csv,Timing | Difference,Welch p,0.3629,0.2867,True
+outputs/rebuild/appendix_v3/table_3.csv,Health | Health,Mean CAR,-1.541,-1.541,False
+outputs/rebuild/appendix_v3/table_3.csv,Health | Health,Median CAR,0.428,0.428,False
+outputs/rebuild/appendix_v3/table_3.csv,Health | Health,N,15,15,False
+outputs/rebuild/appendix_v3/table_3.csv,Health | Health,Welch diff,,,False
+outputs/rebuild/appendix_v3/table_3.csv,Health | Health,Welch p,,,False
+outputs/rebuild/appendix_v3/table_3.csv,Health | Non-health,Mean CAR,-0.094,-0.223,True
+outputs/rebuild/appendix_v3/table_3.csv,Health | Non-health,Median CAR,0.145,0.14,True
+outputs/rebuild/appendix_v3/table_3.csv,Health | Non-health,N,323,325,True
+outputs/rebuild/appendix_v3/table_3.csv,Health | Non-health,Welch diff,,,False
+outputs/rebuild/appendix_v3/table_3.csv,Health | Non-health,Welch p,,,False
+outputs/rebuild/appendix_v3/table_3.csv,Health | Difference,Mean CAR,-1.447,-1.318,True
+outputs/rebuild/appendix_v3/table_3.csv,Health | Difference,Median CAR,,,False
+outputs/rebuild/appendix_v3/table_3.csv,Health | Difference,N,,,False
+outputs/rebuild/appendix_v3/table_3.csv,Health | Difference,Welch diff,-0.627,-0.57,True
+outputs/rebuild/appendix_v3/table_3.csv,Health | Difference,Welch p,0.54,0.5768,True
+outputs/rebuild/appendix_v3/table_3.csv,History | Any prior,Mean CAR,0.278,0.265,True
+outputs/rebuild/appendix_v3/table_3.csv,History | Any prior,Median CAR,0.446,0.421,True
+outputs/rebuild/appendix_v3/table_3.csv,History | Any prior,N,203,204,True
+outputs/rebuild/appendix_v3/table_3.csv,History | Any prior,Welch diff,,,False
+outputs/rebuild/appendix_v3/table_3.csv,History | Any prior,Welch p,,,False
+outputs/rebuild/appendix_v3/table_3.csv,History | No prior,Mean CAR,-0.814,-1.1,True
+outputs/rebuild/appendix_v3/table_3.csv,History | No prior,Median CAR,-0.537,-0.603,True
+outputs/rebuild/appendix_v3/table_3.csv,History | No prior,N,135,136,True
+outputs/rebuild/appendix_v3/table_3.csv,History | No prior,Welch diff,,,False
+outputs/rebuild/appendix_v3/table_3.csv,History | No prior,Welch p,,,False
+outputs/rebuild/appendix_v3/table_3.csv,History | Difference,Mean CAR,1.092,1.365,True
+outputs/rebuild/appendix_v3/table_3.csv,History | Difference,Median CAR,,,False
+outputs/rebuild/appendix_v3/table_3.csv,History | Difference,N,,,False
+outputs/rebuild/appendix_v3/table_3.csv,History | Difference,Welch diff,1.1,1.328,True
+outputs/rebuild/appendix_v3/table_3.csv,History | Difference,Welch p,0.2725,0.1857,True
+outputs/rebuild/appendix_v3/table_3.csv,CAPTION | This table reports mean and median 30-day CARs by subgroup on the regression sample (N = 338). Each Difference row reports the difference in group means with a Welch two-sample t-test allowing unequal variances; medians are reported for each group but are not tested.,Mean CAR,,(absent),True
+outputs/rebuild/appendix_v3/table_3.csv,CAPTION | This table reports mean and median 30-day CARs by subgroup on the regression sample (N = 338). Each Difference row reports the difference in group means with a Welch two-sample t-test allowing unequal variances; medians are reported for each group but are not tested.,Median CAR,,(absent),True
+outputs/rebuild/appendix_v3/table_3.csv,CAPTION | This table reports mean and median 30-day CARs by subgroup on the regression sample (N = 338). Each Difference row reports the difference in group means with a Welch two-sample t-test allowing unequal variances; medians are reported for each group but are not tested.,N,,(absent),True
+outputs/rebuild/appendix_v3/table_3.csv,CAPTION | This table reports mean and median 30-day CARs by subgroup on the regression sample (N = 338). Each Difference row reports the difference in group means with a Welch two-sample t-test allowing unequal variances; medians are reported for each group but are not tested.,Welch diff,,(absent),True
+outputs/rebuild/appendix_v3/table_3.csv,CAPTION | This table reports mean and median 30-day CARs by subgroup on the regression sample (N = 338). Each Difference row reports the difference in group means with a Welch two-sample t-test allowing unequal variances; medians are reported for each group but are not tested.,Welch p,,(absent),True
+outputs/rebuild/appendix_v3/table_3.csv,CAPTION | This table reports mean and median 30-day CARs by subgroup on the regression sample (N = 340). Each Difference row reports the difference in group means with a Welch two-sample t-test allowing unequal variances; medians are reported for each group but are not tested.,Mean CAR,(absent),,True
+outputs/rebuild/appendix_v3/table_3.csv,CAPTION | This table reports mean and median 30-day CARs by subgroup on the regression sample (N = 340). Each Difference row reports the difference in group means with a Welch two-sample t-test allowing unequal variances; medians are reported for each group but are not tested.,Median CAR,(absent),,True
+outputs/rebuild/appendix_v3/table_3.csv,CAPTION | This table reports mean and median 30-day CARs by subgroup on the regression sample (N = 340). Each Difference row reports the difference in group means with a Welch two-sample t-test allowing unequal variances; medians are reported for each group but are not tested.,N,(absent),,True
+outputs/rebuild/appendix_v3/table_3.csv,CAPTION | This table reports mean and median 30-day CARs by subgroup on the regression sample (N = 340). Each Difference row reports the difference in group means with a Welch two-sample t-test allowing unequal variances; medians are reported for each group but are not tested.,Welch diff,(absent),,True
+outputs/rebuild/appendix_v3/table_3.csv,CAPTION | This table reports mean and median 30-day CARs by subgroup on the regression sample (N = 340). Each Difference row reports the difference in group means with a Welch two-sample t-test allowing unequal variances; medians are reported for each group but are not tested.,Welch p,(absent),,True
+outputs/rebuild/appendix_v3/table_4.csv,const,Coef,-1.1918,-2.084,True
+outputs/rebuild/appendix_v3/table_4.csv,const,SE,4.31,4.3771,True
+outputs/rebuild/appendix_v3/table_4.csv,const,p,0.7822,0.634,True
+outputs/rebuild/appendix_v3/table_4.csv,fcc_form499,Coef,-0.2663,-0.8051,True
+outputs/rebuild/appendix_v3/table_4.csv,fcc_form499,SE,1.3225,1.4026,True
+outputs/rebuild/appendix_v3/table_4.csv,fcc_form499,p,0.8404,0.5659,True
+outputs/rebuild/appendix_v3/table_4.csv,immediate_disclosure,Coef,0.9641,1.15,True
+outputs/rebuild/appendix_v3/table_4.csv,immediate_disclosure,SE,0.9894,1.0051,True
+outputs/rebuild/appendix_v3/table_4.csv,immediate_disclosure,p,0.3298,0.2526,True
+outputs/rebuild/appendix_v3/table_4.csv,prior_breaches_1yr,Coef,0.0238,0.0332,True
+outputs/rebuild/appendix_v3/table_4.csv,prior_breaches_1yr,SE,0.0638,0.0644,True
+outputs/rebuild/appendix_v3/table_4.csv,prior_breaches_1yr,p,0.7092,0.6063,True
+outputs/rebuild/appendix_v3/table_4.csv,health_breach,Coef,-1.0553,-1.0247,True
+outputs/rebuild/appendix_v3/table_4.csv,health_breach,SE,2.6194,2.6083,True
+outputs/rebuild/appendix_v3/table_4.csv,health_breach,p,0.687,0.6944,True
+outputs/rebuild/appendix_v3/table_4.csv,firm_size_log,Coef,0.0313,0.0987,True
+outputs/rebuild/appendix_v3/table_4.csv,firm_size_log,SE,0.3596,0.3644,True
+outputs/rebuild/appendix_v3/table_4.csv,firm_size_log,p,0.9307,0.7866,True
+outputs/rebuild/appendix_v3/table_4.csv,leverage,Coef,-0.1029,0.1332,True
+outputs/rebuild/appendix_v3/table_4.csv,leverage,SE,2.1287,2.1309,True
+outputs/rebuild/appendix_v3/table_4.csv,leverage,p,0.9614,0.9502,True
+outputs/rebuild/appendix_v3/table_4.csv,roa,Coef,7.6509,7.353,True
+outputs/rebuild/appendix_v3/table_4.csv,roa,SE,5.4405,5.4209,True
+outputs/rebuild/appendix_v3/table_4.csv,roa,p,0.1596,0.175,True
+outputs/rebuild/appendix_v3/table_4.csv,CAPTION,Coef,"This table reports the baseline ordinary least squares regression of the 30-day CAR on the four hypothesis variables and three accounting controls, estimated on the regression sample (N = 338) with HC3 heteroskedasticity-robust standard errors.","This table reports the baseline ordinary least squares regression of the 30-day CAR on the four hypothesis variables and three accounting controls, estimated on the regression sample (N = 340) with HC3 heteroskedasticity-robust standard errors.",True
+outputs/rebuild/appendix_v3/table_5.csv,H2_FCC,Coef,-0.2663,-0.8051,True
+outputs/rebuild/appendix_v3/table_5.csv,H2_FCC,p,0.8404,0.5659,True
+outputs/rebuild/appendix_v3/table_5.csv,H2_FCC,TOST_p_2.10,0.0833,0.1783,True
+outputs/rebuild/appendix_v3/table_5.csv,H2_FCC,MDE80,3.703,3.9272,True
+outputs/rebuild/appendix_v3/table_5.csv,H2_FCC,Status,NULL-INCONCLUSIVE,NULL-INCONCLUSIVE,False
+outputs/rebuild/appendix_v3/table_5.csv,H1_timing,Coef,0.9641,1.15,True
+outputs/rebuild/appendix_v3/table_5.csv,H1_timing,p,0.3298,0.2526,True
+outputs/rebuild/appendix_v3/table_5.csv,H1_timing,TOST_p_2.10,0.1259,0.1726,True
+outputs/rebuild/appendix_v3/table_5.csv,H1_timing,MDE80,2.7702,2.8143,True
+outputs/rebuild/appendix_v3/table_5.csv,H1_timing,Status,NULL-INCONCLUSIVE,NULL-INCONCLUSIVE,False
+outputs/rebuild/appendix_v3/table_5.csv,H3_prior,Coef,0.0238,0.0332,True
+outputs/rebuild/appendix_v3/table_5.csv,H3_prior,p,0.7092,0.6063,True
+outputs/rebuild/appendix_v3/table_5.csv,H3_prior,TOST_p_2.10,0.0,0.0,False
+outputs/rebuild/appendix_v3/table_5.csv,H3_prior,MDE80,0.1786,0.1804,True
+outputs/rebuild/appendix_v3/table_5.csv,H3_prior,Status,BOUNDED NULL,BOUNDED NULL,False
+outputs/rebuild/appendix_v3/table_5.csv,H4_health,Coef,-1.0553,-1.0247,True
+outputs/rebuild/appendix_v3/table_5.csv,H4_health,p,0.687,0.6944,True
+outputs/rebuild/appendix_v3/table_5.csv,H4_health,TOST_p_2.10,0.3451,0.3402,True
+outputs/rebuild/appendix_v3/table_5.csv,H4_health,MDE80,7.3343,7.3034,True
+outputs/rebuild/appendix_v3/table_5.csv,H4_health,Status,NULL-INCONCLUSIVE,NULL-INCONCLUSIVE,False
+outputs/rebuild/appendix_v3/table_5.csv,CAPTION,Coef,"This table summarizes the four hypothesis tests from the baseline HC3 regression on the regression sample (N = 338). TOST p-values test equivalence against the +/-2.10 percentage-point bound, which was fixed from the prior literature before the rebuilt estimates existed; MDE80 is the minimum detectable effect at 80 percent power.","This table summarizes the four hypothesis tests from the baseline HC3 regression on the regression sample (N = 340). TOST p-values test equivalence against the +/-2.10 percentage-point bound, which was fixed from the prior literature before the rebuilt estimates existed; MDE80 is the minimum detectable effect at 80 percent power.",True
+outputs/rebuild/appendix_v3/table_6.csv,Treated only (fcc_form499=1) | immediate_disclosure,Coef,-0.7835,-0.2202,True
+outputs/rebuild/appendix_v3/table_6.csv,Treated only (fcc_form499=1) | immediate_disclosure,SE,1.8085,1.8879,True
+outputs/rebuild/appendix_v3/table_6.csv,Treated only (fcc_form499=1) | immediate_disclosure,p,0.6648,0.9071,True
+outputs/rebuild/appendix_v3/table_6.csv,Treated only (fcc_form499=1) | immediate_disclosure,N,104,106,True
+outputs/rebuild/appendix_v3/table_6.csv,Untreated only (fcc_form499=0) | immediate_disclosure,Coef,1.9307,1.9307,False
+outputs/rebuild/appendix_v3/table_6.csv,Untreated only (fcc_form499=0) | immediate_disclosure,SE,1.1916,1.1916,False
+outputs/rebuild/appendix_v3/table_6.csv,Untreated only (fcc_form499=0) | immediate_disclosure,p,0.1052,0.1052,False
+outputs/rebuild/appendix_v3/table_6.csv,Untreated only (fcc_form499=0) | immediate_disclosure,N,234,234,False
+outputs/rebuild/appendix_v3/table_6.csv,Pooled with interaction | immediate_disclosure (main effect),Coef,1.9807,1.962,True
+outputs/rebuild/appendix_v3/table_6.csv,Pooled with interaction | immediate_disclosure (main effect),SE,1.1934,1.1936,True
+outputs/rebuild/appendix_v3/table_6.csv,Pooled with interaction | immediate_disclosure (main effect),p,0.097,0.1002,True
+outputs/rebuild/appendix_v3/table_6.csv,Pooled with interaction | immediate_disclosure (main effect),N,338,340,True
+outputs/rebuild/appendix_v3/table_6.csv,Pooled with interaction | fcc_form499 (main effect),Coef,0.9518,0.1567,True
+outputs/rebuild/appendix_v3/table_6.csv,Pooled with interaction | fcc_form499 (main effect),SE,1.5872,1.7639,True
+outputs/rebuild/appendix_v3/table_6.csv,Pooled with interaction | fcc_form499 (main effect),p,0.5487,0.9292,True
+outputs/rebuild/appendix_v3/table_6.csv,Pooled with interaction | fcc_form499 (main effect),N,338,340,True
+outputs/rebuild/appendix_v3/table_6.csv,Pooled with interaction | immediate_disclosure x fcc_form499,Coef,-3.0166,-2.3776,True
+outputs/rebuild/appendix_v3/table_6.csv,Pooled with interaction | immediate_disclosure x fcc_form499,SE,2.1039,2.1868,True
+outputs/rebuild/appendix_v3/table_6.csv,Pooled with interaction | immediate_disclosure x fcc_form499,p,0.1516,0.2769,True
+outputs/rebuild/appendix_v3/table_6.csv,Pooled with interaction | immediate_disclosure x fcc_form499,N,338,340,True
+outputs/rebuild/appendix_v3/table_6.csv,"CAPTION | This table estimates the disclosure-timing effect separately by regulatory regime, with HC3 standard errors throughout. The baseline specification is estimated on treated events only (fcc_form499 = 1, N = 104), on untreated events only (N = 234), and pooled on the full regression sample (N = 338) with an immediate_disclosure-by-fcc_form499 interaction. fcc_form499 is dropped from the subsample specifications because it is constant within each subsample; any other control without variation within a subsample is likewise dropped.",Coef,,(absent),True
+outputs/rebuild/appendix_v3/table_6.csv,"CAPTION | This table estimates the disclosure-timing effect separately by regulatory regime, with HC3 standard errors throughout. The baseline specification is estimated on treated events only (fcc_form499 = 1, N = 104), on untreated events only (N = 234), and pooled on the full regression sample (N = 338) with an immediate_disclosure-by-fcc_form499 interaction. fcc_form499 is dropped from the subsample specifications because it is constant within each subsample; any other control without variation within a subsample is likewise dropped.",SE,,(absent),True
+outputs/rebuild/appendix_v3/table_6.csv,"CAPTION | This table estimates the disclosure-timing effect separately by regulatory regime, with HC3 standard errors throughout. The baseline specification is estimated on treated events only (fcc_form499 = 1, N = 104), on untreated events only (N = 234), and pooled on the full regression sample (N = 338) with an immediate_disclosure-by-fcc_form499 interaction. fcc_form499 is dropped from the subsample specifications because it is constant within each subsample; any other control without variation within a subsample is likewise dropped.",p,,(absent),True
+outputs/rebuild/appendix_v3/table_6.csv,"CAPTION | This table estimates the disclosure-timing effect separately by regulatory regime, with HC3 standard errors throughout. The baseline specification is estimated on treated events only (fcc_form499 = 1, N = 104), on untreated events only (N = 234), and pooled on the full regression sample (N = 338) with an immediate_disclosure-by-fcc_form499 interaction. fcc_form499 is dropped from the subsample specifications because it is constant within each subsample; any other control without variation within a subsample is likewise dropped.",N,,(absent),True
+outputs/rebuild/appendix_v3/table_6.csv,"CAPTION | This table estimates the disclosure-timing effect separately by regulatory regime, with HC3 standard errors throughout. The baseline specification is estimated on treated events only (fcc_form499 = 1, N = 106), on untreated events only (N = 234), and pooled on the full regression sample (N = 340) with an immediate_disclosure-by-fcc_form499 interaction. fcc_form499 is dropped from the subsample specifications because it is constant within each subsample; any other control without variation within a subsample is likewise dropped.",Coef,(absent),,True
+outputs/rebuild/appendix_v3/table_6.csv,"CAPTION | This table estimates the disclosure-timing effect separately by regulatory regime, with HC3 standard errors throughout. The baseline specification is estimated on treated events only (fcc_form499 = 1, N = 106), on untreated events only (N = 234), and pooled on the full regression sample (N = 340) with an immediate_disclosure-by-fcc_form499 interaction. fcc_form499 is dropped from the subsample specifications because it is constant within each subsample; any other control without variation within a subsample is likewise dropped.",SE,(absent),,True
+outputs/rebuild/appendix_v3/table_6.csv,"CAPTION | This table estimates the disclosure-timing effect separately by regulatory regime, with HC3 standard errors throughout. The baseline specification is estimated on treated events only (fcc_form499 = 1, N = 106), on untreated events only (N = 234), and pooled on the full regression sample (N = 340) with an immediate_disclosure-by-fcc_form499 interaction. fcc_form499 is dropped from the subsample specifications because it is constant within each subsample; any other control without variation within a subsample is likewise dropped.",p,(absent),,True
+outputs/rebuild/appendix_v3/table_6.csv,"CAPTION | This table estimates the disclosure-timing effect separately by regulatory regime, with HC3 standard errors throughout. The baseline specification is estimated on treated events only (fcc_form499 = 1, N = 106), on untreated events only (N = 234), and pooled on the full regression sample (N = 340) with an immediate_disclosure-by-fcc_form499 interaction. fcc_form499 is dropped from the subsample specifications because it is constant within each subsample; any other control without variation within a subsample is likewise dropped.",N,(absent),,True
+outputs/rebuild/appendix_v3/table_7.csv,Full,Timing coef,0.964,1.15,True
+outputs/rebuild/appendix_v3/table_7.csv,Full,Timing p,0.33,0.253,True
+outputs/rebuild/appendix_v3/table_7.csv,Full,FCC coef,-0.266,-0.805,True
+outputs/rebuild/appendix_v3/table_7.csv,Full,FCC p,0.84,0.566,True
+outputs/rebuild/appendix_v3/table_7.csv,Full,ROA coef,7.65,7.35,True
+outputs/rebuild/appendix_v3/table_7.csv,Full,ROA p,0.16,0.175,True
+outputs/rebuild/appendix_v3/table_7.csv,Full,N,338,340,True
+outputs/rebuild/appendix_v3/table_7.csv,Excl. largest decile,Timing coef,1.17,1.382,True
+outputs/rebuild/appendix_v3/table_7.csv,Excl. largest decile,Timing p,0.277,0.207,True
+outputs/rebuild/appendix_v3/table_7.csv,Excl. largest decile,FCC coef,-0.375,-0.998,True
+outputs/rebuild/appendix_v3/table_7.csv,Excl. largest decile,FCC p,0.8,0.525,True
+outputs/rebuild/appendix_v3/table_7.csv,Excl. largest decile,ROA coef,8.57,8.18,True
+outputs/rebuild/appendix_v3/table_7.csv,Excl. largest decile,ROA p,0.13,0.147,True
+outputs/rebuild/appendix_v3/table_7.csv,Excl. largest decile,N,305,307,True
+outputs/rebuild/appendix_v3/table_7.csv,Excl. smallest decile,Timing coef,0.527,0.733,True
+outputs/rebuild/appendix_v3/table_7.csv,Excl. smallest decile,Timing p,0.611,0.487,True
+outputs/rebuild/appendix_v3/table_7.csv,Excl. smallest decile,FCC coef,-0.471,-1.05,True
+outputs/rebuild/appendix_v3/table_7.csv,Excl. smallest decile,FCC p,0.736,0.478,True
+outputs/rebuild/appendix_v3/table_7.csv,Excl. smallest decile,ROA coef,4.92,4.7,True
+outputs/rebuild/appendix_v3/table_7.csv,Excl. smallest decile,ROA p,0.379,0.401,True
+outputs/rebuild/appendix_v3/table_7.csv,Excl. smallest decile,N,316,318,True
+outputs/rebuild/appendix_v3/table_7.csv,Non-health,Timing coef,0.743,0.933,True
+outputs/rebuild/appendix_v3/table_7.csv,Non-health,Timing p,0.447,0.349,True
+outputs/rebuild/appendix_v3/table_7.csv,Non-health,FCC coef,-0.212,-0.761,True
+outputs/rebuild/appendix_v3/table_7.csv,Non-health,FCC p,0.874,0.593,True
+outputs/rebuild/appendix_v3/table_7.csv,Non-health,ROA coef,8.07,7.78,True
+outputs/rebuild/appendix_v3/table_7.csv,Non-health,ROA p,0.156,0.169,True
+outputs/rebuild/appendix_v3/table_7.csv,Non-health,N,323,325,True
+outputs/rebuild/appendix_v3/table_7.csv,CAPTION,Timing coef,This table re-estimates the baseline specification with HC3 standard errors on restricted samples; each row reports its own N. Controls without variation within a restricted sample are dropped from that row.,This table re-estimates the baseline specification with HC3 standard errors on restricted samples; each row reports its own N. Controls without variation within a restricted sample are dropped from that row.,False
+outputs/rebuild/appendix_v3/table_8.csv,OLS,Timing p,0.3138,0.2423,True
+outputs/rebuild/appendix_v3/table_8.csv,OLS,FCC p,0.8277,0.5204,True
+outputs/rebuild/appendix_v3/table_8.csv,OLS,ROA p,0.1076,0.1334,True
+outputs/rebuild/appendix_v3/table_8.csv,HC1,Timing p,0.3235,0.2466,True
+outputs/rebuild/appendix_v3/table_8.csv,HC1,FCC p,0.8384,0.5616,True
+outputs/rebuild/appendix_v3/table_8.csv,HC1,ROA p,0.1491,0.1642,True
+outputs/rebuild/appendix_v3/table_8.csv,HC3,Timing p,0.3298,0.2526,True
+outputs/rebuild/appendix_v3/table_8.csv,HC3,FCC p,0.8404,0.5659,True
+outputs/rebuild/appendix_v3/table_8.csv,HC3,ROA p,0.1596,0.175,True
+outputs/rebuild/appendix_v3/table_8.csv,Firm-clustered,Timing p,0.2547,0.1849,True
+outputs/rebuild/appendix_v3/table_8.csv,Firm-clustered,FCC p,0.8227,0.5335,True
+outputs/rebuild/appendix_v3/table_8.csv,Firm-clustered,ROA p,0.1866,0.199,True
+outputs/rebuild/appendix_v3/table_8.csv,CAPTION,Timing p,"This table reports p-values from the baseline specification on the regression sample (N = 338) under alternative standard-error methods: classical OLS, HC1, HC3, and clustering by parent CIK (82 clusters).","This table reports p-values from the baseline specification on the regression sample (N = 340) under alternative standard-error methods: classical OLS, HC1, HC3, and clustering by parent CIK (83 clusters).",True
+outputs/rebuild/appendix_v3/table_9.csv,Q1,Coef,0.895,0.895,False
+outputs/rebuild/appendix_v3/table_9.csv,Q1,p,0.571,0.571,False
+outputs/rebuild/appendix_v3/table_9.csv,Q1,N,86,86,False
+outputs/rebuild/appendix_v3/table_9.csv,Q1,Treated N,2,2,False
+outputs/rebuild/appendix_v3/table_9.csv,Q2,Coef,-0.657,-0.657,False
+outputs/rebuild/appendix_v3/table_9.csv,Q2,p,0.773,0.773,False
+outputs/rebuild/appendix_v3/table_9.csv,Q2,N,84,84,False
+outputs/rebuild/appendix_v3/table_9.csv,Q2,Treated N,14,14,False
+outputs/rebuild/appendix_v3/table_9.csv,Q3,Coef,3.169,3.829,True
+outputs/rebuild/appendix_v3/table_9.csv,Q3,p,0.356,0.274,True
+outputs/rebuild/appendix_v3/table_9.csv,Q3,N,83,85,True
+outputs/rebuild/appendix_v3/table_9.csv,Q3,Treated N,29,31,True
+outputs/rebuild/appendix_v3/table_9.csv,Q4,Coef,-1.073,-1.073,False
+outputs/rebuild/appendix_v3/table_9.csv,Q4,p,0.507,0.507,False
+outputs/rebuild/appendix_v3/table_9.csv,Q4,N,85,85,False
+outputs/rebuild/appendix_v3/table_9.csv,Q4,Treated N,59,59,False
+outputs/rebuild/appendix_v3/table_9.csv,CAPTION,Coef,"This table reports the immediate-disclosure coefficient from the baseline specification (HC3 standard errors), estimated separately within firm-size quartiles of the regression sample. Treated event counts are reported because treated events concentrate in the larger quartiles; controls without variation within a quartile are dropped.","This table reports the immediate-disclosure coefficient from the baseline specification (HC3 standard errors), estimated separately within firm-size quartiles of the regression sample. Treated event counts are reported because treated events concentrate in the larger quartiles; controls without variation within a quartile are dropped.",False
+outputs/rebuild/appendix_v3/table_10.csv,Q1,Coef,2.845,2.845,False
+outputs/rebuild/appendix_v3/table_10.csv,Q1,p,0.555,0.555,False
+outputs/rebuild/appendix_v3/table_10.csv,Q1,N,86,86,False
+outputs/rebuild/appendix_v3/table_10.csv,Q1,Treated N,2,2,False
+outputs/rebuild/appendix_v3/table_10.csv,Q2,Coef,3.935,3.935,False
+outputs/rebuild/appendix_v3/table_10.csv,Q2,p,0.172,0.172,False
+outputs/rebuild/appendix_v3/table_10.csv,Q2,N,84,84,False
+outputs/rebuild/appendix_v3/table_10.csv,Q2,Treated N,14,14,False
+outputs/rebuild/appendix_v3/table_10.csv,Q3,Coef,0.804,-1.298,True
+outputs/rebuild/appendix_v3/table_10.csv,Q3,p,0.808,0.72,True
+outputs/rebuild/appendix_v3/table_10.csv,Q3,N,83,85,True
+outputs/rebuild/appendix_v3/table_10.csv,Q3,Treated N,29,31,True
+outputs/rebuild/appendix_v3/table_10.csv,Q4,Coef,1.983,1.983,False
+outputs/rebuild/appendix_v3/table_10.csv,Q4,p,0.442,0.442,False
+outputs/rebuild/appendix_v3/table_10.csv,Q4,N,85,85,False
+outputs/rebuild/appendix_v3/table_10.csv,Q4,Treated N,59,59,False
+outputs/rebuild/appendix_v3/table_10.csv,CAPTION,Coef,"This table reports the Form 499 coefficient from the baseline specification (HC3 standard errors), estimated separately within firm-size quartiles of the regression sample. Treated event counts are reported because treated events concentrate in the larger quartiles; controls without variation within a quartile are dropped.","This table reports the Form 499 coefficient from the baseline specification (HC3 standard errors), estimated separately within firm-size quartiles of the regression sample. Treated event counts are reported because treated events concentrate in the larger quartiles; controls without variation within a quartile are dropped.",False
+outputs/rebuild/appendix_v3/table_11.csv,Baseline HC3,FCC coef,-0.2663,-0.8051,True
+outputs/rebuild/appendix_v3/table_11.csv,Baseline HC3,p,0.8404,0.5659,True
+outputs/rebuild/appendix_v3/table_11.csv,+ Year FE,FCC coef,-0.9976,-1.7234,True
+outputs/rebuild/appendix_v3/table_11.csv,+ Year FE,p,0.4396,0.2368,True
+outputs/rebuild/appendix_v3/table_11.csv,CAPTION,FCC coef,"This table compares the Form 499 coefficient from the baseline HC3 specification with a specification adding calendar-year fixed effects, both estimated on the regression sample (N = 338).","This table compares the Form 499 coefficient from the baseline HC3 specification with a specification adding calendar-year fixed effects, both estimated on the regression sample (N = 340).",True
+outputs/rebuild/appendix_v3/table_12.csv,Records affected (max across filings),FCC coef,-0.2695,-0.8068,True
+outputs/rebuild/appendix_v3/table_12.csv,Records affected (max across filings),FCC p,0.8386,0.5652,True
+outputs/rebuild/appendix_v3/table_12.csv,Records affected (max across filings),Control p,0.9534,0.9775,True
+outputs/rebuild/appendix_v3/table_12.csv,Records affected (max across filings),N,338,340,True
+outputs/rebuild/appendix_v3/table_12.csv,Records affected (max across filings),Note,HHI retired with pre-audit chain,HHI retired with pre-audit chain,False
+outputs/rebuild/appendix_v3/table_12.csv,CAPTION,FCC coef,"This table adds breach severity, measured as the maximum records-affected count across source filings, to the baseline HC3 specification (N = 338). The pre-audit industry-concentration (HHI) control was retired with the pre-audit chain and does not appear in v3.","This table adds breach severity, measured as the maximum records-affected count across source filings, to the baseline HC3 specification (N = 340). The pre-audit industry-concentration (HHI) control was retired with the pre-audit chain and does not appear in v3.",True
+outputs/rebuild/appendix_v3/table_13.csv,Baseline,FCC p,0.8404,0.5659,True
+outputs/rebuild/appendix_v3/table_13.csv,Baseline,ROA p,0.1596,0.175,True
+outputs/rebuild/appendix_v3/table_13.csv,FF3 controls,FCC p,0.7358,0.4772,True
+outputs/rebuild/appendix_v3/table_13.csv,FF3 controls,ROA p,0.1151,0.1319,True
+outputs/rebuild/appendix_v3/table_13.csv,CAPTION,FCC p,"This table adds month-level Fama-French three-factor values (Mkt-RF, SMB, and HML) to the baseline HC3 specification (N = 338). Every regression-sample event month matched the factor file, so no observations are lost.","This table adds month-level Fama-French three-factor values (Mkt-RF, SMB, and HML) to the baseline HC3 specification (N = 340). Every regression-sample event month matched the factor file, so no observations are lost.",True
+outputs/rebuild/appendix_v3/table_14.csv,fcc_form499,Coef (log turnover),0.0779,0.1064,True
+outputs/rebuild/appendix_v3/table_14.csv,fcc_form499,SE,0.0497,0.053,True
+outputs/rebuild/appendix_v3/table_14.csv,fcc_form499,p,0.1167,0.0446,True
+outputs/rebuild/appendix_v3/table_14.csv,immediate_disclosure,Coef (log turnover),0.0045,0.0098,True
+outputs/rebuild/appendix_v3/table_14.csv,immediate_disclosure,SE,0.036,0.0374,True
+outputs/rebuild/appendix_v3/table_14.csv,immediate_disclosure,p,0.9016,0.7935,True
+outputs/rebuild/appendix_v3/table_14.csv,prior_breaches_1yr,Coef (log turnover),-0.0055,-0.006,True
+outputs/rebuild/appendix_v3/table_14.csv,prior_breaches_1yr,SE,0.0029,0.0029,False
+outputs/rebuild/appendix_v3/table_14.csv,prior_breaches_1yr,p,0.0598,0.0416,True
+outputs/rebuild/appendix_v3/table_14.csv,health_breach,Coef (log turnover),0.0547,0.0566,True
+outputs/rebuild/appendix_v3/table_14.csv,health_breach,SE,0.0935,0.0932,True
+outputs/rebuild/appendix_v3/table_14.csv,health_breach,p,0.5586,0.5442,True
+outputs/rebuild/appendix_v3/table_14.csv,firm_size_log,Coef (log turnover),-0.0197,-0.0232,True
+outputs/rebuild/appendix_v3/table_14.csv,firm_size_log,SE,0.0137,0.0139,True
+outputs/rebuild/appendix_v3/table_14.csv,firm_size_log,p,0.1516,0.0949,True
+outputs/rebuild/appendix_v3/table_14.csv,leverage,Coef (log turnover),-0.1624,-0.1731,True
+outputs/rebuild/appendix_v3/table_14.csv,leverage,SE,0.1157,0.1177,True
+outputs/rebuild/appendix_v3/table_14.csv,leverage,p,0.1604,0.1411,True
+outputs/rebuild/appendix_v3/table_14.csv,roa,Coef (log turnover),0.432,0.4486,True
+outputs/rebuild/appendix_v3/table_14.csv,roa,SE,0.1828,0.1861,True
+outputs/rebuild/appendix_v3/table_14.csv,roa,p,0.0181,0.0159,True
+outputs/rebuild/appendix_v3/table_14.csv,N row,Coef (log turnover),,,False
+outputs/rebuild/appendix_v3/table_14.csv,N row,SE,,,False
+outputs/rebuild/appendix_v3/table_14.csv,N row,p,,,False
+outputs/rebuild/appendix_v3/table_14.csv,N row,Variable,"N=319 (event [-5,+25] vs est [-240,-60] trading days)","N=321 (event [-5,+25] vs est [-240,-60] trading days)",True
+outputs/rebuild/appendix_v3/table_14.csv,CAPTION,Coef (log turnover),"This table regresses abnormal log share turnover on the baseline covariates with HC3 standard errors (N = 319). Abnormal turnover is the mean log turnover over event trading days [-5, +25] minus the mean over estimation days [-240, -60]; 19 regression-sample events lacking sufficient volume history are excluded.","This table regresses abnormal log share turnover on the baseline covariates with HC3 standard errors (N = 321). Abnormal turnover is the mean log turnover over event trading days [-5, +25] minus the mean over estimation days [-240, -60]; 19 regression-sample events lacking sufficient volume history are excluded.",True
+outputs/rebuild/appendix_v3/table_15.csv,roa,Importance,0.331,0.3405,True
+outputs/rebuild/appendix_v3/table_15.csv,firm_size_log,Importance,0.2428,0.2364,True
+outputs/rebuild/appendix_v3/table_15.csv,leverage,Importance,0.2045,0.2019,True
+outputs/rebuild/appendix_v3/table_15.csv,prior_breaches_1yr,Importance,0.1476,0.1416,True
+outputs/rebuild/appendix_v3/table_15.csv,immediate_disclosure,Importance,0.0443,0.0485,True
+outputs/rebuild/appendix_v3/table_15.csv,fcc_form499,Importance,0.0172,0.0202,True
+outputs/rebuild/appendix_v3/table_15.csv,health_breach,Importance,0.0126,0.0109,True
+outputs/rebuild/appendix_v3/table_15.csv,CAPTION,Importance,"This table reports random forest feature importances (500 trees, fixed seed 42) for the seven baseline covariates predicting the 30-day CAR on the regression sample (N = 338). Importances are descriptive and carry no causal interpretation.","This table reports random forest feature importances (500 trees, fixed seed 42) for the seven baseline covariates predicting the 30-day CAR on the regression sample (N = 340). Importances are descriptive and carry no causal interpretation.",True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-30,-21] | All",N,354,356,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-30,-21] | All",Mean CAR (pp),-0.073,-0.143,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-30,-21] | All",Median,-0.03,-0.066,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-30,-21] | All",SD,5.065,5.138,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-30,-21] | All",t,-0.272,-0.525,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-30,-21] | All",p,0.7854,0.5999,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-30,-21] | Treated",N,109,111,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-30,-21] | Treated",Mean CAR (pp),-0.144,-0.366,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-30,-21] | Treated",Median,-0.067,-0.272,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-30,-21] | Treated",SD,5.986,6.164,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-30,-21] | Treated",t,-0.252,-0.626,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-30,-21] | Treated",p,0.8018,0.5324,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-30,-21] | Untreated",N,245,245,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-30,-21] | Untreated",Mean CAR (pp),-0.042,-0.042,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-30,-21] | Untreated",Median,0.005,0.005,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-30,-21] | Untreated",SD,4.609,4.609,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-30,-21] | Untreated",t,-0.142,-0.142,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-30,-21] | Untreated",p,0.8873,0.8873,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-30,-21] | Difference (Welch)",N,,,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-30,-21] | Difference (Welch)",Mean CAR (pp),-0.103,-0.325,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-30,-21] | Difference (Welch)",Median,,,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-30,-21] | Difference (Welch)",SD,,,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-30,-21] | Difference (Welch)",t,-0.159,-0.496,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-30,-21] | Difference (Welch)",p,0.8738,0.6208,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-20,-11] | All",N,354,356,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-20,-11] | All",Mean CAR (pp),0.801,0.771,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-20,-11] | All",Median,0.432,0.424,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-20,-11] | All",SD,6.046,6.048,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-20,-11] | All",t,2.493,2.405,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-20,-11] | All",p,0.0131,0.0167,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-20,-11] | Treated",N,109,111,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-20,-11] | Treated",Mean CAR (pp),0.376,0.287,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-20,-11] | Treated",Median,0.502,0.45,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-20,-11] | Treated",SD,6.41,6.402,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-20,-11] | Treated",t,0.612,0.472,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-20,-11] | Treated",p,0.5417,0.6382,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-20,-11] | Untreated",N,245,245,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-20,-11] | Untreated",Mean CAR (pp),0.99,0.99,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-20,-11] | Untreated",Median,0.418,0.418,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-20,-11] | Untreated",SD,5.881,5.881,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-20,-11] | Untreated",t,2.636,2.636,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-20,-11] | Untreated",p,0.0089,0.0089,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-20,-11] | Difference (Welch)",N,,,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-20,-11] | Difference (Welch)",Mean CAR (pp),-0.615,-0.704,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-20,-11] | Difference (Welch)",Median,,,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-20,-11] | Difference (Welch)",SD,,,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-20,-11] | Difference (Welch)",t,-0.854,-0.985,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-20,-11] | Difference (Welch)",p,0.3943,0.3258,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-10,-1] | All",N,354,356,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-10,-1] | All",Mean CAR (pp),0.088,0.041,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-10,-1] | All",Median,0.101,0.081,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-10,-1] | All",SD,5.843,5.86,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-10,-1] | All",t,0.282,0.133,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-10,-1] | All",p,0.7781,0.8941,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-10,-1] | Treated",N,109,111,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-10,-1] | Treated",Mean CAR (pp),1.231,1.063,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-10,-1] | Treated",Median,0.37,0.339,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-10,-1] | Treated",SD,7.106,7.153,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-10,-1] | Treated",t,1.809,1.565,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-10,-1] | Treated",p,0.0732,0.1204,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-10,-1] | Untreated",N,245,245,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-10,-1] | Untreated",Mean CAR (pp),-0.421,-0.421,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-10,-1] | Untreated",Median,-0.026,-0.026,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-10,-1] | Untreated",SD,5.119,5.119,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-10,-1] | Untreated",t,-1.288,-1.288,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-10,-1] | Untreated",p,0.1989,0.1989,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-10,-1] | Difference (Welch)",N,,,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-10,-1] | Difference (Welch)",Mean CAR (pp),1.653,1.484,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-10,-1] | Difference (Welch)",Median,,,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-10,-1] | Difference (Welch)",SD,,,False
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-10,-1] | Difference (Welch)",t,2.189,1.969,True
+outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored (PRIMARY) | [-10,-1] | Difference (Welch)",p,0.0301,0.0506,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-30,-21] | All",N,353,355,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-30,-21] | All",Mean CAR (pp),0.044,-0.018,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-30,-21] | All",Median,0.145,0.145,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-30,-21] | All",SD,4.95,5.051,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-30,-21] | All",t,0.166,-0.068,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-30,-21] | All",p,0.8686,0.9456,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-30,-21] | Treated",N,108,110,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-30,-21] | Treated",Mean CAR (pp),0.291,0.087,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-30,-21] | Treated",Median,-0.195,-0.195,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-30,-21] | Treated",SD,6.003,6.258,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-30,-21] | Treated",t,0.504,0.146,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-30,-21] | Treated",p,0.615,0.8842,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-30,-21] | Untreated",N,245,245,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-30,-21] | Untreated",Mean CAR (pp),-0.066,-0.066,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-30,-21] | Untreated",Median,0.2,0.2,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-30,-21] | Untreated",SD,4.417,4.417,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-30,-21] | Untreated",t,-0.233,-0.233,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-30,-21] | Untreated",p,0.8163,0.8163,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-30,-21] | Difference (Welch)",N,,,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-30,-21] | Difference (Welch)",Mean CAR (pp),0.357,0.153,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-30,-21] | Difference (Welch)",Median,,,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-30,-21] | Difference (Welch)",SD,,,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-30,-21] | Difference (Welch)",t,0.555,0.231,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-30,-21] | Difference (Welch)",p,0.5794,0.8173,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-20,-11] | All",N,353,355,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-20,-11] | All",Mean CAR (pp),0.357,0.303,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-20,-11] | All",Median,0.308,0.299,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-20,-11] | All",SD,5.122,5.122,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-20,-11] | All",t,1.31,1.115,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-20,-11] | All",p,0.1911,0.2658,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-20,-11] | Treated",N,108,110,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-20,-11] | Treated",Mean CAR (pp),-0.308,-0.471,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-20,-11] | Treated",Median,-0.286,-0.316,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-20,-11] | Treated",SD,5.165,5.14,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-20,-11] | Treated",t,-0.62,-0.96,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-20,-11] | Treated",p,0.5363,0.339,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-20,-11] | Untreated",N,245,245,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-20,-11] | Untreated",Mean CAR (pp),0.65,0.65,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-20,-11] | Untreated",Median,0.561,0.561,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-20,-11] | Untreated",SD,5.086,5.086,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-20,-11] | Untreated",t,2.002,2.002,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-20,-11] | Untreated",p,0.0464,0.0464,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-20,-11] | Difference (Welch)",N,,,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-20,-11] | Difference (Welch)",Mean CAR (pp),-0.959,-1.121,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-20,-11] | Difference (Welch)",Median,,,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-20,-11] | Difference (Welch)",SD,,,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-20,-11] | Difference (Welch)",t,-1.615,-1.907,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-20,-11] | Difference (Welch)",p,0.108,0.058,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-10,-1] | All",N,353,355,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-10,-1] | All",Mean CAR (pp),-0.291,-0.336,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-10,-1] | All",Median,0.042,0.026,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-10,-1] | All",SD,5.507,5.559,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-10,-1] | All",t,-0.991,-1.139,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-10,-1] | All",p,0.3223,0.2555,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-10,-1] | Treated",N,108,110,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-10,-1] | Treated",Mean CAR (pp),0.885,0.717,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-10,-1] | Treated",Median,0.197,0.124,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-10,-1] | Treated",SD,6.335,6.495,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-10,-1] | Treated",t,1.452,1.157,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-10,-1] | Treated",p,0.1494,0.2497,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-10,-1] | Untreated",N,245,245,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-10,-1] | Untreated",Mean CAR (pp),-0.809,-0.809,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-10,-1] | Untreated",Median,-0.032,-0.032,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-10,-1] | Untreated",SD,5.027,5.027,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-10,-1] | Untreated",t,-2.518,-2.518,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-10,-1] | Untreated",p,0.0124,0.0124,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-10,-1] | Difference (Welch)",N,,,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-10,-1] | Difference (Welch)",Mean CAR (pp),1.694,1.526,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-10,-1] | Difference (Welch)",Median,,,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-10,-1] | Difference (Welch)",SD,,,False
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-10,-1] | Difference (Welch)",t,2.459,2.187,True
+outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored (secondary) | [-10,-1] | Difference (Welch)",p,0.015,0.0301,True
+outputs/rebuild/appendix_v3/table_16.csv,"CAPTION | This table reports cumulative market-adjusted abnormal returns (daily CRSP return minus the CRSP value-weighted market return, x100, summed over trading days) over three pre-event windows. In the primary panel, day 0 is the trading day nearest the breach date, identical to the main CAR anchor with its +/-50 calendar-day pull. In the secondary panel, day 0 is the trading day nearest the reported date; 1 of 354 CRSP-sample events are excluded for a missing or invalid reported date (including delay_invalid = 1 wrong-field records). Events lacking 30 complete pre-anchor trading days of abnormal returns are excluded listwise per panel (breach-anchored: 0; announcement-anchored: 0). | ",N,,(absent),True
+outputs/rebuild/appendix_v3/table_16.csv,"CAPTION | This table reports cumulative market-adjusted abnormal returns (daily CRSP return minus the CRSP value-weighted market return, x100, summed over trading days) over three pre-event windows. In the primary panel, day 0 is the trading day nearest the breach date, identical to the main CAR anchor with its +/-50 calendar-day pull. In the secondary panel, day 0 is the trading day nearest the reported date; 1 of 354 CRSP-sample events are excluded for a missing or invalid reported date (including delay_invalid = 1 wrong-field records). Events lacking 30 complete pre-anchor trading days of abnormal returns are excluded listwise per panel (breach-anchored: 0; announcement-anchored: 0). | ",Mean CAR (pp),,(absent),True
+outputs/rebuild/appendix_v3/table_16.csv,"CAPTION | This table reports cumulative market-adjusted abnormal returns (daily CRSP return minus the CRSP value-weighted market return, x100, summed over trading days) over three pre-event windows. In the primary panel, day 0 is the trading day nearest the breach date, identical to the main CAR anchor with its +/-50 calendar-day pull. In the secondary panel, day 0 is the trading day nearest the reported date; 1 of 354 CRSP-sample events are excluded for a missing or invalid reported date (including delay_invalid = 1 wrong-field records). Events lacking 30 complete pre-anchor trading days of abnormal returns are excluded listwise per panel (breach-anchored: 0; announcement-anchored: 0). | ",Median,,(absent),True
+outputs/rebuild/appendix_v3/table_16.csv,"CAPTION | This table reports cumulative market-adjusted abnormal returns (daily CRSP return minus the CRSP value-weighted market return, x100, summed over trading days) over three pre-event windows. In the primary panel, day 0 is the trading day nearest the breach date, identical to the main CAR anchor with its +/-50 calendar-day pull. In the secondary panel, day 0 is the trading day nearest the reported date; 1 of 354 CRSP-sample events are excluded for a missing or invalid reported date (including delay_invalid = 1 wrong-field records). Events lacking 30 complete pre-anchor trading days of abnormal returns are excluded listwise per panel (breach-anchored: 0; announcement-anchored: 0). | ",SD,,(absent),True
+outputs/rebuild/appendix_v3/table_16.csv,"CAPTION | This table reports cumulative market-adjusted abnormal returns (daily CRSP return minus the CRSP value-weighted market return, x100, summed over trading days) over three pre-event windows. In the primary panel, day 0 is the trading day nearest the breach date, identical to the main CAR anchor with its +/-50 calendar-day pull. In the secondary panel, day 0 is the trading day nearest the reported date; 1 of 354 CRSP-sample events are excluded for a missing or invalid reported date (including delay_invalid = 1 wrong-field records). Events lacking 30 complete pre-anchor trading days of abnormal returns are excluded listwise per panel (breach-anchored: 0; announcement-anchored: 0). | ",t,,(absent),True
+outputs/rebuild/appendix_v3/table_16.csv,"CAPTION | This table reports cumulative market-adjusted abnormal returns (daily CRSP return minus the CRSP value-weighted market return, x100, summed over trading days) over three pre-event windows. In the primary panel, day 0 is the trading day nearest the breach date, identical to the main CAR anchor with its +/-50 calendar-day pull. In the secondary panel, day 0 is the trading day nearest the reported date; 1 of 354 CRSP-sample events are excluded for a missing or invalid reported date (including delay_invalid = 1 wrong-field records). Events lacking 30 complete pre-anchor trading days of abnormal returns are excluded listwise per panel (breach-anchored: 0; announcement-anchored: 0). | ",p,,(absent),True
+outputs/rebuild/appendix_v3/table_16.csv,"CAPTION | This table reports cumulative market-adjusted abnormal returns (daily CRSP return minus the CRSP value-weighted market return, x100, summed over trading days) over three pre-event windows. In the primary panel, day 0 is the trading day nearest the breach date, identical to the main CAR anchor with its +/-50 calendar-day pull. In the secondary panel, day 0 is the trading day nearest the reported date; 1 of 356 CRSP-sample events are excluded for a missing or invalid reported date (including delay_invalid = 1 wrong-field records). Events lacking 30 complete pre-anchor trading days of abnormal returns are excluded listwise per panel (breach-anchored: 0; announcement-anchored: 0). | ",N,(absent),,True
+outputs/rebuild/appendix_v3/table_16.csv,"CAPTION | This table reports cumulative market-adjusted abnormal returns (daily CRSP return minus the CRSP value-weighted market return, x100, summed over trading days) over three pre-event windows. In the primary panel, day 0 is the trading day nearest the breach date, identical to the main CAR anchor with its +/-50 calendar-day pull. In the secondary panel, day 0 is the trading day nearest the reported date; 1 of 356 CRSP-sample events are excluded for a missing or invalid reported date (including delay_invalid = 1 wrong-field records). Events lacking 30 complete pre-anchor trading days of abnormal returns are excluded listwise per panel (breach-anchored: 0; announcement-anchored: 0). | ",Mean CAR (pp),(absent),,True
+outputs/rebuild/appendix_v3/table_16.csv,"CAPTION | This table reports cumulative market-adjusted abnormal returns (daily CRSP return minus the CRSP value-weighted market return, x100, summed over trading days) over three pre-event windows. In the primary panel, day 0 is the trading day nearest the breach date, identical to the main CAR anchor with its +/-50 calendar-day pull. In the secondary panel, day 0 is the trading day nearest the reported date; 1 of 356 CRSP-sample events are excluded for a missing or invalid reported date (including delay_invalid = 1 wrong-field records). Events lacking 30 complete pre-anchor trading days of abnormal returns are excluded listwise per panel (breach-anchored: 0; announcement-anchored: 0). | ",Median,(absent),,True
+outputs/rebuild/appendix_v3/table_16.csv,"CAPTION | This table reports cumulative market-adjusted abnormal returns (daily CRSP return minus the CRSP value-weighted market return, x100, summed over trading days) over three pre-event windows. In the primary panel, day 0 is the trading day nearest the breach date, identical to the main CAR anchor with its +/-50 calendar-day pull. In the secondary panel, day 0 is the trading day nearest the reported date; 1 of 356 CRSP-sample events are excluded for a missing or invalid reported date (including delay_invalid = 1 wrong-field records). Events lacking 30 complete pre-anchor trading days of abnormal returns are excluded listwise per panel (breach-anchored: 0; announcement-anchored: 0). | ",SD,(absent),,True
+outputs/rebuild/appendix_v3/table_16.csv,"CAPTION | This table reports cumulative market-adjusted abnormal returns (daily CRSP return minus the CRSP value-weighted market return, x100, summed over trading days) over three pre-event windows. In the primary panel, day 0 is the trading day nearest the breach date, identical to the main CAR anchor with its +/-50 calendar-day pull. In the secondary panel, day 0 is the trading day nearest the reported date; 1 of 356 CRSP-sample events are excluded for a missing or invalid reported date (including delay_invalid = 1 wrong-field records). Events lacking 30 complete pre-anchor trading days of abnormal returns are excluded listwise per panel (breach-anchored: 0; announcement-anchored: 0). | ",t,(absent),,True
+outputs/rebuild/appendix_v3/table_16.csv,"CAPTION | This table reports cumulative market-adjusted abnormal returns (daily CRSP return minus the CRSP value-weighted market return, x100, summed over trading days) over three pre-event windows. In the primary panel, day 0 is the trading day nearest the breach date, identical to the main CAR anchor with its +/-50 calendar-day pull. In the secondary panel, day 0 is the trading day nearest the reported date; 1 of 356 CRSP-sample events are excluded for a missing or invalid reported date (including delay_invalid = 1 wrong-field records). Events lacking 30 complete pre-anchor trading days of abnormal returns are excluded listwise per panel (breach-anchored: 0; announcement-anchored: 0). | ",p,(absent),,True

@@ -1,0 +1,9 @@
+Variable,Coefficient (p),Robust SE (HC3)
+Constant,-2.0840 (.634),4.3771
+Form 499 filer,-0.8051 (.566),1.4026
+Disclosed within 7 days,1.1500 (.253),1.0051
+Prior breaches (past 12 months),0.0332 (.606),0.0644
+Health data breach,-1.0247 (.694),2.6083
+Firm size (log total assets),0.0987 (.787),0.3644
+Leverage (total liabilities / total assets),0.1332 (.950),2.1309
+Return on assets (net income / total assets),7.3530 (.175),5.4209

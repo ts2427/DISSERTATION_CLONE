@@ -1,0 +1,19 @@
+==========================================================================================
+260 ESSAY 1 CHAIR TABLES
+==========================================================================================
+Part A sample gate PASS: {'events_total': 489, 'events_crsp': 356, 'N_regression': 340, 'treated_total': 118, 'treated_crsp': 111, 'treated_regression': 106, 'treated_orgs_regression': 36, 'treated_parent_ciks_regression': 12}
+Part B Table 2 reproduces constants_v3.json T2_* exactly
+                                                    Test            Measure  Treated N  Untreated N Treated value Untreated value Difference  Statistic     df      p
+        Welch two-sample t-test (mean days to first 8-K)  Days to first 8-K        117          201         22.44           30.16      -7.72 t = -3.238  256.8 0.0014
+Mann-Whitney U (Wilcoxon rank-sum), distribution of days  Days to first 8-K        117          201          15.0            26.0      -11.0 U = 9153.5        0.0010
+Two-proportion z-test (share with an 8-K within 90 days) 8-K within 90 days        118          219        0.9915          0.9178     0.0737  z = 2.799        0.0051
+     Fisher's exact test (same share; small-count check) 8-K within 90 days        118          219    117 of 118      201 of 219                              0.0049
+Part C Table 16: all 24 rows reproduce outputs/rebuild/appendix_v3/table_16.csv
+  Panel C [-10,-1] treated - untreated: +1.484 pp, Welch p = 0.0506
+  Panel F [-10,-1] treated - untreated: +1.526 pp, Welch p = 0.0301
+Part D firm size = ln(at): matches the canonical column on all 340 regression events (max |diff| 0.0e+00)
+Part D leverage = lt / at: matches the canonical column on all 340 regression events (max |diff| 0.0e+00)
+Part D ROA = ni / at: matches the canonical column on all 340 regression events (max |diff| 0.0e+00)
+  Debt fields (dltt, dlc) are absent from the Compustat extract: none
+  Fiscal year used: latest fiscal year-end before the breach date, within 550 days; lag median 184 d, range 1-364 d
+  For reference, lt / ceq (a liabilities-to-equity ratio) on the same events has median 2.00, against the leverage column's median 0.669

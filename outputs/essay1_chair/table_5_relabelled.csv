@@ -1,0 +1,5 @@
+Hypothesis,Coefficient (p),95% CI,TOST p (bound ±2.10 pp),MDE80 (pp),Status
+H2: Form 499 filer,-0.8051 (.566),"[-3.55, 1.94]",.178,3.93,Inconclusive (cannot rule out a 2.10 pp effect)
+H1: Disclosed within 7 days,1.1500 (.253),"[-0.82, 3.12]",.173,2.81,Inconclusive (cannot rule out a 2.10 pp effect)
+H3: Prior breaches (past 12 months),0.0332 (.606),"[-0.09, 0.16]",<.001,0.18,Bounded null (effect shown to be small)
+H4: Health data breach,-1.0247 (.694),"[-6.14, 4.09]",.340,7.30,Inconclusive (cannot rule out a 2.10 pp effect)

@@ -1,0 +1,13 @@
+Comparison,Group,N,Mean CAR (%),Median CAR (%),Welch t
+Form 499 filer,Filer,106,-0.933,-0.437,
+Form 499 filer,Non-filer,234,0.014,0.412,
+Form 499 filer,Difference (Welch t-test),,-0.947 (.373),,-0.894
+Disclosed within 7 days,Within 7 days,124,0.365,1.085,
+Disclosed within 7 days,After 7 days,216,-0.652,-0.461,
+Disclosed within 7 days,Difference (Welch t-test),,1.017 (.287),,1.067
+Health data breach,Health data,15,-1.541,0.428,
+Health data breach,Other data,325,-0.223,0.140,
+Health data breach,Difference (Welch t-test),,-1.318 (.577),,-0.570
+Any prior breach (past 12 months),Any prior,204,0.265,0.421,
+Any prior breach (past 12 months),No prior,136,-1.100,-0.603,
+Any prior breach (past 12 months),Difference (Welch t-test),,1.365 (.186),,1.328

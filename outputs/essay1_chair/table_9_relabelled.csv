@@ -1,0 +1,5 @@
+Firm-size quartile,Disclosed within 7 days: coefficient (p),N,Form 499 filer events
+Q1 (smallest),0.895 (.571),86,2
+Q2 (middle),-0.657 (.773),84,14
+Q3 (middle),3.829 (.274),85,31
+Q4 (largest),-1.073 (.507),85,59

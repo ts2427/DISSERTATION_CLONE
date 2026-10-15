@@ -1,0 +1,7 @@
+Variable,N,Mean,SD,Median
+30-day CAR (%),356,-0.378,8.776,-0.031
+5-day CAR (%),356,-0.457,4.295,-0.218
+Firm size (log total assets),341,10.266,1.607,10.287
+Leverage (total liabilities / total assets),341,0.665,0.204,0.669
+Return on assets (net income / total assets),341,0.06,0.108,0.063
+Disclosure delay (days),355,90.555,204.178,24.0

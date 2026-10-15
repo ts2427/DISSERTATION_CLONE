@@ -1,0 +1,5 @@
+Sample,Disclosed within 7 days,Form 499 filer,Return on assets,N
+Full regression sample,1.150 (.253),-0.805 (.566),7.35 (.175),340
+Excluding largest 10% of firms by size,1.382 (.207),-0.998 (.525),8.18 (.147),307
+Excluding smallest 10% of firms by size,0.733 (.487),-1.050 (.478),4.70 (.401),318
+Excluding health data breaches,0.933 (.349),-0.761 (.593),7.78 (.169),325

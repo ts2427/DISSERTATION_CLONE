@@ -1,0 +1,8 @@
+Rank,Variable,Importance
+1,Return on assets (net income / total assets),0.3405
+2,Firm size (log total assets),0.2364
+3,Leverage (total liabilities / total assets),0.2019
+4,Prior breaches (past 12 months),0.1416
+5,Disclosed within 7 days,0.0485
+6,Form 499 filer,0.0202
+7,Health data breach,0.0109

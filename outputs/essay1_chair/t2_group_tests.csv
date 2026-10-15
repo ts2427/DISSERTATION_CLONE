@@ -1,0 +1,5 @@
+Test,Measure,Treated N,Untreated N,Treated value,Untreated value,Difference,Statistic,df,p
+Welch two-sample t-test (mean days to first 8-K),Days to first 8-K,117,201,22.44,30.16,-7.72,t = -3.238,256.8,0.0014
+"Mann-Whitney U (Wilcoxon rank-sum), distribution of days",Days to first 8-K,117,201,15.0,26.0,-11.0,U = 9153.5,,0.001
+Two-proportion z-test (share with an 8-K within 90 days),8-K within 90 days,118,219,0.9915,0.9178,0.0737,z = 2.799,,0.0051
+Fisher's exact test (same share; small-count check),8-K within 90 days,118,219,117 of 118,201 of 219,,,,0.0049
