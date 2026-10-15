@@ -1,5 +1,7 @@
 # Essay 1: table revisions for chair feedback (October 2026)
 
+State as of commit **1634b2f** (scripts 260/261 and every file in `outputs/essay1_chair/`, regenerated from scratch at that commit; row-count gate PASS; freeze gate PASS). This header line was added in the commit that follows it; a file cannot carry its own commit's hash.
+
 Draft reviewed: `Dissertation Essay 1 - Timing Without Consequence - Compliance and Market Reactions under Mandatory Breach Disclosure 10062026.docx` (Downloads; the version carrying the chair's 32 comments and her Panel A–F layout of Table 16).
 
 Numbers of record: `outputs/rebuild/constants_v3.json` and `outputs/rebuild/appendix_v3/table_{1..16}.csv` at **dd8b564**, identical to tag **defense-final** for every one of those files (asserted by `scripts/261`). Sample: 489 events, 356 CRSP, **340 regression, 106 treated, 36 organizations, 12 parent CIKs**.
