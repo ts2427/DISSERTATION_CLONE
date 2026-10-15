@@ -215,6 +215,9 @@ V4_DIRS = (
     # R replication package for the committee (2026-10-04): exported estimation samples and
     # an R script that reproduces the headline estimates. New folder; touches no v3 path.
     "r_replication/",
+    # Essay 1 chair-feedback tables (2026-10-15, scripts 260-261): labels, notes and group
+    # tests on the frozen sample, written only here; no v3 path is touched.
+    "outputs/essay1_chair/",
 )
 V4_DOCS = (
     "docs/claude/REBUILD_V4_QUERY.md",
@@ -267,7 +270,7 @@ V4_DOCS = (
     "outputs/ESSAY3_DRAFTS_PROVENANCE_CHECK.md",
 )
 SCRIPT_RE = re.compile(r"^scripts/(\d+)_[^/]*\.py$")
-SCRIPT_LO, SCRIPT_HI = 210, 258  # 250-253, 255, 258: defense supplement; 254: CRSP loader; 256: Essay 3 appendix supplement; 257: Essay 3 appendix of record
+SCRIPT_LO, SCRIPT_HI = 210, 261  # 250-253, 255, 258: defense supplement; 254: CRSP loader; 256: Essay 3 appendix supplement; 257: Essay 3 appendix of record; 260-261: Essay 1 chair tables
 
 
 def git(*args, binary=False):

@@ -309,8 +309,8 @@ All values are from `outputs/essay1_chair/vintage_diff_67e7c60_dd8b564.csv`, whi
 4. **H2 bound.** "Regulatory status … bounded above at 3.7" becomes **3.9** (Results opening, Conclusion twice, Boundaries).
 5. **CRSP-sample median 30-day CAR changes sign.** "−0.26 percent against a median of +0.09" becomes −0.38 against **−0.03**. The mean is still below the median, so the left-tail reading survives, but the median is no longer positive. (The regression-sample median stays positive at +0.14.)
 6. **Operating-margin amendment** p moves .085 → **.058**. Still not below .05, but "returns a similar estimate at p = .085" needs the new value.
-7. **Methods treatment-rule tallies.** The two DISH events (CIK 1001082; 2023-02-22, 2023-05-17) were "Adjudicated untreated (7/28): satellite TV not a telecom service" at 67e7c60. At dd8b564 they are "Clause (b) date-conditional (9/4)": treated. The draft's example of an untreated-by-rule case, "satellite television operations that fall outside the rule's scope", describes a classification that no longer exists; no satellite-TV untreated row remains in `CANONICAL_V3.csv`. If 96 / 38 / 26 were counted on the old file, they would become 98 / 40 / 24, with 122 unchanged. I found no committed file that produces 96 / 58 / 38 / 26 / 122, so these need a source before the draft keeps them.
-8. **SIC paragraph** (Results and Conclusion): "Of the 116 Form 499-treated events, 25 have no industry code … 26 … 65 … sixty in 4812". The treated count is now 118. DISH's industry code is not checked here, and I found no committed file that produces 25 / 91 / 26 / 65 / 60 on either vintage. These need a source.
+7. **Methods treatment-rule tallies.** The two DISH events (CIK 1001082; 2023-02-22, 2023-05-17) were "Adjudicated untreated (7/28): satellite TV not a telecom service" at 67e7c60. At dd8b564 they are "Clause (b) date-conditional (9/4)": treated. The draft's example of an untreated-by-rule case, "satellite television operations that fall outside the rule's scope", describes a classification that no longer exists; no satellite-TV untreated row remains in `CANONICAL_V3.csv`. **Unsourced:** no committed file produces 96 / 58 / 38 / 26 / 122 (see §8).
+8. **SIC paragraph** (Results and Conclusion): "Of the 116 Form 499-treated events, 25 have no industry code … 26 … 65 … sixty in 4812". The treated count is now 118. **Unsourced:** no committed file produces 25 / 91 / 26 / 65 / 60 on either vintage (see §8).
 
 **(b) Unaffected by the vintage but affected by the definitions check**
 
@@ -327,3 +327,24 @@ All values are from `outputs/essay1_chair/vintage_diff_67e7c60_dd8b564.csv`, whi
 16. Table 3 text: "Collectively, the results present opposite to what reputation theory predicts." Only the prior-breach comparison runs opposite: events at firms with a prior breach average +0.27 against −1.10 for firms without one. The chair asked that the opposite pattern be stated.
 17. Conclusion: "Regulated carriers file faster, more consistently, and without exception." One of 118 treated events has no 8-K within 90 days, and an 8-K need not mention the breach. "Roughly half the time" overstates the gap: median 15 vs 26 days is 58 percent, and the means are 22 vs 30 days.
 18. Methods: "the following thirty trading days". The code sums days 0 through +30.
+
+---
+
+## 8. Lookups in committed outputs (2026-10-15 scope correction; nothing new run)
+
+**Table 14 turnover, p-values beyond HC3.** None exist. The only committed turnover regression is `outputs/rebuild/appendix_v3/table_14.csv` (HC3). `outputs/defense_supplement/e1_cluster_ladder.csv` (script 255) covers only the H1–H4 coefficients of the 30-day CAR regression (rungs: HC3, CV1 parent CIK, CV3 jackknife, wild cluster bootstrap). No committed file reports clustered or small-cluster p-values for turnover.
+
+**Treatment-by-rule counts (96 / 58 / 38 / 26 / 122): unsourced.** No committed report, log or table carries them. `outputs/rebuild/STAGE4_TREATMENT_REPORT.md` exists locally but is not tracked (`.gitignore`; it prints the registry file date) and does not contain them either. Not computed here.
+
+**SIC-proxy counts (25 / 91 / 26 / 65 / 60): unsourced.** No committed file carries them. `docs/DATA_QUALITY_DOCUMENTATION.md:81` mentions "25 SIC-flagged firms (marked SIC 4812 but not matched)". That is a count of firms from the pre-rebuild classification (script 122), not the 25 treated events without an industry code, and it is not a source for the draft sentence. Not computed here.
+
+**H1–H4 95% confidence intervals: committed.** They are in `outputs/rebuild/constants_v3.json` (keys `H1_timing_ci`, `H2_FCC_ci`, `H3_prior_ci`, `H4_health_ci`, HC3, dd8b564) and again in the HC3 rows of `outputs/defense_supplement/e1_cluster_ladder.csv` (`ci95_lo`, `ci95_hi`):
+
+| Hypothesis | Coef | HC3 SE | 95% CI | Source |
+|---|---|---|---|---|
+| H1 Disclosed within 7 days | 1.1500 | 1.0051 | [−0.82, 3.12] | constants_v3.json `H1_timing_ci`; e1_cluster_ladder.csv |
+| H2 Form 499 filer | −0.8051 | 1.4026 | [−3.5541, 1.9438] | constants_v3.json `H2_FCC_ci`; e1_cluster_ladder.csv |
+| H3 Prior breaches (12 months) | 0.0332 | 0.0644 | [−0.0931, 0.1594] | constants_v3.json `H3_prior_ci`; e1_cluster_ladder.csv |
+| H4 Health data breach | −1.0247 | 2.6083 | [−6.137, 4.0875] | constants_v3.json `H4_health_ci`; e1_cluster_ladder.csv |
+
+`appendix_v3/table_4.csv` and `table_5.csv` themselves carry only coefficient, SE and p (Table 5 adds TOST p and MDE80), not the interval.

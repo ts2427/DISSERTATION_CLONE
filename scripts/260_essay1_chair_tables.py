@@ -405,6 +405,16 @@ R[16] = pd.DataFrame({'Panel': T16['Panel'], 'Anchor': T16['Anchor'], 'Window (t
                       'Group': T16['Row'], 'N': T16['N'],
                       'Mean CAR (%)': [cell(m, p) for m, p in zip(T16['Mean CAR (pp)'], T16['p'])],
                       'Median CAR (%)': T16['Median CAR (pp)'], 'SD': T16['SD'], 't': T16['t']})
+# Row-count gate: every relabelled table has exactly the rows of its committed source
+# (table 14 drops only its trailing "N=..." label row), and the Table 2 test block has 4.
+assert len(tests) == 4, f'Table 2 tests: {len(tests)} rows'
+for i, df in R.items():
+    src = app(i)
+    if i == 14:
+        src = src[src['Variable'].isin(CONTROLS)]
+    assert len(df) == len(src) > 0, f'table {i}: {len(df)} relabelled rows vs {len(src)} in source'
+    assert not df.duplicated().any(), f'table {i}: duplicated rows'
+log(f'Row-count gate PASS: {", ".join(f"T{i}={len(df)}" for i, df in R.items())}; Table 2 tests=4')
 for i, df in R.items():
     for c in ['N', 'Form 499 filer events']:
         if c in df.columns:

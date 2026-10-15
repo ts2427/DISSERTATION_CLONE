@@ -1538,7 +1538,7 @@ results.append(all([f1, f2, f3, f4, f5, f6, f7]))
 # Stage 6 - scripts 210 (allowlist), 219 (funda), 230 (outcome gap), 233 (reconcile)
 # =====================================================================================
 print("\n" + "=" * 70)
-print("TEST: 210 script allowlist spans 210-258 and stays exact")
+print("TEST: 210 script allowlist spans 210-261 and stays exact")
 print("=" * 70)
 _m210 = load(Path("scripts/210_verify_v3_frozen.py"), "m210")
 _a = [
@@ -1555,9 +1555,12 @@ _a = [
     ("scripts/255_defsup_e1_cluster_ladder.py", True, "new upper bound (Essay 1 cluster ladder, 2026-10-04)"),
     ("scripts/256_essay3_appendix_supplement.py", True, "256 allowed (Essay 3 appendix supplement, 2026-10-05)"),
     ("scripts/257_essay3_appendix_combined.py", True, "257 allowed (Essay 3 appendix of record, 2026-10-06)"),
-    ("scripts/258_defsup_e3_placebo_2018_flag.py", True, "new upper bound (Essay 3 placebo sensitivity, 2026-10-06)"),
-    ("scripts/259_future.py", False, "259 is outside"),
+    ("scripts/258_defsup_e3_placebo_2018_flag.py", True, "258 allowed (Essay 3 placebo sensitivity, 2026-10-06)"),
+    ("scripts/260_essay1_chair_tables.py", True, "260 allowed (Essay 1 chair tables, 2026-10-15)"),
+    ("scripts/261_essay1_vintage_diff.py", True, "new upper bound (Essay 1 vintage diff, 2026-10-15)"),
+    ("scripts/262_future.py", False, "262 is outside"),
     ("outputs/defense_supplement/x.csv", True, "defense supplement folder"),
+    ("outputs/essay1_chair/x.csv", True, "Essay 1 chair-tables folder"),
     ("scripts/209_old.py", False, "209 is outside"),
     ("scripts/219b_foo.py", False, "219b-style name is not <digits>_"),
     ("scripts/2199_foo.py", False, "2199 must not be read as a prefix"),
