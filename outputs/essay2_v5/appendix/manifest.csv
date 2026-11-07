@@ -1,0 +1,53 @@
+table,key,title,csv,sample_level,source
+1,sample_attrition,Sample attrition,01_sample_attrition.csv,"record 1,054 -> analytical 333",outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md (scripts/163 Phase A); cross-checked against t1
+2A,descriptives_v5,Descriptive statistics (v5 outcome),02A_descriptives_v5.csv,analytical 333,scripts/269 from outputs/essay2_v5/v5_event_panel.csv (scripts/264) + t1
+2B,descriptives_v5_differences,Treated minus control (Welch),02B_descriptives_v5_differences.csv,analytical 333,scripts/269
+3,correlations_v5,Correlation matrix (v5 outcome),03_correlations_v5.csv,analytical 333,scripts/269
+4,events_by_year,Events by year (notification year),04_events_by_year.csv,analytical 333,scripts/269 from t1
+5A,four_panel_decomposition,Four-panel decomposition: industry codes against Form 499,05A_four_panel_decomposition.csv,prior-spec 891 records / 339 dedup events,"scripts/269 (scripts/166 B1 machinery; industry-code panel = record SIC in {4813, 4841, 4899})"
+5B,records_per_event,Records per event (prior-spec panel),05B_records_per_event.csv,prior-spec 891 records,scripts/269
+6A,q1_transition_components,The Q1 transition (prior market-cap partition),06A_q1_transition_components.csv,prior-spec 891 records,scripts/269
+6B,q1_transition_records,Q1 transition records,06B_q1_transition_records.csv,prior-spec 891 records,scripts/269
+7,misclassified_records,"The misclassified group, per record",07_misclassified_records.csv,prior-spec 891 records,scripts/269
+8A,misclassified_group_comparisons,Group comparisons,08A_misclassified_group_comparisons.csv,prior-spec 891 records,scripts/269
+8B,misclassified_group_contrasts,Group comparison contrasts (Welch),08B_misclassified_group_contrasts.csv,prior-spec 891 records,scripts/269
+9,gradient_grid,Gradient across the corrected-data specification grid,09_gradient_grid.csv,"analytical (48 window-specs, committed raw-return DV)",outputs/tables/essay2_v2/t31_gradient_grid.csv (scripts/166)
+10A,identifier_collisions,Identifier-collision inventory (legacy CIKs),10A_identifier_collisions.csv,"legacy annotation (six verified sinks; floor, not census)","scripts/269 from the 1,054-record prior dataset, CANONICAL_V3 and cik_ticker_map; sink list from outputs/rebuild/GATE1_SUMMARY.md"
+10B,recycled_tickers,Ticker-recycling misidentifications (blocked by the 9/6 fallback guard),10B_recycled_tickers.csv,canonical 489,scripts/269 (scripts/155 fallback rule re-applied to the committed ticker map)
+10C,size_variable_reconciliation,Size-variable reconciliation,10C_size_variable_reconciliation.csv,prior-spec CRSP records with a firm_size_log,scripts/269 (prior dataset assets; CRSP |PRC| x SHROUT via cik_ticker_map and ticker_permno_mapping)
+11,missingness_precase,Missingness before the complete-case restriction,11_missingness_precase.csv,CRSP-matched 355,scripts/269 from CANONICAL_V3; window losses from the attrition ledger (scripts/163)
+12,form499_registry_matches,Form 499 registry matches for treated parent entities,12_form499_registry_matches.csv,"analytical 333 (12 parents, 104 events)",scripts/269: Data/edgar/form499_registry.xml x scripts/164 FAMILY keywords (lifted by ast)
+13,treatment_adjudications,Treatment adjudications,13_treatment_adjudications.csv,canonical 489,scripts/154 ADJ and EQUITY_PARENT (lifted verbatim by ast)
+14,sic_conventions_vs_form499,Industry-code conventions against Form 499 registration,14_sic_conventions_vs_form499.csv,canonical 489 (346 testable),scripts/269 (sich rule of scripts/163:188-208)
+15,sic_convention_errors,Classification errors by named organization,15_sic_convention_errors.csv,canonical 489 (346 testable),scripts/269
+16,treated_outside_comparison,Treated events outside the classification comparison,16_treated_outside_comparison.csv,"canonical 489 (comparison covers 346/489, 107/118 treated)",scripts/269
+17,sich_vs_curated_sic,Compustat sich against the breach records' own SIC,17_sich_vs_curated_sic.csv,canonical 489,scripts/269 (stage2_signed record SIC; Compustat sich by the scripts/163 rule)
+18,nested_models,Nested models M1-M4 (v5 outcome),18_nested_models.csv,analytical 333,outputs/essay2_v5/v5_t02_nested_models.csv (scripts/264_e2v5_*.py)
+19,inference_ladder,"Inference ladder, eight rungs (primary M4)",19_inference_ladder.csv,"analytical 333 (G=82, G1=12)",outputs/essay2_v5/v5_t03_ladder.csv (scripts/264_e2v5_*.py)
+20,design_resolution,Design resolution,20_design_resolution.csv,analytical 333,outputs/essay2_v5/v5_t04_design_resolution.csv (scripts/264_e2v5_*.py)
+21,dynamic_path,Dynamic path (BH family of 3),21_dynamic_path.csv,analytical 333,outputs/essay2_v5/v5_t05_dynamic_path.csv (scripts/264_e2v5_*.py)
+22A,benchmarks,Benchmark robustness: market model and FF3,22A_benchmarks.csv,"analytical 333 (model benchmarks need 80% of [-250,-30])",outputs/essay2_v5/v5_t06_benchmarks.csv (scripts/264_e2v5_*.py)
+22B,estimation_contamination,Estimation windows containing an earlier event at the same parent,22B_estimation_contamination.csv,analytical 333,outputs/essay2_v5/v5_t06b_estimation_contamination.csv (scripts/264_e2v5_*.py)
+23,alternatives_bridge,Alternative windows and the bridge to the raw-return outcome,23_alternatives_bridge.csv,analytical 333,outputs/essay2_v5/v5_t07_alternatives.csv (scripts/264_e2v5_*.py)
+24A,announcement_family,Announcement-window family (BH family of 4),24A_announcement_family.csv,analytical 333 / earnings announcements,outputs/essay2_v5/v5_t09_announcement.csv (scripts/265_e2v5_*.py)
+24B,announcement_ladder,"Announcement-window test, full ladder",24B_announcement_ladder.csv,analytical 333,outputs/essay2_v5/v5_t09b_announcement_ladder.csv (scripts/265_e2v5_*.py)
+24C,announcement_buildup,Announcement differential: raw-to-adjusted buildup (CV3),24C_announcement_buildup.csv,analytical 333,outputs/essay2_v5/v5_t09c_announcement_buildup.csv (scripts/265_e2v5_*.py)
+24D,placebo_dates,"Placebo dates (200 draws, seed 499)",24D_placebo_dates.csv,analytical 333,outputs/essay2_v5/v5_t11_placebo.csv (scripts/265_e2v5_*.py)
+24E,earnings_benchmark,Earnings benchmark,24E_earnings_benchmark.csv,sample securities' earnings dates,outputs/essay2_v5/v5_t10_earnings_benchmark.csv (scripts/265_e2v5_*.py)
+25,spreads,Trading-cost measures (BH family of 3),25_spreads.csv,analytical 333,outputs/essay2_v5/v5_t16_spreads.csv (scripts/268_e2v5_spreads.py)
+26A,disclosure_delay,Disclosure delay on treatment (full ladder),26A_disclosure_delay.csv,analytical 333,outputs/essay2_v5/v5_t17_delay.csv (scripts/271_e2v5_delay.py)
+26B,delay_nonzero,"Disclosure delay, non-zero delays only",26B_delay_nonzero.csv,non-zero delays (216),outputs/essay2_v5/v5_t17b_delay_nonzero.csv (scripts/271_e2v5_delay.py)
+26C,delay_quantiles,Delay quantile regressions,26C_delay_quantiles.csv,analytical 333,outputs/essay2_v5/v5_t17c_delay_quantiles.csv (scripts/271_e2v5_delay.py)
+26D,delay_distribution,Delay distribution by group,26D_delay_distribution.csv,analytical 333,outputs/tables/essay2_v2/t17_delay_distribution.csv (scripts/164; uses no controls)
+26E,delay_distribution_tests,Delay distribution tests (no controls),26E_delay_distribution_tests.csv,analytical 333,outputs/essay2_v5/v5_t17d_delay_distribution_tests.csv (scripts/271_e2v5_delay.py)
+27,size_quartiles,Size quartiles (ln total assets; BH family of 4),27_size_quartiles.csv,analytical 333,outputs/essay2_v5/v5_t12_size_quartiles.csv (scripts/265_e2v5_*.py)
+28,prerule_events,Pre-rule observations (before 2007-12-08),28_prerule_events.csv,analytical 333 (identical under both anchors),scripts/269 from t1
+29A,specification_curve,Specification curve (144 specifications),29A_specification_curve.csv,analytical 333,outputs/essay2_v5/v5_t15_spec_curve.csv (scripts/266_e2v5_*.py)
+29B,specification_curve_permutation,Specification-curve permutation test,29B_specification_curve_permutation.csv,"analytical 333 (1,000 parent-level draws)",outputs/essay2_v5/v5_t15b_spec_curve_permutation.csv (scripts/266_e2v5_*.py)
+30A,leave_one_parent_out,Leave-one-parent-out estimates,30A_leave_one_parent_out.csv,analytical 333 (G=82),outputs/essay2_v5/v5_t14b_leave_one_parent_out.csv (scripts/265_e2v5_*.py)
+30B,influence,"Influence: LOPO range, pre-rule, Cook's distance",30B_influence.csv,analytical 333,outputs/essay2_v5/v5_t14_influence.csv (scripts/265_e2v5_*.py)
+31,fixed_effects,Fixed-effects specifications,31_fixed_effects.csv,analytical 333,outputs/essay2_v5/v5_t13_fixed_effects.csv (scripts/265_e2v5_*.py)
+32,v4_date_sensitivity,v4 date sensitivity (report only),32_v4_date_sensitivity.csv,analytical 333 (+1 under the Sprint date),outputs/essay2_v5/v5_t08_v4_dates.csv (scripts/264_e2v5_*.py)
+33A,program_test_enumeration,Program-wide test enumeration (v5: 45 tests),33A_program_test_enumeration.csv,program-wide,outputs/tables/essay2_v2/t53_test_ledger.csv (scripts/182) + outputs/essay2_v5/constants_parts/*.json
+33B,bh_families,Benjamini-Hochberg families,33B_bh_families.csv,program-wide,scripts/269 from constants_parts/*.json
+34,coverage_drops,80% coverage rule: events dropped by window,34_coverage_drops.csv,analytical 333,outputs/essay2_v5/v5_t01_coverage.csv (scripts/264)

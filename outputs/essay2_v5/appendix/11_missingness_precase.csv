@@ -1,0 +1,9 @@
+variable,missing,share
+e2_vol_change (volatility windows),4,0.011267605633802818
+firm_size_log,15,0.04225352112676056
+leverage,15,0.04225352112676056
+roa,15,0.04225352112676056
+disclosure_delay_days,1,0.0028169014084507044
+health_breach,0,0.0
+prior_breaches_total,0,0.0
+ATT_artifact_records (excluded at final step),2,0.005633802816901409

@@ -1,0 +1,45 @@
+{
+ "spec_n": 144,
+ "spec_median": 0.1935014339796477,
+ "spec_min": 0.037446511071918515,
+ "spec_max": 0.36378404264568154,
+ "spec_positive": 144,
+ "spec_cv3_sig": 0,
+ "spec_cv3_ci_contains_zero": 144,
+ "spec_cv1_sig_dominant": 0,
+ "perm_p_median": 0.3306693306693307,
+ "perm_p_sign": 0.2837162837162837,
+ "perm_p_sig": 1.0,
+ "perm_unanimous_share": 0.283,
+ "perm_S3_null_mean": 12.418,
+ "spec_median_by_node": {
+  "pre": {
+   "pre25_5": 0.29573114435297687,
+   "pre45_11": 0.1897294301076274,
+   "pre60_11": 0.167744817848213
+  },
+  "post": {
+   "post1_10": 0.21896153644391636,
+   "post1_20": 0.18057417852136512,
+   "post1_5": 0.22656142445424815,
+   "post5_25": 0.08529778145823942
+  },
+  "benchmark": {
+   "ff3": 0.21758452324627225,
+   "mkt_adj": 0.17786172727991706,
+   "mm": 0.18902116366793328
+  },
+  "returns": {
+   "log": 0.1929556306991798,
+   "simple": 0.19490736526515726
+  },
+  "winsor": {
+   "raw": 0.208565625593363,
+   "w1_99": 0.1850754082428253
+  }
+ },
+ "bh_families": {},
+ "tests": {
+  "specification-curve permutation (joint)": 3
+ }
+}

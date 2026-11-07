@@ -1,0 +1,4 @@
+outcome,mean,se,p,N_announcements,securities
+primary DV on earnings dates,0.1635956949176886,0.02844720918258595,1.6544071416281763e-07,5071,79
+elevation on earnings dates,0.7749232937291779,0.05460445550332614,2.5841330899470437e-23,5094,79
+primary DV on breach dates (sample mean),-0.04155043890424866,,,333,83

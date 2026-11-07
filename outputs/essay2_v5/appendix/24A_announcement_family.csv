@@ -1,0 +1,6 @@
+test,coef,se,p,N,clusters,inference,bh_adj_p,bh_reject_05,basis
+earnings elevation (mean),0.7749232937291779,0.0546044555033261,2.5841330899470443e-23,5094,79,CV1 by security,1.0336532359788176e-22,True,v5: market-adjusted simple returns
+breach elevation (mean),-0.1063581320774028,0.0539910504341189,0.0522649944577514,333,82,CV1 by parent filer entity,0.0522649944577514,False,v5: market-adjusted simple returns
+breach minus earnings (contrast),-0.8812814258065809,0.0834075674355084,5.7435785988877e-17,5427,83,CV1 by security,1.14871571977754e-16,True,v5: market-adjusted simple returns
+Form 499 on breach elevation (pre-specified),0.4326966299965873,0.1922273630123749,0.0270975844614542,333,82,CV3 by parent filer entity,0.0361301126152723,True,v5: market-adjusted simple returns
+"BRIDGE: Form 499 on breach elevation, committed definition (market model)",0.4717135788355946,0.2000252192875594,0.0208016278704878,331,81,CV3,,,"scripts/169/175 (t42), reproduces t50"

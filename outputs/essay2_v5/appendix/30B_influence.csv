@@ -1,0 +1,7 @@
+check,coef,se_cv3,p_cv3,N,detail
+full sample (PRIMARY),0.1366700065904639,0.1931402212954034,0.4812119842956983,333.0,
+leave-one-parent-out minimum,0.0288743837846062,,,324.0,"dropping Sprint Corporation (final_cik 101830, 9 events)"
+leave-one-parent-out maximum,0.2131983186347615,,,257.0,"dropping Intuit Inc. (final_cik 896878, 76 events)"
+share of estimate removed by deleting Sprint (101830),0.7887291842230661,,,,
+drop 6 pre-rule events (reported before 2007-12-08; all control),0.1300448755793488,0.1949384282419646,0.5066474108143564,327.0,shift -0.034 CV3 SEs
+Cook's distance exclusion (D > 4/N),0.0996754374620242,0.1228476509551206,0.4196517364878868,315.0,removed 18; HC3 p 0.2251

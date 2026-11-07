@@ -190,3 +190,7 @@ Data/Articles/
 
 # Essay 2 planning files (Tim, 2026-10-05): local working documents, never committed.
 docs/claude/claude_ESSAY2_*.md
+
+# Essay 2 v5: licensed CRSP quote top-up (DISH, permno 81696). Not committed;
+# regenerate with the pull recipe scripts/267_e2v5_quotes_pull.py (WRDS login).
+Data/wrds_e2v5/

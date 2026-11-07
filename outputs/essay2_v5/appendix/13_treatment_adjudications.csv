@@ -1,0 +1,27 @@
+kind,pattern,direction,basis
+stage4_pattern,Cricket,FORCE TREATED,Clause (a) adjudicated: Cricket Communications FRN 0004321139; LLC variant missed by exact matcher (7/28 record)
+stage4_pattern,T-Mobile,FORCE TREATED,"Clause (a) adjudicated 8/4: active open registry record ""T-Mobile USA, Inc.- CONSOLIDATED"" (499ID 822060, dba T-Mobile, start 1997, no end) — the ""- CONSOLIDATED"" suffix defeats exact matching for USA/US name variants (Cricket precedent, family-wide)"
+stage4_pattern,Boost Mobile,FORCE TREATED,Clause (b): prepaid wireless brand of Sprint Spectrum LLC FRN 0006693022; subscriber-data breach (7/28 adjudication)
+stage4_pattern,^Sprint,FORCE TREATED,"Clause (a) adjudicated 8/4: Sprint Spectrum LLC dba Sprint (499ID 811754, coverage 1997-2024-12-31, replacement 822060) covers all Sprint-family breach dates; dba/suffix variants defeat exact matching"
+stage4_pattern,Verizon Media,FORCE EXCLUDED,"NOT treated (8/4): content division (Yahoo/AOL), not telecom subscriber operations"
+stage4_pattern,^Verizon,FORCE TREATED,"Clause (a) adjudicated 8/4: Verizon carrier filer family (e.g., Verizon-NY FRN 0003469442 through 2021; successor consolidated records active after) — consolidation naming defeats exact matching post-2021"
+stage4_pattern,^Comcast|Comcast Cable,FORCE TREATED,Clause (b): parent brand of Comcast Telephony filers (7/28)
+stage4_pattern,Charter Communication,FORCE TREATED,Clause (b): parent brand of Charter Communications Operating LLC (7/28)
+stage4_pattern,Frontier Communications,FORCE TREATED,Clause (b): parent of regional Form 499 filer subsidiaries (7/28)
+stage4_pattern,Altice USA,FORCE TREATED,Clause (b): parent of Altice Wireless filer (7/28)
+stage4_pattern,AT&T Services,FORCE TREATED,Clause (b): AT&T Inc. filing family (7/28)
+stage4_pattern,CenturyLink,FORCE TREATED,Clause (b): CenturyLink/Lumen carrier family (Gate 1 rescue noted Form 499 relevance; regional LEC filers)
+stage4_pattern,DISH Network (on/after 2020-07-01),FORCE TREATED,Clause (b) date-conditional (9/4): DISH is a facilities-based CMRS carrier from the 2020-07-01 Boost divestiture — DISH Wireless L.L.C. FRN 0027852722 (dba Boost Mobile) and DISH Wireless Puerto Rico L.L.C. FRN 0029666096 are open family registrations at the breach date; standard coverage rule applies
+stage4_pattern,DISH Network,FORCE EXCLUDED,"Adjudicated untreated (7/28, retained for pre-divestiture events only): satellite TV not a telecom service under 64.2011; no covered wireless operation before 2020-07-01"
+stage4_pattern,NBC Sports,FORCE EXCLUDED,No registry match; not a carrier (7/28)
+stage4_pattern,ATT-Breach Notification|ATT-SecurityBreach,FORCE EXCLUDED,"Artifact system entities — signed 122 rule retained; identity=AT&T equity, treatment excluded"
+stage4_pattern,NBCUniversal,FORCE TREATED,"Clause (a) DOCUMENTED: direct registry filer NBCUniversal, LLC FRN 20940540 (8/4 adjudication comment — identity and treatment both recorded)"
+stage4_pattern,Mediacom,FORCE TREATED,"Clause (b) adjudicated 8/4: cable-telephony operator, parent brand of active filer MCC Telephony LLC; subscriber operations — Comcast class"
+stage4_pattern,Cisco Systems,FORCE EXCLUDED,"NOT treated (8/4): holding link to Tropo LLC is anachronistic — Cisco acquired Tropo 2015, breaches 2012; snapshot-era holding data"
+stage4_pattern,Citrix,FORCE EXCLUDED,"NOT treated (8/4): breaches are enterprise-software incidents, not telecom subscriber operations; 2018 event also post-divestiture of Citrix Online"
+stage4_pattern,^Google|Alphabet,FORCE EXCLUDED,NOT treated (8/4): breaches are consumer web-service incidents (no Google Fiber subscriber data); clause (b) operations test fails
+stage4_pattern,^Time ?Warner,FORCE EXCLUDED,NOT treated (8/4): 2006 breach not a telecom-subscriber operation; holding link to HBO filer fails the operations test
+stage4_pattern,Home Box Office,FORCE EXCLUDED,"NOT treated (8/4): HBO Inc filer TERMINATED 2012-12-31 (""no longer providing telecommunications services"") before 2017 breaches — clause (a) fails at breach date"
+equity_parent,1040573 -> 1166691,RE-PARENT,Comcast Cable Communications registrant has no equity; parent = Comcast Corp (Gate 1 verdict A class)
+equity_parent,1512267 -> 1166691,RE-PARENT,NBCUniversal Media LLC registrant has no equity; parent = Comcast Corp (Gate 1 verdict E class)
+equity_parent,1457937 -> 1105705,RE-PARENT,Home Box Office Inc registrant has no equity; 2017 parent = Time Warner Inc TWX (FedEx Ground class)

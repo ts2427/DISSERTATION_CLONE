@@ -1,0 +1,4 @@
+statistic,observed,perm_p,null_mean,percentile,detail,draws
+S1 median estimate,0.1935014339796477,0.3306693306693307,0.0084222629250418,67.0,two-sided on |median|,1000
+S2 dominant-sign count,144.0,0.2837162837162837,119.409,85.9,unanimous-sign curves in 0.283 of draws,1000
+S3 significant in dominant direction (CV1),0.0,1.0,12.418,30.1,observed CV3-significant: 0,1000

@@ -1,0 +1,5 @@
+convention,N_testable,agree,agree_pct,FP,FN,parents_identified,parents_missed,parents_wrongly_included,parent_agree_pct,characteristic_failure
+published_regulated_dummy_4812_4813,346,317,91.61849710982659,3,26,6,6,0,50.0,misses every cable registrant
+prior_spec_4813_4841_4899,346,277,80.05780346820809,6,63,9,3,1,75.0,misses every wireless carrier
+tuned_4812_4813_4841_4899,346,332,95.95375722543352,9,5,10,2,1,83.33333333333333,post-hoc; boundary-blind
+full_range_4800_4899,346,313,90.46242774566474,28,5,10,2,4,83.33333333333333,admits broadcasters

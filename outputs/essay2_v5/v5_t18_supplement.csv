@@ -1,0 +1,13 @@
+item,value,detail
+"corr(primary, breach-anchored primary)",0.5461430392692979,N 333
+share of breach-anchored post-window days before the reporting date (pooled),0.5645645645645646,3760 of 6660 event-days
+... treated,0.5355769230769231,1114 of 2080
+... control,0.5777292576419214,2646 of 4580
+"MDE80, HC3 (2.8 x SE_HC3; scripts/165 convention)",0.31897192878594,5.06 annualized; CV3 MDE80 0.5477
+HC3 MDE shortfall vs CV3 (percent),41.017699352874374,100 x (1 - SE_HC3/SE_CV3)
+converted CAR bound (daily pp),0.13228756555322954,2.10 pp annualized (scripts/165 EQ_CAR)
+"TOST vs CAR bound, lower one-sided p (CV3)",0.0837833064910336,
+"TOST vs CAR bound, upper one-sided p (CV3)",0.509023506104862,
+SE clustered by 2-digit SIC (CV1),0.12698201880793394,p 0.2925; 25 clusters; t(G-1)
+SE clustered by 2-digit SIC (CV3),0.3154725592312807,p 0.6687
+specification-curve permutation draws (scripts/266),1000.0,"parent-level, 12 of 82 treated, seed 499"

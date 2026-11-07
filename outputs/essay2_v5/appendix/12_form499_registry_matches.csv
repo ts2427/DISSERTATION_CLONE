@@ -1,0 +1,672 @@
+parent_cik,legal_name,FRN,start,end,type,usf,holding,end_before_start,events_in_sample,event_span
+18926,"CenturyTel of Midwest-Kendall, Inc",0004547089,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,Gulf Telephone Company,0004333753,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"MebTel, Inc.",0004333795,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"Gulf Long Distance, Inc.",0004333761,1997-01-01,2014-04-01,Toll Reseller,No,"CenturyLink, Inc.",,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Lake Dallas, Inc.",0001677541,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,LCI International Telecom Corp.,,1997-01-01,2001-12-31,Interexchange Carrier (IXC),No,"Qwest Communications International, Inc.",,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Fairwater-Brandon-Alto, Inc.",0004085080,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of the Northwest Arkansas, LLC",0004547295,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Port Aransas, Inc.",0001685429,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Claiborne, Inc.",0001772482,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Central Louisiana, Inc.",0001673359,1997-01-01,2017-01-01,Incumbent Local Exchange Carrier,No,CenturyLink Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Mountain Home, Inc.",0001732338,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of North Mississippi, Inc.",0001743541,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Arkansas, Inc.",0001730886,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of North Louisiana, Inc.",0001710011,1997-01-01,2017-01-01,Incumbent Local Exchange Carrier,No,CenturyLink Inc.,,5,2013-12-27..2022-03-15
+18926,CenturyTel of East Louisiana,0001710979,1997-01-01,2017-01-01,Incumbent Local Exchange Carrier,No,CenturyLink Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of South Arkansas, Inc.",0004312153,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Southeast Louisiana, Inc",0004303004,1997-01-01,2017-01-01,Incumbent Local Exchange Carrier,No,CenturyLink Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Evangeline, Inc.",0005786223,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,CenturyTel of Southwest Louisiana,0004312161,1997-01-01,2017-01-01,Incumbent Local Exchange Carrier,No,CenturyLink Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Odon, Inc.",0001748466,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Central Indiana, Inc.",0003936952,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Northwest Louisiana, Inc.",0004312195,1997-01-01,2017-01-01,Incumbent Local Exchange Carrier,No,CenturyLink Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel Midwest-Michigan, Inc.",0002767283,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Wisconsin, LLC",0002390326,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Chester, Inc.",0004312203,1997-01-01,open,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Idaho, Inc.",0002648368,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Adamsville, Inc.",0001773811,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Redfield, Inc.",0004312211,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Michigan, Inc.",0002774487,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Forestville, Inc.",0004085098,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Larsen-Redfield, Inc.",0004547071,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Monroe County, Inc.",0004547055,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Northwest Wisconsin, Inc.",0004547022,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Colorado, Inc.",0002715902,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Northern Wisconsin, Inc.",0004547048,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Ooltewah - Collegedale, Inc.",0001768449,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Ohio, Inc.",0002853711,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Chatham, LLC.",0004312237,1997-01-01,2017-01-01,Incumbent Local Exchange Carrier,No,CenturyLink Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of San Marcos, Inc",0001712751,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Northern Michigan, Inc.",0004312245,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Ringgold, LLC.",0004312252,1997-01-01,2017-01-01,Incumbent Local Exchange Carrier,No,CenturyLink Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Minnesota, Inc",0002641967,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Postville, Inc.",0003738093,1997-01-01,open,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Southern Wisconsin, Inc.",0004547014,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Washington, Inc",0001584697,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Inter-Island, Inc.",0001582543,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Oregon, Inc.",0004312260,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of  Eastern Oregon, Inc.",0001562099,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Montana, Inc.",0001566041,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Wyoming, Inc.",0001630243,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Eagle, Inc.",0001617265,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,CenturyTel Telecommunications,0003749520,1997-01-01,1997-01-01,Operator Service Provider (OSP),No,"CenturyTel, Inc.",,5,2013-12-27..2022-03-15
+18926,"USLD Communications, Inc.",0007676802,1997-01-01,2004-09-20,Operator Service Provider (OSP),No,Qwest Services Corp.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Cowiche, Inc.",0005761309,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,El Paso County Telephone Company,0008131294,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"Phoenix Network, Inc.",,1997-01-01,2001-12-31,Interexchange Carrier (IXC),No,"Qwest Communications International, Inc.",,5,2013-12-27..2022-03-15
+18926,Coastal Utilities Inc.,0004333688,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"Qwest Wireless, LLC",0001622208,1997-01-01,2009-10-31,Cellular/PCS/SMR,No,Qwest Services Corporation,,5,2013-12-27..2022-03-15
+18926,Qwest Corporation,0003746757,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,Qwest !nterprise America,0001605625,1997-01-01,2005-08-23,CAP/LEC,No,Qwest Services Corporation,,5,2013-12-27..2022-03-15
+18926,"U S WEST Long Distance, Inc.",0004343539,1997-01-01,1997-01-01,Toll Reseller,No,"US West Communications, Inc.",,5,2013-12-27..2022-03-15
+18926,"CenturyLink Communications, LLC",0018421941,1997-01-01,open,Interexchange Carrier (IXC),Yes,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"Coastal Long Distance Services, Inc.",0004333670,1997-01-01,2014-04-01,Toll Reseller,No,"CenturyLink, Inc.",,5,2013-12-27..2022-03-15
+18926,Malheur Home Telephone Company,0003746765,1997-01-01,2009-12-31,Incumbent Local Exchange Carrier,No,Qwest Services Corporation,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Upper Michigan, Inc.",0006160741,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of the Gem State, Inc.",0001623438,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of the Midwest - Wisconsin, Inc.",0004547006,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of the Southwest, Inc.",0001618818,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"Gallatin River Communications, LLC",0004333779,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"Level 3 Communications, LLC",0003723822,1997-01-01,open,Interexchange Carrier (IXC),Yes,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel Long Distance, LLC.",0003749520,1997-01-01,2014-04-01,Interexchange Carrier (IXC),No,"CenturyLink, Inc.",,5,2013-12-27..2022-03-15
+18926,"CenturyTel Solutions, LLC",0005786314,1997-01-01,2014-04-01,CAP/LEC,No,"CenturyLink, Inc.",,5,2013-12-27..2022-03-15
+18926,"Madison River Long Distance Solutions, Inc.",0004333720,1997-01-01,2011-09-30,Toll Reseller,No,"CenturyLink, Inc.",,5,2013-12-27..2022-03-15
+18926,"Spectra Communications Group, LLC",0004253373,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"OnFiber Communications, Inc.",0004334173,1997-01-01,2007-11-01,CAP/LEC,No,Qwest Services Corporation,,5,2013-12-27..2022-03-15
+18926,"Madison River Communications, LLC",0004333803,1997-01-01,2014-04-01,CAP/LEC,No,"CenturyLink, Inc.",,5,2013-12-27..2022-03-15
+18926,"CENTURYLINK PUBLIC COMMUNICATIONS, INC",0005060116,1997-01-01,2020-08-28,Payphone Service Provider,No,CenturyLink Inc.,,5,2013-12-27..2022-03-15
+18926,"TW Wireless, LLC",0001621465,1997-01-01,2004-02-17,Cellular/PCS/SMR,No,"Qwest Wireless, LLC",,5,2013-12-27..2022-03-15
+18926,Telephone USA of WI,0004547261,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,CenturyTel - Central WI,0004312229,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Central Arkansas, LLC ",0004253381,1997-01-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"MebTel Long Distance Solutions, Inc.",0006983746,1997-01-01,2011-09-30,Toll Reseller,No,"CenturyLink, Inc.",,5,2013-12-27..2022-03-15
+18926,Embarq Corporation,0014791164,1997-01-01,2024-12-31,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Alabama, LLC",0005827712,2002-11-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,"CenturyTel of Missouri, LLC",0005827787,2002-11-01,2022-10-03,Incumbent Local Exchange Carrier,No,Lumen Technologies Inc.,,5,2013-12-27..2022-03-15
+18926,Qwest LD Corp.,0007769458,2003-02-01,2014-04-01,Toll Reseller,No,CENTURYLINK,,5,2013-12-27..2022-03-15
+18926,"Centurytel Fiber Company II, LLC",0008607277,2002-01-01,2014-04-01,Interexchange Carrier (IXC),No,"CenturyLink, Inc.",,5,2013-12-27..2022-03-15
+18926,SAVVIS Communications Corporation,0010252021,2003-01-01,2017-03-31,Interexchange Carrier (IXC),No,CenturyLink Inc.,,5,2013-12-27..2022-03-15
+18926,"Century Tel Acquisition, LLC.",0012985495,2004-01-01,2014-04-01,CAP/LEC,No,"CenturyLink, Inc.",,5,2013-12-27..2022-03-15
+18926,"Embarq Communications, Inc",0013389911,1997-01-01,2014-04-01,Interexchange Carrier (IXC),No,"CenturyLink, Inc.",,5,2013-12-27..2022-03-15
+18926,"Enqwest, LLC",0024185118,2014-01-01,2015-06-30,,No,,,5,2013-12-27..2022-03-15
+18926,"Preferred Communications of Texas, LLC",0030102297,1999-01-01,2021-10-31,Payphone Service Provider,No,"Lumen Technologies, Inc.",,5,2013-12-27..2022-03-15
+18926,"CenturyTel Broadband Services, LLC.",0015489941,2022-07-01,2022-10-03,CAP/LEC,No,"Lumen Technologies, Inc.",,5,2013-12-27..2022-03-15
+18926,United Telephone Company of the Northwest,0001566694,1999-01-01,open,Incumbent Local Exchange Carrier,Yes,"Lumen Technologies, Inc.",,5,2013-12-27..2022-03-15
+20520,Global Valley Networks,0001550029,1997-01-01,2009-01-01,Incumbent Local Exchange Carrier,No,Frontier Communications Corporation ,,4,2022-02-24..2024-06-10
+20520,CITIZENS TELECOMMUNICATIONS COMPANY OF CALIFORNIA INC,0003574316,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,Frontier Communications Northwest Inc,0001583244,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,Northwest Fiber LLC,,4,2022-02-24..2024-06-10
+20520,Frontier Communications West Coast Inc.,0001583228,1997-01-01,2013-07-01,Incumbent Local Exchange Carrier,No,FRONTIER COMMUNICATIONS CORPORATION,,4,2022-02-24..2024-06-10
+20520,"Citizens Telecommunications Co. of Tennessee, LLC",0003573391,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of America, Inc.",0005042080,1997-01-01,open,Interexchange Carrier (IXC),Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,CITIZENS TELECOMMUNICATIONS COMPANY OF UTAH ,0003574506,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,CITIZENS TELECOMMUNICATIONS COMPANY OF NEW YORK INC,0003574548,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,Citizens Telecommunications Co. of Idaho,0003574589,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,Northwest Fiber LLC,,4,2022-02-24..2024-06-10
+20520,Citizens Telecommunications Co. of Montana,0003574563,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,Northwest Fiber LLC,,4,2022-02-24..2024-06-10
+20520,CITIZENS TELECOMMUNICATIONS COMPANY OF THE WHITE MOUNTAINS INC,0003572617,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,Citizens Telecommunications Co. of West Virginia,0004054938,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,Citizens Telecommunications Co. of Tuolumne,0003573706,1997-01-01,2009-01-01,Incumbent Local Exchange Carrier,No,Frontier Communications Corporation,,4,2022-02-24..2024-06-10
+20520,CITIZENS TELECOMMUNICATIONS COMPANY OF NEVADA,0001596881,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Citizens Telecommunications Co. of Golden State, Inc",0003573417,1997-01-01,2009-01-01,Incumbent Local Exchange Carrier,No,Citizens Communications Company,,4,2022-02-24..2024-06-10
+20520,Citizens Telecommunications Company of Oregon,0003574522,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,Northwest Fiber LLC,,4,2022-02-24..2024-06-10
+20520,"Citizens Telecomm Company of the Volunteer State, LLC",0004260568,1997-01-01,2018-01-01,Incumbent Local Exchange Carrier,No,Frontier Commnunications Corporation,,4,2022-02-24..2024-06-10
+20520,FRONTIER COMMUNICATIONS OF IOWA LLC ,0002574960,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Minnesota, Inc.",0002624641,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Alabama, LLC",0004243952,1997-01-01,2018-01-01,Incumbent Local Exchange Carrier,No,Frontier Commnunications Corporation,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of the South, LLC",0005061064,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Georgia, LLC",0005450093,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Lamar County, LLC",0005060439,1997-01-01,2018-01-01,Incumbent Local Exchange Carrier,No,Frontier Commnunications Corporation,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Fairmount, LLC",0005061338,1997-01-01,2018-01-01,Incumbent Local Exchange Carrier,No,Frontier Commnunications Corporation,,4,2022-02-24..2024-06-10
+20520,Frontier Communications of Mississippi LLC,0015453079,1997-01-01,open,Incumbent Local Exchange Carrier,No,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of AuSable Valley, Inc.",0003455896,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Breezewood, LLC",0003273240,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Canton, LLC",0003223385,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Michigan, Inc.",0006148175,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,FRONTIER COMMUNICATIONS OF INDIANA LLC,0004163317,1997-01-01,open,Incumbent Local Exchange Carrier,No,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of DePue, Inc.",0002861979,1997-01-01,open,Incumbent Local Exchange Carrier,No,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Pennsylvania, LLC",0003271236,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of New York, Inc.",0004132338,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Illinois, Inc.",0005060371,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Lakeside, Inc.",0004156162,1997-01-01,open,Incumbent Local Exchange Carrier,No,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Lakewood, LLC",0005060413,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,FRONTIER COMMUNICATIONS - MIDLAND INC,0005040266,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Mondovi, LLC",0004966362,1997-01-01,2018-01-01,Incumbent Local Exchange Carrier,No,Frontier Commnunications Corporation,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Mt. Pulaski, Inc.",0005060496,1997-01-01,open,Incumbent Local Exchange Carrier,No,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Orion, Inc.",0005060512,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Oswayo River, LLC",0003222221,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,FRONTIER COMMUNICATIONS - PRAIRIE INC,0003765823,1997-01-01,open,Incumbent Local Exchange Carrier,No,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,FRONTIER COMMUNICATIONS -SCHUYLER INC,0005060314,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Seneca Gorham, Inc.",0003399680,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of St. Croix, LLC",0004150157,1997-01-01,2018-01-01,Incumbent Local Exchange Carrier,No,Frontier Commnunications Corporation,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Sylvan Lake, Inc.",0005060587,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,FRONTIER COMMUNICATIONS OF THORNTOWN LLC,0005061114,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Wisconsin, LLC",0002718971,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Viroqua, LLC",0005234760,1997-01-01,2018-01-01,Incumbent Local Exchange Carrier,No,Frontier Commnunications Corporation,,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of America, Inc.",0005060348,1997-01-01,2003-03-31,Toll Reseller,No,Citizens Communications Company,,4,2022-02-24..2024-06-10
+20520,"Citizens Telecommunications Technologies, Inc.",0003735875,1997-01-01,open,Toll Reseller,No,CITIZENS TELEPHONE COMPANY OF KECKSBURG,,4,2022-02-24..2024-06-10
+20520,CITIZENS TELECOMMUNICATIONS COMPANY OF ILLINOIS ,0003934205,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,CITIZENS TELECOMMUNICATIONS COMPANY OF NEBRASKA,0004341095,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Citizens Telecommunications Company of Minnesota, LLC",0004036703,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Frontier Communications of Rochester, Inc.",0004320081,1997-01-01,open,Local Reseller,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Citizens Telecommunications of North Dakota, Inc.",0004340931,1997-01-01,2003-03-31,Incumbent Local Exchange Carrier,No,Citizens Communications Company,,4,2022-02-24..2024-06-10
+20520,"Citizens Telecom Solutions, LLC.",0009588377,2007-05-01,open,CAP/LEC,Yes,CITIZENS TELEPHONE COMPANY OF KECKSBURG,,4,2022-02-24..2024-06-10
+20520,Frontier Communications Online and Long Distance Inc,0018812487,2010-05-27,open,Toll Reseller,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,Frontier Communications of the Southwest Inc,0018802678,2010-05-27,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,FRONTIER COMMUNICATIONS OF THE CAROLINAS LLC ,0018802660,2010-05-27,open,Incumbent Local Exchange Carrier,Yes,"Frontier Commnunications Parent, Inc.",,4,2022-02-24..2024-06-10
+20520,"Frontier Communications ILEC Holdings, Inc.",0018802652,2010-08-04,2010-08-04,Incumbent Local Exchange Carrier,No,,,4,2022-02-24..2024-06-10
+1001082,dishNET Wireline LLC,0010436087,2003-01-01,open,CAP/LEC,No,DISH NETWORK CORPORATION,,2,2023-02-22..2023-05-17
+1001082,DISH Network Corporation,0005083498,2012-03-01,2015-12-31,Satellite,No,DISH NETWORK CORPORATION,,2,2023-02-22..2023-05-17
+1001082,Gamma Acquisition L.L.C.,0021004817,2012-03-01,2013-05-01,Satellite,No,DISH Networks Corporation,,2,2023-02-22..2023-05-17
+1001082,DISH Wireless L.L.C.,0027852722,2020-06-01,open,Cellular/PCS/SMR,No,,,2,2023-02-22..2023-05-17
+1001082,DISH WIRELESS PUERTO RICO L.L.C.,0029666096,2020-07-01,open,Cellular/PCS/SMR,No,DISH Network Corporation,,2,2023-02-22..2023-05-17
+101830,Sprint/United Telephone - Northwest,0001566694,1997-01-01,1997-01-01,Incumbent Local Exchange Carrier,No,Sprint Corporation,,9,2009-02-01..2019-06-22
+101830,Sprint/United Telephone Company of Ohio,0002938843,1997-01-01,1997-01-01,Incumbent Local Exchange Carrier,No,Sprint Corporation,,9,2009-02-01..2019-06-22
+101830,"Sprint/United Telephone Company of Indiana, Inc",0002901551,1997-01-01,1997-01-01,Incumbent Local Exchange Carrier,No,Sprint Corporation,,9,2009-02-01..2019-06-22
+101830,Sprint/United Telephone Company of Eastern Kansas,0002595247,1997-01-01,1997-01-01,Incumbent Local Exchange Carrier,No,Sprint Corporation,,9,2009-02-01..2019-06-22
+101830,Sprint/United Tel. Co. of Kansas,0002342038,1997-01-01,1997-01-01,Incumbent Local Exchange Carrier,No,Sprint Corporation,,9,2009-02-01..2019-06-22
+101830,Sprint/United Telephone Company of South Central Kansas,0005051743,1997-01-01,1997-01-01,Incumbent Local Exchange Carrier,No,Sprint Corporation,,9,2009-02-01..2019-06-22
+101830,"Sprint - Missouri, Inc",0002337244,1997-01-01,1997-01-01,Incumbent Local Exchange Carrier,No,Sprint Corporation,,9,2009-02-01..2019-06-22
+101830,Sprint/United Telephone Company of the West,0002391639,1997-01-01,1997-01-01,Incumbent Local Exchange Carrier,No,Sprint Corporation,,9,2009-02-01..2019-06-22
+101830,"Sprint/United Telephone Company of Texas, Inc.",0005051768,1997-01-01,1997-01-01,Incumbent Local Exchange Carrier,No,Sprint Corporation,,9,2009-02-01..2019-06-22
+101830,"Sprint- Minnesota, Inc.",0002643435,1997-01-01,1997-01-01,Incumbent Local Exchange Carrier,No,Sprint Corporation,,9,2009-02-01..2019-06-22
+101830,Sprint/Central Telephone Company of Texas,0001685148,1997-01-01,1997-01-01,Incumbent Local Exchange Carrier,No,Sprint Corporation,,9,2009-02-01..2019-06-22
+101830,Sprint/Central Tel. Co. - Nevada,0002382570,1997-01-01,1997-01-01,Incumbent Local Exchange Carrier,No,Sprint Corporation,,9,2009-02-01..2019-06-22
+101830,"COGENT COMMUNICATIONS, INC",0019898303,1997-01-01,2023-05-01,Private Service Provider,No,"Cogent Communications, Inc.",,9,2009-02-01..2019-06-22
+101830,"US Telecom, Inc.",0014848477,1997-01-01,2020-12-30,Toll Reseller,No,"T-MOBILE USA, INC.",,9,2009-02-01..2019-06-22
+101830,Sprint International Communications Company,0004372876,1997-01-01,2002-01-01,Interexchange Carrier (IXC),No,Sprint Corporation,,9,2009-02-01..2019-06-22
+101830,"Sprint/United Telephone Company of New Jersey, Inc.",0004146585,1997-01-01,1997-01-01,Incumbent Local Exchange Carrier,No,Sprint Corporation,,9,2009-02-01..2019-06-22
+101830,Sprint/United Tel. Co. of Pennsylvania,0004140422,1997-01-01,1997-01-01,Incumbent Local Exchange Carrier,No,Sprint Corporation,,9,2009-02-01..2019-06-22
+101830,Sprint/Carolina Telephone & Telegraph Co.,0001952340,1997-01-01,1997-01-01,Incumbent Local Exchange Carrier,No,Sprint Corporation,,9,2009-02-01..2019-06-22
+101830,Sprint/Central Telephone Company of Virginia,0004183919,1997-01-01,1997-01-01,Incumbent Local Exchange Carrier,No,Sprint Corporation,,9,2009-02-01..2019-06-22
+101830,Sprint/Central Telephone Company - North Carolina,0002382570,2001-07-01,2002-05-01,Incumbent Local Exchange Carrier,No,Sprint Corporation,,9,2009-02-01..2019-06-22
+101830,Sprint/United Tel. Co. of the Carolinas,0001777036,1997-01-01,1997-01-01,Incumbent Local Exchange Carrier,No,Sprint Corporation,,9,2009-02-01..2019-06-22
+101830,"Sprint/United Tel. - Southeast, Inc.",0001770122,1997-01-01,1997-01-01,Incumbent Local Exchange Carrier,No,Sprint Corporation,,9,2009-02-01..2019-06-22
+101830,"Sprint - Florida, Inc",0001825298,1997-01-01,1997-01-01,Incumbent Local Exchange Carrier,No,Sprint Corporation,,9,2009-02-01..2019-06-22
+101830,"American PCS Communications, LLC",0002147304,1997-01-01,2015-01-12,Cellular/PCS/SMR,No,Softbank Corp,,9,2009-02-01..2019-06-22
+101830,Sprint Spectrum LLC,0006693022,1997-01-01,2024-12-31,Cellular/PCS/SMR,No,T MOBILE USA INC,,9,2009-02-01..2019-06-22
+101830,"Sprint Telephony PCS, L.P.",0002963965,1997-01-01,2015-01-12,Cellular/PCS/SMR,No,Softbank Corp,,9,2009-02-01..2019-06-22
+101830,Gulf Coast Wireless Limited Partnership,0001711510,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,,,9,2009-02-01..2019-06-22
+101830,"VIA Wireless, LLC",0001530104,1997-01-01,2001-08-13,Cellular/PCS/SMR,No,,,9,2009-02-01..2019-06-22
+101830,"Louisiana Unwired, LLC",0004547493,1997-01-01,2005-08-15,Cellular/PCS/SMR,No,,,9,2009-02-01..2019-06-22
+101830,"SprintCom, Inc.",0002315950,1997-01-01,2015-01-12,Cellular/PCS/SMR,No,Softbank Corp,,9,2009-02-01..2019-06-22
+101830,"Phillie Co., LP",0002317246,1997-01-01,2015-01-12,Cellular/PCS/SMR,No,Softbank Corp.,,9,2009-02-01..2019-06-22
+101830,"Washington Oregon Wireless, LLC",0009476896,2002-05-01,2006-02-01,Cellular/PCS/SMR,No,"Alamosa Holdings, Inc.",,9,2009-02-01..2019-06-22
+101830,Alamosa Wisconsin Limited Partnership,0009476896,2002-05-01,2006-02-01,Cellular/PCS/SMR,No,"Alamosa Holdings, Inc.",,9,2009-02-01..2019-06-22
+101830,"Alamosa Missouri, LLC.",0009476896,2002-05-01,2006-02-01,Cellular/PCS/SMR,No,"Alamosa Holdings, Inc.",,9,2009-02-01..2019-06-22
+101830,Texas Telecommunications LP,0009476896,2002-05-01,2006-02-01,Cellular/PCS/SMR,No,"Alamosa Holdings, Inc.",,9,2009-02-01..2019-06-22
+101830,"Southwest PCS, LP",0009476896,2002-05-01,2006-02-01,Cellular/PCS/SMR,No,"Alamosa Holdings, Inc.",,9,2009-02-01..2019-06-22
+101830,"Helio, LLC",0013213178,2004-01-01,2010-10-01,Cellular/PCS/SMR,No,Sprint Nextel Corporation,,9,2009-02-01..2019-06-22
+101830,"SprintFone, Inc",0032347759,2022-08-01,open,Local Reseller,No,,,9,2009-02-01..2019-06-22
+101830,"Sprinter IT, LLC",0030754840,2022-01-01,open,Interconnected VoIP,No,,,9,2009-02-01..2019-06-22
+732712,Verizon - New York Inc.,0003469442,1997-01-01,2021-09-30,Incumbent Local Exchange Carrier,No,VERIZON COMMUNICATIONS INC,,10,2008-06-27..2024-02-06
+732712,St. Joseph CellTelCo,0005005541,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Topeka Cellular Telephone Company, Inc.",0005757901,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,,,10,2008-06-27..2024-02-06
+732712,Verizon Wireless fka Cellco Partnership,0003290673,1997-01-01,2003-02-03,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,NYNEX Long Distance Company,0004342580,1997-01-01,2014-11-12,Toll Reseller,No,VERIZON COMMUNICATIONS INC,,10,2008-06-27..2024-02-06
+732712,Verizon Hawaii International Inc.,0004374443,1997-01-01,2021-09-30,Private Service Provider,No,VERIZON COMMUNICATIONS INC,,10,2008-06-27..2024-02-06
+732712,"GTE Pacifica, Inc.",0004339933,1997-01-01,open,Interexchange Carrier (IXC),Yes,PACIFIC TELECOM INC,,10,2008-06-27..2024-02-06
+732712,"Verizon South, Inc.",0001962588,1997-01-01,2021-09-30,Incumbent Local Exchange Carrier,No,VERIZON COMMUNICATIONS INC,,10,2008-06-27..2024-02-06
+732712,Verizon Midwest,0004191789,1997-01-01,2002-09-01,Incumbent Local Exchange Carrier,No,"Verizon Communications, Inc.",,10,2008-06-27..2024-02-06
+732712,"Verizon Wireless (VAW) Services, LLC fka Vodaphone AirTouch Licenses, LLC",0003800307,1997-01-01,2003-04-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Boise City MSA Limited Partnership,0001574409,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Colorado RSA No. 3 Limited Partnership,0001572403,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Des Moines MSA General Partnership,0005005491,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Duluth MSA Limited Partnership,0001574425,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Idaho RSA No. 1 Limited Partnership,0001572361,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Idaho RSA No. 2 Limited Partnership,0001572346,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Idaho RSA 3 Limited Partnership,0001837137,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Iowa RSA No. 10 General Partnership,0001572312,1997-01-01,2012-01-01,Cellular/PCS/SMR,No,,,10,2008-06-27..2024-02-06
+732712,Iowa RSA 7 Limited Partnership,0001572445,1997-01-01,2012-07-01,Cellular/PCS/SMR,No,,,10,2008-06-27..2024-02-06
+732712,North Dakota RSA No. 3 Limited Partnership,0001572429,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Olympia Cellular Limited Partnership,0001574367,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Omaha Cellular Telephone Company,0005005533,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Seattle SMSA Limited Partnership,0001581305,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Spokane MSA Limited Partnership,0001578749,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Coconino, Arizona RSA Limited Partnership",0003819521,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Wasatch Utah RSA No. 2 Limited Partnership,0001572387,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Yuma, Arizona RSA Limited Partnership",0001837194,1997-01-01,2001-06-15,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Grays Harbor-Mason Limited Partnership,0001572320,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Sioux Falls Cellular, LP",0003770849,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Bismarck MSA, LP",0001606532,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Eastern South Dakota Cellular (South Dakota RSA No. 9),0001608116,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,North Central RSA 2 Limited Partnership,0001608280,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Colorado 4 - Park Limited Partnership,0001608132,2001-07-01,2001-07-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Platte River Cellular of Colorado, LP",0001608249,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Smokey Hill Cellular of Colorado, LP",0001608223,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Colorado 7 - Saguache Limited Partnership,0003770286,1997-01-01,2023-10-11,Cellular/PCS/SMR,No,Verizon Communications,,10,2008-06-27..2024-02-06
+732712,Two Buttes Cellular of Colorado Limited Partnership,0003770328,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,San Isabel Cellular of Colorado Limited Partnership,0001608199,1997-01-01,2023-10-11,Cellular/PCS/SMR,No,,,10,2008-06-27..2024-02-06
+732712,Idaho 6 - Clark Limited Partnership,0001607886,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Iowa 8 - Monona Limited Partnership,0001608009,1997-01-01,2012-07-01,Cellular/PCS/SMR,No,,,10,2008-06-27..2024-02-06
+732712,South Dakota 8 - Kingsbury Limited Partnership,0001608090,2001-07-01,2001-07-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,South Dakota 7 - Sully Limited Partnership,0001608074,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Cellular Inc. Network Corporation,0001607795,1997-01-01,2003-02-03,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Gold Creek Cellular,0001627702,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Northwest Dakota Cellular of North Dakota, Ltd. Partnership",0001608306,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Badlands Cellular of North Dakota,0001608264,1997-01-01,open,Cellular/PCS/SMR,Yes,,,10,2008-06-27..2024-02-06
+732712,Northern New Mexico LP (New Mexico RSA No. 1),0001604966,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Wyoming 1 - Park Limited Partnership,0001608157,1997-01-01,2012-07-01,Cellular/PCS/SMR,No,,,10,2008-06-27..2024-02-06
+732712,North Dakota 5 - Kidder Limited Partnership,0001607985,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Utah RSA 6 Limited Partnership,0001607241,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Sioux City MSA Limited Partnership,0001609411,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Pueblo MSA Limited Partnership,0001609445,2001-07-01,2001-07-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Verizon Long Distance, LLC",0004342598,1997-01-01,2021-09-30,Toll Reseller,No,VERIZON COMMUNICATIONS INC,,10,2008-06-27..2024-02-06
+732712,"Verizon - Delaware, Inc.",0003271798,1997-01-01,2021-09-30,Incumbent Local Exchange Carrier,No,VERIZON COMMUNICATIONS INC,,10,2008-06-27..2024-02-06
+732712,"Verizon - Pennsylvania, Inc.",0003273505,1997-01-01,2021-09-30,Incumbent Local Exchange Carrier,No,VERIZON COMMUNICATIONS INC,,10,2008-06-27..2024-02-06
+732712,"Verizon- Washington, D.C. Inc.",0002109213,1997-01-01,2021-09-30,Incumbent Local Exchange Carrier,No,VERIZON COMMUNICATIONS INC,,10,2008-06-27..2024-02-06
+732712,"Verizon - Maryland, Inc.",0002166825,1997-01-01,2021-09-30,Incumbent Local Exchange Carrier,No,VERIZON COMMUNICATIONS INC,,10,2008-06-27..2024-02-06
+732712,"Verizon-Virginia, Inc.",0002073203,1997-01-01,2021-09-30,Incumbent Local Exchange Carrier,No,VERIZON COMMUNICATIONS INC,,10,2008-06-27..2024-02-06
+732712,"Verizon - New Jersey, Inc.",0003316692,1997-01-01,2021-09-30,Incumbent Local Exchange Carrier,No,VERIZON COMMUNICATIONS INC,,10,2008-06-27..2024-02-06
+732712,Hamilton Cellular Telephone Company,0005005509,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,NewPar,0003010816,1997-01-01,2003-02-03,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Muskegon Cellular Partnership,0005005517,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"MCI WorldCom Network Services, Inc./ MCI Communications Corporation",0004335584,1997-01-01,1997-01-01,Interexchange Carrier (IXC),No,"WorldCom, Inc.",,10,2008-06-27..2024-02-06
+732712,Verizon Wireless Messaging Services,0003295904,1997-01-01,2003-04-01,Paging & Messaging,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,California RSA No. 4 Limited Partnership,0001838671,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Tuscaloosa Cellular Partnership,0001573104,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Gadsden Cell Tel. Co. Partnership,0001573039,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"GTE Mobilnet of the South, Inc.",0001843887,1997-01-01,2001-03-29,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Virginia Cellular Limited Partnership,,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,New Mexico RSA 5 Limited Partnership,0001838713,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Iowa RSA No. 4 Limited Partnership,0001837285,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Virginia RSA 5 Limited Partnership,0001837210,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Kentucky RSA No. 1 Partnership,0001836709,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Knoxville Cellular Telephone Company,0002149292,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"GTE Mobilnet of the Southwest, Inc.",0001843861,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Fresno MSA Limited Partnership,0001842954,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"GTE Mobilnet of Florence, Alabama, Inc.",0001573518,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Southern Indiana RSA Limited Partnership,0001837269,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,New Mexico RSA 6 - 1 Limited Partnership,0001838655,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Rockford MSA Limited Partnership,0001840537,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,New Mexico RSA 3 Limited Partnership - Consolidated,0001838697,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Illinois RSA 1 Limited Partnership,0001837111,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Iowa RSA No. 5 Limited Partnership,0001837301,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,GTE Mobilnet of California Limited Partnership,0003579380,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,GTE Mobilnet of South Texas Limited Partnership,0003579406,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"GTE Mobilnet of Houston, Inc.",0003579638,1997-01-01,2002-04-03,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,GTE Mobilnet of Santa Barbara Limited Partnership,0003577624,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Fayetteville Cellular Telephone Limited Partnership,0001945492,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,GTE Mobilnet of Fort Wayne Limited Partnership,0003577608,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Austin Limited Partnership,,1997-01-01,2000-09-08,Cellular/PCS/SMR,No,Verizon Wireless,,10,2008-06-27..2024-02-06
+732712,GTE Mobilnet of Texas RSA #21,0003293982,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,,,10,2008-06-27..2024-02-06
+732712,GTE Mobilnet of Texas RSA #17 Limited Partnership,0003293941,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Texas RSA #16 Limited Partnership,,1997-01-01,2000-09-08,Cellular/PCS/SMR,No,Verizon Wireless,,10,2008-06-27..2024-02-06
+732712,GTE Mobilnet of Indiana Limited Partnership,0003579364,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,GTE Mobilnet of Indiana RSA #3 Limited Partnership,0001640697,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Texas RSA #11 Limited Partnership,,1997-01-01,2000-09-08,Cellular/PCS/SMR,No,Verizon Wireless,,10,2008-06-27..2024-02-06
+732712,Danville Cellular Telephone Company Limited Partnership,0003594868,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,GTE Mobilnet of Indiana RSA #6 Limited Partnership,0001640705,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,GTE Mobilnet of Terre Haute Limited Partnership,0003577582,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,GTE Mobilnet of Indiana RSA #1 Limited Partnership,0003293966,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Verizon New England, Inc.",0003628971,1997-01-01,2021-09-30,Incumbent Local Exchange Carrier,No,VERIZON COMMUNICATIONS INC,,10,2008-06-27..2024-02-06
+732712,Portland Cellular Partnership,0003682887,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Chicago SMSA Limited Partnership,0002846962,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Illinois SMSA Limited Partnership,0002840718,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Illinois RSA 6&7 Limited Partnership,0002842334,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Cybertel Cellular Telephone Company,0002805737,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Global Tel*Link Corporation,0003734985,1997-01-01,open,Payphone Service Provider,Yes,GTEL HOLDINGS INC,,10,2008-06-27..2024-02-06
+732712,Sacramento-Valley Limited Partnership,0002972149,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Athens Cellular,0001545474,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Modoc RSA Limited Partnership,0002967776,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Mineral RSA Limited Partnership,0002968576,1997-01-01,2002-04-03,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Airtouch Cellular,0003290673,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Los Angeles SMSA Limited Partnership,0002963817,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"TSI Telecommunications Services, Inc.",0004374468,1997-01-01,1997-01-01,Other Toll,No,"Verizon Communications, Inc.",,10,2008-06-27..2024-02-06
+732712,"Verizon Select Services, Inc.",0004997375,1997-01-01,2021-09-30,Toll Reseller,No,VERIZON COMMUNICATIONS INC,,10,2008-06-27..2024-02-06
+732712,"Verizon Wireless Personal Communications, L.P",0001659069,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Pennsylvania No. 4 Sector 2, LP",0002147494,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Pennsylvania No. 3 Sector 2, LP",0002147551,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"CommNet Paging, Inc.",,1997-01-01,2002-04-03,Paging & Messaging,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"GTE Wireless of the Midwest, Inc.",0003578580,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Longtell Communication, LLC",,1997-01-01,2002-04-05,Payphone Service Provider,No,,,10,2008-06-27..2024-02-06
+732712,Verizon Avenue Corp,0003469442,1997-01-01,2015-11-30,Private Service Provider,No,VERIZON COMMUNICATIONS INC,,10,2008-06-27..2024-02-06
+732712,Verizon Avenue Corp.,0001536424,1997-01-01,2015-11-30,Private Service Provider,No,VERIZON AVENUE CORP,,10,2008-06-27..2024-02-06
+732712,"Verizon Avenue, Corp",0001824804,1997-01-01,2015-11-30,Private Service Provider,No,VERIZON COMMUNICATIONS INC,,10,2008-06-27..2024-02-06
+732712,"Verizon Wireless Puerto Rico, Inc.",0004283081,1997-01-01,2002-05-01,Cellular/PCS/SMR,No,"Telecommunicaciones de Puerto Rico, Inc.",,10,2008-06-27..2024-02-06
+732712,Verizon Avenue Corp,0001962588,1997-01-01,2015-11-30,Private Service Provider,No,VERIZON COMMUNICATIONS INC,,10,2008-06-27..2024-02-06
+732712,Waterloo MSA Limited Partnership,0002844546,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Northeast Pennsylvania SMSA Limited Partnership,0003250123,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Dubuque MSA Limited Partnership,0002842599,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Indiana RSA #2 Partnership,0002837078,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Bell Atlantic Mobile of Massachusetts, Inc.",,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"OnePoint Services, LLC",,1997-01-01,1997-01-01,Prepaid Card,No,Verizon Avenue Corp.,,10,2008-06-27..2024-02-06
+732712,GTE Pacific-Guam,0004339941,1997-01-01,2005-11-01,Prepaid Card,No,Micronesian Telecommunications Corp.,,10,2008-06-27..2024-02-06
+732712,"San Antonio MTA, LP",0001658962,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Dallas MTA, LP",0001658970,1997-01-01,2003-02-03,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Southwestco Wireless, LP",0003290525,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Anderson CTC,0004268926,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Asheville, Inc.",0003595105,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Blue Ridge CTC,0003998184,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Pittsburgh SMSA, LP",0003290335,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Pennsylvania RSA 6 (II), LP",0003290350,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Allentown SMSA, LP",0003299781,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"New York SMSA, LP",0003473220,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,St. Lawrence Seaway Cellular Partnership,0003477916,1997-01-01,2013-10-01,Cellular/PCS/SMR,No,UNITED STATES CELLULAR CORPORATION,,10,2008-06-27..2024-02-06
+732712,"Washington SMSA, LP",0003290376,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,NY RSA 2 Cellular Partnership,0001836584,1997-01-01,2013-10-01,Cellular/PCS/SMR,No,UNITED STATES CELLULAR CORPORATION,,10,2008-06-27..2024-02-06
+732712,"Binghamton MSA, LP",0001840230,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,New York RSA 3 Cellular Partnership,0003398716,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"NYNEX Mobile of New York, LP",0001840214,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Rochester Telephone Mobile Communication, LP",0003402666,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Syracuse SMSA, LP",0003472230,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Upstate Cellular Network,0003407764,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,NYNEX Mobile LP 1,0005005525,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Vermont RSA, LP",0005005558,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,NYNEX Mobile LP 2,0003300795,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Orange Poughkeepsie, LP",0003300811,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"New Hampshire RSA 2, LP",0003299922,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Pittsfield CTC,0003290418,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,Redding MSA Limited Partnership,0001723964,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,The Great Salts Flats General Partnership,0001622273,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,,,10,2008-06-27..2024-02-06
+732712,"Southern & Central Wireless, LLC",0003802923,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"PA RSA 1, LP",0002837151,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Ligtel Communications, Inc.",0007770084,1997-01-01,open,Toll Reseller,Yes,Ligonier Telephone Company,,10,2008-06-27..2024-02-06
+732712,"Youngstown-Warren MSA, LP",0002531275,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Verizon Advanced Data, Inc.",0005806740,1997-01-01,2003-06-19,CAP/LEC,No,Verizon Ventures III,,10,2008-06-27..2024-02-06
+732712,"Verizon Advanced Data VA, Inc.",,1997-01-01,2002-01-28,CAP/LEC,No,Verizon Advanced Data Inc.,,10,2008-06-27..2024-02-06
+732712,Virginia RSA 5 Retail Limited Partnership,,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Verizon Global Solutions, Inc.",0004372975,1997-01-01,2005-03-01,Private Service Provider,No,Verizon Communications Inc.,,10,2008-06-27..2024-02-06
+732712,MP Communications,0006400998,1997-01-01,2005-01-01,Cellular/PCS/SMR,No,,,10,2008-06-27..2024-02-06
+732712,Wescel Cellular of New Mexico,,1997-01-01,2003-02-01,Cellular/PCS/SMR,No,Cellco Partnership,,10,2008-06-27..2024-02-06
+732712,"Pueblo Cellular, Inc.",0006754345,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,,,10,2008-06-27..2024-02-06
+732712,"Sangre de Cristo Cellular, Inc.",0006754360,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,,,10,2008-06-27..2024-02-06
+732712,"Sanborn Cellular, Inc.",0006754253,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,,,10,2008-06-27..2024-02-06
+732712,"Verizon Wireless Texas, LLC",0004447371,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,,,10,2008-06-27..2024-02-06
+732712,Verizon Wireless Tennessee Partnership,0006209373,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,,,10,2008-06-27..2024-02-06
+732712,Verizon Wireless Svcs.,,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,,,10,2008-06-27..2024-02-06
+732712,Missouri Valley Cellular,0006754196,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,,,10,2008-06-27..2024-02-06
+732712,"Eastern South Dakota Cellular, Inc. (South Dakota 9)",0006574289,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,,,10,2008-06-27..2024-02-06
+732712,"VERIZON VALUE, INC.",0006855639,1997-01-01,open,Cellular/PCS/SMR,Yes,Verizon Communications Inc,,10,2008-06-27..2024-02-06
+732712,"CommNet Cellular, Inc.",,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,,,10,2008-06-27..2024-02-06
+732712,"Verizon Wireless of the East, LP",0007609324,2002-04-01,2003-02-03,Cellular/PCS/SMR,No,,,10,2008-06-27..2024-02-06
+732712,"XO Communications Services, LLC",0006275945,2003-02-01,2021-09-30,CAP/LEC,No,VERIZON COMMUNICATIONS INC,,10,2008-06-27..2024-02-06
+732712,Cellco Partnership & Affiliated Entities- CONSOLIDATED,0003290673,2002-04-01,open,Cellular/PCS/SMR,Yes,"Verizon Communications, Inc.",,10,2008-06-27..2024-02-06
+732712,"Codetel International Communications, Inc.",0006369441,2004-01-13,2007-03-31,Toll Reseller,No,"Verizon Communications, Inc.",,10,2008-06-27..2024-02-06
+732712,"Mundetel Telecommunications, Inc.",0017713207,2003-01-01,2009-07-01,Interexchange Carrier (IXC),No,"US Starcom, Inc.",,10,2008-06-27..2024-02-06
+732712,Verizon Business Global LLC,0010856284,2004-01-01,2021-09-30,Interexchange Carrier (IXC),No,VERIZON COMMUNICATIONS INC,,10,2008-06-27..2024-02-06
+732712,"segTEL, Inc.",0006204630,2004-01-01,2018-06-30,CAP/LEC,No,"TVC Albany, Inc.",,10,2008-06-27..2024-02-06
+732712,"GTEL Conustancy And Services, Inc.",0013640826,2004-01-01,2005-04-05,Operator Service Provider (OSP),No,,,10,2008-06-27..2024-02-06
+732712,"Verizon Dominicana, C. por A.",0014851463,2005-01-01,2006-07-01,Private Service Provider,No,"Verizon Commuinications, Inc.",,10,2008-06-27..2024-02-06
+732712,Michigan RSA #9 Limited Partnership,0001712916,2009-06-16,2010-07-01,Cellular/PCS/SMR,No,,,10,2008-06-27..2024-02-06
+732712,Wisconsin RSA#1 Limited Partnership,0001838584,2009-06-16,2010-01-01,Cellular/PCS/SMR,No,,,10,2008-06-27..2024-02-06
+732712,Verizon North LLC,0020249777,2010-05-27,2021-09-30,Incumbent Local Exchange Carrier,No,VERIZON COMMUNICATIONS INC,,10,2008-06-27..2024-02-06
+732712,Verizon Connect Inc.,0019691732,2011-05-09,2022-12-31,Cellular/PCS/SMR,No,VERIZON COMMUNICATIONS INC,,10,2008-06-27..2024-02-06
+732712,"Springtel, Inc.",0022450589,2009-07-01,2018-01-01,,No,,,10,2008-06-27..2024-02-06
+732712,"NoyTel Networks, LLC",0024367252,2015-01-03,2015-06-30,Interconnected VoIP,No,,,10,2008-06-27..2024-02-06
+732712,Gtek Computers & Wireless L.L.C.,0016715682,2009-09-01,open,Wireless Data,No,,,10,2008-06-27..2024-02-06
+732712,"Ringtel Networks, LLC",0025713546,2017-03-01,open,Interexchange Carrier (IXC),No,,,10,2008-06-27..2024-02-06
+732712,Springtel LLC,0027053206,2018-01-01,open,,No,,,10,2008-06-27..2024-02-06
+732712,Visible Service LLC,0026739722,2018-05-01,open,Cellular/PCS/SMR,Yes,Verizon Communications Inc.,,10,2008-06-27..2024-02-06
+732712,GTech Fiber LLC,0031476740,2021-04-01,open,Interconnected VoIP,No,,,10,2008-06-27..2024-02-06
+732712,Verizon Sourcing LLC,0030488753,1999-01-01,open,Incumbent Local Exchange Carrier,Yes,Verizon Communications Inc.,,10,2008-06-27..2024-02-06
+732712,6GTech Systems Limited,0036928174,2022-12-01,open,Interconnected VoIP,No,,,10,2008-06-27..2024-02-06
+732717,Pacific Bell Telephone Company,0001551530,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"AT&T, Inc.",,24,2008-05-23..2024-04-14
+732717,"BellSouth Public Communications, Inc.",0008709081,1997-01-01,2004-03-31,Payphone Service Provider,No,"Bellsouth Telecommunications, Inc.",,24,2008-05-23..2024-04-14
+732717,"BellSouth Telecommunications, LLC",0001857952,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"AT&T, Inc.",,24,2008-05-23..2024-04-14
+732717,The Woodbury Telephone Company,0003576550,1997-01-01,2007-05-16,Incumbent Local Exchange Carrier,No,"AT&T, Inc.",,24,2008-05-23..2024-04-14
+732717,"AT&T Wireless PCS, LLC",,1997-01-01,2001-04-01,Cellular/PCS/SMR,No,,,24,2008-05-23..2024-04-14
+732717,"Illinois Bell Telephone Company, LLC",0027735927,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"AT&T, Inc.",,24,2008-05-23..2024-04-14
+732717,"Indiana Bell Telephone Company, LLC",0002904654,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"AT&T, Inc.",,24,2008-05-23..2024-04-14
+732717,Michigan Bell Telephone Company,0002776771,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"AT&T, Inc.",,24,2008-05-23..2024-04-14
+732717,"Ameritech Communications International, Inc.",0003773108,1997-01-01,2002-12-26,Toll Reseller,No,"SBC Communications, Inc.",,24,2008-05-23..2024-04-14
+732717,"The Ohio Bell Telephone Company, LLC",0002946986,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"AT&T, Inc.",,24,2008-05-23..2024-04-14
+732717,"Wisconsin Bell, LLC",0002716561,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"AT&T, Inc.",,24,2008-05-23..2024-04-14
+732717,"SNET Mobility, Inc.",0004382412,1997-01-01,2002-07-10,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,"SNET Diversified Group, Inc.",0007586423,1997-01-01,2013-12-31,Other Local,No,AT&T INC,,24,2008-05-23..2024-04-14
+732717,Houma Thibodaux Cellular Partnership,0003738879,1997-01-01,2002-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,"Alabama Cellular Service, LLC",0001843903,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,"Northeast Mississippi Cellular, LLC",0001835917,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,"BellSouth Mobility, LLC",0001844349,1997-01-01,2002-08-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,"BellSouth Long Distance, Inc.",0003733318,1997-01-01,open,Interexchange Carrier (IXC),Yes,"AT&T, Inc.",,24,2008-05-23..2024-04-14
+732717,"Florida Cellular Service, LLC",0001844232,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,"Kentucky CGSA, LLC",0001843937,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,Huntsville MSA Limited Partnership,0001840719,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,Atlanta-Athens MSA Limited Partnership,0001843077,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,"American Cellular Communications, LLC",0001749316,1997-01-01,2002-07-10,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,"Indiana Cellular, LLC",0003765773,1997-01-01,2002-07-10,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,Lafayette MSA Limited Partnership,0001682509,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,Memphis SMSA Limited Partnership,0001843051,1997-01-01,2002-01-24,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,Jacksonville MSA Limited Partnership,0001842707,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,Orlando SMSA Limited Partnership,0001843036,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,Chattanooga MSA Ltd. Partnership,0001842723,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,Decatur RSA Ltd. Partnership,0003765682,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,Florida RSA No. 2B (Indiana River) Ltd. Partnership,0001837566,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,Georgia RSA No. 1 Ltd. Partnership,0001837525,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,Georgia RSA No. 2 Ltd. Partnership,0001837715,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,Georgia RSA No. 3 Ltd. Partnership,0001836998,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,Northeastern Georgia RSA Limited Partnership,0001837152,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,Acadiana Cellular General Partnership,0001837814,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,Louisiana RSA No. 7 Cellular General Partnership,0001837798,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,Tennessee RSA Limited Partnership,0001832740,1997-01-01,2002-01-24,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,"M-T Cellular, LLC",0001767557,1997-01-01,2002-01-24,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,MCTA,0003755733,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,"Westel-Indianapolis, LLC",0001808971,1997-01-01,2002-08-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,Bloomington Cellular Telephone Co.,0001573328,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,"Westel-Milwaukee Company, LLC",0001808997,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,"Southwestern Bell Mobile Systems, Inc.",0004249660,1997-01-01,2002-08-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,"Nevada Bell Telephone Company, LLC",0001552173,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"AT&T, Inc.",,24,2008-05-23..2024-04-14
+732717,"Southwestern Bell Telephone Company, LLC",0003801651,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"AT&T, Inc.",,24,2008-05-23..2024-04-14
+732717,Southwestern Bell Wireless Inc.,0004249561,1997-01-01,2002-08-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,"Teleport Communications America, LLC",0004274114,1997-01-01,open,CAP/LEC,Yes,"AT&T, Inc.",,24,2008-05-23..2024-04-14
+732717,"AT&T Enterprises, LLC",0005937974,1997-01-01,open,Interexchange Carrier (IXC),Yes,"AT&T, Inc.",,24,2008-05-23..2024-04-14
+732717,Georgia RSA #8 Partnership,0001838069,1997-01-01,2014-03-20,Cellular/PCS/SMR,No,AT&T Inc,,24,2008-05-23..2024-04-14
+732717,Pacific Bell Wireless,0001672997,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,Delaware Valley Cellular Corporation,0004249744,1997-01-01,2002-07-10,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,USVI Cellular Telephone Company,0004556098,1997-01-01,2003-01-10,Cellular/PCS/SMR,No,,,24,2008-05-23..2024-04-14
+732717,Houston Cellular Telephone Company,0001842921,1997-01-01,2002-08-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,San Juan Cellular Telephone Company,0003578069,1997-01-01,2005-09-30,Cellular/PCS/SMR,No,,,24,2008-05-23..2024-04-14
+732717,"CCPR of the Virgin Islands, Inc.",0004499034,1997-01-01,2005-09-30,Cellular/PCS/SMR,No,,,24,2008-05-23..2024-04-14
+732717,"USVI Paging, Inc.",0005824057,1997-01-01,2002-12-31,Paging & Messaging,No,,,24,2008-05-23..2024-04-14
+732717,"CCPR Paging, Inc.",0003476744,1997-01-01,2002-12-31,Cellular/PCS/SMR,No,,,24,2008-05-23..2024-04-14
+732717,"CCPR Services, Inc.",0003473709,1997-01-01,2005-09-30,Cellular/PCS/SMR,No,,,24,2008-05-23..2024-04-14
+732717,Centennial Caldwell Cellular Corp.,0008816779,1997-01-01,2010-12-31,Cellular/PCS/SMR,No,"New Cingular Wireless PCS, LLC",,24,2008-05-23..2024-04-14
+732717,Centennial Clairborne Cellular Corp.,0006528715,1997-01-01,2010-12-31,Cellular/PCS/SMR,No,New Cingular Wireless PCS LLC,,24,2008-05-23..2024-04-14
+732717,"Centennial Morehouse Cellular, LLC",0003574142,1997-01-01,2010-12-31,Cellular/PCS/SMR,No,New Cingular Wireless PCS LLC,,24,2008-05-23..2024-04-14
+732717,"Centennial Hammond Cellular, LLC",0008816902,1997-01-01,2010-12-31,Cellular/PCS/SMR,No,"New Cingular Wireless PCS, LLC",,24,2008-05-23..2024-04-14
+732717,"Mega-Comm, LLC",0008816753,1997-01-01,2010-08-31,Cellular/PCS/SMR,No,Centennial Communications Corp.,,24,2008-05-23..2024-04-14
+732717,"Centennial Beauregard Cellular, LLC",0006528723,1997-01-01,2010-12-31,Cellular/PCS/SMR,No,"New Cingular Wireless PCS, LLC",,24,2008-05-23..2024-04-14
+732717,"South Bend Metronet, Inc.",0008816910,1997-01-01,2010-08-31,Cellular/PCS/SMR,No,Centennial Communications Corp.,,24,2008-05-23..2024-04-14
+732717,Detroit SMSA Limited Partnership,0002846277,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,Cincinnati SMSA Limited Partnership,0003738580,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,Milwaukee SMSA Limited Partnership,0002846293,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,Madison SMSA Limited Partnership,0002840260,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,"Ameritech Wireless Communications, Inc.",0004249793,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,"Cingular Interactive, LP",0003756475,1997-01-01,2004-10-22,Paging & Messaging,No,Cingular Wireless,,24,2008-05-23..2024-04-14
+732717,Galveston Cellular Telephone Company,0003765724,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,Centennial Cellular Tri-State Operating Partnership,0006528665,1997-01-01,2010-12-31,Cellular/PCS/SMR,No,Cingular Wireless PCS LLC,,24,2008-05-23..2024-04-14
+732717,"Centennial Lafayette Communications, LLC",0001545771,1997-01-01,2010-12-31,Cellular/PCS/SMR,No,"New Cingular Wireless PCS, LLC",,24,2008-05-23..2024-04-14
+732717,"Anniston-Westel Company, LLC",0001804525,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,SBC Long Distance LLC,0003763497,1997-01-01,open,Interexchange Carrier (IXC),Yes,"AT&T, Inc.",,24,2008-05-23..2024-04-14
+732717,Southwestern Bell Communications Services - Massachusetts,,1997-01-01,2002-02-25,Toll Reseller,No,"SBC Communications, Inc.",,24,2008-05-23..2024-04-14
+732717,Southwestern Bell Communications Services - New York,,1997-01-01,2002-02-25,Toll Reseller,No,"SBC Communications, Inc.",,24,2008-05-23..2024-04-14
+732717,Southwestern Bell Communications Services- Maryland,,1997-01-01,1999-09-01,Toll Reseller,No,"Southwestern Bell Communications Services, Inc.",,24,2008-05-23..2024-04-14
+732717,"TCI Telephony Services of Illinois, Inc.",,1997-01-01,1997-01-01,CAP/LEC,No,AT&T Corporation,,24,2008-05-23..2024-04-14
+732717,"BellSouth Personal Communications, LLC",0001835248,1997-01-01,2002-08-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,"BellSouth Carolinas PCS, LLC",0001833854,1997-01-01,2001-07-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,"SBMS New York Services, Inc.",,1997-01-01,2002-04-18,Local Reseller,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,Louisiana RSA No. 8 Limited Partnership,0001837830,1997-01-01,1997-01-01,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,"Orlando CGSA, LLC",0001843929,1997-01-01,2002-01-24,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,"AT&T Broadband Phone of Virginia, Inc.",,1997-01-01,1997-01-01,CAP/LEC,No,AT&T Corporation,,24,2008-05-23..2024-04-14
+732717,"BCTC of Texas, LLC",0001746585,1997-01-01,2002-07-10,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,CCPR Telecommunications,0006961049,1997-01-01,2003-09-30,CAP/LEC,No,,,24,2008-05-23..2024-04-14
+732717,"BellSouth BSE, Inc.",0003733326,1997-01-01,2004-12-31,CAP/LEC,No,BellSouth Corporation,,24,2008-05-23..2024-04-14
+732717,"Cricket Communications, Inc.",0004321139,1997-01-01,2015-09-30,Cellular/PCS/SMR,No,AT&T INC.,,24,2008-05-23..2024-04-14
+732717,"Ameritech Communications, Inc.",0004341384,1997-01-01,2002-12-24,Toll Reseller,No,"SBC Communications, Inc.",,24,2008-05-23..2024-04-14
+732717,AT&T Corp.,0007585730,1997-01-01,2011-02-01,CAP/LEC,No,"AT&T, Inc.",,24,2008-05-23..2024-04-14
+732717,AT&T Corp.,0007585714,1997-01-01,2011-02-01,CAP/LEC,No,"AT&T, Inc.",,24,2008-05-23..2024-04-14
+732717,AT&T Corp.,0007585607,1997-01-01,2011-02-01,CAP/LEC,No,"AT&T, Inc.",,24,2008-05-23..2024-04-14
+732717,AT&T Corp.,0007585508,1997-01-01,2011-02-01,CAP/LEC,No,"AT&T, Inc.",,24,2008-05-23..2024-04-14
+732717,AT&T Corp.,0007585383,1997-01-01,2011-02-01,CAP/LEC,No,"AT&T, Inc.",,24,2008-05-23..2024-04-14
+732717,"Ameritech Mobile Communications, Inc.",0004249801,1997-01-01,2004-08-02,Cellular/PCS/SMR,No,,,24,2008-05-23..2024-04-14
+732717,AT&T Corp.,0005891072,1997-01-01,2011-02-01,CAP/LEC,No,"AT&T, Inc.",,24,2008-05-23..2024-04-14
+732717,"Louisiana Cellular Holdings, LLC",0001842004,1997-01-01,2002-07-10,Cellular/PCS/SMR,No,"Cingular Wireless, LLC",,24,2008-05-23..2024-04-14
+732717,"AT&T Transoceanic Communications, LLC",0003775848,1997-01-01,2002-07-01,Interexchange Carrier (IXC),No,AT&T Corporation,,24,2008-05-23..2024-04-14
+732717,"SBC Telecom, Inc.",0004299178,1997-01-01,2005-05-01,CAP/LEC,No,AT&T Inc,,24,2008-05-23..2024-04-14
+732717,"New Cingular Wireless Services, Inc. CONSOLIDATED",0003766532,1997-01-01,open,Cellular/PCS/SMR,Yes,"AT&T, Inc.",,24,2008-05-23..2024-04-14
+732717,"Comcast Phone, LLC",0005098389,1997-01-01,2002-05-01,Other Toll,No,AT&T Corporation,,24,2008-05-23..2024-04-14
+732717,"Cingular Wireless, LLC- CONSOLIDATED",0004979233,1997-01-01,2005-09-30,Cellular/PCS/SMR,No,,,24,2008-05-23..2024-04-14
+732717,"Insight Phone of Indiana, LLC",0007863095,2003-05-20,2019-06-30,Private Service Provider,No,Time Warner Cable Enterprises LLC,,24,2008-05-23..2024-04-14
+732717,"Insight Phone of Kentucky, LLC",0007863145,2003-05-20,2019-06-30,Private Service Provider,No,Time Warner Cable Enterprises LLC,,24,2008-05-23..2024-04-14
+732717,"Salmon PCS Licensee, LLC",0005095666,2003-01-01,2006-11-01,Cellular/PCS/SMR,No,"Salmon PCS, LLC",,24,2008-05-23..2024-04-14
+732717,"Bell South MNS, LLC.",0015281421,2006-07-28,2010-05-31,Interconnected VoIP,No,AT&T Inc.,,24,2008-05-23..2024-04-14
+732717,"SBC Internet Services, Inc.",0011554029,2006-07-28,2009-05-01,Interconnected VoIP,No,"AT&T, Inc.",,24,2008-05-23..2024-04-14
+732717,"STX Wireless Operations, LLC",0019612910,2010-10-04,2014-06-30,Cellular/PCS/SMR,No,AT&T INC,,24,2008-05-23..2024-04-14
+732717,Ameritech Alarm LLC.,0030812358,2021-05-01,2022-03-31,Local Reseller,No,,,24,2008-05-23..2024-04-14
+732717,"SBC-Wireless, Inc.",0035664358,2024-01-01,2024-01-01,Wireless Data,No,,,24,2008-05-23..2024-04-14
+732717,"Standard Bell Communication Services, Inc.",0031418858,2015-09-01,open,Interconnected VoIP,No,,,24,2008-05-23..2024-04-14
+1091667,Sprint Spectrum LLC,0006693022,1997-01-01,2024-12-31,Cellular/PCS/SMR,No,T MOBILE USA INC,,8,2008-07-14..2023-09-01
+1091667,"Telespectrum Communications, Inc.",0002471837,1997-01-01,2014-05-27,Paging & Messaging,No,MIDSTATES WIRELESS INC,,8,2008-07-14..2023-09-01
+1091667,Kansas City Cable Partners,0001610427,1997-01-01,2007-02-06,CAP/LEC,No, Kansas City Cable Partners,,8,2008-07-14..2023-09-01
+1091667,"Time Warner ResCom of New York, LLC",0003757622,1997-01-01,2011-01-01,CAP/LEC,No,Time Warner Cable Inc.,,8,2008-07-14..2023-09-01
+1091667,"Creative Exchange, Inc.",0001803063,1997-01-01,2005-09-28,SMR (dispatch),No,"Air Spectrum III, Inc.",,8,2008-07-14..2023-09-01
+1091667,"Air Spectrum III, Inc.",0003782877,1997-01-01,2005-09-28,SMR (dispatch),No,,,8,2008-07-14..2023-09-01
+1091667,"DukeNet Communications, LLC",0007736853,1997-01-01,open,Private Service Provider,Yes,Time Warner Cable Enterprises LLC,,8,2008-07-14..2023-09-01
+1091667,"Superior Technologies, Inc",0002745354,2002-05-01,2007-07-31,Toll Reseller,No,"TelNet Worldwide, Inc.",,8,2008-07-14..2023-09-01
+1091667,"Spectrum Communications, Inc.",0001639897,2002-05-01,2003-11-05,Paging & Messaging,No,,,8,2008-07-14..2023-09-01
+1091667,"Super Com of Northern Michigan, LP",0006792196,2002-05-01,2005-12-01,Paging & Messaging,No,,,8,2008-07-14..2023-09-01
+1091667,"Insight Phone of Indiana, LLC",0007863095,2003-05-20,2019-06-30,Private Service Provider,No,Time Warner Cable Enterprises LLC,,8,2008-07-14..2023-09-01
+1091667,"Insight Phone of Kentucky, LLC",0007863145,2003-05-20,2019-06-30,Private Service Provider,No,Time Warner Cable Enterprises LLC,,8,2008-07-14..2023-09-01
+1091667,"Time Warner Cable Information Services (Maine), LLC",0008359648,2003-01-01,2011-01-01,CAP/LEC,No,Time Warner Cable Inc.,,8,2008-07-14..2023-09-01
+1091667,"Time Warner Cable Information Services (Texas), LP",0012620969,2004-01-01,2011-01-01,CAP/LEC,No,Time Warner Cable Inc. ,,8,2008-07-14..2023-09-01
+1091667,"Time Warner Cable Information Services (North Carolina), LLC",0010669430,2004-01-01,2011-01-01,CAP/LEC,No,Time Warner Cable Inc.,,8,2008-07-14..2023-09-01
+1091667,"Marcus Spectrum Holdings, LLC",0005009691,2003-01-01,2025-02-13,SMR (dispatch),No,MARCUS COMMUNICATIONS LLC,,8,2008-07-14..2023-09-01
+1091667,"Spectrum Communications Sites, LLC",0008295644,2003-01-01,2011-10-31,Cellular/PCS/SMR,No,,,8,2008-07-14..2023-09-01
+1091667,"Bright House Networks Information Services (Florida), LLC",0010788453,2004-01-01,open,CAP/LEC,No,BRIGHT HOUSE NETWORKS LLC,,8,2008-07-14..2023-09-01
+1091667,"Time Warner Cable Information Services (Missouri), LLC",0011015922,2004-01-01,2011-01-01,CAP/LEC,No,Time Warner Cable Inc.,,8,2008-07-14..2023-09-01
+1091667,"Time Warner Cable Information Services (Kansas), LLC",0011018058,2004-01-01,2011-01-01,Interconnected VoIP,No,"Time Warner Cable, Inc.",,8,2008-07-14..2023-09-01
+1091667,"Time Warner Cable Information Services (Ohio), LLC",0011753092,2004-01-01,2011-01-01,CAP/LEC,No,Time Warner Cable,,8,2008-07-14..2023-09-01
+1091667,"Time Warner Cable Information Services (Mississippi), LLC",0011753241,2004-01-01,2009-02-27,Interconnected VoIP,No,Time Warner Cable Inc. ,,8,2008-07-14..2023-09-01
+1091667,"Time Warner Cable Information Services (California), LLC",0011752953,2004-01-01,2011-01-01,CAP/LEC,No,Time Warner Cable Inc.,,8,2008-07-14..2023-09-01
+1091667,"Time Warner Cable Information Services (New Hampshire), LLC",0012220422,2004-01-01,2011-01-01,CAP/LEC,No,Time Warner Cable Inc. ,,8,2008-07-14..2023-09-01
+1091667,"Time Warner Cable Information Services (Louisiana), LLC",0012187548,2004-01-01,2006-12-07,Interconnected VoIP,No,Time Warner Cable Inc.,,8,2008-07-14..2023-09-01
+1091667,"Time Warner Cable Information Services (Wisconsin), LLC",0012327896,2004-01-01,2004-01-02,Cable TV provider of local exchange,No,Time Warner Cable Inc. ,,8,2008-07-14..2023-09-01
+1091667,"Bright House Networks Information Services (Alabama), LLC",0012500559,2004-01-01,open,CAP/LEC,No,BRIGHT HOUSE NETWORKS LLC,,8,2008-07-14..2023-09-01
+1091667,"TWC Information Services (Florida), LLC",0012538310,2004-01-01,2006-12-07,Interconnected VoIP,No,Time Warner Cable Inc.,,8,2008-07-14..2023-09-01
+1091667,"Time Warner Cable Information Services (Georgia), LLC",0012538583,2004-01-01,2009-03-03,Interconnected VoIP,No,Time Warner Cable Inc.,,8,2008-07-14..2023-09-01
+1091667,"Time Warner Cable Information Services (West Virginia), LLC",0012538500,2004-01-01,2011-01-01,CAP/LEC,No,Time Warner Cable Inc.,,8,2008-07-14..2023-09-01
+1091667,"Time Warner Cable Information Services (Indiana), LLC",0012538229,2004-01-01,2011-01-01,CAP/LEC,No,Time Warner Cable Inc.,,8,2008-07-14..2023-09-01
+1091667,"Time Warner Cable Information Services (Oklahoma), LLC",0012538203,2004-01-01,2009-03-26,CAP/LEC,No,"Time Warner Cable, Inc.",,8,2008-07-14..2023-09-01
+1091667,"Time Warner Cable Information Services (Alabama), LLC",0012538542,2004-01-01,2011-01-01,CAP/LEC,No,Time Warner Cable Inc.,,8,2008-07-14..2023-09-01
+1091667,"Time Warner Cable Services (Tennessee), Inc",0012620969,2004-01-01,2006-12-07,Interconnected VoIP,No,Time Warner Cable Inc.,,8,2008-07-14..2023-09-01
+1091667,"Time Warner Cable Information Services (Wisconsin), LLC",0012327896,2004-01-01,2013-12-31,Interconnected VoIP,No,TIME WARNER CABLE ENTERPRISES LLC,,8,2008-07-14..2023-09-01
+1091667,"Time Warner Cable Information Services (South Carolina), LLC",0011010055,2004-01-01,2013-11-01,Interconnected VoIP,No,TIME WARNER CABLE ENTERPRISES LLC,,8,2008-07-14..2023-09-01
+1091667,"Time Warner Cable Services (Nebraska), Inc",0012620894,2004-01-01,2011-01-01,CAP/LEC,No,Time Warner Cable Inc.,,8,2008-07-14..2023-09-01
+1091667,Time Warner Cable Information Services (Massachusetts) LLC,0013182712,2004-01-01,2011-01-01,CAP/LEC,No,Time Warner Cable Inc.,,8,2008-07-14..2023-09-01
+1091667,Time Warner Cable Information Services (Hawaii) LLC,0013182647,2005-04-12,2011-01-01,CAP/LEC,No,Time Warner Cable Inc.,,8,2008-07-14..2023-09-01
+1091667,Time Warner Cable Information Services (Pennsylvania) LLC,0013182803,2004-01-01,2011-01-01,CAP/LEC,No,Time Warner Cable Inc.,,8,2008-07-14..2023-09-01
+1091667,Time Warner Cable Information Services (New Jersey) LLC,0013182753,2004-01-01,2011-01-01,Interconnected VoIP,No,Time Warner Cable Inc. ,,8,2008-07-14..2023-09-01
+1091667,Time Warner Cable Information Services (Arkansas) LLC,0012984399,2004-01-01,2006-12-07,Interconnected VoIP,No,"Time Warner Cable, Inc.",,8,2008-07-14..2023-09-01
+1091667,Time Warner Cable Information Services (Minnesota) LLC,0012620829,2004-01-01,2006-12-07,Interconnected VoIP,No,"Time Warner Cable, Inc.",,8,2008-07-14..2023-09-01
+1091667,"P&R Spectrum Resourses, Inc.",0010716645,2004-01-01,open,SMR (dispatch),No,P&R COMMUNICATIONS SERVICE INC,,8,2008-07-14..2023-09-01
+1091667,"Insight Midwest Holdings, LLC",0005017827,2004-01-01,2023-12-31,Private Service Provider,No,Time Warner Cable Enterprises LLC,,8,2008-07-14..2023-09-01
+1091667,"Insight Phone of Ohio, LLC",0011280948,2004-01-01,2019-06-30,Private Service Provider,No,Time Warner Cable Enterprises LLC,,8,2008-07-14..2023-09-01
+1091667,"Bright House Networks Information Services (Michigan), LLC",0013697735,2005-01-01,open,CAP/LEC,No,BRIGHT HOUSE NETWORKS LLC,,8,2008-07-14..2023-09-01
+1091667,"Bright House Networks Information Services (Indiana), LLC",0013697768,2004-01-01,open,CAP/LEC,No,BRIGHT HOUSE NETWORKS LLC,,8,2008-07-14..2023-09-01
+1091667,Spectrum Sunshine State LLC,0007508237,2004-01-01,open,Interconnected VoIP,Yes,"Charter Communications Operating, LLC",,8,2008-07-14..2023-09-01
+1091667,"Bright House Networks Information Services (California), LLC",0013697784,2004-01-01,open,CAP/LEC,No,BRIGHT HOUSE NETWORKS LLC,,8,2008-07-14..2023-09-01
+1091667,"TWCIS (KY), LLC.",0014765994,2005-01-01,2011-01-01,CAP/LEC,No,Time Warner Cable Inc.,,8,2008-07-14..2023-09-01
+1091667,"TWCIS(AZ), LLC.",0014765994,2005-01-01,2011-01-01,Interconnected VoIP,No,Time Warner Cable Inc.,,8,2008-07-14..2023-09-01
+1091667,"Time Warner Cable Information Services (Washington), LLC.",0015624216,2006-11-22,2011-01-01,CAP/LEC,No,Time Warner Cable,,8,2008-07-14..2023-09-01
+1091667,"Erie Digital Phone, LLC.",0015957236,2007-01-12,2009-10-01,Interconnected VoIP,No,Time Warner Cable,,8,2008-07-14..2023-09-01
+1091667,"Time Warner Cable Information Services (Virginia), LLC.",0015590714,2007-02-15,2011-01-01,CAP/LEC,No,"Time Warner Cable Information Services (Virginia),",,8,2008-07-14..2023-09-01
+1091667,"Time Warner Cable Information Services (Idaho), LLC.",0016020406,2007-02-15,2011-01-01,All Distance,No,"Time Warner Cable, Inc.",,8,2008-07-14..2023-09-01
+1091667,"Time Warner Cable Information Services, (New Mexico), LLC.",0016021313,2007-02-15,2011-01-01,All Distance,No,Time Warner Cable,,8,2008-07-14..2023-09-01
+1091667,Radio Spectrum,0007724545,2007-04-03,open,SMR (dispatch),No,,,8,2008-07-14..2023-09-01
+1091667,"Insight Kentucky Partners II, L.P. CONSOLIDATED",0001542604,2006-12-01,2019-06-30,Interconnected VoIP,No,Time Warner Cable Enterprises LLC,,8,2008-07-14..2023-09-01
+1091667,"Full Spectrum Communications, Inc.",0016338832,2007-04-01,open,Toll Reseller,No,FULL SPECTRUM TELECOMMUNICATIONS INC,,8,2008-07-14..2023-09-01
+1091667,"Spectrum Advanced Services, LLC. ",0016370264,2007-05-17,open,Interconnected VoIP,Yes,Time Warner Cable Enterprises LLC,,8,2008-07-14..2023-09-01
+1091667,"TWC Communications, LLC.",0009816596,2007-06-14,2022-12-31,Private Service Provider,No,TIME WARNER CABLE ENTERPRISES LLC,,8,2008-07-14..2023-09-01
+1091667,"Spectrum Networks, LLC.",0016525354,2008-01-01,2013-08-20,Other Local,No,,,8,2008-07-14..2023-09-01
+1091667,"Insight Communications of Central Ohio, LLC.",0003748324,2008-06-01,2019-06-30,Interconnected VoIP,No,Time Warner Cable Enterprises LLC,,8,2008-07-14..2023-09-01
+1091667,"Skytel Spectrum, LLC.",0017628322,2008-06-01,open,Other Mobile,No,,,8,2008-07-14..2023-09-01
+1091667,"Denali Spectrum Operations, LLC.",0015024854,2008-09-11,2011-03-31,Cellular/PCS/SMR,No,"Denali Spectrum, LLC",,8,2008-07-14..2023-09-01
+1091667,TWCIS Holdco LLC,0020222733,2010-10-01,open,CAP/LEC,Yes,Time Warner Cable Enterprises LLC,,8,2008-07-14..2023-09-01
+1091667,"Time Warner Cable Information Services (Maine), LLC",0008359648,2011-05-24,2013-12-31,CAP/LEC,No,TIME WARNER CABLE ENTERPRISES LLC,,8,2008-07-14..2023-09-01
+1091667,"Time Warner Cable Information Services (New Hampshire), LLC",0012220422,2012-01-01,2013-11-01,CAP/LEC,No,TIME WARNER CABLE ENTERPRISES LLC,,8,2008-07-14..2023-09-01
+1091667,Spectrum Intelligence Communications Agency LLC ,0021806898,2012-04-01,2024-03-31,Other Toll,No,,,8,2008-07-14..2023-09-01
+1091667,Time Warner Cable Business LLC,0022373617,2013-01-01,open,Interexchange Carrier (IXC),Yes,Time Warner Cable Enterprises LLC,,8,2008-07-14..2023-09-01
+1091667,IP SPECTRUM SOLUTIONS LLC,0024260960,2015-01-12,2020-03-02,Cellular/PCS/SMR,No,"Bandwidth.com, Inc",,8,2008-07-14..2023-09-01
+1091667,"Spectrum VOIP Solutions, Inc.",0024868986,2015-01-12,2017-09-22,Interconnected VoIP,No,,,8,2008-07-14..2023-09-01
+1091667,"Anterix, Inc",0023686587,2015-03-01,open,SMR (dispatch),No,"PDV Spectrum Holding Company, LLC",,8,2008-07-14..2023-09-01
+1091667,Red Spectrum Communications LLC,0025124421,2017-08-01,open,Interconnected VoIP,Yes,,,8,2008-07-14..2023-09-01
+1091667,"Onvoy Spectrum, LLC",0024415002,2017-09-01,2023-06-30,Cellular/PCS/SMR,No,"Sinch US Holding, Inc.",,8,2008-07-14..2023-09-01
+1091667,"Charter Communications Operating, LLC",0002526580,2018-01-01,open,Cable TV provider of local exchange,Yes,,,8,2008-07-14..2023-09-01
+1091667,Spectrum Promotions LLC,0027566249,2018-06-01,2018-05-30,Interconnected VoIP,No,,True,8,2008-07-14..2023-09-01
+1091667,Spectrum Sales LLC,0029169927,2020-10-01,2024-02-12,Other Local,No,,,8,2008-07-14..2023-09-01
+1091667,Quasar Data Center Ltd,0029504909,2019-10-01,2019-10-01,Interconnected VoIP,No,,,8,2008-07-14..2023-09-01
+1091667,"SpectrumVoIP, Inc.",0026799676,2006-09-01,open,Interconnected VoIP,Yes,,,8,2008-07-14..2023-09-01
+1091667,Alaska Tribal Spectrum,0029809050,2019-07-01,open,Satellite,No,,,8,2008-07-14..2023-09-01
+1091667,"Charter IP Enabled Services, LLC",0034233072,2024-01-01,open,Interconnected VoIP,No,"Charter Communications Operating, LLC",,8,2008-07-14..2023-09-01
+1091667,"TWC IP Enabled Services, LLC",0034233080,2024-01-01,open,Interconnected VoIP,No,"Charter Communications Operating, LLC",,8,2008-07-14..2023-09-01
+1091667,"BHN IP Enabled Services, LLC",0036251585,2025-04-01,open,Interconnected VoIP,No,"Charter Communications Operating, LLC",,8,2008-07-14..2023-09-01
+1166691,"CIMCO Communications, Inc.",0003735180,1997-01-01,2010-03-16,Toll Reseller,No,Comcast Corporation,,9,2008-01-29..2024-10-04
+1166691,"MH Lightnet, Inc.",0005040035,1997-01-01,2014-08-18,CAP/LEC,No,COMCAST CABLE COMMUNICATIONS LLC,,9,2008-01-29..2024-10-04
+1166691,"Comcast Telephony Communications of Maryland, Inc.",0003766052,1997-01-01,2003-08-15,CAP/LEC,No,Comcast Corporation,,9,2008-01-29..2024-10-04
+1166691,"Comcast Business Communications, LLC.",0004321725,1997-01-01,open,CAP/LEC,Yes,COMCAST CORPORATION,,9,2008-01-29..2024-10-04
+1166691,"Comcast MH Telephony Communications of Florida, Inc.",0003766029,1997-01-01,1997-01-01,CAP/LEC,No,Comcast Corporation,,9,2008-01-29..2024-10-04
+1166691,"Comcast ABB Network Solutions, Inc.",0006183099,1997-01-01,2016-08-25,Private Service Provider,No,COMCAST CABLE COMMUNICATIONS LLC,,9,2008-01-29..2024-10-04
+1166691,"New Global Telecom, Inc.",0018570895,1997-01-01,2016-09-30,Interconnected VoIP,No,COMCAST CABLE COMMUNICATIONS LLC,,9,2008-01-29..2024-10-04
+1166691,"Comcast Phone of Northern Virginia, Inc.",0003778123,1997-01-01,2012-06-30,CAP/LEC,No,"COMCAST CABLE COMMUNICATIONS, LLC",,9,2008-01-29..2024-10-04
+1166691,"Comcast Phone of Maryland, Inc.",0003778131,1997-01-01,2009-03-31,CAP/LEC,No,"COMCAST CABLE COMMUNICATIONS, LLC",,9,2008-01-29..2024-10-04
+1166691,"NBCUniversal, LLC",0020940540,1997-01-01,open,Private Service Provider,Yes,Comcast Corporation,,9,2008-01-29..2024-10-04
+1166691,"Comcast Phone of Michigan, LLC",0006638423,1997-01-01,2020-04-01,CAP/LEC,No,COMCAST CABLE COMMUNICATIONS LLC,,9,2008-01-29..2024-10-04
+1166691,"Comcast Phone, LLC",0005098389,1997-01-01,2002-05-01,Other Toll,No,AT&T Corporation,,9,2008-01-29..2024-10-04
+1166691,"Comcast Phone, LLC",0005098389,1997-01-01,open,CAP/LEC,No,COMCAST CORPORATION,,9,2008-01-29..2024-10-04
+1166691,"Masergy Communications, Inc.",0007269616,2002-04-01,open,Private Service Provider,Yes,COMCAST CORPORATION,,9,2008-01-29..2024-10-04
+1166691,"Comcast Commercial Services, Inc.",0008850760,2003-01-01,2020-04-01,Private Service Provider,No,COMCAST CABLE COMMUNICATIONS LLC,,9,2008-01-29..2024-10-04
+1166691,"Comcast Phone of New York, LLC.",0015453160,2004-01-01,2011-07-01,CAP/LEC,No,,,9,2008-01-29..2024-10-04
+1166691,"Comcast Phone II, Inc.",0011306958,2004-01-01,2007-01-01,Interconnected VoIP,No,Comcast Corporation,,9,2008-01-29..2024-10-04
+1166691,"Comcast of Northern Maryland, Inc.",0003766052,2005-01-01,2005-08-01,CAP/LEC,No,Comcast Corporation,,9,2008-01-29..2024-10-04
+1166691,"Comcast IP Phone II, LLC.",0015322464,2006-07-28,2016-06-23,Interconnected VoIP,No,COMCAST CABLE COMMUNICATIONS LLC,,9,2008-01-29..2024-10-04
+1166691,"Comcast IP Phone, LLC.",0008497687,2006-07-28,open,Interconnected VoIP,Yes,COMCAST CORPORATION,,9,2008-01-29..2024-10-04
+1166691,"Comcast IP Phone V, LLC.",0016513004,2007-06-14,2016-08-18,Interconnected VoIP,No,COMCAST CABLE COMMUNICATIONS LLC,,9,2008-01-29..2024-10-04
+1166691,"Comcast IP Phone IV, LLC.",0016513020,2007-05-01,2016-07-07,Interconnected VoIP,No,COMCAST CABLE COMMUNICATIONS LLC,,9,2008-01-29..2024-10-04
+1166691,"Comcast IP Phone III, LLC.",0016536385,2007-05-01,2016-06-29,Interconnected VoIP,No,COMCAST CABLE COMMUNICATIONS LLC,,9,2008-01-29..2024-10-04
+1166691,"Comcast IP Phone VI, LLC.",0015991573,2008-01-01,2016-07-01,Interconnected VoIP,No,COMCAST CABLE COMMUNICATIONS LLC,,9,2008-01-29..2024-10-04
+1166691,"Comcast IP Phone VII, LLC.",0017430760,2008-01-01,2016-09-23,Interconnected VoIP,No,"COMCAST CABLE COMMUNICATIONS, LLC",,9,2008-01-29..2024-10-04
+1166691,"Comcast Phone II, LLC.",0011306958,2008-01-01,2020-04-01,CAP/LEC,No,COMCAST CABLE COMMUNICATIONS LLC,,9,2008-01-29..2024-10-04
+1166691,"Masergy Cloud Communications, Inc.",0018122523,2006-10-01,open,Interconnected VoIP,Yes,COMCAST CORPORATION,,9,2008-01-29..2024-10-04
+1166691,"Comcast OTR1, LLC",0025673260,2017-04-01,open,Cellular/PCS/SMR,Yes,COMCAST CORPORATION,,9,2008-01-29..2024-10-04
+1166691,"Blueface US, LLC",0028459253,2019-05-01,2024-02-28,Interconnected VoIP,No,COMCAST CORPORATION,,9,2008-01-29..2024-10-04
+1166691,"Defined Technologies, LLC",0031744527,2021-10-01,2022-07-05,Private Service Provider,No,Comcast Cable Communications LLC,,9,2008-01-29..2024-10-04
+1166691,"Comcast Government Services, LLC",0029994571,2020-09-01,open,Private Service Provider,Yes,COMCAST CORPORATION,,9,2008-01-29..2024-10-04
+1283699,"US Telecom, Inc.",0014848477,1997-01-01,2020-12-30,Toll Reseller,No,"T-MOBILE USA, INC.",,26,2014-01-02..2023-04-28
+1283699,Sprint Spectrum LLC,0006693022,1997-01-01,2024-12-31,Cellular/PCS/SMR,No,T MOBILE USA INC,,26,2014-01-02..2023-04-28
+1283699,"MetroPCS Georgia, LLC.",0014512941,1997-01-01,open,Cellular/PCS/SMR,Yes,T MOBILE USA INC,,26,2014-01-02..2023-04-28
+1283699,"MetroPCS California, LLC.",0014512891,1997-01-01,open,Cellular/PCS/SMR,Yes,T MOBILE USA INC,,26,2014-01-02..2023-04-28
+1283699,"T-Mobile USA, Inc.- CONSOLIDATED",0006945950,1997-01-01,open,Cellular/PCS/SMR,Yes,T MOBILE USA INC,,26,2014-01-02..2023-04-28
+1283699,"MetroPCS Michigan, Inc.",0014050579,2001-01-01,open,Cellular/PCS/SMR,Yes,T MOBILE USA INC,,26,2014-01-02..2023-04-28
+1283699,"MetroPCS Texas, LLC",0013336714,2001-01-01,open,Cellular/PCS/SMR,Yes,T MOBILE USA INC,,26,2014-01-02..2023-04-28
+1283699,"MetroPCS Florida, LLC",0014545644,2004-01-01,open,Cellular/PCS/SMR,Yes,T MOBILE USA INC,,26,2014-01-02..2023-04-28
+1283699,T-Mobile Puerto Rico LLC,0014848477,2005-01-01,open,Cellular/PCS/SMR,Yes,T MOBILE USA INC,,26,2014-01-02..2023-04-28
+1283699,"MetroPCS Networks, LLC",0012198735,2004-01-01,2014-09-11,Cellular/PCS/SMR,No,T MOBILE USA INC,,26,2014-01-02..2023-04-28
+1283699,"PRWireless PR, LLC",0026287664,2007-06-01,2025-12-31,Cellular/PCS/SMR,No,"T-MOBILE USA, INC.",,26,2014-01-02..2023-04-28
+1283699,"MetroPCS Pennsylvania, LLC.",0017726001,2008-05-12,open,Cellular/PCS/SMR,Yes,T MOBILE USA INC,,26,2014-01-02..2023-04-28
+1283699,"MetroPCS Massachusetts, LLC",0017970328,2009-02-10,open,Cellular/PCS/SMR,Yes,T MOBILE USA INC,,26,2014-01-02..2023-04-28
+1283699,MetroPCS New York LLC,0018469460,2009-02-10,open,Cellular/PCS/SMR,Yes,T MOBILE USA INC,,26,2014-01-02..2023-04-28
+1283699,"Boostlink, LLC.",0018893370,2009-07-16,2009-04-05,Prepaid Card,No,,True,26,2014-01-02..2023-04-28
+1283699,"UVNV, LLC",0021822333,2012-07-01,open,Cellular/PCS/SMR,Yes,"T-Mobile USA, Inc.",,26,2014-01-02..2023-04-28
+1283699,SB Telecom America Corp,0005079868,2013-07-10,2021-03-31,Private Service Provider,No,T-Mobile USA,,26,2014-01-02..2023-04-28
+1283699,"Mint Mobile, LLC",0028706406,2019-09-01,open,Cellular/PCS/SMR,Yes,"T-Mobile USA, Inc.",,26,2014-01-02..2023-04-28
+1283699,DISH Wireless L.L.C.,0027852722,2020-06-01,open,Cellular/PCS/SMR,No,,,26,2014-01-02..2023-04-28
+1283699,Mnboost Corp.,0036281509,2025-01-01,2025-01-01,Cellular/PCS/SMR,No,,,26,2014-01-02..2023-04-28
+1283699,Boost SubscriberCo L.L.C.,0037698057,2025-12-01,open,Cellular/PCS/SMR,Yes,,,26,2014-01-02..2023-04-28
+1283699,TMUS Fiber LLC,0037828100,2025-04-01,open,Interconnected VoIP,Yes,T MOBILE USA INC,,26,2014-01-02..2023-04-28
+1447669,Twilio Inc,0020237343,2010-10-07,open,,No,,,2,2022-08-04..2024-04-01
+1447669,Twilio US Technology Inc.,0028844892,2020-04-01,open,Interconnected VoIP,Yes,Twilio Inc.,,2,2022-08-04..2024-04-01
+1609711,"Call Catchers, Inc.",0016109803,2007-06-14,2020-03-31,Interconnected VoIP,No,Godaddy Operating Company LLC,,3,2019-10-16..2022-03-14
+1609711,GoDaddy.com LLC,0025730607,2017-04-01,open,Other Toll,Yes,GoDaddy Operating Company LLC,,3,2019-10-16..2022-03-14
+1632127,"ComSouth Telecommunications, LLC",0004319257,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Cable One, Inc.",,2,2019-03-01..2019-08-08
+1632127,Fidelity Tel. Co.,0002550309,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Cable One, Inc.",,2,2019-03-01..2019-08-08
+1632127,"Hargray Telephone Company, LLC",0001886704,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Cable One, Inc.",,2,2019-03-01..2019-08-08
+1632127,"Bluffton Telephone Company, LLC",0005058151,1997-01-01,open,Incumbent Local Exchange Carrier,Yes,"Cable One, Inc.",,2,2019-03-01..2019-08-08
+1632127,"Hargray, LLC",0004940540,2002-05-01,open,CAP/LEC,Yes,"Cable One, Inc.",,2,2019-03-01..2019-08-08
+1632127,ComSouth Telenet LLC,0010112571,2004-01-01,open,CAP/LEC,Yes,"Cable One, Inc.",,2,2019-03-01..2019-08-08
+1632127,Cable One Inc.,0003474327,2006-08-01,open,Interconnected VoIP,Yes,"Cable One, Inc",,2,2019-03-01..2019-08-08
+1632127,"Fidelity Cablevision, LLC",0000013326,2008-10-21,open,CAP/LEC,Yes,"Cable One, Inc.",,2,2019-03-01..2019-08-08
+1632127,"Hargray Communications Group, Inc.",0004213724,2000-12-01,open,Private Service Provider,No,"Cable One, Inc.",,2,2019-03-01..2019-08-08
+1632127,"CoBridge Communications, LLC",0020037461,2010-08-03,open,Interconnected VoIP,Yes,"Cable One, Inc.",,2,2019-03-01..2019-08-08
+1632127,Cable One VoIP LLC,0024177222,2015-01-01,2015-01-01,Interconnected VoIP,No,GRAHAM HOLDINGS COMPANY,,2,2019-03-01..2019-08-08
+1632127,Telecommunications Management LLC,0009232554,2018-10-01,2020-12-31,Interconnected VoIP,No,"Cable One, Inc.",,2,2019-03-01..2019-08-08
+1632127,"Hargray of Alabama, LLC",0028332666,2019-09-01,open,CAP/LEC,Yes,"Cable One, Inc.",,2,2019-03-01..2019-08-08
