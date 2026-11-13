@@ -1,0 +1,38 @@
+essay,parent_cik,name,treated_events
+E1,1283699,"T-Mobile USA, Inc.",26
+E1,732717,AT&T,24
+E1,101830,Sprint Corporation,11
+E1,732712,Verizon,10
+E1,1166691,Comcast Cable Communications LLC,9
+E1,1091667,"Charter Communications, Inc.",8
+E1,18926,CenturyLink,5
+E1,20520,"Frontier Communications Parent, Inc.",4
+E1,1609711,"GoDaddy.com, LLC",3
+E1,1001082,"DISH Network, LLC",2
+E1,1447669,Twilio,2
+E1,1632127,"Cable One, Inc.",2
+E2,1283699,"T-Mobile USA, Inc.",26
+E2,732717,AT&T,24
+E2,732712,Verizon,10
+E2,101830,Sprint Corporation,9
+E2,1166691,Comcast Cable Communications LLC,9
+E2,1091667,"Charter Communications, Inc.",8
+E2,18926,CenturyLink,5
+E2,20520,"Frontier Communications Parent, Inc.",4
+E2,1609711,"GoDaddy.com, LLC",3
+E2,1001082,"DISH Network, LLC",2
+E2,1447669,Twilio,2
+E2,1632127,"Cable One, Inc.",2
+E3,1283699,"T-Mobile USA, Inc.",26
+E3,732717,AT&T,24
+E3,101830,Sprint Corporation,12
+E3,732712,Verizon,10
+E3,1166691,Comcast Cable Communications LLC,9
+E3,1091667,"Charter Communications, Inc.",8
+E3,18926,CenturyLink,5
+E3,20520,"Frontier Communications Parent, Inc.",4
+E3,1609711,"GoDaddy.com, LLC",3
+E3,1001082,"DISH Network, LLC",2
+E3,1447669,Twilio,2
+E3,1632127,"Cable One, Inc.",2
+E3,1702780,"Altice USA, Inc.",2

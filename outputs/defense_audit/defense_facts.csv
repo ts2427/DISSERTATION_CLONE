@@ -1,0 +1,96 @@
+section,key,value,source
+C1,E1_treated_events_flag_customer-terms only,87,c1_treated_scope.csv (keyword reading aid; CUST/EMPL regex in scripts/273)
+C1,E1_treated_events_flag_both,19,c1_treated_scope.csv (keyword reading aid; CUST/EMPL regex in scripts/273)
+C1,E2_treated_events_flag_customer-terms only,86,c1_treated_scope.csv (keyword reading aid; CUST/EMPL regex in scripts/273)
+C1,E2_treated_events_flag_both,18,c1_treated_scope.csv (keyword reading aid; CUST/EMPL regex in scripts/273)
+C1,E3_treated_events_flag_customer-terms only,90,c1_treated_scope.csv (keyword reading aid; CUST/EMPL regex in scripts/273)
+C1,E3_treated_events_flag_both,19,c1_treated_scope.csv (keyword reading aid; CUST/EMPL regex in scripts/273)
+C2,E1_H1_timing_ci90,"[-0.5033, 2.8033]",e1_notification_anchored.csv section D2 immediate_disclosure ci90_lo/ci90_hi
+C2,E1_H1_timing_smallest_rejectable_bound,2.8033,"e1_notification_anchored.csv section D2 immediate_disclosure ci90_lo/ci90_hi -> max(|lo|,|hi|)"
+C2,E1_H2_FCC_ci90,"[-3.1121, 1.5019]",e1_notification_anchored.csv section D2 fcc_form499 ci90_lo/ci90_hi
+C2,E1_H2_FCC_smallest_rejectable_bound,3.1121,"e1_notification_anchored.csv section D2 fcc_form499 ci90_lo/ci90_hi -> max(|lo|,|hi|)"
+C2,E1_H3_prior_ci90,"[-0.0728, 0.1391]",e1_notification_anchored.csv section D2 prior_breaches_1yr ci90_lo/ci90_hi
+C2,E1_H3_prior_smallest_rejectable_bound,0.1391,"e1_notification_anchored.csv section D2 prior_breaches_1yr ci90_lo/ci90_hi -> max(|lo|,|hi|)"
+C2,E1_H4_health_ci90,"[-5.3151, 3.2656]",e1_notification_anchored.csv section D2 health_breach ci90_lo/ci90_hi
+C2,E1_H4_health_smallest_rejectable_bound,5.3151,"e1_notification_anchored.csv section D2 health_breach ci90_lo/ci90_hi -> max(|lo|,|hi|)"
+C2,E1_car_30d_sd,8.4848,CANONICAL_V3 car_30d on the 340 (ddof 1)
+C2,E1_bound_2.10_share_of_sd,0.2475,2.10 / E1_car_30d_sd
+C3,E1_on_or_after_2023-12-18_effective_treated,16,E1 sample reported_date
+C3,E1_on_or_after_2023-12-18_effective_control,18,E1 sample reported_date
+C3,E1_on_or_after_2023-09-05_adoption_treated,16,E1 sample reported_date
+C3,E1_on_or_after_2023-09-05_adoption_control,38,E1 sample reported_date
+C3,E2_on_or_after_2023-12-18_effective_treated,16,E2 sample reported_date
+C3,E2_on_or_after_2023-12-18_effective_control,15,E2 sample reported_date
+C3,E2_on_or_after_2023-09-05_adoption_treated,16,E2 sample reported_date
+C3,E2_on_or_after_2023-09-05_adoption_control,35,E2 sample reported_date
+C3,E2ann_on_or_after_2023-12-18_effective_treated,16,E2ann sample reported_date
+C3,E2ann_on_or_after_2023-12-18_effective_control,15,E2ann sample reported_date
+C3,E2ann_on_or_after_2023-09-05_adoption_treated,16,E2ann sample reported_date
+C3,E2ann_on_or_after_2023-09-05_adoption_control,35,E2ann sample reported_date
+C3,E3_on_or_after_2023-12-18_effective_treated,17,E3 sample reported_date
+C3,E3_on_or_after_2023-12-18_effective_control,23,E3 sample reported_date
+C3,E3_on_or_after_2023-09-05_adoption_treated,17,E3 sample reported_date
+C3,E3_on_or_after_2023-09-05_adoption_control,48,E3 sample reported_date
+C4,E1_events_sharing_day0,61,"day 0 = market trading day nearest breach_date (scripts/155:7 rule, market calendar)"
+C4,E1_max_events_on_one_day0,4,same
+C4,E1_event_pairs_overlapping_0_30_windows,1281,|day0_i - day0_j| <= 30 trading days
+C4,E1_event_pairs_total,57630,n(n-1)/2
+C5,E3_30_fitted_min,-0.0182,refit of scripts/227 spec; gate F1_30_coef
+C5,E3_30_fitted_max,0.1154,refit of scripts/227 spec; gate F1_30_coef
+C5,E3_30_fitted_outside_0_1,14,of N 405
+C5,E3_90_fitted_min,-0.0276,refit of scripts/227 spec; gate F1_90_coef
+C5,E3_90_fitted_max,0.3289,refit of scripts/227 spec; gate F1_90_coef
+C5,E3_90_fitted_outside_0_1,6,of N 405
+C5,E3_180_fitted_min,0.0712,refit of scripts/227 spec; gate F1_180_coef
+C5,E3_180_fitted_max,0.3893,refit of scripts/227 spec; gate F1_180_coef
+C5,E3_180_fitted_outside_0_1,0,of N 405
+C5,E3_placebo_fitted_min,-0.1185,refit of scripts/227 spec; gate F4_coef
+C5,E3_placebo_fitted_max,0.8007,refit of scripts/227 spec; gate F4_coef
+C5,E3_placebo_fitted_outside_0_1,17,of N 405
+C6,E1_treated_parent_ciks,12,E1 sample
+C6,E1_largest_parent_share,0.2453,"T-Mobile USA, Inc. 26 of 106 treated events"
+C6,E2_treated_parent_ciks,12,E2 sample
+C6,E2_largest_parent_share,0.25,"T-Mobile USA, Inc. 26 of 104 treated events"
+C6,E3_treated_parent_ciks,13,E3 sample
+C6,E3_largest_parent_share,0.2385,"T-Mobile USA, Inc. 26 of 109 treated events"
+C6,E1_G_star,22.8,"CSS on treatment partial leverage (scripts/263 cluster_diag = 165 D2), E1 baseline X"
+C6,E2_G_star_defense_era,24.2,"same formula, defense-era XS4 (outputs/ESSAY2_QUERY4_PART_DE.md:20 = 24.2)"
+C6,E2_G_star_v5,23.4,outputs/essay2_v5/constants_essay2.json primary_G_star
+C6,E3_G_star,24.5,"same formula, E3 30d X; committed F1_30_G_star = 24.5"
+C7,E1_car30_treated_mean,-0.9325,"CANONICAL_V3 car_30d, E1 sample"
+C7,E1_car30_treated_median,-0.437,same
+C7,E1_car30_treated_sd,9.4851,same
+C7,E1_car30_control_mean,0.0141,"CANONICAL_V3 car_30d, E1 sample"
+C7,E1_car30_control_median,0.4118,same
+C7,E1_car30_control_sd,7.9949,same
+C7,E2_delay_treated_mean,98.91,t1 disclosure_delay_days (raw days)
+C7,E2_delay_treated_median,22.0,t1 disclosure_delay_days (raw days)
+C7,E2_delay_treated_p25,0.0,t1 disclosure_delay_days (raw days)
+C7,E2_delay_treated_p75,83.0,t1 disclosure_delay_days (raw days)
+C7,E2_delay_treated_max,1917.0,t1 disclosure_delay_days (raw days)
+C7,E2_delay_control_mean,71.1,t1 disclosure_delay_days (raw days)
+C7,E2_delay_control_median,24.0,t1 disclosure_delay_days (raw days)
+C7,E2_delay_control_p25,0.0,t1 disclosure_delay_days (raw days)
+C7,E2_delay_control_p75,76.0,t1 disclosure_delay_days (raw days)
+C7,E2_delay_control_max,961.0,t1 disclosure_delay_days (raw days)
+C7,E3_departure_30d_treated,4/109 = 0.0367,constants_essay3_v4.json F1_30_treated_mean
+C7,E3_departure_30d_control,13/296 = 0.0439,constants_essay3_v4.json F1_30_control_mean
+C7,E3_departure_90d_treated,11/109 = 0.1009,constants_essay3_v4.json F1_90_treated_mean
+C7,E3_departure_90d_control,43/296 = 0.1453,constants_essay3_v4.json F1_90_control_mean
+C7,E3_departure_180d_treated,33/109 = 0.3028,constants_essay3_v4.json F1_180_treated_mean
+C7,E3_departure_180d_control,73/296 = 0.2466,constants_essay3_v4.json F1_180_control_mean
+C8,records_total,1054,"stage2_signed.csv (= master_breach_dataset.xlsx, 1,054)"
+C8,records_states_distinct,15,reporting-agency state parsed from incident_details (scripts/273 reporting_state)
+C8,records_state_unparsed,67,same
+C8,records_massachusetts,149,same
+C8,records_mentioning_massachusetts_anywhere,150,substring count
+C8,canonical_events_matched_to_records,476,of 489 (CIK + breach date incl. Gate-2 components)
+C8,massachusetts_canonical_events,131,c8_states.csv
+C8,massachusetts_share_of_489,0.2679,c8_states.csv
+C9,"leave-one-treated-parent-out, Essay 1",no,"NO: no committed output; scripts/255 computes the cluster jackknife internally (betas_del, lifted from 165) but writes only SEs/p (e1_cluster_ladder.csv)"
+C9,"leave-one-parent-out, Essay 2 (defense era: 165 cluster-deleted range; v5 table)",yes,outputs/tables/essay2_v2/t25_cluster_diagnostics.csv; outputs/essay2_v5/v5_t14b_leave_one_parent_out.csv
+C9,market-model or factor-model CAR (Essay 1),no,"NO: car_30d is market-adjusted (ret - vwretd, scripts/155:6); FF3 enters only as monthly factor CONTROLS in a CAR regression (scripts/158:319-333, appendix Table 13), not as a factor-model CAR"
+C9,"logit or probit, Essay 3",yes,outputs/essay3_v4/f1_logit_ame.csv
+C9,CV3 or WCR p for Essay 1 hypothesis variables,yes,outputs/defense_supplement/e1_cluster_ladder.csv
+C9,power/MDE for the Essay 2 announcement test,no,NO: scripts/175 and 180 emit no MDE; v5 v5_t09b_announcement_ladder.csv has no MDE column
+C9,notification-anchored Essay 1 values,yes,outputs/defense_supplement/e1_notification_anchored.csv

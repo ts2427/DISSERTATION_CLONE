@@ -1,0 +1,425 @@
+slide_id,slide_number,quoted_text,value_on_slide,source_file,source_key_or_row,source_value,status,note
+motivation,2,T-Mobile's 2021 breach,2021,,,,NO-SOURCE,literature/regulatory - not a pipeline output
+motivation,2,affected 76 million people,76 million,,,,NO-SOURCE,literature/regulatory - not a pipeline output
+motivation,2,settled class claims for $350 million,$350 million,,,,NO-SOURCE,literature/regulatory - not a pipeline output
+motivation,2,"(In re T-Mobile, 2023)",2023,,,,NO-SOURCE,literature/regulatory - not a pipeline output
+motivation,2,$31.5 million FCC enforcement action,$31.5 million,,,,NO-SOURCE,"literature/regulatory - not a pipeline output; essay text gives a $15.75M penalty plus an equal security spend (sum $31.5M), consistent"
+motivation,2,"breaches in 2021, 2022, and 2023","2021, 2022, 2023",,,,NO-SOURCE,literature/regulatory - not a pipeline output
+motivation,2,"(FCC, 2024b)",2024,,,,NO-SOURCE,literature/regulatory - not a pipeline output
+rule,3,47 CFR § 64.2011,§ 64.2011,,,,NO-SOURCE,literature/regulatory - not a pipeline output
+rule,3,DAY 0,0,,,,NO-SOURCE,literature/regulatory - not a pipeline output
+rule,3,≤ 7 BUSINESS DAYS,7 business days,,,,NO-SOURCE,literature/regulatory - not a pipeline output
+rule,3,≥ 7 MORE BUSINESS DAYS,7 business days,,,,NO-SOURCE,literature/regulatory - not a pipeline output
+rule,3,Adopted in the 2007 CPNI Order,2007,,,,NO-SOURCE,literature/regulatory - not a pipeline output
+rule,3,"published June 8, 2007","June 8, 2007",,,,NO-SOURCE,literature/regulatory - not a pipeline output
+rule,3,72 FR 31948,72 FR 31948,,,,NO-SOURCE,literature/regulatory - not a pipeline output
+rule,3,"effective December 8, 2007","December 8, 2007",,,,NO-SOURCE,literature/regulatory - not a pipeline output
+rule,3,The 2024 amendments are delayed indefinitely,2024,,,,NO-SOURCE,"literature/regulatory - not a pipeline output; Essay 2 Methods (M027) says the amendments were ""adopted in 2023"" - make the year consistent"
+rule,3,NOTES: at least seven more business days,seven,,,,NO-SOURCE,literature/regulatory - not a pipeline output
+chain,4,"public firms reporting breaches after December 8, 2007","December 8, 2007",,,,NO-SOURCE,"literature/regulatory - not a pipeline output; the pipeline uses the same cutoff 2007-12-08 (outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md:20, 94)"
+chain,4,47 CFR § 64.2011 (a Form 499 filer),§ 64.2011,,,,NO-SOURCE,literature/regulatory - not a pipeline output
+chain,4,"No treated breach precedes the December 8, 2007 effective date",0 treated pre-rule,outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md; outputs/essay3_v4/e_ledger.csv,"outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md:96 (Essay 1, breach anchor: 6 pre-rule, 0 treated); outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md:31 (Essay 2: 6 pre-rule, 0 treated); outputs/essay3_v4/e_ledger.csv:11 col pre_rule_treated",0 / 0 / 0,MATCH,holds for all three essay samples
+roadmap,5,"4 min (rule, premise, data)",4 min,,,,NO-SOURCE,presentation timing - not a data value
+roadmap,5,10 min (Essay 1),10 min,,,,NO-SOURCE,presentation timing - not a data value
+roadmap,5,10 min (Essay 2),10 min,,,,NO-SOURCE,presentation timing - not a data value
+roadmap,5,10 min (Essay 3),10 min,,,,NO-SOURCE,presentation timing - not a data value
+roadmap,5,4 min (together),4 min,,,,NO-SOURCE,presentation timing - not a data value
+roadmap,5,NOTES: Thirty seconds,30 seconds,,,,NO-SOURCE,presentation timing - not a data value
+roadmap,5,NOTES: the next forty minutes,40 minutes,,,,NO-SOURCE,presentation timing - not a data value; the five blocks sum to 38 min (4+10+10+10+4)
+data,6,"1,054 PRC notification records","1,054",outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md,outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md:11 (Gate 1 In),1054,MATCH,
+data,6,758 Resolved to an SEC registrant,758,outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md,outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md:11,758,MATCH,
+data,6,524 Firm-day events,524,outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md,outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md:12,524,MATCH,
+data,6,489 Breach events,489,outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md,outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md:13,489,MATCH,
+data,6,Rolling-campaign rule; 118 treated,118,outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md,outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md:45 (After Gate 2),118,MATCH,treated events
+data,6,Essay 1: 340 events,340,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json N_regression (line 4),340,MATCH,
+data,6,Essay 1: (106 treated),106,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json treated_regression (line 7),106,MATCH,treated events
+data,6,Essay 2: 333 events,333,outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md,outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md:31,333,MATCH,
+data,6,Essay 2: (104 treated),104,outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md,outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md:31,104,MATCH,treated events
+data,6,Essay 3: 405 events,405,outputs/essay3_v4/e_ledger.csv,outputs/essay3_v4/e_ledger.csv:11 (ANALYSIS SAMPLE); constants_essay3_v4.json F1_30_n,405,MATCH,
+data,6,Essay 3: (109 treated),109,outputs/essay3_v4/e_ledger.csv,outputs/essay3_v4/e_ledger.csv:11 col treated,109,MATCH,treated events
+data,6,Treated events come from 12 to 13 parent CIKs,12 to 13,outputs/defense_audit/defense_facts.csv (committed with this audit),"outputs/defense_audit/defense_facts.csv (committed with this audit):50,52,54",12 / 12 / 13,MATCH,"treated parent CIKs (E1, E2, E3)"
+data,6,T-Mobile alone carries 26 of Essay 3's 109 treated events,26 of 109,outputs/defense_audit/defense_facts.csv (committed with this audit),outputs/defense_audit/defense_facts.csv (committed with this audit):55 E3_largest_parent_share,26 of 109 (0.2385),MATCH,treated events; A2-5 recount matches
+e1div,7,NOTES: Ten minutes,10 minutes,,,,NO-SOURCE,presentation timing - not a data value
+e1q,8,prior breaches in the preceding twelve months,twelve months,scripts/156_rebuild_s6_assembly.py,156:105 prior_breaches_1yr window,365 days,MATCH,
+e1q,8,"(Akerlof, 1970)",1970,,,,NO-SOURCE,"citation year - literature, not a pipeline output"
+e1q,8,"Diamond & Verrecchia, 1991",1991,,,,NO-SOURCE,"citation year - literature, not a pipeline output"
+e1q,8,"(Spence, 1973)",1973,,,,NO-SOURCE,"citation year - literature, not a pipeline output"
+e1q,8,"(Tushman & Nadler, 1978)",1978,,,,NO-SOURCE,"citation year - literature, not a pipeline output"
+e1model,9,A market-adjusted event study on 340 breach events,340,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json N_regression (line 4),340,MATCH,
+e1model,9,CARi = Σt=0..30 ARit,0..30 trading days,scripts/155_rebuild_s5_outcomes.py,"155:6 ""TRADING days [0,+30]""","[0,+30]",MATCH,
+e1model,9,Sample: 340 events,340,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json line 4,340,MATCH,
+e1model,9,106 treated,106,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json treated_regression (line 7),106,MATCH,treated events
+e1model,9,(36 organizations,36,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json treated_orgs_regression (line 8),36,MATCH,treated organizations
+e1model,9,12 parent CIKs),12,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json treated_parent_ciks_regression (line 9),12,MATCH,treated parent CIKs
+e1model,9,83 parent-CIK clusters,83,outputs/rebuild/appendix_v3/table_8.csv,"outputs/rebuild/appendix_v3/table_8.csv:6 caption ""(83 clusters)""",83,MATCH,also e1_cluster_ladder.csv column G = 83
+e1model,9,TOST against ±2.10 pp,±2.10 pp,scripts/158_rebuild_s8_regenerate.py,158:78 EQ = 2.10,2.10,MATCH,"first committed 2534fb9 (2026-02-18) with comment ""A 2.1% bound ensures TOST passes"""
+e1model,9,it matches the two-day penalty in Cavusoglu et al. (2004),two-day; 2004,,,,NO-SOURCE,"literature/regulatory - not a pipeline output; A2-8: untracked drafts give Cavusoglu -2.1% with no ""two-day""; another draft says -1.0% to -1.5%"
+e1model,9,Minimum detectable effect at 80% power,80%,scripts/158_rebuild_s8_regenerate.py,158:89 mde80 = 2.8 x SE,2.8 = z.975 + z.80,MATCH,"fixed multiplier, not t quantiles"
+e1model,9,NOTES: Market-adjusted returns over thirty trading days,thirty trading days,scripts/155_rebuild_s5_outcomes.py,155:6,"[0,+30] = 31 trading rows",MATCH,"window is days 0..+30; ""thirty"" describes +30"
+e1model,9,NOTES: One regression carries all four hypotheses,four,scripts/158_rebuild_s8_regenerate.py,158:54 HVARS (4 variables),4,MATCH,
+e1results,10,None of the four variables moves the 30-day reaction,four; 30-day,scripts/158_rebuild_s8_regenerate.py,"158:54 HVARS; 155:6 [0,+30]","4; [0,+30]",MATCH,
+e1results,10,H1 · Timing variable +1.15,+1.15,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json H1_timing_coef (line 19),1.15,MATCH,
+e1results,10,H1 p = .253,.253,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json H1_timing_p (line 20),0.2526,MATCH,
+e1results,10,H2 · Form 499 −0.81,−0.81,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json H2_FCC_coef (line 10),-0.8051,MATCH,
+e1results,10,H2 p = .566,.566,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json H2_FCC_p (line 11),0.5659,MATCH,
+e1results,10,H3 · Prior breaches +0.03,+0.03,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json H3_prior_coef (line 28),0.0332,MATCH,
+e1results,10,H3 p = .606,.606,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json H3_prior_p (line 29),0.6063,MATCH,
+e1results,10,H4 · Health data −1.02,−1.02,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json H4_health_coef (line 37),-1.0247,MATCH,
+e1results,10,H4 p = .694,.694,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json H4_health_p (line 38),0.6944,MATCH,
+e1results,10,axis tick −8,−8,,,,NO-SOURCE,chart axis tick label - not a data value
+e1results,10,axis tick −6,−6,,,,NO-SOURCE,chart axis tick label - not a data value
+e1results,10,axis tick −4,−4,,,,NO-SOURCE,chart axis tick label - not a data value
+e1results,10,axis tick −2,−2,,,,NO-SOURCE,chart axis tick label - not a data value
+e1results,10,axis tick 0,0,,,,NO-SOURCE,chart axis tick label - not a data value
+e1results,10,axis tick +2,+2,,,,NO-SOURCE,chart axis tick label - not a data value
+e1results,10,axis tick +4,+4,,,,NO-SOURCE,chart axis tick label - not a data value
+e1results,10,axis tick +6,+6,,,,NO-SOURCE,chart axis tick label - not a data value
+e1results,10,axis tick +8,+8,,,,NO-SOURCE,chart axis tick label - not a data value
+e1results,10,thick bar = 90% CI,90%,outputs/defense_supplement/deck_exhibits.csv (git HEAD version; working tree has uncommitted edits),outputs/defense_supplement/deck_exhibits.csv (git HEAD version; working tree has uncommitted edits) rows 2-17 E1_ci90_essay1 (coef ± z.95 x HC3 SE),90% CIs computed,MATCH,"plotted 90% CIs: H1 [-0.503, 2.803], H2 [-3.112, 1.502], H3 [-0.073, 0.139], H4 [-5.315, 3.266]"
+e1results,10,thin bar = 95% CI,95%,outputs/rebuild/constants_v3.json,"outputs/rebuild/constants_v3.json H*_ci (lines 12-15, 21-24, 30-33, 39-42)","95% CI (HC3, normal)",MATCH,
+e1results,10,shaded = ±2.10 pp equivalence bound,±2.10 pp,scripts/158_rebuild_s8_regenerate.py,158:78,2.10,MATCH,
+e1results,10,Percentage points of 30-day CAR; HC3; N = 340,30-day; 340,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json N_regression (line 4); 155:6,"340; [0,+30]",MATCH,
+e1results,10,NOTES: Only prior breaches sits wholly inside the band,one variable inside ±2.10,outputs/defense_supplement/deck_exhibits.csv (git HEAD version; working tree has uncommitted edits),outputs/defense_supplement/deck_exhibits.csv (git HEAD version; working tree has uncommitted edits) rows 4-17 (90% CIs),"only H3 [-0.0727, 0.1391] lies inside ±2.10",DERIVED,compare each 90% CI with ±2.10
+e1bounds,11,One null is bounded,one,outputs/rebuild/constants_v3.json,"outputs/rebuild/constants_v3.json H*_status (lines 18, 27, 36, 45)",1 BOUNDED NULL (H3); 3 NULL-INCONCLUSIVE,MATCH,
+e1bounds,11,Prior breaches +0.03,+0.03,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json H3_prior_coef (line 28),0.0332,MATCH,
+e1bounds,11,"Prior [−0.09, 0.16]","[−0.09, 0.16]",outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json H3_prior_ci (lines 30-33),"[-0.0931, 0.1594]",MATCH,
+e1bounds,11,Prior MDE80 0.18,0.18,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json H3_prior_mde80 (line 34),0.1804,MATCH,
+e1bounds,11,Prior: Bounded null (TOST p < .001),< .001,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json H3_prior_tost_p (line 35),0.0,MATCH,
+e1bounds,11,Form 499 −0.81,−0.81,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json H2_FCC_coef (line 10),-0.8051,MATCH,
+e1bounds,11,"Form 499 [−3.55, 1.94]","[−3.55, 1.94]",outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json H2_FCC_ci (lines 12-15),"[-3.5541, 1.9438]",MATCH,
+e1bounds,11,Form 499 MDE80 3.93,3.93,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json H2_FCC_mde80 (line 16),3.9272,MATCH,
+e1bounds,11,Form 499: Inconclusive (TOST p = .178),.178,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json H2_FCC_tost_p (line 17),0.1783,MATCH,
+e1bounds,11,Health −1.02,−1.02,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json H4_health_coef (line 37),-1.0247,MATCH,
+e1bounds,11,"Health [−6.14, 4.09]","[−6.14, 4.09]",outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json H4_health_ci (lines 39-42),"[-6.137, 4.0875]",MATCH,
+e1bounds,11,Health MDE80 7.30,7.30,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json H4_health_mde80 (line 43),7.3034,MATCH,
+e1bounds,11,Health: Inconclusive (TOST p = .340),.340,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json H4_health_tost_p (line 44),0.3402,MATCH,
+e1bounds,11,Timing variable +1.15,+1.15,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json H1_timing_coef (line 19),1.15,MATCH,
+e1bounds,11,"Timing [−0.82, 3.12]","[−0.82, 3.12]",outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json H1_timing_ci (lines 21-24),"[-0.82, 3.12]",MATCH,
+e1bounds,11,Timing MDE80 2.81,2.81,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json H1_timing_mde80 (line 25),2.8143,MATCH,
+e1bounds,11,Health data (15 events),15,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json health_events_crsp (line 59),15,MATCH,this key counts the 356-event CRSP set; RECOMPUTED on the 340: also 15 health events (0 treated)
+e1bounds,11,In dollars: the ±2.10 pp bound,±2.10 pp,scripts/158_rebuild_s8_regenerate.py,158:78,2.10,MATCH,
+e1bounds,11,about ±$757 million at the sample's median market capitalization,±$757 million,outputs/defense_supplement/deck_exhibits.csv (git HEAD version; working tree has uncommitted edits),outputs/defense_supplement/deck_exhibits.csv (git HEAD version; working tree has uncommitted edits) row 50 tost_bound_pos_at_median_mcap,757.3875 $M,MATCH,
+e1bounds,11,($36.1 billion,$36.1 billion,outputs/defense_supplement/deck_exhibits.csv (git HEAD version; working tree has uncommitted edits),outputs/defense_supplement/deck_exhibits.csv (git HEAD version; working tree has uncommitted edits) row 40 mcap_all_median,36.066072 $B,MATCH,
+e1bounds,11,325 of 340 events with price data,325 of 340,outputs/defense_supplement/deck_exhibits.csv (git HEAD version; working tree has uncommitted edits),outputs/defense_supplement/deck_exhibits.csv (git HEAD version; working tree has uncommitted edits) row 38 mcap_all_n_covered (n = 340),325,MATCH,
+e1timing,12,Of 124 events coded as disclosed within seven days,124,outputs/TIMING_MEASUREMENT_REPORT.md,"outputs/TIMING_MEASUREMENT_REPORT.md:145,151",124 of 340,MATCH,"committed file, no committed generator (scratchpad tm_*.py); also DERIVED from constants immediate_share_regression 0.3647 x 340 = 124; RECOMPUTED 124"
+e1timing,12,disclosed within seven days,seven days,scripts/156_rebuild_s6_assembly.py,156:135 immediate_disclosure = delay <= 7,7,MATCH,
+e1timing,12,8 have a documented gap of seven days or less,8,outputs/TIMING_MEASUREMENT_REPORT.md,"outputs/TIMING_MEASUREMENT_REPORT.md:155,159,657",8,MATCH,"committed file, no committed generator (scratchpad tm_*.py)"
+e1timing,12,116 carry a breach date equal to the notification date,116,outputs/TIMING_MEASUREMENT_REPORT.md,outputs/TIMING_MEASUREMENT_REPORT.md:24,116 (41 treated),MATCH,"committed file, no committed generator (scratchpad tm_*.py); A2-3 RECOMPUTED 116, the same set as the blimits slide"
+e1timing,12,93 are Massachusetts records,93,outputs/TIMING_MEASUREMENT_REPORT.md,outputs/TIMING_MEASUREMENT_REPORT.md:39,93 (31 treated),MATCH,"committed file, no committed generator (scratchpad tm_*.py)"
+e1timing,12,For 128 of 340 events,128 of 340,outputs/TIMING_MEASUREMENT_REPORT.md,"outputs/TIMING_MEASUREMENT_REPORT.md:221,226-227",128 of 340 (38%),MATCH,"committed file, no committed generator (scratchpad tm_*.py)"
+e1timing,12,(42 of 106 treated),42 of 106,outputs/TIMING_MEASUREMENT_REPORT.md,"outputs/TIMING_MEASUREMENT_REPORT.md:221,227",42 of 106,MATCH,"committed file, no committed generator (scratchpad tm_*.py); treated events"
+e1robust,13,Baseline (HC3) −0.81,−0.81,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json H2_FCC_coef (line 10),-0.8051,MATCH,
+e1robust,13,Baseline (HC3) p .566,.566,outputs/rebuild/appendix_v3/table_11.csv,outputs/rebuild/appendix_v3/table_11.csv:2,0.5659,MATCH,
+e1robust,13,Year fixed effects −1.72,−1.72,outputs/rebuild/appendix_v3/table_11.csv,outputs/rebuild/appendix_v3/table_11.csv:3,-1.7234,MATCH,
+e1robust,13,Year fixed effects p .237,.237,outputs/rebuild/appendix_v3/table_11.csv,outputs/rebuild/appendix_v3/table_11.csv:3,0.2368,MATCH,
+e1robust,13,Records affected added −0.81,−0.81,outputs/rebuild/appendix_v3/table_12.csv,outputs/rebuild/appendix_v3/table_12.csv:2,-0.8068,MATCH,
+e1robust,13,Records affected added p .565,.565,outputs/rebuild/appendix_v3/table_12.csv,outputs/rebuild/appendix_v3/table_12.csv:2,0.5652,MATCH,
+e1robust,13,Within firm-size quartiles −1.30 to +3.94,−1.30 to +3.94,outputs/rebuild/appendix_v3/table_10.csv,outputs/rebuild/appendix_v3/table_10.csv:2-5,-1.298 (Q3) to 3.935 (Q2),MATCH,
+e1robust,13,Within firm-size quartiles: all ≥ .172,≥ .172,outputs/rebuild/appendix_v3/table_10.csv,outputs/rebuild/appendix_v3/table_10.csv:2-5 p,min 0.172 (Q2),MATCH,
+e1robust,13,Parent-CIK clustered −0.81,−0.81,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json H2_FCC_coef (line 10),-0.8051,MATCH,clustering leaves the coefficient unchanged
+e1robust,13,Parent-CIK clustered p .534,.534,outputs/rebuild/appendix_v3/table_8.csv,outputs/rebuild/appendix_v3/table_8.csv:5 Firm-clustered FCC p,0.5335,MATCH,"0.5335 -> .534 under round-half-up; also e1_cluster_ladder.csv:3 (CV1, normal) 0.5335"
+e1robust,13,Abnormal turnover (N = 321),321,outputs/rebuild/appendix_v3/table_14.csv,outputs/rebuild/appendix_v3/table_14.csv:9-10,N=321,MATCH,
+e1robust,13,Form 499: +0.11 log points,+0.11,outputs/rebuild/appendix_v3/table_14.csv,outputs/rebuild/appendix_v3/table_14.csv:2,0.1064,MATCH,
+e1robust,13,Form 499 (p = .045),.045,outputs/rebuild/appendix_v3/table_14.csv,outputs/rebuild/appendix_v3/table_14.csv:2,0.0446,MATCH,also outputs/rebuild/constants_v3.json volume_fcc_p (line 90)
+e1robust,13,Prior breaches: −0.006 per breach,−0.006,outputs/rebuild/appendix_v3/table_14.csv,outputs/rebuild/appendix_v3/table_14.csv:4,-0.006,MATCH,
+e1robust,13,Prior breaches (p = .042),.042,outputs/rebuild/appendix_v3/table_14.csv,outputs/rebuild/appendix_v3/table_14.csv:4,0.0416,MATCH,
+e1robust,13,Return on assets: +0.45,+0.45,outputs/rebuild/appendix_v3/table_14.csv,outputs/rebuild/appendix_v3/table_14.csv:8,0.4486,MATCH,
+e1robust,13,Return on assets (p = .016),.016,outputs/rebuild/appendix_v3/table_14.csv,outputs/rebuild/appendix_v3/table_14.csv:8,0.0159,MATCH,
+e1robust,13,Timing p = .794,.794,outputs/rebuild/appendix_v3/table_14.csv,outputs/rebuild/appendix_v3/table_14.csv:3,0.7935,MATCH,0.7935 -> .794 under round-half-up
+e1robust,13,health p = .544,.544,outputs/rebuild/appendix_v3/table_14.csv,outputs/rebuild/appendix_v3/table_14.csv:5,0.5442,MATCH,
+e1robust,13,Treated events come from 12 parent CIKs,12,outputs/rebuild/constants_v3.json,outputs/rebuild/constants_v3.json treated_parent_ciks_regression (line 9),12,MATCH,treated parent CIKs
+e1robust,13,NOTES: three associations under HC3,three,outputs/rebuild/appendix_v3/table_14.csv,"outputs/rebuild/appendix_v3/table_14.csv:2,4,8 (p < .05)","3 (Form 499, prior breaches, ROA)",DERIVED,count of table_14 rows with p < .05
+e1take,14,None of the four predictors is associated with the 30-day market reaction,four; 30-day,scripts/158_rebuild_s8_regenerate.py,158:54 HVARS; 155:6,"4; [0,+30]",MATCH,
+e1take,14,"(1,054 records","1,054",outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md,outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md:11,1054,MATCH,
+e1take,14,489 events),489,outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md,outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md:13,489,MATCH,
+e1take,14,NOTES: Ten minutes ends here,10 minutes,,,,NO-SOURCE,presentation timing - not a data value
+e2div,15,NOTES: Ten minutes.,ten minutes,,,,NO-SOURCE,"presentation timing note, not a data claim"
+e2q,16,"from [−25, −5] to [+5, +25] trading days","[−25,−5] / [+5,+25]",scripts/163_essay2_rerun_form499.py,"line 152 PRE_LO, PRE_HI, POST_LO, POST_HI","-25, -5, 5, 25",MATCH,"defense-era H5b window; v5 primary windows are [−60,−11]/[+1,+20] (scripts/263_e2v5_lib.py:48)"
+e2q,16,"announcement window [−4, +4]","[−4, +4]",scripts/180_essay2_elevation_calibration.py,"line 17 ANN = (-4, 4)","(-4, 4)",MATCH,also scripts/169 abn_ann window
+e2q,16,H5a · Disclosure delay,H5a,,,,NO-SOURCE,"the labels H5a / H5b appear nowhere in the repo (docs, outputs, scripts, archive searched)"
+e2q,16,H5b · Uncertainty after disclosure,H5b,,,,NO-SOURCE,label not in repo (see H5a)
+e2q,16,"Tushman & Nadler, 1978",1978,,,,NO-SOURCE,literature/regulatory — not a pipeline output
+e2q,16,"Fabrizio & Kim, 2019",2019,,,,NO-SOURCE,literature/regulatory — not a pipeline output
+e2q,16,"Diamond & Verrecchia, 1991",1991,,,,NO-SOURCE,literature/regulatory — not a pipeline output
+e2model,17,"333 events, with inference clustered",333,outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md,line 31,N = 333,MATCH,
+e2model,17,"104 treated (36 organizations, 12 parent CIKs)",104,outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md,line 31,104 treated,MATCH,
+e2model,17,36 organizations,36,outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md,line 31,36 orgs,MATCH,
+e2model,17,12 parent CIKs,12,outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md,line 31,12 parent CIKs,MATCH,
+e2model,17,229 control,229,outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md,line 31,229 control,MATCH,
+e2model,17,82 parent-CIK clusters,82,outputs/tables/essay2_v2/t26_inference_ladder.csv,"row 7 bias text ""total G=82""",G=82,MATCH,also t1_final_sample.csv final_cik nunique = 82
+e2model,17,NOTES: With 12 treated parent CIKs,12,outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md,line 31,12 parent CIKs,MATCH,
+e2results,18,Volatility change ... +0.21,+0.21,outputs/tables/essay2_v2/t26_inference_ladder.csv,row 4 (CV3) coef,0.2119,MATCH,v5: 0.1367
+e2results,18,Volatility change ... CV3 p .386,.386,outputs/tables/essay2_v2/t26_inference_ladder.csv,row 4 (CV3) p,0.3863,MATCH,v5: .4812
+e2results,18,Volatility change ... Wild bootstrap p .333,.333,outputs/tables/essay2_v2/t26_inference_ladder.csv,row 5 (WCR) p,0.3325,ROUNDING,0.3325 -> .333 under round-half-up (.332 under round-half-even); v5: .4257
+e2results,18,Volatility change ... MDE80 0.69,0.69,outputs/tables/essay2_v2/t28_design_resolution.csv,row 2 mde_daily,0.6898,MATCH,v5: 0.5477
+e2results,18,(40% of baseline),40%,outputs/defense_supplement/deck_exhibits.csv (git show HEAD:; working tree has uncommitted changes),line 66 E2_vol_scaling mde_pct_of_pre_sd,40.321123,MATCH,baseline = pooled mean pre-window SD 1.7108 (line 72)
+e2results,18,Disclosure delay (days) +25.5,+25.5,outputs/defense_supplement/e2_delay_ladder.csv,row 4 (CV3) coef,25.5087,MATCH,"v5 (new control, scripts/271): 29.23"
+e2results,18,Disclosure delay CV3 p .608,.608,outputs/defense_supplement/e2_delay_ladder.csv,row 4 (CV3) p,0.6083,MATCH,v5: .5853
+e2results,18,Disclosure delay wild bootstrap p .574,.574,outputs/defense_supplement/e2_delay_ladder.csv,row 5 (WCR) p,0.5742,MATCH,v5: .5507
+e2results,18,Disclosure delay MDE80 141 days,141,outputs/defense_supplement/e2_delay_ladder.csv,row 4 mde80_cv3,140.584,MATCH,v5: 151.3
+e2results,18,(176% of mean),176%,outputs/defense_supplement/e2_delay_ladder.csv,row 4 mde80_share_of_mean,1.7621,MATCH,
+e2results,18,"Delay, winsorized +10.0",+10.0,outputs/defense_supplement/e2_delay_ladder.csv,row 10 (CV3) coef,10.0261,MATCH,v5: 13.30
+e2results,18,"Delay, winsorized CV3 p .800",.800,outputs/defense_supplement/e2_delay_ladder.csv,row 10 (CV3) p,0.7997,MATCH,v5: .7552
+e2results,18,"Delay, winsorized wild bootstrap p .765",.765,outputs/defense_supplement/e2_delay_ladder.csv,row 11 (WCR) p,0.7648,MATCH,v5: .7149
+e2results,18,"Delay, winsorized MDE80 112 days",112,outputs/defense_supplement/e2_delay_ladder.csv,row 10 mde80_cv3,111.6884,MATCH,v5: 120.5
+e2results,18,H5a and H5b are not rejected,H5a/H5b,,,,NO-SOURCE,labels not in repo; the underlying nulls are t26 and e2_delay_ladder
+e2results,18,about 12% of mean pre-window volatility,12%,outputs/defense_supplement/deck_exhibits.csv (git show HEAD:; working tree has uncommitted changes),line 63 E2_vol_scaling coef_pct_of_pre_sd,12.386265,MATCH,v5 not computed
+e2announce,19,announcement-window volatility elevation: +0.47 daily pp,+0.47,outputs/tables/essay2_v2/t50_announcement_contrast.csv,row 6 (L3 Form 499 on elevation) coef,0.4717,MATCH,v5 (market-adjusted basis): 0.4327
+e2announce,19,CV3 p = .021,.021,outputs/tables/essay2_v2/t50_announcement_contrast.csv,row 6 p_cv3,0.0208,MATCH,v5: .0271
+e2announce,19,wild bootstrap p = .006,.006,outputs/tables/essay2_v2/t50_announcement_contrast.csv,"row 6 p_wcr (B_wcr 49,999)",0.006,MATCH,v5: .0093
+e2announce,19,CV1 p = .004,.004,outputs/tables/essay2_v2/t50_announcement_contrast.csv,row 6 p_cv1,0.004,MATCH,
+e2announce,19,N = 331,331,outputs/tables/essay2_v2/t50_announcement_contrast.csv,row 6 n,331,MATCH,v5 announcement sample is 333 (G 82)
+e2announce,19,G = 81,81,outputs/tables/essay2_v2/t42_final_sample_with_repairs.csv,rows with abn_ann and abn_pre present: final_cik nunique,81,DERIVED,count on committed t42 (not printed in t50)
+e2announce,19,12 treated parent CIKs,12,outputs/tables/essay2_v2/t42_final_sample_with_repairs.csv,"same rows, treated final_cik nunique",12,DERIVED,count on committed t42
+e2announce,19,Pre-specified on 8/31,8/31,scripts/175_essay2_announcement_contrast.py,"line 4 (""Tim's 8/31 rescoping decision""); line 56 FAM_ANN",8/31,MATCH,"date appears only in the docstring/reports, all first committed 115a72f on 2026-09-02; no standalone 8/31 record; ""before estimation"" not verifiable from git (169 computes the elevation, same commit)"
+e2announce,19,within its four-test family,four,outputs/tables/essay2_v2/t53_test_ledger.csv,lines 54-57 (family L1+L3 announcement window),4 tests,MATCH,BH adjusted p not emitted; DERIVED 0.0208 x 4/3 = 0.0277
+e2announce,19,"skip days [−4, +4]","[−4, +4]",scripts/163_essay2_rerun_form499.py,"line 152 (pre ends −5, post starts +5)",-5 / +5,MATCH,
+e2announce,19,"NOTES: Two control events drop from 333 (Uber, Zscaler)",Two / 333,outputs/tables/essay2_v2/t42_final_sample_with_repairs.csv,"row index 313 (Uber 2019-10-28) and 330 (Zscaler 2018-10-10): abn_ann, abn_pre, beta missing","2 control events (Uber, Zscaler)",DERIVED,"333 - 331 = 2; both fcc_form499 = 0; missing beta = no [-250,-46] return history (recent IPOs; docs/claude/ESSAY3_POST_RERUN_STATE.md:43 says the same for Essay 3)"
+e2measure,20,117 of 333 events show zero delay,117,outputs/tables/essay2_v2/t17_delay_distribution.csv,rows 2-3 zeros (42 + 75),117,DERIVED,42 treated + 75 control
+e2measure,20,117 of 333,333,outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md,line 31,333,MATCH,
+e2measure,20,112 of those are same-date records,112,outputs/TIMING_MEASUREMENT_REPORT.md,line 179,112,MATCH,"report generator (tm_*.py) never committed; RECOMPUTED from t1: 115 of the 117 zero-delay events have breach_date == reported_date (the other 2 are delay_recoded); report's ""no independent breach date"" definition is narrower and cannot be regenerated"
+e2measure,20,Two records carry the breach date in the notification field,Two,docs/claude/KNOWN_LIMITATIONS.md,lines 184-190,"2 (Sprint, Roku)",MATCH,
+e2measure,20,Sprint 2019,2019,docs/claude/KNOWN_LIMITATIONS.md,"line 189 (Sprint 2019-06-08, treated)",2019-06-08,MATCH,
+e2measure,20,Roku 2023,2023,docs/claude/KNOWN_LIMITATIONS.md,"line 190 (Roku Inc 2023-12-28, control)",2023-12-28,MATCH,
+e2take,21,gone within a week,a week,scripts/163_essay2_rerun_form499.py,line 152 POST_LO = 5,post window starts trading day +5,DERIVED,"inferred from the window design (null over [+5,+25]); no committed test dates when the elevation ends"
+e3div,22,NOTES: Ten minutes.,ten minutes,,,,NO-SOURCE,"presentation timing note, not a data claim"
+e3q,23,"within 30, 90, or 180 days",30/90/180,scripts/227_essay3_v4_estimation.py,line 184 exec_departure_{w}_rd; constants F1_30/90/180,"30, 90, 180",MATCH,
+e3q,23,disclosed under Item 5.02(b),5.02(b),scripts/220_essay3_v4_classifier_v2.py,"lines 26-29, 28","Item 5.02 section (sub-items a-f recorded, not filtered)",MISMATCH,"the outcome is any executive departure in the Item 5.02 section text, not restricted to sub-item (b)"
+e3q,23,197 of 296 control events have an Item 5.02 filing,197,outputs/essay3_appendix/ESSAY3_APPENDIX_TABLES.md,line 182,197 (66.6%),MATCH,also ESSAY3_APPENDIX.md:184; RECOMPUTED any_502_180_rd control = 197
+e3q,23,197 of 296,296,outputs/essay3_appendix/ESSAY3_APPENDIX_TABLES.md,line 182,296,MATCH,
+e3q,23,73 have an executive departure,73,outputs/essay3_appendix/ESSAY3_APPENDIX_TABLES.md,line 182,73 (24.7%),MATCH,also constants F1_180_control_mean 0.2466 x 296 = 73
+e3q,23,At 180 days,180,outputs/essay3_appendix/ESSAY3_APPENDIX_TABLES.md,line 182,180,MATCH,
+e3q,23,NOTES: the 197 versus 73 contrast,197 / 73,outputs/essay3_appendix/ESSAY3_APPENDIX_TABLES.md,line 182,197 / 73,MATCH,
+e3model,24,A linear probability model on 405 events,405,outputs/essay3_v4/constants_essay3_v4.json,F1_30_n,405,MATCH,
+e3model,24,across three windows,three,outputs/essay3_v4/constants_essay3_v4.json,F1_30/F1_90/F1_180,3 windows,MATCH,
+e3model,24,"w ∈ {30, 90, 180} days","30, 90, 180",scripts/227_essay3_v4_estimation.py,line 184,"30, 90, 180",MATCH,
+e3model,24,405 events; 109 treated,109,outputs/essay3_v4/e_ledger.csv,row 10 treated,109,MATCH,
+e3model,24,(13 parent CIKs,13,outputs/essay3_v4/e_ledger.csv,row 10 treated_parent_ciks,13,MATCH,
+e3model,24,12 parent entities),12,outputs/essay3_v4/e_ledger.csv,row 10 treated_corporate_families,12,MATCH,
+e3model,24,296 control,296,outputs/essay3_v4/e_ledger.csv,row 10 control,296,MATCH,
+e3model,24,"7 pre-rule events, all control",7,outputs/essay3_v4/e_ledger.csv,row 10 pre_rule_control / pre_rule_treated,7 / 0,MATCH,
+e3model,24,G = 119 parent CIKs,119,outputs/essay3_v4/constants_essay3_v4.json,F1_30_G,119,MATCH,
+e3model,24,effective clusters G* = 24.5,24.5,outputs/essay3_v4/constants_essay3_v4.json,F1_30_G_star,24.5,MATCH,
+e3model,24,"wild cluster bootstrap (B = 99,999)","99,999",outputs/essay3_v4/constants_essay3_v4.json,F1_30_B_wcr,99999,MATCH,
+e3model,24,NOTES: G star of 24.5,24.5,outputs/essay3_v4/constants_essay3_v4.json,F1_30_G_star,24.5,MATCH,
+e3results,25,30 days +0.4,+0.4,outputs/essay3_v4/constants_essay3_v4.json,F1_30_coef (x100),0.004,MATCH,
+e3results,25,30 days CV3 p = .906,.906,outputs/essay3_v4/constants_essay3_v4.json,F1_30_p_cv3,0.9061,MATCH,
+e3results,25,90 days −4.1,−4.1,outputs/essay3_v4/constants_essay3_v4.json,F1_90_coef (x100),-0.041,MATCH,
+e3results,25,90 days CV3 p = .605,.605,outputs/essay3_v4/constants_essay3_v4.json,F1_90_p_cv3,0.6053,MATCH,
+e3results,25,180 days +2.3,+2.3,outputs/essay3_v4/constants_essay3_v4.json,F1_180_coef (x100),0.0233,MATCH,
+e3results,25,180 days CV3 p = .816,.816,outputs/essay3_v4/constants_essay3_v4.json,F1_180_p_cv3,0.8159,MATCH,
+e3results,25,axis −30 … +30 percentage points,−30..+30,outputs/essay3_v4/constants_essay3_v4.json,F1_*_ci_cv3_lo/hi x100,"min −19.76, max +22.06",DERIVED,"chart axis range; contains every CV3 95% CI (and 90% CIs, deck_exhibits HEAD lines 18-29)"
+e3results,25,thick bar = 90% CI,90%,outputs/defense_supplement/deck_exhibits.csv (git show HEAD:; working tree has uncommitted changes),"lines 18-29 E1_ci90_essay3 (coef ± t(.95,118) x CV3 SE)","90% CIs [−5.14,5.94], [−17.21,9.01], [−14.18,18.84]",MATCH,
+e3results,25,thin bar = 95% CI,95%,outputs/essay3_v4/constants_essay3_v4.json,F1_*_ci_cv3_lo/hi,"[−6.23,7.02], [−19.76,11.56], [−17.40,22.06]",MATCH,
+e3results,25,Wild bootstrap p = .889,.889,outputs/essay3_v4/constants_essay3_v4.json,F1_30_p_wcr,0.8889,MATCH,
+e3results,25,Wild bootstrap p = .514,.514,outputs/essay3_v4/constants_essay3_v4.json,F1_90_p_wcr,0.5136,MATCH,
+e3results,25,Wild bootstrap p = .790,.790,outputs/essay3_v4/constants_essay3_v4.json,F1_180_p_wcr,0.7901,MATCH,
+e3power,26,30 days | 9.4 pp,9.4,outputs/essay3_v4/constants_essay3_v4.json,F1_30_mde80_cv3 (x100),0.0944,MATCH,
+e3power,26,30 days | 4.4%,4.4%,outputs/defense_supplement/deck_exhibits.csv (git show HEAD:; working tree has uncommitted changes),line 76 w30_control_rate_pct,4.391892,MATCH,
+e3power,26,30 days | ≈10,≈10,outputs/defense_supplement/deck_exhibits.csv (git show HEAD:; working tree has uncommitted changes),line 74 w30_extra_departures,10.2896,MATCH,mde80 x 109
+e3power,26,90 days | 22.3 pp,22.3,outputs/essay3_v4/constants_essay3_v4.json,F1_90_mde80_cv3 (x100),0.2234,MATCH,
+e3power,26,90 days | 14.5%,14.5%,outputs/defense_supplement/deck_exhibits.csv (git show HEAD:; working tree has uncommitted changes),line 83 w90_control_rate_pct,14.527027,MATCH,
+e3power,26,90 days | ≈24,≈24,outputs/defense_supplement/deck_exhibits.csv (git show HEAD:; working tree has uncommitted changes),line 81 w90_extra_departures,24.3506,MATCH,
+e3power,26,180 days | 28.2 pp,28.2,outputs/essay3_v4/constants_essay3_v4.json,F1_180_mde80_cv3 (x100),0.2815,MATCH,28.15 -> 28.2 (half-up)
+e3power,26,180 days | 24.7%,24.7%,outputs/defense_supplement/deck_exhibits.csv (git show HEAD:; working tree has uncommitted changes),line 90 w180_control_rate_pct,24.662162,MATCH,
+e3power,26,180 days | ≈31,≈31,outputs/defense_supplement/deck_exhibits.csv (git show HEAD:; working tree has uncommitted changes),line 88 w180_extra_departures,30.6835,MATCH,
+e3power,26,among the 109 treated events,109,outputs/essay3_v4/e_ledger.csv,row 10 treated,109,MATCH,
+e3power,26,13 of 119 parents reassigned,13 of 119,outputs/defense_supplement/e3_randomization_inference.csv,"rows 2-5 G1, G (C1 all parents)",13 / 119,MATCH,
+e3power,26,"9,999 draws","9,999",outputs/defense_supplement/e3_randomization_inference.csv,rows 2-5 B,9999,MATCH,seed 250
+e3power,26,p = .90,.90,outputs/defense_supplement/e3_randomization_inference.csv,row 2 ri_p_coef (30d),0.9037,MATCH,CV3-t-based RI p = .8803
+e3power,26,p = .60,.60,outputs/defense_supplement/e3_randomization_inference.csv,row 3 ri_p_coef (90d),0.5961,MATCH,CV3-t-based .5872
+e3power,26,p = .85,.85,outputs/defense_supplement/e3_randomization_inference.csv,row 4 ri_p_coef (180d),0.8455,MATCH,CV3-t-based .8100
+e3power,26,Placebo before disclosure: −8.6 pp,−8.6,outputs/essay3_v4/constants_essay3_v4.json,F4_coef (x100),-0.0862,MATCH,
+e3power,26,CV3 p = .312,.312,outputs/essay3_v4/constants_essay3_v4.json,F4_p_cv3,0.3116,MATCH,
+e3power,26,27 of 27 sensitivities null,27 of 27,outputs/essay3_v4/f3_sensitivities.csv,27 rows; p_cv3 < .05 in 0 (min .1132),"27 rows, 0 rejections",DERIVED,count on committed table
+e3power,26,Without T-Mobile: −1.6,−1.6,outputs/essay3_v4/f3_loco.csv,row 2 without_TMobile (30),-0.0164,MATCH,
+e3power,26,Without T-Mobile: −6.9,−6.9,outputs/essay3_v4/f3_loco.csv,row 3 without_TMobile (90),-0.0687,MATCH,
+e3power,26,Without T-Mobile: −3.5,−3.5,outputs/essay3_v4/f3_loco.csv,row 4 without_TMobile (180),-0.0349,MATCH,
+e3tmobile,27,"Gary A. King, EVP and CIO | 2016-02-19",2016-02-19,outputs/essay3_v4/228_case.log,line 14,"2016-02-19 Gary A. King (termination, severance_release)",MATCH,
+e3tmobile,27,David A. Miller ... | 2021-09-16,2021-09-16,outputs/essay3_v4/228_case.log,line 34,2021-09-16 David A. Miller (retirement),MATCH,
+e3tmobile,27,Neville Ray ... | 2023-02-13,2023-02-13,outputs/essay3_v4/228_case.log,line 53,2023-02-13 Neville Ray (retirement),MATCH,
+e3tmobile,27,Peter Ewens ... | 2023-09-08,2023-09-08,outputs/essay3_v4/228_case.log,line 56,2023-09-08 Peter Ewens (retirement),MATCH,
+e3tmobile,27,disclosed 2019-11-18,2019-11-18,outputs/essay3_v4/228_case.log,"lines 105, 108",filing 0001193125-19-294093 filed 2019-11-18,MATCH,Carter: outputs/essay3_v4/tmobile_timeline.csv:56
+e3tmobile,27,eight days before,eight days,outputs/essay3_v4/228_case.log,line 108,-8 days vs breach_date 2019-11-26,MATCH,
+e3tmobile,27,the 2019-11-26 breach date,2019-11-26,outputs/essay3_v4/228_case.log,line 108,2019-11-26,MATCH,
+e3tmobile,27,so both fall in the placebo window,"(t0−180d, t0]",outputs/essay3_v4/228_case.log,line 108 (-105 days vs reported_date 2020-03-02),-105 days,DERIVED,"placebo window (t0-180d, t0] (scripts/220:691); -105 is inside it"
+e3tmobile,27,NOTES: T-Mobile carries 26 of 109,26 of 109,outputs/defense_audit/c6_treated_parents.csv,E3 parent 1283699,26 treated events of 109,MATCH,also outputs/essay3_v4/e_analysis_sample.csv count (A2-5)
+story,29,the other three rule out only large effects,3,outputs/rebuild/constants_v3.json,"H1_timing_status, H2_FCC_status, H4_health_status",NULL-INCONCLUSIVE x3 (H3_prior_status BOUNDED NULL),MATCH,three inconclusive hypotheses besides the bounded H3
+story,29,"More volatility at announcement, gone within a week",within a week,outputs/tables/essay2_v2/t26_inference_ladder.csv; scripts/163:152,"CV3 row p; post window [+5,+25]",post-window volatility change null (CV3 p .3863),DERIVED,"reading: announcement window [-4,+4] elevated (t50 CV3 p .0208); primary post window starts at trading day +5 and shows no effect; ""a week"" = 5 trading days"
+measure,30,"1,054 notification records",1054,outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md,line 13 (PRC universe),"1,054",MATCH,
+measure,30,resolve to 489 breach events,489,outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md,line 16 (Gate 2); line 22,489,MATCH,
+measure,30,CRSP data for 111 of 118 treated,111 of 118,outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md; outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md,L2 lines 22-23 (118 canonical treated; 111 CRSP-matched); L1 line 46,111 of 118,MATCH,
+measure,30,but 245 of 371 control events,245 of 371,outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md; outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md,L1 line 14 (CRSP 356) minus 111 treated; L2 line 22 control 371,245 of 371,DERIVED,"356 - 111 = 245 (Essay 1 CRSP sample, has_crsp_data); Essay 2 permno-matched control is 250 (L2 line 23)"
+measure,30,143 of 150 Massachusetts records carry the filing date,143 of 150,outputs/TIMING_MEASUREMENT_REPORT.md,lines 42-44,"143 of 150 (record level, 1,054 PRC records)",MATCH,"record level, not events; no committed generator (scratchpad tm_*.py); text parse gives 143 of 149 (outputs/defense_audit/A2_TENSION_CHECKS.md A2-4)"
+limits,31,Post-2007 cross-sectional comparisons,2007,outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md,"line 34 (""Framing is post-2007 cross-sectional"")",post-2007,MATCH,
+limits,31,no treated pre-rule events,0,outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md,line 31 (pre-rule treated 0),0,MATCH,
+limits,31,12 to 13 treated parent CIKs,12 to 13,outputs/defense_audit/defense_facts.csv,C6 E1/E2/E3_treated_parent_ciks,"E1 12, E2 12, E3 13",MATCH,
+limits,31,dropping T-Mobile flips the sign of Essay 3 estimates at 30 and 180 days,30 and 180 days,outputs/essay3_v4/f3_loco.csv,windows 30/180: full_coef vs without_TMobile,30d +0.004 -> -0.0164; 180d +0.0233 -> -0.0349; 90d -0.041 -> -0.0687 (no flip),MATCH,
+limits,31,Split incidents (79 of 489 events),79 of 489,docs/claude/KNOWN_LIMITATIONS.md,line 18,79 of the 489 canonical events,MATCH,KNOWN_LIMITATIONS cites TIMING_MEASUREMENT_REPORT.md:552 (no committed generator)
+future,32,Since December 2023,December 2023,,,,NO-SOURCE,literature/regulatory - not a pipeline output; Tim to check PDFs (SEC Item 1.05 effective 2023-12-18)
+future,32,within four business days,4,,,,NO-SOURCE,literature/regulatory - not a pipeline output; Tim to check PDFs
+bbound,B1,+/-2.10 pp bound,2.10,scripts/158_rebuild_s8_regenerate.py,line 78 (EQ = 2.10),2.10,MATCH,"defined in code, not an output; first committed 2534fb9 (2026-02-18) with comment ""A 2.1% bound ensures TOST passes"" (METHODS_FACTS.md B3)"
+bbound,B1,Cavusoglu et al. (2004) | Two days | -2.1%,-2.1% two days,,,,NO-SOURCE,"literature/regulatory - not a pipeline output; Tim to check PDFs; untracked March drafts: Cavusoglu -2.1% with no ""two-day"", another draft -1.0% to -1.5%; Gordon -2.91/-0.35/-1.04, no -0.63%; Kamiya/Martins/Campbell absent (A2_TENSION_CHECKS.md A2-8)"
+bbound,B1,"Gordon et al. (2024), 670 breaches",670,,,,NO-SOURCE,"literature/regulatory - not a pipeline output; Tim to check PDFs; untracked March drafts: Cavusoglu -2.1% with no ""two-day"", another draft -1.0% to -1.5%; Gordon -2.91/-0.35/-1.04, no -0.63%; Kamiya/Martins/Campbell absent (A2_TENSION_CHECKS.md A2-8)"
+bbound,B1,Gordon et al. (2024) | Three days | -0.63%,-0.63% three days,,,,NO-SOURCE,"literature/regulatory - not a pipeline output; Tim to check PDFs; untracked March drafts: Cavusoglu -2.1% with no ""two-day"", another draft -1.0% to -1.5%; Gordon -2.91/-0.35/-1.04, no -0.63%; Kamiya/Martins/Campbell absent (A2_TENSION_CHECKS.md A2-8)"
+bbound,B1,Kamiya et al. (2021) | Three days | -1.09%,-1.09% three days,,,,NO-SOURCE,"literature/regulatory - not a pipeline output; Tim to check PDFs; untracked March drafts: Cavusoglu -2.1% with no ""two-day"", another draft -1.0% to -1.5%; Gordon -2.91/-0.35/-1.04, no -0.63%; Kamiya/Martins/Campbell absent (A2_TENSION_CHECKS.md A2-8)"
+bbound,B1,"Martins et al. (2025), 53 major attacks",53,,,,NO-SOURCE,"literature/regulatory - not a pipeline output; Tim to check PDFs; untracked March drafts: Cavusoglu -2.1% with no ""two-day"", another draft -1.0% to -1.5%; Gordon -2.91/-0.35/-1.04, no -0.63%; Kamiya/Martins/Campbell absent (A2_TENSION_CHECKS.md A2-8)"
+bbound,B1,Martins et al. (2025) | Three days | -4.08%,-4.08% three days,,,,NO-SOURCE,"literature/regulatory - not a pipeline output; Tim to check PDFs; untracked March drafts: Cavusoglu -2.1% with no ""two-day"", another draft -1.0% to -1.5%; Gordon -2.91/-0.35/-1.04, no -0.63%; Kamiya/Martins/Campbell absent (A2_TENSION_CHECKS.md A2-8)"
+bbound,B1,Campbell et al. (2003) | Event window | -5.46%,-5.46%,,,,NO-SOURCE,"literature/regulatory - not a pipeline output; Tim to check PDFs; untracked March drafts: Cavusoglu -2.1% with no ""two-day"", another draft -1.0% to -1.5%; Gordon -2.91/-0.35/-1.04, no -0.63%; Kamiya/Martins/Campbell absent (A2_TENSION_CHECKS.md A2-8)"
+bbound,B1,exceeds Gordon et al.'s 0.63%,0.63%,,,,NO-SOURCE,"literature/regulatory - not a pipeline output; Tim to check PDFs; untracked March drafts: Cavusoglu -2.1% with no ""two-day"", another draft -1.0% to -1.5%; Gordon -2.91/-0.35/-1.04, no -0.63%; Kamiya/Martins/Campbell absent (A2_TENSION_CHECKS.md A2-8)"
+bbound,B1,matches Cavusoglu et al.'s two-day penalty,2.1% two-day,,,,NO-SOURCE,"literature/regulatory - not a pipeline output; Tim to check PDFs; untracked March drafts: Cavusoglu -2.1% with no ""two-day"", another draft -1.0% to -1.5%; Gordon -2.91/-0.35/-1.04, no -0.63%; Kamiya/Martins/Campbell absent (A2_TENSION_CHECKS.md A2-8)"
+bbound,B1,+/-2.10 pp = +/-$757 million at the median market cap,757 million,outputs/defense_supplement/deck_exhibits.csv (git show HEAD: committed version; working tree has uncommitted E3-only additions),"E1_dollar,tost_bound_pos_at_median_mcap",757.3875 $M,MATCH,
+bbound,B1,median market cap ($36.1 billion),36.1 billion,outputs/defense_supplement/deck_exhibits.csv (git show HEAD: committed version; working tree has uncommitted E3-only additions),"E1_dollar,mcap_all_median",36.066072 $B (325 of 340 covered),MATCH,
+bbound,B1,+/-$2.9 billion at the treated median,2.9 billion,outputs/defense_supplement/deck_exhibits.csv (git show HEAD: committed version; working tree has uncommitted E3-only additions),"E1_dollar,tost_bound_at_treated_median_mcap",2.903901 $B,MATCH,
+bbound,B1,treated median ($138.3 billion),138.3 billion,outputs/defense_supplement/deck_exhibits.csv (git show HEAD: committed version; working tree has uncommitted E3-only additions),"E1_dollar,mcap_treated_median",138.281 $B (91 of 106 treated covered),MATCH,
+bbound,B1,A tighter window is in B10,B10,DECK_TEXT_V25.md,e1notice slide number,B10,MATCH,internal cross-reference
+btmo,B2,"T-Mobile breach of August 17, 2021",2021-08-17,outputs/defense_supplement/deck_exhibits.csv (git show HEAD: committed version; working tree has uncommitted E3-only additions),"E1_tmobile,event_date_day0",2021-08-17,MATCH,
+btmo,B2,0 (breach date) | 2021-08-17 | +0.74,+0.74,outputs/defense_supplement/deck_exhibits.csv (git show HEAD: committed version; working tree has uncommitted E3-only additions),"E1_tmobile,ar_day00_2021-08-17",0.7395,MATCH,
+btmo,B2,0 (breach date) | cumulative +0.74,+0.74,outputs/defense_supplement/deck_exhibits.csv (git show HEAD: committed version; working tree has uncommitted E3-only additions),"E1_tmobile,cum_day00",0.7395,MATCH,
+btmo,B2,2 (notification) | 2021-08-19,2021-08-19,outputs/defense_supplement/deck_exhibits.csv (git show HEAD: committed version; working tree has uncommitted E3-only additions),"E1_tmobile,reported_date",2021-08-19,MATCH,
+btmo,B2,2 (notification) | +0.98,+0.98,outputs/defense_supplement/deck_exhibits.csv (git show HEAD: committed version; working tree has uncommitted E3-only additions),"E1_tmobile,ar_day02_2021-08-19",0.984,MATCH,
+btmo,B2,2 (notification) | cumulative +2.01,+2.01,outputs/defense_supplement/deck_exhibits.csv (git show HEAD: committed version; working tree has uncommitted E3-only additions),"E1_tmobile,cum_day02",2.0122,MATCH,
+btmo,B2,5 | 2021-08-24 | -0.45,-0.45,outputs/defense_supplement/deck_exhibits.csv (git show HEAD: committed version; working tree has uncommitted E3-only additions),"E1_tmobile,ar_day05_2021-08-24",-0.4513,MATCH,
+btmo,B2,5 | cumulative +0.81,+0.81,outputs/defense_supplement/deck_exhibits.csv (git show HEAD: committed version; working tree has uncommitted E3-only additions),"E1_tmobile,cum_day05",0.809,MATCH,
+btmo,B2,6 | 2021-08-25 | -2.11,-2.11,outputs/defense_supplement/deck_exhibits.csv (git show HEAD: committed version; working tree has uncommitted E3-only additions),"E1_tmobile,ar_day06_2021-08-25",-2.1119,MATCH,
+btmo,B2,6 | cumulative -1.30,-1.30,outputs/defense_supplement/deck_exhibits.csv (git show HEAD: committed version; working tree has uncommitted E3-only additions),"E1_tmobile,cum_day06",-1.3029,MATCH,
+btmo,B2,20 | 2021-09-15 | -2.29,-2.29,outputs/defense_supplement/deck_exhibits.csv (git show HEAD: committed version; working tree has uncommitted E3-only additions),"E1_tmobile,ar_day20_2021-09-15",-2.2868,MATCH,
+btmo,B2,20 | cumulative -10.72,-10.72,outputs/defense_supplement/deck_exhibits.csv (git show HEAD: committed version; working tree has uncommitted E3-only additions),"E1_tmobile,cum_day20",-10.7195,MATCH,
+btmo,B2,30 | 2021-09-29 | +1.42,+1.42,outputs/defense_supplement/deck_exhibits.csv (git show HEAD: committed version; working tree has uncommitted E3-only additions),"E1_tmobile,ar_day30_2021-09-29",1.4241,MATCH,
+btmo,B2,30 | cumulative -7.24,-7.24,outputs/defense_supplement/deck_exhibits.csv (git show HEAD: committed version; working tree has uncommitted E3-only additions),"E1_tmobile,cum_day30",-7.238,MATCH,
+btmo,B2,"CAR(0, +30) = -7.24 pp",-7.24,outputs/defense_supplement/deck_exhibits.csv (git show HEAD: committed version; working tree has uncommitted E3-only additions),"E1_tmobile,car_30d",-7.238 (== committed car_30d),MATCH,
+btmo,B2,pre-event market cap of $175.6 billion,175.6 billion,outputs/defense_supplement/deck_exhibits.csv (git show HEAD: committed version; working tree has uncommitted E3-only additions),"E1_tmobile,mcap",175.626255 $B,MATCH,
+btmo,B2,about -$12.7 billion,-12.7 billion,outputs/defense_supplement/deck_exhibits.csv (git show HEAD: committed version; working tree has uncommitted E3-only additions),"E1_tmobile,dollar_car_30d",-12.711828 $B,MATCH,
+btmo,B2,the decline starts at day 6,6,outputs/defense_supplement/deck_exhibits.csv (git show HEAD: committed version; working tree has uncommitted E3-only additions),E1_tmobile cum_day05 0.809 -> cum_day06 -1.3029,cumulative turns negative at day 6,MATCH,
+btmo,B2,overlaps T-Mobile's August 26 event,2021-08-26,Data/processed/rebuild/CANONICAL_V3.csv,"final_cik 1283699, breach_date 2021-08-26",T-Mobile USA 2021-08-26,MATCH,
+btmo,B2,"AR = (R - Rm) x 100; CAR(0, +30)","100; (0,+30)",scripts/155_rebuild_s5_outcomes.py,"lines 6, 101-105","(ret - vwretd) x 100 over trading days [0,+30]",MATCH,
+bse,B3,OLS | Timing p .242,.242,outputs/rebuild/appendix_v3/table_8.csv,"row OLS, column Timing p",0.2423,MATCH,
+bse,B3,OLS | FCC p .520,.520,outputs/rebuild/appendix_v3/table_8.csv,"row OLS, column FCC p",0.5204,MATCH,
+bse,B3,OLS | ROA p .133,.133,outputs/rebuild/appendix_v3/table_8.csv,"row OLS, column ROA p",0.1334,MATCH,
+bse,B3,HC1 | Timing p .247,.247,outputs/rebuild/appendix_v3/table_8.csv,"row HC1, column Timing p",0.2466,MATCH,
+bse,B3,HC1 | FCC p .562,.562,outputs/rebuild/appendix_v3/table_8.csv,"row HC1, column FCC p",0.5616,MATCH,
+bse,B3,HC1 | ROA p .164,.164,outputs/rebuild/appendix_v3/table_8.csv,"row HC1, column ROA p",0.1642,MATCH,
+bse,B3,HC3 (primary) | Timing p .253,.253,outputs/rebuild/appendix_v3/table_8.csv,"row HC3, column Timing p",0.2526,MATCH,
+bse,B3,HC3 (primary) | FCC p .566,.566,outputs/rebuild/appendix_v3/table_8.csv,"row HC3, column FCC p",0.5659,MATCH,
+bse,B3,HC3 (primary) | ROA p .175,.175,outputs/rebuild/appendix_v3/table_8.csv,"row HC3, column ROA p",0.175,MATCH,
+bse,B3,Parent-CIK clustered (83) | Timing p .185,.185,outputs/rebuild/appendix_v3/table_8.csv,"row Firm-clustered, column Timing p",0.1849,MATCH,
+bse,B3,Parent-CIK clustered (83) | FCC p .534,.534,outputs/rebuild/appendix_v3/table_8.csv,"row Firm-clustered, column FCC p",0.5335,MATCH,half-up rounding
+bse,B3,Parent-CIK clustered (83) | ROA p .199,.199,outputs/rebuild/appendix_v3/table_8.csv,"row Firm-clustered, column ROA p",0.199,MATCH,
+bse,B3,Parent-CIK clustered (83),83,outputs/rebuild/appendix_v3/table_8.csv,"CAPTION (""83 clusters"")",83,MATCH,
+bse,B3,N = 340,340,outputs/rebuild/appendix_v3/table_8.csv; outputs/rebuild/constants_v3.json,CAPTION (N = 340); N_regression,340,MATCH,
+bleak,B4,"Breach, [-10, -1] | Treated +1.06",+1.06,outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored [-10,-1] Treated Mean CAR",1.063,MATCH,
+bleak,B4,"Breach, [-10, -1] | Untreated -0.42",-0.42,outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored [-10,-1] Untreated Mean CAR",-0.421,MATCH,
+bleak,B4,"Breach, [-10, -1] | Difference +1.48",+1.48,outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored [-10,-1] Difference (Welch)",1.484,MATCH,
+bleak,B4,"Breach, [-10, -1] | Welch p .051",.051,outputs/rebuild/appendix_v3/table_16.csv,"Breach-anchored [-10,-1] Difference (Welch) p",0.0506,MATCH,
+bleak,B4,"Notice, [-10, -1] | Treated +0.72",+0.72,outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored [-10,-1] Treated",0.717,MATCH,
+bleak,B4,"Notice, [-10, -1] | Untreated -0.81",-0.81,outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored [-10,-1] Untreated",-0.809,MATCH,
+bleak,B4,"Notice, [-10, -1] | Difference +1.53",+1.53,outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored [-10,-1] Difference (Welch)",1.526,MATCH,
+bleak,B4,"Notice, [-10, -1] | Welch p .030",.030,outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored [-10,-1] Difference (Welch) p",0.0301,MATCH,
+bleak,B4,"Notice, [-20, -11] | Treated -0.47",-0.47,outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored [-20,-11] Treated",-0.471,MATCH,
+bleak,B4,"Notice, [-20, -11] | Untreated +0.65",+0.65,outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored [-20,-11] Untreated",0.65,MATCH,
+bleak,B4,"Notice, [-20, -11] | Difference -1.12",-1.12,outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored [-20,-11] Difference (Welch)",-1.121,MATCH,
+bleak,B4,"Notice, [-20, -11] | Welch p .058",.058,outputs/rebuild/appendix_v3/table_16.csv,"Announcement-anchored [-20,-11] Difference (Welch) p",0.058,MATCH,
+bleak,B4,CRSP sample (111 treated / 245 untreated,111 / 245,outputs/rebuild/appendix_v3/table_16.csv,Breach-anchored Treated N / Untreated N,111 / 245,MATCH,
+bleak,B4,110 / 245 for notice anchor,110 / 245,outputs/rebuild/appendix_v3/table_16.csv,Announcement-anchored Treated N / Untreated N,110 / 245,MATCH,
+be2,B5,HC3 (disqualified) | Volatility change p .122,.122,outputs/tables/essay2_v2/t26_inference_ladder.csv,HC3 row p,0.1215,MATCH,
+be2,B5,HC3 | Delay (raw) p .419,.419,outputs/defense_supplement/e2_delay_ladder.csv,"delay (raw days), HC3, p",0.4193,MATCH,
+be2,B5,"CV1 parent CIK, t(81) | .298",.298,outputs/tables/essay2_v2/t26_inference_ladder.csv,CV1 row p,0.2983,MATCH,
+be2,B5,CV1 | Delay .512,.512,outputs/defense_supplement/e2_delay_ladder.csv,"delay (raw days), CV1 parent CIK, p",0.5119,MATCH,
+be2,B5,"CV3 jackknife, t(81) | .386",.386,outputs/tables/essay2_v2/t26_inference_ladder.csv,CV3 row p,0.3863,MATCH,
+be2,B5,CV3 | Delay .608,.608,outputs/defense_supplement/e2_delay_ladder.csv,"delay (raw days), CV3 jackknife, p",0.6083,MATCH,
+be2,B5,"Wild cluster bootstrap (B = 99,999) | .333",.333,outputs/tables/essay2_v2/t26_inference_ladder.csv,WCR row p,0.3325,MATCH,half-up rounding (.3325 -> .333)
+be2,B5,Wild cluster bootstrap | Delay .574,.574,outputs/defense_supplement/e2_delay_ladder.csv,"delay (raw days), WCR restricted Rademacher, p",0.5742,MATCH,
+be2,B5,t(81),81,outputs/tables/essay2_v2/t26_inference_ladder.csv,CV1/CV3 procedure labels,t(81),MATCH,
+be2,B5,"B = 99,999","99,999",outputs/tables/essay2_v2/t26_inference_ladder.csv; outputs/defense_supplement/e2_delay_ladder.csv,WCR label; B column,99999,MATCH,
+be2,B5,Volatility change +0.21 daily pp,+0.21,outputs/tables/essay2_v2/t26_inference_ladder.csv,coef,0.2119,MATCH,
+be2,B5,"CV3 95% CI [-0.27, 0.70]","[-0.27, 0.70]",outputs/tables/essay2_v2/t26_inference_ladder.csv,CV3 row ci_lo/ci_hi,"[-0.2721, 0.6959]",MATCH,
+be2,B5,Delay +25.5 days,+25.5,outputs/defense_supplement/e2_delay_ladder.csv,delay (raw days) coef,25.5087,MATCH,
+be2,B5,"CV3 95% CI [-73.1, 124.1]","[-73.1, 124.1]",outputs/defense_supplement/e2_delay_ladder.csv,delay (raw days) CV3 ci_lo/ci_hi,"[-73.1306, 124.1479]",MATCH,
+be2,B5,N = 333; G = 82; 12 treated parent CIKs,333 / 82 / 12,outputs/defense_supplement/e2_delay_ladder.csv; outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md,"N, G, G1 columns; ledger line 31",333 / 82 / 12,MATCH,
+binference,B6,30 days | Coef +0.004,+0.004,outputs/essay3_v4/f1_ladder.csv,"y=exec_departure_30_rd, column coef",0.004,MATCH,
+binference,B6,30 days | HC3 p .876,.876,outputs/essay3_v4/f1_ladder.csv,"y=exec_departure_30_rd, column p_hc3",0.8764,MATCH,
+binference,B6,30 days | CV1 p .873,.873,outputs/essay3_v4/f1_ladder.csv,"y=exec_departure_30_rd, column p_cv1",0.873,MATCH,
+binference,B6,30 days | CV3 p .906,.906,outputs/essay3_v4/f1_ladder.csv,"y=exec_departure_30_rd, column p_cv3",0.9061,MATCH,
+binference,B6,30 days | WCR p .889,.889,outputs/essay3_v4/f1_ladder.csv,"y=exec_departure_30_rd, column p_wcr",0.8889,MATCH,
+binference,B6,30 days | RI p .904,.904,outputs/defense_supplement/e3_randomization_inference.csv,"exec_departure_30_rd, C1 all parents, ri_p_coef",0.9037,MATCH,
+binference,B6,90 days | Coef -0.041,-0.041,outputs/essay3_v4/f1_ladder.csv,"y=exec_departure_90_rd, column coef",-0.041,MATCH,
+binference,B6,90 days | HC3 p .345,.345,outputs/essay3_v4/f1_ladder.csv,"y=exec_departure_90_rd, column p_hc3",0.3445,MATCH,
+binference,B6,90 days | CV1 p .413,.413,outputs/essay3_v4/f1_ladder.csv,"y=exec_departure_90_rd, column p_cv1",0.4128,MATCH,
+binference,B6,90 days | CV3 p .605,.605,outputs/essay3_v4/f1_ladder.csv,"y=exec_departure_90_rd, column p_cv3",0.6053,MATCH,
+binference,B6,90 days | WCR p .514,.514,outputs/essay3_v4/f1_ladder.csv,"y=exec_departure_90_rd, column p_wcr",0.5136,MATCH,
+binference,B6,90 days | RI p .596,.596,outputs/defense_supplement/e3_randomization_inference.csv,"exec_departure_90_rd, C1 all parents, ri_p_coef",0.5961,MATCH,
+binference,B6,180 days | Coef +0.023,+0.023,outputs/essay3_v4/f1_ladder.csv,"y=exec_departure_180_rd, column coef",0.0233,MATCH,
+binference,B6,180 days | HC3 p .703,.703,outputs/essay3_v4/f1_ladder.csv,"y=exec_departure_180_rd, column p_hc3",0.7034,MATCH,
+binference,B6,180 days | CV1 p .767,.767,outputs/essay3_v4/f1_ladder.csv,"y=exec_departure_180_rd, column p_cv1",0.7668,MATCH,
+binference,B6,180 days | CV3 p .816,.816,outputs/essay3_v4/f1_ladder.csv,"y=exec_departure_180_rd, column p_cv3",0.8159,MATCH,
+binference,B6,180 days | WCR p .790,.790,outputs/essay3_v4/f1_ladder.csv,"y=exec_departure_180_rd, column p_wcr",0.7901,MATCH,
+binference,B6,180 days | RI p .846,.846,outputs/defense_supplement/e3_randomization_inference.csv,"exec_departure_180_rd, C1 all parents, ri_p_coef",0.8455,MATCH,
+binference,B6,Placebo | Coef -0.086,-0.086,outputs/essay3_v4/f4_placebo.csv,"y=placebo_exec_departure_rd, column coef",-0.0862,MATCH,
+binference,B6,Placebo | HC3 p .124,.124,outputs/essay3_v4/f4_placebo.csv,"y=placebo_exec_departure_rd, column p_hc3",0.1244,MATCH,
+binference,B6,Placebo | CV1 p .187,.187,outputs/essay3_v4/f4_placebo.csv,"y=placebo_exec_departure_rd, column p_cv1",0.1867,MATCH,
+binference,B6,Placebo | CV3 p .312,.312,outputs/essay3_v4/f4_placebo.csv,"y=placebo_exec_departure_rd, column p_cv3",0.3116,MATCH,
+binference,B6,Placebo | WCR p .231,.231,outputs/essay3_v4/f4_placebo.csv,"y=placebo_exec_departure_rd, column p_wcr",0.2308,MATCH,
+binference,B6,Placebo | RI p .408,.408,outputs/defense_supplement/e3_randomization_inference.csv,"placebo_exec_departure_rd, C1 all parents, ri_p_coef",0.4080,MATCH,
+binference,B6,RI reassigns treatment to 13 of 119 parent CIKs,13 of 119,outputs/defense_supplement/e3_randomization_inference.csv,"G1, G columns","13, 119",MATCH,
+binference,B6,"(9,999 draws)","9,999",outputs/defense_supplement/e3_randomization_inference.csv,B column,9999 (seed 250),MATCH,
+binference,B6,"a size-matched variant gives .93, .55, .83",".93, .55, .83",outputs/defense_supplement/e3_randomization_inference.csv,"C3 size-matched parents, ri_p_coef at 30/90/180","0.9292, 0.5459, 0.8323",MATCH,
+binference,B6,G* = 24.5,24.5,outputs/essay3_v4/f1_ladder.csv,G_star column (all windows),24.5,MATCH,
+bclassifier,B7,"recall audit, 77-80 filings",77-80,outputs/essay3_q2/d3_audit_agreement.csv,n column (PRIMARY rows),77 / 79 / 80,MATCH,"Query-2-era recall audit (v2 classifier; outputs/essay3_q2, 3b5be1e 2026-09-11), not the v4 scoring (outputs/essay3_v4/238_scoring.md: n = 30, exec kappa .87); reference codes produced by Claude, not hand-coded by Tim (METHODS_FACTS.md B20)"
+bclassifier,B7,Executive departure | Precision 0.966,0.966,outputs/essay3_q2/d3_audit_agreement.csv,"exec departure (A), PRIMARY, precision",0.9655,MATCH,"Query-2-era recall audit (v2 classifier; outputs/essay3_q2, 3b5be1e 2026-09-11), not the v4 scoring (outputs/essay3_v4/238_scoring.md: n = 30, exec kappa .87); reference codes produced by Claude, not hand-coded by Tim (METHODS_FACTS.md B20)"
+bclassifier,B7,"Executive departure | [0.822, 0.999]","[0.822, 0.999]",outputs/essay3_q2/d3_audit_agreement.csv,"exec departure (A), PRIMARY, precision_ci95","[0.822, 0.999]",MATCH,"Query-2-era recall audit (v2 classifier; outputs/essay3_q2, 3b5be1e 2026-09-11), not the v4 scoring (outputs/essay3_v4/238_scoring.md: n = 30, exec kappa .87); reference codes produced by Claude, not hand-coded by Tim (METHODS_FACTS.md B20)"
+bclassifier,B7,Executive departure | Recall 0.800,0.800,outputs/essay3_q2/d3_audit_agreement.csv,"exec departure (A), PRIMARY, recall",0.8,MATCH,"Query-2-era recall audit (v2 classifier; outputs/essay3_q2, 3b5be1e 2026-09-11), not the v4 scoring (outputs/essay3_v4/238_scoring.md: n = 30, exec kappa .87); reference codes produced by Claude, not hand-coded by Tim (METHODS_FACTS.md B20)"
+bclassifier,B7,"Executive departure | [0.631, 0.916]","[0.631, 0.916]",outputs/essay3_q2/d3_audit_agreement.csv,"exec departure (A), PRIMARY, recall_ci95","[0.631, 0.916]",MATCH,"Query-2-era recall audit (v2 classifier; outputs/essay3_q2, 3b5be1e 2026-09-11), not the v4 scoring (outputs/essay3_v4/238_scoring.md: n = 30, exec kappa .87); reference codes produced by Claude, not hand-coded by Tim (METHODS_FACTS.md B20)"
+bclassifier,B7,Executive departure | Kappa 0.79,0.79,outputs/essay3_q2/d3_audit_agreement.csv,"exec departure (A), PRIMARY, kappa",0.7874,MATCH,"Query-2-era recall audit (v2 classifier; outputs/essay3_q2, 3b5be1e 2026-09-11), not the v4 scoring (outputs/essay3_v4/238_scoring.md: n = 30, exec kappa .87); reference codes produced by Claude, not hand-coded by Tim (METHODS_FACTS.md B20)"
+bclassifier,B7,CEO departure | Precision 0.571,0.571,outputs/essay3_q2/d3_audit_agreement.csv,"CEO departure, PRIMARY, precision",0.5714,MATCH,"Query-2-era recall audit (v2 classifier; outputs/essay3_q2, 3b5be1e 2026-09-11), not the v4 scoring (outputs/essay3_v4/238_scoring.md: n = 30, exec kappa .87); reference codes produced by Claude, not hand-coded by Tim (METHODS_FACTS.md B20)"
+bclassifier,B7,"CEO departure | Precision [0.184, 0.901]","[0.184, 0.901]",outputs/essay3_q2/d3_audit_agreement.csv,"CEO departure, PRIMARY, precision_ci95","[0.184, 0.901]",MATCH,"Query-2-era recall audit (v2 classifier; outputs/essay3_q2, 3b5be1e 2026-09-11), not the v4 scoring (outputs/essay3_v4/238_scoring.md: n = 30, exec kappa .87); reference codes produced by Claude, not hand-coded by Tim (METHODS_FACTS.md B20)"
+bclassifier,B7,CEO departure | Recall 0.571,0.571,outputs/essay3_q2/d3_audit_agreement.csv,"CEO departure, PRIMARY, recall",0.5714,MATCH,"Query-2-era recall audit (v2 classifier; outputs/essay3_q2, 3b5be1e 2026-09-11), not the v4 scoring (outputs/essay3_v4/238_scoring.md: n = 30, exec kappa .87); reference codes produced by Claude, not hand-coded by Tim (METHODS_FACTS.md B20)"
+bclassifier,B7,"CEO departure | Recall [0.184, 0.901]","[0.184, 0.901]",outputs/essay3_q2/d3_audit_agreement.csv,"CEO departure, PRIMARY, recall_ci95","[0.184, 0.901]",MATCH,"Query-2-era recall audit (v2 classifier; outputs/essay3_q2, 3b5be1e 2026-09-11), not the v4 scoring (outputs/essay3_v4/238_scoring.md: n = 30, exec kappa .87); reference codes produced by Claude, not hand-coded by Tim (METHODS_FACTS.md B20)"
+bclassifier,B7,CEO departure | Kappa 0.53,0.53,outputs/essay3_q2/d3_audit_agreement.csv,"CEO departure, PRIMARY, kappa",0.5298,MATCH,"Query-2-era recall audit (v2 classifier; outputs/essay3_q2, 3b5be1e 2026-09-11), not the v4 scoring (outputs/essay3_v4/238_scoring.md: n = 30, exec kappa .87); reference codes produced by Claude, not hand-coded by Tim (METHODS_FACTS.md B20)"
+bclassifier,B7,Director-only departure | Precision 0.818,0.818,outputs/essay3_q2/d3_audit_agreement.csv,"director-only departure, PRIMARY, precision",0.8182,MATCH,"Query-2-era recall audit (v2 classifier; outputs/essay3_q2, 3b5be1e 2026-09-11), not the v4 scoring (outputs/essay3_v4/238_scoring.md: n = 30, exec kappa .87); reference codes produced by Claude, not hand-coded by Tim (METHODS_FACTS.md B20)"
+bclassifier,B7,"Director-only departure | Precision [0.482, 0.977]","[0.482, 0.977]",outputs/essay3_q2/d3_audit_agreement.csv,"director-only departure, PRIMARY, precision_ci95","[0.482, 0.977]",MATCH,"Query-2-era recall audit (v2 classifier; outputs/essay3_q2, 3b5be1e 2026-09-11), not the v4 scoring (outputs/essay3_v4/238_scoring.md: n = 30, exec kappa .87); reference codes produced by Claude, not hand-coded by Tim (METHODS_FACTS.md B20)"
+bclassifier,B7,Director-only departure | Recall 0.750,0.750,outputs/essay3_q2/d3_audit_agreement.csv,"director-only departure, PRIMARY, recall",0.75,MATCH,"Query-2-era recall audit (v2 classifier; outputs/essay3_q2, 3b5be1e 2026-09-11), not the v4 scoring (outputs/essay3_v4/238_scoring.md: n = 30, exec kappa .87); reference codes produced by Claude, not hand-coded by Tim (METHODS_FACTS.md B20)"
+bclassifier,B7,"Director-only departure | Recall [0.428, 0.945]","[0.428, 0.945]",outputs/essay3_q2/d3_audit_agreement.csv,"director-only departure, PRIMARY, recall_ci95","[0.428, 0.945]",MATCH,"Query-2-era recall audit (v2 classifier; outputs/essay3_q2, 3b5be1e 2026-09-11), not the v4 scoring (outputs/essay3_v4/238_scoring.md: n = 30, exec kappa .87); reference codes produced by Claude, not hand-coded by Tim (METHODS_FACTS.md B20)"
+bclassifier,B7,Director-only departure | Kappa 0.75,0.75,outputs/essay3_q2/d3_audit_agreement.csv,"director-only departure, PRIMARY, kappa",0.7462,MATCH,"Query-2-era recall audit (v2 classifier; outputs/essay3_q2, 3b5be1e 2026-09-11), not the v4 scoring (outputs/essay3_v4/238_scoring.md: n = 30, exec kappa .87); reference codes produced by Claude, not hand-coded by Tim (METHODS_FACTS.md B20)"
+blimits,B8,One incident split across state filings | 79 of 489 events,79 of 489,docs/claude/KNOWN_LIMITATIONS.md,line 18,79 of the 489 canonical events,MATCH,KNOWN_LIMITATIONS cites TIMING_MEASUREMENT_REPORT.md:552
+blimits,B8,(19 treated),19,docs/claude/KNOWN_LIMITATIONS.md,line 20,"19 treated events, 60 control",MATCH,
+blimits,B8,Breach date equals filing date | 116 of 340 Essay 1 events,116 of 340,docs/claude/KNOWN_LIMITATIONS.md; outputs/TIMING_MEASUREMENT_REPORT.md,"KL line 59; TMR lines 24, 39",116 (41 treated / 75 control),MATCH,same 116 as e1timing; all inside the 124 immediate-disclosure events; TMR numbers from uncommitted scratchpad scripts (A2-3)
+blimits,B8,93 Massachusetts,93,docs/claude/KNOWN_LIMITATIONS.md; outputs/TIMING_MEASUREMENT_REPORT.md,KL line 59; TMR line 39,93,MATCH,
+blimits,B8,CAR window closes before notification | 128 of 340 events,128 of 340,docs/claude/KNOWN_LIMITATIONS.md,line 113,128 of 340 (38%),MATCH,
+blimits,B8,(42 treated),42,docs/claude/KNOWN_LIMITATIONS.md,line 113,42 of 106,MATCH,
+blimits,B8,No single notification-date rule | 31 Gate-2 chained events,31,docs/claude/KNOWN_LIMITATIONS.md,line 136,31 Gate-2 chained events,MATCH,
+blimits,B8,Uneven CRSP coverage | 111 of 118 treated,111 of 118,outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md; outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md,L2 lines 22-23; L1 line 46,111 of 118,MATCH,
+blimits,B8,vs 245 of 371 control with CRSP data,245 of 371,outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md; outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md,L1 line 14 (356) minus 111; L2 line 22 (371),245 of 371,DERIVED,356 - 111 = 245
+blimits,B8,Aon | Essay 1: 83 -> 82,83 -> 82,docs/claude/KNOWN_LIMITATIONS.md,lines 218-222 table,Essay 1 regression 83 -> 82,MATCH,
+blimits,B8,Essay 2: 82 -> 81 if merged,82 -> 81,docs/claude/KNOWN_LIMITATIONS.md,lines 218-222 table,Essay 2 final 82 -> 81,MATCH,
+brepro,B9,65 of 66 steps succeed,65 of 66,REVIEWER_GUIDE.md; run_all.py at defense-final,"REVIEWER_GUIDE.md:26 (""66 steps""), :32 (one declared skip: step 170); git show defense-final:run_all.py = 66 step tuples","66 steps, 1 declared skip",MATCH,true at defense-final; current main run_all.py has 70 step tuples (255-258 added after the tag)
+brepro,B9,one declared WRDS-licensed skip,1,REVIEWER_GUIDE.md,line 32,step 170,MATCH,
+brepro,B9,all 99 analytic values match Python,99,r_replication/VERIFICATION.md,"line 9 (current, c298475): ""143 | 143 of 143""; 1566d02:r_replication/VERIFICATION.md:9 ""99 of 99""",143 of 143,MISMATCH,deck carries the superseded same-day 1566d02 count; current file reports 143 of 143 analytic values plus 8 of 8 Essay 1 90% CIs (line 10)
+brepro,B9,to 4 decimals,4,r_replication/VERIFICATION.md,"line 9 (""R rounded to 4 decimals"")",4,MATCH,
+brepro,B9,bootstrap p-values within Monte Carlo error,12,r_replication/VERIFICATION.md,"line 11 (""12 of 12"", |R - Python| <= 3*sqrt(p(1-p)/B))",12 of 12,MATCH,randomization-inference values not compared (0)
+brepro,B9,duplicated CRSP rows that distorted three events' returns,3,outputs/RETIREMENT_LEDGER.md; outputs/defense_supplement/deck_exhibits.csv (git show HEAD: committed version; working tree has uncommitted E3-only additions),"RETIREMENT_LEDGER 2026-10-02 ""The three affected events""; E1_dup_diagnostic,n_events_affected",3,MATCH,
+e1notice,B10,"Breach-anchored (0, +30) | TOST .178",.178,outputs/defense_supplement/e1_notification_anchored.csv,"D2 breach (committed baseline) (0,+30) fcc_form499 tost_p_2_10",0.178281,MATCH,
+e1notice,B10,"Notice-anchored (0, +1) | TOST < .001",<.001,outputs/defense_supplement/e1_notification_anchored.csv,"D2 notification (0,+1) fcc_form499 tost_p_2_10",1.6e-05,MATCH,
+e1notice,B10,"Notice-anchored (0, +5) | TOST .009",.009,outputs/defense_supplement/e1_notification_anchored.csv,"D2 notification (0,+5) fcc_form499 tost_p_2_10",0.00857,MATCH,
+e1notice,B10,"Notice-anchored (0, +30) | TOST .389",.389,outputs/defense_supplement/e1_notification_anchored.csv,"D2 notification (0,+30) fcc_form499 tost_p_2_10",0.389266,MATCH,
+e1notice,B10,N = 337 / 337 / 335,337/337/335,outputs/defense_supplement/e1_notification_anchored.csv,"D2 notification rows, N column",337 / 337 / 335,MATCH,
+e1notice,B10,(104 treated),104,outputs/defense_supplement/e1_notification_anchored.csv,"D2 notification rows, n_treated",104,MATCH,
+e1notice,B10,No hypothesis variable reaches p < .05 in any window,.05,outputs/defense_supplement/e1_notification_anchored.csv,D2 all rows p_hc3 (minimum),"min p_hc3 0.1564 (notification (0,+30) fcc_form499)",MATCH,
+e1notice,B10,shaded = +/-2.10 pp equivalence bound,2.10,outputs/defense_supplement/e1_notification_anchored.csv; scripts/158:78,column tost_p_2_10,2.10,MATCH,
+b8k,B11,Form 499 filers | 118,118,outputs/rebuild/appendix_v3/table_2.csv,Treated (Form 499) N,118,MATCH,
+b8k,B11,Form 499 filers | Median days 15,15,outputs/rebuild/appendix_v3/table_2.csv,Treated Median gap,15.0,MATCH,
+b8k,B11,Form 499 filers | Mean days 22.4,22.4,outputs/rebuild/appendix_v3/table_2.csv,Treated Mean gap,22.44,MATCH,
+b8k,B11,Form 499 filers | 117 of 118,117 of 118,outputs/essay1_chair/t2_group_tests.csv,"Fisher's exact row, Treated value",117 of 118,MATCH,
+b8k,B11,Non-filers at firms with 3+ breaches | 219,219,outputs/rebuild/appendix_v3/table_2.csv,"Untreated (control CIKs, 3+ events) N",219,MATCH,
+b8k,B11,Non-filers | Median days 26,26,outputs/rebuild/appendix_v3/table_2.csv,Untreated Median gap,26.0,MATCH,
+b8k,B11,Non-filers | Mean days 30.2,30.2,outputs/rebuild/appendix_v3/table_2.csv,Untreated Mean gap,30.16,MATCH,
+b8k,B11,Non-filers | 201 of 219,201 of 219,outputs/essay1_chair/t2_group_tests.csv,"Fisher's exact row, Untreated value",201 of 219,MATCH,
+b8k,B11,firms with 3+ breaches,3,outputs/rebuild/appendix_v3/table_2.csv,"group label ""3+ events""",3+,MATCH,
+b8k,B11,Welch t = -3.24,-3.24,outputs/essay1_chair/t2_group_tests.csv,Welch row Statistic,t = -3.238 (df 256.8),MATCH,Welch/Mann-Whitney use the 117 / 201 events with an 8-K within 90 days (t2_group_tests N columns); table_2 N = 118 / 219
+b8k,B11,Welch p = .001,.001,outputs/essay1_chair/t2_group_tests.csv,Welch row p,0.0014,MATCH,Welch/Mann-Whitney use the 117 / 201 events with an 8-K within 90 days (t2_group_tests N columns); table_2 N = 118 / 219
+b8k,B11,mean difference -7.7 days,-7.7,outputs/essay1_chair/t2_group_tests.csv,Welch row Difference,-7.72,MATCH,Welch/Mann-Whitney use the 117 / 201 events with an 8-K within 90 days (t2_group_tests N columns); table_2 N = 118 / 219
+b8k,B11,Mann-Whitney p = .001,.001,outputs/essay1_chair/t2_group_tests.csv,Mann-Whitney row p,0.001,MATCH,Welch/Mann-Whitney use the 117 / 201 events with an 8-K within 90 days (t2_group_tests N columns); table_2 N = 118 / 219
+b8k,B11,share within 90 days z = 2.80,2.80,outputs/essay1_chair/t2_group_tests.csv,two-proportion z row Statistic,z = 2.799,MATCH,
+b8k,B11,z p = .005,.005,outputs/essay1_chair/t2_group_tests.csv,two-proportion z row p,0.0051,MATCH,
+b8k,B11,Fisher p = .005,.005,outputs/essay1_chair/t2_group_tests.csv,Fisher's exact row p,0.0049,MATCH,
+b8k,B11,8-K within 90 days,90,outputs/rebuild/appendix_v3/table_2.csv,"column ""Share with 8-K in 90d""",90,MATCH,
+b8k,B11,"Essay 1, Table 2",2,outputs/rebuild/appendix_v3/table_2.csv,appendix_v3 table_2,Table 2,MATCH,

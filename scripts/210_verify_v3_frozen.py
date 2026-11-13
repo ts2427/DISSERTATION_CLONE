@@ -218,6 +218,13 @@ V4_DIRS = (
     # Essay 1 chair-feedback tables (2026-10-15, scripts 260-261): labels, notes and group
     # tests on the frozen sample, written only here; no v3 path is touched.
     "outputs/essay1_chair/",
+    # Essay 2 v5 committee rerun (2026-11-07 / 11-13, scripts 262-272): new outcome on the
+    # frozen 333-event sample, written only here; no v3 path is touched. Entry missed when
+    # 21cfbbb / 16f9611 were committed (this gate failed on those 105 additions until now).
+    "outputs/essay2_v5/",
+    # Defense audit (2026-11-13, scripts/273): provenance, methods facts and descriptive
+    # counts on the frozen samples, written only here; no v3 path is touched.
+    "outputs/defense_audit/",
 )
 V4_DOCS = (
     "docs/claude/REBUILD_V4_QUERY.md",
@@ -270,7 +277,7 @@ V4_DOCS = (
     "outputs/ESSAY3_DRAFTS_PROVENANCE_CHECK.md",
 )
 SCRIPT_RE = re.compile(r"^scripts/(\d+)_[^/]*\.py$")
-SCRIPT_LO, SCRIPT_HI = 210, 261  # 250-253, 255, 258: defense supplement; 254: CRSP loader; 256: Essay 3 appendix supplement; 257: Essay 3 appendix of record; 260-261: Essay 1 chair tables
+SCRIPT_LO, SCRIPT_HI = 210, 273  # 250-253, 255, 258: defense supplement; 254: CRSP loader; 256: Essay 3 appendix supplement; 257: Essay 3 appendix of record; 260-261: Essay 1 chair tables; 262-272: Essay 2 v5; 273: defense audit facts
 
 
 def git(*args, binary=False):
