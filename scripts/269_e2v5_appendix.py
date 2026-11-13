@@ -63,13 +63,13 @@ TABLE_GROUPS = [
     ['inference_ladder'],                                                         # 19
     ['design_resolution'],                                                        # 20
     ['dynamic_path'],                                                             # 21
-    ['benchmarks', 'estimation_contamination'],                                   # 22
+    ['benchmarks', 'estimation_contamination', 'coverage_drops'],                 # 22
     ['alternatives_bridge'],                                                      # 23
     ['announcement_family', 'announcement_ladder', 'announcement_buildup',
      'placebo_dates', 'earnings_benchmark'],                                      # 24
-    ['spreads'],                                                                  # 25
     ['disclosure_delay', 'delay_nonzero', 'delay_quantiles', 'delay_distribution',
-     'delay_distribution_tests'],                                                 # 26
+     'delay_distribution_tests'],                                                 # 25
+    ['spreads'],                                                                  # 26
     ['size_quartiles'],                                                           # 27
     ['prerule_events'],                                                           # 28
     ['specification_curve', 'specification_curve_permutation'],                   # 29
@@ -77,7 +77,6 @@ TABLE_GROUPS = [
     ['fixed_effects'],                                                            # 31
     ['v4_date_sensitivity'],                                                      # 32
     ['program_test_enumeration', 'bh_families'],                                  # 33
-    ['coverage_drops'],                                                           # 34 (not in the citation list)
 ]
 TABLE_ORDER = [k for g in TABLE_GROUPS for k in g]
 assert len(TABLE_ORDER) == len(set(TABLE_ORDER))

@@ -1,7 +1,7 @@
 group,definition,events,contaminated,share
 treated,est_contaminated_by_notification,104,42,0.4038461538461538
-treated,est_contaminated_by_breach_date,104,74,0.7115384615384616
+treated,est_contaminated_by_breach_date,104,61,0.5865384615384616
 control,est_contaminated_by_notification,229,101,0.4410480349344978
-control,est_contaminated_by_breach_date,229,173,0.7554585152838428
+control,est_contaminated_by_breach_date,229,134,0.5851528384279476
 all,est_contaminated_by_notification,333,143,0.4294294294294294
-all,est_contaminated_by_breach_date,333,247,0.7417417417417418
+all,est_contaminated_by_breach_date,333,195,0.5855855855855856

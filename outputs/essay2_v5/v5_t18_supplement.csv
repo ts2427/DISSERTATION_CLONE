@@ -11,3 +11,5 @@ converted CAR bound (daily pp),0.13228756555322954,2.10 pp annualized (scripts/1
 SE clustered by 2-digit SIC (CV1),0.12698201880793394,p 0.2925; 25 clusters; t(G-1)
 SE clustered by 2-digit SIC (CV3),0.3154725592312807,p 0.6687
 specification-curve permutation draws (scripts/266),1000.0,"parent-level, 12 of 82 treated, seed 499"
+R1-R14 descriptives (treated minus control; Welch),0.03829543312021114,"df 177.49, t 0.386, p 0.6999; pre-SD gap +0.2688 (p 0.0090); post-SD gap +0.3070 (p 0.0084)"
+"R-squared, M4 without / with Form 499",0.1802250144802927,without 0.1765

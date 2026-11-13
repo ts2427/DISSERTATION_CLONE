@@ -207,12 +207,17 @@ bench_t.to_csv(OUT / 'v5_t06_benchmarks.csv', index=False)
 log('\n## 3. Benchmarks (market model / FF3 estimated on [-250,-30]):')
 log(bench_t.round(4).to_string(index=False))
 
-# estimation-window contamination: an earlier breach notification at the same
-# parent filer entity inside [-250,-30] (canonical 489 events)
+# estimation-window contamination: ANOTHER event at the same parent filer entity
+# inside [-250,-30] (canonical 489 events). The focal event itself, and any
+# canonical row sharing its Gate-2 chain id (CH-nn in chain_note), are excluded:
+# an event's own breach date can fall in its own estimation window (fixed
+# 2026-11-13; the 11/7 version counted it).
 can = pd.read_csv('Data/processed/rebuild/CANONICAL_V3.csv', low_memory=False)
 can['rdt'] = pd.to_datetime(can['reported_date'], errors='coerce')
 can['bdt'] = pd.to_datetime(can['breach_date'], errors='coerce')
+can['chain_id'] = can['chain_note'].astype(str).str.extract(r'\b(CH-\d+)\b')[0]
 cont = []
+n_chain_excl = 0
 for i, r in fin.iterrows():
     pos = M.anchor(r['permno'], r['rdt'])
     if pos is None or pos + L.EST_WIN[0] < 0:
@@ -220,11 +225,18 @@ for i, r in fin.iterrows():
         continue
     lo, hi = M.dates[pos + L.EST_WIN[0]], M.dates[pos + L.EST_WIN[1]]
     same = can[can['final_cik'] == r['final_cik']]
+    focal = (same['breach_date'] == r['breach_date']) & (same['org_name'] == r['org_name'])
+    assert focal.sum() == 1, f'focal event not unique in CANONICAL_V3: {r["org_name"]} {r["breach_date"]}'
+    cid = same.loc[focal, 'chain_id'].iloc[0]
+    chain = same['chain_id'].eq(cid) & ~focal if pd.notna(cid) else focal & False
+    n_chain_excl += int(chain.sum())
+    same = same[~(focal | chain)]
     by_rep = bool(((same['rdt'] >= lo) & (same['rdt'] <= hi)).any())
     by_br = bool(((same['bdt'] >= lo) & (same['bdt'] <= hi)).any())
     cont.append((by_rep, by_br))
 panel['est_contaminated_by_notification'] = [c[0] for c in cont]
 panel['est_contaminated_by_breach_date'] = [c[1] for c in cont]
+log(f'\n  contamination: focal event excluded for all; other rows excluded as same Gate-2 chain: {n_chain_excl}')
 crow = []
 for lab, m_ in [('treated', fin[TREAT] == 1), ('control', fin[TREAT] == 0), ('all', fin[TREAT] >= 0)]:
     for col in ['est_contaminated_by_notification', 'est_contaminated_by_breach_date']:
