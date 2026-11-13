@@ -232,9 +232,25 @@ def _lift():
 LADDER = _lift()
 
 
-def ladder(df, ycol, xcols, cluster='final_cik', treat=TREAT, full=True):
+def _lstsq_numpy():
+    """numpy with linalg.solve replaced by least squares. Identical to solve when the matrix is
+    invertible; still defined when deleting a cluster leaves a small subsample's design
+    singular (e.g. a control constant within the remaining clusters of a size cell)."""
+    import types
+    shim = types.ModuleType('numpy_lstsq')
+    shim.__dict__.update(np.__dict__)
+    lin = types.ModuleType('numpy_linalg_lstsq')
+    lin.__dict__.update(np.linalg.__dict__)
+    lin.solve = lambda a, b: np.linalg.lstsq(a, b, rcond=None)[0]
+    shim.linalg = lin
+    return shim
+
+
+def ladder(df, ycol, xcols, cluster='final_cik', treat=TREAT, full=True, singular_safe=False):
     """Run 165's ladder statements on df. full=False skips the wild bootstrap
-    (point estimate, OLS/HC1/HC3/CV1/CV3 only) for cheap repeated use."""
+    (point estimate, OLS/HC1/HC3/CV1/CV3 only) for cheap repeated use.
+    singular_safe=True runs the same lifted statements with linalg.solve -> lstsq (see
+    _lstsq_numpy); the default path, which the t26/t28 gate checks, is unchanged."""
     d = df.dropna(subset=[ycol] + xcols).reset_index(drop=True)
     # a control constant within a subsample (e.g. no health breach in a size
     # cell) is dropped and recorded; the treatment column is never dropped
@@ -259,7 +275,7 @@ def ladder(df, ycol, xcols, cluster='final_cik', treat=TREAT, full=True):
     res['r2'] = float(fit.rsquared)
     res['df_hc'] = n - k
     if full:
-        ns = dict(np=np, sm=sm, stats=stats, rng=np.random.default_rng(SEED),
+        ns = dict(np=_lstsq_numpy() if singular_safe else np, sm=sm, stats=stats, rng=np.random.default_rng(SEED),
                   Y=Y, X=X, ti=ti, G_inv=G_inv, G=G, G1=res['G1'], n=n, k=k)
         exec(LADDER, ns)
         assert abs(ns['b_t'] - res['coef']) < 1e-10

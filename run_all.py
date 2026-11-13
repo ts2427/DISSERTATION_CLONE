@@ -264,6 +264,13 @@ DECLARED_SKIPS = {
         'Data/wrds/crsp_quotes_topup.csv',
         'docs/claude/REPRODUCE_ESSAY2.md',
         'intraday quotes for the effective-spread measure; WRDS licence required'),
+    # Essay 2 v5 spreads (2026-11-13): needs the same licensed quotes extract as 170 plus the DISH
+    # quotes pulled by scripts/267 (Data/wrds_e2v5/, gitignored). Its committed output
+    # outputs/essay2_v5/v5_t16_spreads.csv is checked for presence only.
+    'scripts/268_e2v5_spreads.py': (
+        'Data/wrds_e2v5/crsp_quotes_topup_e2v5.csv',
+        'docs/claude/REPRODUCE_ESSAY2.md',
+        'daily quotes for CPQS/EDGE/OCAM (Data/wrds/crsp_quotes_topup.csv + scripts/267 DISH pull); WRDS licence required'),
 }
 
 
@@ -470,6 +477,20 @@ def verify_outputs(log_file, run_start=None):
         Path('outputs/essay3_appendix/ESSAY3_APPENDIX.md'),             # scripts/257 (added 2026-10-06)
         Path('outputs/defense_supplement/deck_exhibits.csv'),
         Path('outputs/defense_supplement/deck_exhibits.json'),
+        # Essay 2 v5 (scripts 264-272, added 2026-11-13)
+        Path('outputs/essay2_v5/v5_event_panel.csv'),
+        Path('outputs/essay2_v5/v5_t03_ladder.csv'),
+        Path('outputs/essay2_v5/v5_t04_design_resolution.csv'),
+        Path('outputs/essay2_v5/v5_t09_announcement.csv'),
+        Path('outputs/essay2_v5/v5_t12_size_quartiles.csv'),
+        Path('outputs/essay2_v5/v5_t15_spec_curve.csv'),
+        Path('outputs/essay2_v5/v5_t17_delay.csv'),
+        Path('outputs/essay2_v5/v5_t18_supplement.csv'),
+        Path('outputs/essay2_v5/v5_t18d_announcement_leave_one_treated_parent_out.csv'),
+        Path('outputs/essay2_v5/v5_t18e_quartile_ladder.csv'),
+        Path('outputs/essay2_v5/appendix/ESSAY2_V5_APPENDIX.md'),
+        Path('outputs/essay2_v5/constants_essay2.json'),
+        Path('outputs/defense_audit/defense_facts.csv'),                # scripts/273
     ]
 
     # ---- 2. PRESENCE ONLY --------------------------------------------------------
@@ -484,6 +505,9 @@ def verify_outputs(log_file, run_start=None):
         # An input, not an output: no live step writes it; scripts/245 reads it.
         (Path('outputs/essay3_q4/tmobile_502_text.md'),
          'committed input to scripts/245; written by no live step (184/185 are retired)'),
+        # Written by scripts/268, a declared skip in a clean clone (licensed quotes); read by 269/270.
+        (Path('outputs/essay2_v5/v5_t16_spreads.csv'),
+         'scripts/268 output; declared skip without the licensed quotes, so presence only'),
     ]
     # NOT in this category: outputs/rebuild/constants_v3.json. scripts/158 rewrites it on
     # every run - confirmed written during the verification run - so it is held to the
@@ -762,6 +786,23 @@ Log file: {log_path}
                     ('scripts/256_essay3_appendix_supplement.py', 'Essay 3 appendix supplement, an internal source under its old table numbers 12-15 (randomization inference, CEO counts, director-only counts, T-Mobile filings quoted verbatim) plus the classifier-provenance note to Table 5; reads committed outputs only and does not touch what 245 writes (follows 250, whose output it reads). The appendix of record is written by 257'),
                     ('scripts/257_essay3_appendix_combined.py', 'Essay 3 appendix of record: one combined document (ESSAY3_APPENDIX.md and .docx) assembled from the 245 and 256 outputs, Tables 1-13 in citation order, with TABLE_NUMBER_CROSSWALK.csv mapping old numbers to new; labels, notes and display format only, every cell checked against its source (follows 245 and 256)'),
                     ('scripts/253_defsup_constants.py', 'Defense-supplement constants block + assertion baseline (constants_defense_supplement.json; asserts against it, writes it only if absent)'),
+                ]
+            },
+            {
+                'category': 'ESSAY 2 v5 — COMMITTEE RERUN (2026-11-07; CURRENT Essay 2; scripts 263-272 on the frozen 333-event sample)',
+                'scripts': [
+                    # scripts/263 is the shared library (imported, not run). scripts/262 is a session
+                    # guard over a local hash snapshot and is not a pipeline step. NOT STAGED - licensed
+                    # WRDS pull whose output is gitignored: scripts/267_e2v5_quotes_pull.py.
+                    ('scripts/264_e2v5_primary.py', 'Essay 2 v5 primary: market-adjusted volatility change [-60,-11]/[+1,+20], 80% coverage, nested M1-M4, eight-rung ladder (165 lifted by ast, gated on t26/t28), design resolution, dynamic path, benchmarks, contamination, alternatives, v4 dates'),
+                    ('scripts/265_e2v5_results.py', 'Essay 2 v5 results: announcement test and BH family, placebo dates, earnings benchmark, size quartiles, fixed effects, influence'),
+                    ('scripts/266_e2v5_spec_curve.py', 'Essay 2 v5 specification curve (144 specs) + parent-level permutation test (1,000 draws)'),
+                    ('scripts/268_e2v5_spreads.py', 'Essay 2 v5 spreads (CPQS, EDGE, OCAM; BH family of 3) — REQUIRES licensed quotes (declared skip in a clean clone)'),
+                    ('scripts/271_e2v5_delay.py', 'Essay 2 v5 delay tests with the v5 pre-window control (old control as gated bridge; follows 249)'),
+                    ('scripts/272_e2v5_supplement.py', 'Essay 2 v5 supplementary constants: anchor check, HC3 MDE, CAR-bound TOST, SIC clustering, descriptives, announcement sensitivities and leave-one-treated-parent-out, quartile ladder'),
+                    ('scripts/269_e2v5_appendix.py', 'Essay 2 v5 appendix generator (Tables 1-33 in citation order; classification tables recomputed and gated against the tombstoned CSVs)'),
+                    ('scripts/270_e2v5_constants.py', 'Essay 2 v5 constants of record -> outputs/essay2_v5/constants_essay2.json'),
+                    ('scripts/273_defaud_facts.py', 'Defense audit descriptive facts (counts and arithmetic on the frozen samples; asserts every sample first)'),
                 ]
             },
             {

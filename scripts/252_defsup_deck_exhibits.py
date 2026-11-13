@@ -38,6 +38,10 @@ Inputs (all git-tracked; crsp_quotes_topup.csv is untracked and is deliberately 
     outputs/tables/essay2_v2/t1_final_sample.csv, t2_descriptives_by_treatment.csv,
         t26_inference_ladder.csv, t28_design_resolution.csv
     outputs/essay3_v4/constants_essay3_v4.json, f1_ladder.csv, f1_se_diagnostics.csv
+    outputs/essay3_v4/f4_placebo.csv, e_ledger.csv
+    Data/processed/rebuild_v4/CANONICAL_V4.csv
+    outputs/defense_supplement/e3_randomization_inference.csv, e3_placebo_2018_flag.csv
+    outputs/essay3_appendix/TABLE_NUMBER_CROSSWALK.csv, ESSAY3_APPENDIX.md
 
 Market cap comes from crsp_daily_returns.csv only (the top-up files carry ret, not prc/shrout);
 coverage is computed and logged, not assumed.
@@ -81,6 +85,13 @@ INPUTS = {
     'c3': 'outputs/essay3_v4/constants_essay3_v4.json',
     'f1': 'outputs/essay3_v4/f1_ladder.csv',
     'f1d': 'outputs/essay3_v4/f1_se_diagnostics.csv',
+    'f4': 'outputs/essay3_v4/f4_placebo.csv',
+    'led': 'outputs/essay3_v4/e_ledger.csv',
+    'canon4': 'Data/processed/rebuild_v4/CANONICAL_V4.csv',
+    'ri': 'outputs/defense_supplement/e3_randomization_inference.csv',
+    'pf': 'outputs/defense_supplement/e3_placebo_2018_flag.csv',
+    'xw': 'outputs/essay3_appendix/TABLE_NUMBER_CROSSWALK.csv',
+    'apx': 'outputs/essay3_appendix/ESSAY3_APPENDIX.md',
 }
 
 LOG = []
@@ -630,8 +641,130 @@ for t, lab, grp, ck in ((1, 'treated', 'Filer', 'T3_filer_median'), (0, 'control
     emit('E1_caar', f'{lab}_car_0_5', round(s.loc[5, 'caar'] - s.loc[-1, 'caar'], 6), 'pp', S1,
          int(s.loc[5, 'count']), 'CAAR(+5) - CAAR(-1)', INPUTS['crsp'])
 
-# ---------------------------------------------------------------- 8. write
-log('== 8. assert summary ==')
+# ---------------------------------------------------------------- 8. E3 randomization inference
+# Both versions side by side: the p on the CV3 t-statistic (the one the essay reports) and the
+# p on the raw coefficient. Nothing is re-drawn here; the file is checked against the committed
+# estimates it claims to permute.
+log('== 8. Essay 3 randomization inference (CV3 t beside the coefficient version) ==')
+ri = rd('ri')
+f4 = rd('f4').iloc[0]
+eq('RI file N/G/G1 == constants', (set(ri.N), set(ri.G), set(ri.G1)),
+   ({C3['N']}, {C3['parent_ciks']}, {C3['treated_parent_ciks']}))
+eq('RI file treated events == constants', set(ri.treated_events_obs), {C3['treated']})
+eq('RI file has one draw count and one seed', (ri.B.nunique(), ri.seed.nunique()), (1, 1))
+POOL = {'C1 all parents': 'all_parents', 'C3 size-matched parents': 'size_matched'}
+eq('RI pools', set(ri.variant), set(POOL))
+eq('RI rows', len(ri), 8)
+for _, r in ri.iterrows():
+    plc = r.outcome == 'placebo_exec_departure_rd'
+    wk = 'placebo' if plc else f'w{int(r.window)}'
+    ref = f4 if plc else f1.loc[int(r.window)]
+    eq(f'RI {wk} {POOL[r.variant]} outcome is the committed outcome', r.outcome, ref['y'])
+    check(f'RI {wk} {POOL[r.variant]} observed coef == committed coef', r.coef_obs, ref['coef'], H4 + EPS,
+          'committed estimate, 4 dp')
+    check(f'RI {wk} {POOL[r.variant]} observed CV3 SE == committed se_cv3', r.cv3_se_obs, ref['se_cv3'], H4 + EPS,
+          'committed estimate, 4 dp')
+    check(f'RI {wk} {POOL[r.variant]} CV3 t == coef / CV3 SE', r.coef_obs / r.cv3_se_obs, r.cv3_t_obs,
+          H4 + prop(lambda b_, s_: b_ / s_, [r.coef_obs, r.cv3_se_obs], [5e-7, 5e-7]) + EPS, 'identity, 4 dp t')
+    true(f'RI {wk} {POOL[r.variant]} both p-values in [0, 1]', 0 <= r.ri_p_t <= 1 and 0 <= r.ri_p_coef <= 1, 'invariant')
+    for key, v, fml in (('ri_p_cv3_t', r.ri_p_t, 'share of draws with |CV3 t| >= observed (reported version)'),
+                        ('ri_p_coef', r.ri_p_coef, 'share of draws with |coef| >= observed'),
+                        ('cv3_t_obs', r.cv3_t_obs, 'observed coef / CV3 SE')):
+        emit('E3_randomization_inference', f'{wk}_{POOL[r.variant]}_{key}', round(float(v), 6),
+             'p' if key.startswith('ri_p') else 't', S3, N3, fml, INPUTS['ri'])
+for key, v in (('draws', int(ri.B.iloc[0])), ('seed', int(ri.seed.iloc[0])),
+               ('parents_reassigned_per_draw', int(ri.G1.iloc[0]))):
+    emit('E3_randomization_inference', key, v, 'count', S3, N3, 'committed', INPUTS['ri'])
+
+# ---------------------------------------------------------------- 9. E3 placebo, 2018 flag
+# Outside the analysis plan. The re-run row must be the committed placebo; the second row
+# differs from it by exactly one treated event.
+log('== 9. Essay 3 placebo sensitivity to the 2018-04-30 filing (outside the analysis plan) ==')
+pf = rd('pf')
+ps = pf[pf.panel == 'placebo sensitivity'].reset_index(drop=True)
+pw = pf[pf.panel == 'filing windows'].reset_index(drop=True)
+eq('placebo sensitivity rows', list(ps.specification),
+   ['committed specification, re-run', '2018-08-20 placebo flag set to 0'])
+true('placebo sensitivity is labelled outside the analysis plan',
+     ps.status.str.contains('outside the analysis plan').all() and pw.status.str.contains('outside the analysis plan').all(),
+     'label carried by every row')
+for col in ('coef', 'se_cv1', 'p_cv1', 'se_cv3', 'p_cv3', 'ci_cv3_lo', 'ci_cv3_hi'):
+    check(f'placebo re-run {col} == committed f4_placebo', ps.loc[0, col], f4[col], 1e-12, 'two committed files, 4 dp')
+check('placebo re-run bootstrap p within Monte Carlo error of the committed p', ps.loc[0, 'p_wcr'], f4['p_wcr'], 0.01,
+      'different stream, B = 99,999')
+check('placebo committed treated rate == flagged / treated n', ps.loc[0, 'treated_flagged'] / ps.loc[0, 'treated_n'],
+      f4['treated_mean'], H4 + EPS, 'committed rate, 4 dp')
+check('placebo committed control rate == flagged / control n', ps.loc[0, 'control_flagged'] / ps.loc[0, 'control_n'],
+      f4['control_mean'], H4 + EPS, 'committed rate, 4 dp')
+eq('placebo sensitivity changes exactly one treated flag',
+   (int(ps.loc[0, 'treated_flagged'] - ps.loc[1, 'treated_flagged']),
+    int(ps.loc[0, 'control_flagged'] - ps.loc[1, 'control_flagged'])), (1, 0))
+eq('placebo sensitivity sample == constants', (set(ps.n), set(ps.G), set(ps.treated_n)),
+   ({C3['N']}, {C3['parent_ciks']}, {C3['treated']}))
+eq('filing touches four events: one placebo window, three baseline windows',
+   sorted(pw.window_notification_anchor), ['baseline', 'baseline', 'baseline', 'placebo'])
+for i, lab in ((0, 'committed'), (1, 'flag0')):
+    r = ps.loc[i]
+    for key, v, u in (('coef_pp', 100 * r.coef, 'pp'), ('se_cv3_pp', 100 * r.se_cv3, 'pp'), ('p_cv3', r.p_cv3, 'p'),
+                      ('p_wcr', r.p_wcr, 'p'), ('ci_cv3_lo_pp', 100 * r.ci_cv3_lo, 'pp'),
+                      ('ci_cv3_hi_pp', 100 * r.ci_cv3_hi, 'pp'), ('treated_flagged', int(r.treated_flagged), 'events')):
+        emit('E3_placebo_2018_flag', f'{lab}_{key}', round(float(v), 6), u, S3, N3,
+             f'{r.specification}; {r.status}', INPUTS['pf'])
+emit('E3_placebo_2018_flag', 'bootstrap_seed', int(ps.seed.iloc[0]), 'seed', S3, N3, 'committed', INPUTS['pf'])
+emit('E3_placebo_2018_flag', 'bootstrap_draws', int(ps.B_wcr.iloc[0]), 'count', S3, N3, 'committed', INPUTS['pf'])
+
+# ---------------------------------------------------------------- 10. E3 sample chain
+log('== 10. Essay 3 sample chain (758 records resolve to 489 events) ==')
+led = rd('led')
+c4 = rd('canon4', low_memory=False)
+
+
+def lstep(sub):
+    r = led[led.step.str.contains(sub, regex=False)]
+    eq(f'ledger step "{sub}" is one row', len(r), 1)
+    return r.iloc[0]
+
+
+CHAIN = [('notification_records', 'PRC notification records'), ('records_assigned_parent_cik', 'signed parent CIK'),
+         ('firm_day_events', 'firm-day events'), ('after_rolling_campaign_rule', 'adjacency collapse'),
+         ('canonical_events', 'canonical events'), ('security_link', 'CRSP data'),
+         ('covariates', 'Compustat covariates'), ('analysis_sample', '>=150 daily returns')]
+ch = {k: lstep(sub) for k, sub in CHAIN}
+eq('ledger records with a parent CIK == sum of source records over canonical events',
+   int(ch['records_assigned_parent_cik'].N), int(c4.n_source_records.sum()), 'independent file')
+eq('ledger canonical events == rows of the canonical file', int(ch['canonical_events'].N), len(c4), 'independent file')
+eq('ledger canonical treated == treated rows of the canonical file', int(ch['canonical_events'].treated),
+   int(c4.fcc_form499.sum()), 'independent file')
+eq('ledger analysis sample == constants', (int(ch['analysis_sample'].N), int(ch['analysis_sample'].treated)),
+   (C3['N'], C3['treated']))
+true('ledger is non-increasing', all(int(ch[a].N) >= int(ch[b].N) for (a, _), (b, _) in zip(CHAIN, CHAIN[1:])), 'invariant')
+for k, sub in CHAIN:
+    emit('E3_sample_chain', k, int(ch[k].N), 'records' if 'record' in k else 'events', S3, int(ch[k].N),
+         f'ledger step: {sub}', INPUTS['led'])
+emit('E3_sample_chain', 'canonical_treated', int(ch['canonical_events'].treated), 'events', S3,
+     int(ch['canonical_events'].N), 'ledger step: canonical events', INPUTS['led'])
+emit('E3_sample_chain', 'canonical_control', int(ch['canonical_events'].control), 'events', S3,
+     int(ch['canonical_events'].N), 'ledger step: canonical events', INPUTS['led'])
+
+# ---------------------------------------------------------------- 11. E3 appendix numbering
+log('== 11. Essay 3 appendix of record: table numbering ==')
+xw = rd('xw')
+rec = xw[xw.status == 'in the appendix of record'].copy()
+rec['new_number'] = rec.new_number.astype(int)
+apx = (ROOT / INPUTS['apx']).read_text(encoding='utf-8').split('\n')
+heads = [(int(ln[8:-2]), apx[i + 2].strip('*')) for i, ln in enumerate(apx)
+         if ln.startswith('**Table ') and ln.endswith('**') and ln[8:-2].isdigit()]
+eq('crosswalk numbers are 1..n in order', list(rec.new_number), list(range(1, len(rec) + 1)))
+eq('appendix of record has the crosswalk tables, same numbers and titles', heads,
+   list(zip(rec.new_number, rec.title)), 'independent file')
+for _, r in rec.iterrows():
+    emit('E3_table_numbering', f'table_{r.new_number:02d}', int(r.new_number), 'appendix table number',
+         S3, N3, f'{r.title} (internal source: {r.source_script}, old number {int(r.old_number)})', INPUTS['xw'])
+emit('E3_table_numbering', 'tables_in_appendix_of_record', len(rec), 'count', S3, N3, 'crosswalk rows carried',
+     INPUTS['xw'])
+
+# ---------------------------------------------------------------- 12. write
+log('== 12. assert summary ==')
 nontrivial = sorted([a for a in ASSERTS if a[3] and a[3] >= 1e-5], key=lambda a: -a[4])
 log(f'  {len(ASSERTS)} asserts, all PASS. Tightest (largest |diff|/tol) among rounding-tolerance asserts:')
 for a in nontrivial[:10]:

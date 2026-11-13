@@ -167,7 +167,7 @@
  "E1_ladder_H4_health_cv3_status": "NULL-INCONCLUSIVE",
  "E1_ladder_H4_health_wcr_p": 0.6935,
  "E1_ladder_any_status_change_under_cv3": false,
- "DECK_rows": 334,
+ "DECK_rows": 401,
  "DECK_E1_caar_rows": 170,
  "DECK_E1_ci90_essay1_rows": 16,
  "DECK_E1_ci90_essay3_rows": 12,
@@ -175,5 +175,9 @@
  "DECK_E1_dup_diagnostic_rows": 8,
  "DECK_E1_tmobile_rows": 72,
  "DECK_E2_vol_scaling_rows": 10,
- "DECK_E3_mde_departures_rows": 21
+ "DECK_E3_mde_departures_rows": 21,
+ "DECK_E3_placebo_2018_flag_rows": 16,
+ "DECK_E3_randomization_inference_rows": 27,
+ "DECK_E3_sample_chain_rows": 10,
+ "DECK_E3_table_numbering_rows": 14
 }

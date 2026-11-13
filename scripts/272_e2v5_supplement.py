@@ -217,6 +217,54 @@ print(f'spec curve: {len(sc)} specs; p<.05 under CV3 {C["spec_sig_cv3_any"]}, un
       f'min p CV3 {sc["p_cv3"].min():.4f}, min p CV1 {sc["p_cv1"].min():.4f}')
 C.update(spec_min_p_cv3=float(sc['p_cv3'].min()), spec_min_p_cv1=float(sc['p_cv1'].min()))
 
+# (a) announcement test, leave-one-treated-parent-out (the scripts/265 specification on the
+# v5 construction; one treated parent filer entity deleted at a time; CV3 at each deletion)
+names = fin.groupby('final_cik')['org_name'].agg(lambda s: s.value_counts().index[0])
+base_x = [TREAT, 'base_sd'] + CTRL
+lo_rows = []
+for cik in sorted(fin.loc[fin[TREAT] == 1, 'final_cik'].unique()):
+    dd_ = e[e['final_cik'] != cik]
+    r = L.ladder(dd_, 'elev', base_x, full=False)
+    lo_rows.append(dict(deleted_parent_cik=int(cik), deleted_parent=names[cik],
+                        deleted_events=int((e['final_cik'] == cik).sum()),
+                        deleted_treated_events=int(((e['final_cik'] == cik) & (e[TREAT] == 1)).sum()),
+                        coef=r['coef'], se_cv3=r['se_cv3'], p_cv3=r['p_cv3'], N=r['N'], G=r['G'],
+                        G1=r['G1'], rejects_05_cv3=bool(r['p_cv3'] < .05)))
+alo = pd.DataFrame(lo_rows).sort_values('coef').reset_index(drop=True)
+alo.to_csv(OUT / 'v5_t18d_announcement_leave_one_treated_parent_out.csv', index=False)
+print(alo.round(4).to_string(index=False))
+C.update(ann_lotpo_min=float(alo['coef'].min()), ann_lotpo_min_parent=alo.loc[0, 'deleted_parent'],
+         ann_lotpo_max=float(alo['coef'].max()), ann_lotpo_max_parent=alo.loc[len(alo) - 1, 'deleted_parent'],
+         ann_lotpo_max_p_cv3=float(alo['p_cv3'].max()), ann_lotpo_n_not_rejecting=int((~alo['rejects_05_cv3']).sum()),
+         ann_lotpo_sign_flips=int((alo['coef'] <= 0).sum()))
+for nm, cik in [('sprint', 101830), ('tmobile', 1283699)]:
+    rr = alo[alo['deleted_parent_cik'] == cik].iloc[0]
+    C.update({f'ann_without_{nm}_coef': float(rr['coef']), f'ann_without_{nm}_p_cv3': float(rr['p_cv3'])})
+
+# (b) size-quartile gradient: Form 499 coefficient on every rung (CV1, CV3, WCR and the rest),
+# with treated parent CIKs per quartile (the scripts/265 cells; same controls)
+qd = fin.copy()
+q_rows = []
+for q in sorted(qd['size_q'].unique()):
+    dq = qd[qd['size_q'] == q]
+    r = L.ladder(dq, 'dv', L.XS4, singular_safe=True)
+    for x in L.ladder_rows(r, q):
+        x.update(quartile=q, treated_parent_ciks=r['G1'], treated_events=r['n_treated'],
+                 dropped_constant=r['dropped_constant'])
+        q_rows.append(x)
+    k_ = q.split()[0]
+    C.update({f'q_{k_}_p_cv1': r['p_cv1'], f'q_{k_}_p_wcr': r['p_wcr'], f'q_{k_}_G1': r['G1']})
+qlad = pd.DataFrame(q_rows)
+qlad.to_csv(OUT / 'v5_t18e_quartile_ladder.csv', index=False)
+print(qlad[qlad['rung'].str.match('CV1|CV3|WCR restricted')][['quartile', 'rung', 'coef', 'p', 'G', 'G1']]
+      .round(4).to_string(index=False))
+
+# (c) what the two TOST p-values test (design resolution, scripts/263:368-369)
+C.update(tost_lower_tests=('H0: beta <= -SESOI (a meaningfully negative effect); p = P(t <= ...) for '
+                           '(b + SESOI)/SE_CV3 against t(G-1); rejection rules out a negative effect at least SESOI in size'),
+         tost_upper_tests=('H0: beta >= +SESOI (a meaningfully positive effect); p for (b - SESOI)/SE_CV3 against '
+                           't(G-1); non-rejection leaves a positive effect of SESOI or more open'))
+
 pd.DataFrame(rows).to_csv(OUT / 'v5_t18_supplement.csv', index=False)
 print(pd.DataFrame(rows).to_string(index=False))
 C['bh_families'], C['tests'] = {}, {}

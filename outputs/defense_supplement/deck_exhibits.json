@@ -2,7 +2,7 @@
   "_meta": {
     "script": "scripts/252_defsup_deck_exhibits.py",
     "assert_policy": "each value checked against an independent committed input or an independent recomputation path; tol = half-unit of committed rounding + input-rounding propagation + 1e-9; identities at 1e-9/1e-12; hard failure, nothing written",
-    "n_asserts": 220,
+    "n_asserts": 295,
     "inputs": [
       "Data/processed/rebuild/CANONICAL_V3.csv",
       "Data/wrds/crsp_daily_returns.csv",
@@ -18,7 +18,14 @@
       "outputs/tables/essay2_v2/t28_design_resolution.csv",
       "outputs/essay3_v4/constants_essay3_v4.json",
       "outputs/essay3_v4/f1_ladder.csv",
-      "outputs/essay3_v4/f1_se_diagnostics.csv"
+      "outputs/essay3_v4/f1_se_diagnostics.csv",
+      "outputs/essay3_v4/f4_placebo.csv",
+      "outputs/essay3_v4/e_ledger.csv",
+      "Data/processed/rebuild_v4/CANONICAL_V4.csv",
+      "outputs/defense_supplement/e3_randomization_inference.csv",
+      "outputs/defense_supplement/e3_placebo_2018_flag.csv",
+      "outputs/essay3_appendix/TABLE_NUMBER_CROSSWALK.csv",
+      "outputs/essay3_appendix/ESSAY3_APPENDIX.md"
     ],
     "note": "Arithmetic only on git-tracked inputs; crsp_quotes_topup.csv (untracked) not used, so treated mcap covers 91 of 106 events. 3 car_30d values summed duplicated top-up rows before the 2026-10-02 fix (E1_dup_diagnostic)."
   },
@@ -2708,6 +2715,550 @@
       "n": 234,
       "formula": "CAAR(+5) - CAAR(-1)",
       "source": "Data/wrds/crsp_daily_returns.csv"
+    }
+  },
+  "E3_randomization_inference": {
+    "w30_all_parents_ri_p_cv3_t": {
+      "value": 0.8803,
+      "unit": "p",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "share of draws with |CV3 t| >= observed (reported version)",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    },
+    "w30_all_parents_ri_p_coef": {
+      "value": 0.9037,
+      "unit": "p",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "share of draws with |coef| >= observed",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    },
+    "w30_all_parents_cv3_t_obs": {
+      "value": 0.1182,
+      "unit": "t",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "observed coef / CV3 SE",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    },
+    "w90_all_parents_ri_p_cv3_t": {
+      "value": 0.5872,
+      "unit": "p",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "share of draws with |CV3 t| >= observed (reported version)",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    },
+    "w90_all_parents_ri_p_coef": {
+      "value": 0.5961,
+      "unit": "p",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "share of draws with |coef| >= observed",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    },
+    "w90_all_parents_cv3_t_obs": {
+      "value": -0.5181,
+      "unit": "t",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "observed coef / CV3 SE",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    },
+    "w180_all_parents_ri_p_cv3_t": {
+      "value": 0.81,
+      "unit": "p",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "share of draws with |CV3 t| >= observed (reported version)",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    },
+    "w180_all_parents_ri_p_coef": {
+      "value": 0.8455,
+      "unit": "p",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "share of draws with |coef| >= observed",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    },
+    "w180_all_parents_cv3_t_obs": {
+      "value": 0.2334,
+      "unit": "t",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "observed coef / CV3 SE",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    },
+    "placebo_all_parents_ri_p_cv3_t": {
+      "value": 0.2875,
+      "unit": "p",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "share of draws with |CV3 t| >= observed (reported version)",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    },
+    "placebo_all_parents_ri_p_coef": {
+      "value": 0.408,
+      "unit": "p",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "share of draws with |coef| >= observed",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    },
+    "placebo_all_parents_cv3_t_obs": {
+      "value": -1.0162,
+      "unit": "t",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "observed coef / CV3 SE",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    },
+    "w30_size_matched_ri_p_cv3_t": {
+      "value": 0.9213,
+      "unit": "p",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "share of draws with |CV3 t| >= observed (reported version)",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    },
+    "w30_size_matched_ri_p_coef": {
+      "value": 0.9292,
+      "unit": "p",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "share of draws with |coef| >= observed",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    },
+    "w30_size_matched_cv3_t_obs": {
+      "value": 0.1182,
+      "unit": "t",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "observed coef / CV3 SE",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    },
+    "w90_size_matched_ri_p_cv3_t": {
+      "value": 0.5865,
+      "unit": "p",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "share of draws with |CV3 t| >= observed (reported version)",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    },
+    "w90_size_matched_ri_p_coef": {
+      "value": 0.5459,
+      "unit": "p",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "share of draws with |coef| >= observed",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    },
+    "w90_size_matched_cv3_t_obs": {
+      "value": -0.5181,
+      "unit": "t",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "observed coef / CV3 SE",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    },
+    "w180_size_matched_ri_p_cv3_t": {
+      "value": 0.8058,
+      "unit": "p",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "share of draws with |CV3 t| >= observed (reported version)",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    },
+    "w180_size_matched_ri_p_coef": {
+      "value": 0.8323,
+      "unit": "p",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "share of draws with |coef| >= observed",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    },
+    "w180_size_matched_cv3_t_obs": {
+      "value": 0.2334,
+      "unit": "t",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "observed coef / CV3 SE",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    },
+    "placebo_size_matched_ri_p_cv3_t": {
+      "value": 0.2703,
+      "unit": "p",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "share of draws with |CV3 t| >= observed (reported version)",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    },
+    "placebo_size_matched_ri_p_coef": {
+      "value": 0.3233,
+      "unit": "p",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "share of draws with |coef| >= observed",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    },
+    "placebo_size_matched_cv3_t_obs": {
+      "value": -1.0162,
+      "unit": "t",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "observed coef / CV3 SE",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    },
+    "draws": {
+      "value": 9999,
+      "unit": "count",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "committed",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    },
+    "seed": {
+      "value": 250,
+      "unit": "count",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "committed",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    },
+    "parents_reassigned_per_draw": {
+      "value": 13,
+      "unit": "count",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "committed",
+      "source": "outputs/defense_supplement/e3_randomization_inference.csv"
+    }
+  },
+  "E3_placebo_2018_flag": {
+    "committed_coef_pp": {
+      "value": -8.62,
+      "unit": "pp",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "committed specification, re-run; outside the analysis plan; not in the test ledger; committed placebo estimate unchanged",
+      "source": "outputs/defense_supplement/e3_placebo_2018_flag.csv"
+    },
+    "committed_se_cv3_pp": {
+      "value": 8.49,
+      "unit": "pp",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "committed specification, re-run; outside the analysis plan; not in the test ledger; committed placebo estimate unchanged",
+      "source": "outputs/defense_supplement/e3_placebo_2018_flag.csv"
+    },
+    "committed_p_cv3": {
+      "value": 0.3116,
+      "unit": "p",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "committed specification, re-run; outside the analysis plan; not in the test ledger; committed placebo estimate unchanged",
+      "source": "outputs/defense_supplement/e3_placebo_2018_flag.csv"
+    },
+    "committed_p_wcr": {
+      "value": 0.2343,
+      "unit": "p",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "committed specification, re-run; outside the analysis plan; not in the test ledger; committed placebo estimate unchanged",
+      "source": "outputs/defense_supplement/e3_placebo_2018_flag.csv"
+    },
+    "committed_ci_cv3_lo_pp": {
+      "value": -25.43,
+      "unit": "pp",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "committed specification, re-run; outside the analysis plan; not in the test ledger; committed placebo estimate unchanged",
+      "source": "outputs/defense_supplement/e3_placebo_2018_flag.csv"
+    },
+    "committed_ci_cv3_hi_pp": {
+      "value": 8.18,
+      "unit": "pp",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "committed specification, re-run; outside the analysis plan; not in the test ledger; committed placebo estimate unchanged",
+      "source": "outputs/defense_supplement/e3_placebo_2018_flag.csv"
+    },
+    "committed_treated_flagged": {
+      "value": 25.0,
+      "unit": "events",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "committed specification, re-run; outside the analysis plan; not in the test ledger; committed placebo estimate unchanged",
+      "source": "outputs/defense_supplement/e3_placebo_2018_flag.csv"
+    },
+    "flag0_coef_pp": {
+      "value": -9.75,
+      "unit": "pp",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "2018-08-20 placebo flag set to 0; outside the analysis plan; not in the test ledger; committed placebo estimate unchanged",
+      "source": "outputs/defense_supplement/e3_placebo_2018_flag.csv"
+    },
+    "flag0_se_cv3_pp": {
+      "value": 8.02,
+      "unit": "pp",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "2018-08-20 placebo flag set to 0; outside the analysis plan; not in the test ledger; committed placebo estimate unchanged",
+      "source": "outputs/defense_supplement/e3_placebo_2018_flag.csv"
+    },
+    "flag0_p_cv3": {
+      "value": 0.2263,
+      "unit": "p",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "2018-08-20 placebo flag set to 0; outside the analysis plan; not in the test ledger; committed placebo estimate unchanged",
+      "source": "outputs/defense_supplement/e3_placebo_2018_flag.csv"
+    },
+    "flag0_p_wcr": {
+      "value": 0.1566,
+      "unit": "p",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "2018-08-20 placebo flag set to 0; outside the analysis plan; not in the test ledger; committed placebo estimate unchanged",
+      "source": "outputs/defense_supplement/e3_placebo_2018_flag.csv"
+    },
+    "flag0_ci_cv3_lo_pp": {
+      "value": -25.63,
+      "unit": "pp",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "2018-08-20 placebo flag set to 0; outside the analysis plan; not in the test ledger; committed placebo estimate unchanged",
+      "source": "outputs/defense_supplement/e3_placebo_2018_flag.csv"
+    },
+    "flag0_ci_cv3_hi_pp": {
+      "value": 6.12,
+      "unit": "pp",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "2018-08-20 placebo flag set to 0; outside the analysis plan; not in the test ledger; committed placebo estimate unchanged",
+      "source": "outputs/defense_supplement/e3_placebo_2018_flag.csv"
+    },
+    "flag0_treated_flagged": {
+      "value": 24.0,
+      "unit": "events",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "2018-08-20 placebo flag set to 0; outside the analysis plan; not in the test ledger; committed placebo estimate unchanged",
+      "source": "outputs/defense_supplement/e3_placebo_2018_flag.csv"
+    },
+    "bootstrap_seed": {
+      "value": 258,
+      "unit": "seed",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "committed",
+      "source": "outputs/defense_supplement/e3_placebo_2018_flag.csv"
+    },
+    "bootstrap_draws": {
+      "value": 99999,
+      "unit": "count",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "committed",
+      "source": "outputs/defense_supplement/e3_placebo_2018_flag.csv"
+    }
+  },
+  "E3_sample_chain": {
+    "notification_records": {
+      "value": 1054,
+      "unit": "records",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 1054,
+      "formula": "ledger step: PRC notification records",
+      "source": "outputs/essay3_v4/e_ledger.csv"
+    },
+    "records_assigned_parent_cik": {
+      "value": 758,
+      "unit": "records",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 758,
+      "formula": "ledger step: signed parent CIK",
+      "source": "outputs/essay3_v4/e_ledger.csv"
+    },
+    "firm_day_events": {
+      "value": 524,
+      "unit": "events",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 524,
+      "formula": "ledger step: firm-day events",
+      "source": "outputs/essay3_v4/e_ledger.csv"
+    },
+    "after_rolling_campaign_rule": {
+      "value": 491,
+      "unit": "events",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 491,
+      "formula": "ledger step: adjacency collapse",
+      "source": "outputs/essay3_v4/e_ledger.csv"
+    },
+    "canonical_events": {
+      "value": 489,
+      "unit": "events",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 489,
+      "formula": "ledger step: canonical events",
+      "source": "outputs/essay3_v4/e_ledger.csv"
+    },
+    "security_link": {
+      "value": 414,
+      "unit": "events",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 414,
+      "formula": "ledger step: CRSP data",
+      "source": "outputs/essay3_v4/e_ledger.csv"
+    },
+    "covariates": {
+      "value": 412,
+      "unit": "events",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 412,
+      "formula": "ledger step: Compustat covariates",
+      "source": "outputs/essay3_v4/e_ledger.csv"
+    },
+    "analysis_sample": {
+      "value": 405,
+      "unit": "events",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "ledger step: >=150 daily returns",
+      "source": "outputs/essay3_v4/e_ledger.csv"
+    },
+    "canonical_treated": {
+      "value": 118,
+      "unit": "events",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 489,
+      "formula": "ledger step: canonical events",
+      "source": "outputs/essay3_v4/e_ledger.csv"
+    },
+    "canonical_control": {
+      "value": 371,
+      "unit": "events",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 489,
+      "formula": "ledger step: canonical events",
+      "source": "outputs/essay3_v4/e_ledger.csv"
+    }
+  },
+  "E3_table_numbering": {
+    "table_01": {
+      "value": 1,
+      "unit": "appendix table number",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "Sample Construction From Notification Records to the Analysis Sample (internal source: scripts/245, old number 1)",
+      "source": "outputs/essay3_appendix/TABLE_NUMBER_CROSSWALK.csv"
+    },
+    "table_02": {
+      "value": 2,
+      "unit": "appendix table number",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "Treated Parent CIKs and Cluster Structure (internal source: scripts/245, old number 2)",
+      "source": "outputs/essay3_appendix/TABLE_NUMBER_CROSSWALK.csv"
+    },
+    "table_03": {
+      "value": 3,
+      "unit": "appendix table number",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "Breach Type by Treatment Group (internal source: scripts/245, old number 3)",
+      "source": "outputs/essay3_appendix/TABLE_NUMBER_CROSSWALK.csv"
+    },
+    "table_04": {
+      "value": 4,
+      "unit": "appendix table number",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "Covariate Balance, Common Support, and Date Anchors (internal source: scripts/245, old number 4)",
+      "source": "outputs/essay3_appendix/TABLE_NUMBER_CROSSWALK.csv"
+    },
+    "table_05": {
+      "value": 5,
+      "unit": "appendix table number",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "Classifier Validation (internal source: scripts/245, old number 5)",
+      "source": "outputs/essay3_appendix/TABLE_NUMBER_CROSSWALK.csv"
+    },
+    "table_06": {
+      "value": 6,
+      "unit": "appendix table number",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "Item 5.02 Filings and Disclosed Departures by Window (internal source: scripts/245, old number 6)",
+      "source": "outputs/essay3_appendix/TABLE_NUMBER_CROSSWALK.csv"
+    },
+    "table_07": {
+      "value": 7,
+      "unit": "appendix table number",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "Primary Estimates: Inference Ladder, Minimum Detectable Effects, Logit Check, and Controls (internal source: scripts/245, old number 7)",
+      "source": "outputs/essay3_appendix/TABLE_NUMBER_CROSSWALK.csv"
+    },
+    "table_08": {
+      "value": 8,
+      "unit": "appendix table number",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "Randomization Inference: Reassigning Treatment Across Parent CIKs (internal source: scripts/256, old number 12)",
+      "source": "outputs/essay3_appendix/TABLE_NUMBER_CROSSWALK.csv"
+    },
+    "table_09": {
+      "value": 9,
+      "unit": "appendix table number",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "Pre-Disclosure Placebo (internal source: scripts/245, old number 8)",
+      "source": "outputs/essay3_appendix/TABLE_NUMBER_CROSSWALK.csv"
+    },
+    "table_10": {
+      "value": 10,
+      "unit": "appendix table number",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "Sensitivity Analyses (internal source: scripts/245, old number 9)",
+      "source": "outputs/essay3_appendix/TABLE_NUMBER_CROSSWALK.csv"
+    },
+    "table_11": {
+      "value": 11,
+      "unit": "appendix table number",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "Cluster Concentration (internal source: scripts/245, old number 10)",
+      "source": "outputs/essay3_appendix/TABLE_NUMBER_CROSSWALK.csv"
+    },
+    "table_12": {
+      "value": 12,
+      "unit": "appendix table number",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "T-Mobile Events and Executive Departures (internal source: scripts/245, old number 11)",
+      "source": "outputs/essay3_appendix/TABLE_NUMBER_CROSSWALK.csv"
+    },
+    "table_13": {
+      "value": 13,
+      "unit": "appendix table number",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "T-Mobile: Executive Departures Disclosed Within the Outcome Windows, and the Placebo-Window Succession Filing (internal source: scripts/256, old number 15)",
+      "source": "outputs/essay3_appendix/TABLE_NUMBER_CROSSWALK.csv"
+    },
+    "tables_in_appendix_of_record": {
+      "value": 13,
+      "unit": "count",
+      "sample": "E3 v4 N=405 (109 treated; G=119, G1=13)",
+      "n": 405,
+      "formula": "crosswalk rows carried",
+      "source": "outputs/essay3_appendix/TABLE_NUMBER_CROSSWALK.csv"
     }
   }
 }

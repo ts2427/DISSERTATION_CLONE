@@ -123,3 +123,16 @@ The Essay 2 appendix Tim cites (`outputs/ESSAY2_APPENDIX.md`, 28 tables) draws o
 2026-09-29 (`outputs/tables/essay2_appendix/TOMBSTONE.md`). The live chain writes 61 files
 to `outputs/tables/essay2_v2/` instead, and the two sets share no filenames. See
 `outputs/ALIGNMENT_REPORT.md` Part B for the table-by-table mapping.
+
+## Essay 2 v5 (committee rerun, 2026-11-07; live in run_all.py from 2026-11-13)
+
+The current Essay 2 is the v5 chain: scripts 264-272 write `outputs/essay2_v5/`, and
+scripts/269 generates the appendix of record (Tables 1-33) from committed code, replacing the
+tombstoned CSVs above. Every v5 step is staged in `run_all.py` (category "ESSAY 2 v5").
+
+One v5 step needs licensed data and is a **declared skip** in a clean clone, for the same reason
+as 170: `scripts/268_e2v5_spreads.py` (CPQS, EDGE, OCAM) reads `Data/wrds/crsp_quotes_topup.csv`
+(scripts/167, WRDS) and `Data/wrds_e2v5/crsp_quotes_topup_e2v5.csv` (the DISH quotes, pulled by
+`scripts/267_e2v5_quotes_pull.py` with a WRDS login; gitignored). Its committed output
+`outputs/essay2_v5/v5_t16_spreads.csv` is read by 269/270 and checked for presence only. With
+the licensed files in place, 268 runs and reproduces that file.

@@ -4,12 +4,12 @@ share of breach-anchored post-window days before the reporting date (pooled),0.5
 ... treated,0.5355769230769231,1114 of 2080
 ... control,0.5777292576419214,2646 of 4580
 "MDE80, HC3 (2.8 x SE_HC3; scripts/165 convention)",0.31897192878594,5.06 annualized; CV3 MDE80 0.5477
-HC3 MDE shortfall vs CV3 (percent),41.017699352874374,100 x (1 - SE_HC3/SE_CV3)
+HC3 MDE shortfall vs CV3 (percent),41.01769935287438,100 x (1 - SE_HC3/SE_CV3)
 converted CAR bound (daily pp),0.13228756555322954,2.10 pp annualized (scripts/165 EQ_CAR)
-"TOST vs CAR bound, lower one-sided p (CV3)",0.0837833064910336,
-"TOST vs CAR bound, upper one-sided p (CV3)",0.509023506104862,
-SE clustered by 2-digit SIC (CV1),0.12698201880793394,p 0.2925; 25 clusters; t(G-1)
-SE clustered by 2-digit SIC (CV3),0.3154725592312807,p 0.6687
+"TOST vs CAR bound, lower one-sided p (CV3)",0.08378330649103383,
+"TOST vs CAR bound, upper one-sided p (CV3)",0.5090235061048616,
+SE clustered by 2-digit SIC (CV1),0.1269820188079339,p 0.2925; 25 clusters; t(G-1)
+SE clustered by 2-digit SIC (CV3),0.31547255923128004,p 0.6687
 specification-curve permutation draws (scripts/266),1000.0,"parent-level, 12 of 82 treated, seed 499"
 R1-R14 descriptives (treated minus control; Welch),0.03829543312021114,"df 177.49, t 0.386, p 0.6999; pre-SD gap +0.2688 (p 0.0090); post-SD gap +0.3070 (p 0.0084)"
 "R-squared, M4 without / with Form 499",0.1802250144802927,without 0.1765

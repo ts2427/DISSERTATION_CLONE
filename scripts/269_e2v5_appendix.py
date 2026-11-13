@@ -66,11 +66,11 @@ TABLE_GROUPS = [
     ['benchmarks', 'estimation_contamination', 'coverage_drops'],                 # 22
     ['alternatives_bridge'],                                                      # 23
     ['announcement_family', 'announcement_ladder', 'announcement_buildup',
-     'placebo_dates', 'earnings_benchmark'],                                      # 24
+     'placebo_dates', 'earnings_benchmark', 'announcement_lotpo'],                # 24
     ['disclosure_delay', 'delay_nonzero', 'delay_quantiles', 'delay_distribution',
      'delay_distribution_tests'],                                                 # 25
     ['spreads'],                                                                  # 26
-    ['size_quartiles'],                                                           # 27
+    ['size_quartiles', 'size_quartile_ladder'],                                   # 27
     ['prerule_events'],                                                           # 28
     ['specification_curve', 'specification_curve_permutation'],                   # 29
     ['leave_one_parent_out', 'influence'],                                        # 30
@@ -767,9 +767,12 @@ RES = [
     ('leave_one_parent_out', 'v5_t14b_leave_one_parent_out.csv', 'Leave-one-parent-out estimates', 'analytical 333 (G=82)'),
     ('specification_curve', 'v5_t15_spec_curve.csv', 'Specification curve (144 specifications)', 'analytical 333'),
     ('specification_curve_permutation', 'v5_t15b_spec_curve_permutation.csv', 'Specification-curve permutation test', 'analytical 333 (1,000 parent-level draws)'),
+    ('announcement_lotpo', 'v5_t18d_announcement_leave_one_treated_parent_out.csv', 'Announcement-window test, leave one treated parent out (CV3)', 'analytical 333 less one treated parent filer entity'),
+    ('size_quartile_ladder', 'v5_t18e_quartile_ladder.csv', 'Size quartiles: Form 499 coefficient on every inference rung, treated parent CIKs per cell', 'analytical 333 (partition: ln total assets)'),
 ]
 SRC = {'v5_t02': 264, 'v5_t03': 264, 'v5_t04': 264, 'v5_t05': 264, 'v5_t06': 264, 'v5_t07': 264, 'v5_t08': 264,
-       'v5_t09': 265, 'v5_t10': 265, 'v5_t11': 265, 'v5_t12': 265, 'v5_t13': 265, 'v5_t14': 265, 'v5_t15': 266}
+       'v5_t09': 265, 'v5_t10': 265, 'v5_t11': 265, 'v5_t12': 265, 'v5_t13': 265, 'v5_t14': 265, 'v5_t15': 266,
+       'v5_t18': 272}
 for key_, f, title, lvl in RES:
     scr = SRC[f[:6]]
     add(key_, v5(f), title, lvl, f'outputs/essay2_v5/{f} (scripts/{scr}_e2v5_*.py)')
