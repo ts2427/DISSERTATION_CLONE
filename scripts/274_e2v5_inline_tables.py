@@ -299,11 +299,103 @@ class Notes:
         """A design constant (window bound, cap rule, code set) with the file that defines it."""
         return self.reg(shown, 'design: ' + source, shown)
 
+    def w(self, word, value, source):
+        """A number written as a word; its value must equal the source value."""
+        if WORDNUM[word.lower()] != int(value):
+            sys.exit(f'Table {self.t} note: "{word}" but the source ({source}) gives {value}')
+        return self.reg(word, source, int(value))
+
+    def final(self):
+        """The note exactly as written, after every number in it is checked against the registry."""
+        text = NOTE_TEXT[self.t]
+        mt = _mask(text)
+        taken, errs = [], []
+        for e in NOTE_REG[self.t]:
+            i = _free_at(mt, e['shown'], taken)
+            if i is None:
+                errs.append(f'registered {e["shown"]!r} ({e["source"]} = {e["value"]}) does not occur in the note')
+            else:
+                taken.append((i, i + len(e['shown'])))
+        cov = lambda a, b: any(x <= a and b <= y for x, y in taken)
+        for m in list(_NUM_TOKEN.finditer(mt)) + list(_SCAN_WORDS.finditer(mt)):
+            if not cov(*m.span()):
+                errs.append(f'no registered source for {m.group()!r} in "...{text[max(0, m.start() - 50):m.end() + 30]}..."')
+        if errs:
+            sys.exit(f'Table {self.t} note check failed:\n  ' + '\n  '.join(errs))
+        return text
+
 
 def claim(ok, what):
     """A statement a note makes about the data; the render stops if the data do not bear it out."""
     if not ok:
         sys.exit(f'note claim fails: {what}')
+
+
+# ------------------------------------------------------------------ note text (Tim, 2026-11-18)
+# Each note is used exactly as written. Notes.final() checks it against the registry: every
+# registered number (formatted from its committed source) must occur in the text, and every
+# number in the text must be covered by a registration. The render stops otherwise.
+WORDNUM = {'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5, 'six': 6, 'seven': 7, 'eight': 8,
+           'nine': 9, 'ten': 10, 'eleven': 11, 'twelve': 12, 'twenty-eight': 28}
+_SCAN_WORDS = re.compile(r'\b(two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|twenty-eight)\b', re.I)
+_NUM_TOKEN = re.compile(r'(?<![\w.])[\u2212+]?(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?(?:st|nd|rd|th)?(?!\w)'
+                        r'|(?<![\w.])\.\d+')
+# names and terms whose digits or number words are not statistics
+_MASKS = [r'Form 499', r'\b(?:M[1-4]|H1|Q[1-4]|G1|CV[13]|HC[13]|MDE80|FF3)\b', r'Table \d+', r'Gate [12]',
+          r'R\u00b2', r'two-digit', r'three-factor',
+          r'(?<=et al\. \()(?:19|20)\d{2}', r'(?<=et al\., )(?:19|20)\d{2}',
+          r'(?<=[a-z] & [A-Z])[a-z]+, (?:19|20)\d{2}']
+
+
+def _mask(text):
+    out = list(text)
+    for pat in _MASKS:
+        for m in re.finditer(pat, text):
+            for k in range(m.start(), m.end()):
+                if out[k].isdigit():
+                    out[k] = 'x'
+            if pat in ('two-digit', 'three-factor'):
+                for k in range(m.start(), m.start() + m.group().index('-')):
+                    out[k] = 'x'
+    return ''.join(out)
+
+
+def _free_at(text, shown, taken):
+    i = text.find(shown)
+    while i != -1:
+        j = i + len(shown)
+        left = text[i - 1] if i > 0 else ' '
+        right = text[j] if j < len(text) else ' '
+        nxt = text[j + 1] if j + 1 < len(text) else ' '
+        ok = (not left.isalnum() and left != '.' and not (shown[0].isdigit() and left in '\u2212+')
+              and not right.isalnum() and not (right in '.,' and nxt.isdigit()))
+        if ok and not any(a < j and i < b for a, b in taken):
+            return i
+        i = text.find(shown, i + 1)
+    return None
+
+
+NOTE_TEXT = {
+    1: 'Panel A traces the sample from Privacy Rights Clearinghouse (PRC) notification records to analytical events. The first four rows count records and the remaining rows count canonical events; one breach can produce several records, so the starting 1,054 records are not 1,054 breaches. Gate 1 keeps a record only when the reporting organization resolves to a public filer entity. Gate 2 reviews records at the same parent filer entity with nearby dates and rules whether they describe one breach, so that each breach enters once. The registrant column gives Form 499 registrant events, with their organizations and parent filer entities in parentheses; an em dash (—) marks a count not tracked at that step. Panel B reports the final sample at three levels. The registrant and other parent counts sum to 84 rather than 82 because Comcast and Verizon each have events in both groups: the NBC Sports Group and Verizon Media events are other events. Panel C counts events by reporting year. The 5 years marked "one group only" hold 52 events, 3 of them registrant events, and contribute nothing to the estimate under year fixed effects. A Form 499 registrant event is an event at a firm registered on Federal Communications Commission (FCC) Form 499. The parent filer entity is the Securities and Exchange Commission (SEC) filer that owns the breached organization and is the clustering unit (G = 82). CRSP = Center for Research in Security Prices.',
+    2: 'Each row compares the 104 Form 499 registrant events with the 229 other events in the analytical sample (N = 333). The dependent variable is the change in abnormal return volatility: the standard deviation (SD) of daily abnormal returns (the stock return minus the CRSP value-weighted market return), in percentage points, over trading days [+1, +20] after the agency reporting date minus the same SD over [−60, −11]; the pre-window and post-window rows report the two levels. M is the group mean. Difference is the registrant mean minus the other-firm mean, with its standard error (SE) in parentheses. The Welch t-test tests whether the two means are equal without assuming equal variances and uses Welch–Satterthwaite degrees of freedom (df), shown in parentheses; a p-value below .05 indicates that the means differ. The groups do not differ on the change (p = .700) but differ on both levels (p = .009 and .008) and on every control except the disclosure gap (p = .490). Log total assets is the natural log of Compustat total assets; leverage is total liabilities divided by total assets; return on assets is net income divided by total assets. The health-breach flag equals 1 when the breach record lists medical or health information as affected (15 events, all other events). Prior breach events counts earlier sample events at the same parent filer entity. The disclosure gap is the number of days from the breach date to the agency reporting date, with gaps of −30 to −1 days set to 0 and values capped at the 99th percentile (784.96 days). Panel C reports Pearson correlations; the largest in absolute value is between registration and log total assets (.57). CRSP = Center for Research in Security Prices.',
+    3: 'Panels A and B reproduce the earlier specification: raw-return volatility on 891 notification records, size quartiles of log market value, and HC3 heteroskedasticity-consistent standard errors (SE), which do not account for clustering. Each cell is the treatment coefficient from a separate ordinary least squares (OLS) regression within the quartile named, with its SE in parentheses. Panel A treats a record when its Standard Industrial Classification (SIC) code is 4813, 4841, or 4899; Panel B treats it when its parent filer entity is registered on Federal Communications Commission (FCC) Form 499. The two panels use the same records, so their estimates share observations and no test of their difference is reported. Panel C repeats the comparison on 339 canonical events, with size quartiles of log total assets; treated parent filer entities are in parentheses. The Q1 − Q4 spread is the smallest-quartile estimate minus the largest. Treatment varies across few parent filer entities (the Panel C Q1 cell holds 2 treated events at 1 parent), so these SEs are too small to support a rejection. Panel D shows how records concentrate in events: 115 of the 618 events have more than one record and supply 388 records, and two 2024 events at one parent filer entity supply 56. Panel E counts, among 48 window specifications on the corrected data (24 per anchor date), those that place the Q1 estimate above Q4 (0) and those that decline steadily from Q1 to Q4 (0). Q1 is the smallest quartile.',
+    4: 'Panel A divides the 891 notification records by the two treatment definitions: an industry code of 4813, 4841, or 4899 on the record, and registration of the parent filer entity on Federal Communications Commission (FCC) Form 499. The definitions disagree on 30 records. Twenty-eight are Form 499 registrant records that carry none of the three codes, at 16 organizations. The other 2 are damaged source entries coded 4813 whose organization field holds an AT&T breach label rather than a firm name, so they resolve to no parent filer entity. Records neither definition treats form the comparison group under both. Change is the change in raw-return volatility under the earlier specification, and size is log market value. Panel B splits the 229 records in the smallest size quartile (Q1). The 10 records treated under Form 499 only come from GoDaddy, a domain registrar (8), and Twilio, a communications platform (2); their mean change, −8.62, compares with −2.20 for records neither definition treats. Panel C places the 28 missed records by quartile: 10 in Q1, 13 in Q4, and 5 in Q2 or Q3. M = mean; SD = standard deviation.',
+    5: "Panel A lists the 6 identifiers in the earlier matching chain that absorbed the names of unrelated organizations, so those organizations' breach records took on another firm's stock data. Organizations absorbed counts distinct organization names, records counts their breach records, and canonical events counts current events carrying one of those names; the largest collision absorbed 25 organizations and 46 records. Panel B lists the 7 events at which ticker reuse would have matched the breached firm to an earlier, unrelated holder of the same symbol whose ticker had ended years before (in 2002 for META and 1992 for DASH). The current chain blocks that match, and none of the 7 events has a stock match. Panel C regresses the earlier dataset's size variable on two candidate measures: against log market value the slope is 0.99 and R² is .86, and against log total assets the slope is 0.46 and R² is .44, so the variable measures market value. Share within is the share of records within 0.10 or 0.25 of each candidate. Panel D starts from the 355 events matched to stock data and reported by December 31, 2024 (111 registrant and 244 other events) and counts the events lost at each requirement. Retention is 93.7 percent of registrant events (104 of 111) and 93.9 percent of other events (229 of 244). PERMNO = CRSP permanent security identifier; CRSP = Center for Research in Security Prices; R² = share of variance explained.",
+    6: "Panel A has one row per treated parent filer entity (12 parents, 104 registrant events). The Federal Communications Commission (FCC) Form 499 registry holds 20,669 filer records. Registry records matched counts the records whose legal name, doing-business-as name, or holding company contains one of the parent's name keywords (671 in all). A match counts toward treatment only when the matched registration is open on the breach date. Distinct FRNs counts FCC Registration Numbers among the matched records, and end date before start date counts records carrying that registry error (2 in all). Breach dates gives the first and last breach date among the parent's events. Panel B lists the 23 adjudication rules, covering 22 organization names. Each rule records a ruling for a name pattern that exact matching would treat wrongly. A rule forces treatment under clause (a), a registration of the organization itself open on the breach date, or clause (b), the organization is the parent brand of a registered filer whose subscriber operations were breached, and forces exclusion when neither clause holds. DISH Network has two rules: it is excluded before July 1, 2020, and treated after. Panel C lists the 3 rules that assign a registrant with no traded equity to the parent filer entity that owns it. CIK = Securities and Exchange Commission Central Index Key.",
+    7: "Each row of Panel A applies one industry-code convention to the 346 canonical events with a Compustat historical Standard Industrial Classification (SIC) code and compares the result with Federal Communications Commission (FCC) Form 499 registration. The conventions are the regulated-carrier codes from published practice (4812 and 4813; Barclay & Smith, 1995), the communications codes of this essay's earlier specification (4813, 4841, and 4899), the full communications range (4800 to 4899), and a set chosen after examining the registry (4812, 4813, 4841, and 4899), whose agreement is therefore an upper bound rather than a test. Event agreement is the percentage of events on which convention and registration agree. A false positive is an event the convention codes as a carrier although its parent filer entity is not a registrant; a false negative is a registrant event the convention does not code. Treated parents identified counts, of the 12 registrant parent filer entities, those with at least one event the convention codes as a carrier. The tuned set agrees most often (96.0 percent), and the published convention identifies the fewest registrant parents (6). Panel B lists the misclassified organizations with the SIC code that produced each error.",
+    8: "Panel A lists the 11 registrant events, at 3 parent filer entities, that fall outside the comparison in Table 7. Of the 118 verified registrant events, 107 carry a Compustat historical Standard Industrial Classification (SIC) code. An event goes uncoded when its firm has no matched stock ticker (7 events) or no Compustat annual record in the 550 days before the breach date (4 events); 8 of the 11 are T-Mobile events. Panel B compares, for each treated parent filer entity and for Roku, the Compustat code on the most recent annual record within 550 days before the breach date with every code on the parent's breach records. The two sources disagree for 11 of the 14 treated parents. An em dash (—) marks a missing code.",
+    9: 'Each column is an ordinary least squares (OLS) regression on the analytical sample (N = 333 events, 104 Form 499 registrant events). The dependent variable is the change in abnormal return volatility, defined in Table 2. M1 includes the pre-window volatility level and the disclosure gap; M2 adds log total assets, leverage, and return on assets; M3 adds the Form 499 registrant indicator, the test of H1; M4 adds the health-breach flag and prior breach events and is the primary model. Each cell shows the coefficient, its CV3 standard error in parentheses, and its p-value below. CV3 is the cluster jackknife standard error, clustered by parent filer entity (G = 82, 12 with registrant events); it re-estimates the model leaving out one parent at a time, and its p-values use the t distribution with 81 degrees of freedom. With the pre-window level as a regressor, each model is an analysis of covariance: the registrant coefficient compares post-window volatility across groups at the same pre-window level. Because the dependent variable contains the pre-window level, R² is not the share of post-disclosure volatility explained. In M4 the registrant coefficient is 0.137 (p = .481), and adding the indicator raises R² from .177 to .180. Disclosure-gap coefficients are per day.',
+    10: "Each row of Panel A reports a different standard error (SE) and test for the Form 499 registrant coefficient of the primary model M4 (0.137; N = 333). OLS assumes independent errors with equal variance. HC1 and HC3 allow the variance to differ across events but treat events as independent; HC3 inflates each residual by its leverage. CV1 clusters by parent filer entity with the usual small-sample correction. CV3, the primary procedure, is the cluster jackknife, which re-estimates the model leaving out one parent filer entity at a time; its p-values use the t distribution with 81 degrees of freedom. The three wild cluster bootstrap rows reweight parent-level residuals to simulate the distribution of the test statistic: the restricted version imposes a zero coefficient and the unrestricted version does not. Rademacher weights flip each parent's residuals with probability one half (99,999 draws); Webb weights draw from six points, which suits few clusters (9,999 draws); the seed is 499. Procedures that ignore clustering understate the SE when treatment varies across few parents: the HC1 SE (0.112) is 42 percent smaller than the CV3 SE (0.193). No procedure gives a p-value below .05. G is the number of parent filer entities (82), G1 the number with registrant events (12), and G* the effective number of clusters, 23.4, which adjusts G for unequal cluster sizes and the concentration of treatment (Carter et al., 2017); the coefficient of variation of cluster size is 2.25. An em dash (—) marks a procedure that produces no confidence interval. Panel B clusters by two-digit Standard Industrial Classification (SIC) industry (25 clusters).",
+    11: "The table asks whether the primary estimate (M4; N = 333, G = 82) is precise enough to rule out effects that matter. Values are in percentage points (pp) of daily abnormal return volatility; annualized values multiply by √252. The smallest effect size of interest (SESOI) is 0.25 times the standard deviation of the dependent variable among other events (0.763), or 0.191 pp daily (3.03 pp annualized); no comparable volatility effect is reported in the literature, so the bound rests on the outcome's own spread. TOST (two one-sided tests) tests whether the effect is small enough to treat as practically zero: it runs one test that the effect is above −SESOI and one that it is below +SESOI, using the CV3 standard error and the t distribution with 81 degrees of freedom, and reports the larger p-value. The lower test rejects (p = .047), so effects below −SESOI are ruled out; the upper test does not (p = .390), so a positive effect as large as SESOI cannot be excluded. The 90 percent confidence interval, [−0.185, 0.458], corresponds to TOST at the 5 percent level and does not lie inside ±SESOI. The literature bound is ±2.10 pp, the two-day breach penalty reported by Cavusoglu et al. (2004), divided by √252 to 0.132 pp daily; its TOST p is .509. MDE80 is the minimum detectable effect, the smallest true effect the regression would detect approximately four times in five at the 5 percent level, computed as 2.84 times the CV3 standard error; it is 2.87 times SESOI. The HC3 row shows the MDE80 that heteroskedasticity-consistent standard errors would imply, 41 percent lower. An MDE80 of 5 pp annualized would require 55 treated parent filer entities, and as treated parents increase without limit the MDE80 falls only to 0.207 pp daily (3.29 pp annualized).",
+    12: "Each row re-estimates the primary model M4 with one change and reports the Form 499 registrant coefficient, its CV3 standard error (SE) in parentheses, its p-value, and its 95 percent confidence interval; N = 333 and G = 82 unless the N column shows otherwise. CV3 is the cluster jackknife SE by parent filer entity. Panel A ends the post-window at day +5, +10, or +20 against the pre-window [−60, −11]; the three windows form one family, and the BH-adjusted p applies the Benjamini–Hochberg false-discovery-rate adjustment within it. The wild cluster p comes from the restricted wild cluster bootstrap with Rademacher weights. Every window must have returns on at least 80 percent of its trading days. Panel B replaces the market adjustment with abnormal returns from the market model and the Fama–French three-factor (FF3) model, both estimated over trading days [−250, −30]; 6 events (1 registrant event) lack 80 percent coverage in that window, leaving 327 events. Panel C counts contaminated estimation windows, those containing another event at the same parent filer entity, dated by that event's notification date and by its breach date; the focal event itself is excluded. The shares across all events are .43 by notification date and .59 by breach date. Panel D lists coverage drops by benchmark and pre-window; the primary windows drop no event. Panel E moves step by step from the earlier outcome, raw log-return volatility over [−25, −5] and [+5, +25], to the primary one: the same outcome with the 80 percent rule, then market-adjusted simple returns on the same windows, then the current windows. Its first rows start the pre-window at day −45. No row gives a p-value below .05.",
+    13: 'Announcement elevation is the standard deviation (SD) of daily market-adjusted returns over the nine trading days [−4, +4] centered on the agency reporting date minus the SD over the three weeks before, [−25, −5]; each window needs returns on 8 of 9 and 17 of 21 days. Unless a row shows otherwise, each estimate is the Form 499 registrant coefficient from a regression of elevation on registration, baseline-window volatility, and the M4 controls (N = 333, G = 82). Panel A is the pre-specified family of 4 tests: mean elevation on earnings-announcement dates, mean elevation on breach reporting dates, their contrast, and the registrant coefficient; the BH-adjusted p applies the Benjamini–Hochberg adjustment within that family. The two earnings tests are calibration checks expected to reject. The registrant coefficient is 0.433 (CV3 p = .027, BH-adjusted p = .036). Panel B repeats the test under each procedure in Table 10; every procedure gives p below .05 except the unrestricted wild cluster bootstrap (p = .545). Panel C adds controls in steps; the baseline-window SD closes .42 of the distance from the unadjusted to the full-model coefficient, and log total assets brings the total to .81. Panel D is the placebo test: in each of 200 draws (seed 499), every security receives a random quiet date at least 120 trading days from any breach notification and 30 from any earnings date, and no draw matches the actual coefficient (0 of 200). Relative to their own quiet days, registrant events show elevation 0.008 higher on breach dates and other events 0.140 lower, so the difference comes from other events. Panel E reports the earnings-announcement benchmark, with SEs clustered by security. Panel F removes one treated parent filer entity at a time; the CV3 p stays below .05 in 11 of 12 removals but not when T-Mobile is removed (p = .076). Panel G adds the four sensitivities (breach severity, flexible size, both, and a common-support sample), each with CV3 p below .05.',
+    14: "Delay is the number of days from the breach date to the agency reporting date, with delays of −30 to −1 days, which arise from field-level errors, set to 0. Each row of Panel A regresses a delay outcome on the Form 499 registrant indicator and controls (N = 333, G = 82), with CV3 standard errors by parent filer entity. In all, 117 events have a zero delay (42 registrant, 75 other), because the source records the breach and its report on the same day or a small negative delay was set to 0. Uncapped rows use the delay as recorded; capped rows cap it at the 99th percentile (784.96 days), the disclosure gap of Table 2. The unadjusted difference in mean uncapped delay is 27.8 days; the capped difference in Table 2 is 12.13 days. Log rows use log(1 + delay) in Panel A and log(delay) on nonzero delays in Panel B, which drops the zero delays (216 events, 62 registrant). MDE80 is the minimum detectable effect at 80 percent power, in the units of the outcome. Panel C reports quantile regressions of the uncapped delay; at the 10th and 25th percentiles both groups' delays are 0, so those estimates are 0 by construction and carry no information. Panel D describes the uncapped delay by group. Panel E tests whether the groups' delays differ in spread or shape: the Brown–Forsythe test compares spread around each group's median, the Kolmogorov–Smirnov test compares whole distributions, and the log-rank test compares time to report. No test in the table gives a p-value below .05. CV1 and the wild cluster bootstrap are defined in Table 10.",
+    15: 'Each row regresses the change in one trading-cost measure, its mean over trading days [+1, +20] after the agency reporting date minus its mean over [−60, −11], on the Form 499 registrant indicator, the M4 controls, and calendar-month fixed effects (N = 333, G = 82), with CV3 standard errors by parent filer entity. CPQS is the closing percent quoted spread, the ask minus the bid divided by the quote midpoint, from valid uncrossed closing quotes, with values above 0.5 set to missing (Chung & Zhang, 2014); it is a fraction and is shown to five decimals. EDGE is the efficient bid–ask spread estimator from open, high, low, and close prices (Ardia et al., 2024). OCAM is the open-to-close Amihud illiquidity measure, the absolute open-to-close return divided by dollar volume (Barardehi et al., 2021); its window means are winsorized at the 1st and 99th percentiles and logged. OCAM is biased toward zero in large stocks, where dollar volume is high. Each window needs trading on at least 80 percent of its days. The three measures form one family, and the BH-adjusted p applies the Benjamini–Hochberg adjustment within it; no measure gives p below .05 before or after adjustment. The last column is the Pearson correlation between the change in each measure and the change in abnormal return volatility; none exceeds .11 in absolute value, so trading costs and volatility move largely independently around the reporting date.',
+    16: "Each row of Panel A re-estimates the primary model M4 within one quartile of log total assets (333 events in all), with CV3 standard errors clustered by parent filer entity; G is the number of parent filer entities in the cell, and p-values use the t distribution with that cell's G − 1 degrees of freedom. Registrant events concentrate at the top: Q4 holds 59 of 104, and Q1 rests on 2 registrant events at 1 parent filer entity, so its estimate compares one firm with the rest of the cell; Q1 omits the health-breach flag, which does not vary there. The four cells form one family, and the BH-adjusted p applies the Benjamini–Hochberg adjustment within it; the smallest BH-adjusted CV3 p is .535. Panel B asks whether any cell shows the effect to be negligible. A cell does so only if its 90 percent confidence interval lies inside ±0.191, the smallest effect size of interest (SESOI) from Table 11; no cell's interval does. MDE80, the minimum detectable effect at 80 percent power, runs from 0.821 to 2.632, or 4.30 to 13.80 times SESOI. Panel C shows p-values from procedures that understate clustering, to document over-rejection when few treated parents sit in a cell: HC1 and HC3 give p below .05 in 3 of the four cells, and CV3 in none. Q1 is the smallest quartile.",
+    17: 'Each specification re-estimates the registrant coefficient of the primary model M4 (N = 333, G = 82) under one combination of five decisions: the pre-window, the post-window, the return benchmark, simple or log returns, and whether the outcome is winsorized at the 1st and 99th percentiles, for 3 × 4 × 3 × 2 × 2 = 144 specifications. Panel A summarizes the estimates for each option, pooling the specifications that use it, and counts those with p below .05 under CV3, the cluster jackknife standard error by parent filer entity, and under CV1, the cluster-robust standard error with the usual small-sample correction. All 144 estimates are positive, none is significant under either procedure, and the median estimate is 0.194. Panel B tests the whole curve by permutation (Simonsohn et al., 2020): in each of 1,000 draws, registration is reassigned at random to 12 of the 82 parent filer entities, and all 144 specifications are re-estimated. Each permutation p is the share of draws at least as extreme as the observed curve, for the median estimate, the count of estimates sharing the dominant sign, and the count significant in that direction under CV1; none is below .05. A curve of a single sign is common under the null here because every specification uses the same events, so the estimates move together: .283 of the null draws produce one.',
+    18: "Each row re-estimates the registrant coefficient of the primary model M4 (N = 333, G = 82) with one change, with CV3 standard errors by parent filer entity. Panel A drops one parent filer entity at a time (82 re-estimates) and reports the smallest and largest estimates: dropping Sprint Corporation (9 events) lowers the estimate to 0.029, removing 78.9 percent of it, and dropping Intuit Inc. (76 events) raises it to 0.213. Panel B drops the 18 events whose Cook's distance, a measure of how much all fitted values move when one observation is deleted, exceeds 4/N, and separately the 6 events reported before the rule took effect on December 8, 2007, none of them registrant events. Panel C adds fixed effects for reporting year, two-digit Standard Industrial Classification (SIC) industry, or both. A mixed stratum is a year, industry, or year-by-industry cell holding both registrant and other events; with fixed effects the coefficient is identified only within mixed strata, so events in single-group strata carry no weight (Aronow & Samii, 2016). Effective events counts the events in mixed strata, with registrant events in parentheses: year fixed effects leave 281, and both sets leave 109 events in 12 mixed cells. Industries with a single event drop as singletons (7 events). Panel D uses the revised reporting dates the source later published for 12 events and then corrects Sprint's breach date, which adds 1 event. No row gives a p-value below .05.",
+    19: 'Each row is one family of tests in the analysis program, which holds 45 tests. A family is a set of tests addressing one question. Within each family of more than one test, p-values are adjusted by the Benjamini–Hochberg (BH) false-discovery-rate procedure; single checks and joint tests use their own reference distributions. The last column counts tests with p below .05, using the CV3 cluster jackknife standard error where the test has one. Five tests give p below .05. Three are in the announcement-window family, and two of them are calibration checks expected to reject on earnings dates (the earnings elevation and the breach-minus-earnings contrast). The other two are composition checks kept from the earlier ledger, which compare the size and pre-breach volatility of events that industry codes treat but Form 499 does not with registrant events the codes also treat (p = .003 and p < .001); neither tests registration. One test of registration rejects: the registrant coefficient on announcement elevation (p = .027, BH-adjusted p = .036). If every null hypothesis were true, about 45 × .05 = 2.25 tests would give p below .05 by chance.',
+}
 
 
 # ------------------------------------------------------------------ shared labels
@@ -430,53 +522,30 @@ def table_1():
 
     n, nt, nc = s['events']
     g, gt, gc = s['parents']
+    n, nt, nc = s['events']
+    g, gt, gc = s['parents']
     nb = Notes(1)
     ev = pd.read_csv(PANEL_CSV, dtype={'final_cik': str})
     both = ev[ev.final_cik.isin(s['both_parents']) & (ev.fcc_form499 == 0)]
-    other_names = sorted(both.org_name.unique())
-    claim(other_names == ['NBC Sports Group', 'Verizon Media'], f'other-side names {other_names}')
-    n_nbc, n_vzm = (both.org_name == 'NBC Sports Group').sum(), (both.org_name == 'Verizon Media').sum()
-    att_ = appendix_csv('01_sample_attrition.csv')
-    first, g2 = att_.iloc[0], att_[att_.step == 'Gate 2 adjacency verdicts'].iloc[0]
-    can0 = att_[att_.step == 'Canonical events (post-Gate 2)'].iloc[0]
-    claim(int(float(g2.N)) == int(float(can0.N)), 'records after Gate 2 = canonical events')
-    note = (f'Each row of Panel A is one step in building the analytical sample. The first four rows count '
-            f'Privacy Rights Clearinghouse (PRC) notification records; from the row "canonical events after '
-            f'Gate 2" onward the rows count canonical events, so the unit changes at that row, where the '
-            f'{nb.i(g2.N, "01, Gate 2 adjacency verdicts / N")} records retained become '
-            f'{nb.i(can0.N, "01, Canonical events (post-Gate 2) / N")} canonical events. A notification record '
-            f'is one entry in the PRC data, and one breach can produce several records, so the starting '
-            f'{nb.i(first.N, "01, PRC universe / N")} records are not {nb.i(first.N, "01, PRC universe / N")} '
-            f'breaches. Gate 1 is the entity-resolution screen: it keeps a record only when the reporting '
-            f'organization resolves to a public filer entity. Gate 2 is the adjacency review: it examines records '
-            f'at the same parent filer entity whose dates lie close together and rules whether they describe the '
-            f'same breach, so that each breach enters once. Removed is the count dropped at a step and Remaining '
-            f'the count left. Registrant counts are reported at the event level only, because registration is '
-            f'assigned to events; the registrant column gives registrant events with, in parentheses, the '
-            f'organizations and parent filer entities they belong to, and an em dash (—) marks a count the ledger does not track at that step. '
-            f'Panel B reports the final sample of {nb.i(n, "01, final row / N")} events '
-            f'({nb.i(nt, "01, final row / treated")} Form 499 registrant events and '
-            f'{nb.i(nc, "01, final row / control")} other events) at three levels. A Form 499 registrant event is '
-            f'an event at a firm registered on Federal Communications Commission (FCC) Form 499. The parent filer '
-            f'entity is the Securities and Exchange Commission (SEC) filer that owns the breached organization; '
-            f'it is the clustering unit for inference (G = {nb.i(g, "constants values.ann_G (= distinct final_cik in v5_event_panel.csv)")}). '
-            f'The registrant and other parent counts sum to {nb.i(gt + gc, "v5_event_panel.csv, distinct final_cik by group, summed")} '
-            f'rather than {nb.i(g, "constants values.ann_G")} because '
-            f'{nb.i(len(s["both_parents"]), "v5_event_panel.csv, final_cik in both groups")} parent filer '
-            f'entities, Comcast and Verizon, have events in both groups: the '
-            f'{nb.i(n_nbc, "v5_event_panel.csv, NBC Sports Group events")} NBC Sports Group events (Comcast) and '
-            f'the {nb.i(n_vzm, "v5_event_panel.csv, Verizon Media events")} Verizon Media event (Verizon) are '
-            f'other events, adjudicated as not registrant operations, while the carrier subsidiaries’ events '
-            f'are registrant events. Panel C counts events by the year of the agency reporting date. "One group '
-            f'only" marks the {nb.c("years_single_kind", "i")} years whose events are all registrant events or '
-            f'all other events; together they hold {nb.c("years_single_kind_events", "i")} events, '
-            f'{nb.c("years_single_kind_treated", "i")} of them registrant events. Under year fixed effects each '
-            f'event is compared only with events reported in the same year, so a year with only one group offers '
-            f'no comparison and contributes nothing to the registrant estimate. Reporting dates run from '
-            f'{nb.reg(s["date_min"], "v5_event_panel.csv, min reported_date", s["date_min"])} to '
-            f'{nb.reg(s["date_max"], "v5_event_panel.csv, max reported_date", s["date_max"])}. CRSP is the '
-            f'Center for Research in Security Prices; Compustat is the S&P Global accounting database.')
+    claim(sorted(both.org_name.unique()) == ['NBC Sports Group', 'Verizon Media'], 'other-side events are NBC Sports Group and Verizon Media')
+    pn = parent_names()
+    claim(sorted(pn[str(c)] for c in s['both_parents']) == ['Comcast Cable Communications LLC', 'Verizon'], 'both-group parents are Comcast and Verizon')
+    first = att.iloc[0]
+    n_rec = sum(1 for st_ in att.step if ATTRITION_LABELS[st_].startswith('Records:'))
+    claim(all(ATTRITION_LABELS[st_].startswith('Records:') for st_ in att.step[:n_rec]), 'record rows come first')
+    nb.w('four', n_rec, 'Panel A rows that count records')
+    nb.i(first.N, '01, PRC universe / N')
+    nb.i(first.N, '01, PRC universe / N')
+    nb.w('three', len(rows_b), 'Panel B rows (levels)')
+    nb.i(gt + gc, 'v5_event_panel.csv, distinct final_cik by group, summed')
+    nb.i(g, 'constants values.ann_G')
+    nb.c('years_single_kind', 'i')
+    nb.c('years_single_kind_events', 'i')
+    nb.c('years_single_kind_treated', 'i')
+    nb.i(g, 'constants values.ann_G (= distinct final_cik in v5_event_panel.csv)')
     claim(len(one_group) == V('years_single_kind'), 'one-group years match the constants')
+    note = nb.final()
+
     return render_table(1, 'Sample Construction',
                         [('Attrition from notification records to analytical events', hdr_a, rows_a),
                          ('Final sample by level', hdr_b, rows_b),
@@ -532,44 +601,31 @@ def table_2():
     offd = [(abs(float(cor.loc[a, b])), a, b) for i_, a in enumerate(CORR_ORDER) for b in CORR_ORDER[:i_]]
     top = max(offd)
     claim({top[1], top[2]} == {'fcc_form499', 'firm_size_log'}, 'registration-size is the largest correlation')
-    hc_c, hc_t = V('desc_control_health_breach_n'), V('desc_treated_health_breach_n')
+    claim(V('desc_treated_health_breach_n') == 0 and V('desc_control_health_breach_n') == V('desc_full_health_breach_n'),
+          'all health breaches are other events')
     cap = cell[('full', 'delay_w')]['max']
-    nN = {g: nb.i(cell[(g, 'dv')].N, f'02A, {g} / dv / N') for g in ('full', 'treated', 'control')}
-    note = (f'Each row compares the {nN["treated"]} Form 499 registrant events with the {nN["control"]} other '
-            f'events in the analytical sample of {nN["full"]} events. '
-            f'The dependent variable is the change in abnormal return volatility: the standard deviation (SD) of '
-            f'daily abnormal returns, RET − vwretd (the stock’s return minus the CRSP value-weighted '
-            f'market return), in percentage points, over trading days '
-            f'{nb.d("[+1, +20]", "constants primary_outcome")} after the agency reporting date minus the same SD '
-            f'over trading days {nb.d("[−60, −11]", "constants primary_outcome")} before it; the '
-            f'pre-window and post-window rows report the two levels. M is the group mean and SD the group '
-            f'standard deviation. Difference is the registrant mean minus the other-firm mean, with its standard '
-            f'error (SE) in parentheses; a positive difference means the registrant events have the higher '
-            f'value. The Welch t-test tests whether the two group means are equal. It does not assume that the '
-            f'two groups have equal variances, which matters here because the groups differ in size and in '
-            f'spread, and it uses the Welch–Satterthwaite degrees of freedom (df) shown in parentheses. A '
-            f'p-value below .05 indicates that the means differ. The two groups do not differ on the change '
-            f'(p = {nb.p(dfx.loc["dv", "p"], "02B, dv / p")}) but differ on the pre-window and post-window levels '
-            f'(p = {nb.p(dfx.loc["pre_sd", "p"], "02B, pre_sd / p")} and '
-            f'{nb.p(dfx.loc["post_sd", "p"], "02B, post_sd / p")}) and on every control except the disclosure '
-            f'gap (p = {nb.p(dfx.loc["delay_w", "p"], "02B, delay_w / p")}). Log total assets is the natural log '
-            f'of Compustat total assets. Leverage is total liabilities divided by total assets. Return on assets '
-            f'is net income divided by total assets. The health-breach flag equals 1 when the breach record lists '
-            f'medical or health information as affected; it applies to '
-            f'{nb.c("desc_full_health_breach_n", "i")} events, all of them other '
-            f'events ({nb.i(hc_t, "constants values.desc_treated_health_breach_n")} registrant events). Prior '
-            f'breach events counts earlier sample events at the same parent filer entity. The disclosure gap is '
-            f'the number of days from the breach date to the agency reporting date; gaps of '
-            f'{nb.d("−30", "scripts/156 (delay floor rule)")} to {nb.d("−1", "scripts/156")} days, '
-            f'where the reporting date precedes the breach date by a field-level error, are set to 0, and values '
-            f'are capped at the in-sample {nb.d("99th", "scripts/163 (P99 winsorization rule)")} percentile (P99), '
-            f'{nb.f(cap, 2, "02A, full / delay_w / max (the P99 cap)")} days. Panel C reports Pearson '
-            f'correlations among the model variables over all {nN["full"]} events, lower triangle only; the column '
-            f'numbers refer to the numbered rows. The largest correlation in absolute value is between '
-            f'registration and log total assets, '
-            f'{nb.r(cor.loc["fcc_form499", "firm_size_log"], 2, "03, fcc_form499 x firm_size_log")}. Percentiles, '
-            f'minima and maxima are in the committed appendix CSV. RET is the CRSP daily stock return and vwretd '
-            f'the CRSP value-weighted market return; CRSP is the Center for Research in Security Prices.')
+    nb.i(cell[('treated', 'dv')].N, '02A, treated / dv / N')
+    nb.i(cell[('control', 'dv')].N, '02A, control / dv / N')
+    nb.i(cell[('full', 'dv')].N, '02A, full / dv / N')
+    nb.d('[+1, +20]', 'constants primary_outcome')
+    nb.d('[\u221260, \u221211]', 'constants primary_outcome')
+    nb.w('two', 2, 'design: the pre-window and post-window levels')
+    nb.w('two', 2, 'design: the two groups compared')
+    nb.d('.05', 'design: significance level')
+    nb.p(dfx.loc['dv', 'p'], '02B, dv / p')
+    nb.p(dfx.loc['pre_sd', 'p'], '02B, pre_sd / p')
+    nb.p(dfx.loc['post_sd', 'p'], '02B, post_sd / p')
+    nb.p(dfx.loc['delay_w', 'p'], '02B, delay_w / p')
+    nb.d('1', 'design: indicator value')
+    nb.c('desc_control_health_breach_n', 'i')
+    nb.d('\u221230', 'scripts/156 (delay floor rule)')
+    nb.d('\u22121', 'scripts/156')
+    nb.d('0', 'scripts/156 (recoded value)')
+    nb.d('99th', 'scripts/163 (P99 winsorization rule)')
+    nb.f(cap, 2, '02A, full / delay_w / max (the P99 cap)')
+    nb.r(cor.loc['fcc_form499', 'firm_size_log'], 2, '03, fcc_form499 x firm_size_log')
+    note = nb.final()
+
     return render_table(2, 'Descriptive Statistics by Registration',
                         [('Dependent variable', hdr_ab, group_rows(DV_VARS)),
                          ('Controls', hdr_ab, group_rows(CONTROL_VARS)),
@@ -580,8 +636,6 @@ RENDERERS.update({1: table_1, 2: table_2})
 
 
 # ------------------------------------------------------------------ Set 2 shared
-RECORD_SPEC = ('Record-level panels use the earlier specification: raw-return volatility on '
-               'notification records, size measured by market value.')
 QLAB = {'main': 'All', 'Q1': 'Q1 (smallest)', 'Q2': 'Q2', 'Q3': 'Q3', 'Q4': 'Q4 (largest)'}
 
 
@@ -671,9 +725,10 @@ def table_3():
               ['Median records per event', fmt_int(summ['median_records_per_event'])],
               ['Events with more than one record', fmt_int(summ['events_with_more_than_one_record'])],
               ['Records in those events', fmt_int(summ['records_in_multi_record_events'])]]
-    for _, r in pair.iterrows():
-        rows_d.append([f'Records in the {r.date} event of parent CIK {r.cik}', fmt_int(r.value)])
-    rows_d.append([f'Records in both 2024 events of parent CIK {top.cik}',
+    for k_, (_, r) in enumerate(pair.iterrows()):
+        rows_d.append([f'Records in the {r.date} event' + (' (largest parent filer entity)' if k_ == 0 else ' (same parent)'),
+                       fmt_int(r.value)])
+    rows_d.append(['Records in both 2024 events of that parent',
                    fmt_int(sum(int(float(v)) for v in pair.value))])
     hdr_d = ['Measure', 'Value']
 
@@ -689,44 +744,27 @@ def table_3():
     if len(g_per) != 1:
         sys.exit('Table 3 Panel E: anchors have different specification counts')
     nb = Notes(3)
-    I_, II_, III_, IV_ = 'i_industry_codes_records', 'ii_form499_repaired', 'iii_dedup_sic', 'iv_dedup_form499'
+    I_, IV_ = 'i_industry_codes_records', 'iv_dedup_form499'
     q1p = cell[(IV_, 'Q1')]
-    note = (f'Each cell reports the coefficient on treatment from a separate ordinary least squares (OLS) '
-            f'regression of the change in raw-return volatility on treatment and the earlier specification’s '
-            f'controls (pre-period volatility, size, leverage, return on assets, disclosure gap, prior breaches '
-            f'and the health-breach flag), estimated within the sample the row names; the standard error (SE) '
-            f'is in parentheses. {RECORD_SPEC} Panels A and B use '
-            f'{nb.i(m.cellN, f"05A, {I_} / main / cellN")} notification records, quartiles of log market value and '
-            f'HC3 heteroskedasticity-consistent standard errors, which do not account for clustering. Panel A '
-            f'treats a record when its Standard Industrial Classification (SIC) code is '
-            f'{nb.d("4813, 4841 or 4899", "scripts/269 section B (industry-code set)")}; Panel B treats it when '
-            f'its parent filer entity is registered on Federal Communications Commission (FCC) Form 499. Panels A '
-            f'and B estimate on the same records, so their estimates share observations and no test of their '
-            f'difference is reported. Panel C repeats the comparison on '
-            f'{nb.i(cell[(IV_, "main")].cellN, f"05A, {IV_} / main / cellN")} canonical events (records '
-            f'collapsed to events), with the earlier breach-date-anchored raw-return outcome and quartiles of log '
-            f'total assets from the canonical event file; Treated events (parents) gives the treated events and, '
-            f'in parentheses, the treated parent filer entities. The Q1 − Q4 spread is the Q1 estimate minus '
-            f'the Q4 estimate. A p-value below .05 marks a coefficient different from zero under HC3, but '
-            f'treatment varies across few parent filer entities (the Panel C Q1 cell has '
-            f'{nb.i(q1p.treatedN, f"05A, {IV_} / Q1 / treatedN")} treated events at '
-            f'{nb.i(q1p.t_parents, f"05A, {IV_} / Q1 / t_parents")} parent), so the event-level standard errors '
-            f'are too small for this design to support a rejection. Panel D shows how the records concentrate in '
-            f'events: {nb.i(summ["events_with_more_than_one_record"], "05B, summary / events_with_more_than_one_record")} '
-            f'of the {nb.i(summ["events"], "05B, summary / events")} events have more than one record and '
-            f'together supply {nb.i(summ["records_in_multi_record_events"], "05B, summary / records_in_multi_record_events")} '
-            f'records, and the two 2024 events of parent CIK '
-            f'{nb.reg(top.cik, "05B, largest / first row parent CIK", top.cik)} supply '
-            f'{nb.i(sum(int(float(v_)) for v_ in pair.value), "05B, largest / two 2024 rows of that CIK, summed")}. '
-            f'Panel E counts specifications only: across '
-            f'{nb.i(g_tot, "09, TOTAL / n_specs")} window specifications on the corrected data '
-            f'({nb.i(g_per[0], "09, breach and notification / n_specs")} per anchor date, the breach date and the '
-            f'notification date), it reports how many put the Q1 estimate above Q4 '
-            f'({nb.i(gg[gg.anchor == "TOTAL"].q1_gt_q4.iloc[0], "09, TOTAL / q1_gt_q4")}) and how many decline '
-            f'monotonically from Q1 to Q4 ({nb.i(gg[gg.anchor == "TOTAL"].monotone_stepdown.iloc[0], "09, TOTAL / monotone_stepdown")}); '
-            f'the full grid is in the committed CSV outputs/tables/essay2_v2/t31_gradient_grid.csv. Q1 to Q4 are '
-            f'size quartiles, Q1 smallest; HC3 is the heteroskedasticity-consistent covariance estimator, type 3; '
-            f'CIK is the SEC (Securities and Exchange Commission) Central Index Key.')
+    claim(all(d_.startswith('2024') for d_ in pair.date), 'both largest-parent events are in 2024')
+    nb.i(m.cellN, f'05A, {I_} / main / cellN')
+    nb.d('4813, 4841, or 4899', 'scripts/269 section B (industry-code set)')
+    nb.w('two', 2, 'design: Panels A and B')
+    nb.i(cell[(IV_, 'main')].cellN, f'05A, {IV_} / main / cellN')
+    nb.i(q1p.treatedN, f'05A, {IV_} / Q1 / treatedN')
+    nb.i(q1p.t_parents, f'05A, {IV_} / Q1 / t_parents')
+    nb.i(summ['events_with_more_than_one_record'], '05B, summary / events_with_more_than_one_record')
+    nb.i(summ['events'], '05B, summary / events')
+    nb.i(summ['records_in_multi_record_events'], '05B, summary / records_in_multi_record_events')
+    nb.w('two', len(pair), '05B, largest / 2024 rows of the top parent (count)')
+    nb.reg('2024', '05B, largest / year of those rows', '; '.join(pair.date))
+    nb.i(sum(int(float(v_)) for v_ in pair.value), '05B, largest / two 2024 rows of that parent, summed')
+    nb.i(g_tot, '09, TOTAL / n_specs')
+    nb.i(g_per[0], '09, breach and notification / n_specs')
+    nb.i(gg[gg.anchor == 'TOTAL'].q1_gt_q4.iloc[0], '09, TOTAL / q1_gt_q4')
+    nb.i(gg[gg.anchor == 'TOTAL'].monotone_stepdown.iloc[0], '09, TOTAL / monotone_stepdown')
+    note = nb.final()
+
     return render_table(3, 'How the Size Gradient Is Produced',
                         [('Industry-code treatment on records', hdr_ab,
                           record_panel('i_industry_codes_records')),
@@ -781,7 +819,7 @@ def table_4():
     for pc, g in sorted(added.groupby('parent_cik'), key=lambda kv: (-len(kv[1]), kv[0])):
         name = min(g.organization, key=lambda x: (len(x), x))
         vc = g.volatility_change.astype(float)
-        rows_b.append([f' of which {name} (parent CIK {pc})', fmt_int(len(g)), '',
+        rows_b.append([f' of which {name}', fmt_int(len(g)), '',
                        f'{fmt_num(vc.mean(), 2)} ({fmt_num(vc.std(), 2)})'])
     rows_b.append(crow('never_treated'))
     q1n = sum(int(comp.loc[k].N_records) for k in comp.index)
@@ -799,37 +837,31 @@ def table_4():
 
     nb = Notes(4)
     claim(set(mr.parent_cik) == {'unresolved'}, 'damaged entries resolve to no parent')
-    added_by = {pc: len(g) for pc, g in added.groupby('parent_cik')}
-    note = (f'Each row of Panel A is a group of the {nb.i(n_all, "08A, N summed over the four groups")} '
-            f'notification records, defined by the two treatment definitions: the industry-code definition '
-            f'(Standard Industrial Classification, SIC, code {nb.d("4813, 4841 or 4899", "scripts/269 section B")} '
-            f'on the record) and the Form 499 definition (parent filer entity registered on Federal '
-            f'Communications Commission Form 499). The two definitions disagree on '
-            f'{nb.c("disagree_records", "i")} records. Missed by the codes are Form 499 registrants whose record '
-            f'carries none of the three codes ({nb.i(mi.N, "08A, missed_by_industry_codes / N")} records at '
-            f'{nb.i(mi.orgs, "08A, missed_by_industry_codes / orgs")} organizations). Damaged source entries are '
-            f'the {nb.i(gc.loc["misclassified_repaired"].N, "08A, misclassified_repaired / N")} records coded '
-            f'{nb.reg(str(mr.source_sic.iloc[0]), "07, source_sic", str(mr.source_sic.iloc[0]))} whose organization '
-            f'field holds an AT&T breach label rather than a firm name, so they resolve to no parent filer entity '
-            f'and no registration. Industry code and registrant are records both definitions treat. Neither '
-            f'definition treats are records outside both, the comparison group under either definition. M is the '
-            f'mean and SD the standard deviation; log market value is the earlier dataset’s size variable; '
-            f'change is the change in raw-return volatility under the earlier specification. Panel B splits the '
-            f'{nb.i(q1n, "06A, N_records summed")} records in the smallest size quartile (Q1) by how the two '
-            f'definitions treat them. The added records are treated under Form 499 only: '
-            f'{nb.i(added_by[1609711] if 1609711 in added_by else added_by["1609711"], "06B, added rows, parent_cik 1609711")} '
-            f'from GoDaddy, a domain registrar, and '
-            f'{nb.i(added_by[1447669] if 1447669 in added_by else added_by["1447669"], "06B, added rows, parent_cik 1447669")} '
-            f'from Twilio, a communications platform; their mean change, '
-            f'{nb.f(comp.loc["added"]["mean"], 2, "06A, added / mean")}, compares with '
-            f'{nb.f(comp.loc["never_treated"]["mean"], 2, "06A, never_treated / mean")} for records neither '
-            f'definition treats. Panel C summarizes the {nb.i(mi.N, "08A, missed_by_industry_codes / N")} missed '
-            f'records: {nb.c("q1_added_records", "i")} fall in Q1, {nb.c("missed_q4_records", "i")} in Q4 and the '
-            f'remaining {nb.i(int(mi.N) - n_q1 - n_q4, "08A N minus constants q1_added_records and missed_q4_records")} '
-            f'in Q2 or Q3. The firm names and record SIC codes of the '
-            f'{nb.i(mi.N, "08A, missed_by_industry_codes / N")} records are in the committed CSV '
-            f'{MISSED_CSV.relative_to(ROOT).as_posix()}. {RECORD_SPEC} Q1 to Q4 are quartiles of log market '
-            f'value, Q1 smallest; CIK is the SEC Central Index Key.')
+    added_by = {str(pc): g for pc, g in added.groupby('parent_cik')}
+    claim(all(o.startswith('GoDaddy') for o in added_by['1609711'].organization)
+          and all(o.startswith('Twilio') for o in added_by['1447669'].organization), 'added records are GoDaddy and Twilio')
+    nb.i(n_all, '08A, N summed over the four groups')
+    nb.w('two', 2, 'design: the two treatment definitions')
+    nb.d('4813, 4841, or 4899', 'scripts/269 section B')
+    nb.c('disagree_records', 'i')
+    nb.w('Twenty-eight', mi.N, '08A, missed_by_industry_codes / N')
+    nb.w('three', 3, 'design: the three industry codes')
+    nb.i(mi.orgs, '08A, missed_by_industry_codes / orgs')
+    nb.i(gc.loc['misclassified_repaired'].N, '08A, misclassified_repaired / N')
+    nb.reg(str(mr.source_sic.iloc[0]), '07, source_sic', ', '.join(sorted(set(str(x) for x in mr.source_sic))))
+    claim(set(str(x) for x in mr.source_sic) == {'4813'}, 'both damaged entries are coded 4813')
+    nb.i(q1n, '06A, N_records summed')
+    nb.i(comp.loc['added'].N_records, '06A, added / N_records')
+    nb.i(len(added_by['1609711']), '06B, added rows, parent_cik 1609711 (GoDaddy)')
+    nb.i(len(added_by['1447669']), '06B, added rows, parent_cik 1447669 (Twilio)')
+    nb.f(comp.loc['added']['mean'], 2, '06A, added / mean')
+    nb.f(comp.loc['never_treated']['mean'], 2, '06A, never_treated / mean')
+    nb.i(mi.N, '08A, missed_by_industry_codes / N')
+    nb.c('q1_added_records', 'i')
+    nb.c('missed_q4_records', 'i')
+    nb.i(int(mi.N) - n_q1 - n_q4, '08A N minus constants q1_added_records and missed_q4_records')
+    note = nb.final()
+
     return render_table(4, 'Where the Two Treatment Definitions Disagree',
                         [(f'The {fmt_int(n_dis)} disagreement records against the {fmt_int(n_all - n_dis)} '
                           f'agreements', hdr_a, rows_a),
@@ -849,13 +881,13 @@ def table_5():
     for _, r in ic.iterrows():
         orgs = [demojibake(o) for o in r.organizations_absorbed.split('; ')]
         ex = '; '.join(orgs[:2]) + ('; …' if len(orgs) > 2 else '')
-        rows_a.append([r.legacy_cik, r.ticker_for_cik, fmt_int(len(orgs)), ex, fmt_int(r.n_records),
+        rows_a.append([r.ticker_for_cik, fmt_int(len(orgs)), ex, fmt_int(r.n_records),
                        fmt_int(r.canonical_events_with_these_names),
                        'Yes' if r.legacy_cik_is_canonical_parent == 'True' else 'No'])
     if len(rows_a) != V('collision_sinks'):
         sys.exit('Table 5 Panel A: collision count disagrees with constants')
-    hdr_a = ['Legacy CIK', 'Ticker on the CIK', 'Organizations absorbed', 'Examples', 'Records',
-             'Canonical events with these names', 'CIK is a canonical parent']
+    hdr_a = ['Ticker on the identifier', 'Organizations absorbed', 'Examples', 'Records',
+             'Canonical events with these names', 'Identifier is a current parent filer entity']
 
     rt = appendix_csv('10B_recycled_tickers.csv')
     if len(rt) != V('recycled_ticker_events'):
@@ -904,42 +936,33 @@ def table_5():
     big = ic.assign(norg=[len(x.split('; ')) for x in ic.organizations_absorbed]).sort_values('norg').iloc[-1]
     meta = rt[rt.ticker == 'META'].iloc[0]
     dash = rt[rt.ticker == 'DASH'].iloc[0]
-    note = (f'Panel A lists the {nn.c("collision_sinks", "i")} legacy identifiers in the earlier matching chain '
-            f'at which an identifier collision occurred: one Securities and Exchange Commission (SEC) Central '
-            f'Index Key (CIK) absorbed the names of unrelated organizations, so their breach records took on that '
-            f'firm’s stock data. Organizations absorbed counts the distinct organization names on the CIK, '
-            f'Records counts their breach records, and Canonical events with these names counts events in the '
-            f'current chain that carry one of those names; the largest collision, CIK '
-            f'{nn.reg(big.legacy_cik, "10A, legacy_cik with most organizations", big.legacy_cik)}, absorbed '
-            f'{nn.c("collision_max_orgs", "i")} organizations and {nn.i(big.n_records, "10A, n_records of that CIK")} '
-            f'records. Panel B lists the {nn.c("recycled_ticker_events", "i")} events at which ticker reuse would '
-            f'have matched the breached firm to an earlier, unrelated holder of the same ticker symbol: the old '
-            f'fallback rule took the last security to carry the ticker before the breach date, here a security '
-            f'whose ticker had ended years before (in '
-            f'{nn.reg(str(meta.ticker_end_for_assigned)[:4], "10B, META / ticker_end_for_assigned (year)", str(meta.ticker_end_for_assigned))} '
-            f'for META and {nn.reg(str(dash.ticker_end_for_assigned)[:4], "10B, DASH / ticker_end_for_assigned (year)", str(dash.ticker_end_for_assigned))} '
-            f'for DASH). The current chain blocks that rule, and none of the {nn.i(len(rt), "10B, rows")} events has a CRSP match. '
-            f'PERMNO is the CRSP permanent security identifier. Panel C regresses the earlier dataset’s size '
-            f'variable on two candidate measures. Against log market value the slope is '
-            f'{nn.c("sizerec_mktcap_slope", "f", 2)} and the R² {nn.c("sizerec_mktcap_r2", "r", 2)}, so the '
-            f'variable measures market value; against log total assets the slope is '
-            f'{nn.c("sizerec_assets_slope", "f", 2)} and the R² {nn.c("sizerec_assets_r2", "r", 2)}. Share '
-            f'within gives the share of records whose absolute gap to the candidate is at most '
-            f'{nn.d("0.10", "scripts/269 (size reconciliation thresholds)")} or '
-            f'{nn.d("0.25", "scripts/269")}. Panel D starts from the {nn.c("miss_base", "i")} events matched to '
-            f'CRSP and reported by {nn.d("December 31, 2024", "01, step Notification on/before 2024-12-31")} ({nn.i(tb, "01, Notification on/before 2024-12-31 / treated")} '
-            f'registrant and {nn.i(cb, "01, Notification on/before 2024-12-31 / control")} other events). Fewer '
-            f'trading days means the stock lacks the trading days the volatility windows require. No Compustat '
-            f'match means no annual accounting record supplies size, leverage and return on assets. Invalid '
-            f'disclosure date means the reporting date precedes the breach date by more than '
-            f'{nn.d("30", "scripts/156 (delay_invalid rule)")} days, so the disclosure gap is set to missing. '
-            f'Damaged source records are the {nn.c("miss_att", "i")} records whose organization field holds an '
-            f'AT&T breach label rather than a firm name. Retained shares are within each group: '
-            f'{nn.i(prev[1], "01, final row / treated")} of {nn.i(tb, "01, 355 row / treated")} registrant events '
-            f'({nn.f(100 * prev[1] / tb, 1, "01, 104 / 111 x 100")} percent) and '
-            f'{nn.i(prev[2], "01, final row / control")} of {nn.i(cb, "01, 355 row / control")} other events '
-            f'({nn.f(100 * prev[2] / cb, 1, "01, 229 / 244 x 100")} percent). {RECORD_SPEC} CRSP is the Center '
-            f'for Research in Security Prices; R² is the share of variance explained.')
+    claim(all(str(x) == '0' for x in rt.has_crsp_data), 'none of the reused-ticker events has stock data')
+    nn.c('collision_sinks', 'i')
+    nn.c('collision_max_orgs', 'i')
+    nn.i(big.n_records, '10A, n_records of the largest collision')
+    nn.c('recycled_ticker_events', 'i')
+    nn.reg(str(meta.ticker_end_for_assigned)[:4], '10B, META / ticker_end_for_assigned (year)', str(meta.ticker_end_for_assigned))
+    nn.reg(str(dash.ticker_end_for_assigned)[:4], '10B, DASH / ticker_end_for_assigned (year)', str(dash.ticker_end_for_assigned))
+    nn.i(len(rt), '10B, rows (has_crsp_data = 0 in all)')
+    nn.w('two', len(sv), '10C, rows (candidate measures)')
+    nn.c('sizerec_mktcap_slope', 'f', 2)
+    nn.c('sizerec_mktcap_r2', 'r', 2)
+    nn.c('sizerec_assets_slope', 'f', 2)
+    nn.c('sizerec_assets_r2', 'r', 2)
+    nn.d('0.10', 'scripts/269 (size reconciliation thresholds)')
+    nn.d('0.25', 'scripts/269')
+    nn.c('miss_base', 'i')
+    nn.d('December 31, 2024', '01, step Notification on/before 2024-12-31')
+    nn.i(tb, '01, Notification on/before 2024-12-31 / treated')
+    nn.i(cb, '01, Notification on/before 2024-12-31 / control')
+    nn.f(100 * prev[1] / tb, 1, '01, 104 / 111 x 100')
+    nn.i(prev[1], '01, final row / treated')
+    nn.i(tb, '01, 355 row / treated')
+    nn.f(100 * prev[2] / cb, 1, '01, 229 / 244 x 100')
+    nn.i(prev[2], '01, final row / control')
+    nn.i(cb, '01, 355 row / control')
+    note = nn.final()
+
     return render_table(5, 'Data Quality in the Matching Chain',
                         [('Identifier collisions in the earlier chain', hdr_a, rows_a),
                          ('Reused-ticker matches', hdr_b, rows_b),
@@ -963,6 +986,27 @@ def parent_names():
     """Parent filer entity names: the organization column of 17 (one row per canonical treated parent)."""
     sv = appendix_csv('17_sich_vs_curated_sic.csv')
     return {str(r.parent_cik): r.organization for _, r in sv.iterrows()}
+
+
+# Version history and pipeline references removed from the committed adjudication basis text.
+BASIS_EDITS = [
+    (r'\s*\(\d{1,2}/\d{1,2}\b[^()]*\)', ''),            # "(7/28)", "(8/4 adjudication comment ...)"
+    (r' adjudicated \d{1,2}/\d{1,2}:', ' adjudicated:'),
+    (r'NOT treated:', 'Not treated:'),
+    (r'\s*\(Cricket precedent, family-wide\)', ''),
+    (r' \u2014 Comcast class', ''),
+    (r'Gate 1 rescue noted Form 499 relevance; ', ''),
+    (r' \u2014 signed 122 rule retained;', ';'),
+    (r'DOCUMENTED', 'documented'),
+]
+
+
+def clean_basis(t):
+    for a, b in BASIS_EDITS:
+        t = re.sub(a, b, t)
+    if re.search(r'\b\d{1,2}/\d{1,2}\b|scripts/|Gate \d|\bsigned\b', t):
+        sys.exit(f'Table 6 Panel B: version history left in {t!r}')
+    return t
 
 
 # ------------------------------------------------------------------ Table 6
@@ -996,40 +1040,32 @@ def table_6():
         sys.exit('Table 6: adjudication counts disagree with the constants')
     ruling = {'FORCE TREATED': 'Treated', 'FORCE EXCLUDED': 'Excluded'}
     rows_b = [[r.pattern.replace('^', '').replace(' ?', ' ').replace('|', '; '), ruling[r.direction],
-               r.basis.replace('—', '—')] for _, r in st.iterrows()]
+               clean_basis(r.basis)] for _, r in st.iterrows()]
     hdr_b = ['Organization name pattern', 'Ruling', 'Basis']
-    rows_c = [[r.pattern.split(' -> ')[0], r.pattern.split(' -> ')[1], r.basis] for _, r in ep.iterrows()]
-    hdr_c = ['Registrant CIK', 'Parent CIK assigned', 'Basis']
+    rows_c = []
+    for _, r in ep.iterrows():
+        m_ = re.match(r'^(.+?) registrant has no equity; (?:\d{4} )?parent = (.+?)(?: [A-Z]{2,5})? \(', r.basis)
+        if m_ is None:
+            sys.exit(f'Table 6 Panel C: cannot read names from {r.basis!r}')
+        rows_c.append([m_.group(1), r.pattern.split(' -> ')[0], m_.group(2), r.pattern.split(' -> ')[1]])
+    hdr_c = ['Registrant', 'Registrant CIK', 'Parent filer entity assigned', 'Parent CIK']
 
     nb = Notes(6)
     dish = st[st.pattern.str.startswith('DISH')]
     claim(len(dish) == 2 and set(dish.direction) == {'FORCE TREATED', 'FORCE EXCLUDED'}, 'DISH has two rules')
     ebs = int((reg.end_before_start == 'True').sum())
-    note = (f'Panel A has one row per treated parent filer entity in the analytical sample '
-            f'({nb.i(len(order), "12, distinct parent_cik")} parents, {nb.c("primary_treated", "i")} registrant '
-            f'events). The Federal Communications Commission (FCC) Form 499 registry holds '
-            f'{nb.c("registry_records", "i")} filer records; Registry records matched counts the records whose '
-            f'legal name, doing-business-as name or holding company contains one of the parent’s family '
-            f'keywords ({nb.c("registry_family_records", "i")} records in all). A name match counts toward '
-            f'treatment only when the matched registration is open on the breach date: its start date falls on or '
-            f'before the breach date and its end date, if any, falls after it. Distinct FRNs counts the FCC '
-            f'Registration Numbers among the matched records. End date before start date counts matched records '
-            f'whose registry end date precedes their start date, a data error in the registry '
-            f'({nb.i(ebs, "12, end_before_start == True")} records in all). Registrant events counts the parent’s '
-            f'events in the analytical sample, and Breach dates gives the first and last breach date among them. '
-            f'Panel B lists the adjudication rules. An adjudication rule is a recorded ruling for an organization '
-            f'name pattern that exact name matching against the registry would treat wrongly; it either forces '
-            f'treatment, under clause (a), a registration of the organization itself open on the breach date, or '
-            f'clause (b), the organization is the parent brand of a registered filer whose subscriber operations '
-            f'were breached, or it forces exclusion when neither clause holds. There are '
-            f'{nb.c("adjudication_rules", "i")} rules covering {nb.c("adjudication_names", "i")} organization '
-            f'names; DISH Network has two rules, so it is excluded before '
-            f'{nb.d("July 1, 2020", "13, DISH rules (2020-07-01 divestiture date)")}, when it had no covered '
-            f'wireless operation, and treated on and after that date. Panel C lists the '
-            f'{nb.c("equity_parent_maps", "i")} equity re-parenting rules, which assign a registrant with no '
-            f'traded equity to the parent filer entity that owns it. CIK is the Securities and Exchange Commission '
-            f'(SEC) Central Index Key; FRN is the FCC Registration Number; Form 499 registrant means an event at a '
-            f'firm registered on FCC Form 499.')
+    nb.i(len(order), '12, distinct parent_cik')
+    nb.c('primary_treated', 'i')
+    nb.c('registry_records', 'i')
+    nb.c('registry_family_records', 'i')
+    nb.i(ebs, '12, end_before_start == True')
+    nb.c('adjudication_rules', 'i')
+    nb.c('adjudication_names', 'i')
+    nb.w('two', len(dish), '13, DISH Network rules')
+    nb.d('July 1, 2020', '13, DISH rules (2020-07-01 divestiture date)')
+    nb.c('equity_parent_maps', 'i')
+    note = nb.final()
+
     return render_table(6, 'The Form 499 Registry: Treated Parent Filer Entities and Adjudication Rules',
                         [('Registry records matched to each treated parent filer entity', hdr_a, rows_a),
                          ('Adjudication rules', hdr_b, rows_b),
@@ -1048,9 +1084,9 @@ def table_7():
     hdr_a = ['Convention (codes)', 'Event agreement, %', 'False positives', 'False negatives',
              'Treated parents identified', 'Other parents included', 'Characteristic failure']
     elab = {'FALSE_POSITIVE': 'False positive', 'FALSE_NEGATIVE': 'False negative'}
-    rows_b = [[CONV_LABEL[r.convention][0], elab[r.error_type], r.organization, r.parent_cik, r.sich,
+    rows_b = [[CONV_LABEL[r.convention][0], elab[r.error_type], r.organization, r.sich,
                fmt_int(r.events)] for _, r in er.iterrows()]
-    hdr_b = ['Convention', 'Error', 'Organization', 'Parent CIK', 'SIC', 'Events']
+    hdr_b = ['Convention', 'Error', 'Organization', 'SIC', 'Events']
 
     nb = Notes(7)
     nt = int(cv.N_testable.iloc[0])
@@ -1058,27 +1094,19 @@ def table_7():
     best = cv.sort_values('agree_pct').iloc[-1]
     claim(best.convention.startswith('tuned'), 'the tuned set has the highest agreement')
     pub = cv[cv.convention.str.startswith('published')].iloc[0]
-    note = (f'Each row of Panel A applies one industry-code convention to the '
-            f'{nb.i(nt, "14, N_testable (= constants sic_testable)")} canonical events with a Compustat '
-            f'historical Standard Industrial Classification (SIC) code and compares the result with Federal '
-            f'Communications Commission (FCC) Form 499 registration. The conventions are the published regulated-'
-            f'carrier dummy (SIC 4812 and 4813), the earlier specification of this essay (4813, 4841 and 4899), a '
-            f'set tuned to the registry (4812, 4813, 4841 and 4899) and the full communications range (4800 to '
-            f'4899); literature source for each convention: [NO SOURCE]. The tuned set was chosen after looking '
-            f'at the registry, so its agreement is an upper bound, not a test. Event agreement is the percentage '
-            f'of the {nb.i(nt, "14, N_testable")} events on which the convention and registration agree. A false '
-            f'positive is an event the convention codes as a carrier although its parent filer entity is not a '
-            f'registrant; a false negative is a registrant event the convention does not code. Treated parents '
-            f'identified counts, of the {nb.c("sic_treated_parents_testable", "i")} registrant parent filer '
-            f'entities in the comparison, those with at least one event the convention codes as a carrier; Other '
-            f'parents included counts non-registrant parents the convention codes as carriers. The tuned set '
-            f'agrees most often ({nb.f(best.agree_pct, 1, "14, tuned / agree_pct")} percent) and the published '
-            f'dummy identifies the fewest registrant parents ({nb.i(pub.parents_identified, "14, published / parents_identified")}). '
-            f'Panel B lists the misclassified organizations under the published dummy and the tuned set, with the '
-            f'SIC code that produced the error and the number of events. CIK is the Securities and Exchange '
-            f'Commission Central Index Key.')
-    for code in ('4812', '4813', '4841', '4899', '4800'):
-        nb.d(code, 'scripts/269 CONV (convention code sets)')
+    claim(int(pub.parents_identified) < min(int(x) for x in cv[cv.convention != pub.convention].parents_identified),
+          'the published convention identifies the fewest registrant parents')
+    nb.i(nt, '14, N_testable (= constants sic_testable)')
+    nb.d('4812', 'scripts/269 CONV (published convention)')
+    nb.d('4813', 'scripts/269 CONV (published convention)')
+    nb.d('4813, 4841, and 4899', 'scripts/269 CONV (earlier specification)')
+    nb.d('4800 to 4899', 'scripts/269 CONV (full range)')
+    nb.d('4812, 4813, 4841, and 4899', 'scripts/269 CONV (tuned set)')
+    nb.c('sic_treated_parents_testable', 'i')
+    nb.f(best.agree_pct, 1, '14, tuned / agree_pct')
+    nb.i(pub.parents_identified, '14, published / parents_identified')
+    note = nb.final()
+
     return render_table(7, 'Industry-Code Conventions Against Form 499 Registration',
                         [('Agreement with Form 499 registration', hdr_a, rows_a),
                          ('Misclassified organizations', hdr_b, rows_b)], note)
@@ -1090,34 +1118,33 @@ def table_8():
     sv = appendix_csv('17_sich_vs_curated_sic.csv')
     rlab = {'no matched ticker': 'No matched ticker',
             'ticker but no Compustat row in 550-day window': 'Ticker, but no Compustat record in the prior 550 days'}
-    rows_a = [[r.organization, r.parent_cik, r.reported_date, rlab[r.reason]] for _, r in ot.iterrows()]
-    hdr_a = ['Organization', 'Parent CIK', 'Reporting date', 'Reason']
-    rows_b = [[r.organization, r.parent_cik, r.tickers, r.sich or '—', r.curated_sic or '—',
+    rows_a = [[r.organization, r.reported_date, rlab[r.reason]] for _, r in ot.iterrows()]
+    hdr_a = ['Organization', 'Reporting date', 'Reason']
+    rows_b = [[r.organization, r.tickers, r.sich or '—', r.curated_sic or '—',
                'Registrant' if r.form499 == 'treated' else 'Not a registrant',
                'Yes' if r.sources_disagree == 'True' else 'No'] for _, r in sv.iterrows()]
-    hdr_b = ['Organization', 'Parent CIK', 'Tickers', 'Compustat SIC', 'Breach-record SIC', 'Form 499',
-             'Sources disagree']
+    hdr_b = ['Organization', 'Tickers', 'Compustat SIC', 'Breach-record SIC', 'Form 499', 'Sources disagree']
 
     nb = Notes(8)
     claim(len(ot) == V('outside_treated') and ot.parent_cik.nunique() == V('outside_parents'), 'outside counts')
     claim(V('sic_treated_total') - V('sic_treated_testable') == V('outside_treated'), '118 - 107 = 11')
     n_noticker = int((ot.reason == 'no matched ticker').sum())
-    note = (f'Panel A lists the {nb.c("outside_treated", "i")} registrant events, at '
-            f'{nb.c("outside_parents", "i")} parent filer entities, that fall outside the industry-code comparison '
-            f'in Table 7. The comparison starts from the {nb.c("sic_treated_total", "i")} verified registrant events '
-            f'among the canonical events and keeps the {nb.c("sic_treated_testable", "i")} with a Compustat '
-            f'historical Standard Industrial Classification (SIC) code. An event goes uncoded when its firm has no '
-            f'matched stock ticker ({nb.i(n_noticker, "16, reason == no matched ticker")} events) or when the '
-            f'ticker has no Compustat annual record in the {nb.d("550", "scripts/163 sich rule (550-day window)")} '
-            f'days before the breach date ({nb.i(len(ot) - n_noticker, "16, other reason")} events); '
-            f'{nb.c("outside_tmobile", "i")} of the {nb.c("outside_treated", "i")} are T-Mobile events. Panel B '
-            f'compares, for each treated parent filer entity and for Roku, the Compustat historical SIC code with '
-            f'the SIC codes attached to the breach records in the source data. The two sources disagree for '
-            f'{nb.c("sich_sources_disagree_treated", "i")} of the {nb.c("sich_treated_parents", "i")} treated '
-            f'parents. Compustat SIC is the code on the firm’s most recent annual record within '
-            f'{nb.d("550", "scripts/163 sich rule")} days before the breach date; Breach-record SIC is every code '
-            f'found on the parent’s breach records; an em dash (—) marks a missing code. CIK is the '
-            f'Securities and Exchange Commission Central Index Key.')
+    claim(int(ot.organization.str.startswith('T-Mobile').sum()) == V('outside_tmobile'), 'T-Mobile count')
+    nb.c('outside_treated', 'i')
+    nb.c('outside_parents', 'i')
+    nb.c('sic_treated_total', 'i')
+    nb.c('sic_treated_testable', 'i')
+    nb.i(n_noticker, '16, reason == no matched ticker')
+    nb.d('550', 'scripts/163 sich rule (550-day window)')
+    nb.i(len(ot) - n_noticker, '16, other reason')
+    nb.c('outside_tmobile', 'i')
+    nb.c('outside_treated', 'i')
+    nb.d('550', 'scripts/163 sich rule')
+    nb.w('two', 2, 'design: Compustat and breach-record sources')
+    nb.c('sich_sources_disagree_treated', 'i')
+    nb.c('sich_treated_parents', 'i')
+    note = nb.final()
+
     return render_table(8, 'Industry-Code Coverage and Source',
                         [('Registrant events outside the industry-code comparison', hdr_a, rows_a),
                          ('Compustat SIC against the breach records’ SIC', hdr_b, rows_b)], note)
@@ -1132,14 +1159,6 @@ MODEL_VARS = [('fcc_form499', 'Form 499 registrant'), ('pre_sd', 'Pre-window abn
               ('leverage', 'Leverage'), ('roa', 'Return on assets'), ('health_breach', 'Health-breach flag'),
               ('prior_events', 'Prior breach events'), ('const', 'Intercept')]
 SQRT252 = 252 ** 0.5
-
-
-def cv3_text(nb):
-    """The standing CV3 definition, numbers registered."""
-    return (f'CV3 is the cluster jackknife standard error, clustered by parent filer entity (G = '
-            f'{nb.c("primary_G", "i")} parents, {nb.c("primary_G1", "i")} with registrant events); it '
-            f're-estimates the model leaving out one parent at a time, and its p-values use the t distribution '
-            f'with G − 1 = {nb.i(V("primary_G") - 1, "constants primary_G - 1")} degrees of freedom (df)')
 
 
 # ------------------------------------------------------------------ Table 9
@@ -1161,26 +1180,17 @@ def table_9():
     nb = Notes(9)
     claim(fmt_num(first['M4'].r2, 6) == fmt_num(V('primary_r2_M4'), 6), 'M4 R2 matches constants')
     claim(abs(float(cell[('M4', 'fcc_form499')].coef) - V('primary_coef')) < 1e-9, 'M4 coefficient = primary')
-    note = (f'Each column is one ordinary least squares (OLS) regression of the change in abnormal return '
-            f'volatility on the analytical sample (N = {nb.c("primary_N", "i")} events, '
-            f'{nb.c("primary_treated", "i")} of them Form 499 registrant events). The dependent variable is the '
-            f'change in abnormal return volatility: the standard deviation (SD) of daily abnormal returns, '
-            f'RET − vwretd, in percentage points, over trading days {nb.d("[+1, +20]", "constants primary_outcome")} '
-            f'after the agency reporting date minus the same SD over {nb.d("[−60, −11]", "constants primary_outcome")}. '
-            f'M1 regresses it on the pre-window volatility level and the disclosure gap; M2 adds log total assets, '
-            f'leverage and return on assets; M3 adds the Form 499 registrant indicator, the test of the first '
-            f'hypothesis (H1); M4 adds the health-breach flag and prior breach events and is the primary model. '
-            f'Each cell shows the coefficient with its CV3 standard error in parentheses below it and, on the next '
-            f'row, its p-value. {cv3_text(nb)}. With the pre-window level on the right-hand side, each model is an '
-            f'analysis of covariance: the registrant coefficient compares post-window volatility between groups '
-            f'holding the pre-window level fixed. Because the dependent variable is a change that contains the '
-            f'pre-window level, R² is not the share of post-disclosure volatility the model explains. In M4 the registrant coefficient is '
-            f'{nb.f(cell[("M4", "fcc_form499")].coef, 3, "18, M4 / fcc_form499 / coef")} '
-            f'(p = {nb.p(cell[("M4", "fcc_form499")].p_cv3, "18, M4 / fcc_form499 / p_cv3")}), and adding the '
-            f'registrant indicator raises R² from {nb.r(V("r2_M4_without_treatment"), 3, "constants values.r2_M4_without_treatment")} '
-            f'to {nb.r(V("r2_M4_with_treatment"), 3, "constants values.r2_M4_with_treatment")}. Disclosure-gap '
-            f'coefficients are per day and shown to five decimals. RET is the daily stock return and vwretd the '
-            f'value-weighted market return, both from the Center for Research in Security Prices (CRSP).')
+    nb.c('primary_N', 'i')
+    nb.c('primary_treated', 'i')
+    nb.c('primary_G', 'i')
+    nb.c('primary_G1', 'i')
+    nb.i(V('primary_G') - 1, 'constants primary_G - 1')
+    nb.f(cell[('M4', 'fcc_form499')].coef, 3, '18, M4 / fcc_form499 / coef')
+    nb.p(cell[('M4', 'fcc_form499')].p_cv3, '18, M4 / fcc_form499 / p_cv3')
+    nb.r(V('r2_M4_without_treatment'), 3, 'constants values.r2_M4_without_treatment')
+    nb.r(V('r2_M4_with_treatment'), 3, 'constants values.r2_M4_with_treatment')
+    note = nb.final()
+
     return render_table(9, 'Hierarchical Model for H1', [('', hdr, rows)], note)
 
 
@@ -1206,32 +1216,29 @@ def table_10():
     nb = Notes(10)
     r0 = ld.iloc[0]
     claim(len(set(ld.coef)) == 1, 'one coefficient across the ladder')
-    claim(all(float(x) >= .05 for x in ld.p), 'no procedure rejects')
+    claim(all(float(x) >= .05 for x in ld.p) and V('sic2_cluster_p_cv1') >= .05 and V('sic2_cluster_p_cv3') >= .05,
+          'no procedure rejects')
     hc1, cv3 = V('primary_se_hc1'), V('primary_se_cv3')
-    note = (f'Each row of Panel A reports a different standard error (SE) and test for the same coefficient, the '
-            f'Form 499 registrant coefficient of the primary model M4 '
-            f'({nb.f(r0.coef, 3, "19, coef")}; N = {nb.i(r0.N, "19, N")} events, '
-            f'{nb.i(r0.n_treated, "19, n_treated")} registrant events). OLS is the classical SE, which assumes '
-            f'independent errors of equal variance. HC1 and HC3 allow the error variance to differ across events '
-            f'but treat events as independent; HC3 inflates each residual by its leverage. CV1 clusters by parent '
-            f'filer entity with the usual small-sample correction. {cv3_text(nb)}; it is the primary procedure. '
-            f'The three wild cluster bootstrap rows resample parent-level residuals: the restricted version '
-            f'imposes the null hypothesis of a zero coefficient when it builds the bootstrap samples and the '
-            f'unrestricted version does not; Rademacher weights flip each parent’s residuals with '
-            f'probability one half, and Webb weights draw from six points, which suits few clusters. The '
-            f'Rademacher rows use {nb.d("99,999", "19, rung labels (B)")} draws and the Webb row '
-            f'{nb.d("9,999", "19, rung labels (B)")}, with seed {nb.d("499", "scripts/263 SEED")}. Procedures '
-            f'that ignore clustering understate the SE when treatment varies across few parents, because events '
-            f'at the same parent share shocks: the HC1 SE ({nb.f(hc1, 3, "constants primary_se_hc1")}) is '
-            f'{nb.f(100 * (1 - hc1 / cv3), 0, "constants 1 - primary_se_hc1 / primary_se_cv3 (x 100)")} percent '
-            f'smaller than the CV3 SE ({nb.f(cv3, 3, "constants primary_se_cv3")}). G is the number of parent '
-            f'filer entities ({nb.c("primary_G", "i")}), G1 the number with registrant events '
-            f'({nb.c("primary_G1", "i")}), and G* the effective number of clusters (Carter et al., 2017), '
-            f'{nb.c("primary_G_star", "f", 1)}, which adjusts G for unequal cluster sizes and the concentration of '
-            f'treatment; the coefficient of variation of cluster size is {nb.c("cluster_size_cv_ddof0", "f", 2)}. '
-            f'No procedure gives p below .05. A 95 percent confidence interval (CI) is shown where the procedure '
-            f'produces one; an em dash (—) marks none. Panel B clusters instead by two-digit Standard '
-            f'Industrial Classification (SIC) industry, with {nb.c("sic2_clusters", "i")} clusters.')
+    n_wild = int(ld.rung.str.startswith('W').sum())
+    nb.f(r0.coef, 3, '19, coef')
+    nb.i(r0.N, '19, N')
+    nb.i(V('primary_G') - 1, 'constants primary_G - 1')
+    nb.w('three', n_wild, '19, wild cluster rows')
+    nb.d('99,999', '19, rung labels (B)')
+    nb.w('six', 6, 'design: 19, rung label (Webb six-point)')
+    nb.d('9,999', '19, rung labels (B)')
+    nb.d('499', 'scripts/263 SEED')
+    nb.f(hc1, 3, 'constants primary_se_hc1')
+    nb.f(100 * (1 - hc1 / cv3), 0, 'constants 1 - primary_se_hc1 / primary_se_cv3 (x 100)')
+    nb.f(cv3, 3, 'constants primary_se_cv3')
+    nb.d('.05', 'design: significance level')
+    nb.c('primary_G', 'i')
+    nb.c('primary_G1', 'i')
+    nb.c('primary_G_star', 'f', 1)
+    nb.c('cluster_size_cv_ddof0', 'f', 2)
+    nb.c('sic2_clusters', 'i')
+    note = nb.final()
+
     return render_table(10, 'Inference for the Registrant Coefficient',
                         [('Inference ladder, clustering by parent filer entity', hdr, rows),
                          ('Clustering by industry', hdr_b, rows_b)], note)
@@ -1262,41 +1269,38 @@ def table_11():
     claim(dr.ci90_inside_sesoi == 'False', '90% CI not inside SESOI')
     claim(float(dr.tost_p_lower) < .05 <= float(dr.tost_p_upper), 'lower bound ruled out, upper not')
     claim(abs(V('sesoi_car_daily') * SQRT252 - V('sesoi_car_ann')) < 1e-9, 'CAR bound conversion')
-    note = (f'The table asks whether the primary estimate (M4, N = {nb.c("primary_N", "i")}, G = '
-            f'{nb.c("primary_G", "i")} parent filer entities, {nb.c("primary_G1", "i")} with registrant events) '
-            f'is precise enough to rule out effects that matter. Daily values are in percentage points (pp) of '
-            f'daily abnormal return volatility; annualized values multiply them by √{nb.d("252", "scripts/263 (trading days per year)")}. '
-            f'The smallest effect size of interest (SESOI) is {nb.d("0.25", "scripts/263 design_resolution sesoi_mult")} '
-            f'times the standard deviation of the dependent variable among other events '
-            f'({nb.f(dr.sd_control, 3, "20, sd_control")}), or {nb.f(dr.sesoi_daily, 3, "20, sesoi_daily")} pp '
-            f'daily and {nb.f(dr.sesoi_ann, 2, "20, sesoi_ann")} pp annualized; it rests on the outcome’s own '
-            f'spread because no commensurable effect size exists in the literature for volatility. TOST (two one-'
-            f'sided tests) asks whether the effect is small enough to treat as practically zero: it runs one test '
-            f'that the effect is above −SESOI and one that it is below +SESOI, using the CV3 standard error and '
-            f'the t distribution with {nb.i(V("primary_G") - 1, "constants primary_G - 1")} degrees of freedom '
-            f'(df), and the TOST p is the larger of the two. The lower test rejects '
-            f'(p = {nb.p(dr.tost_p_lower, "20, tost_p_lower")}), so effects below −SESOI are ruled out; the '
-            f'upper test does not (p = {nb.p(dr.tost_p_upper, "20, tost_p_upper")}), so a positive effect as large '
-            f'as SESOI cannot be excluded and the TOST p is {nb.p(dr.tost_p_upper, "20, tost_p_upper")}. The '
-            f'literature bound is the Essay 1 equivalence bound of ±{nb.f(V("sesoi_car_ann"), 2, "constants sesoi_car_ann")} '
-            f'pp, whose size matches the two-day breach penalty reported by Cavusoglu et al. (2004), divided by '
-            f'√252 to a daily {nb.f(V("sesoi_car_daily"), 3, "constants sesoi_car_daily")} pp; its TOST p is '
-            f'{nb.p(V("tost_car_p"), "constants tost_car_p")}. The 90 percent confidence interval, '
-            f'[{nb.f(dr.ci90_lo, 3, "20, ci90_lo")}, {nb.f(dr.ci90_hi, 3, "20, ci90_hi")}], is '
-            f'the interval that matches TOST at the 5 percent level, because each one-sided test uses 5 percent; it '
-            f'is not inside ±SESOI. MDE80 is the minimum detectable effect, the smallest true effect the '
-            f'regression would detect four times in five at the 5 percent level, computed as '
-            f'(t.975 + t.80, df {nb.i(V("primary_G") - 1, "constants primary_G - 1")}) × SE_CV3 = '
-            f'{nb.f(mult, 2, "constants dr_mde80_daily / primary_se_cv3")} × SE_CV3; it is '
-            f'{nb.f(dr.mde_over_sesoi, 2, "20, mde_over_sesoi")} times SESOI. The HC3 row shows the MDE80 that '
-            f'heteroskedasticity-consistent (HC3) standard errors would imply, '
-            f'{nb.c("mde80_hc3_pct_below_cv3", "f", 0)} percent below the CV3 value. Reaching an MDE80 of '
-            f'{nb.d("5", "scripts/263 design_resolution target_ann")} pp annualized would take '
-            f'{nb.i(dr.required_parents_5pp_ann, "20, required_parents_5pp_ann")} treated parents, holding the other '
-            f'parents and the variance structure fixed; as treated parents grow without limit the MDE80 falls only '
-            f'to a floor of {nb.f(dr.floor_daily, 3, "20, floor_daily")} pp daily '
-            f'({nb.f(dr.floor_ann, 2, "20, floor_ann")} pp annualized), set by the other parents. CV3 is the cluster '
-            f'jackknife standard error by parent filer entity.')
+    nb.c('primary_N', 'i')
+    nb.c('primary_G', 'i')
+    nb.d('252', 'scripts/263 (trading days per year)')
+    nb.d('0.25', 'scripts/263 design_resolution sesoi_mult')
+    nb.f(dr.sd_control, 3, '20, sd_control')
+    nb.f(dr.sesoi_daily, 3, '20, sesoi_daily')
+    nb.f(dr.sesoi_ann, 2, '20, sesoi_ann')
+    nb.w('two', 2, 'design: TOST (two one-sided tests)')
+    nb.i(V('primary_G') - 1, 'constants primary_G - 1')
+    nb.p(dr.tost_p_lower, '20, tost_p_lower')
+    nb.p(dr.tost_p_upper, '20, tost_p_upper')
+    nb.d('90', 'design: 90% interval matching TOST at 5%')
+    nb.f(dr.ci90_lo, 3, '20, ci90_lo')
+    nb.f(dr.ci90_hi, 3, '20, ci90_hi')
+    nb.d('5', 'design: significance level (5 percent)')
+    nb.f(V('sesoi_car_ann'), 2, 'constants sesoi_car_ann')
+    nb.w('two', 2, 'design: literature (two-day announcement window of Cavusoglu et al., 2004; no committed computation)')
+    nb.d('252', 'scripts/263 (trading days per year)')
+    nb.f(V('sesoi_car_daily'), 3, 'constants sesoi_car_daily')
+    nb.p(V('tost_car_p'), 'constants tost_car_p')
+    nb.w('four', 4, 'design: 80 percent power (four in five)')
+    nb.w('five', 5, 'design: 80 percent power (four in five)')
+    nb.d('5', 'design: significance level (5 percent)')
+    nb.f(V('dr_mde80_daily') / V('primary_se_cv3'), 2, 'constants dr_mde80_daily / primary_se_cv3')
+    nb.f(dr.mde_over_sesoi, 2, '20, mde_over_sesoi')
+    nb.c('mde80_hc3_pct_below_cv3', 'f', 0)
+    nb.d('5', 'scripts/263 design_resolution target_ann')
+    nb.i(dr.required_parents_5pp_ann, '20, required_parents_5pp_ann')
+    nb.f(dr.floor_daily, 3, '20, floor_daily')
+    nb.f(dr.floor_ann, 2, '20, floor_ann')
+    note = nb.final()
+
     return render_table(11, 'Design Resolution: Equivalence and Power',
                         [('Thresholds', hdr_a, rows_a), ('Tests and design', hdr_b, rows_b)], note)
 
@@ -1362,67 +1366,50 @@ def table_12():
             w_ = re.search(r'pre (\[[^\]]+\]) / post (\[[^\]]+\])', r)
             alab.append(f'Pre-window {win(w_.group(1))}, post-window {win(w_.group(2))}, market-adjusted')
         elif r.startswith('BRIDGE a'):
-            alab.append('Bridge a: raw log returns, [−25, −5] / [+5, +25], committed earlier outcome')
+            alab.append('Raw log returns, [−25, −5] vs. [+5, +25]')
         elif r.startswith('BRIDGE b'):
-            alab.append('Bridge b: raw log returns, [−25, −5] / [+5, +25], current calendar and 80% rule')
+            alab.append('Raw log returns, [−25, −5] vs. [+5, +25], with the 80% rule')
         elif r.startswith('BRIDGE c'):
-            alab.append('Bridge c: market-adjusted simple returns, [−25, −5] / [+5, +25]')
+            alab.append('Market-adjusted simple returns, [−25, −5] vs. [+5, +25]')
         else:
-            alab.append('Bridge d (primary): market-adjusted simple returns, [−60, −11] / [+1, +20]')
+            alab.append('Market-adjusted simple returns, [−60, −11] vs. [+1, +20] (primary)')
     rows_e = [[lab_, est(r), fmt_p(r.p_cv3), fmt_ci(r.ci3_lo, r.ci3_hi)] for lab_, (_, r) in zip(alab, alt.iterrows())]
     hdr_e = ['Specification', 'Estimate (CV3 SE)', 'p', '95% CI']
 
     nb = Notes(12)
-    claim(all(float(x) >= .05 for x in list(dp_.p_cv3) + list(bm.p_cv3) + list(alt.p_cv3)), 'nothing rejects')
+    claim(all(float(x) >= .05 for x in list(dp_.p_cv3) + list(dp_.bh_adj_p) + list(dp_.p_wcr) + list(bm.p_cv3)
+              + list(alt.p_cv3)), 'nothing rejects')
     mm = cv[cv.spec == 'mm'].iloc[0]
-    from collections import Counter as _C
-    dropped_orgs = _C(x.split(':')[0].rsplit(' ', 1)[0] for x in mm.reasons.split('; '))
-    claim(sum(dropped_orgs.values()) == int(mm.dropped), 'coverage reasons list every dropped event')
-    org_list = '; '.join(f'{o} ({nb.i(k, "22C, mm / reasons, events of " + o)})'
-                         for o, k in sorted(dropped_orgs.items(), key=lambda kv: (-kv[1], kv[0])))
+    claim(all(int(x) == int(mm.dropped) for x in cv[cv.spec.isin(['mm', 'ff3'])].dropped), 'mm and ff3 drop the same events')
+    claim(all(int(x) == 0 for x in cv[cv.spec == 'market-adjusted'].dropped), 'the market-adjusted windows drop none')
     allc = ct[ct.group == 'all']
-    note = (f'Each row re-estimates the primary model M4 with one change and reports the Form 499 registrant '
-            f'coefficient, its CV3 standard error (SE) in parentheses, its p-value and its 95 percent confidence '
-            f'interval (CI); the analytical sample has N = {nb.c("primary_N", "i")} events and G = '
-            f'{nb.c("primary_G", "i")} parent filer entities ({nb.c("primary_G1", "i")} with registrant events) '
-            f'unless the N column shows otherwise. CV3 is the cluster jackknife standard error, clustered by parent '
-            f'filer entity, with p-values from the t distribution with G − 1 degrees of freedom. Panel A varies '
-            f'the post-window, the trading days after the agency reporting date over which volatility is measured, '
-            f'from {nb.d("[+1, +5]", "21, post_window")} to {nb.d("[+1, +20]", "21, post_window")}, against the '
-            f'pre-window {nb.d("[−60, −11]", "constants primary_outcome")}. The three windows form one '
-            f'family of {nb.i(len(dp_), "21, rows (family size)")} tests, and the BH-adjusted p applies the '
-            f'Benjamini–Hochberg false-discovery-rate adjustment within that family; the wild cluster p comes '
-            f'from the restricted wild cluster bootstrap with Rademacher weights. Every window must have at least '
-            f'{nb.d("80", "scripts/264 (coverage rule)")} percent of its trading days with returns, the 80 percent '
-            f'coverage rule. Panel B replaces the market adjustment (RET − vwretd, the stock return minus the '
-            f'value-weighted market return) with abnormal returns from the market model and from the Fama–French '
-            f'three-factor (FF3) model, both estimated over trading days {nb.d("[−250, −30]", "22C reasons / scripts/263 EST_WIN")}; '
-            f'{nb.i(mm.dropped, "22C, mm rows / dropped")} events '
-            f'({nb.i(mm.dropped_treated, "22C, mm rows / dropped_treated")} registrant event) drop because their '
-            f'estimation window has less than 80 percent coverage, by organization {org_list}, which leaves '
-            f'{nb.i(mm.surviving, "22C, mm / surviving")} events and {nb.i(mm.surviving_G, "22C, mm / surviving_G")} '
-            f'parents. Panel C counts contaminated estimation windows: an estimation window is contaminated when '
-            f'another event at the same parent filer entity falls inside it, counted once by that event’s '
-            f'notification date and once by its breach date. The counts exclude the focal event itself and events '
-            f'in its own Gate 2 chain, after the correction of {nb.d("November 13, 2026", "scripts/264 contamination comment (fixed 2026-11-13)")} that stopped an event’s own '
-            f'breach date counting against it; across all events the shares are '
-            f'{nb.r(allc[allc.definition == "est_contaminated_by_notification"].share.iloc[0], 2, "22B, all / notification / share")} '
-            f'by notification date and {nb.r(allc[allc.definition == "est_contaminated_by_breach_date"].share.iloc[0], 2, "22B, all / breach date / share")} '
-            f'by breach date. Panel D lists the coverage-rule drops for each benchmark and pre-window; the primary '
-            f'market-adjusted windows drop no event. Panel E builds the outcome step by step from the earlier '
-            f'construction to the current one: bridge a is the committed earlier outcome, the change in the SD of '
-            f'raw log returns between {nb.d("[−25, −5]", "23, bridge rows")} and '
-            f'{nb.d("[+5, +25]", "23, bridge rows")}; bridge b recomputes it on the current trading calendar with '
-            f'the 80 percent rule; bridge c switches to market-adjusted simple returns on the same windows; bridge d '
-            f'moves to the current windows and is the primary estimate. The first rows of Panel E start the '
-            f'pre-window at day {nb.d("−45", "23, ALT rows")} instead of {nb.d("−60", "constants primary_outcome")}. '
-            f'No row gives p below .05. SD is the standard deviation; RET and vwretd are from the Center for Research '
-            f'in Security Prices (CRSP).')
+    nb.d('95', 'design: 95 percent confidence interval')
+    nb.c('primary_N', 'i')
+    nb.c('primary_G', 'i')
+    for w_ in dp_.post_window:
+        nb.reg('+' + re.search(r'\+(\d+)\]', str(w_)).group(1), '21, post_window (end)', str(w_))
+    nb.d('[\u221260, \u221211]', 'constants primary_outcome')
+    nb.w('three', len(dp_), '21, rows (family size)')
+    nb.d('80', 'scripts/264 (coverage rule)')
+    nb.d('[\u2212250, \u221230]', '22C reasons / scripts/263 EST_WIN')
+    nb.i(mm.dropped, '22C, mm rows / dropped')
+    nb.i(mm.dropped_treated, '22C, mm rows / dropped_treated')
+    nb.d('80', 'scripts/264 (coverage rule)')
+    nb.i(mm.surviving, '22C, mm / surviving')
+    nb.r(allc[allc.definition == 'est_contaminated_by_notification'].share.iloc[0], 2, '22B, all / notification / share')
+    nb.r(allc[allc.definition == 'est_contaminated_by_breach_date'].share.iloc[0], 2, '22B, all / breach date / share')
+    nb.d('[\u221225, \u22125]', '23, bridge rows')
+    nb.d('[+5, +25]', '23, bridge rows')
+    nb.d('80', 'scripts/264 (coverage rule)')
+    nb.d('\u221245', '23, ALT rows')
+    nb.d('.05', 'design: significance level')
+    note = nb.final()
+
     return render_table(12, 'Robustness of the Main Estimate',
                         [('Post-window length', hdr_a, rows_a), ('Return benchmark', hdr_b, rows_b),
                          ('Estimation-window contamination', hdr_c, rows_c),
                          ('Events dropped by the 80% coverage rule', hdr_d, rows_d),
-                         ('Alternative pre-window and the bridge from the earlier outcome', hdr_e, rows_e)], note)
+                         ('Alternative pre-window and steps from the earlier outcome', hdr_e, rows_e)], note)
 
 
 RENDERERS.update({12: table_12})
@@ -1451,8 +1438,11 @@ def table_13():
             'breach minus earnings (contrast)': 'Breach minus earnings (contrast)',
             'Form 499 on breach elevation (pre-specified)': 'Form 499 registrant on breach elevation (pre-specified)'}
     rows_a = []
+    fam = fam[fam.test.isin(list(tlab))]
+    if len(fam) != 4:
+        sys.exit('Table 13 Panel A: expected the four pre-specified tests')
     for _, r in fam.iterrows():
-        lab_ = tlab.get(r.test, 'Bridge: registrant on elevation, committed market-model definition')
+        lab_ = tlab[r.test]
         rows_a.append([lab_, f'{fmt_num(r.coef, 3)} ({fmt_num(r.se, 3)})', fmt_p(r.p),
                        fmt_p(r.bh_adj_p) if str(r.bh_adj_p).strip() else '—', fmt_int(r.N), fmt_int(r.clusters),
                        r.inference.replace('CV1 by security', 'CV1, security').replace('CV1 by parent filer entity', 'CV1, parent')
@@ -1509,51 +1499,45 @@ def table_13():
     nrej = int((lo.rejects_05_cv3 == 'True').sum())
     claim(len(lo) - nrej == V('ann_lotpo_n_not_rejecting'), 'LOTPO non-rejections match constants')
     notrej = lo[lo.rejects_05_cv3 != 'True'].iloc[0]
+    claim(notrej.deleted_parent.startswith('T-Mobile'), 'the non-rejecting removal is T-Mobile')
     claim(all(float(x) < .05 for x in se_.p_cv3), 'every sensitivity rejects under CV3')
-    note = (f'Each estimate in Panels A, B, C, F and G is the coefficient on the Form 499 registrant indicator in a '
-            f'regression of announcement elevation on registration, the baseline-window volatility and the M4 '
-            f'controls, on the analytical sample (N = {nb.c("ann_N", "i")}, G = {nb.c("ann_G", "i")} parent filer '
-            f'entities, {nb.c("ann_G1", "i")} with registrant events) unless a row shows otherwise. Announcement '
-            f'elevation is the standard deviation (SD) of daily market-adjusted abnormal returns, RET − vwretd, '
-            f'over the nine trading days {nb.d("[−4, +4]", "scripts/265 ANN")} centered on the agency reporting '
-            f'date (day 0) minus the same SD over the three weeks before, trading days '
-            f'{nb.d("[−25, −5]", "scripts/265 BASE")}; each window must have returns on '
-            f'{nb.d("8", "scripts/265 header (80% rule)")} of {nb.d("9", "scripts/265 header")} and '
-            f'{nb.d("17", "scripts/265 header")} of {nb.d("21", "scripts/265 header")} days. Panel A is the '
-            f'pre-specified family of {nb.i(load_constants()["bh_families"]["announcement_window"], "constants bh_families.announcement_window")} '
-            f'tests: mean elevation on the sample securities’ earnings-announcement dates, mean elevation on breach '
-            f'reporting dates, their contrast, and the registrant coefficient. The BH-adjusted p applies the '
-            f'Benjamini–Hochberg false-discovery-rate adjustment within that family. The registrant coefficient '
-            f'is {nb.f(f4.coef, 3, "24A, Form 499 row / coef")} (CV3 p = {nb.p(f4.p, "24A, Form 499 row / p")}, '
-            f'BH-adjusted p = {nb.p(f4.bh_adj_p, "24A, Form 499 row / bh_adj_p")}), and it clears .05 after the '
-            f'adjustment; the bridge row gives the registrant coefficient under the committed market-model definition of elevation. CV3 is the '
-            f'cluster jackknife standard error (SE) by parent filer entity, with t distribution p-values on G − 1 '
-            f'degrees of freedom; CV1 is the cluster-robust SE with the usual small-sample correction. Panel B repeats '
-            f'the registrant test under each inference procedure, defined as in Table 10; every procedure gives p '
-            f'below .05 except the unrestricted wild cluster bootstrap (p = {nb.p(wcu.p, "24B, WCU / p")}). Panel C '
-            f'adds controls in steps; Share of the movement is how far each step moves the coefficient from the '
-            f'registrant-only value toward the full-model value, as a share of the whole distance: the baseline-window '
-            f'SD closes {nb.c("ann_share_closed_base", "r", 2)} of it and log total assets brings the total to '
-            f'{nb.c("ann_share_closed_base_size", "r", 2)}. Panel D is the placebo test: in each of '
-            f'{nb.i(pl.draws.iloc[0], "24D, draws")} draws (seed {nb.d("499", "scripts/263 SEED")}), every '
-            f'security in the sample gets a random date that lies at least {nb.d("120", "scripts/265 header (eligibility)")} '
-            f'trading days from any of its breach notifications and at least {nb.d("30", "scripts/265 header")} from '
-            f'any of its earnings dates, and the regression is re-estimated on those quiet days; the columns count the '
-            f'draws whose coefficient is at least as large in absolute value as the actual one and the draws with CV3 '
-            f'p below .05. No placebo draw matches the actual elevation coefficient '
-            f'({nb.i(pl.draws_abs_ge_actual.iloc[1], "24D, elevation / draws_abs_ge_actual")} of '
-            f'{nb.i(pl.draws.iloc[1], "24D, draws")}). Compared with their own quiet days, registrant events show '
-            f'elevation {nb.c("ann_treated_minus_quiet", "f", 3)} higher on breach reporting dates and other events '
-            f'{nb.c("ann_control_minus_quiet", "f", 3)}, so the registrant difference comes from other events’ '
-            f'volatility falling below its quiet-day level. Panel E is the earnings-announcement benchmark: the mean '
-            f'of each outcome over the sample securities’ quarterly earnings dates, with SEs clustered by '
-            f'security. Panel F removes one treated parent filer entity at a time; the CV3 p-value stays below .05 for '
-            f'{nb.i(nrej, "24F, rejects_05_cv3 == True")} of {nb.i(len(lo), "24F, rows")} removals and not when '
-            f'{nb.reg(notrej.deleted_parent, "24F, the non-rejecting row", notrej.deleted_parent)} is removed '
-            f'(p = {nb.p(notrej.p_cv3, "24F, that row / p_cv3")}). Panel G adds the four sensitivities to the '
-            f'pre-specified model: breach severity, flexible size, both, and a common-support sample; each keeps CV3 p '
-            f'below .05. RET is the daily stock return and vwretd the value-weighted market return, both from the '
-            f'Center for Research in Security Prices (CRSP); OLS is ordinary least squares.')
+    claim(V('ann_treated_minus_quiet') > 0 > V('ann_control_minus_quiet'), 'registrant above, other below quiet days')
+    claim(int(float(pl.draws_abs_ge_actual.iloc[1])) == 0, 'no placebo draw matches the elevation coefficient')
+    nb.w('nine', 9, 'design: scripts/265 ANN [-4, +4]')
+    nb.d('[\u22124, +4]', 'scripts/265 ANN')
+    nb.w('three', 3, 'design: scripts/265 BASE (21 trading days)')
+    nb.d('[\u221225, \u22125]', 'scripts/265 BASE')
+    nb.d('8', 'scripts/265 header (80% rule)')
+    nb.d('9', 'scripts/265 header')
+    nb.d('17', 'scripts/265 header')
+    nb.d('21', 'scripts/265 header')
+    nb.c('ann_N', 'i')
+    nb.c('ann_G', 'i')
+    nb.i(load_constants()['bh_families']['announcement_window'], 'constants bh_families.announcement_window')
+    nb.w('two', 2, '24A, earnings calibration rows')
+    nb.f(f4.coef, 3, '24A, Form 499 row / coef')
+    nb.p(f4.p, '24A, Form 499 row / p')
+    nb.p(f4.bh_adj_p, '24A, Form 499 row / bh_adj_p')
+    nb.d('.05', 'design: significance level')
+    nb.p(wcu.p, '24B, WCU / p')
+    nb.c('ann_share_closed_base', 'r', 2)
+    nb.c('ann_share_closed_base_size', 'r', 2)
+    nb.i(pl.draws.iloc[0], '24D, draws')
+    nb.d('499', 'scripts/263 SEED')
+    nb.d('120', 'scripts/265 header (eligibility)')
+    nb.d('30', 'scripts/265 header')
+    nb.i(pl.draws_abs_ge_actual.iloc[1], '24D, elevation / draws_abs_ge_actual')
+    nb.i(pl.draws.iloc[1], '24D, draws')
+    nb.c('ann_treated_minus_quiet', 'f', 3)
+    nb.f(-V('ann_control_minus_quiet'), 3, 'constants values.ann_control_minus_quiet (magnitude; negative)')
+    nb.d('.05', 'design: significance level')
+    nb.i(nrej, '24F, rejects_05_cv3 == True')
+    nb.i(len(lo), '24F, rows')
+    nb.p(notrej.p_cv3, '24F, T-Mobile row / p_cv3')
+    nb.w('four', len(se_) - 1, 'v5_t18b, sensitivity rows (excluding the base row)')
+    nb.d('.05', 'design: significance level')
+    note = nb.final()
+
     return render_table(13, 'Volatility Around the Agency Reporting Date',
                         [('The pre-specified family of four tests', hdr_a, rows_a),
                          ('Inference for the registrant coefficient', hdr_b, rows_b),
@@ -1570,39 +1554,33 @@ RENDERERS.update({13: table_13})
 # ------------------------------------------------------------------ Table 14
 DELAY_OUT = {'delay (raw days)': 'Delay, days (uncapped)', 'delay (winsorized p99)': 'Delay, days (capped at P99)',
              'log(1+delay)': 'Log(1 + delay)', 'log(delay)': 'Log(delay)'}
-CTRL_LAB = {'BRIDGE old control': 'Earlier controls', 'v5 control': 'Current controls'}
-
-
-def _ctrl(c):
-    return CTRL_LAB['BRIDGE old control' if c.startswith('BRIDGE') else 'v5 control']
-
-
 def table_14():
     dl = appendix_csv('25A_disclosure_delay.csv')
     rows_a = []
     for (o, c), g in dl.groupby(['outcome', 'control'], sort=False):
+        if c.startswith('BRIDGE'):
+            continue
         cv3 = g[g.rung.str.startswith('CV3')].iloc[0]
         cv1 = g[g.rung.str.startswith('CV1')].iloc[0]
         wcr = g[g.rung.str.startswith('WCR restricted')].iloc[0]
         dp = 3 if o.startswith('log') else 2
-        rows_a.append([DELAY_OUT[o], _ctrl(c), f'{fmt_num(cv3.coef, dp)} ({fmt_num(cv3.se, dp)})', fmt_p(cv3.p),
+        rows_a.append([DELAY_OUT[o], f'{fmt_num(cv3.coef, dp)} ({fmt_num(cv3.se, dp)})', fmt_p(cv3.p),
                        fmt_p(cv1.p), fmt_p(wcr.p), fmt_num(cv3.mde80_cv3, dp)])
-    hdr_a = ['Outcome', 'Controls', 'Estimate (CV3 SE)', 'p', 'CV1 p', 'Wild cluster p', 'MDE80']
+    hdr_a = ['Outcome', 'Estimate (CV3 SE)', 'p', 'CV1 p', 'Wild cluster p', 'MDE80']
 
     nz = appendix_csv('25B_delay_nonzero.csv')
-    rows_b = [[DELAY_OUT[r.outcome], _ctrl(r.control), f'{fmt_num(r.coef, 3 if "log" in r.outcome else 2)} '
+    rows_b = [[DELAY_OUT[r.outcome], f'{fmt_num(r.coef, 3 if "log" in r.outcome else 2)} '
                f'({fmt_num(r.se_cv3, 3 if "log" in r.outcome else 2)})', fmt_p(r.p_cv3), fmt_p(r.p_cv1),
-               f'{fmt_int(r.N)} ({fmt_int(r.n_treated)})'] for _, r in nz.iterrows()]
-    hdr_b = ['Outcome', 'Controls', 'Estimate (CV3 SE)', 'p', 'CV1 p', 'N (registrant)']
+               f'{fmt_int(r.N)} ({fmt_int(r.n_treated)})'] for _, r in nz.iterrows() if not r.control.startswith('BRIDGE')]
+    hdr_b = ['Outcome', 'Estimate (CV3 SE)', 'p', 'CV1 p', 'N (registrant)']
 
     qt = appendix_csv('25C_delay_quantiles.csv')
     rows_c = []
     for q in sorted(set(qt.q), key=float):
         a_ = qt[(qt.q == q) & (qt.control == 'v5 control')].iloc[0]
-        b_ = qt[(qt.q == q) & (qt.control != 'v5 control')].iloc[0]
         rows_c.append([f'{int(round(float(q) * 100))}th percentile', f'{fmt_num(a_.coef, 2)} ({fmt_num(a_.se, 2)})',
-                       fmt_p(a_.p), f'{fmt_num(b_.coef, 2)} ({fmt_num(b_.se, 2)})', fmt_p(b_.p)])
-    hdr_c = ['Quantile', 'Current controls: estimate (SE)', 'p', 'Earlier controls: estimate (SE)', 'p']
+                       fmt_p(a_.p)])
+    hdr_c = ['Quantile', 'Estimate (SE)', 'p']
 
     ds = appendix_csv('25D_delay_distribution.csv').set_index('group')
     glab = {'treated': 'Form 499 registrant events', 'control': 'Other events'}
@@ -1626,39 +1604,38 @@ def table_14():
     zr = te[te.test == 'zero-delay events'].iloc[0]
     claim(int(float(zr.stat)) == V('delay_zero_events') and int(float(zr.sd_treated)) == V('delay_zero_treated')
           and int(float(zr.sd_control)) == V('delay_zero_control'), 'zero-delay counts match constants')
-    claim(all(float(x) >= .05 for x in list(dl[dl.rung.str.startswith('CV3')].p) + list(nz.p_cv3)), 'no delay test rejects')
+    claim(all(float(x) >= .05 for x in list(dl.p) + list(nz.p_cv3) + list(nz.p_cv1) + list(qt.p)), 'no delay test rejects')
     claim(all(float(x) >= .05 for x in te.p if str(x).strip()), 'no distribution test rejects')
-    claim(float(ds.loc['treated', 'p25']) == 0 and float(ds.loc['control', 'p25']) == 0, 'both 25th percentiles are zero')
+    for g_ in ('treated', 'control'):
+        claim(float(ds.loc[g_, 'p10']) == 0 and float(ds.loc[g_, 'p25']) == 0, f'{g_} 10th and 25th percentiles are zero')
+    q_lo = qt[(qt.control == 'v5 control') & qt.q.astype(float).isin([.1, .25])]
+    claim(all(abs(float(x)) < 1e-4 for x in q_lo.coef), 'the 10th and 25th percentile estimates are 0')
     cap = appendix_csv('02A_descriptives_v5.csv')
     capv = cap[(cap.group == 'full') & (cap.variable == 'delay_w')]['max'].iloc[0]
-    note = (f'Each row of Panel A regresses a delay outcome on the Form 499 registrant indicator and controls in the '
-            f'analytical sample (N = {nb.c("primary_N", "i")}, G = {nb.c("primary_G", "i")} parent filer entities, '
-            f'{nb.c("primary_G1", "i")} with registrant events). Delay is the number of days from the breach date to '
-            f'the agency reporting date. Delays of {nb.d("−30", "scripts/156")} to {nb.d("−1", "scripts/156")} '
-            f'days, where the reporting date precedes the breach date by a field-level error, are set to 0. '
-            f'In all, {nb.c("delay_zero_events", "i")} events have a zero delay ({nb.c("delay_zero_treated", "i")} registrant, '
-            f'{nb.c("delay_zero_control", "i")} other), because the source records the breach and its report on the '
-            f'same day or because a small negative delay was set to 0. The uncapped rows use the delay as recorded; '
-            f'the capped rows cap it at the in-sample {nb.d("99th", "scripts/163 (P99 winsorization rule)")} percentile (P99), {nb.f(capv, 2, "02A, full / delay_w / max")} '
-            f'days, the disclosure gap of Table 2. The unadjusted difference in mean uncapped delay is '
-            f'{nb.c("delay_raw_unadjusted_diff", "f", 1)} days, while Table 2 reports the capped gap of '
-            f'{nb.f(appendix_csv("02B_descriptives_v5_differences.csv").set_index("variable").loc["delay_w", "diff"], 2, "02B, delay_w / diff")} '
-            f'days. The log rows use log(1 + delay) in Panel A and log(delay) on nonzero delays in Panel B. Current '
-            f'controls are the M4 controls with the pre-window volatility of the current outcome; earlier controls use '
-            f'the pre-window volatility of the earlier raw-return outcome. CV3 is the cluster jackknife standard error '
-            f'(SE) by parent filer entity, with p-values from the t distribution with G − 1 degrees of freedom; '
-            f'CV1 is the cluster-robust SE with the usual small-sample correction; the wild cluster p comes from the '
-            f'restricted wild cluster bootstrap with Rademacher weights. MDE80 is the minimum detectable effect at 80 '
-            f'percent power, (t.975 + t.80) × SE_CV3, in the units of the outcome. No row gives p below .05. Panel B '
-            f'drops the zero delays ({nb.i(nz.N.iloc[0], "25B, N")} events, {nb.i(nz.n_treated.iloc[0], "25B, n_treated")} '
-            f'registrant). Panel C reports quantile regressions of the uncapped delay at five quantiles with SEs in '
-            f'parentheses. Below the median the estimates carry no information: more than a quarter of the delays in '
-            f'each group are zero, so both groups’ {nb.d("10th", "25C, q = 0.1")} and {nb.d("25th", "25C, q = 0.25")} percentiles are 0 and the estimate there is 0 by '
-            f'construction. Panel D describes the uncapped delay by group. Panel E tests whether the two groups’ '
-            f'delays differ in spread or shape: the Brown–Forsythe test compares spread using deviations from '
-            f'each group’s median, the Kolmogorov–Smirnov test compares whole distributions, and the log-rank '
-            f'test compares the time to report as a survival curve; none gives p below .05. SD is the standard '
-            f'deviation and M the mean.')
+    nb.d('\u221230', 'scripts/156')
+    nb.d('\u22121', 'scripts/156')
+    nb.d('0', 'scripts/156 (recoded value)')
+    nb.c('primary_N', 'i')
+    nb.c('primary_G', 'i')
+    nb.c('delay_zero_events', 'i')
+    nb.c('delay_zero_treated', 'i')
+    nb.c('delay_zero_control', 'i')
+    nb.d('0', 'scripts/156 (recoded value)')
+    nb.d('99th', 'scripts/163 (P99 winsorization rule)')
+    nb.f(capv, 2, '02A, full / delay_w / max')
+    nb.c('delay_raw_unadjusted_diff', 'f', 1)
+    nb.f(appendix_csv('02B_descriptives_v5_differences.csv').set_index('variable').loc['delay_w', 'diff'], 2, '02B, delay_w / diff')
+    nb.d('log(1 + delay)', 'scripts/164 (log outcome)')
+    nb.i(nz.N.iloc[0], '25B, N')
+    nb.i(nz.n_treated.iloc[0], '25B, n_treated')
+    nb.d('80', 'design: 80 percent power')
+    nb.d('10th', '25C, q = 0.1')
+    nb.d('25th', '25C, q = 0.25')
+    nb.reg('0', '25D, treated and control p10 and p25', 0)
+    nb.reg('0', '25C, v5 control q = 0.1 and 0.25 / coef (rounded)', 0)
+    nb.d('.05', 'design: significance level')
+    note = nb.final()
+
     return render_table(14, 'Disclosure Delay by Registration',
                         [('Delay regressions, all events', hdr_a, rows_a), ('Nonzero delays only', hdr_b, rows_b),
                          ('Quantile regressions of the uncapped delay', hdr_c, rows_c),
@@ -1679,29 +1656,22 @@ def table_15():
     nb = Notes(15)
     claim(all(float(x) >= .05 for x in sp.bh_adj_p) and all(float(x) >= .05 for x in sp.p_cv3), 'no spread test rejects')
     r0 = sp.iloc[0]
-    note = (f'Each row regresses the change in one trading-cost measure, its mean over trading days '
-            f'{nb.d("[+1, +20]", "scripts/268 header")} after the agency reporting date minus its mean over '
-            f'{nb.d("[−60, −11]", "scripts/268 header")}, on the Form 499 registrant indicator, the M4 controls '
-            f'and fixed effects for the calendar month of the reporting date, in the analytical sample '
-            f'(N = {nb.i(r0.N, "26, N")}, {nb.i(r0.n_treated, "26, n_treated")} registrant events, G = '
-            f'{nb.i(r0.G, "26, G")} parent filer entities, {nb.i(r0.G1, "26, G1")} with registrant events). CPQS is the '
-            f'closing percent quoted spread, (ask − bid) divided by the quote midpoint, from valid uncrossed '
-            f'closing quotes, with values above {nb.d("0.5", "scripts/268 header")} set to missing (Chung & Zhang, '
-            f'2014); it is shown to five decimals because it is a fraction. EDGE is the efficient estimator of the '
-            f'bid–ask spread from open, high, low and close prices (Ardia et al., 2024). OCAM is the open-to-close '
-            f'Amihud illiquidity measure, the absolute open-to-close return divided by dollar volume (Barardehi et al., '
-            f'2021); its window means are winsorized at the {nb.d("1st", "scripts/268 header (winsorized 1/99)")} and '
-            f'{nb.d("99th", "scripts/268 header")} percentiles within each window and then logged. OCAM is biased '
-            f'toward zero in large stocks, where dollar volume is high. Each window needs trading on at least '
-            f'{nb.d("80", "scripts/268 header")} percent of its days. CV3 is the cluster jackknife standard error (SE) '
-            f'by parent filer entity, with p-values from the t distribution with G − 1 degrees of freedom; CV1 is '
-            f'the cluster-robust SE with the usual small-sample correction. The three measures form one family of '
-            f'{nb.i(load_constants()["bh_families"]["spreads"], "constants bh_families.spreads")} tests, and the '
-            f'BH-adjusted p applies the Benjamini–Hochberg false-discovery-rate adjustment within it; no measure '
-            f'gives p below .05 before or after the adjustment. The last column is the Pearson correlation across '
-            f'events between the change in the measure and the change in abnormal return volatility; all three are '
-            f'small (at most {nb.r(max(abs(float(x)) for x in sp.corr_with_primary_dv), 2, "26, max |corr_with_primary_dv|")} '
-            f'in absolute value), so trading costs and volatility move largely independently around the reporting date.')
+    mx = max(abs(float(x)) for x in sp.corr_with_primary_dv)
+    claim(mx <= .11, 'no correlation exceeds .11 in absolute value')
+    nb.d('[+1, +20]', 'scripts/268 header')
+    nb.d('[\u221260, \u221211]', 'scripts/268 header')
+    nb.i(r0.N, '26, N')
+    nb.i(r0.G, '26, G')
+    nb.d('0.5', 'scripts/268 header')
+    nb.w('five', 5, 'design: CPQS shown to five decimals (scripts/274 Table 15)')
+    nb.d('1st', 'scripts/268 header (winsorized 1/99)')
+    nb.d('99th', 'scripts/268 header')
+    nb.d('80', 'scripts/268 header')
+    nb.w('three', len(sp), '26, rows (family size)')
+    nb.d('.05', 'design: significance level')
+    nb.r(mx, 2, '26, max |corr_with_primary_dv|')
+    note = nb.final()
+
     return render_table(15, 'Trading-Cost Measures', [('', hdr, rows)], note)
 
 
@@ -1734,37 +1704,32 @@ def table_16():
     claim(V('q_cells_negligible') == 0, 'constants: no negligible cell')
     claim(all(int(float(ci.loc[q].df)) == int(sq.set_index('quartile').loc[q].G) - 1 for q in ci.index), 'cell df = G - 1')
     claim(sum(int(x) for x in sq.N) == V('primary_N'), 'cells sum to N')
-    claim(all(float(x) >= .05 for x in sq.bh_adj_p_cv3), 'no cell rejects under CV3 after BH')
+    claim(all(float(x) >= .05 for x in sq.p_cv3), 'CV3 rejects in no cell')
     q1 = sq.iloc[0]
     sesoi = float(ci.iloc[0].sesoi)
-    n_hc1 = sum(1 for row in rows_c if row[1] != '' and (row[1] == '< .001' or float('0' + row[1]) < .05))
-    note = (f'Each row of Panel A re-estimates the primary model M4 within one quartile of log total assets in the '
-            f'analytical sample ({nb.c("primary_N", "i")} events in all), with the CV3 standard error (SE) clustered by '
-            f'parent filer entity; G is the number of parent filer entities in the cell, and each cell’s CV3 '
-            f'p-values use the t distribution with that cell’s G − 1 degrees of freedom (df). Registrant events '
-            f'cluster at the top: Q4 holds {nb.i(sq.iloc[3].treated_events, "27A, Q4 / treated_events")} of '
-            f'{nb.c("primary_treated", "i")}, and Q1 rests on {nb.i(q1.treated_events, "27A, Q1 / treated_events")} '
-            f'registrant events at {nb.i(q1.treated_parents, "27A, Q1 / treated_parents")} treated parent, so its '
-            f'estimate compares one firm with the rest of the cell; Q1 also drops the health-breach flag, which does '
-            f'not vary there. The four cells form one family of '
-            f'{nb.i(load_constants()["bh_families"]["size_quartiles"], "constants bh_families.size_quartiles")} tests, '
-            f'and the BH-adjusted p applies the Benjamini–Hochberg false-discovery-rate adjustment within it; no '
-            f'cell gives a BH-adjusted CV3 p below .05 (smallest {nb.c("q_min_bh_p_cv3", "p")}). Panel B asks whether '
-            f'any cell can rule out effects that matter. The smallest effect size of interest (SESOI) is '
-            f'{nb.f(sesoi, 3, "v5_t18c, sesoi (= constants dr_sesoi_daily)")}, 0.25 times the standard deviation of the '
-            f'dependent variable among other events in the full sample. A cell rules out a negligible effect only if '
-            f'its 90 percent confidence interval (CI) lies inside ±SESOI, the equivalence test at the 5 percent '
-            f'level; no cell’s interval does, so no cell is ruled out as negligible. MDE80, the minimum detectable '
-            f'effect at 80 percent power, is (t.975 + t.80, cell df) × SE_CV3; it runs from '
-            f'{nb.c("q_mde_min", "f", 3)} to {nb.c("q_mde_max", "f", 3)}, or {nb.c("q_mde_min_x_sesoi", "f", 2)} to '
-            f'{nb.c("q_mde_max_x_sesoi", "f", 2)} times SESOI. Panel C shows the p-values from procedures that ignore '
-            f'or understate clustering, to document how they over-reject when few treated clusters sit in a cell: HC1 '
-            f'and HC3 treat events as independent and give p below .05 in '
-            f'{nb.i(n_hc1, "27B, HC1 rows with p < .05 (count)")} of the four cells, while CV3 rejects in none. HC1 and '
-            f'HC3 are heteroskedasticity-consistent SEs; CV1 is the cluster-robust SE with the usual small-sample '
-            f'correction; the wild cluster p comes from the restricted wild cluster bootstrap with Rademacher weights. '
-            f'Q1 to Q4 are the size quartiles, Q1 smallest.')
-    nb.d('0.25', 'scripts/263 design_resolution sesoi_mult')
+    n_hc1 = sum(1 for q in sq.quartile if float(lad[(lad.quartile == q) & lad.rung.str.startswith('HC1')].p.iloc[0]) < .05)
+    n_hc3 = sum(1 for q in sq.quartile if float(lad[(lad.quartile == q) & lad.rung.str.startswith('HC3')].p.iloc[0]) < .05)
+    claim(n_hc1 == n_hc3, 'HC1 and HC3 reject in the same number of cells')
+    claim(int(sq.iloc[3].treated_events) == max(int(x) for x in sq.treated_events), 'Q4 holds the most registrant events')
+    nb.c('primary_N', 'i')
+    nb.d('G \u2212 1', 'design: cell degrees of freedom (v5_t18c df = G - 1)')
+    nb.i(sq.iloc[3].treated_events, '27A, Q4 / treated_events')
+    nb.c('primary_treated', 'i')
+    nb.i(q1.treated_events, '27A, Q1 / treated_events')
+    nb.i(q1.treated_parents, '27A, Q1 / treated_parents')
+    nb.w('four', len(sq), '27A, rows (family size)')
+    nb.c('q_min_bh_p_cv3', 'p')
+    nb.d('90', 'design: 90 percent interval (equivalence at 5 percent)')
+    nb.f(sesoi, 3, 'v5_t18c, sesoi (= constants dr_sesoi_daily)')
+    nb.d('80', 'design: 80 percent power')
+    nb.c('q_mde_min', 'f', 3)
+    nb.c('q_mde_max', 'f', 3)
+    nb.c('q_mde_min_x_sesoi', 'f', 2)
+    nb.c('q_mde_max_x_sesoi', 'f', 2)
+    nb.d('.05', 'design: significance level')
+    nb.i(n_hc1, '27B, HC1 and HC3 rows with p < .05 (count)')
+    nb.w('four', len(sq), '27A, rows')
+    note = nb.final()
     return render_table(16, 'Estimates by Size Quartile',
                         [('Cell estimates', hdr_a, rows_a), ('Equivalence and power by cell', hdr_b, rows_b),
                          ('Procedures that understate clustering', hdr_c, rows_c)], note)
@@ -1808,29 +1773,29 @@ def table_17():
     nb = Notes(17)
     sizes = [sc[k].nunique() for k in NODE]
     claim(len(sc) == V('spec_n') and len(sc) == int(np_prod(sizes)), 'grid size = product of options')
-    claim((sc.p_cv3 < .05).sum() == V('spec_cv3_sig') == 0 and (sc.coef > 0).sum() == V('spec_positive'), 'none significant, all positive')
-    s_ = ' × '.join(nb.i(x, f"29A, distinct {k}") for x, k in zip(sizes, NODE))
-    note = (f'Each specification re-estimates the registrant coefficient of the primary model M4 on the analytical '
-            f'sample (N = {nb.c("primary_N", "i")}, G = {nb.c("primary_G", "i")} parent filer entities, '
-            f'{nb.c("primary_G1", "i")} with registrant events) under one combination of five analysis decisions: the '
-            f'pre-window, the post-window, the return benchmark, simple or log returns, and whether daily returns are '
-            f'winsorized; {s_} = {nb.c("spec_n", "i")} specifications. Panel A summarizes the estimates for each '
-            f'option, pooling the specifications that use it (Number counts them); the last two columns count the specifications whose '
-            f'p-value falls below .05 under CV3, the cluster jackknife standard error by parent filer entity, and under '
-            f'CV1, the cluster-robust standard error with the usual small-sample correction. All '
-            f'{nb.c("spec_positive", "i")} estimates are positive and none is significant under CV3 '
-            f'({nb.c("spec_cv3_sig", "i")}) or CV1 ({nb.c("spec_sig_cv1_any", "i")}); the median estimate is '
-            f'{nb.c("spec_median", "f", 3)}. Panel B is the permutation test of the whole curve (Simonsohn, Simmons & '
-            f'Nelson, 2020): in each of {nb.c("spec_perm_draws", "i")} draws, registration is reassigned at random to '
-            f'{nb.c("primary_G1", "i")} of the {nb.c("primary_G", "i")} parent filer entities, all events of a chosen '
-            f'parent becoming registrant events, and all {nb.c("spec_n", "i")} specifications are re-estimated. Each '
-            f'permutation p is the share of draws at least as extreme as the observed curve: for the median estimate, '
-            f'in absolute value; for the count of estimates sharing the dominant sign; and for the count significant '
-            f'in the dominant direction, using CV1. None is below '
-            f'.05. An all-positive curve is common under the null here because every specification uses the same '
-            f'events and parents, so the estimates move together: '
-            f'{nb.r(V("perm_unanimous_share"), 3, "constants perm_unanimous_share")} of the null draws produce a curve '
-            f'with a single sign.')
+    claim((sc.p_cv3 < .05).sum() == V('spec_cv3_sig') == 0 and (sc.p_cv1 < .05).sum() == V('spec_sig_cv1_any') == 0
+          and (sc.coef > 0).sum() == V('spec_positive') == len(sc), 'none significant, all positive')
+    claim(set(sc.winsor) == {'raw', 'w1_99'}, 'the fifth decision winsorizes the outcome at 1/99 (scripts/266 lines 65-67)')
+    claim(all(float(x) >= .05 for x in pm.perm_p), 'no permutation p below .05')
+    nb.c('primary_N', 'i')
+    nb.c('primary_G', 'i')
+    nb.w('five', len(NODE), '29A, decisions')
+    nb.d('1st', 'scripts/266 WINS (w1_99)')
+    nb.d('99th', 'scripts/266 WINS (w1_99)')
+    for x, k in zip(sizes, NODE):
+        nb.i(x, f'29A, distinct {k}')
+    nb.c('spec_n', 'i')
+    nb.d('.05', 'design: significance level')
+    nb.c('spec_positive', 'i')
+    nb.c('spec_median', 'f', 3)
+    nb.c('spec_perm_draws', 'i')
+    nb.c('primary_G1', 'i')
+    nb.c('primary_G', 'i')
+    nb.c('spec_n', 'i')
+    nb.d('.05', 'design: significance level')
+    nb.r(V('perm_unanimous_share'), 3, 'constants perm_unanimous_share')
+    note = nb.final()
+
     return render_table(17, 'Specification Curve',
                         [('Estimates by decision and option', hdr_a, rows_a), ('Permutation test of the curve', hdr_b, rows_b)], note)
 
@@ -1883,35 +1848,31 @@ def table_18():
     yr = fe.iloc[0]
     claim(int(yr.N) - int(yr.effective_obs) == V('years_single_kind_events'), 'year FE drops exactly the one-group years')
     claim(all(float(x) >= .05 for x in list(fe.p_cv3) + [cook.p_cv3, pre.p_cv3] + list(v4.p_cv3)), 'no check rejects')
-    note = (f'Each row re-estimates the registrant coefficient of the primary model M4 (N = {nb.c("primary_N", "i")}, '
-            f'G = {nb.c("primary_G", "i")} parent filer entities, {nb.c("primary_G1", "i")} with registrant events) with '
-            f'one change; standard errors are CV3, the cluster jackknife by parent filer entity, with p-values from the '
-            f't distribution with G − 1 degrees of freedom. Panel A drops one parent filer entity at a time, '
-            f'{nb.c("primary_G", "i")} re-estimates in all, and reports the smallest and largest. Dropping '
-            f'{nb.reg(mn.parent, "30A, smallest coef_without / parent", mn.parent)} '
-            f'({nb.i(mn.events, "30A, that row / events")} events) lowers the estimate to '
-            f'{nb.f(lo_.coef, 3, "30B, LOPO minimum / coef")}, removing {nb.c("sprint_share_removed", "pct", 1)} percent '
-            f'of it; dropping {nb.reg(mx.parent, "30A, largest coef_without / parent", mx.parent)} '
-            f'({nb.i(mx.events, "30A, that row / events")} events) raises it to '
-            f'{nb.f(hi_.coef, 3, "30B, LOPO maximum / coef")}. Panel B drops influential observations: Cook’s distance '
-            f'measures how much all fitted values move when an observation is deleted, and the '
-            f'{nb.c("cook_removed", "i")} events with a distance above {nb.d("4/N", "30B, Cook row (D > 4/N)")} are '
-            f'removed; the second row drops the {nb.c("prerule_events", "i")} events reported before the rule took effect '
-            f'on {nb.d("December 8, 2007", "30B / scripts/269 (2007-12-08)")}, none of them registrant events. Panel C '
-            f'adds fixed effects for the reporting year, the two-digit Standard Industrial Classification (SIC) industry, '
-            f'or both. A stratum is one year, one industry or one year-by-industry cell; a mixed stratum holds both '
-            f'registrant and other events. With fixed effects the coefficient is identified only within mixed strata, '
-            f'so events in single-group strata carry no weight (Aronow & Samii, 2016); Effective events counts the '
-            f'events in mixed strata, with registrant events in parentheses. Under year fixed effects the '
-            f'{nb.c("years_single_kind_events", "i")} events in single-group years drop out, leaving '
-            f'{nb.i(yr.effective_obs, "31, year FE / effective_obs")}; under both sets only '
-            f'{nb.i(fe.iloc[2].effective_obs, "31, year + industry / effective_obs")} events in '
-            f'{nb.i(fe.iloc[2].mixed_strata, "31, year + industry / mixed_strata")} mixed cells remain. Industries with a '
-            f'single event are dropped as singletons ({nb.i(fe.iloc[1].singletons_dropped, "31, industry / singletons_dropped")} '
-            f'events). Panel D re-dates events: the second row uses the revised reporting dates the source later '
-            f'published for {nb.i(v4.iloc[1].events_changed, "32, v4 row / events_changed")} events, and the third '
-            f'corrects Sprint’s breach date, which adds {nb.i(v4.iloc[2].events_changed, "32, Sprint row / events_changed")} '
-            f'event to the sample. No row gives p below .05.')
+    claim(len(lp) == V('primary_G'), 'one re-estimate per parent')
+    claim(V('prerule_treated') == 0, 'no pre-rule event is a registrant event')
+    nb.c('primary_N', 'i')
+    nb.c('primary_G', 'i')
+    nb.i(len(lp), '30A, rows (re-estimates)')
+    nb.reg(mn.parent, '30A, smallest coef_without / parent', mn.parent)
+    nb.i(mn.events, '30A, that row / events')
+    nb.f(lo_.coef, 3, '30B, LOPO minimum / coef')
+    nb.c('sprint_share_removed', 'pct', 1)
+    nb.reg(mx.parent, '30A, largest coef_without / parent', mx.parent)
+    nb.i(mx.events, '30A, that row / events')
+    nb.f(hi_.coef, 3, '30B, LOPO maximum / coef')
+    nb.c('cook_removed', 'i')
+    nb.d('4/N', '30B, Cook row (D > 4/N)')
+    nb.c('prerule_events', 'i')
+    nb.d('December 8, 2007', '30B / scripts/269 (2007-12-08)')
+    nb.i(yr.effective_obs, '31, year FE / effective_obs')
+    nb.i(fe.iloc[2].effective_obs, '31, year + industry / effective_obs')
+    nb.i(fe.iloc[2].mixed_strata, '31, year + industry / mixed_strata')
+    nb.i(fe.iloc[1].singletons_dropped, '31, industry / singletons_dropped')
+    nb.i(v4.iloc[1].events_changed, '32, revised-dates row / events_changed')
+    nb.i(v4.iloc[2].events_changed, '32, Sprint row / events_changed')
+    nb.d('.05', 'design: significance level')
+    note = nb.final()
+
     return render_table(18, 'Sensitivity of the Main Estimate',
                         [('Leaving out one parent filer entity', hdr_a, rows_a), ('Influential and pre-rule events', hdr_b, rows_b),
                          ('Fixed effects and effective samples', hdr_c, rows_c), ('Revised dates', hdr_d, rows_d)], note)
@@ -1919,8 +1880,8 @@ def table_18():
 
 # ------------------------------------------------------------------ Table 19
 FAMILY_LAB = {
-    'A2-delay': 'Disclosure delay (A2)', 'A2-delay-nz': 'Disclosure delay, nonzero (A2)', 'B2': 'Records per event and firm size (B2)',
-    'B2b': 'Industry-code-only group comparisons (B2b)', 'poscontrol': 'Positive control (earnings decline)',
+    'A2-delay': 'Disclosure delay', 'A2-delay-nz': 'Disclosure delay, nonzero', 'B2': 'Records per event and firm size',
+    'B2b': 'Industry-code-only group comparisons', 'poscontrol': 'Positive control (earnings decline)',
     'announcement family': 'Announcement window', 'dynamic path': 'Post-window length (dynamic path)',
     'fixed effects': 'Fixed effects', "Cook's exclusion": 'Cook’s distance exclusion', 'pre-rule exclusion': 'Pre-rule exclusion',
     'size quartiles': 'Size quartiles', 'specification-curve permutation (joint)': 'Specification-curve permutation',
@@ -1947,54 +1908,117 @@ def _v5_rejections():
     }
 
 
+QUERY4 = ROOT / 'outputs' / 'ESSAY2_QUERY4_PARTS_ACJ.md'   # committed log of scripts/164
+QUERY6 = ROOT / 'outputs' / 'ESSAY2_QUERY6_REPORT.md'      # committed log of scripts/174
+
+
+def _find(text, pat, what):
+    m = re.search(pat, text)
+    if m is None:
+        sys.exit(f'kept-test result not found ({what}): {pat}')
+    return m
+
+
+def kept_results():
+    """Committed p-values (or 95% CIs) of the 23 tests kept from the earlier ledger, by family.
+
+    Each entry: (family, test, p or None, ci or None, source). A test counts as p < .05 when its p is
+    below .05 or, where only a CI is committed, when the CI excludes 0.
+    """
+    a = appendix_csv
+    q4 = QUERY4.read_text(encoding='utf-8')
+    q6 = QUERY6.read_text(encoding='utf-8')
+    out = []
+    dl = a('25A_disclosure_delay.csv')
+    for o in ['delay (raw days)', 'delay (winsorized p99)', 'log(1+delay)']:
+        r = dl[(dl.outcome == o) & (dl.control.str.startswith('v5')) & dl.rung.str.startswith('CV3')].iloc[0]
+        out.append(('A2-delay', f'OLS {o}', float(r.p), None, '25A, current controls, CV3'))
+    te = a('25E_delay_distribution_tests.csv').set_index('test')
+    out.append(('A2-delay', 'Brown-Forsythe, all delays', float(te.loc['Brown-Forsythe, all delays', 'p']), None, '25E'))
+    qt = a('25C_delay_quantiles.csv')
+    for _, r in qt[qt.control == 'v5 control'].iterrows():
+        out.append(('A2-delay', f'quantile q={r.q}', float(r.p), None, '25C, current controls'))
+    m = _find(q4, r'Kaplan-Meier time-to-notification.*?log-rank chi2=[\d.]+ \(p=([\d.]+)\)', 'log-rank, all delays')
+    out.append(('A2-delay', 'log-rank, all delays', float(m.group(1)), None, QUERY4.name + ' (Kaplan-Meier line)'))
+    m = _find(q4, r'KS test of distributional equality: D=[\d.]+ \(p=([\d.]+)\)', 'KS, all delays')
+    out.append(('A2-delay', 'KS, all delays', float(m.group(1)), None, QUERY4.name))
+    nz = a('25B_delay_nonzero.csv')
+    for _, r in nz[nz.control.str.startswith('v5')].iterrows():
+        out.append(('A2-delay-nz', f'OLS nonzero {r.outcome}', float(r.p_cv3), None, '25B, current controls, CV3'))
+    for t in ['Brown-Forsythe, non-zero', 'KS, non-zero', 'log-rank, non-zero']:
+        out.append(('A2-delay-nz', t, float(te.loc[t, 'p']), None, '25E'))
+    for lab_, pat in [('records-per-event ~ log assets', r'records-per-event ~ ln\(assets\):.*?95% CI \[([-+\d.]+), ([-+\d.]+)\]'),
+                      ('records-per-event ~ log mktcap', r'records-per-event ~ ln\(mktcap\):.*?95% CI \[([-+\d.]+), ([-+\d.]+)\]')]:
+        m = _find(q4, pat, lab_)
+        out.append(('B2', lab_, None, (float(m.group(1)), float(m.group(2))), QUERY4.name + ' (B2)'))
+    m = _find(q4, r'ln\(assets\) t=[-+\d.]+ \(p=([\d.]+)\); pre-breach volatility t=[-+\d.]+ \(p=([\d.]+)\)', 'B2b Welch')
+    out.append(('B2b', 'size: industry-code-only vs concordant registrants', float(m.group(1)), None, QUERY4.name + ' (B2b Welch)'))
+    out.append(('B2b', 'pre-vol: industry-code-only vs concordant registrants', float(m.group(2)), None, QUERY4.name + ' (B2b Welch)'))
+    m = _find(q4, r'size manufactured-vs-concordant t=[-+\d.]+ \(p=([\d.]+)\)', 'B2b old size')
+    out.append(('B2b', 'earlier data: size', float(m.group(1)), None, QUERY4.name + ' (B2b, earlier data)'))
+    m = _find(q4, r'Volatility change, manufactured-vs-control: t=[-+\d.]+ \(p=([\d.]+)', 'B2b old vol-change')
+    out.append(('B2b', 'earlier data: volatility change', float(m.group(1)), None, QUERY4.name + ' (B2b, earlier data)'))
+    m = _find(q6, r'Year-FE constant.*?95% CI \[([-+\d.]+), ([-+\d.]+)\]', 'earnings decline')
+    out.append(('poscontrol', 'earnings decline', None, (float(m.group(1)), float(m.group(2))), QUERY6.name))
+    return out
+
+
+def _sig(e):
+    _, _, p_, ci_, _ = e
+    return (p_ < .05) if p_ is not None else (ci_[0] > 0 or ci_[1] < 0)
+
+
 def table_19():
     en = appendix_csv('33A_program_test_enumeration.csv')
     live = en[~en.v5_status.str.startswith('RETIRED')]
     bh = load_constants()['bh_families']
     rej = _v5_rejections()
+    kr = kept_results()
+    kept_n = {f: sum(1 for e in kr if e[0] == f) for f in {e[0] for e in kr}}
     rows_a = []
     for fam_, g in live.groupby('family', sort=False):
         kept = g.v5_status.iloc[0].startswith('KEPT')
+        if kept and kept_n.get(fam_) != len(g):
+            sys.exit(f'Table 19: {fam_} has {len(g)} kept tests but {kept_n.get(fam_)} committed results')
+        if kept:
+            rej[fam_] = sum(1 for e in kr if e[0] == fam_ and _sig(e))
         bhs = bh.get(BH_KEY.get(fam_, ''), None)
         rows_a.append([FAMILY_LAB[fam_], fmt_int(len(g)), 'Kept from the earlier ledger' if kept else 'New in this version',
-                       fmt_int(bhs) if bhs else '—', '—' if kept else fmt_int(rej[fam_])])
+                       fmt_int(bhs) if bhs else '—', fmt_int(rej[fam_])])
     rows_a.append(['All tests', fmt_int(len(live)), '', '', fmt_int(sum(rej.values()))])
     hdr_a = ['Family', 'Tests', 'Status', 'BH family size', 'p < .05']
-    ret = en[en.v5_status.str.startswith('RETIRED')]
-    rlab = {'RETIRED: raw-return volatility outcome, superseded by the v5 outcome': 'Raw-return volatility outcome, replaced by the current outcome',
-            'RETIRED: microstructure intent-scope / TOST on the 167 measures, superseded by the v5 spreads family': 'Earlier trading-cost tests, replaced by the trading-cost family',
-            'RETIRED: composition checks of the old announcement estimate; not rerun under v5': 'Composition checks of the earlier announcement estimate',
-            'RETIRED: announcement family on the market-model basis, superseded by the v5 announcement family': 'Market-model announcement family, replaced by the current family'}
-    rows_b = [[rlab[k], fmt_int(n)] for k, n in ret.v5_status.value_counts(sort=False).items()]
-    rows_b.append(['All retired tests', fmt_int(len(ret))])
-    hdr_b = ['Reason retired', 'Tests']
 
     nb = Notes(19)
     claim(len(live) == V('program_tests_total'), 'live tests = 45')
-    claim(sum(rej.values()) == V('program_rejections_cv3'), 'rejections match constants')
-    claim(len(ret) == V('program_tests_retired_from_t53'), 'retired = 39')
+    new_fams = [f for f in rej if f not in kept_n]
+    n_new = sum(rej[f] for f in new_fams)
+    n_kept = sum(rej[f] for f in kept_n)
+    claim(n_new == V('program_rejections_cv3'), 'new-test rejections match constants')
+    claim(rej['announcement family'] == n_new, 'every new rejection is in the announcement-window family')
+    kept_sig = [e for e in kr if _sig(e)]
+    claim([e[0] for e in kept_sig] == ['B2b', 'B2b'], 'the kept rejections are the two B2b composition checks')
+    claim(len(kr) == V('program_tests_kept_from_t53'), 'kept results cover the 23 kept tests')
     fa = appendix_csv('24A_announcement_family.csv').iloc[3]
-    n_bh = sum(1 for k in BH_KEY if k in set(live.family))
-    note = (f'Each row of Panel A is one family of tests in the analysis program; the program holds '
-            f'{nb.c("program_tests_total", "i")} tests, {nb.c("program_tests_kept_from_t53", "i")} kept from the earlier '
-            f'test ledger because their outcomes do not use the volatility measure and '
-            f'{nb.c("program_tests_new_v5", "i")} new in this version. A family is a set of tests that address one '
-            f'question together. Within each of the {nb.i(n_bh, "33B, families with a BH adjustment (count)")} families '
-            f'with a BH family size, p-values are adjusted by the Benjamini–Hochberg false-discovery-rate procedure '
-            f'within that family; the other families are single checks or joint tests with their own reference '
-            f'distribution. The last column counts tests with p below .05, using the CV3 cluster jackknife standard '
-            f'error where the test has one; kept tests were not re-run in this version and show an em dash (—). '
-            f'Of the new tests, {nb.c("program_rejections_cv3", "i")} give p below .05, all in the announcement-window family, '
-            f'and {nb.i(V("program_rejections_cv3") - V("program_rejections_cv3_excl_calibration"), "constants program_rejections_cv3 - program_rejections_cv3_excl_calibration")} '
-            f'of them are calibration tests that check the measure behaves as expected on earnings dates (the earnings '
-            f'elevation and the breach-minus-earnings contrast). One substantive test rejects: the registrant coefficient '
-            f'on announcement elevation (p = {nb.p(fa.p, "24A, Form 499 row / p")}, BH-adjusted p = '
-            f'{nb.p(fa.bh_adj_p, "24A, Form 499 row / bh_adj_p")}). If every null hypothesis were true, about '
-            f'{nb.c("program_tests_total", "i")} × .05 = {nb.f(V("program_tests_total") * .05, 2, "constants program_tests_total x .05")} '
-            f'tests would give p below .05 by chance. Panel B lists the {nb.c("program_tests_retired_from_t53", "i")} '
-            f'tests of the earlier ledger retired in this version, by reason. BH is Benjamini–Hochberg.')
-    return render_table(19, 'Test Program Summary',
-                        [('Live test families', hdr_a, rows_a), ('Retired tests', hdr_b, rows_b)], note)
+    nb.c('program_tests_total', 'i')
+    nb.d('.05', 'design: significance level')
+    nb.w('Five', n_new + n_kept, 'new rejections (constants program_rejections_cv3) + kept rejections (committed logs)')
+    nb.d('.05', 'design: significance level')
+    nb.w('Three', rej['announcement family'], '24A, announcement family rows with p < .05')
+    nb.w('two', V('program_rejections_cv3') - V('program_rejections_cv3_excl_calibration'),
+         'constants program_rejections_cv3 - program_rejections_cv3_excl_calibration')
+    nb.w('two', n_kept, 'kept tests with p < .05 (ESSAY2_QUERY4_PARTS_ACJ.md, B2b Welch line)')
+    nb.p(kept_sig[0][2], kept_sig[0][4] + ': ' + kept_sig[0][1])
+    nb.p(kept_sig[1][2], kept_sig[1][4] + ': ' + kept_sig[1][1])
+    nb.w('One', V('program_rejections_cv3_excl_calibration'), 'constants program_rejections_cv3_excl_calibration')
+    nb.p(fa.p, '24A, Form 499 row / p')
+    nb.p(fa.bh_adj_p, '24A, Form 499 row / bh_adj_p')
+    nb.c('program_tests_total', 'i')
+    nb.d('.05', 'design: significance level')
+    nb.f(V('program_tests_total') * .05, 2, 'constants program_tests_total x .05')
+    nb.d('.05', 'design: significance level')
+    note = nb.final()
+
+    return render_table(19, 'Test Program Summary', [('Test families', hdr_a, rows_a)], note)
 
 
 RENDERERS.update({17: table_17, 18: table_18, 19: table_19})

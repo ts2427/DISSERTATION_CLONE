@@ -45,9 +45,9 @@ Panel D: Concentration of records in events
 | Median records per event | 1 |
 | Events with more than one record | 115 |
 | Records in those events | 388 |
-| Records in the 2024-02-21 event of parent CIK 1140859 | 31 |
-| Records in the 2024-04-10 event of parent CIK 1140859 | 25 |
-| Records in both 2024 events of parent CIK 1140859 | 56 |
+| Records in the 2024-02-21 event (largest parent filer entity) | 31 |
+| Records in the 2024-04-10 event (same parent) | 25 |
+| Records in both 2024 events of that parent | 56 |
 
 Panel E: Gradient on corrected data, 48 specifications
 
@@ -57,7 +57,7 @@ Panel E: Gradient on corrected data, 48 specifications
 | Notification date | 24 | 0 | 0 |
 | Both anchors | 48 | 0 | 0 |
 
-*Note.* Each cell reports the coefficient on treatment from a separate ordinary least squares (OLS) regression of the change in raw-return volatility on treatment and the earlier specification’s controls (pre-period volatility, size, leverage, return on assets, disclosure gap, prior breaches and the health-breach flag), estimated within the sample the row names; the standard error (SE) is in parentheses. Record-level panels use the earlier specification: raw-return volatility on notification records, size measured by market value. Panels A and B use 891 notification records, quartiles of log market value and HC3 heteroskedasticity-consistent standard errors, which do not account for clustering. Panel A treats a record when its Standard Industrial Classification (SIC) code is 4813, 4841 or 4899; Panel B treats it when its parent filer entity is registered on Federal Communications Commission (FCC) Form 499. Panels A and B estimate on the same records, so their estimates share observations and no test of their difference is reported. Panel C repeats the comparison on 339 canonical events (records collapsed to events), with the earlier breach-date-anchored raw-return outcome and quartiles of log total assets from the canonical event file; Treated events (parents) gives the treated events and, in parentheses, the treated parent filer entities. The Q1 − Q4 spread is the Q1 estimate minus the Q4 estimate. A p-value below .05 marks a coefficient different from zero under HC3, but treatment varies across few parent filer entities (the Panel C Q1 cell has 2 treated events at 1 parent), so the event-level standard errors are too small for this design to support a rejection. Panel D shows how the records concentrate in events: 115 of the 618 events have more than one record and together supply 388 records, and the two 2024 events of parent CIK 1140859 supply 56. Panel E counts specifications only: across 48 window specifications on the corrected data (24 per anchor date, the breach date and the notification date), it reports how many put the Q1 estimate above Q4 (0) and how many decline monotonically from Q1 to Q4 (0); the full grid is in the committed CSV outputs/tables/essay2_v2/t31_gradient_grid.csv. Q1 to Q4 are size quartiles, Q1 smallest; HC3 is the heteroskedasticity-consistent covariance estimator, type 3; CIK is the SEC (Securities and Exchange Commission) Central Index Key.
+*Note.* Panels A and B reproduce the earlier specification: raw-return volatility on 891 notification records, size quartiles of log market value, and HC3 heteroskedasticity-consistent standard errors (SE), which do not account for clustering. Each cell is the treatment coefficient from a separate ordinary least squares (OLS) regression within the quartile named, with its SE in parentheses. Panel A treats a record when its Standard Industrial Classification (SIC) code is 4813, 4841, or 4899; Panel B treats it when its parent filer entity is registered on Federal Communications Commission (FCC) Form 499. The two panels use the same records, so their estimates share observations and no test of their difference is reported. Panel C repeats the comparison on 339 canonical events, with size quartiles of log total assets; treated parent filer entities are in parentheses. The Q1 − Q4 spread is the smallest-quartile estimate minus the largest. Treatment varies across few parent filer entities (the Panel C Q1 cell holds 2 treated events at 1 parent), so these SEs are too small to support a rejection. Panel D shows how records concentrate in events: 115 of the 618 events have more than one record and supply 388 records, and two 2024 events at one parent filer entity supply 56. Panel E counts, among 48 window specifications on the corrected data (24 per anchor date), those that place the Q1 estimate above Q4 (0) and those that decline steadily from Q1 to Q4 (0). Q1 is the smallest quartile.
 
 **Table 4**
 
@@ -82,8 +82,8 @@ Panel B: Records added to the smallest quartile
 | Treated under both definitions | 33 | 20 | 0.52 (12.94) |
 | Treated by codes only (dropped) | 0 | 0 | — |
 | Treated by Form 499 only (added) | 10 | 6 | −8.62 (24.48) |
-|  of which GoDaddy (parent CIK 1609711) | 8 |  | −8.70 (27.75) |
-|  of which Twilio (parent CIK 1447669) | 2 |  | −8.29 (1.65) |
+|  of which GoDaddy | 8 |  | −8.70 (27.75) |
+|  of which Twilio | 2 |  | −8.29 (1.65) |
 | Treated by neither | 186 | 142 | −2.20 (14.61) |
 
 Panel C: Registrants the industry codes miss
@@ -92,7 +92,7 @@ Panel C: Registrants the industry codes miss
 |:---|---:|---:|---:|---:|
 | All missed registrants | 28 | 16 | −1.49 (17.22) | Q1 10; Q2–Q3 5; Q4 13 |
 
-*Note.* Each row of Panel A is a group of the 891 notification records, defined by the two treatment definitions: the industry-code definition (Standard Industrial Classification, SIC, code 4813, 4841 or 4899 on the record) and the Form 499 definition (parent filer entity registered on Federal Communications Commission Form 499). The two definitions disagree on 30 records. Missed by the codes are Form 499 registrants whose record carries none of the three codes (28 records at 16 organizations). Damaged source entries are the 2 records coded 4813 whose organization field holds an AT&T breach label rather than a firm name, so they resolve to no parent filer entity and no registration. Industry code and registrant are records both definitions treat. Neither definition treats are records outside both, the comparison group under either definition. M is the mean and SD the standard deviation; log market value is the earlier dataset’s size variable; change is the change in raw-return volatility under the earlier specification. Panel B splits the 229 records in the smallest size quartile (Q1) by how the two definitions treat them. The added records are treated under Form 499 only: 8 from GoDaddy, a domain registrar, and 2 from Twilio, a communications platform; their mean change, −8.62, compares with −2.20 for records neither definition treats. Panel C summarizes the 28 missed records: 10 fall in Q1, 13 in Q4 and the remaining 5 in Q2 or Q3. The firm names and record SIC codes of the 28 records are in the committed CSV outputs/essay2_v5/missed_registrants_by_firm.csv. Record-level panels use the earlier specification: raw-return volatility on notification records, size measured by market value. Q1 to Q4 are quartiles of log market value, Q1 smallest; CIK is the SEC Central Index Key.
+*Note.* Panel A divides the 891 notification records by the two treatment definitions: an industry code of 4813, 4841, or 4899 on the record, and registration of the parent filer entity on Federal Communications Commission (FCC) Form 499. The definitions disagree on 30 records. Twenty-eight are Form 499 registrant records that carry none of the three codes, at 16 organizations. The other 2 are damaged source entries coded 4813 whose organization field holds an AT&T breach label rather than a firm name, so they resolve to no parent filer entity. Records neither definition treats form the comparison group under both. Change is the change in raw-return volatility under the earlier specification, and size is log market value. Panel B splits the 229 records in the smallest size quartile (Q1). The 10 records treated under Form 499 only come from GoDaddy, a domain registrar (8), and Twilio, a communications platform (2); their mean change, −8.62, compares with −2.20 for records neither definition treats. Panel C places the 28 missed records by quartile: 10 in Q1, 13 in Q4, and 5 in Q2 or Q3. M = mean; SD = standard deviation.
 
 **Table 5**
 
@@ -100,14 +100,14 @@ Panel C: Registrants the industry codes miss
 
 Panel A: Identifier collisions in the earlier chain
 
-| Legacy CIK | Ticker on the CIK | Organizations absorbed | Examples | Records | Canonical events with these names | CIK is a canonical parent |
-|:---|---:|---:|---:|---:|---:|---:|
-| 200406 | JNJ | 10 | Christensen O’Connor Johnson Kindness PLLC; DiGiovine, Hnilo, Jordan + Johnson Ltd; … | 15 | 0 | No |
-| 1034054 | SBAC | 25 | American Alarm & Communications, Inc.; Centerline Communications, LLC; … | 46 | 11 | No |
-| 1437107 | WBD | 2 | iHeart Media Inc; iHeartMedia + Entertainment, Inc. | 6 | 2 | No |
-| 1004980 | PCG-PA | 1 | E.W. Wylie Corporation | 1 | 0 | No |
-| 1841666 | APA | 3 | Dynapar Corporation; MNP Corporation; … | 4 | 0 | No |
-| 732717 | T-PC | 11 | AT&T; AT&T Inc; … | 40 | 26 | Yes |
+| Ticker on the identifier | Organizations absorbed | Examples | Records | Canonical events with these names | Identifier is a current parent filer entity |
+|:---|---:|---:|---:|---:|---:|
+| JNJ | 10 | Christensen O’Connor Johnson Kindness PLLC; DiGiovine, Hnilo, Jordan + Johnson Ltd; … | 15 | 0 | No |
+| SBAC | 25 | American Alarm & Communications, Inc.; Centerline Communications, LLC; … | 46 | 11 | No |
+| WBD | 2 | iHeart Media Inc; iHeartMedia + Entertainment, Inc. | 6 | 2 | No |
+| PCG-PA | 1 | E.W. Wylie Corporation | 1 | 0 | No |
+| APA | 3 | Dynapar Corporation; MNP Corporation; … | 4 | 0 | No |
+| T-PC | 11 | AT&T; AT&T Inc; … | 40 | 26 | Yes |
 
 Panel B: Reused-ticker matches
 
@@ -139,4 +139,4 @@ Panel D: Losses after the CRSP match
 | All losses | 22 | 6.2% | 7 | 15 |
 | Retained | 333 | 93.8% | 104 (93.7%) | 229 (93.9%) |
 
-*Note.* Panel A lists the 6 legacy identifiers in the earlier matching chain at which an identifier collision occurred: one Securities and Exchange Commission (SEC) Central Index Key (CIK) absorbed the names of unrelated organizations, so their breach records took on that firm’s stock data. Organizations absorbed counts the distinct organization names on the CIK, Records counts their breach records, and Canonical events with these names counts events in the current chain that carry one of those names; the largest collision, CIK 1034054, absorbed 25 organizations and 46 records. Panel B lists the 7 events at which ticker reuse would have matched the breached firm to an earlier, unrelated holder of the same ticker symbol: the old fallback rule took the last security to carry the ticker before the breach date, here a security whose ticker had ended years before (in 2002 for META and 1992 for DASH). The current chain blocks that rule, and none of the 7 events has a CRSP match. PERMNO is the CRSP permanent security identifier. Panel C regresses the earlier dataset’s size variable on two candidate measures. Against log market value the slope is 0.99 and the R² .86, so the variable measures market value; against log total assets the slope is 0.46 and the R² .44. Share within gives the share of records whose absolute gap to the candidate is at most 0.10 or 0.25. Panel D starts from the 355 events matched to CRSP and reported by December 31, 2024 (111 registrant and 244 other events). Fewer trading days means the stock lacks the trading days the volatility windows require. No Compustat match means no annual accounting record supplies size, leverage and return on assets. Invalid disclosure date means the reporting date precedes the breach date by more than 30 days, so the disclosure gap is set to missing. Damaged source records are the 2 records whose organization field holds an AT&T breach label rather than a firm name. Retained shares are within each group: 104 of 111 registrant events (93.7 percent) and 229 of 244 other events (93.9 percent). Record-level panels use the earlier specification: raw-return volatility on notification records, size measured by market value. CRSP is the Center for Research in Security Prices; R² is the share of variance explained.
+*Note.* Panel A lists the 6 identifiers in the earlier matching chain that absorbed the names of unrelated organizations, so those organizations' breach records took on another firm's stock data. Organizations absorbed counts distinct organization names, records counts their breach records, and canonical events counts current events carrying one of those names; the largest collision absorbed 25 organizations and 46 records. Panel B lists the 7 events at which ticker reuse would have matched the breached firm to an earlier, unrelated holder of the same symbol whose ticker had ended years before (in 2002 for META and 1992 for DASH). The current chain blocks that match, and none of the 7 events has a stock match. Panel C regresses the earlier dataset's size variable on two candidate measures: against log market value the slope is 0.99 and R² is .86, and against log total assets the slope is 0.46 and R² is .44, so the variable measures market value. Share within is the share of records within 0.10 or 0.25 of each candidate. Panel D starts from the 355 events matched to stock data and reported by December 31, 2024 (111 registrant and 244 other events) and counts the events lost at each requirement. Retention is 93.7 percent of registrant events (104 of 111) and 93.9 percent of other events (229 of 244). PERMNO = CRSP permanent security identifier; CRSP = Center for Research in Security Prices; R² = share of variance explained.

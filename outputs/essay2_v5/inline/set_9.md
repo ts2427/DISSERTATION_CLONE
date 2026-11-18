@@ -30,7 +30,7 @@ Panel B: Permutation test of the curve
 | Estimates sharing the dominant sign | 144 | 119.409 | .284 | 85.9 |
 | Significant in the dominant direction (CV1) | 0 | 12.418 | > .999 | 30.1 |
 
-*Note.* Each specification re-estimates the registrant coefficient of the primary model M4 on the analytical sample (N = 333, G = 82 parent filer entities, 12 with registrant events) under one combination of five analysis decisions: the pre-window, the post-window, the return benchmark, simple or log returns, and whether daily returns are winsorized; 3 × 4 × 3 × 2 × 2 = 144 specifications. Panel A summarizes the estimates for each option, pooling the specifications that use it (Number counts them); the last two columns count the specifications whose p-value falls below .05 under CV3, the cluster jackknife standard error by parent filer entity, and under CV1, the cluster-robust standard error with the usual small-sample correction. All 144 estimates are positive and none is significant under CV3 (0) or CV1 (0); the median estimate is 0.194. Panel B is the permutation test of the whole curve (Simonsohn, Simmons & Nelson, 2020): in each of 1,000 draws, registration is reassigned at random to 12 of the 82 parent filer entities, all events of a chosen parent becoming registrant events, and all 144 specifications are re-estimated. Each permutation p is the share of draws at least as extreme as the observed curve: for the median estimate, in absolute value; for the count of estimates sharing the dominant sign; and for the count significant in the dominant direction, using CV1. None is below .05. An all-positive curve is common under the null here because every specification uses the same events and parents, so the estimates move together: .283 of the null draws produce a curve with a single sign.
+*Note.* Each specification re-estimates the registrant coefficient of the primary model M4 (N = 333, G = 82) under one combination of five decisions: the pre-window, the post-window, the return benchmark, simple or log returns, and whether the outcome is winsorized at the 1st and 99th percentiles, for 3 × 4 × 3 × 2 × 2 = 144 specifications. Panel A summarizes the estimates for each option, pooling the specifications that use it, and counts those with p below .05 under CV3, the cluster jackknife standard error by parent filer entity, and under CV1, the cluster-robust standard error with the usual small-sample correction. All 144 estimates are positive, none is significant under either procedure, and the median estimate is 0.194. Panel B tests the whole curve by permutation (Simonsohn et al., 2020): in each of 1,000 draws, registration is reassigned at random to 12 of the 82 parent filer entities, and all 144 specifications are re-estimated. Each permutation p is the share of draws at least as extreme as the observed curve, for the median estimate, the count of estimates sharing the dominant sign, and the count significant in that direction under CV1; none is below .05. A curve of a single sign is common under the null here because every specification uses the same events, so the estimates move together: .283 of the null draws produce one.
 
 **Table 18**
 
@@ -68,21 +68,19 @@ Panel D: Revised dates
 | Revised source reporting dates | 0.112 (0.188) | .552 | 333 (104) | 12 |
 | Sprint’s corrected breach date (event added) | 0.137 (0.193) | .481 | 334 (105) | 1 |
 
-*Note.* Each row re-estimates the registrant coefficient of the primary model M4 (N = 333, G = 82 parent filer entities, 12 with registrant events) with one change; standard errors are CV3, the cluster jackknife by parent filer entity, with p-values from the t distribution with G − 1 degrees of freedom. Panel A drops one parent filer entity at a time, 82 re-estimates in all, and reports the smallest and largest. Dropping Sprint Corporation (9 events) lowers the estimate to 0.029, removing 78.9 percent of it; dropping Intuit Inc. (76 events) raises it to 0.213. Panel B drops influential observations: Cook’s distance measures how much all fitted values move when an observation is deleted, and the 18 events with a distance above 4/N are removed; the second row drops the 6 events reported before the rule took effect on December 8, 2007, none of them registrant events. Panel C adds fixed effects for the reporting year, the two-digit Standard Industrial Classification (SIC) industry, or both. A stratum is one year, one industry or one year-by-industry cell; a mixed stratum holds both registrant and other events. With fixed effects the coefficient is identified only within mixed strata, so events in single-group strata carry no weight (Aronow & Samii, 2016); Effective events counts the events in mixed strata, with registrant events in parentheses. Under year fixed effects the 52 events in single-group years drop out, leaving 281; under both sets only 109 events in 12 mixed cells remain. Industries with a single event are dropped as singletons (7 events). Panel D re-dates events: the second row uses the revised reporting dates the source later published for 12 events, and the third corrects Sprint’s breach date, which adds 1 event to the sample. No row gives p below .05.
+*Note.* Each row re-estimates the registrant coefficient of the primary model M4 (N = 333, G = 82) with one change, with CV3 standard errors by parent filer entity. Panel A drops one parent filer entity at a time (82 re-estimates) and reports the smallest and largest estimates: dropping Sprint Corporation (9 events) lowers the estimate to 0.029, removing 78.9 percent of it, and dropping Intuit Inc. (76 events) raises it to 0.213. Panel B drops the 18 events whose Cook's distance, a measure of how much all fitted values move when one observation is deleted, exceeds 4/N, and separately the 6 events reported before the rule took effect on December 8, 2007, none of them registrant events. Panel C adds fixed effects for reporting year, two-digit Standard Industrial Classification (SIC) industry, or both. A mixed stratum is a year, industry, or year-by-industry cell holding both registrant and other events; with fixed effects the coefficient is identified only within mixed strata, so events in single-group strata carry no weight (Aronow & Samii, 2016). Effective events counts the events in mixed strata, with registrant events in parentheses: year fixed effects leave 281, and both sets leave 109 events in 12 mixed cells. Industries with a single event drop as singletons (7 events). Panel D uses the revised reporting dates the source later published for 12 events and then corrects Sprint's breach date, which adds 1 event. No row gives a p-value below .05.
 
 **Table 19**
 
 *Test Program Summary*
 
-Panel A: Live test families
-
 | Family | Tests | Status | BH family size | p < .05 |
 |:---|---:|---:|---:|---:|
-| Disclosure delay (A2) | 11 | Kept from the earlier ledger | 11 | — |
-| Disclosure delay, nonzero (A2) | 5 | Kept from the earlier ledger | 5 | — |
-| Records per event and firm size (B2) | 2 | Kept from the earlier ledger | — | — |
-| Industry-code-only group comparisons (B2b) | 4 | Kept from the earlier ledger | — | — |
-| Positive control (earnings decline) | 1 | Kept from the earlier ledger | — | — |
+| Disclosure delay | 11 | Kept from the earlier ledger | 11 | 0 |
+| Disclosure delay, nonzero | 5 | Kept from the earlier ledger | 5 | 0 |
+| Records per event and firm size | 2 | Kept from the earlier ledger | — | 0 |
+| Industry-code-only group comparisons | 4 | Kept from the earlier ledger | — | 2 |
+| Positive control (earnings decline) | 1 | Kept from the earlier ledger | — | 0 |
 | Post-window length (dynamic path) | 3 | New in this version | 3 | 0 |
 | Announcement window | 4 | New in this version | 4 | 3 |
 | Size quartiles | 4 | New in this version | 4 | 0 |
@@ -91,16 +89,6 @@ Panel A: Live test families
 | Cook’s distance exclusion | 1 | New in this version | — | 0 |
 | Specification-curve permutation | 3 | New in this version | — | 0 |
 | Trading costs | 3 | New in this version | 3 | 0 |
-| All tests | 45 |  |  | 3 |
+| All tests | 45 |  |  | 5 |
 
-Panel B: Retired tests
-
-| Reason retired | Tests |
-|:---|---:|
-| Raw-return volatility outcome, replaced by the current outcome | 23 |
-| Earlier trading-cost tests, replaced by the trading-cost family | 6 |
-| Market-model announcement family, replaced by the current family | 4 |
-| Composition checks of the earlier announcement estimate | 6 |
-| All retired tests | 39 |
-
-*Note.* Each row of Panel A is one family of tests in the analysis program; the program holds 45 tests, 23 kept from the earlier test ledger because their outcomes do not use the volatility measure and 22 new in this version. A family is a set of tests that address one question together. Within each of the 6 families with a BH family size, p-values are adjusted by the Benjamini–Hochberg false-discovery-rate procedure within that family; the other families are single checks or joint tests with their own reference distribution. The last column counts tests with p below .05, using the CV3 cluster jackknife standard error where the test has one; kept tests were not re-run in this version and show an em dash (—). Of the new tests, 3 give p below .05, all in the announcement-window family, and 2 of them are calibration tests that check the measure behaves as expected on earnings dates (the earnings elevation and the breach-minus-earnings contrast). One substantive test rejects: the registrant coefficient on announcement elevation (p = .027, BH-adjusted p = .036). If every null hypothesis were true, about 45 × .05 = 2.25 tests would give p below .05 by chance. Panel B lists the 39 tests of the earlier ledger retired in this version, by reason. BH is Benjamini–Hochberg.
+*Note.* Each row is one family of tests in the analysis program, which holds 45 tests. A family is a set of tests addressing one question. Within each family of more than one test, p-values are adjusted by the Benjamini–Hochberg (BH) false-discovery-rate procedure; single checks and joint tests use their own reference distributions. The last column counts tests with p below .05, using the CV3 cluster jackknife standard error where the test has one. Five tests give p below .05. Three are in the announcement-window family, and two of them are calibration checks expected to reject on earnings dates (the earnings elevation and the breach-minus-earnings contrast). The other two are composition checks kept from the earlier ledger, which compare the size and pre-breach volatility of events that industry codes treat but Form 499 does not with registrant events the codes also treat (p = .003 and p < .001); neither tests registration. One test of registration rejects: the registrant coefficient on announcement elevation (p = .027, BH-adjusted p = .036). If every null hypothesis were true, about 45 × .05 = 2.25 tests would give p below .05 by chance.

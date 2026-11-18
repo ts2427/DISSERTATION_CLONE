@@ -24,39 +24,39 @@ Panel B: Adjudication rules
 
 | Organization name pattern | Ruling | Basis |
 |:---|---:|---:|
-| Cricket | Treated | Clause (a) adjudicated: Cricket Communications FRN 0004321139; LLC variant missed by exact matcher (7/28 record) |
-| T-Mobile | Treated | Clause (a) adjudicated 8/4: active open registry record "T-Mobile USA, Inc.- CONSOLIDATED" (499ID 822060, dba T-Mobile, start 1997, no end) — the "- CONSOLIDATED" suffix defeats exact matching for USA/US name variants (Cricket precedent, family-wide) |
-| Boost Mobile | Treated | Clause (b): prepaid wireless brand of Sprint Spectrum LLC FRN 0006693022; subscriber-data breach (7/28 adjudication) |
-| Sprint | Treated | Clause (a) adjudicated 8/4: Sprint Spectrum LLC dba Sprint (499ID 811754, coverage 1997-2024-12-31, replacement 822060) covers all Sprint-family breach dates; dba/suffix variants defeat exact matching |
-| Verizon Media | Excluded | NOT treated (8/4): content division (Yahoo/AOL), not telecom subscriber operations |
-| Verizon | Treated | Clause (a) adjudicated 8/4: Verizon carrier filer family (e.g., Verizon-NY FRN 0003469442 through 2021; successor consolidated records active after) — consolidation naming defeats exact matching post-2021 |
-| Comcast; Comcast Cable | Treated | Clause (b): parent brand of Comcast Telephony filers (7/28) |
-| Charter Communication | Treated | Clause (b): parent brand of Charter Communications Operating LLC (7/28) |
-| Frontier Communications | Treated | Clause (b): parent of regional Form 499 filer subsidiaries (7/28) |
-| Altice USA | Treated | Clause (b): parent of Altice Wireless filer (7/28) |
-| AT&T Services | Treated | Clause (b): AT&T Inc. filing family (7/28) |
-| CenturyLink | Treated | Clause (b): CenturyLink/Lumen carrier family (Gate 1 rescue noted Form 499 relevance; regional LEC filers) |
-| DISH Network (on/after 2020-07-01) | Treated | Clause (b) date-conditional (9/4): DISH is a facilities-based CMRS carrier from the 2020-07-01 Boost divestiture — DISH Wireless L.L.C. FRN 0027852722 (dba Boost Mobile) and DISH Wireless Puerto Rico L.L.C. FRN 0029666096 are open family registrations at the breach date; standard coverage rule applies |
-| DISH Network | Excluded | Adjudicated untreated (7/28, retained for pre-divestiture events only): satellite TV not a telecom service under 64.2011; no covered wireless operation before 2020-07-01 |
-| NBC Sports | Excluded | No registry match; not a carrier (7/28) |
-| ATT-Breach Notification; ATT-SecurityBreach | Excluded | Artifact system entities — signed 122 rule retained; identity=AT&T equity, treatment excluded |
-| NBCUniversal | Treated | Clause (a) DOCUMENTED: direct registry filer NBCUniversal, LLC FRN 20940540 (8/4 adjudication comment — identity and treatment both recorded) |
-| Mediacom | Treated | Clause (b) adjudicated 8/4: cable-telephony operator, parent brand of active filer MCC Telephony LLC; subscriber operations — Comcast class |
-| Cisco Systems | Excluded | NOT treated (8/4): holding link to Tropo LLC is anachronistic — Cisco acquired Tropo 2015, breaches 2012; snapshot-era holding data |
-| Citrix | Excluded | NOT treated (8/4): breaches are enterprise-software incidents, not telecom subscriber operations; 2018 event also post-divestiture of Citrix Online |
-| Google; Alphabet | Excluded | NOT treated (8/4): breaches are consumer web-service incidents (no Google Fiber subscriber data); clause (b) operations test fails |
-| Time Warner | Excluded | NOT treated (8/4): 2006 breach not a telecom-subscriber operation; holding link to HBO filer fails the operations test |
-| Home Box Office | Excluded | NOT treated (8/4): HBO Inc filer TERMINATED 2012-12-31 ("no longer providing telecommunications services") before 2017 breaches — clause (a) fails at breach date |
+| Cricket | Treated | Clause (a) adjudicated: Cricket Communications FRN 0004321139; LLC variant missed by exact matcher |
+| T-Mobile | Treated | Clause (a) adjudicated: active open registry record "T-Mobile USA, Inc.- CONSOLIDATED" (499ID 822060, dba T-Mobile, start 1997, no end) — the "- CONSOLIDATED" suffix defeats exact matching for USA/US name variants |
+| Boost Mobile | Treated | Clause (b): prepaid wireless brand of Sprint Spectrum LLC FRN 0006693022; subscriber-data breach |
+| Sprint | Treated | Clause (a) adjudicated: Sprint Spectrum LLC dba Sprint (499ID 811754, coverage 1997-2024-12-31, replacement 822060) covers all Sprint-family breach dates; dba/suffix variants defeat exact matching |
+| Verizon Media | Excluded | Not treated: content division (Yahoo/AOL), not telecom subscriber operations |
+| Verizon | Treated | Clause (a) adjudicated: Verizon carrier filer family (e.g., Verizon-NY FRN 0003469442 through 2021; successor consolidated records active after) — consolidation naming defeats exact matching post-2021 |
+| Comcast; Comcast Cable | Treated | Clause (b): parent brand of Comcast Telephony filers |
+| Charter Communication | Treated | Clause (b): parent brand of Charter Communications Operating LLC |
+| Frontier Communications | Treated | Clause (b): parent of regional Form 499 filer subsidiaries |
+| Altice USA | Treated | Clause (b): parent of Altice Wireless filer |
+| AT&T Services | Treated | Clause (b): AT&T Inc. filing family |
+| CenturyLink | Treated | Clause (b): CenturyLink/Lumen carrier family (regional LEC filers) |
+| DISH Network (on/after 2020-07-01) | Treated | Clause (b) date-conditional: DISH is a facilities-based CMRS carrier from the 2020-07-01 Boost divestiture — DISH Wireless L.L.C. FRN 0027852722 (dba Boost Mobile) and DISH Wireless Puerto Rico L.L.C. FRN 0029666096 are open family registrations at the breach date; standard coverage rule applies |
+| DISH Network | Excluded | Adjudicated untreated: satellite TV not a telecom service under 64.2011; no covered wireless operation before 2020-07-01 |
+| NBC Sports | Excluded | No registry match; not a carrier |
+| ATT-Breach Notification; ATT-SecurityBreach | Excluded | Artifact system entities; identity=AT&T equity, treatment excluded |
+| NBCUniversal | Treated | Clause (a) documented: direct registry filer NBCUniversal, LLC FRN 20940540 |
+| Mediacom | Treated | Clause (b) adjudicated: cable-telephony operator, parent brand of active filer MCC Telephony LLC; subscriber operations |
+| Cisco Systems | Excluded | Not treated: holding link to Tropo LLC is anachronistic — Cisco acquired Tropo 2015, breaches 2012; snapshot-era holding data |
+| Citrix | Excluded | Not treated: breaches are enterprise-software incidents, not telecom subscriber operations; 2018 event also post-divestiture of Citrix Online |
+| Google; Alphabet | Excluded | Not treated: breaches are consumer web-service incidents (no Google Fiber subscriber data); clause (b) operations test fails |
+| Time Warner | Excluded | Not treated: 2006 breach not a telecom-subscriber operation; holding link to HBO filer fails the operations test |
+| Home Box Office | Excluded | Not treated: HBO Inc filer TERMINATED 2012-12-31 ("no longer providing telecommunications services") before 2017 breaches — clause (a) fails at breach date |
 
 Panel C: Equity re-parenting rules
 
-| Registrant CIK | Parent CIK assigned | Basis |
-|:---|---:|---:|
-| 1040573 | 1166691 | Comcast Cable Communications registrant has no equity; parent = Comcast Corp (Gate 1 verdict A class) |
-| 1512267 | 1166691 | NBCUniversal Media LLC registrant has no equity; parent = Comcast Corp (Gate 1 verdict E class) |
-| 1457937 | 1105705 | Home Box Office Inc registrant has no equity; 2017 parent = Time Warner Inc TWX (FedEx Ground class) |
+| Registrant | Registrant CIK | Parent filer entity assigned | Parent CIK |
+|:---|---:|---:|---:|
+| Comcast Cable Communications | 1040573 | Comcast Corp | 1166691 |
+| NBCUniversal Media LLC | 1512267 | Comcast Corp | 1166691 |
+| Home Box Office Inc | 1457937 | Time Warner Inc | 1105705 |
 
-*Note.* Panel A has one row per treated parent filer entity in the analytical sample (12 parents, 104 registrant events). The Federal Communications Commission (FCC) Form 499 registry holds 20,669 filer records; Registry records matched counts the records whose legal name, doing-business-as name or holding company contains one of the parent’s family keywords (671 records in all). A name match counts toward treatment only when the matched registration is open on the breach date: its start date falls on or before the breach date and its end date, if any, falls after it. Distinct FRNs counts the FCC Registration Numbers among the matched records. End date before start date counts matched records whose registry end date precedes their start date, a data error in the registry (2 records in all). Registrant events counts the parent’s events in the analytical sample, and Breach dates gives the first and last breach date among them. Panel B lists the adjudication rules. An adjudication rule is a recorded ruling for an organization name pattern that exact name matching against the registry would treat wrongly; it either forces treatment, under clause (a), a registration of the organization itself open on the breach date, or clause (b), the organization is the parent brand of a registered filer whose subscriber operations were breached, or it forces exclusion when neither clause holds. There are 23 rules covering 22 organization names; DISH Network has two rules, so it is excluded before July 1, 2020, when it had no covered wireless operation, and treated on and after that date. Panel C lists the 3 equity re-parenting rules, which assign a registrant with no traded equity to the parent filer entity that owns it. CIK is the Securities and Exchange Commission (SEC) Central Index Key; FRN is the FCC Registration Number; Form 499 registrant means an event at a firm registered on FCC Form 499.
+*Note.* Panel A has one row per treated parent filer entity (12 parents, 104 registrant events). The Federal Communications Commission (FCC) Form 499 registry holds 20,669 filer records. Registry records matched counts the records whose legal name, doing-business-as name, or holding company contains one of the parent's name keywords (671 in all). A match counts toward treatment only when the matched registration is open on the breach date. Distinct FRNs counts FCC Registration Numbers among the matched records, and end date before start date counts records carrying that registry error (2 in all). Breach dates gives the first and last breach date among the parent's events. Panel B lists the 23 adjudication rules, covering 22 organization names. Each rule records a ruling for a name pattern that exact matching would treat wrongly. A rule forces treatment under clause (a), a registration of the organization itself open on the breach date, or clause (b), the organization is the parent brand of a registered filer whose subscriber operations were breached, and forces exclusion when neither clause holds. DISH Network has two rules: it is excluded before July 1, 2020, and treated after. Panel C lists the 3 rules that assign a registrant with no traded equity to the parent filer entity that owns it. CIK = Securities and Exchange Commission Central Index Key.
 
 **Table 7**
 
@@ -73,33 +73,33 @@ Panel A: Agreement with Form 499 registration
 
 Panel B: Misclassified organizations
 
-| Convention | Error | Organization | Parent CIK | SIC | Events |
-|:---|---:|---:|---:|---:|---:|
-| Published regulated-carrier dummy | False positive | ATT-Breach Notification | 732717 | 4812 | 2 |
-| Published regulated-carrier dummy | False positive | Verizon Media | 732712 | 4812 | 1 |
-| Published regulated-carrier dummy | False negative | Cable One, Inc. | 1632127 | 4841 | 2 |
-| Published regulated-carrier dummy | False negative | Charter Communication | 1091667 | 4841 | 1 |
-| Published regulated-carrier dummy | False negative | Charter Communications | 1091667 | 4841 | 2 |
-| Published regulated-carrier dummy | False negative | Charter Communications, Inc. | 1091667 | 4841 | 5 |
-| Published regulated-carrier dummy | False negative | Comcast | 1166691 | 4841 | 2 |
-| Published regulated-carrier dummy | False negative | Comcast Cable Communications LLC | 1166691 | 4841 | 4 |
-| Published regulated-carrier dummy | False negative | Comcast Cable Communications, Inc. | 1166691 | 4841 | 2 |
-| Published regulated-carrier dummy | False negative | DISH Network, LLC | 1001082 | 4841 | 2 |
-| Published regulated-carrier dummy | False negative | GoDaddy.com LLC | 1609711 | 7370 | 1 |
-| Published regulated-carrier dummy | False negative | GoDaddy.com, LLC | 1609711 | 7370 | 2 |
-| Published regulated-carrier dummy | False negative | NBCUniversal | 1166691 | 4841 | 1 |
-| Published regulated-carrier dummy | False negative | Twilio | 1447669 | 7370 | 2 |
-| Tuned to the registry | False positive | ATT-Breach Notification | 732717 | 4812 | 2 |
-| Tuned to the registry | False positive | NBC Sports Group | 1166691 | 4841 | 3 |
-| Tuned to the registry | False positive | Roku Inc | 1428439 | 4841 | 1 |
-| Tuned to the registry | False positive | Roku Inc. | 1428439 | 4841 | 1 |
-| Tuned to the registry | False positive | Roku, Inc. | 1428439 | 4841 | 1 |
-| Tuned to the registry | False positive | Verizon Media | 732712 | 4812 | 1 |
-| Tuned to the registry | False negative | GoDaddy.com LLC | 1609711 | 7370 | 1 |
-| Tuned to the registry | False negative | GoDaddy.com, LLC | 1609711 | 7370 | 2 |
-| Tuned to the registry | False negative | Twilio | 1447669 | 7370 | 2 |
+| Convention | Error | Organization | SIC | Events |
+|:---|---:|---:|---:|---:|
+| Published regulated-carrier dummy | False positive | ATT-Breach Notification | 4812 | 2 |
+| Published regulated-carrier dummy | False positive | Verizon Media | 4812 | 1 |
+| Published regulated-carrier dummy | False negative | Cable One, Inc. | 4841 | 2 |
+| Published regulated-carrier dummy | False negative | Charter Communication | 4841 | 1 |
+| Published regulated-carrier dummy | False negative | Charter Communications | 4841 | 2 |
+| Published regulated-carrier dummy | False negative | Charter Communications, Inc. | 4841 | 5 |
+| Published regulated-carrier dummy | False negative | Comcast | 4841 | 2 |
+| Published regulated-carrier dummy | False negative | Comcast Cable Communications LLC | 4841 | 4 |
+| Published regulated-carrier dummy | False negative | Comcast Cable Communications, Inc. | 4841 | 2 |
+| Published regulated-carrier dummy | False negative | DISH Network, LLC | 4841 | 2 |
+| Published regulated-carrier dummy | False negative | GoDaddy.com LLC | 7370 | 1 |
+| Published regulated-carrier dummy | False negative | GoDaddy.com, LLC | 7370 | 2 |
+| Published regulated-carrier dummy | False negative | NBCUniversal | 4841 | 1 |
+| Published regulated-carrier dummy | False negative | Twilio | 7370 | 2 |
+| Tuned to the registry | False positive | ATT-Breach Notification | 4812 | 2 |
+| Tuned to the registry | False positive | NBC Sports Group | 4841 | 3 |
+| Tuned to the registry | False positive | Roku Inc | 4841 | 1 |
+| Tuned to the registry | False positive | Roku Inc. | 4841 | 1 |
+| Tuned to the registry | False positive | Roku, Inc. | 4841 | 1 |
+| Tuned to the registry | False positive | Verizon Media | 4812 | 1 |
+| Tuned to the registry | False negative | GoDaddy.com LLC | 7370 | 1 |
+| Tuned to the registry | False negative | GoDaddy.com, LLC | 7370 | 2 |
+| Tuned to the registry | False negative | Twilio | 7370 | 2 |
 
-*Note.* Each row of Panel A applies one industry-code convention to the 346 canonical events with a Compustat historical Standard Industrial Classification (SIC) code and compares the result with Federal Communications Commission (FCC) Form 499 registration. The conventions are the published regulated-carrier dummy (SIC 4812 and 4813), the earlier specification of this essay (4813, 4841 and 4899), a set tuned to the registry (4812, 4813, 4841 and 4899) and the full communications range (4800 to 4899); literature source for each convention: [NO SOURCE]. The tuned set was chosen after looking at the registry, so its agreement is an upper bound, not a test. Event agreement is the percentage of the 346 events on which the convention and registration agree. A false positive is an event the convention codes as a carrier although its parent filer entity is not a registrant; a false negative is a registrant event the convention does not code. Treated parents identified counts, of the 12 registrant parent filer entities in the comparison, those with at least one event the convention codes as a carrier; Other parents included counts non-registrant parents the convention codes as carriers. The tuned set agrees most often (96.0 percent) and the published dummy identifies the fewest registrant parents (6). Panel B lists the misclassified organizations under the published dummy and the tuned set, with the SIC code that produced the error and the number of events. CIK is the Securities and Exchange Commission Central Index Key.
+*Note.* Each row of Panel A applies one industry-code convention to the 346 canonical events with a Compustat historical Standard Industrial Classification (SIC) code and compares the result with Federal Communications Commission (FCC) Form 499 registration. The conventions are the regulated-carrier codes from published practice (4812 and 4813; Barclay & Smith, 1995), the communications codes of this essay's earlier specification (4813, 4841, and 4899), the full communications range (4800 to 4899), and a set chosen after examining the registry (4812, 4813, 4841, and 4899), whose agreement is therefore an upper bound rather than a test. Event agreement is the percentage of events on which convention and registration agree. A false positive is an event the convention codes as a carrier although its parent filer entity is not a registrant; a false negative is a registrant event the convention does not code. Treated parents identified counts, of the 12 registrant parent filer entities, those with at least one event the convention codes as a carrier. The tuned set agrees most often (96.0 percent), and the published convention identifies the fewest registrant parents (6). Panel B lists the misclassified organizations with the SIC code that produced each error.
 
 **Table 8**
 
@@ -107,38 +107,38 @@ Panel B: Misclassified organizations
 
 Panel A: Registrant events outside the industry-code comparison
 
-| Organization | Parent CIK | Reporting date | Reason |
-|:---|---:|---:|---:|
-| Mediacom Communications Corporation | 1098659 | 2022-08-30 | No matched ticker |
-| T-Mobile USA, Inc. | 1283699 | 2009-09-03 | No matched ticker |
-| T-Mobile USA, Inc. | 1283699 | 2009-10-05 | No matched ticker |
-| T-Mobile | 1283699 | 2009-10-08 | No matched ticker |
-| T-Mobile USA Inc. | 1283699 | 2011-10-21 | No matched ticker |
-| T-Mobile | 1283699 | 2012-05-08 | No matched ticker |
-| T-Mobile | 1283699 | 2012-08-28 | No matched ticker |
-| T-Mobile USA, Inc. | 1283699 | 2013-12-30 | Ticker, but no Compustat record in the prior 550 days |
-| T-Mobile | 1283699 | 2013-12-31 | Ticker, but no Compustat record in the prior 550 days |
-| Altice USA, Inc. | 1702780 | 2020-02-06 | Ticker, but no Compustat record in the prior 550 days |
-| Altice USA | 1702780 | 2024-02-29 | Ticker, but no Compustat record in the prior 550 days |
+| Organization | Reporting date | Reason |
+|:---|---:|---:|
+| Mediacom Communications Corporation | 2022-08-30 | No matched ticker |
+| T-Mobile USA, Inc. | 2009-09-03 | No matched ticker |
+| T-Mobile USA, Inc. | 2009-10-05 | No matched ticker |
+| T-Mobile | 2009-10-08 | No matched ticker |
+| T-Mobile USA Inc. | 2011-10-21 | No matched ticker |
+| T-Mobile | 2012-05-08 | No matched ticker |
+| T-Mobile | 2012-08-28 | No matched ticker |
+| T-Mobile USA, Inc. | 2013-12-30 | Ticker, but no Compustat record in the prior 550 days |
+| T-Mobile | 2013-12-31 | Ticker, but no Compustat record in the prior 550 days |
+| Altice USA, Inc. | 2020-02-06 | Ticker, but no Compustat record in the prior 550 days |
+| Altice USA | 2024-02-29 | Ticker, but no Compustat record in the prior 550 days |
 
 Panel B: Compustat SIC against the breach records’ SIC
 
-| Organization | Parent CIK | Tickers | Compustat SIC | Breach-record SIC | Form 499 | Sources disagree |
-|:---|---:|---:|---:|---:|---:|---:|
-| CenturyLink | 18926 | CTL; LUMN | 4813 | 4813; 6500 | Registrant | Yes |
-| Frontier Communications Parent, Inc. | 20520 | FYBR | 4813 | 4813; 6500 | Registrant | Yes |
-| Sprint Corporation | 101830 | S | 4813 | 4813; 4841 | Registrant | Yes |
-| Verizon | 732712 | VZ | 4812; 4813 | 4813; 4833 | Registrant | Yes |
-| AT&T | 732717 | T | 4812; 4813 | 4813; 4833 | Registrant | Yes |
-| DISH Network, LLC | 1001082 | DISH | 4841 | 4841 | Registrant | No |
-| Charter Communications, Inc. | 1091667 | CHTR | 4841 | 4841 | Registrant | No |
-| Mediacom Communications Corporation | 1098659 |  | — | 6500 | Registrant | Yes |
-| Comcast Cable Communications LLC | 1166691 | CMCSA | 4841 | 4833; 4841 | Registrant | Yes |
-| T-Mobile USA, Inc. | 1283699 | TMUS | 4812 | 4813; 4833 | Registrant | Yes |
-| Twilio | 1447669 | TWLO | 7370 | 7372 | Registrant | Yes |
-| GoDaddy.com, LLC | 1609711 | GDDY | 7370 | 7372 | Registrant | Yes |
-| Cable One, Inc. | 1632127 | CABO | 4841 | 4841 | Registrant | No |
-| Altice USA, Inc. | 1702780 | ATUS | — | 4841 | Registrant | Yes |
-| Roku Inc. | 1428439 | ROKU | 4841 | 7372 | Not a registrant | Yes |
+| Organization | Tickers | Compustat SIC | Breach-record SIC | Form 499 | Sources disagree |
+|:---|---:|---:|---:|---:|---:|
+| CenturyLink | CTL; LUMN | 4813 | 4813; 6500 | Registrant | Yes |
+| Frontier Communications Parent, Inc. | FYBR | 4813 | 4813; 6500 | Registrant | Yes |
+| Sprint Corporation | S | 4813 | 4813; 4841 | Registrant | Yes |
+| Verizon | VZ | 4812; 4813 | 4813; 4833 | Registrant | Yes |
+| AT&T | T | 4812; 4813 | 4813; 4833 | Registrant | Yes |
+| DISH Network, LLC | DISH | 4841 | 4841 | Registrant | No |
+| Charter Communications, Inc. | CHTR | 4841 | 4841 | Registrant | No |
+| Mediacom Communications Corporation |  | — | 6500 | Registrant | Yes |
+| Comcast Cable Communications LLC | CMCSA | 4841 | 4833; 4841 | Registrant | Yes |
+| T-Mobile USA, Inc. | TMUS | 4812 | 4813; 4833 | Registrant | Yes |
+| Twilio | TWLO | 7370 | 7372 | Registrant | Yes |
+| GoDaddy.com, LLC | GDDY | 7370 | 7372 | Registrant | Yes |
+| Cable One, Inc. | CABO | 4841 | 4841 | Registrant | No |
+| Altice USA, Inc. | ATUS | — | 4841 | Registrant | Yes |
+| Roku Inc. | ROKU | 4841 | 7372 | Not a registrant | Yes |
 
-*Note.* Panel A lists the 11 registrant events, at 3 parent filer entities, that fall outside the industry-code comparison in Table 7. The comparison starts from the 118 verified registrant events among the canonical events and keeps the 107 with a Compustat historical Standard Industrial Classification (SIC) code. An event goes uncoded when its firm has no matched stock ticker (7 events) or when the ticker has no Compustat annual record in the 550 days before the breach date (4 events); 8 of the 11 are T-Mobile events. Panel B compares, for each treated parent filer entity and for Roku, the Compustat historical SIC code with the SIC codes attached to the breach records in the source data. The two sources disagree for 11 of the 14 treated parents. Compustat SIC is the code on the firm’s most recent annual record within 550 days before the breach date; Breach-record SIC is every code found on the parent’s breach records; an em dash (—) marks a missing code. CIK is the Securities and Exchange Commission Central Index Key.
+*Note.* Panel A lists the 11 registrant events, at 3 parent filer entities, that fall outside the comparison in Table 7. Of the 118 verified registrant events, 107 carry a Compustat historical Standard Industrial Classification (SIC) code. An event goes uncoded when its firm has no matched stock ticker (7 events) or no Compustat annual record in the 550 days before the breach date (4 events); 8 of the 11 are T-Mobile events. Panel B compares, for each treated parent filer entity and for Roku, the Compustat code on the most recent annual record within 550 days before the breach date with every code on the parent's breach records. The two sources disagree for 11 of the 14 treated parents. An em dash (—) marks a missing code.
