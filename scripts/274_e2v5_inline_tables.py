@@ -384,7 +384,7 @@ NOTE_TEXT = {
     6: "Panel A has one row per treated parent filer entity (12 parents, 104 registrant events). The Federal Communications Commission (FCC) Form 499 registry holds 20,669 filer records. Registry records matched counts the records whose legal name, doing-business-as name, or holding company contains one of the parent's name keywords (671 in all). A match counts toward treatment only when the matched registration is open on the breach date. Distinct FRNs counts FCC Registration Numbers among the matched records, and end date before start date counts records carrying that registry error (2 in all). Breach dates gives the first and last breach date among the parent's events. Panel B lists the 23 adjudication rules, covering 22 organization names. Each rule records a ruling for a name pattern that exact matching would treat wrongly. A rule forces treatment under clause (a), a registration of the organization itself open on the breach date, or clause (b), the organization is the parent brand of a registered filer whose subscriber operations were breached, and forces exclusion when neither clause holds. DISH Network has two rules: it is excluded before July 1, 2020, and treated after. Panel C lists the 3 rules that assign a registrant with no traded equity to the parent filer entity that owns it. CIK = Securities and Exchange Commission Central Index Key.",
     7: "Each row of Panel A applies one industry-code convention to the 346 canonical events with a Compustat historical Standard Industrial Classification (SIC) code and compares the result with Federal Communications Commission (FCC) Form 499 registration. The conventions are the regulated-carrier codes from published practice (4812 and 4813; Barclay & Smith, 1995), the communications codes of this essay's earlier specification (4813, 4841, and 4899), the full communications range (4800 to 4899), and a set chosen after examining the registry (4812, 4813, 4841, and 4899), whose agreement is therefore an upper bound rather than a test. Event agreement is the percentage of events on which convention and registration agree. A false positive is an event the convention codes as a carrier although its parent filer entity is not a registrant; a false negative is a registrant event the convention does not code. Treated parents identified counts, of the 12 registrant parent filer entities, those with at least one event the convention codes as a carrier. The tuned set agrees most often (96.0 percent), and the published convention identifies the fewest registrant parents (6). Panel B lists the misclassified organizations with the SIC code that produced each error.",
     8: "Panel A lists the 11 registrant events, at 3 parent filer entities, that fall outside the comparison in Table 7. Of the 118 verified registrant events, 107 carry a Compustat historical Standard Industrial Classification (SIC) code. An event goes uncoded when its firm has no matched stock ticker (7 events) or no Compustat annual record in the 550 days before the breach date (4 events); 8 of the 11 are T-Mobile events. Panel B compares, for each treated parent filer entity and for Roku, the Compustat code on the most recent annual record within 550 days before the breach date with every code on the parent's breach records. The two sources disagree for 11 of the 14 treated parents. An em dash (—) marks a missing code.",
-    9: 'Each column is an ordinary least squares (OLS) regression on the analytical sample (N = 333 events, 104 Form 499 registrant events). The dependent variable is the change in abnormal return volatility, defined in Table 2. M1 includes the pre-window volatility level and the disclosure gap; M2 adds log total assets, leverage, and return on assets; M3 adds the Form 499 registrant indicator, the test of H1; M4 adds the health-breach flag and prior breach events and is the primary model. Each cell shows the coefficient, its CV3 standard error in parentheses, and its p-value below. CV3 is the cluster jackknife standard error, clustered by parent filer entity (G = 82, 12 with registrant events); it re-estimates the model leaving out one parent at a time, and its p-values use the t distribution with 81 degrees of freedom. With the pre-window level as a regressor, each model is an analysis of covariance: the registrant coefficient compares post-window volatility across groups at the same pre-window level. Because the dependent variable contains the pre-window level, R² is not the share of post-disclosure volatility explained. In M4 the registrant coefficient is 0.137 (p = .481), and adding the indicator raises R² from .177 to .180. Disclosure-gap coefficients are per day.',
+    9: 'Each column is an ordinary least squares (OLS) regression on the analytical sample (N = 333 events, 104 Form 499 registrant events). The dependent variable is the change in abnormal return volatility, defined in Table 2. M1 includes the pre-window volatility level and the disclosure gap; M2 adds log total assets, leverage, and return on assets; M3 adds the Form 499 registrant indicator, the test of H1; M4 adds the health-breach flag and prior breach events and is the primary model. Each cell shows the coefficient, its CV3 standard error in parentheses, and its p-value below. CV3 is the cluster jackknife standard error, clustered by parent filer entity (G = 82, 12 with registrant events); it re-estimates the model leaving out one parent at a time, and its p-values use the t distribution with 81 degrees of freedom. With the pre-window level as a regressor, each model is an analysis of covariance: the registrant coefficient compares post-window volatility across groups at the same pre-window level. Because the dependent variable contains the pre-window level, R² is not the share of post-disclosure volatility explained. In M4 the registrant coefficient is 0.137 (p = .481), and adding the indicator in M3 raises R² from .159 to .163. Disclosure-gap coefficients are per day.',
     10: "Each row of Panel A reports a different standard error (SE) and test for the Form 499 registrant coefficient of the primary model M4 (0.137; N = 333). OLS assumes independent errors with equal variance. HC1 and HC3 allow the variance to differ across events but treat events as independent; HC3 inflates each residual by its leverage. CV1 clusters by parent filer entity with the usual small-sample correction. CV3, the primary procedure, is the cluster jackknife, which re-estimates the model leaving out one parent filer entity at a time; its p-values use the t distribution with 81 degrees of freedom. The three wild cluster bootstrap rows reweight parent-level residuals to simulate the distribution of the test statistic: the restricted version imposes a zero coefficient and the unrestricted version does not. Rademacher weights flip each parent's residuals with probability one half (99,999 draws); Webb weights draw from six points, which suits few clusters (9,999 draws); the seed is 499. Procedures that ignore clustering understate the SE when treatment varies across few parents: the HC1 SE (0.112) is 42 percent smaller than the CV3 SE (0.193). No procedure gives a p-value below .05. G is the number of parent filer entities (82), G1 the number with registrant events (12), and G* the effective number of clusters, 23.4, which adjusts G for unequal cluster sizes and the concentration of treatment (Carter et al., 2017); the coefficient of variation of cluster size is 2.25. An em dash (—) marks a procedure that produces no confidence interval. Panel B clusters by two-digit Standard Industrial Classification (SIC) industry (25 clusters).",
     11: "The table asks whether the primary estimate (M4; N = 333, G = 82) is precise enough to rule out effects that matter. Values are in percentage points (pp) of daily abnormal return volatility; annualized values multiply by √252. The smallest effect size of interest (SESOI) is 0.25 times the standard deviation of the dependent variable among other events (0.763), or 0.191 pp daily (3.03 pp annualized); no comparable volatility effect is reported in the literature, so the bound rests on the outcome's own spread. TOST (two one-sided tests) tests whether the effect is small enough to treat as practically zero: it runs one test that the effect is above −SESOI and one that it is below +SESOI, using the CV3 standard error and the t distribution with 81 degrees of freedom, and reports the larger p-value. The lower test rejects (p = .047), so effects below −SESOI are ruled out; the upper test does not (p = .390), so a positive effect as large as SESOI cannot be excluded. The 90 percent confidence interval, [−0.185, 0.458], corresponds to TOST at the 5 percent level and does not lie inside ±SESOI. The literature bound is ±2.10 pp, the two-day breach penalty reported by Cavusoglu et al. (2004), divided by √252 to 0.132 pp daily; its TOST p is .509. MDE80 is the minimum detectable effect, the smallest true effect the regression would detect approximately four times in five at the 5 percent level, computed as 2.84 times the CV3 standard error; it is 2.87 times SESOI. The HC3 row shows the MDE80 that heteroskedasticity-consistent standard errors would imply, 41 percent lower. An MDE80 of 5 pp annualized would require 55 treated parent filer entities, and as treated parents increase without limit the MDE80 falls only to 0.207 pp daily (3.29 pp annualized).",
     12: "Each row re-estimates the primary model M4 with one change and reports the Form 499 registrant coefficient, its CV3 standard error (SE) in parentheses, its p-value, and its 95 percent confidence interval; N = 333 and G = 82 unless the N column shows otherwise. CV3 is the cluster jackknife SE by parent filer entity. Panel A ends the post-window at day +5, +10, or +20 against the pre-window [−60, −11]; the three windows form one family, and the BH-adjusted p applies the Benjamini–Hochberg false-discovery-rate adjustment within it. The wild cluster p comes from the restricted wild cluster bootstrap with Rademacher weights. Every window must have returns on at least 80 percent of its trading days. Panel B replaces the market adjustment with abnormal returns from the market model and the Fama–French three-factor (FF3) model, both estimated over trading days [−250, −30]; 6 events (1 registrant event) lack 80 percent coverage in that window, leaving 327 events. Panel C counts contaminated estimation windows, those containing another event at the same parent filer entity, dated by that event's notification date and by its breach date; the focal event itself is excluded. The shares across all events are .43 by notification date and .59 by breach date. Panel D lists coverage drops by benchmark and pre-window; the primary windows drop no event. Panel E moves step by step from the earlier outcome, raw log-return volatility over [−25, −5] and [+5, +25], to the primary one: the same outcome with the 80 percent rule, then market-adjusted simple returns on the same windows, then the current windows. Its first rows start the pre-window at day −45. No row gives a p-value below .05.",
@@ -725,9 +725,10 @@ def table_3():
               ['Median records per event', fmt_int(summ['median_records_per_event'])],
               ['Events with more than one record', fmt_int(summ['events_with_more_than_one_record'])],
               ['Records in those events', fmt_int(summ['records_in_multi_record_events'])]]
+    claim(float(pair.value.iloc[0]) > float(pair.value.iloc[1]), 'the first 2024 event is the larger')
     for k_, (_, r) in enumerate(pair.iterrows()):
-        rows_d.append([f'Records in the {r.date} event' + (' (largest parent filer entity)' if k_ == 0 else ' (same parent)'),
-                       fmt_int(r.value)])
+        rows_d.append(['Records in the larger 2024 event at one parent filer entity' if k_ == 0
+                       else 'Records in the second 2024 event at that parent', fmt_int(r.value)])
     rows_d.append(['Records in both 2024 events of that parent',
                    fmt_int(sum(int(float(v)) for v in pair.value))])
     hdr_d = ['Measure', 'Value']
@@ -900,9 +901,9 @@ def table_5():
     sv = appendix_csv('10C_size_variable_reconciliation.csv').set_index('candidate')
     slab = {'ln_market_cap': 'Log market value (CRSP price × shares outstanding)',
             'ln_total_assets': 'Log total assets (earlier dataset)'}
-    rows_c = [[slab[k], fmt_int(r.N), fmt_num(r.slope, 2), fmt_num(r.intercept, 2), apa_share(r.R2),
+    rows_c = [[slab[k], fmt_num(r.slope, 2), fmt_num(r.intercept, 2), apa_share(r.R2),
                apa_share(r.share_within_010), apa_share(r.share_within_025)] for k, r in sv.iterrows()]
-    hdr_c = ['Candidate measure', 'Records', 'Slope', 'Intercept', 'R²', 'Share within 0.10',
+    hdr_c = ['Candidate measure', 'Slope', 'Intercept', 'R²', 'Share within 0.10',
              'Share within 0.25']
 
     att = appendix_csv('01_sample_attrition.csv').set_index('step')
@@ -988,25 +989,58 @@ def parent_names():
     return {str(r.parent_cik): r.organization for _, r in sv.iterrows()}
 
 
-# Version history and pipeline references removed from the committed adjudication basis text.
-BASIS_EDITS = [
-    (r'\s*\(\d{1,2}/\d{1,2}\b[^()]*\)', ''),            # "(7/28)", "(8/4 adjudication comment ...)"
-    (r' adjudicated \d{1,2}/\d{1,2}:', ' adjudicated:'),
-    (r'NOT treated:', 'Not treated:'),
-    (r'\s*\(Cricket precedent, family-wide\)', ''),
-    (r' \u2014 Comcast class', ''),
-    (r'Gate 1 rescue noted Form 499 relevance; ', ''),
-    (r' \u2014 signed 122 rule retained;', ';'),
-    (r'DOCUMENTED', 'documented'),
+# Plain-language basis for each adjudication rule (Tim, 2026-11-18), keyed by the committed pattern
+# in committed order. The committed rule text stays in 13_treatment_adjudications.csv. Each FRN and
+# filer ID quoted here is checked against the committed basis and the registry (12) in table_6().
+BASIS_PLAIN = [
+    ('Cricket', 'Clause (a): Cricket Communications holds its own registration (FRN 0004321139); the LLC name variant defeats exact matching.'),
+    ('T-Mobile', 'Clause (a): the open registration "T-Mobile USA, Inc.- CONSOLIDATED" (filer 822060, active since 1997); the suffix defeats exact matching.'),
+    ('Boost Mobile', 'Clause (b): prepaid wireless brand of Sprint Spectrum LLC (FRN 0006693022); subscriber data were breached.'),
+    ('^Sprint', 'Clause (a): Sprint Spectrum LLC, doing business as Sprint (filer 811754), registered through 2024 and covering every Sprint breach date; name variants defeat exact matching.'),
+    ('Verizon Media', 'Content division (Yahoo and AOL), not telecommunications subscriber operations.'),
+    ('^Verizon', 'Clause (a): Verizon carrier filers (for example, Verizon New York, FRN 0003469442, through 2021, and consolidated successors after); consolidated names defeat exact matching.'),
+    ('^Comcast|Comcast Cable', 'Clause (b): parent brand of the Comcast telephony filers.'),
+    ('Charter Communication', 'Clause (b): parent brand of Charter Communications Operating LLC.'),
+    ('Frontier Communications', 'Clause (b): parent of regional Form 499 filers.'),
+    ('Altice USA', 'Clause (b): parent of the Altice Wireless filer.'),
+    ('AT&T Services', 'Clause (b): part of the AT&T Inc. filing family.'),
+    ('CenturyLink', 'Clause (b): CenturyLink and Lumen carrier family (regional local exchange carriers).'),
+    ('DISH Network (on/after 2020-07-01)', 'Clause (b): a facilities-based wireless carrier after acquiring Boost Mobile on July 1, 2020; DISH Wireless L.L.C. (FRN 0027852722) and DISH Wireless Puerto Rico L.L.C. (FRN 0029666096) are open registrations on the breach dates.'),
+    ('DISH Network', 'Satellite television is not a telecommunications service under \u00a7 64.2011, and DISH had no covered wireless operation before July 1, 2020.'),
+    ('NBC Sports', 'No registry match; not a carrier.'),
+    ('ATT-Breach Notification|ATT-SecurityBreach', 'Damaged source entries carrying a breach label in place of a firm name; stock data attach to AT&T, but treatment is excluded.'),
+    ('NBCUniversal', 'Clause (a): NBCUniversal, LLC is itself a registered filer (FRN {nbcu_frn}).'),
+    ('Mediacom', 'Clause (b): cable telephony operator and parent brand of the active filer MCC Telephony LLC.'),
+    ('Cisco Systems', 'The holding link to Tropo LLC postdates the breaches: Cisco acquired Tropo in 2015, and the breaches occurred in 2012.'),
+    ('Citrix', 'Enterprise-software incidents, not telecommunications subscriber operations; the 2018 event follows the divestiture of Citrix Online.'),
+    ('^Google|Alphabet', 'Consumer web-service incidents with no Google Fiber subscriber data; clause (b) fails.'),
+    ('^Time ?Warner', 'The 2006 breach did not involve telecommunications subscriber operations; the holding link to the HBO filer fails clause (b).'),
+    ('Home Box Office', 'The HBO filer was terminated on December 31, 2012, before the 2017 breaches, so clause (a) fails on the breach date.'),
 ]
 
 
-def clean_basis(t):
-    for a, b in BASIS_EDITS:
-        t = re.sub(a, b, t)
-    if re.search(r'\b\d{1,2}/\d{1,2}\b|scripts/|Gate \d|\bsigned\b', t):
-        sys.exit(f'Table 6 Panel B: version history left in {t!r}')
-    return t
+def plain_basis(st, reg):
+    """Tim's plain-language basis, row by row; stops if a quoted identifier disagrees with the committed facts."""
+    if [p for p, _ in BASIS_PLAIN] != list(st.pattern):
+        sys.exit('Table 6 Panel B: plain-language basis rows do not match the committed rules in order')
+    nb = reg[reg.legal_name == 'NBCUniversal, LLC'].FRN.unique()
+    if len(nb) != 1:
+        sys.exit('Table 6 Panel B: NBCUniversal, LLC FRN not unique in the registry')
+    nbcu = str(nb[0])
+    out = []
+    for (pat, txt), (_, r) in zip(BASIS_PLAIN, st.iterrows()):
+        txt = txt.format(nbcu_frn=nbcu)
+        committed = r.basis
+        for frn in re.findall(r'FRN (\d+)', txt):
+            if len(frn) != 10 or frn not in set(reg.FRN.astype(str)):
+                sys.exit(f'Table 6 Panel B: FRN {frn} ({pat}) is not a ten-digit registry FRN')
+            if frn.lstrip('0') not in committed:
+                sys.exit(f'Table 6 Panel B: FRN {frn} ({pat}) is not in the committed basis')
+        for fid in re.findall(r'filer (\d{6})', txt):
+            if f'499ID {fid}' not in committed:
+                sys.exit(f'Table 6 Panel B: filer {fid} ({pat}) is not in the committed basis')
+        out.append(txt)
+    return out, nbcu
 
 
 # ------------------------------------------------------------------ Table 6
@@ -1039,8 +1073,9 @@ def table_6():
     if len(st) != V('adjudication_rules') or len(ep) != V('equity_parent_maps'):
         sys.exit('Table 6: adjudication counts disagree with the constants')
     ruling = {'FORCE TREATED': 'Treated', 'FORCE EXCLUDED': 'Excluded'}
-    rows_b = [[r.pattern.replace('^', '').replace(' ?', ' ').replace('|', '; '), ruling[r.direction],
-               clean_basis(r.basis)] for _, r in st.iterrows()]
+    basis, _ = plain_basis(st, reg)
+    rows_b = [[r.pattern.replace('^', '').replace(' ?', ' ').replace('|', '; '), ruling[r.direction], b_]
+              for (_, r), b_ in zip(st.iterrows(), basis)]
     hdr_b = ['Organization name pattern', 'Ruling', 'Basis']
     rows_c = []
     for _, r in ep.iterrows():
@@ -1073,14 +1108,19 @@ def table_6():
 
 
 # ------------------------------------------------------------------ Table 7
+FAILURE_LABEL = {'post-hoc; boundary-blind': 'chosen after examining the registry'}   # Tim, 2026-11-18
+
+
 def table_7():
     cv = appendix_csv('14_sic_conventions_vs_form499.csv')
+    claim(set(FAILURE_LABEL) <= set(cv.characteristic_failure), 'Table 7 relabel matches a committed label')
     er = appendix_csv('15_sic_convention_errors.csv')
     rows_a = []
     for _, r in cv.iterrows():
         lab, codes = CONV_LABEL[r.convention]
         rows_a.append([f'{lab} (SIC {codes})', fmt_num(r.agree_pct, 1), fmt_int(r.FP), fmt_int(r.FN),
-                       fmt_int(r.parents_identified), fmt_int(r.parents_wrongly_included), r.characteristic_failure])
+                       fmt_int(r.parents_identified), fmt_int(r.parents_wrongly_included),
+                       FAILURE_LABEL.get(r.characteristic_failure, r.characteristic_failure)])
     hdr_a = ['Convention (codes)', 'Event agreement, %', 'False positives', 'False negatives',
              'Treated parents identified', 'Other parents included', 'Characteristic failure']
     elab = {'FALSE_POSITIVE': 'False positive', 'FALSE_NEGATIVE': 'False negative'}
@@ -1187,8 +1227,8 @@ def table_9():
     nb.i(V('primary_G') - 1, 'constants primary_G - 1')
     nb.f(cell[('M4', 'fcc_form499')].coef, 3, '18, M4 / fcc_form499 / coef')
     nb.p(cell[('M4', 'fcc_form499')].p_cv3, '18, M4 / fcc_form499 / p_cv3')
-    nb.r(V('r2_M4_without_treatment'), 3, 'constants values.r2_M4_without_treatment')
-    nb.r(V('r2_M4_with_treatment'), 3, 'constants values.r2_M4_with_treatment')
+    nb.r(first['M2'].r2, 3, '18, M2 / r2')
+    nb.r(first['M3'].r2, 3, '18, M3 / r2')
     note = nb.final()
 
     return render_table(9, 'Hierarchical Model for H1', [('', hdr, rows)], note)
@@ -1983,10 +2023,9 @@ def table_19():
         if kept:
             rej[fam_] = sum(1 for e in kr if e[0] == fam_ and _sig(e))
         bhs = bh.get(BH_KEY.get(fam_, ''), None)
-        rows_a.append([FAMILY_LAB[fam_], fmt_int(len(g)), 'Kept from the earlier ledger' if kept else 'New in this version',
-                       fmt_int(bhs) if bhs else '—', fmt_int(rej[fam_])])
-    rows_a.append(['All tests', fmt_int(len(live)), '', '', fmt_int(sum(rej.values()))])
-    hdr_a = ['Family', 'Tests', 'Status', 'BH family size', 'p < .05']
+        rows_a.append([FAMILY_LAB[fam_], fmt_int(len(g)), fmt_int(bhs) if bhs else '—', fmt_int(rej[fam_])])
+    rows_a.append(['All tests', fmt_int(len(live)), '', fmt_int(sum(rej.values()))])
+    hdr_a = ['Family', 'Tests', 'BH family size', 'p < .05']
 
     nb = Notes(19)
     claim(len(live) == V('program_tests_total'), 'live tests = 45')

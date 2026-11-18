@@ -74,21 +74,21 @@ Panel D: Revised dates
 
 *Test Program Summary*
 
-| Family | Tests | Status | BH family size | p < .05 |
-|:---|---:|---:|---:|---:|
-| Disclosure delay | 11 | Kept from the earlier ledger | 11 | 0 |
-| Disclosure delay, nonzero | 5 | Kept from the earlier ledger | 5 | 0 |
-| Records per event and firm size | 2 | Kept from the earlier ledger | — | 0 |
-| Industry-code-only group comparisons | 4 | Kept from the earlier ledger | — | 2 |
-| Positive control (earnings decline) | 1 | Kept from the earlier ledger | — | 0 |
-| Post-window length (dynamic path) | 3 | New in this version | 3 | 0 |
-| Announcement window | 4 | New in this version | 4 | 3 |
-| Size quartiles | 4 | New in this version | 4 | 0 |
-| Fixed effects | 3 | New in this version | — | 0 |
-| Pre-rule exclusion | 1 | New in this version | — | 0 |
-| Cook’s distance exclusion | 1 | New in this version | — | 0 |
-| Specification-curve permutation | 3 | New in this version | — | 0 |
-| Trading costs | 3 | New in this version | 3 | 0 |
-| All tests | 45 |  |  | 5 |
+| Family | Tests | BH family size | p < .05 |
+|:---|---:|---:|---:|
+| Disclosure delay | 11 | 11 | 0 |
+| Disclosure delay, nonzero | 5 | 5 | 0 |
+| Records per event and firm size | 2 | — | 0 |
+| Industry-code-only group comparisons | 4 | — | 2 |
+| Positive control (earnings decline) | 1 | — | 0 |
+| Post-window length (dynamic path) | 3 | 3 | 0 |
+| Announcement window | 4 | 4 | 3 |
+| Size quartiles | 4 | 4 | 0 |
+| Fixed effects | 3 | — | 0 |
+| Pre-rule exclusion | 1 | — | 0 |
+| Cook’s distance exclusion | 1 | — | 0 |
+| Specification-curve permutation | 3 | — | 0 |
+| Trading costs | 3 | 3 | 0 |
+| All tests | 45 |  | 5 |
 
 *Note.* Each row is one family of tests in the analysis program, which holds 45 tests. A family is a set of tests addressing one question. Within each family of more than one test, p-values are adjusted by the Benjamini–Hochberg (BH) false-discovery-rate procedure; single checks and joint tests use their own reference distributions. The last column counts tests with p below .05, using the CV3 cluster jackknife standard error where the test has one. Five tests give p below .05. Three are in the announcement-window family, and two of them are calibration checks expected to reject on earnings dates (the earnings elevation and the breach-minus-earnings contrast). The other two are composition checks kept from the earlier ledger, which compare the size and pre-breach volatility of events that industry codes treat but Form 499 does not with registrant events the codes also treat (p = .003 and p < .001); neither tests registration. One test of registration rejects: the registrant coefficient on announcement elevation (p = .027, BH-adjusted p = .036). If every null hypothesis were true, about 45 × .05 = 2.25 tests would give p below .05 by chance.

@@ -24,29 +24,29 @@ Panel B: Adjudication rules
 
 | Organization name pattern | Ruling | Basis |
 |:---|---:|---:|
-| Cricket | Treated | Clause (a) adjudicated: Cricket Communications FRN 0004321139; LLC variant missed by exact matcher |
-| T-Mobile | Treated | Clause (a) adjudicated: active open registry record "T-Mobile USA, Inc.- CONSOLIDATED" (499ID 822060, dba T-Mobile, start 1997, no end) — the "- CONSOLIDATED" suffix defeats exact matching for USA/US name variants |
-| Boost Mobile | Treated | Clause (b): prepaid wireless brand of Sprint Spectrum LLC FRN 0006693022; subscriber-data breach |
-| Sprint | Treated | Clause (a) adjudicated: Sprint Spectrum LLC dba Sprint (499ID 811754, coverage 1997-2024-12-31, replacement 822060) covers all Sprint-family breach dates; dba/suffix variants defeat exact matching |
-| Verizon Media | Excluded | Not treated: content division (Yahoo/AOL), not telecom subscriber operations |
-| Verizon | Treated | Clause (a) adjudicated: Verizon carrier filer family (e.g., Verizon-NY FRN 0003469442 through 2021; successor consolidated records active after) — consolidation naming defeats exact matching post-2021 |
-| Comcast; Comcast Cable | Treated | Clause (b): parent brand of Comcast Telephony filers |
-| Charter Communication | Treated | Clause (b): parent brand of Charter Communications Operating LLC |
-| Frontier Communications | Treated | Clause (b): parent of regional Form 499 filer subsidiaries |
-| Altice USA | Treated | Clause (b): parent of Altice Wireless filer |
-| AT&T Services | Treated | Clause (b): AT&T Inc. filing family |
-| CenturyLink | Treated | Clause (b): CenturyLink/Lumen carrier family (regional LEC filers) |
-| DISH Network (on/after 2020-07-01) | Treated | Clause (b) date-conditional: DISH is a facilities-based CMRS carrier from the 2020-07-01 Boost divestiture — DISH Wireless L.L.C. FRN 0027852722 (dba Boost Mobile) and DISH Wireless Puerto Rico L.L.C. FRN 0029666096 are open family registrations at the breach date; standard coverage rule applies |
-| DISH Network | Excluded | Adjudicated untreated: satellite TV not a telecom service under 64.2011; no covered wireless operation before 2020-07-01 |
-| NBC Sports | Excluded | No registry match; not a carrier |
-| ATT-Breach Notification; ATT-SecurityBreach | Excluded | Artifact system entities; identity=AT&T equity, treatment excluded |
-| NBCUniversal | Treated | Clause (a) documented: direct registry filer NBCUniversal, LLC FRN 20940540 |
-| Mediacom | Treated | Clause (b) adjudicated: cable-telephony operator, parent brand of active filer MCC Telephony LLC; subscriber operations |
-| Cisco Systems | Excluded | Not treated: holding link to Tropo LLC is anachronistic — Cisco acquired Tropo 2015, breaches 2012; snapshot-era holding data |
-| Citrix | Excluded | Not treated: breaches are enterprise-software incidents, not telecom subscriber operations; 2018 event also post-divestiture of Citrix Online |
-| Google; Alphabet | Excluded | Not treated: breaches are consumer web-service incidents (no Google Fiber subscriber data); clause (b) operations test fails |
-| Time Warner | Excluded | Not treated: 2006 breach not a telecom-subscriber operation; holding link to HBO filer fails the operations test |
-| Home Box Office | Excluded | Not treated: HBO Inc filer TERMINATED 2012-12-31 ("no longer providing telecommunications services") before 2017 breaches — clause (a) fails at breach date |
+| Cricket | Treated | Clause (a): Cricket Communications holds its own registration (FRN 0004321139); the LLC name variant defeats exact matching. |
+| T-Mobile | Treated | Clause (a): the open registration "T-Mobile USA, Inc.- CONSOLIDATED" (filer 822060, active since 1997); the suffix defeats exact matching. |
+| Boost Mobile | Treated | Clause (b): prepaid wireless brand of Sprint Spectrum LLC (FRN 0006693022); subscriber data were breached. |
+| Sprint | Treated | Clause (a): Sprint Spectrum LLC, doing business as Sprint (filer 811754), registered through 2024 and covering every Sprint breach date; name variants defeat exact matching. |
+| Verizon Media | Excluded | Content division (Yahoo and AOL), not telecommunications subscriber operations. |
+| Verizon | Treated | Clause (a): Verizon carrier filers (for example, Verizon New York, FRN 0003469442, through 2021, and consolidated successors after); consolidated names defeat exact matching. |
+| Comcast; Comcast Cable | Treated | Clause (b): parent brand of the Comcast telephony filers. |
+| Charter Communication | Treated | Clause (b): parent brand of Charter Communications Operating LLC. |
+| Frontier Communications | Treated | Clause (b): parent of regional Form 499 filers. |
+| Altice USA | Treated | Clause (b): parent of the Altice Wireless filer. |
+| AT&T Services | Treated | Clause (b): part of the AT&T Inc. filing family. |
+| CenturyLink | Treated | Clause (b): CenturyLink and Lumen carrier family (regional local exchange carriers). |
+| DISH Network (on/after 2020-07-01) | Treated | Clause (b): a facilities-based wireless carrier after acquiring Boost Mobile on July 1, 2020; DISH Wireless L.L.C. (FRN 0027852722) and DISH Wireless Puerto Rico L.L.C. (FRN 0029666096) are open registrations on the breach dates. |
+| DISH Network | Excluded | Satellite television is not a telecommunications service under § 64.2011, and DISH had no covered wireless operation before July 1, 2020. |
+| NBC Sports | Excluded | No registry match; not a carrier. |
+| ATT-Breach Notification; ATT-SecurityBreach | Excluded | Damaged source entries carrying a breach label in place of a firm name; stock data attach to AT&T, but treatment is excluded. |
+| NBCUniversal | Treated | Clause (a): NBCUniversal, LLC is itself a registered filer (FRN 0020940540). |
+| Mediacom | Treated | Clause (b): cable telephony operator and parent brand of the active filer MCC Telephony LLC. |
+| Cisco Systems | Excluded | The holding link to Tropo LLC postdates the breaches: Cisco acquired Tropo in 2015, and the breaches occurred in 2012. |
+| Citrix | Excluded | Enterprise-software incidents, not telecommunications subscriber operations; the 2018 event follows the divestiture of Citrix Online. |
+| Google; Alphabet | Excluded | Consumer web-service incidents with no Google Fiber subscriber data; clause (b) fails. |
+| Time Warner | Excluded | The 2006 breach did not involve telecommunications subscriber operations; the holding link to the HBO filer fails clause (b). |
+| Home Box Office | Excluded | The HBO filer was terminated on December 31, 2012, before the 2017 breaches, so clause (a) fails on the breach date. |
 
 Panel C: Equity re-parenting rules
 
@@ -68,7 +68,7 @@ Panel A: Agreement with Form 499 registration
 |:---|---:|---:|---:|---:|---:|---:|
 | Published regulated-carrier dummy (SIC 4812, 4813) | 91.6 | 3 | 26 | 6 | 0 | misses every cable registrant |
 | Earlier specification of this essay (SIC 4813, 4841, 4899) | 80.1 | 6 | 63 | 9 | 1 | misses every wireless carrier |
-| Tuned to the registry (SIC 4812, 4813, 4841, 4899) | 96.0 | 9 | 5 | 10 | 1 | post-hoc; boundary-blind |
+| Tuned to the registry (SIC 4812, 4813, 4841, 4899) | 96.0 | 9 | 5 | 10 | 1 | chosen after examining the registry |
 | Full communications range (SIC 4800–4899) | 90.5 | 28 | 5 | 10 | 4 | admits broadcasters |
 
 Panel B: Misclassified organizations

@@ -45,8 +45,8 @@ Panel D: Concentration of records in events
 | Median records per event | 1 |
 | Events with more than one record | 115 |
 | Records in those events | 388 |
-| Records in the 2024-02-21 event (largest parent filer entity) | 31 |
-| Records in the 2024-04-10 event (same parent) | 25 |
+| Records in the larger 2024 event at one parent filer entity | 31 |
+| Records in the second 2024 event at that parent | 25 |
 | Records in both 2024 events of that parent | 56 |
 
 Panel E: Gradient on corrected data, 48 specifications
@@ -123,10 +123,10 @@ Panel B: Reused-ticker matches
 
 Panel C: The size-measure defect
 
-| Candidate measure | Records | Slope | Intercept | R² | Share within 0.10 | Share within 0.25 |
-|:---|---:|---:|---:|---:|---:|---:|
-| Log market value (CRSP price × shares outstanding) | 674 | 0.99 | 0.05 | .86 | .69 | .96 |
-| Log total assets (earlier dataset) | 898 | 0.46 | 5.60 | .44 | .04 | .15 |
+| Candidate measure | Slope | Intercept | R² | Share within 0.10 | Share within 0.25 |
+|:---|---:|---:|---:|---:|---:|
+| Log market value (CRSP price × shares outstanding) | 0.99 | 0.05 | .86 | .69 | .96 |
+| Log total assets (earlier dataset) | 0.46 | 5.60 | .44 | .04 | .15 |
 
 Panel D: Losses after the CRSP match
 
