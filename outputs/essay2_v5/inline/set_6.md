@@ -62,7 +62,7 @@ Panel F: Leaving out one treated parent filer entity
 | Cable One Inc | 2 (2) | 0.450 (0.207) | .032 | 331 |
 | Frontier Communications Parent Inc | 4 (4) | 0.458 (0.210) | .032 | 329 |
 | Comcast Corp | 12 (9) | 0.465 (0.214) | .033 | 321 |
-| Lumen Technologies Inc | 5 (5) | 0.467 (0.208) | .028 | 328 |
+| Lumen Technologies Inc (formerly CenturyLink) | 5 (5) | 0.467 (0.208) | .028 | 328 |
 | AT&T Inc | 24 (24) | 0.506 (0.203) | .015 | 309 |
 
 Panel G: Sensitivities

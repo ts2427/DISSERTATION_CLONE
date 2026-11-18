@@ -41,9 +41,9 @@ Panel A: Leaving out one parent filer entity
 | Check | Estimate (CV3 SE) | p | N |
 |:---|---:|---:|---:|
 | Full sample (primary) | 0.137 (0.193) | .481 | 333 |
-| Without Sprint Corporation (9 events), smallest | 0.029 |  | 324 |
+| Without Sprint Corp (9 events), smallest | 0.029 |  | 324 |
 | Without Intuit Inc. (76 events), largest | 0.213 |  | 257 |
-| Share of the estimate removed by dropping Sprint Corporation | 0.789 |  |  |
+| Share of the estimate removed by dropping Sprint Corp | 0.789 |  |  |
 
 Panel B: Influential and pre-rule events
 
@@ -68,7 +68,7 @@ Panel D: Revised dates
 | Revised source reporting dates | 0.112 (0.188) | .552 | 333 (104) | 12 |
 | Sprint’s corrected breach date (event added) | 0.137 (0.193) | .481 | 334 (105) | 1 |
 
-*Note.* Each row re-estimates the registrant coefficient of the primary model M4 (N = 333, G = 82) with one change, with CV3 standard errors by parent filer entity. Panel A drops one parent filer entity at a time (82 re-estimates) and reports the smallest and largest estimates: dropping Sprint Corporation (9 events) lowers the estimate to 0.029, removing 78.9 percent of it, and dropping Intuit Inc. (76 events) raises it to 0.213. Panel B drops the 18 events whose Cook's distance, a measure of how much all fitted values move when one observation is deleted, exceeds 4/N, and separately the 6 events reported before the rule took effect on December 8, 2007, none of them registrant events. Panel C adds fixed effects for reporting year, two-digit Standard Industrial Classification (SIC) industry, or both. A mixed stratum is a year, industry, or year-by-industry cell holding both registrant and other events; with fixed effects the coefficient is identified only within mixed strata, so events in single-group strata carry no weight (Aronow & Samii, 2016). Effective events counts the events in mixed strata, with registrant events in parentheses: year fixed effects leave 281, and both sets leave 109 events in 12 mixed cells. Industries with a single event drop as singletons (7 events). Panel D uses the revised reporting dates the source later published for 12 events and then corrects Sprint's breach date, which adds 1 event. No row gives a p-value below .05.
+*Note.* Each row re-estimates the registrant coefficient of the primary model M4 (N = 333, G = 82) with one change, with CV3 standard errors by parent filer entity. Panel A drops one parent filer entity at a time (82 re-estimates) and reports the smallest and largest estimates: dropping Sprint Corp (9 events) lowers the estimate to 0.029, removing 78.9 percent of it, and dropping Intuit Inc. (76 events) raises it to 0.213. Panel B drops the 18 events whose Cook's distance, a measure of how much all fitted values move when one observation is deleted, exceeds 4/N, and separately the 6 events reported before the rule took effect on December 8, 2007, none of them registrant events. Panel C adds fixed effects for reporting year, two-digit Standard Industrial Classification (SIC) industry, or both. A mixed stratum is a year, industry, or year-by-industry cell holding both registrant and other events; with fixed effects the coefficient is identified only within mixed strata, so events in single-group strata carry no weight (Aronow & Samii, 2016). Effective events counts the events in mixed strata, with registrant events in parentheses: year fixed effects leave 281, and both sets leave 109 events in 12 mixed cells. Industries with a single event drop as singletons (7 events). Panel D uses the revised reporting dates the source later published for 12 events and then corrects Sprint's breach date, which adds 1 event. No row gives a p-value below .05.
 
 **Table 19**
 

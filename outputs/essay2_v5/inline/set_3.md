@@ -8,7 +8,7 @@ Panel A: Registry records matched to each treated parent filer entity
 |:---|---:|---:|---:|---:|---:|---:|
 | Verizon Communications Inc | 732712 | 202 | 186 | 0 | 10 | 2008-06-27 to 2024-02-06 |
 | AT&T Inc | 732717 | 114 | 108 | 0 | 24 | 2008-05-23 to 2024-04-14 |
-| Lumen Technologies Inc | 18926 | 95 | 93 | 0 | 5 | 2013-12-27 to 2022-03-15 |
+| Lumen Technologies Inc (formerly CenturyLink) | 18926 | 95 | 93 | 0 | 5 | 2013-12-27 to 2022-03-15 |
 | Charter Communications Inc | 1091667 | 85 | 80 | 1 | 8 | 2008-07-14 to 2023-09-01 |
 | Frontier Communications Parent Inc | 20520 | 61 | 61 | 0 | 4 | 2022-02-24 to 2024-06-10 |
 | Sprint Corp | 101830 | 39 | 34 | 0 | 9 | 2009-02-01 to 2019-06-22 |
