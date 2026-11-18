@@ -76,6 +76,7 @@ N_OLD = 33
 # set number -> list of new table numbers. Filled in by each set's prompt.
 SETS = {
     1: [1, 2],
+    2: [3, 4, 5],
 }
 
 # new table number -> renderer. Each renderer returns the markdown block
@@ -442,6 +443,302 @@ def table_2():
 
 
 RENDERERS.update({1: table_1, 2: table_2})
+
+
+# ------------------------------------------------------------------ Set 2 shared
+RECORD_SPEC = ('Record-level panels use the earlier specification: raw-return volatility on '
+               'notification records, size measured by market value.')
+QLAB = {'main': 'All', 'Q1': 'Q1 (smallest)', 'Q2': 'Q2', 'Q3': 'Q3', 'Q4': 'Q4 (largest)'}
+
+
+def V(key):
+    """A value from constants_essay2.json; exits if absent (a missing key is a source error)."""
+    v = const(load_constants(), f'values.{key}')
+    if v == NO_SOURCE:
+        sys.exit(f'constants key values.{key} missing')
+    return v
+
+
+def demojibake(s):
+    """Undo UTF-8 read as cp1252 in names (e.g. 'Oâ€™Connor' -> 'O’Connor'); text only."""
+    try:
+        return s.encode('cp1252').decode('utf-8')
+    except (UnicodeEncodeError, UnicodeDecodeError):
+        return s
+
+
+def est_se(coef, se, dp=3):
+    if str(se).strip() == '':
+        return fmt_num(coef, dp)
+    return f'{fmt_num(coef, dp)} ({fmt_num(se, dp)})'
+
+
+def apa_share(x, dp=2):
+    """A proportion bounded by 1: no leading zero (R², shares)."""
+    s = fmt_num(x, dp)
+    return s[1:] if s.startswith('0.') else s
+
+
+def pct(num, den, dp=1):
+    return f'{fmt_num(100 * num / den, dp)}%'
+
+
+# ------------------------------------------------------------------ Table 3
+def table_3():
+    fp = appendix_csv('05A_four_panel_decomposition.csv')
+    cell = {(r.panel, r.cell): r for _, r in fp.iterrows()}
+    order = ['main', 'Q1', 'Q2', 'Q3', 'Q4']
+
+    def record_panel(pan):
+        rows = []
+        for c in order:
+            r = cell[(pan, c)]
+            rows.append([QLAB[c], est_se(r.coef, r.se), fmt_p(r.p), fmt_int(r.cellN),
+                         fmt_int(r.treatedN), fmt_int(r.t_parents)])
+        if sum(int(float(cell[(pan, c)].cellN)) for c in order[1:]) != int(float(cell[(pan, 'main')].cellN)):
+            sys.exit(f'Table 3: quartile records do not sum to the total in {pan}')
+        rows.append(['Q1 − Q4 spread', fmt_num(cell[(pan, 'Q1_minus_Q4_spread')].coef, 3), '', '', '', ''])
+        return rows
+
+    hdr_ab = ['Cell', 'Estimate (SE)', 'p', 'Records', 'Treated records', 'Treated parent filer entities']
+
+    rows_c = []
+    for c in order:
+        a, b = cell[('iii_dedup_sic', c)], cell[('iv_dedup_form499', c)]
+        if a.cellN != b.cellN:
+            sys.exit(f'Table 3 Panel C: event counts differ between definitions in {c}')
+        cl = {'main': 'All', 'Q1': 'Q1, smallest', 'Q4': 'Q4, largest'}.get(c, c)
+        rows_c.append([f'{cl} ({fmt_int(a.cellN)} events)',
+                       est_se(a.coef, a.se), fmt_p(a.p), f'{fmt_int(a.treatedN)} ({fmt_int(a.t_parents)})',
+                       est_se(b.coef, b.se), fmt_p(b.p), f'{fmt_int(b.treatedN)} ({fmt_int(b.t_parents)})'])
+    rows_c.append(['Q1 − Q4 spread', fmt_num(cell[('iii_dedup_sic', 'Q1_minus_Q4_spread')].coef, 3), '', '',
+                   fmt_num(cell[('iv_dedup_form499', 'Q1_minus_Q4_spread')].coef, 3), '', ''])
+    hdr_c = ['Cell', 'Industry codes: estimate (SE)', 'p', 'Treated events (parents)',
+             'Form 499: estimate (SE)', 'p', 'Treated events (parents)']
+
+    rp = appendix_csv('05B_records_per_event.csv')
+    summ = {r['item']: r['value'] for _, r in rp[rp.panel == 'summary'].iterrows()}
+    dist = rp[rp.panel == 'distribution']
+    if sum(int(float(v)) for v in dist.value) != int(float(summ['events'])):
+        sys.exit('Table 3 Panel D: distribution does not sum to events')
+    if sum(int(re.search(r'_(\d+)_records', i).group(1)) * int(float(v))
+           for i, v in zip(dist['item'], dist.value)) != int(float(summ['records'])):
+        sys.exit('Table 3 Panel D: distribution does not sum to records')
+    big = rp[rp.panel == 'largest'].copy()
+    big['cik'] = big['item'].str.extract(r'^c(\d+) ')[0]
+    big['date'] = big['item'].str.extract(r'(\d{4}-\d{2}-\d{2})$')[0]
+    top = big.iloc[0]
+    pair = big[(big.cik == top.cik) & big.date.str.startswith('2024')]
+    if len(pair) != 2:
+        sys.exit('Table 3 Panel D: expected two 2024 events for the largest parent')
+    rows_d = [['Records', fmt_int(summ['records'])],
+              ['Events', fmt_int(summ['events'])],
+              ['Mean records per event', fmt_num(summ['mean_records_per_event'], 2)],
+              ['Median records per event', fmt_int(summ['median_records_per_event'])],
+              ['Events with more than one record', fmt_int(summ['events_with_more_than_one_record'])],
+              ['Records in those events', fmt_int(summ['records_in_multi_record_events'])]]
+    for _, r in pair.iterrows():
+        rows_d.append([f'Records in the {r.date} event of parent CIK {r.cik}', fmt_int(r.value)])
+    rows_d.append([f'Records in both 2024 events of parent CIK {top.cik}',
+                   fmt_int(sum(int(float(v)) for v in pair.value))])
+    hdr_d = ['Measure', 'Value']
+
+    gg = appendix_csv('09_gradient_grid.csv')
+    alab = {'breach': 'Breach date', 'notification': 'Notification date', 'TOTAL': 'Both anchors'}
+    rows_e = [[alab[r.anchor], fmt_int(r.n_specs), fmt_int(r.q1_gt_q4), fmt_int(r.monotone_stepdown),
+               NO_SOURCE, NO_SOURCE] for _, r in gg.iterrows()]
+    hdr_e = ['Anchor date', 'Specifications', 'Q1 estimate above Q4', 'Monotone decline Q1 to Q4',
+             'Q1 − Q4 significant at .05', 'Range of Q1 − Q4']
+
+    m = cell[('i_industry_codes_records', 'main')]
+    g_tot = int(gg[gg.anchor == 'TOTAL'].n_specs.iloc[0])
+    g_per = sorted({int(x) for x in gg[gg.anchor != 'TOTAL'].n_specs})
+    if len(g_per) != 1:
+        sys.exit('Table 3 Panel E: anchors have different specification counts')
+    note = (f'{RECORD_SPEC} Panels A and B: {fmt_int(m.cellN)} notification records; treatment by '
+            f'industry code (SIC 4813, 4841 or 4899 on the record) in Panel A and by Form 499 '
+            f'registration of the parent filer entity in Panel B; quartiles of log market value. '
+            f'Panel C: the same comparison on {fmt_int(cell[("iv_dedup_form499", "main")].cellN)} '
+            f'canonical events (records collapsed to events), with the earlier breach-date-anchored '
+            f'raw-return outcome; its quartiles are of log total assets from the canonical event file. '
+            f'Estimates are the treatment coefficient from OLS of the change in raw-return volatility '
+            f'on treatment and the earlier specification’s controls (pre-period volatility, size, '
+            f'leverage, return on assets, disclosure gap, prior breaches, health-breach flag), within '
+            f'each cell; SEs are HC3 heteroskedasticity-consistent, not clustered. Q1 − Q4 spread = '
+            f'Q1 estimate minus Q4 estimate. Panel D counts records per event in the Panel A–B '
+            f'records. Panel E summarizes the gradient on corrected data across {g_tot} window '
+            f'specifications ({g_per[0]} per anchor date); the full grid, one row per specification, is in '
+            f'the committed CSV outputs/tables/essay2_v2/t31_gradient_grid.csv. Treated parents in '
+            f'Panel C are parent filer entities. SIC = Standard Industrial Classification; Q1–Q4 = '
+            f'size quartiles, Q1 smallest; SE = standard error; OLS = ordinary least squares; HC3 = '
+            f'heteroskedasticity-consistent covariance, type 3; CIK = SEC Central Index Key.')
+    return render_table(3, 'How the Size Gradient Is Produced',
+                        [('Industry-code treatment on records', hdr_ab,
+                          record_panel('i_industry_codes_records')),
+                         ('Form 499 treatment on the same records', hdr_ab, record_panel('ii_form499_repaired')),
+                         ('Events instead of records, both definitions', hdr_c, rows_c),
+                         ('Concentration of records in events', hdr_d, rows_d),
+                         (f'Gradient on corrected data, {g_tot} specifications', hdr_e, rows_e)], note)
+
+
+# ------------------------------------------------------------------ Table 4
+def table_4():
+    gc = appendix_csv('08A_misclassified_group_comparisons.csv').set_index('group')
+    mr = appendix_csv('07_misclassified_records.csv')
+
+    def grow(label, g):
+        r = gc.loc[g]
+        return [label, fmt_int(r.N), fmt_int(r.orgs), f'{fmt_num(r.mean_ln_mktcap, 2)} ({fmt_num(r.sd_ln_mktcap, 2)})',
+                f'{fmt_num(r.mean_vol_change, 2)} ({fmt_num(r.sd_vol_change, 2)})']
+
+    part = ['missed_by_industry_codes', 'misclassified_repaired', 'concordant_registrants', 'control']
+    n_all = sum(int(gc.loc[g].N) for g in part)
+    if n_all != int(float(cell_main_records())):
+        sys.exit(f'Table 4: groups sum to {n_all}, not the record total')
+    n_dis = int(gc.loc['missed_by_industry_codes'].N) + int(gc.loc['misclassified_repaired'].N)
+    if n_dis != V('disagree_records'):
+        sys.exit('Table 4: disagreement records do not match constants')
+    rows_a = [grow('Disagree: Form 499 registrant, no industry code (missed by the codes)', part[0]),
+              grow('Disagree: industry code, not a registrant (damaged source entries)', part[1])]
+    for _, r in mr.iterrows():
+        rows_a.append([f' {r.organization} (SIC {r.source_sic}, breach {r.breach_date}, Q{r.prior_spec_quartile_mktcap})',
+                       '1', '1', fmt_num(r.ln_mktcap_as_found, 2), fmt_num(r.volatility_change, 2)])
+    rows_a += [grow('Agree: industry code and registrant', part[2]),
+               grow('Agree: neither definition treats', part[3]),
+               ['All records', fmt_int(n_all), '', '', '']]
+    hdr_a = ['Group', 'Records', 'Organizations', 'Log market value M (SD)', 'Change M (SD)']
+
+    comp = appendix_csv('06A_q1_transition_components.csv').set_index('component')
+    recs = appendix_csv('06B_q1_transition_records.csv')
+    clab = {'stayed': 'Treated under both definitions', 'dropped': 'Treated by codes only (dropped)',
+            'added': 'Treated by Form 499 only (added)', 'never_treated': 'Treated by neither'}
+
+    def crow(k):
+        r = comp.loc[k]
+        ms_ = '—' if str(r['mean']).strip() == '' else (
+            f'{fmt_num(r["mean"], 2)} ({fmt_num(r.sd, 2)})' if str(r.sd).strip() else fmt_num(r['mean'], 2))
+        return [clab[k], fmt_int(r.N_records), fmt_int(r.N_events), ms_]
+
+    rows_b = [crow(k) for k in ['stayed', 'dropped', 'added']]
+    added = recs[recs.direction == 'added']
+    if len(added) != int(comp.loc['added'].N_records) or len(added) != V('q1_added_records'):
+        sys.exit('Table 4 Panel B: added records disagree')
+    for pc, g in sorted(added.groupby('parent_cik'), key=lambda kv: (-len(kv[1]), kv[0])):
+        name = min(g.organization, key=lambda x: (len(x), x))
+        vc = g.volatility_change.astype(float)
+        rows_b.append([f' of which {name} (parent CIK {pc})', fmt_int(len(g)), '',
+                       f'{fmt_num(vc.mean(), 2)} ({fmt_num(vc.std(), 2)})'])
+    rows_b.append(crow('never_treated'))
+    q1n = sum(int(comp.loc[k].N_records) for k in comp.index)
+    hdr_b = ['Q1 component', 'Records', 'Events', 'Change M (SD)']
+
+    mi = gc.loc['missed_by_industry_codes']
+    n_q1, n_q4 = V('q1_added_records'), V('missed_q4_records')
+    rows_c = [['All missed registrants', fmt_int(mi.N), fmt_int(mi.orgs),
+               f'{fmt_num(mi.mean_vol_change, 2)} ({fmt_num(mi.sd_vol_change, 2)})',
+               f'Q1 {n_q1}; Q2–Q3 {int(mi.N) - n_q1 - n_q4}; Q4 {n_q4}'],
+              ['By firm, with SIC code', NO_SOURCE, NO_SOURCE, NO_SOURCE, NO_SOURCE]]
+    hdr_c = ['Firm', 'Records', 'Organizations', 'Change M (SD)', 'Quartile placement (records)']
+
+    note = (f'{RECORD_SPEC} All panels use the {fmt_int(n_all)} notification records; industry-code '
+            f'treatment = SIC 4813, 4841 or 4899 on the record; Form 499 treatment = Form 499 '
+            f'registration of the parent filer entity. Change = change in raw-return volatility. '
+            f'Panel B covers the {fmt_int(q1n)} records in the smallest size quartile (Q1). In Panel C, '
+            f'Q2–Q3 placement is the {fmt_int(mi.N)} records less those in Q1 and Q4. The pre-repair '
+            f'sensitivity group and the Welch contrasts for the damaged entries are in the committed '
+            f'appendix CSVs. SIC = Standard Industrial Classification; CIK = SEC Central Index Key; '
+            f'Q1–Q4 = size quartiles of log market value, Q1 smallest; M = mean; SD = standard '
+            f'deviation.')
+    return render_table(4, 'Where the Two Definitions Disagree',
+                        [(f'The {fmt_int(n_dis)} disagreement records against the {fmt_int(n_all - n_dis)} '
+                          f'agreements', hdr_a, rows_a),
+                         ('Records added to the smallest quartile', hdr_b, rows_b),
+                         ('Registrants the industry codes miss', hdr_c, rows_c)], note)
+
+
+def cell_main_records():
+    fp = appendix_csv('05A_four_panel_decomposition.csv')
+    return fp[(fp.panel == 'i_industry_codes_records') & (fp.cell == 'main')].cellN.iloc[0]
+
+
+# ------------------------------------------------------------------ Table 5
+def table_5():
+    ic = appendix_csv('10A_identifier_collisions.csv')
+    rows_a = []
+    for _, r in ic.iterrows():
+        orgs = [demojibake(o) for o in r.organizations_absorbed.split('; ')]
+        ex = '; '.join(orgs[:2]) + ('; …' if len(orgs) > 2 else '')
+        rows_a.append([r.legacy_cik, r.ticker_for_cik, fmt_int(len(orgs)), ex, fmt_int(r.n_records),
+                       fmt_int(r.canonical_events_with_these_names),
+                       'Yes' if r.legacy_cik_is_canonical_parent == 'True' else 'No'])
+    if len(rows_a) != V('collision_sinks'):
+        sys.exit('Table 5 Panel A: collision count disagrees with constants')
+    hdr_a = ['Legacy CIK', 'Ticker on the CIK', 'Organizations absorbed', 'Examples', 'Records',
+             'Canonical events with these names', 'CIK is a canonical parent']
+
+    rt = appendix_csv('10B_recycled_tickers.csv')
+    if len(rt) != V('recycled_ticker_events'):
+        sys.exit('Table 5 Panel B: recycled-ticker count disagrees with constants')
+    rows_b = [[r.organization, r.event_date, r.ticker, f'{r.assigned_security} ({r.assigned_permno})',
+               r.ticker_end_for_assigned, r.later_owner_in_mapping] for _, r in rt.iterrows()]
+    hdr_b = ['Organization', 'Breach date', 'Ticker', 'Security the old rule assigned (PERMNO)',
+             'Assigned security’s ticker ended', 'Later owner of the ticker (PERMNO)']
+
+    sv = appendix_csv('10C_size_variable_reconciliation.csv').set_index('candidate')
+    slab = {'ln_market_cap': 'Log market value (CRSP price × shares outstanding)',
+            'ln_total_assets': 'Log total assets (earlier dataset)'}
+    rows_c = [[slab[k], fmt_int(r.N), fmt_num(r.slope, 2), fmt_num(r.intercept, 2), apa_share(r.R2),
+               apa_share(r.share_within_010), apa_share(r.share_within_025)] for k, r in sv.iterrows()]
+    hdr_c = ['Candidate measure', 'Records', 'Slope', 'Intercept', 'R²', 'Share within 0.10',
+             'Share within 0.25']
+
+    att = appendix_csv('01_sample_attrition.csv').set_index('step')
+    ms = appendix_csv('11_missingness_precase.csv').set_index('variable')
+    base = att.loc['Notification on/before 2024-12-31']
+    nb, tb, cb = int(float(base.N)), int(float(base.treated)), int(float(base.control))
+    if nb != V('miss_base'):
+        sys.exit('Table 5 Panel D: base disagrees with constants')
+    steps = [('Volatility windows computable', 'e2_vol_change (volatility windows)',
+              'Fewer trading days than the volatility windows need'),
+             ('Compustat covariates complete', 'firm_size_log', 'No Compustat match (size, leverage, return on assets)'),
+             ('Disclosure delay valid', 'disclosure_delay_days', 'Invalid disclosure date'),
+             ('Malformed-record exclusion (FINAL)', 'ATT_artifact_records (excluded at final step)',
+              'Damaged source records')]
+    rows_d, prev, lost = [], (nb, tb, cb), [0, 0, 0]
+    for step, mv, lab in steps:
+        r = att.loc[step]
+        cur = (int(float(r.N)), int(float(r.treated)), int(float(r.control)))
+        d = tuple(p - c for p, c in zip(prev, cur))
+        if d[0] != int(ms.loc[mv].missing) or d[0] != d[1] + d[2]:
+            sys.exit(f'Table 5 Panel D: ledger and missingness disagree at {step}')
+        rows_d.append([lab, fmt_int(d[0]), pct(d[0], nb), fmt_int(d[1]), fmt_int(d[2])])
+        lost = [a + b for a, b in zip(lost, d)]
+        prev = cur
+    rows_d.append(['All losses', fmt_int(lost[0]), pct(lost[0], nb), fmt_int(lost[1]), fmt_int(lost[2])])
+    rows_d.append(['Retained', fmt_int(prev[0]), pct(prev[0], nb), f'{fmt_int(prev[1])} ({pct(prev[1], tb)})',
+                   f'{fmt_int(prev[2])} ({pct(prev[2], cb)})'])
+    rows_d.append([f'Registrant events lost, by name', '', '', NO_SOURCE, ''])
+    hdr_d = ['Reason', 'Events', f'Share of {fmt_int(nb)}', 'Registrant events', 'Other events']
+
+    note = (f'{RECORD_SPEC} Panel A lists the {len(rows_a)} legacy identifiers (SEC Central Index Keys) to '
+            f'which the earlier chain attached unrelated organizations; examples show the first two '
+            f'names, and every name is in the committed CSV. Panel B lists the canonical events that '
+            f'the earlier fallback rule would have matched to an earlier, unrelated owner of the same '
+            f'ticker; the current chain blocks the rule and none of the {len(rt)} has a CRSP match. Panel C '
+            f'regresses the earlier dataset’s size variable on each candidate measure; share '
+            f'within = share of records whose absolute gap to the candidate is at most 0.10 or 0.25. '
+            f'Panel D starts from the {fmt_int(nb)} CRSP-matched events notified by December 31, 2024 '
+            f'({fmt_int(tb)} registrant, {fmt_int(cb)} other); retained shares are within group. '
+            f'CIK = SEC Central Index Key; CRSP = Center for Research in Security Prices; PERMNO = CRSP '
+            f'permanent security identifier.')
+    return render_table(5, 'Data Quality',
+                        [('Identifier collisions in the earlier chain', hdr_a, rows_a),
+                         ('Reused-ticker matches', hdr_b, rows_b),
+                         ('The size-measure defect', hdr_c, rows_c),
+                         ('Losses after the CRSP match', hdr_d, rows_d)], note)
+
+
+RENDERERS.update({3: table_3, 4: table_4, 5: table_5})
 
 
 # ------------------------------------------------------------------ constants
