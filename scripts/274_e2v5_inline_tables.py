@@ -237,6 +237,66 @@ def render_table(new, title, panels, note):
                 panels=[(pt, h, r, (k[0] if k else None)) for pt, h, r, *k in panels])
 
 
+# ------------------------------------------------------------------ note numbers
+# Every number written into a note goes through a Notes object, which records the text
+# shown, its committed source and the source value. write_set dumps the registry to
+# outputs/essay2_check/note_numbers_setN.json (git-excluded) for the note checks.
+NOTE_REG = {}
+CHECK_DIR = ROOT / 'outputs' / 'essay2_check'
+
+
+class Notes:
+    def __init__(self, table):
+        self.t = table
+        NOTE_REG[table] = []
+
+    def reg(self, shown, source, value):
+        NOTE_REG[self.t].append(dict(shown=str(shown), source=source,
+                                     value=value if isinstance(value, (int, float, str, bool)) else str(value)))
+        return str(shown)
+
+    def i(self, value, source):
+        return self.reg(fmt_int(value), source, float(value))
+
+    def f(self, value, dp, source, signed=False):
+        return self.reg(fmt_num(value, dp, signed), source, float(value))
+
+    def p(self, value, source):
+        return self.reg(fmt_p(value), source, float(value))
+
+    def r(self, value, dp, source):
+        """A bounded share / correlation written without a leading zero."""
+        sh = fmt_num(value, dp)
+        sh = sh[1:] if sh.startswith('0.') else (MINUS + sh[2:] if sh.startswith(MINUS + '0.') else sh)
+        return self.reg(sh, source, float(value))
+
+    def pct(self, value, dp, source):
+        return self.reg(f'{fmt_num(100 * float(value), dp)}', source + ' (x 100)', 100 * float(value))
+
+    def c(self, key, kind='f', dp=2):
+        v = V(key)
+        src = f'constants values.{key}'
+        if kind == 'i':
+            return self.i(v, src)
+        if kind == 'p':
+            return self.p(v, src)
+        if kind == 'r':
+            return self.r(v, dp, src)
+        if kind == 'pct':
+            return self.pct(v, dp, src)
+        return self.f(v, dp, src)
+
+    def d(self, shown, source):
+        """A design constant (window bound, cap rule, code set) with the file that defines it."""
+        return self.reg(shown, 'design: ' + source, shown)
+
+
+def claim(ok, what):
+    """A statement a note makes about the data; the render stops if the data do not bear it out."""
+    if not ok:
+        sys.exit(f'note claim fails: {what}')
+
+
 # ------------------------------------------------------------------ shared labels
 GROUP_TREATED = 'Form 499 registrant'
 GROUP_CONTROL = 'Other firm'
@@ -360,21 +420,52 @@ def table_1():
 
     n, nt, nc = s['events']
     g, gt, gc = s['parents']
-    note = (f'The starting units are Privacy Rights Clearinghouse (PRC) notification records, '
-            f'not breaches; a breach can generate several records, and the record-level steps '
-            f'reduce records to events. Final sample: {fmt_int(n)} events ({fmt_int(nt)} '
-            f'{GROUP_TREATED} events, {fmt_int(nc)} other), {fmt_int(s["orgs"][0])} '
-            f'organizations, and {fmt_int(g)} parent filer entities (G = {fmt_int(g)}; '
-            f'{fmt_int(gt)} with registrant events). Of these, {len(s["both_parents"])} '
-            f'parent filer entities ({" and ".join(s["both_parent_names"])}) have both registrant and other '
-            f'events, so the registrant and other parent counts in Panel B sum to '
-            f'{fmt_int(gt + gc)}, not {fmt_int(g)}. Reporting dates run from '
-            f'{s["date_min"]} to {s["date_max"]}. An em dash (—) marks a count the ledger '
-            f'does not track at that step. In Panel C, "one group only" marks years whose events '
-            f'are all registrant or all other events. Form 499 registrant = event at a firm '
-            f'registered with the Federal Communications Commission on FCC Form 499. '
-            f'Gate 1 = entity-resolution screen; Gate 2 = adjacency review of near-duplicate '
-            f'events. CRSP = Center for Research in Security Prices.')
+    nb = Notes(1)
+    ev = pd.read_csv(PANEL_CSV, dtype={'final_cik': str})
+    both = ev[ev.final_cik.isin(s['both_parents']) & (ev.fcc_form499 == 0)]
+    other_names = sorted(both.org_name.unique())
+    claim(other_names == ['NBC Sports Group', 'Verizon Media'], f'other-side names {other_names}')
+    n_nbc, n_vzm = (both.org_name == 'NBC Sports Group').sum(), (both.org_name == 'Verizon Media').sum()
+    att_ = appendix_csv('01_sample_attrition.csv')
+    first, g2 = att_.iloc[0], att_[att_.step == 'Gate 2 adjacency verdicts'].iloc[0]
+    can0 = att_[att_.step == 'Canonical events (post-Gate 2)'].iloc[0]
+    claim(int(float(g2.N)) == int(float(can0.N)), 'records after Gate 2 = canonical events')
+    note = (f'Each row of Panel A is one step in building the analytical sample. The first four rows count '
+            f'Privacy Rights Clearinghouse (PRC) notification records; from the row "canonical events after '
+            f'Gate 2" onward the rows count canonical events, so the unit changes at that row, where the '
+            f'{nb.i(g2.N, "01, Gate 2 adjacency verdicts / N")} records retained become '
+            f'{nb.i(can0.N, "01, Canonical events (post-Gate 2) / N")} canonical events. A notification record '
+            f'is one entry in the PRC data, and one breach can produce several records, so the starting '
+            f'{nb.i(first.N, "01, PRC universe / N")} records are not {nb.i(first.N, "01, PRC universe / N")} '
+            f'breaches. Gate 1 is the entity-resolution screen: it keeps a record only when the reporting '
+            f'organization resolves to a public filer entity. Gate 2 is the adjacency review: it examines records '
+            f'at the same parent filer entity whose dates lie close together and rules whether they describe the '
+            f'same breach, so that each breach enters once. Removed is the count dropped at a step and Remaining '
+            f'the count left. Registrant counts are reported at the event level only, because registration is '
+            f'assigned to events, and an em dash (—) marks a count the ledger does not track at that step. '
+            f'Panel B reports the final sample of {nb.i(n, "01, final row / N")} events '
+            f'({nb.i(nt, "01, final row / treated")} Form 499 registrant events and '
+            f'{nb.i(nc, "01, final row / control")} other events) at three levels. A Form 499 registrant event is '
+            f'an event at a firm registered on Federal Communications Commission (FCC) Form 499. The parent filer '
+            f'entity is the Securities and Exchange Commission (SEC) filer that owns the breached organization; '
+            f'it is the clustering unit for inference (G = {nb.i(g, "constants values.ann_G (= distinct final_cik in v5_event_panel.csv)")}). '
+            f'The registrant and other parent counts sum to {nb.i(gt + gc, "v5_event_panel.csv, distinct final_cik by group, summed")} '
+            f'rather than {nb.i(g, "constants values.ann_G")} because '
+            f'{nb.i(len(s["both_parents"]), "v5_event_panel.csv, final_cik in both groups")} parent filer '
+            f'entities, Comcast and Verizon, have events in both groups: the '
+            f'{nb.i(n_nbc, "v5_event_panel.csv, NBC Sports Group events")} NBC Sports Group events (Comcast) and '
+            f'the {nb.i(n_vzm, "v5_event_panel.csv, Verizon Media events")} Verizon Media event (Verizon) are '
+            f'other events, adjudicated as not registrant operations, while the carrier subsidiaries’ events '
+            f'are registrant events. Panel C counts events by the year of the agency reporting date. "One group '
+            f'only" marks the {nb.c("years_single_kind", "i")} years whose events are all registrant events or '
+            f'all other events; together they hold {nb.c("years_single_kind_events", "i")} events, '
+            f'{nb.c("years_single_kind_treated", "i")} of them registrant events. Under year fixed effects each '
+            f'event is compared only with events reported in the same year, so a year with only one group offers '
+            f'no comparison and contributes nothing to the registrant estimate. Reporting dates run from '
+            f'{nb.reg(s["date_min"], "v5_event_panel.csv, min reported_date", s["date_min"])} to '
+            f'{nb.reg(s["date_max"], "v5_event_panel.csv, max reported_date", s["date_max"])}. CRSP is the '
+            f'Center for Research in Security Prices; Compustat is the S&P Global accounting database.')
+    claim(len(one_group) == V('years_single_kind'), 'one-group years match the constants')
     return render_table(1, 'Sample Construction',
                         [('Attrition from notification records to analytical events', hdr_a, rows_a),
                          ('Final sample by level', hdr_b, rows_b),
@@ -421,22 +512,53 @@ def table_2():
               [fmt_num(cor.loc[v, CORR_ORDER[j]], 2) if j <= i else '' for j in range(len(CORR_ORDER))]
               for i, v in enumerate(CORR_ORDER)]
 
-    note = (f'Sample: {n["full"]} events ({n["treated"]} {GROUP_TREATED} events, '
-            f'{n["control"]} other-firm events). Dependent variable: {DV_WORDS}; the pre- and '
-            f'post-window rows give the two levels. Difference = {GROUP_TREATED} mean '
-            f'minus other-firm mean; Welch t and p are from the unequal-variance two-sample '
-            f't test, with Welch–Satterthwaite df. Correlations are Pearson, lower triangle, '
-            f'over all {n["full"]} events; column numbers refer to the numbered rows. Percentiles, '
-            f'minima and maxima are in the committed appendix CSV. Log total assets = natural log of Compustat total '
-            f'assets; leverage = total liabilities / total assets; return on assets = net income '
-            f'/ total assets; health-breach flag = 1 when the record lists medical or health '
-            f'information as affected or the organization is a medical organization; prior '
-            f'breach events = earlier sample events at the same parent filer entity; disclosure '
-            f'gap = days from the breach date to the reporting date (negative gaps set to 0), '
-            f'top-coded at the 99th percentile. M = mean; SD = standard '
-            f'deviation; SE = standard error; df = degrees of freedom; Form 499 registrant = '
-            f'event at a firm registered with the Federal Communications Commission on FCC '
-            f'Form 499.')
+    nb = Notes(2)
+    dfx = diff
+    ctrl_sig = [v for v in CONTROL_VARS if float(dfx.loc[v, 'p']) < .05]
+    claim(ctrl_sig == [v for v in CONTROL_VARS if v != 'delay_w'], 'every control but the gap differs at .05')
+    claim(float(dfx.loc['dv', 'p']) >= .05 and float(dfx.loc['pre_sd', 'p']) < .05
+          and float(dfx.loc['post_sd', 'p']) < .05, 'change not different; both levels different')
+    offd = [(abs(float(cor.loc[a, b])), a, b) for i_, a in enumerate(CORR_ORDER) for b in CORR_ORDER[:i_]]
+    top = max(offd)
+    claim({top[1], top[2]} == {'fcc_form499', 'firm_size_log'}, 'registration-size is the largest correlation')
+    hc_c, hc_t = V('desc_control_health_breach_n'), V('desc_treated_health_breach_n')
+    cap = cell[('full', 'delay_w')]['max']
+    nN = {g: nb.i(cell[(g, 'dv')].N, f'02A, {g} / dv / N') for g in ('full', 'treated', 'control')}
+    note = (f'Each row compares the {nN["treated"]} Form 499 registrant events with the {nN["control"]} other '
+            f'events in the analytical sample of {nN["full"]} events. '
+            f'The dependent variable is the change in abnormal return volatility: the standard deviation (SD) of '
+            f'daily abnormal returns, RET − vwretd (the stock’s return minus the CRSP value-weighted '
+            f'market return), in percentage points, over trading days '
+            f'{nb.d("[+1, +20]", "constants primary_outcome")} after the agency reporting date minus the same SD '
+            f'over trading days {nb.d("[−60, −11]", "constants primary_outcome")} before it; the '
+            f'pre-window and post-window rows report the two levels. M is the group mean and SD the group '
+            f'standard deviation. Difference is the registrant mean minus the other-firm mean, with its standard '
+            f'error (SE) in parentheses; a positive difference means the registrant events have the higher '
+            f'value. The Welch t-test tests whether the two group means are equal. It does not assume that the '
+            f'two groups have equal variances, which matters here because the groups differ in size and in '
+            f'spread, and it uses the Welch–Satterthwaite degrees of freedom (df) shown in parentheses. A '
+            f'p-value below .05 indicates that the means differ. The two groups do not differ on the change '
+            f'(p = {nb.p(dfx.loc["dv", "p"], "02B, dv / p")}) but differ on the pre-window and post-window levels '
+            f'(p = {nb.p(dfx.loc["pre_sd", "p"], "02B, pre_sd / p")} and '
+            f'{nb.p(dfx.loc["post_sd", "p"], "02B, post_sd / p")}) and on every control except the disclosure '
+            f'gap (p = {nb.p(dfx.loc["delay_w", "p"], "02B, delay_w / p")}). Log total assets is the natural log '
+            f'of Compustat total assets. Leverage is total liabilities divided by total assets. Return on assets '
+            f'is net income divided by total assets. The health-breach flag equals 1 when the breach record lists '
+            f'medical or health information as affected; it applies to '
+            f'{nb.c("desc_full_health_breach_n", "i")} events, all of them other '
+            f'events ({nb.i(hc_t, "constants values.desc_treated_health_breach_n")} registrant events). Prior '
+            f'breach events counts earlier sample events at the same parent filer entity. The disclosure gap is '
+            f'the number of days from the breach date to the agency reporting date; gaps of '
+            f'{nb.d("−30", "scripts/156 (delay floor rule)")} to {nb.d("−1", "scripts/156")} days, '
+            f'where the reporting date precedes the breach date by a field-level error, are set to 0, and values '
+            f'are capped at the in-sample {nb.d("99th", "scripts/163 (P99 winsorization rule)")} percentile (P99), '
+            f'{nb.f(cap, 2, "02A, full / delay_w / max (the P99 cap)")} days. Panel C reports Pearson '
+            f'correlations among the model variables over all {nN["full"]} events, lower triangle only; the column '
+            f'numbers refer to the numbered rows. The largest correlation in absolute value is between '
+            f'registration and log total assets, '
+            f'{nb.r(cor.loc["fcc_form499", "firm_size_log"], 2, "03, fcc_form499 x firm_size_log")}. Percentiles, '
+            f'minima and maxima are in the committed appendix CSV. RET is the CRSP daily stock return and vwretd '
+            f'the CRSP value-weighted market return; CRSP is the Center for Research in Security Prices.')
     return render_table(2, 'Descriptive Statistics by Registration',
                         [('Dependent variable', hdr_ab, group_rows(DV_VARS)),
                          ('Controls', hdr_ab, group_rows(CONTROL_VARS)),
@@ -555,23 +677,45 @@ def table_3():
     g_per = sorted({int(x) for x in gg[gg.anchor != 'TOTAL'].n_specs})
     if len(g_per) != 1:
         sys.exit('Table 3 Panel E: anchors have different specification counts')
-    note = (f'{RECORD_SPEC} Panels A and B: {fmt_int(m.cellN)} notification records; treatment by '
-            f'industry code (SIC 4813, 4841 or 4899 on the record) in Panel A and by Form 499 '
-            f'registration of the parent filer entity in Panel B; quartiles of log market value. '
-            f'Panel C: the same comparison on {fmt_int(cell[("iv_dedup_form499", "main")].cellN)} '
-            f'canonical events (records collapsed to events), with the earlier breach-date-anchored '
-            f'raw-return outcome; its quartiles are of log total assets from the canonical event file. '
-            f'Estimates are the treatment coefficient from OLS of the change in raw-return volatility '
-            f'on treatment and the earlier specification’s controls (pre-period volatility, size, '
-            f'leverage, return on assets, disclosure gap, prior breaches, health-breach flag), within '
-            f'each cell; SEs are HC3 heteroskedasticity-consistent, not clustered. Q1 − Q4 spread = '
-            f'Q1 estimate minus Q4 estimate. Panel D counts records per event in the Panel A–B '
-            f'records. Panel E summarizes the gradient on corrected data across {g_tot} window '
-            f'specifications ({g_per[0]} per anchor date); the full grid, one row per specification, is in '
-            f'the committed CSV outputs/tables/essay2_v2/t31_gradient_grid.csv. Treated parents in '
-            f'Panel C are parent filer entities. SIC = Standard Industrial Classification; Q1–Q4 = '
-            f'size quartiles, Q1 smallest; SE = standard error; OLS = ordinary least squares; HC3 = '
-            f'heteroskedasticity-consistent covariance, type 3; CIK = SEC Central Index Key.')
+    nb = Notes(3)
+    I_, II_, III_, IV_ = 'i_industry_codes_records', 'ii_form499_repaired', 'iii_dedup_sic', 'iv_dedup_form499'
+    q1p = cell[(IV_, 'Q1')]
+    note = (f'Each cell reports the coefficient on treatment from a separate ordinary least squares (OLS) '
+            f'regression of the change in raw-return volatility on treatment and the earlier specification’s '
+            f'controls (pre-period volatility, size, leverage, return on assets, disclosure gap, prior breaches '
+            f'and the health-breach flag), estimated within the sample the row names; the standard error (SE) '
+            f'is in parentheses. {RECORD_SPEC} Panels A and B use '
+            f'{nb.i(m.cellN, f"05A, {I_} / main / cellN")} notification records, quartiles of log market value and '
+            f'HC3 heteroskedasticity-consistent standard errors, which do not account for clustering. Panel A '
+            f'treats a record when its Standard Industrial Classification (SIC) code is '
+            f'{nb.d("4813, 4841 or 4899", "scripts/269 section B (industry-code set)")}; Panel B treats it when '
+            f'its parent filer entity is registered on Federal Communications Commission (FCC) Form 499. Panels A '
+            f'and B estimate on the same records, so their estimates share observations and no test of their '
+            f'difference is reported. Panel C repeats the comparison on '
+            f'{nb.i(cell[(IV_, "main")].cellN, f"05A, {IV_} / main / cellN")} canonical events (records '
+            f'collapsed to events), with the earlier breach-date-anchored raw-return outcome and quartiles of log '
+            f'total assets from the canonical event file; Treated events (parents) gives the treated events and, '
+            f'in parentheses, the treated parent filer entities. The Q1 − Q4 spread is the Q1 estimate minus '
+            f'the Q4 estimate. A p-value below .05 marks a coefficient different from zero under HC3, but '
+            f'treatment varies across few parent filer entities (the Panel C Q1 cell has '
+            f'{nb.i(q1p.treatedN, f"05A, {IV_} / Q1 / treatedN")} treated events at '
+            f'{nb.i(q1p.t_parents, f"05A, {IV_} / Q1 / t_parents")} parent), so the event-level standard errors '
+            f'are too small for this design to support a rejection. Panel D shows how the records concentrate in '
+            f'events: {nb.i(summ["events_with_more_than_one_record"], "05B, summary / events_with_more_than_one_record")} '
+            f'of the {nb.i(summ["events"], "05B, summary / events")} events have more than one record and '
+            f'together supply {nb.i(summ["records_in_multi_record_events"], "05B, summary / records_in_multi_record_events")} '
+            f'records, and the two 2024 events of parent CIK '
+            f'{nb.reg(top.cik, "05B, largest / first row parent CIK", top.cik)} supply '
+            f'{nb.i(sum(int(float(v_)) for v_ in pair.value), "05B, largest / two 2024 rows of that CIK, summed")}. '
+            f'Panel E counts specifications only: across '
+            f'{nb.i(g_tot, "09, TOTAL / n_specs")} window specifications on the corrected data '
+            f'({nb.i(g_per[0], "09, breach and notification / n_specs")} per anchor date, the breach date and the '
+            f'notification date), it reports how many put the Q1 estimate above Q4 '
+            f'({nb.i(gg[gg.anchor == "TOTAL"].q1_gt_q4.iloc[0], "09, TOTAL / q1_gt_q4")}) and how many decline '
+            f'monotonically from Q1 to Q4 ({nb.i(gg[gg.anchor == "TOTAL"].monotone_stepdown.iloc[0], "09, TOTAL / monotone_stepdown")}); '
+            f'the full grid is in the committed CSV outputs/tables/essay2_v2/t31_gradient_grid.csv. Q1 to Q4 are '
+            f'size quartiles, Q1 smallest; HC3 is the heteroskedasticity-consistent covariance estimator, type 3; '
+            f'CIK is the SEC (Securities and Exchange Commission) Central Index Key.')
     return render_table(3, 'How the Size Gradient Is Produced',
                         [('Industry-code treatment on records', hdr_ab,
                           record_panel('i_industry_codes_records')),
@@ -642,18 +786,40 @@ def table_4():
                f'Q1 {n_q1}; Q2\u2013Q3 {int(mi.N) - n_q1 - n_q4}; Q4 {n_q4}']]
     hdr_c = ['Group', 'Records', 'Organizations', 'Change M (SD)', 'Quartile placement (records)']
 
-    note = (f'{RECORD_SPEC} All panels use the {fmt_int(n_all)} notification records; industry-code '
-            f'treatment = SIC 4813, 4841 or 4899 on the record; Form 499 treatment = Form 499 '
-            f'registration of the parent filer entity. Change = change in raw-return volatility. '
-            f'Panel B covers the {fmt_int(q1n)} records in the smallest size quartile (Q1). In Panel C, '
-            f'Q2\u2013Q3 placement is the {fmt_int(mi.N)} records less those in Q1 and Q4; the firm names '
-            f'and SIC codes of the {fmt_int(mi.N)} records are in the committed CSV '
-            f'{MISSED_CSV.relative_to(ROOT).as_posix()}. The pre-repair '
-            f'sensitivity group and the Welch contrasts for the damaged entries are in the committed '
-            f'appendix CSVs. SIC = Standard Industrial Classification; CIK = SEC Central Index Key; '
-            f'Q1–Q4 = size quartiles of log market value, Q1 smallest; M = mean; SD = standard '
-            f'deviation.')
-    return render_table(4, 'Where the Two Definitions Disagree',
+    nb = Notes(4)
+    claim(set(mr.parent_cik) == {'unresolved'}, 'damaged entries resolve to no parent')
+    added_by = {pc: len(g) for pc, g in added.groupby('parent_cik')}
+    note = (f'Each row of Panel A is a group of the {nb.i(n_all, "08A, N summed over the four groups")} '
+            f'notification records, defined by the two treatment definitions: the industry-code definition '
+            f'(Standard Industrial Classification, SIC, code {nb.d("4813, 4841 or 4899", "scripts/269 section B")} '
+            f'on the record) and the Form 499 definition (parent filer entity registered on Federal '
+            f'Communications Commission Form 499). The two definitions disagree on '
+            f'{nb.c("disagree_records", "i")} records. Missed by the codes are Form 499 registrants whose record '
+            f'carries none of the three codes ({nb.i(mi.N, "08A, missed_by_industry_codes / N")} records at '
+            f'{nb.i(mi.orgs, "08A, missed_by_industry_codes / orgs")} organizations). Damaged source entries are '
+            f'the {nb.i(gc.loc["misclassified_repaired"].N, "08A, misclassified_repaired / N")} records coded '
+            f'{nb.reg(str(mr.source_sic.iloc[0]), "07, source_sic", str(mr.source_sic.iloc[0]))} whose organization '
+            f'field holds an AT&T breach label rather than a firm name, so they resolve to no parent filer entity '
+            f'and no registration. Industry code and registrant are records both definitions treat. Neither '
+            f'definition treats are records outside both, the comparison group under either definition. M is the '
+            f'mean and SD the standard deviation; log market value is the earlier dataset’s size variable; '
+            f'change is the change in raw-return volatility under the earlier specification. Panel B splits the '
+            f'{nb.i(q1n, "06A, N_records summed")} records in the smallest size quartile (Q1) by how the two '
+            f'definitions treat them. The added records are treated under Form 499 only: '
+            f'{nb.i(added_by[1609711] if 1609711 in added_by else added_by["1609711"], "06B, added rows, parent_cik 1609711")} '
+            f'from GoDaddy, a domain registrar, and '
+            f'{nb.i(added_by[1447669] if 1447669 in added_by else added_by["1447669"], "06B, added rows, parent_cik 1447669")} '
+            f'from Twilio, a communications platform; their mean change, '
+            f'{nb.f(comp.loc["added"]["mean"], 2, "06A, added / mean")}, compares with '
+            f'{nb.f(comp.loc["never_treated"]["mean"], 2, "06A, never_treated / mean")} for records neither '
+            f'definition treats. Panel C summarizes the {nb.i(mi.N, "08A, missed_by_industry_codes / N")} missed '
+            f'records: {nb.c("q1_added_records", "i")} fall in Q1, {nb.c("missed_q4_records", "i")} in Q4 and the '
+            f'remaining {nb.i(int(mi.N) - n_q1 - n_q4, "08A N minus constants q1_added_records and missed_q4_records")} '
+            f'in Q2 or Q3. The firm names and record SIC codes of the '
+            f'{nb.i(mi.N, "08A, missed_by_industry_codes / N")} records are in the committed CSV '
+            f'{MISSED_CSV.relative_to(ROOT).as_posix()}. {RECORD_SPEC} Q1 to Q4 are quartiles of log market '
+            f'value, Q1 smallest; CIK is the SEC Central Index Key.')
+    return render_table(4, 'Where the Two Treatment Definitions Disagree',
                         [(f'The {fmt_int(n_dis)} disagreement records against the {fmt_int(n_all - n_dis)} '
                           f'agreements', hdr_a, rows_a),
                          ('Records added to the smallest quartile', hdr_b, rows_b),
@@ -723,18 +889,47 @@ def table_5():
                    f'{fmt_int(prev[2])} ({pct(prev[2], cb)})'])
     hdr_d = ['Reason', 'Events', f'Share of {fmt_int(nb)}', 'Registrant events', 'Other events']
 
-    note = (f'{RECORD_SPEC} Panel A lists the {len(rows_a)} legacy identifiers (SEC Central Index Keys) to '
-            f'which the earlier chain attached unrelated organizations; examples show the first two '
-            f'names, and every name is in the committed CSV. Panel B lists the canonical events that '
-            f'the earlier fallback rule would have matched to an earlier, unrelated owner of the same '
-            f'ticker; the current chain blocks the rule and none of the {len(rt)} has a CRSP match. Panel C '
-            f'regresses the earlier dataset’s size variable on each candidate measure; share '
-            f'within = share of records whose absolute gap to the candidate is at most 0.10 or 0.25. '
-            f'Panel D starts from the {fmt_int(nb)} CRSP-matched events notified by December 31, 2024 '
-            f'({fmt_int(tb)} registrant, {fmt_int(cb)} other); retained shares are within group. '
-            f'CIK = SEC Central Index Key; CRSP = Center for Research in Security Prices; PERMNO = CRSP '
-            f'permanent security identifier.')
-    return render_table(5, 'Data Quality',
+    nn = Notes(5)
+    big = ic.assign(norg=[len(x.split('; ')) for x in ic.organizations_absorbed]).sort_values('norg').iloc[-1]
+    meta = rt[rt.ticker == 'META'].iloc[0]
+    dash = rt[rt.ticker == 'DASH'].iloc[0]
+    note = (f'Panel A lists the {nn.c("collision_sinks", "i")} legacy identifiers in the earlier matching chain '
+            f'at which an identifier collision occurred: one Securities and Exchange Commission (SEC) Central '
+            f'Index Key (CIK) absorbed the names of unrelated organizations, so their breach records took on that '
+            f'firm’s stock data. Organizations absorbed counts the distinct organization names on the CIK, '
+            f'Records counts their breach records, and Canonical events with these names counts events in the '
+            f'current chain that carry one of those names; the largest collision, CIK '
+            f'{nn.reg(big.legacy_cik, "10A, legacy_cik with most organizations", big.legacy_cik)}, absorbed '
+            f'{nn.c("collision_max_orgs", "i")} organizations and {nn.i(big.n_records, "10A, n_records of that CIK")} '
+            f'records. Panel B lists the {nn.c("recycled_ticker_events", "i")} events at which ticker reuse would '
+            f'have matched the breached firm to an earlier, unrelated holder of the same ticker symbol: the old '
+            f'fallback rule took the last security to carry the ticker before the breach date, here a security '
+            f'whose ticker had ended years before (in '
+            f'{nn.reg(str(meta.ticker_end_for_assigned)[:4], "10B, META / ticker_end_for_assigned (year)", str(meta.ticker_end_for_assigned))} '
+            f'for META and {nn.reg(str(dash.ticker_end_for_assigned)[:4], "10B, DASH / ticker_end_for_assigned (year)", str(dash.ticker_end_for_assigned))} '
+            f'for DASH). The current chain blocks that rule, and none of the {nn.i(len(rt), "10B, rows")} events has a CRSP match. '
+            f'PERMNO is the CRSP permanent security identifier. Panel C regresses the earlier dataset’s size '
+            f'variable on two candidate measures. Against log market value the slope is '
+            f'{nn.c("sizerec_mktcap_slope", "f", 2)} and the R² {nn.c("sizerec_mktcap_r2", "r", 2)}, so the '
+            f'variable measures market value; against log total assets the slope is '
+            f'{nn.c("sizerec_assets_slope", "f", 2)} and the R² {nn.c("sizerec_assets_r2", "r", 2)}. Share '
+            f'within gives the share of records whose absolute gap to the candidate is at most '
+            f'{nn.d("0.10", "scripts/269 (size reconciliation thresholds)")} or '
+            f'{nn.d("0.25", "scripts/269")}. Panel D starts from the {nn.c("miss_base", "i")} events matched to '
+            f'CRSP and reported by {nn.d("December 31, 2024", "01, step Notification on/before 2024-12-31")} ({nn.i(tb, "01, Notification on/before 2024-12-31 / treated")} '
+            f'registrant and {nn.i(cb, "01, Notification on/before 2024-12-31 / control")} other events). Fewer '
+            f'trading days means the stock lacks the trading days the volatility windows require. No Compustat '
+            f'match means no annual accounting record supplies size, leverage and return on assets. Invalid '
+            f'disclosure date means the reporting date precedes the breach date by more than '
+            f'{nn.d("30", "scripts/156 (delay_invalid rule)")} days, so the disclosure gap is set to missing. '
+            f'Damaged source records are the {nn.c("miss_att", "i")} records whose organization field holds an '
+            f'AT&T breach label rather than a firm name. Retained shares are within each group: '
+            f'{nn.i(prev[1], "01, final row / treated")} of {nn.i(tb, "01, 355 row / treated")} registrant events '
+            f'({nn.f(100 * prev[1] / tb, 1, "01, 104 / 111 x 100")} percent) and '
+            f'{nn.i(prev[2], "01, final row / control")} of {nn.i(cb, "01, 355 row / control")} other events '
+            f'({nn.f(100 * prev[2] / cb, 1, "01, 229 / 244 x 100")} percent). {RECORD_SPEC} CRSP is the Center '
+            f'for Research in Security Prices; R² is the share of variance explained.')
+    return render_table(5, 'Data Quality in the Matching Chain',
                         [('Identifier collisions in the earlier chain', hdr_a, rows_a),
                          ('Reused-ticker matches', hdr_b, rows_b),
                          ('The size-measure defect', hdr_c, rows_c),
@@ -1028,6 +1223,10 @@ def write_set(n, docx_too=False):
     with open(path, 'w', encoding='utf-8', newline='\n') as f:
         f.write(text)
     print(f'wrote {path.relative_to(ROOT)} (tables {SETS[n]}; {no_src} [NO SOURCE] cells)')
+    reg = {str(b['new']): dict(note=b['note'], numbers=NOTE_REG.get(b['new'], [])) for b in blocks}
+    CHECK_DIR.mkdir(parents=True, exist_ok=True)
+    with open(CHECK_DIR / f'note_numbers_set{n}.json', 'w', encoding='utf-8', newline='\n') as f:
+        json.dump(reg, f, indent=1, ensure_ascii=False, sort_keys=True)
     if docx_too:
         write_docx(OUT_DIR / f'Essay2_Tables_Set_{n}.docx', blocks)
         if n == LAST_SET:
