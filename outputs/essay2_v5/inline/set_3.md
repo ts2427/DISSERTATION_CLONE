@@ -36,7 +36,7 @@ Panel B: Adjudication rules
 | Altice USA | Treated | Clause (b): parent of the Altice Wireless filer. |
 | AT&T Services | Treated | Clause (b): part of the AT&T Inc. filing family. |
 | CenturyLink | Treated | Clause (b): CenturyLink and Lumen carrier family (regional local exchange carriers). |
-| DISH Network (on/after 2020-07-01) | Treated | Clause (b): a facilities-based wireless carrier after acquiring Boost Mobile on July 1, 2020; DISH Wireless L.L.C. (FRN 0027852722) and DISH Wireless Puerto Rico L.L.C. (FRN 0029666096) are open registrations on the breach dates. |
+| DISH Network (on or after July 1, 2020) | Treated | Clause (b): a facilities-based wireless carrier after acquiring Boost Mobile on July 1, 2020; DISH Wireless L.L.C. (FRN 0027852722) and DISH Wireless Puerto Rico L.L.C. (FRN 0029666096) are open registrations on the breach dates. |
 | DISH Network | Excluded | Satellite television is not a telecommunications service under § 64.2011, and DISH had no covered wireless operation before July 1, 2020. |
 | NBC Sports | Excluded | No registry match; not a carrier. |
 | ATT-Breach Notification; ATT-SecurityBreach | Excluded | Damaged source entries carrying a breach label in place of a firm name; stock data attach to AT&T, but treatment is excluded. |
