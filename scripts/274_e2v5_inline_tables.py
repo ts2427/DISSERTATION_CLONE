@@ -1046,7 +1046,7 @@ def plain_basis(st, reg):
 # ------------------------------------------------------------------ Table 6
 def table_6():
     reg = appendix_csv('12_form499_registry_matches.csv')
-    names = parent_names()
+    names = filer_names()
     rows_a, tot_rec, tot_ev = [], 0, 0
     order = (reg.groupby('parent_cik').size().sort_values(ascending=False, kind='stable').index)
     for pc in order:
@@ -1057,7 +1057,7 @@ def table_6():
             sys.exit(f'Table 6: events per parent not constant for {pc}')
         a_, b_ = next(iter(span)).split('..')
         n_ebs = int((g.end_before_start == 'True').sum())
-        rows_a.append([names.get(pc, pc), pc, fmt_int(len(g)), fmt_int(g.FRN.nunique()), fmt_int(n_ebs),
+        rows_a.append([names[pc], pc, fmt_int(len(g)), fmt_int(g.FRN.nunique()), fmt_int(n_ebs),
                        fmt_int(next(iter(ev))), f'{a_} to {b_}'])
         tot_rec += len(g)
         tot_ev += next(iter(ev))
@@ -1518,7 +1518,8 @@ def table_13():
     hdr_e = ['Outcome', 'Mean (SE)', 'p', 'Dates', 'Securities']
 
     lo = appendix_csv('24F_announcement_lotpo.csv')
-    rows_f = [[r.deleted_parent, f'{fmt_int(r.deleted_events)} ({fmt_int(r.deleted_treated_events)})',
+    fn = filer_names()
+    rows_f = [[fn[r.deleted_parent_cik], f'{fmt_int(r.deleted_events)} ({fmt_int(r.deleted_treated_events)})',
                f'{fmt_num(r.coef, 3)} ({fmt_num(r.se_cv3, 3)})', fmt_p(r.p_cv3), fmt_int(r.N)] for _, r in lo.iterrows()]
     hdr_f = ['Treated parent removed', 'Events removed (registrant)', 'Estimate (CV3 SE)', 'p', 'N']
 
@@ -2146,6 +2147,52 @@ def emit_missed_registrants():
     print(f'wrote {MISSED_CSV.relative_to(ROOT)}: {len(out)} organizations, {int(out.records.sum())} records')
 
 
+FILER_CSV = V5 / 'parent_filer_names.csv'
+
+
+def _name_key(s):
+    s = re.sub(r'/[A-Z]{2}/', '', str(s).upper())
+    s = s.replace('CORPORATION', 'CORP')
+    return re.sub(r'[^A-Z0-9&]', '', s)
+
+
+def emit_parent_filer_names():
+    """Filer name for each treated parent CIK (Tables 6 Panel A and 13 Panel F).
+
+    Reads committed Data/: the registrant name (conml) that Compustat's company file
+    (Data/wrds_v4/comp_company.csv, scripts/211) records for the CIK. Gated: one name per CIK,
+    every CIK covered, and the name must agree with the SEC company_tickers.json title wherever
+    the SEC file still lists the CIK (it omits delisted filers).
+    """
+    import json
+    ciks = sorted({str(c) for c in appendix_csv('12_form499_registry_matches.csv').parent_cik}
+                  | {str(c) for c in appendix_csv('24F_announcement_lotpo.csv').deleted_parent_cik}, key=int)
+    cc = pd.read_csv(ROOT / 'Data/wrds_v4/comp_company.csv', dtype=str, keep_default_na=False)
+    cc['c'] = cc.cik.str.lstrip('0')
+    sec = {}
+    for v in json.load(open(ROOT / 'Data/edgar/company_tickers.json', encoding='utf-8')).values():
+        sec.setdefault(str(v['cik_str']), set()).add(v['title'])
+    rows = []
+    for c in ciks:
+        nm = set(cc.loc[cc.c == c, 'conml'])
+        if len(nm) != 1:
+            sys.exit(f'parent filer names: CIK {c} has {len(nm)} Compustat names')
+        nm = nm.pop()
+        st = sec.get(c, set())
+        if any(_name_key(t) != _name_key(nm) for t in st):
+            sys.exit(f'parent filer names: CIK {c} {nm!r} disagrees with SEC {st}')
+        rows.append(dict(cik=c, filer_name=nm, sec_tickers_title='; '.join(sorted(st))))
+    pd.DataFrame(rows).to_csv(FILER_CSV, index=False, lineterminator='\n', encoding='utf-8')
+    print(f'wrote {FILER_CSV.relative_to(ROOT)}: {len(rows)} CIKs '
+          f'({sum(1 for r in rows if r["sec_tickers_title"])} confirmed in the SEC ticker file)')
+
+
+def filer_names():
+    if not FILER_CSV.exists():
+        sys.exit(f'missing committed source {FILER_CSV.relative_to(ROOT)} (run --parent-names)')
+    return {r.cik: r.filer_name for _, r in read_csv(FILER_CSV).iterrows()}
+
+
 # ------------------------------------------------------------------ Word output
 LAST_SET = 9
 FIXED_TIME = (1980, 1, 1, 0, 0, 0)
@@ -2406,6 +2453,8 @@ def main():
     g.add_argument('--layout', action='store_true')
     g.add_argument('--missed-registrants', action='store_true',
                    help=f'write {MISSED_CSV.name} (reads committed Data/, as scripts/269 does)')
+    g.add_argument('--parent-names', action='store_true',
+                   help=f'write {FILER_CSV.name} (reads committed Data/wrds_v4 and Data/edgar)')
     g.add_argument('--constants', action='store_true',
                    help='write constants_parts/274.json (then merge with scripts/270)')
     ap.add_argument('--docx', action='store_true',
@@ -2417,6 +2466,8 @@ def main():
     check_layout()
     if a.missed_registrants:
         emit_missed_registrants()
+    elif a.parent_names:
+        emit_parent_filer_names()
     elif a.constants:
         emit_constants()
     elif a.layout:

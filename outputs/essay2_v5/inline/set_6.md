@@ -52,18 +52,18 @@ Panel F: Leaving out one treated parent filer entity
 
 | Treated parent removed | Events removed (registrant) | Estimate (CV3 SE) | p | N |
 |:---|---:|---:|---:|---:|
-| Sprint Corporation | 9 (9) | 0.329 (0.153) | .035 | 324 |
-| Twilio | 2 (2) | 0.381 (0.190) | .049 | 331 |
-| DISH Network, LLC | 2 (2) | 0.403 (0.194) | .041 | 331 |
-| GoDaddy.com, LLC | 3 (3) | 0.410 (0.198) | .042 | 330 |
-| Verizon | 11 (10) | 0.420 (0.204) | .043 | 322 |
-| Charter Communications, Inc. | 8 (8) | 0.423 (0.205) | .043 | 325 |
-| T-Mobile USA, Inc. | 26 (26) | 0.435 (0.242) | .076 | 307 |
-| Cable One, Inc. | 2 (2) | 0.450 (0.207) | .032 | 331 |
-| Frontier Communications Parent, Inc. | 4 (4) | 0.458 (0.210) | .032 | 329 |
-| Comcast Cable Communications LLC | 12 (9) | 0.465 (0.214) | .033 | 321 |
-| CenturyLink | 5 (5) | 0.467 (0.208) | .028 | 328 |
-| AT&T | 24 (24) | 0.506 (0.203) | .015 | 309 |
+| Sprint Corp | 9 (9) | 0.329 (0.153) | .035 | 324 |
+| Twilio Inc | 2 (2) | 0.381 (0.190) | .049 | 331 |
+| DISH Network Corp | 2 (2) | 0.403 (0.194) | .041 | 331 |
+| GoDaddy Inc | 3 (3) | 0.410 (0.198) | .042 | 330 |
+| Verizon Communications Inc | 11 (10) | 0.420 (0.204) | .043 | 322 |
+| Charter Communications Inc | 8 (8) | 0.423 (0.205) | .043 | 325 |
+| T-Mobile US Inc | 26 (26) | 0.435 (0.242) | .076 | 307 |
+| Cable One Inc | 2 (2) | 0.450 (0.207) | .032 | 331 |
+| Frontier Communications Parent Inc | 4 (4) | 0.458 (0.210) | .032 | 329 |
+| Comcast Corp | 12 (9) | 0.465 (0.214) | .033 | 321 |
+| Lumen Technologies Inc | 5 (5) | 0.467 (0.208) | .028 | 328 |
+| AT&T Inc | 24 (24) | 0.506 (0.203) | .015 | 309 |
 
 Panel G: Sensitivities
 

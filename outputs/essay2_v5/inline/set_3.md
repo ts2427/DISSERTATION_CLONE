@@ -6,18 +6,18 @@ Panel A: Registry records matched to each treated parent filer entity
 
 | Parent filer entity | CIK | Registry records matched | Distinct FRNs | End date before start date | Registrant events | Breach dates |
 |:---|---:|---:|---:|---:|---:|---:|
-| Verizon | 732712 | 202 | 186 | 0 | 10 | 2008-06-27 to 2024-02-06 |
-| AT&T | 732717 | 114 | 108 | 0 | 24 | 2008-05-23 to 2024-04-14 |
-| CenturyLink | 18926 | 95 | 93 | 0 | 5 | 2013-12-27 to 2022-03-15 |
-| Charter Communications, Inc. | 1091667 | 85 | 80 | 1 | 8 | 2008-07-14 to 2023-09-01 |
-| Frontier Communications Parent, Inc. | 20520 | 61 | 61 | 0 | 4 | 2022-02-24 to 2024-06-10 |
-| Sprint Corporation | 101830 | 39 | 34 | 0 | 9 | 2009-02-01 to 2019-06-22 |
-| Comcast Cable Communications LLC | 1166691 | 31 | 28 | 0 | 9 | 2008-01-29 to 2024-10-04 |
-| T-Mobile USA, Inc. | 1283699 | 22 | 21 | 1 | 26 | 2014-01-02 to 2023-04-28 |
-| Cable One, Inc. | 1632127 | 13 | 13 | 0 | 2 | 2019-03-01 to 2019-08-08 |
-| DISH Network, LLC | 1001082 | 5 | 5 | 0 | 2 | 2023-02-22 to 2023-05-17 |
-| Twilio | 1447669 | 2 | 2 | 0 | 2 | 2022-08-04 to 2024-04-01 |
-| GoDaddy.com, LLC | 1609711 | 2 | 2 | 0 | 3 | 2019-10-16 to 2022-03-14 |
+| Verizon Communications Inc | 732712 | 202 | 186 | 0 | 10 | 2008-06-27 to 2024-02-06 |
+| AT&T Inc | 732717 | 114 | 108 | 0 | 24 | 2008-05-23 to 2024-04-14 |
+| Lumen Technologies Inc | 18926 | 95 | 93 | 0 | 5 | 2013-12-27 to 2022-03-15 |
+| Charter Communications Inc | 1091667 | 85 | 80 | 1 | 8 | 2008-07-14 to 2023-09-01 |
+| Frontier Communications Parent Inc | 20520 | 61 | 61 | 0 | 4 | 2022-02-24 to 2024-06-10 |
+| Sprint Corp | 101830 | 39 | 34 | 0 | 9 | 2009-02-01 to 2019-06-22 |
+| Comcast Corp | 1166691 | 31 | 28 | 0 | 9 | 2008-01-29 to 2024-10-04 |
+| T-Mobile US Inc | 1283699 | 22 | 21 | 1 | 26 | 2014-01-02 to 2023-04-28 |
+| Cable One Inc | 1632127 | 13 | 13 | 0 | 2 | 2019-03-01 to 2019-08-08 |
+| DISH Network Corp | 1001082 | 5 | 5 | 0 | 2 | 2023-02-22 to 2023-05-17 |
+| Twilio Inc | 1447669 | 2 | 2 | 0 | 2 | 2022-08-04 to 2024-04-01 |
+| GoDaddy Inc | 1609711 | 2 | 2 | 0 | 3 | 2019-10-16 to 2022-03-14 |
 | All treated parent filer entities |  | 671 |  |  | 104 |  |
 
 Panel B: Adjudication rules
