@@ -3248,7 +3248,7 @@
 "scripts/213_stage3_verify.py": "2c69769e8f8b43def66addeec03292eb1b9051d9f689361e7037c174cb644241",
 "scripts/214_corrections_v4.py": "a32fd6d22ae2d117d2942140012efa1696cd0ceb7396741798bac907263e714b",
 "scripts/215_ledger_v4.py": "0dee0b48902e49ae105ff7978531d83e1e3471e1010e59f6960c1d75468904ef",
-"scripts/217_v4_offline_tests.py": "36c97ac5bade7fc83e275d496833d4f0512fe6f309d802a65297044abe735b75",
+"scripts/217_v4_offline_tests.py": "128e0d884568e47defd82d712bc0892712a98fdd0f6bf31e496c2b2fcb0396e5",
 "scripts/218_v4_common.py": "d9812cec0ca4737cd8518d452208dbcb29c1bad5b2b55c01fbc1ff39e75303c2",
 "scripts/219_wrds_funda_v4.py": "5c2ccaa4ca935ae17573862174a3e00f575b5bbf4bf2c49517b5fa29dc002bbf",
 "scripts/220_essay3_v4_classifier_v2.py": "c921735e6e4d3669ae3edba3c9063afd7e42cb8446d106d6fda7af9c0b7e0f41",
