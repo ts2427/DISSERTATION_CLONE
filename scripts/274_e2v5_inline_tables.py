@@ -79,6 +79,7 @@ SETS = {
     2: [3, 4, 5],
     3: [6, 7, 8],
     4: [9, 10, 11],
+    5: [12],
 }
 
 # new table number -> renderer. Each renderer returns the markdown block
@@ -1293,6 +1294,130 @@ def table_11():
 
 
 RENDERERS.update({9: table_9, 10: table_10, 11: table_11})
+
+
+def win(w):
+    """'[+1,+20]' -> '[+1, +20]' with true minus signs."""
+    return minus_all(str(w).replace(',', ', ').replace(',  ', ', '))
+
+
+def minus_all(t):
+    return re.sub(r'(?<![\w])-(?=\d)', MINUS, t)
+
+
+def est(r, se_col='se_cv3'):
+    return f'{fmt_num(r.coef, 3)} ({fmt_num(r[se_col], 3)})'
+
+
+# ------------------------------------------------------------------ Table 12
+def table_12():
+    dp_ = appendix_csv('21_dynamic_path.csv')
+    rows_a = [[win(r.post_window), est(r), fmt_p(r.p_cv3), fmt_p(r.bh_adj_p), fmt_p(r.p_wcr), fmt_ci(r.ci3_lo, r.ci3_hi)]
+              for _, r in dp_.iterrows()]
+    hdr_a = ['Post-window', 'Estimate (CV3 SE)', 'p', 'BH-adjusted p', 'Wild cluster p', '95% CI']
+
+    bm = appendix_csv('22A_benchmarks.csv')
+    blab = {'mkt_adj': 'Market-adjusted', 'mm': 'Market model', 'ff3': 'Fama–French three-factor'}
+    rows_b = [[blab[r.benchmark], win(r.post_window), est(r), fmt_p(r.p_cv3), fmt_int(r.N),
+               fmt_ci(r.ci3_lo, r.ci3_hi)] for _, r in bm.iterrows()]
+    hdr_b = ['Benchmark', 'Post-window', 'Estimate (CV3 SE)', 'p', 'N', '95% CI']
+
+    ct = appendix_csv('22B_estimation_contamination.csv')
+    glab = {'treated': 'Form 499 registrant events', 'control': 'Other events', 'all': 'All events'}
+    rows_c = []
+    for g in ['treated', 'control', 'all']:
+        a_ = ct[(ct.group == g) & (ct.definition == 'est_contaminated_by_notification')].iloc[0]
+        b_ = ct[(ct.group == g) & (ct.definition == 'est_contaminated_by_breach_date')].iloc[0]
+        rows_c.append([glab[g], fmt_int(a_.events), fmt_int(a_.contaminated), apa_share(a_.share, 2),
+                       fmt_int(b_.contaminated), apa_share(b_.share, 2)])
+    hdr_c = ['Group', 'Events', 'Earlier notification in window', 'Share', 'Earlier breach date in window', 'Share']
+
+    cv = appendix_csv('22C_coverage_drops.csv')
+    cv['spec'] = cv.window.str.extract(r', ([^,]+)$')[0].str.strip()
+    cv['pre'] = cv.window.str.extract(r'pre (\[[^\]]+\])')[0]
+    slab = {'market-adjusted': 'Market-adjusted', 'mm': 'Market model', 'ff3': 'Fama–French three-factor'}
+    rows_d = []
+    for (pre, spec), g in cv[~cv.window.str.startswith('PRIMARY')].groupby(['pre', 'spec'], sort=False):
+        cols = ['dropped', 'dropped_treated', 'dropped_control', 'surviving', 'surviving_G']
+        if len(g[cols].drop_duplicates()) != 1:
+            sys.exit(f'Table 12 Panel D: drops differ across post-windows for {pre} {spec}')
+        r = g.iloc[0]
+        rows_d.append([f'{slab[spec]}, pre-window {win(pre)}', fmt_int(r.dropped), fmt_int(r.dropped_treated),
+                       fmt_int(r.dropped_control), fmt_int(r.surviving), fmt_int(r.surviving_G)])
+    hdr_d = ['Benchmark and pre-window (all three post-windows)', 'Dropped', 'Registrant dropped', 'Other dropped',
+             'Events kept', 'Parents kept (G)']
+
+    alt = appendix_csv('23_alternatives_bridge.csv')
+    alab = []
+    for r in alt.row:
+        if r.startswith('ALT'):
+            w_ = re.search(r'pre (\[[^\]]+\]) / post (\[[^\]]+\])', r)
+            alab.append(f'Pre-window {win(w_.group(1))}, post-window {win(w_.group(2))}, market-adjusted')
+        elif r.startswith('BRIDGE a'):
+            alab.append('Bridge a: raw log returns, [−25, −5] / [+5, +25], committed earlier outcome')
+        elif r.startswith('BRIDGE b'):
+            alab.append('Bridge b: raw log returns, [−25, −5] / [+5, +25], current calendar and 80% rule')
+        elif r.startswith('BRIDGE c'):
+            alab.append('Bridge c: market-adjusted simple returns, [−25, −5] / [+5, +25]')
+        else:
+            alab.append('Bridge d (primary): market-adjusted simple returns, [−60, −11] / [+1, +20]')
+    rows_e = [[lab_, est(r), fmt_p(r.p_cv3), fmt_ci(r.ci3_lo, r.ci3_hi)] for lab_, (_, r) in zip(alab, alt.iterrows())]
+    hdr_e = ['Specification', 'Estimate (CV3 SE)', 'p', '95% CI']
+
+    nb = Notes(12)
+    claim(all(float(x) >= .05 for x in list(dp_.p_cv3) + list(bm.p_cv3) + list(alt.p_cv3)), 'nothing rejects')
+    mm = cv[cv.spec == 'mm'].iloc[0]
+    from collections import Counter as _C
+    dropped_orgs = _C(x.split(':')[0].rsplit(' ', 1)[0] for x in mm.reasons.split('; '))
+    claim(sum(dropped_orgs.values()) == int(mm.dropped), 'coverage reasons list every dropped event')
+    org_list = '; '.join(f'{o} ({nb.i(k, "22C, mm / reasons, events of " + o)})'
+                         for o, k in sorted(dropped_orgs.items(), key=lambda kv: (-kv[1], kv[0])))
+    allc = ct[ct.group == 'all']
+    note = (f'Each row re-estimates the primary model M4 with one change and reports the Form 499 registrant '
+            f'coefficient, its CV3 standard error (SE) in parentheses, its p-value and its 95 percent confidence '
+            f'interval (CI); the analytical sample has N = {nb.c("primary_N", "i")} events and G = '
+            f'{nb.c("primary_G", "i")} parent filer entities ({nb.c("primary_G1", "i")} with registrant events) '
+            f'unless the N column shows otherwise. CV3 is the cluster jackknife standard error, clustered by parent '
+            f'filer entity, with p-values from the t distribution with G − 1 degrees of freedom. Panel A varies '
+            f'the post-window, the trading days after the agency reporting date over which volatility is measured, '
+            f'from {nb.d("[+1, +5]", "21, post_window")} to {nb.d("[+1, +20]", "21, post_window")}, against the '
+            f'pre-window {nb.d("[−60, −11]", "constants primary_outcome")}. The three windows form one '
+            f'family of {nb.i(len(dp_), "21, rows (family size)")} tests, and the BH-adjusted p applies the '
+            f'Benjamini–Hochberg false-discovery-rate adjustment within that family; the wild cluster p comes '
+            f'from the restricted wild cluster bootstrap with Rademacher weights. Every window must have at least '
+            f'{nb.d("80", "scripts/264 (coverage rule)")} percent of its trading days with returns, the 80 percent '
+            f'coverage rule. Panel B replaces the market adjustment (RET − vwretd, the stock return minus the '
+            f'value-weighted market return) with abnormal returns from the market model and from the Fama–French '
+            f'three-factor (FF3) model, both estimated over trading days {nb.d("[−250, −30]", "22C reasons / scripts/263 EST_WIN")}; '
+            f'{nb.i(mm.dropped, "22C, mm rows / dropped")} events '
+            f'({nb.i(mm.dropped_treated, "22C, mm rows / dropped_treated")} registrant event) drop because their '
+            f'estimation window has less than 80 percent coverage, by organization {org_list}, which leaves '
+            f'{nb.i(mm.surviving, "22C, mm / surviving")} events and {nb.i(mm.surviving_G, "22C, mm / surviving_G")} '
+            f'parents. Panel C counts contaminated estimation windows: an estimation window is contaminated when '
+            f'another event at the same parent filer entity falls inside it, counted once by that event’s '
+            f'notification date and once by its breach date. The counts exclude the focal event itself and events '
+            f'in its own Gate 2 chain, after the correction of {nb.d("November 13, 2026", "scripts/264 contamination comment (fixed 2026-11-13)")} that stopped an event’s own '
+            f'breach date counting against it; across all events the shares are '
+            f'{nb.r(allc[allc.definition == "est_contaminated_by_notification"].share.iloc[0], 2, "22B, all / notification / share")} '
+            f'by notification date and {nb.r(allc[allc.definition == "est_contaminated_by_breach_date"].share.iloc[0], 2, "22B, all / breach date / share")} '
+            f'by breach date. Panel D lists the coverage-rule drops for each benchmark and pre-window; the primary '
+            f'market-adjusted windows drop no event. Panel E builds the outcome step by step from the earlier '
+            f'construction to the current one: bridge a is the committed earlier outcome, the change in the SD of '
+            f'raw log returns between {nb.d("[−25, −5]", "23, bridge rows")} and '
+            f'{nb.d("[+5, +25]", "23, bridge rows")}; bridge b recomputes it on the current trading calendar with '
+            f'the 80 percent rule; bridge c switches to market-adjusted simple returns on the same windows; bridge d '
+            f'moves to the current windows and is the primary estimate. The first rows of Panel E start the '
+            f'pre-window at day {nb.d("−45", "23, ALT rows")} instead of {nb.d("−60", "constants primary_outcome")}. '
+            f'No row gives p below .05. SD is the standard deviation; RET and vwretd are from the Center for Research '
+            f'in Security Prices (CRSP).')
+    return render_table(12, 'Robustness of the Main Estimate',
+                        [('Post-window length', hdr_a, rows_a), ('Return benchmark', hdr_b, rows_b),
+                         ('Estimation-window contamination', hdr_c, rows_c),
+                         ('Events dropped by the 80% coverage rule', hdr_d, rows_d),
+                         ('Alternative pre-window and the bridge from the earlier outcome', hdr_e, rows_e)], note)
+
+
+RENDERERS.update({12: table_12})
 
 
 # ------------------------------------------------------------------ constants
