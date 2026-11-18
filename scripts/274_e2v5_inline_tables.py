@@ -8,6 +8,7 @@ is printed as [NO SOURCE].
 
     python scripts/274_e2v5_inline_tables.py --set N
     python scripts/274_e2v5_inline_tables.py --layout     # print the old->new map
+    python scripts/274_e2v5_inline_tables.py --constants  # constants_parts/274.json (merge: scripts/270)
 
 Writes outputs/essay2_v5/inline/set_N.md. Deterministic: a rerun on the same
 committed inputs writes byte-identical output (UTF-8, LF line endings, sorted
@@ -43,7 +44,8 @@ OUT_DIR = V5 / 'inline'
 
 MINUS = '\u2212'
 NO_SOURCE = '[NO SOURCE]'
-MAX_COLS = 7  # no panel wider than 7 columns
+MAX_COLS = 7  # no panel wider than 7 columns (correlation matrices excepted)
+CORRELATION = 'correlation'
 
 # ------------------------------------------------------------------ layout
 # new table number -> old appendix table numbers (scripts/269 numbering).
@@ -201,8 +203,9 @@ def _cell(s):
     return str(s).replace('|', '\\|').replace('\n', ' ')
 
 
-def md_table(header, rows):
-    if len(header) > MAX_COLS:
+def md_table(header, rows, wide_ok=False):
+    """wide_ok: the correlation-matrix exception to the 7-column limit (rules, 2026-11-18)."""
+    if len(header) > MAX_COLS and not wide_ok:
         sys.exit(f'panel has {len(header)} columns (max {MAX_COLS}); split it')
     for r in rows:
         if len(r) != len(header):
@@ -218,12 +221,16 @@ def panel_letter(i):
 
 
 def render_table(new, title, panels, note):
-    """panels: list of (panel title, header, rows). One panel -> no panel label."""
+    """panels: list of (panel title, header, rows[, CORRELATION]). One panel -> no panel label.
+
+    A fourth element CORRELATION marks a correlation matrix, the one panel type allowed
+    past the 7-column limit.
+    """
     out = [f'**Table {new}**', '', f'*{title}*', '']
-    for i, (ptitle, header, rows) in enumerate(panels):
+    for i, (ptitle, header, rows, *kind) in enumerate(panels):
         if len(panels) > 1:
             out += [f'Panel {panel_letter(i)}: {ptitle}', '']
-        out += [md_table(header, rows), '']
+        out += [md_table(header, rows, wide_ok=kind == [CORRELATION]), '']
     out.append(f'*Note.* {note}')
     return '\n'.join(out) + '\n'
 
@@ -407,34 +414,18 @@ def table_2():
     cor = appendix_csv('03_correlations_v5.csv').set_index('variable')
     if list(cor.index) != CORR_ORDER or list(cor.columns) != CORR_ORDER:
         sys.exit('Table 2: correlation matrix order changed')
-    lab = [f'{i + 1}. {VAR_LABELS[v]}' for i, v in enumerate(CORR_ORDER)]
-
-    def corr_panel(cols):
-        rows = []
-        for i, v in enumerate(CORR_ORDER):
-            if i < cols[0]:
-                continue
-            rows.append([lab[i]] + [fmt_num(cor.loc[v, CORR_ORDER[j]], 2) if j <= i else ''
-                                    for j in cols])
-        return ['Variable'] + [str(j + 1) for j in cols], rows
-
-    hdr_c, rows_c = corr_panel(range(0, 6))
-    hdr_d, rows_d = corr_panel(range(6, 9))
-
-    hdr_dist = ['Variable', 'M (SD)', 'Median', '25th percentile', '75th percentile', 'Minimum',
-                'Maximum']
-
-    def dist_rows(g):
-        return [[VAR_LABELS[v], ms(g, v)] + [fmt_num(cell[(g, v)][k], 2)
-                                             for k in ('median', 'p25', 'p75', 'min', 'max')]
-                for v in DV_VARS + CONTROL_VARS]
+    hdr_c = ['Variable'] + [f'({j + 1})' for j in range(len(CORR_ORDER))]
+    rows_c = [[f'({i + 1}) {VAR_LABELS[v]}'] +
+              [fmt_num(cor.loc[v, CORR_ORDER[j]], 2) if j <= i else '' for j in range(len(CORR_ORDER))]
+              for i, v in enumerate(CORR_ORDER)]
 
     note = (f'Sample: {n["full"]} events ({n["treated"]} {GROUP_TREATED} events, '
             f'{n["control"]} other-firm events). Dependent variable: {DV_WORDS}; the pre- and '
             f'post-window rows give the two levels. Difference = {GROUP_TREATED} mean '
             f'minus other-firm mean; Welch t and p are from the unequal-variance two-sample '
             f't test, with Welch–Satterthwaite df. Correlations are Pearson, lower triangle, '
-            f'over all {n["full"]} events. Log total assets = natural log of Compustat total '
+            f'over all {n["full"]} events; column numbers refer to the numbered rows. Percentiles, '
+            f'minima and maxima are in the committed appendix CSV. Log total assets = natural log of Compustat total '
             f'assets; leverage = total liabilities / total assets; return on assets = net income '
             f'/ total assets; health-breach flag = 1 when the record lists medical or health '
             f'information as affected or the organization is a medical organization; prior '
@@ -447,16 +438,42 @@ def table_2():
     return render_table(2, 'Descriptive Statistics by Registration',
                         [('Dependent variable', hdr_ab, group_rows(DV_VARS)),
                          ('Controls', hdr_ab, group_rows(CONTROL_VARS)),
-                         ('Correlations of model variables, variables 1–6', hdr_c, rows_c),
-                         ('Correlations of model variables, variables 7–9', hdr_d, rows_d),
-                         (f'Distribution, all events (N = {n["full"]})', hdr_dist, dist_rows('full')),
-                         (f'Distribution, {GROUP_TREATED} events (N = {n["treated"]})',
-                          hdr_dist, dist_rows('treated')),
-                         (f'Distribution, other-firm events (N = {n["control"]})',
-                          hdr_dist, dist_rows('control'))], note)
+                         ('Correlations of model variables', hdr_c, rows_c, CORRELATION)], note)
 
 
 RENDERERS.update({1: table_1, 2: table_2})
+
+
+# ------------------------------------------------------------------ constants
+T1 = ROOT / 'outputs' / 'tables' / 'essay2_v2' / 't1_final_sample.csv'
+PART = V5 / 'constants_parts' / '274.json'
+
+
+def emit_constants():
+    """Counts the prose cites that had no direct committed source; writes constants_parts/274.json.
+
+    Health-breach counts by group come from the committed analytical sample (t1, the file
+    scripts/269 reads for the 02A descriptives) and are cross-checked against 02A mean x N.
+    Merge into constants_essay2.json with scripts/270.
+    """
+    fin = pd.read_csv(T1, low_memory=False)
+    if len(fin) != 333:
+        sys.exit(f't1 has {len(fin)} rows, not 333')
+    d = appendix_csv('02A_descriptives_v5.csv')
+    out = {}
+    for grp, m in [('full', fin.fcc_form499 >= 0), ('treated', fin.fcc_form499 == 1),
+                   ('control', fin.fcc_form499 == 0)]:
+        h = fin.loc[m, 'health_breach'].astype(float)
+        if h.isna().any() or not h.isin([0, 1]).all():
+            sys.exit(f'health_breach not 0/1 in group {grp}')
+        k = int(h.sum())
+        r = d[(d.group == grp) & (d.variable == 'health_breach')].iloc[0]
+        if abs(float(r['mean']) * int(r.N) - k) > 1e-9 or int(r.N) != len(h):
+            sys.exit(f'health-breach count {k} disagrees with 02A for group {grp}')
+        out[f'desc_{grp}_health_breach_n'] = k
+    with open(PART, 'w', encoding='utf-8', newline='\n') as f:
+        f.write(json.dumps(out, indent=1, sort_keys=True) + '\n')
+    print(f'wrote {PART.relative_to(ROOT)}: {out}')
 
 
 # ------------------------------------------------------------------ main
@@ -489,9 +506,13 @@ def main():
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument('--set', type=int, dest='set_n')
     g.add_argument('--layout', action='store_true')
+    g.add_argument('--constants', action='store_true',
+                   help='write constants_parts/274.json (then merge with scripts/270)')
     a = ap.parse_args()
     check_layout()
-    if a.layout:
+    if a.constants:
+        emit_constants()
+    elif a.layout:
         print_layout()
     else:
         write_set(a.set_n)

@@ -22,7 +22,10 @@ from pathlib import Path
 
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 ROOTS = ['outputs', 'Data', 'docs', 'scripts']
-SKIP = re.compile(r'^(outputs/essay2_v5/|outputs/essay2_check/)|/__pycache__/|\.pyc$')
+# scripts/274 (inline Results tables) and its outputs are edited per set; excluded 2026-11-18 (Tim)
+# so the snapshot is not re-taken per set. outputs/essay2_v5/ already covers outputs/essay2_v5/inline/.
+SKIP = re.compile(r'^(outputs/essay2_v5/|outputs/essay2_v5/inline/|outputs/essay2_check/|'
+                  r'scripts/274_e2v5_inline_tables\.py$)|/__pycache__/|\.pyc$')
 ALLOWED_NEW = re.compile(r'^(outputs/essay2_v5/|outputs/essay2_check/|Data/wrds_e2v5/|'
                          r'scripts/2(6[2-9]|7[0-9])_e2v5_[a-z0-9_]+\.py$)')
 # Essay 1 / Essay 3 outputs and constants (the closed essays)
