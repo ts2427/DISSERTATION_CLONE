@@ -80,6 +80,7 @@ SETS = {
     3: [6, 7, 8],
     4: [9, 10, 11],
     5: [12],
+    6: [13],
 }
 
 # new table number -> renderer. Each renderer returns the markdown block
@@ -1418,6 +1419,145 @@ def table_12():
 
 
 RENDERERS.update({12: table_12})
+
+
+def ladder_rows(ld):
+    lab = {'OLS (classical)': 'OLS, classical', 'HC1': 'HC1', 'HC3': 'HC3',
+           'CV1 parent filer entity': 'CV1, parent filer entity',
+           'CV3 cluster jackknife (PRIMARY)': 'CV3, parent filer entity (primary)'}
+    rows = []
+    for _, r in ld.iterrows():
+        name = lab.get(r.rung) or (r.rung.replace('WCR restricted Rademacher', 'Wild cluster, restricted, Rademacher weights')
+                                   .replace('WCU unrestricted Rademacher', 'Wild cluster, unrestricted, Rademacher weights')
+                                   .replace('WCR Webb six-point', 'Wild cluster, restricted, Webb weights'))
+        rows.append([name, fmt_num(r.se, 3) if str(r.se).strip() else '—',
+                     fmt_int(float(r.df)) if str(r.df).strip() else '—', fmt_p(r.p),
+                     fmt_ci(r.ci_lo, r.ci_hi) if str(r.ci_lo).strip() else '—'])
+    return ['Procedure', 'SE', 'df', 'p', '95% CI'], rows
+
+
+# ------------------------------------------------------------------ Table 13
+def table_13():
+    fam = appendix_csv('24A_announcement_family.csv')
+    tlab = {'earnings elevation (mean)': 'Elevation on earnings dates (mean)',
+            'breach elevation (mean)': 'Elevation on breach reporting dates (mean)',
+            'breach minus earnings (contrast)': 'Breach minus earnings (contrast)',
+            'Form 499 on breach elevation (pre-specified)': 'Form 499 registrant on breach elevation (pre-specified)'}
+    rows_a = []
+    for _, r in fam.iterrows():
+        lab_ = tlab.get(r.test, 'Bridge: registrant on elevation, committed market-model definition')
+        rows_a.append([lab_, f'{fmt_num(r.coef, 3)} ({fmt_num(r.se, 3)})', fmt_p(r.p),
+                       fmt_p(r.bh_adj_p) if str(r.bh_adj_p).strip() else '—', fmt_int(r.N), fmt_int(r.clusters),
+                       r.inference.replace('CV1 by security', 'CV1, security').replace('CV1 by parent filer entity', 'CV1, parent')
+                       .replace('CV3 by parent filer entity', 'CV3, parent').replace('CV3', 'CV3, parent') if r.inference != 'CV3' else 'CV3, parent'])
+    rows_a = [[*r_[:6], r_[6].replace('CV3, parent, parent', 'CV3, parent')] for r_ in rows_a]
+    hdr_a = ['Test', 'Estimate (SE)', 'p', 'BH-adjusted p', 'N', 'Clusters', 'SE']
+
+    hdr_b, rows_b = ladder_rows(appendix_csv('24B_announcement_ladder.csv'))
+
+    bu = appendix_csv('24C_announcement_buildup.csv')
+    blab = {'unadjusted (Form 499 only)': 'Registrant indicator only',
+            '+ baseline SD': '+ baseline-window SD', '+ baseline SD + ln assets': '+ baseline-window SD and log total assets',
+            'full (pre-specified)': 'All controls (pre-specified)'}
+    rows_c = [[blab[r.step], f'{fmt_num(r.coef, 3)} ({fmt_num(r.se_cv3, 3)})', fmt_p(r.p_cv3), apa_share(r.share_of_movement, 2)]
+              for _, r in bu.iterrows()]
+    hdr_c = ['Controls', 'Estimate (CV3 SE)', 'p', 'Share of the movement']
+
+    pl = appendix_csv('24D_placebo_dates.csv')
+    olab = {'primary DV': 'Change in abnormal return volatility (primary)', 'announcement elevation': 'Announcement elevation'}
+    rows_d = [[olab[r.outcome], fmt_num(r.actual, 3), f'{fmt_num(r.placebo_mean, 3)} ({fmt_num(r.placebo_sd, 3)})',
+               fmt_int(r.draws_abs_ge_actual), fmt_int(r.draws_cv3_p_lt_05), fmt_int(r.draws)] for _, r in pl.iterrows()]
+    hdr_d = ['Outcome', 'Actual estimate', 'Placebo mean (SD)', 'Draws at least as large', 'Draws with p < .05', 'Draws']
+
+    eb = appendix_csv('24E_earnings_benchmark.csv')
+    elab = {'primary DV on earnings dates': 'Change in volatility, earnings dates',
+            'elevation on earnings dates': 'Elevation, earnings dates',
+            'primary DV on breach dates (sample mean)': 'Change in volatility, breach reporting dates (sample mean)'}
+    rows_e = [[elab[r.outcome], f'{fmt_num(r["mean"], 3)}' + (f' ({fmt_num(r.se, 3)})' if str(r.se).strip() else ''),
+               fmt_p(r.p) if str(r.p).strip() else '—', fmt_int(r.N_announcements), fmt_int(r.securities)]
+              for _, r in eb.iterrows()]
+    hdr_e = ['Outcome', 'Mean (SE)', 'p', 'Dates', 'Securities']
+
+    lo = appendix_csv('24F_announcement_lotpo.csv')
+    rows_f = [[r.deleted_parent, f'{fmt_int(r.deleted_events)} ({fmt_int(r.deleted_treated_events)})',
+               f'{fmt_num(r.coef, 3)} ({fmt_num(r.se_cv3, 3)})', fmt_p(r.p_cv3), fmt_int(r.N)] for _, r in lo.iterrows()]
+    hdr_f = ['Treated parent removed', 'Events removed (registrant)', 'Estimate (CV3 SE)', 'p', 'N']
+
+    se_ = pd.read_csv(V5 / 'v5_t18b_announcement_sensitivities.csv', dtype=str, keep_default_na=False)
+    slab = {'base (scripts/265)': 'Pre-specified model',
+            '+ severity (ln records + vector FE)': '+ breach severity (log records and attack-vector fixed effects)',
+            '+ flexible size (quartile FE + size^2)': '+ flexible size (size-quartile fixed effects and size squared)',
+            '+ severity and flexible size': '+ severity and flexible size',
+            'common support (controls in treated size range)': 'Common support (other events within the registrant size range)'}
+    rows_g = [[slab[r.spec], f'{fmt_num(r.coef, 3)} ({fmt_num(r.se_cv3, 3)})', fmt_p(r.p_cv3), fmt_p(r.p_cv1), fmt_int(r.N)]
+              for _, r in se_.iterrows()]
+    hdr_g = ['Specification', 'Estimate (CV3 SE)', 'p', 'CV1 p', 'N']
+
+    nb = Notes(13)
+    f4 = fam.iloc[3]
+    lad = appendix_csv('24B_announcement_ladder.csv')
+    wcu = lad[lad.rung.str.startswith('WCU')].iloc[0]
+    claim(float(f4.p) < .05 and float(f4.bh_adj_p) < .05, 'the registrant test rejects after BH')
+    claim(float(wcu.p) >= .05 and all(float(x) < .05 for x in lad[~lad.rung.str.startswith('WCU')].p), 'only WCU does not reject')
+    nrej = int((lo.rejects_05_cv3 == 'True').sum())
+    claim(len(lo) - nrej == V('ann_lotpo_n_not_rejecting'), 'LOTPO non-rejections match constants')
+    notrej = lo[lo.rejects_05_cv3 != 'True'].iloc[0]
+    claim(all(float(x) < .05 for x in se_.p_cv3), 'every sensitivity rejects under CV3')
+    note = (f'Each estimate in Panels A, B, C, F and G is the coefficient on the Form 499 registrant indicator in a '
+            f'regression of announcement elevation on registration, the baseline-window volatility and the M4 '
+            f'controls, on the analytical sample (N = {nb.c("ann_N", "i")}, G = {nb.c("ann_G", "i")} parent filer '
+            f'entities, {nb.c("ann_G1", "i")} with registrant events) unless a row shows otherwise. Announcement '
+            f'elevation is the standard deviation (SD) of daily market-adjusted abnormal returns, RET − vwretd, '
+            f'over the nine trading days {nb.d("[−4, +4]", "scripts/265 ANN")} centered on the agency reporting '
+            f'date (day 0) minus the same SD over the three weeks before, trading days '
+            f'{nb.d("[−25, −5]", "scripts/265 BASE")}; each window must have returns on '
+            f'{nb.d("8", "scripts/265 header (80% rule)")} of {nb.d("9", "scripts/265 header")} and '
+            f'{nb.d("17", "scripts/265 header")} of {nb.d("21", "scripts/265 header")} days. Panel A is the '
+            f'pre-specified family of {nb.i(load_constants()["bh_families"]["announcement_window"], "constants bh_families.announcement_window")} '
+            f'tests: mean elevation on the sample securities’ earnings-announcement dates, mean elevation on breach '
+            f'reporting dates, their contrast, and the registrant coefficient. The BH-adjusted p applies the '
+            f'Benjamini–Hochberg false-discovery-rate adjustment within that family. The registrant coefficient '
+            f'is {nb.f(f4.coef, 3, "24A, Form 499 row / coef")} (CV3 p = {nb.p(f4.p, "24A, Form 499 row / p")}, '
+            f'BH-adjusted p = {nb.p(f4.bh_adj_p, "24A, Form 499 row / bh_adj_p")}), and it clears .05 after the '
+            f'adjustment; the bridge row gives the registrant coefficient under the committed market-model definition of elevation. CV3 is the '
+            f'cluster jackknife standard error (SE) by parent filer entity, with t distribution p-values on G − 1 '
+            f'degrees of freedom; CV1 is the cluster-robust SE with the usual small-sample correction. Panel B repeats '
+            f'the registrant test under each inference procedure, defined as in Table 10; every procedure gives p '
+            f'below .05 except the unrestricted wild cluster bootstrap (p = {nb.p(wcu.p, "24B, WCU / p")}). Panel C '
+            f'adds controls in steps; Share of the movement is how far each step moves the coefficient from the '
+            f'registrant-only value toward the full-model value, as a share of the whole distance: the baseline-window '
+            f'SD closes {nb.c("ann_share_closed_base", "r", 2)} of it and log total assets brings the total to '
+            f'{nb.c("ann_share_closed_base_size", "r", 2)}. Panel D is the placebo test: in each of '
+            f'{nb.i(pl.draws.iloc[0], "24D, draws")} draws (seed {nb.d("499", "scripts/263 SEED")}), every '
+            f'security in the sample gets a random date that lies at least {nb.d("120", "scripts/265 header (eligibility)")} '
+            f'trading days from any of its breach notifications and at least {nb.d("30", "scripts/265 header")} from '
+            f'any of its earnings dates, and the regression is re-estimated on those quiet days; the columns count the '
+            f'draws whose coefficient is at least as large in absolute value as the actual one and the draws with CV3 '
+            f'p below .05. No placebo draw matches the actual elevation coefficient '
+            f'({nb.i(pl.draws_abs_ge_actual.iloc[1], "24D, elevation / draws_abs_ge_actual")} of '
+            f'{nb.i(pl.draws.iloc[1], "24D, draws")}). Compared with their own quiet days, registrant events show '
+            f'elevation {nb.c("ann_treated_minus_quiet", "f", 3)} higher on breach reporting dates and other events '
+            f'{nb.c("ann_control_minus_quiet", "f", 3)}, so the registrant difference comes from other events’ '
+            f'volatility falling below its quiet-day level. Panel E is the earnings-announcement benchmark: the mean '
+            f'of each outcome over the sample securities’ quarterly earnings dates, with SEs clustered by '
+            f'security. Panel F removes one treated parent filer entity at a time; the CV3 p-value stays below .05 for '
+            f'{nb.i(nrej, "24F, rejects_05_cv3 == True")} of {nb.i(len(lo), "24F, rows")} removals and not when '
+            f'{nb.reg(notrej.deleted_parent, "24F, the non-rejecting row", notrej.deleted_parent)} is removed '
+            f'(p = {nb.p(notrej.p_cv3, "24F, that row / p_cv3")}). Panel G adds the four sensitivities to the '
+            f'pre-specified model: breach severity, flexible size, both, and a common-support sample; each keeps CV3 p '
+            f'below .05. RET is the daily stock return and vwretd the value-weighted market return, both from the '
+            f'Center for Research in Security Prices (CRSP); OLS is ordinary least squares.')
+    return render_table(13, 'Volatility Around the Agency Reporting Date',
+                        [('The pre-specified family of four tests', hdr_a, rows_a),
+                         ('Inference for the registrant coefficient', hdr_b, rows_b),
+                         ('Adding controls in steps', hdr_c, rows_c),
+                         ('Placebo dates', hdr_d, rows_d),
+                         ('Earnings-announcement benchmark', hdr_e, rows_e),
+                         ('Leaving out one treated parent filer entity', hdr_f, rows_f),
+                         ('Sensitivities', hdr_g, rows_g)], note)
+
+
+RENDERERS.update({13: table_13})
 
 
 # ------------------------------------------------------------------ constants
