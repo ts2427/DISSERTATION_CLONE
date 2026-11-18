@@ -4,20 +4,20 @@
 
 Panel A: Attrition from notification records to analytical events
 
-| Step | Removed | Remaining | Registrant events | Registrant organizations | Registrant parent filer entities | Other events |
-|:---|---:|---:|---:|---:|---:|---:|
-| Records: Privacy Rights Clearinghouse notification records (start) | — | 1,054 | — | — | — | — |
-| Records: not resolved to a public filer entity (entity resolution, Gate 1) | 296 | 758 | — | — | — | — |
-| Records: duplicate records for the same filer and date removed | 234 | 524 | — | — | — | — |
-| Records: removed at the Gate 2 adjacency review | 35 | 489 | — | — | — | — |
-| Events: canonical events after Gate 2 | — | 489 | 118 | 39 | 14 | 371 |
-| Events: no matched CRSP security | 128 | 361 | 111 | 38 | 13 | 250 |
-| Events: no public notification date | 0 | 361 | 111 | 38 | 13 | 250 |
-| Events: notified after December 31, 2024 | 6 | 355 | 111 | 38 | 13 | 244 |
-| Events: volatility windows not computable | 4 | 351 | 109 | 38 | 13 | 242 |
-| Events: Compustat controls incomplete | 15 | 336 | 105 | 36 | 12 | 231 |
-| Events: disclosure gap not valid | 1 | 335 | 104 | 36 | 12 | 231 |
-| Events: malformed records excluded (final sample) | 2 | 333 | 104 | 36 | 12 | 229 |
+| Step | Removed | Remaining | Registrant events (organizations, parent filer entities) | Other events |
+|:---|---:|---:|---:|---:|
+| Records: Privacy Rights Clearinghouse notification records (start) | — | 1,054 | — | — |
+| Records: not resolved to a public filer entity (entity resolution, Gate 1) | 296 | 758 | — | — |
+| Records: duplicate records for the same filer and date removed | 234 | 524 | — | — |
+| Records: removed at the Gate 2 adjacency review | 35 | 489 | — | — |
+| Events: canonical events after Gate 2 | — | 489 | 118 (39, 14) | 371 |
+| Events: no matched CRSP security | 128 | 361 | 111 (38, 13) | 250 |
+| Events: no public notification date | 0 | 361 | 111 (38, 13) | 250 |
+| Events: notified after December 31, 2024 | 6 | 355 | 111 (38, 13) | 244 |
+| Events: volatility windows not computable | 4 | 351 | 109 (38, 13) | 242 |
+| Events: Compustat controls incomplete | 15 | 336 | 105 (36, 12) | 231 |
+| Events: disclosure gap not valid | 1 | 335 | 104 (36, 12) | 231 |
+| Events: malformed records excluded (final sample) | 2 | 333 | 104 (36, 12) | 229 |
 
 Panel B: Final sample by level
 
@@ -51,7 +51,7 @@ Panel C: Events by reporting year
 | 2024 | 29 | 15 | 14 |  |
 | Total | 333 | 104 | 229 |  |
 
-*Note.* Each row of Panel A is one step in building the analytical sample. The first four rows count Privacy Rights Clearinghouse (PRC) notification records; from the row "canonical events after Gate 2" onward the rows count canonical events, so the unit changes at that row, where the 489 records retained become 489 canonical events. A notification record is one entry in the PRC data, and one breach can produce several records, so the starting 1,054 records are not 1,054 breaches. Gate 1 is the entity-resolution screen: it keeps a record only when the reporting organization resolves to a public filer entity. Gate 2 is the adjacency review: it examines records at the same parent filer entity whose dates lie close together and rules whether they describe the same breach, so that each breach enters once. Removed is the count dropped at a step and Remaining the count left. Registrant counts are reported at the event level only, because registration is assigned to events, and an em dash (—) marks a count the ledger does not track at that step. Panel B reports the final sample of 333 events (104 Form 499 registrant events and 229 other events) at three levels. A Form 499 registrant event is an event at a firm registered on Federal Communications Commission (FCC) Form 499. The parent filer entity is the Securities and Exchange Commission (SEC) filer that owns the breached organization; it is the clustering unit for inference (G = 82). The registrant and other parent counts sum to 84 rather than 82 because 2 parent filer entities, Comcast and Verizon, have events in both groups: the 3 NBC Sports Group events (Comcast) and the 1 Verizon Media event (Verizon) are other events, adjudicated as not registrant operations, while the carrier subsidiaries’ events are registrant events. Panel C counts events by the year of the agency reporting date. "One group only" marks the 5 years whose events are all registrant events or all other events; together they hold 52 events, 3 of them registrant events. Under year fixed effects each event is compared only with events reported in the same year, so a year with only one group offers no comparison and contributes nothing to the registrant estimate. Reporting dates run from 2007-01-10 to 2024-11-08. CRSP is the Center for Research in Security Prices; Compustat is the S&P Global accounting database.
+*Note.* Each row of Panel A is one step in building the analytical sample. The first four rows count Privacy Rights Clearinghouse (PRC) notification records; from the row "canonical events after Gate 2" onward the rows count canonical events, so the unit changes at that row, where the 489 records retained become 489 canonical events. A notification record is one entry in the PRC data, and one breach can produce several records, so the starting 1,054 records are not 1,054 breaches. Gate 1 is the entity-resolution screen: it keeps a record only when the reporting organization resolves to a public filer entity. Gate 2 is the adjacency review: it examines records at the same parent filer entity whose dates lie close together and rules whether they describe the same breach, so that each breach enters once. Removed is the count dropped at a step and Remaining the count left. Registrant counts are reported at the event level only, because registration is assigned to events; the registrant column gives registrant events with, in parentheses, the organizations and parent filer entities they belong to, and an em dash (—) marks a count the ledger does not track at that step. Panel B reports the final sample of 333 events (104 Form 499 registrant events and 229 other events) at three levels. A Form 499 registrant event is an event at a firm registered on Federal Communications Commission (FCC) Form 499. The parent filer entity is the Securities and Exchange Commission (SEC) filer that owns the breached organization; it is the clustering unit for inference (G = 82). The registrant and other parent counts sum to 84 rather than 82 because 2 parent filer entities, Comcast and Verizon, have events in both groups: the 3 NBC Sports Group events (Comcast) and the 1 Verizon Media event (Verizon) are other events, adjudicated as not registrant operations, while the carrier subsidiaries’ events are registrant events. Panel C counts events by the year of the agency reporting date. "One group only" marks the 5 years whose events are all registrant events or all other events; together they hold 52 events, 3 of them registrant events. Under year fixed effects each event is compared only with events reported in the same year, so a year with only one group offers no comparison and contributes nothing to the registrant estimate. Reporting dates run from 2007-01-10 to 2024-11-08. CRSP is the Center for Research in Security Prices; Compustat is the S&P Global accounting database.
 
 **Table 2**
 

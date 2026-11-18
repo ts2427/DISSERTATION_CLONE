@@ -83,6 +83,7 @@ SETS = {
     6: [13],
     7: [14, 15],
     8: [16],
+    9: [17, 18, 19],
 }
 
 # new table number -> renderer. Each renderer returns the markdown block
@@ -398,11 +399,12 @@ def table_1():
     for _, r in att.iterrows():
         if r.step not in ATTRITION_LABELS:
             sys.exit(f'Table 1: no plain-language label for attrition step {r.step!r}')
+        reg_ = ('—' if str(r.treated).strip() == '' else
+                f'{fmt_int(r.treated)} ({fmt_int(r.t_orgs)}, {fmt_int(r.t_parents)})')
         rows_a.append([ATTRITION_LABELS[r.step], blank_dash(r.removed, fmt_int), fmt_int(r.N),
-                       blank_dash(r.treated, fmt_int), blank_dash(r.t_orgs, fmt_int),
-                       blank_dash(r.t_parents, fmt_int), blank_dash(r.control, fmt_int)])
-    hdr_a = ['Step', 'Removed', 'Remaining', 'Registrant events', 'Registrant organizations',
-             'Registrant parent filer entities', 'Other events']
+                       reg_, blank_dash(r.control, fmt_int)])
+    hdr_a = ['Step', 'Removed', 'Remaining', 'Registrant events (organizations, parent filer entities)',
+             'Other events']
 
     s = sample_counts()
     rows_b = [['Events'] + [fmt_int(x) for x in s['events']],
@@ -450,7 +452,8 @@ def table_1():
             f'at the same parent filer entity whose dates lie close together and rules whether they describe the '
             f'same breach, so that each breach enters once. Removed is the count dropped at a step and Remaining '
             f'the count left. Registrant counts are reported at the event level only, because registration is '
-            f'assigned to events, and an em dash (—) marks a count the ledger does not track at that step. '
+            f'assigned to events; the registrant column gives registrant events with, in parentheses, the '
+            f'organizations and parent filer entities they belong to, and an em dash (—) marks a count the ledger does not track at that step. '
             f'Panel B reports the final sample of {nb.i(n, "01, final row / N")} events '
             f'({nb.i(nt, "01, final row / treated")} Form 499 registrant events and '
             f'{nb.i(nc, "01, final row / control")} other events) at three levels. A Form 499 registrant event is '
@@ -1147,7 +1150,7 @@ def table_9():
     rows = []
     for v, lab in MODEL_VARS:
         dp = 5 if v == 'delay_w' else 3
-        rows.append([lab] + [f'{fmt_num(cell[(m, v)].coef, dp)} ({fmt_num(cell[(m, v)].se_cv3, dp)})'
+        rows.append([lab] + [f'{fmt_num(cell[(m, v)].coef, dp)}\n({fmt_num(cell[(m, v)].se_cv3, dp)})'
                              if (m, v) in cell else '' for m in models])
         rows.append([' p'] + [fmt_p(cell[(m, v)].p_cv3) if (m, v) in cell else '' for m in models])
     first = {m: nm[nm.model == m].iloc[0] for m in models}
@@ -1167,8 +1170,8 @@ def table_9():
             f'M1 regresses it on the pre-window volatility level and the disclosure gap; M2 adds log total assets, '
             f'leverage and return on assets; M3 adds the Form 499 registrant indicator, the test of the first '
             f'hypothesis (H1); M4 adds the health-breach flag and prior breach events and is the primary model. '
-            f'Each cell shows the coefficient with its CV3 standard error in parentheses and, on the line below, '
-            f'its p-value. {cv3_text(nb)}. With the pre-window level on the right-hand side, each model is an '
+            f'Each cell shows the coefficient with its CV3 standard error in parentheses below it and, on the next '
+            f'row, its p-value. {cv3_text(nb)}. With the pre-window level on the right-hand side, each model is an '
             f'analysis of covariance: the registrant coefficient compares post-window volatility between groups '
             f'holding the pre-window level fixed. Because the dependent variable is a change that contains the '
             f'pre-window level, R² is not the share of post-disclosure volatility the model explains. In M4 the registrant coefficient is '
@@ -1633,7 +1636,7 @@ def table_14():
             f'{nb.c("primary_G1", "i")} with registrant events). Delay is the number of days from the breach date to '
             f'the agency reporting date. Delays of {nb.d("−30", "scripts/156")} to {nb.d("−1", "scripts/156")} '
             f'days, where the reporting date precedes the breach date by a field-level error, are set to 0. '
-            f'{nb.c("delay_zero_events", "i")} events have a zero delay ({nb.c("delay_zero_treated", "i")} registrant, '
+            f'In all, {nb.c("delay_zero_events", "i")} events have a zero delay ({nb.c("delay_zero_treated", "i")} registrant, '
             f'{nb.c("delay_zero_control", "i")} other), because the source records the breach and its report on the '
             f'same day or because a small negative delay was set to 0. The uncapped rows use the delay as recorded; '
             f'the capped rows cap it at the in-sample {nb.d("99th", "scripts/163 (P99 winsorization rule)")} percentile (P99), {nb.f(capv, 2, "02A, full / delay_w / max")} '
@@ -1770,6 +1773,233 @@ def table_16():
 RENDERERS.update({16: table_16})
 
 
+# ------------------------------------------------------------------ Table 17
+NODE = {
+    'pre': ('Pre-window', {'pre60_11': '[−60, −11]', 'pre45_11': '[−45, −11]', 'pre25_5': '[−25, −5]'}),
+    'post': ('Post-window', {'post1_5': '[+1, +5]', 'post1_10': '[+1, +10]', 'post1_20': '[+1, +20]', 'post5_25': '[+5, +25]'}),
+    'benchmark': ('Return benchmark', {'mkt_adj': 'Market-adjusted', 'mm': 'Market model', 'ff3': 'Fama–French three-factor'}),
+    'returns': ('Return type', {'simple': 'Simple', 'log': 'Log'}),
+    'winsor': ('Winsorizing', {'raw': 'None', 'w1_99': '1st and 99th percentiles'}),
+}
+
+
+def table_17():
+    sc = appendix_csv('29A_specification_curve.csv')
+    for c in ['coef', 'p_cv3', 'p_cv1']:
+        sc[c] = sc[c].astype(float)
+
+    def row(dec, opt, g):
+        return [dec, opt, fmt_int(len(g)), fmt_num(g.coef.median(), 3),
+                f'{fmt_num(g.coef.min(), 3)} to {fmt_num(g.coef.max(), 3)}',
+                fmt_int((g.p_cv3 < .05).sum()), fmt_int((g.p_cv1 < .05).sum())]
+    rows_a = [row('All specifications', '', sc)]
+    for k, (dec, opts) in NODE.items():
+        for code, lab_ in opts.items():
+            rows_a.append(row(dec, lab_, sc[sc[k] == code]))
+    hdr_a = ['Decision', 'Option', 'Number', 'Median estimate', 'Range', 'CV3 p < .05', 'CV1 p < .05']
+    pm = appendix_csv('29B_specification_curve_permutation.csv')
+    plab = {'S1 median estimate': 'Median estimate (two-sided)', 'S2 dominant-sign count': 'Estimates sharing the dominant sign',
+            'S3 significant in dominant direction (CV1)': 'Significant in the dominant direction (CV1)'}
+    rows_b = [[plab[r.statistic], fmt_num(r.observed, 3) if '.' in str(r.observed) and not float(r.observed).is_integer()
+               else fmt_int(float(r.observed)), fmt_num(r.null_mean, 3), fmt_p(r.perm_p), fmt_num(r.percentile, 1)]
+              for _, r in pm.iterrows()]
+    hdr_b = ['Statistic', 'Observed', 'Mean under the null', 'Permutation p', 'Percentile of the observed value']
+
+    nb = Notes(17)
+    sizes = [sc[k].nunique() for k in NODE]
+    claim(len(sc) == V('spec_n') and len(sc) == int(np_prod(sizes)), 'grid size = product of options')
+    claim((sc.p_cv3 < .05).sum() == V('spec_cv3_sig') == 0 and (sc.coef > 0).sum() == V('spec_positive'), 'none significant, all positive')
+    s_ = ' × '.join(nb.i(x, f"29A, distinct {k}") for x, k in zip(sizes, NODE))
+    note = (f'Each specification re-estimates the registrant coefficient of the primary model M4 on the analytical '
+            f'sample (N = {nb.c("primary_N", "i")}, G = {nb.c("primary_G", "i")} parent filer entities, '
+            f'{nb.c("primary_G1", "i")} with registrant events) under one combination of five analysis decisions: the '
+            f'pre-window, the post-window, the return benchmark, simple or log returns, and whether daily returns are '
+            f'winsorized; {s_} = {nb.c("spec_n", "i")} specifications. Panel A summarizes the estimates for each '
+            f'option, pooling the specifications that use it (Number counts them); the last two columns count the specifications whose '
+            f'p-value falls below .05 under CV3, the cluster jackknife standard error by parent filer entity, and under '
+            f'CV1, the cluster-robust standard error with the usual small-sample correction. All '
+            f'{nb.c("spec_positive", "i")} estimates are positive and none is significant under CV3 '
+            f'({nb.c("spec_cv3_sig", "i")}) or CV1 ({nb.c("spec_sig_cv1_any", "i")}); the median estimate is '
+            f'{nb.c("spec_median", "f", 3)}. Panel B is the permutation test of the whole curve (Simonsohn, Simmons & '
+            f'Nelson, 2020): in each of {nb.c("spec_perm_draws", "i")} draws, registration is reassigned at random to '
+            f'{nb.c("primary_G1", "i")} of the {nb.c("primary_G", "i")} parent filer entities, all events of a chosen '
+            f'parent becoming registrant events, and all {nb.c("spec_n", "i")} specifications are re-estimated. Each '
+            f'permutation p is the share of draws at least as extreme as the observed curve: for the median estimate, '
+            f'in absolute value; for the count of estimates sharing the dominant sign; and for the count significant '
+            f'in the dominant direction, using CV1. None is below '
+            f'.05. An all-positive curve is common under the null here because every specification uses the same '
+            f'events and parents, so the estimates move together: '
+            f'{nb.r(V("perm_unanimous_share"), 3, "constants perm_unanimous_share")} of the null draws produce a curve '
+            f'with a single sign.')
+    return render_table(17, 'Specification Curve',
+                        [('Estimates by decision and option', hdr_a, rows_a), ('Permutation test of the curve', hdr_b, rows_b)], note)
+
+
+def np_prod(xs):
+    out = 1
+    for x in xs:
+        out *= int(x)
+    return out
+
+
+# ------------------------------------------------------------------ Table 18
+def table_18():
+    inf = appendix_csv('30B_influence.csv')
+    full = inf.iloc[0]
+    lo_ = inf[inf.check.str.startswith('leave-one-parent-out minimum')].iloc[0]
+    hi_ = inf[inf.check.str.startswith('leave-one-parent-out maximum')].iloc[0]
+    sh = inf[inf.check.str.startswith('share of estimate')].iloc[0]
+    pre = inf[inf.check.str.startswith('drop 6 pre-rule')].iloc[0]
+    cook = inf[inf.check.str.startswith("Cook")].iloc[0]
+    lp = appendix_csv('30A_leave_one_parent_out.csv')
+    lp['coef_without'] = lp.coef_without.astype(float)
+    mn, mx = lp.sort_values('coef_without').iloc[0], lp.sort_values('coef_without').iloc[-1]
+    claim(abs(float(mn.coef_without) - float(lo_.coef)) < 1e-12 and abs(float(mx.coef_without) - float(hi_.coef)) < 1e-12, 'LOPO extremes agree')
+    rows_a = [['Full sample (primary)', f'{fmt_num(full.coef, 3)} ({fmt_num(full.se_cv3, 3)})', fmt_p(full.p_cv3), fmt_int(float(full.N))],
+              [f'Without {mn.parent} ({fmt_int(mn.events)} events), smallest', fmt_num(lo_.coef, 3), '', fmt_int(float(lo_.N))],
+              [f'Without {mx.parent} ({fmt_int(mx.events)} events), largest', fmt_num(hi_.coef, 3), '', fmt_int(float(hi_.N))],
+              [f'Share of the estimate removed by dropping {mn.parent}', fmt_num(sh.coef, 3), '', '']]
+    hdr_a = ['Check', 'Estimate (CV3 SE)', 'p', 'N']
+    rows_b = [['Drop events with Cook’s distance above 4/N', f'{fmt_num(cook.coef, 3)} ({fmt_num(cook.se_cv3, 3)})',
+               fmt_p(cook.p_cv3), fmt_int(float(cook.N))],
+              ['Drop events reported before the rule took effect', f'{fmt_num(pre.coef, 3)} ({fmt_num(pre.se_cv3, 3)})',
+               fmt_p(pre.p_cv3), fmt_int(float(pre.N))]]
+    hdr_b = hdr_a
+    fe = appendix_csv('31_fixed_effects.csv')
+    flab = {'year FE': 'Year', 'industry FE (2-digit SIC)': 'Industry (two-digit SIC)', 'year + industry FE': 'Year and industry'}
+    rows_c = [[flab[r.spec], f'{fmt_num(r.coef, 3)} ({fmt_num(r.se_cv3, 3)})', fmt_p(r.p_cv3), fmt_int(r.N),
+               f'{fmt_int(r.mixed_strata)} of {fmt_int(r.strata)}', f'{fmt_int(r.effective_obs)} ({fmt_int(r.effective_treated)})',
+               fmt_int(r.singletons_dropped)] for _, r in fe.iterrows()]
+    hdr_c = ['Fixed effects', 'Estimate (CV3 SE)', 'p', 'N', 'Mixed strata', 'Effective events (registrant)', 'Singletons dropped']
+    v4 = appendix_csv('32_v4_date_sensitivity.csv')
+    vlab = {'v3 dates (PRIMARY)': 'Dates as used (primary)',
+            'v4 reporting dates for the re-anchored events': 'Revised source reporting dates',
+            "v3 dates + Sprint's corrected breach date (event enters)": 'Sprint’s corrected breach date (event added)'}
+    rows_d = [[vlab[r.scenario], f'{fmt_num(r.coef, 3)} ({fmt_num(r.se_cv3, 3)})', fmt_p(r.p_cv3),
+               f'{fmt_int(r.N)} ({fmt_int(r.n_treated)})', fmt_int(r.events_changed)] for _, r in v4.iterrows()]
+    hdr_d = ['Dates', 'Estimate (CV3 SE)', 'p', 'N (registrant)', 'Events changed']
+
+    nb = Notes(18)
+    yr = fe.iloc[0]
+    claim(int(yr.N) - int(yr.effective_obs) == V('years_single_kind_events'), 'year FE drops exactly the one-group years')
+    claim(all(float(x) >= .05 for x in list(fe.p_cv3) + [cook.p_cv3, pre.p_cv3] + list(v4.p_cv3)), 'no check rejects')
+    note = (f'Each row re-estimates the registrant coefficient of the primary model M4 (N = {nb.c("primary_N", "i")}, '
+            f'G = {nb.c("primary_G", "i")} parent filer entities, {nb.c("primary_G1", "i")} with registrant events) with '
+            f'one change; standard errors are CV3, the cluster jackknife by parent filer entity, with p-values from the '
+            f't distribution with G − 1 degrees of freedom. Panel A drops one parent filer entity at a time, '
+            f'{nb.c("primary_G", "i")} re-estimates in all, and reports the smallest and largest. Dropping '
+            f'{nb.reg(mn.parent, "30A, smallest coef_without / parent", mn.parent)} '
+            f'({nb.i(mn.events, "30A, that row / events")} events) lowers the estimate to '
+            f'{nb.f(lo_.coef, 3, "30B, LOPO minimum / coef")}, removing {nb.c("sprint_share_removed", "pct", 1)} percent '
+            f'of it; dropping {nb.reg(mx.parent, "30A, largest coef_without / parent", mx.parent)} '
+            f'({nb.i(mx.events, "30A, that row / events")} events) raises it to '
+            f'{nb.f(hi_.coef, 3, "30B, LOPO maximum / coef")}. Panel B drops influential observations: Cook’s distance '
+            f'measures how much all fitted values move when an observation is deleted, and the '
+            f'{nb.c("cook_removed", "i")} events with a distance above {nb.d("4/N", "30B, Cook row (D > 4/N)")} are '
+            f'removed; the second row drops the {nb.c("prerule_events", "i")} events reported before the rule took effect '
+            f'on {nb.d("December 8, 2007", "30B / scripts/269 (2007-12-08)")}, none of them registrant events. Panel C '
+            f'adds fixed effects for the reporting year, the two-digit Standard Industrial Classification (SIC) industry, '
+            f'or both. A stratum is one year, one industry or one year-by-industry cell; a mixed stratum holds both '
+            f'registrant and other events. With fixed effects the coefficient is identified only within mixed strata, '
+            f'so events in single-group strata carry no weight (Aronow & Samii, 2016); Effective events counts the '
+            f'events in mixed strata, with registrant events in parentheses. Under year fixed effects the '
+            f'{nb.c("years_single_kind_events", "i")} events in single-group years drop out, leaving '
+            f'{nb.i(yr.effective_obs, "31, year FE / effective_obs")}; under both sets only '
+            f'{nb.i(fe.iloc[2].effective_obs, "31, year + industry / effective_obs")} events in '
+            f'{nb.i(fe.iloc[2].mixed_strata, "31, year + industry / mixed_strata")} mixed cells remain. Industries with a '
+            f'single event are dropped as singletons ({nb.i(fe.iloc[1].singletons_dropped, "31, industry / singletons_dropped")} '
+            f'events). Panel D re-dates events: the second row uses the revised reporting dates the source later '
+            f'published for {nb.i(v4.iloc[1].events_changed, "32, v4 row / events_changed")} events, and the third '
+            f'corrects Sprint’s breach date, which adds {nb.i(v4.iloc[2].events_changed, "32, Sprint row / events_changed")} '
+            f'event to the sample. No row gives p below .05.')
+    return render_table(18, 'Sensitivity of the Main Estimate',
+                        [('Leaving out one parent filer entity', hdr_a, rows_a), ('Influential and pre-rule events', hdr_b, rows_b),
+                         ('Fixed effects and effective samples', hdr_c, rows_c), ('Revised dates', hdr_d, rows_d)], note)
+
+
+# ------------------------------------------------------------------ Table 19
+FAMILY_LAB = {
+    'A2-delay': 'Disclosure delay (A2)', 'A2-delay-nz': 'Disclosure delay, nonzero (A2)', 'B2': 'Records per event and firm size (B2)',
+    'B2b': 'Industry-code-only group comparisons (B2b)', 'poscontrol': 'Positive control (earnings decline)',
+    'announcement family': 'Announcement window', 'dynamic path': 'Post-window length (dynamic path)',
+    'fixed effects': 'Fixed effects', "Cook's exclusion": 'Cook’s distance exclusion', 'pre-rule exclusion': 'Pre-rule exclusion',
+    'size quartiles': 'Size quartiles', 'specification-curve permutation (joint)': 'Specification-curve permutation',
+    'spreads': 'Trading costs',
+}
+BH_KEY = {'A2-delay': 'A2-delay (scripts/164, kept)', 'A2-delay-nz': 'A2-delay-nz (scripts/164, kept)',
+          'announcement family': 'announcement_window', 'dynamic path': 'dynamic_path', 'size quartiles': 'size_quartiles',
+          'spreads': 'spreads'}
+
+
+def _v5_rejections():
+    """Count p < .05 (CV3 where the table has it) among the v5 tests, by family, from the v5 CSVs."""
+    a = appendix_csv
+    inf = a('30B_influence.csv')
+    return {
+        'dynamic path': sum(float(x) < .05 for x in a('21_dynamic_path.csv').p_cv3),
+        'announcement family': sum(float(x) < .05 for x in a('24A_announcement_family.csv').p.iloc[:4]),
+        'size quartiles': sum(float(x) < .05 for x in a('27A_size_quartiles.csv').p_cv3),
+        'spreads': sum(float(x) < .05 for x in a('26_spreads.csv').p_cv3),
+        'fixed effects': sum(float(x) < .05 for x in a('31_fixed_effects.csv').p_cv3),
+        "Cook's exclusion": int(float(inf[inf.check.str.startswith('Cook')].p_cv3.iloc[0]) < .05),
+        'pre-rule exclusion': int(float(inf[inf.check.str.startswith('drop 6')].p_cv3.iloc[0]) < .05),
+        'specification-curve permutation (joint)': sum(float(x) < .05 for x in a('29B_specification_curve_permutation.csv').perm_p),
+    }
+
+
+def table_19():
+    en = appendix_csv('33A_program_test_enumeration.csv')
+    live = en[~en.v5_status.str.startswith('RETIRED')]
+    bh = load_constants()['bh_families']
+    rej = _v5_rejections()
+    rows_a = []
+    for fam_, g in live.groupby('family', sort=False):
+        kept = g.v5_status.iloc[0].startswith('KEPT')
+        bhs = bh.get(BH_KEY.get(fam_, ''), None)
+        rows_a.append([FAMILY_LAB[fam_], fmt_int(len(g)), 'Kept from the earlier ledger' if kept else 'New in this version',
+                       fmt_int(bhs) if bhs else '—', '—' if kept else fmt_int(rej[fam_])])
+    rows_a.append(['All tests', fmt_int(len(live)), '', '', fmt_int(sum(rej.values()))])
+    hdr_a = ['Family', 'Tests', 'Status', 'BH family size', 'p < .05']
+    ret = en[en.v5_status.str.startswith('RETIRED')]
+    rlab = {'RETIRED: raw-return volatility outcome, superseded by the v5 outcome': 'Raw-return volatility outcome, replaced by the current outcome',
+            'RETIRED: microstructure intent-scope / TOST on the 167 measures, superseded by the v5 spreads family': 'Earlier trading-cost tests, replaced by the trading-cost family',
+            'RETIRED: composition checks of the old announcement estimate; not rerun under v5': 'Composition checks of the earlier announcement estimate',
+            'RETIRED: announcement family on the market-model basis, superseded by the v5 announcement family': 'Market-model announcement family, replaced by the current family'}
+    rows_b = [[rlab[k], fmt_int(n)] for k, n in ret.v5_status.value_counts(sort=False).items()]
+    rows_b.append(['All retired tests', fmt_int(len(ret))])
+    hdr_b = ['Reason retired', 'Tests']
+
+    nb = Notes(19)
+    claim(len(live) == V('program_tests_total'), 'live tests = 45')
+    claim(sum(rej.values()) == V('program_rejections_cv3'), 'rejections match constants')
+    claim(len(ret) == V('program_tests_retired_from_t53'), 'retired = 39')
+    fa = appendix_csv('24A_announcement_family.csv').iloc[3]
+    n_bh = sum(1 for k in BH_KEY if k in set(live.family))
+    note = (f'Each row of Panel A is one family of tests in the analysis program; the program holds '
+            f'{nb.c("program_tests_total", "i")} tests, {nb.c("program_tests_kept_from_t53", "i")} kept from the earlier '
+            f'test ledger because their outcomes do not use the volatility measure and '
+            f'{nb.c("program_tests_new_v5", "i")} new in this version. A family is a set of tests that address one '
+            f'question together. Within each of the {nb.i(n_bh, "33B, families with a BH adjustment (count)")} families '
+            f'with a BH family size, p-values are adjusted by the Benjamini–Hochberg false-discovery-rate procedure '
+            f'within that family; the other families are single checks or joint tests with their own reference '
+            f'distribution. The last column counts tests with p below .05, using the CV3 cluster jackknife standard '
+            f'error where the test has one; kept tests were not re-run in this version and show an em dash (—). '
+            f'Of the new tests, {nb.c("program_rejections_cv3", "i")} give p below .05, all in the announcement-window family, '
+            f'and {nb.i(V("program_rejections_cv3") - V("program_rejections_cv3_excl_calibration"), "constants program_rejections_cv3 - program_rejections_cv3_excl_calibration")} '
+            f'of them are calibration tests that check the measure behaves as expected on earnings dates (the earnings '
+            f'elevation and the breach-minus-earnings contrast). One substantive test rejects: the registrant coefficient '
+            f'on announcement elevation (p = {nb.p(fa.p, "24A, Form 499 row / p")}, BH-adjusted p = '
+            f'{nb.p(fa.bh_adj_p, "24A, Form 499 row / bh_adj_p")}). If every null hypothesis were true, about '
+            f'{nb.c("program_tests_total", "i")} × .05 = {nb.f(V("program_tests_total") * .05, 2, "constants program_tests_total x .05")} '
+            f'tests would give p below .05 by chance. Panel B lists the {nb.c("program_tests_retired_from_t53", "i")} '
+            f'tests of the earlier ledger retired in this version, by reason. BH is Benjamini–Hochberg.')
+    return render_table(19, 'Test Program Summary',
+                        [('Live test families', hdr_a, rows_a), ('Retired tests', hdr_b, rows_b)], note)
+
+
+RENDERERS.update({17: table_17, 18: table_18, 19: table_19})
+
+
 # ------------------------------------------------------------------ constants
 T1 = ROOT / 'outputs' / 'tables' / 'essay2_v2' / 't1_final_sample.csv'
 PART = V5 / 'constants_parts' / '274.json'
@@ -1859,10 +2089,13 @@ _NUMERIC_CELL = re.compile(r'^[−\-+<>=.,%()\[\]\d\s;Q–]*$')
 
 def _is_numeric(text):
     t = str(text).strip()
+    if re.fullmatch(r'[−\-]?[\d.,]+ to [−\-]?[\d.,]+', t):   # number ranges such as '0.037 to 0.364'
+        return True
     return t in ('', '—', NO_SOURCE) or (bool(_NUMERIC_CELL.match(t)) and any(ch.isdigit() for ch in t))
 
 
-CHAR_IN = 0.07     # average Times New Roman 10 pt character width, inches
+CHAR_IN = 0.075    # average Times New Roman 10 pt character width, inches
+HEAD_CHAR_IN = 0.09   # header words: wider letters, must not break mid-word
 PAD_IN = 0.16      # left + right cell margins
 TABLE_DXA = int(6.5 * 1440)
 WRAP_IN = 1.6      # columns wider than this may wrap
@@ -1872,35 +2105,44 @@ MIN_WRAP_IN = 1.0  # narrowest a wrapping column may get
 def _column_widths(header, rows, numeric):
     """Column widths (dxa) sized to content, summing to 6.5 in.
 
-    Each column's natural width is its widest body cell or its longest header word (headers
-    wrap at word breaks). Columns narrower than WRAP_IN never wrap and keep their natural
-    width; wider columns (long labels and names) share what is left, in proportion to their
-    natural widths, wrapping as needed. If the content is narrower than 6.5 in, every column
-    widens in proportion. Deterministic.
+    Natural width = widest body cell or longest header word; minimum width = longest single
+    word in the column (body or header), so no word breaks mid-word when it can be avoided.
+    Columns narrower than WRAP_IN keep their natural width; wider columns (labels, names,
+    bases) get their minimum plus a share of what is left in proportion to how much more they
+    would need. If even the minimums do not fit, every column scales from its minimum.
     """
-    nat = []
+    def words(t):
+        return [w for w in str(t).replace('/', '/ ').split() if w]
+    nat, mn = [], []
     for j, h in enumerate(header):
-        body = max([len(str(r[j])) for r in rows] + [0])
-        word = max([len(w) for w in str(h).split()] + [0])
-        nat.append(max(body, word) * CHAR_IN + PAD_IN)
+        body = max([len(line) for r in rows for line in str(r[j]).split('\n')] + [0])
+        hw = max([len(w) for w in words(h)] + [0])
+        bw = max([len(w) for r in rows for w in words(r[j])] + [0])
+        nat.append(max(body * CHAR_IN, hw * HEAD_CHAR_IN) + PAD_IN)
+        # numeric cells never wrap (their spaces are non-breaking in Word): minimum = natural
+        mn.append(nat[-1] if numeric[j] else max(bw * CHAR_IN, hw * HEAD_CHAR_IN) + PAD_IN)
     total_in = TABLE_DXA / 1440
     if sum(nat) <= total_in:
         w = [n * total_in / sum(nat) for n in nat]
     else:
         wrap = [n > WRAP_IN for n in nat]
         keep = sum(n for n, wr in zip(nat, wrap) if not wr)
-        long_ = sum(n for n, wr in zip(nat, wrap) if wr)
+        wmins = sum(m for m, wr in zip(mn, wrap) if wr)
         avail = total_in - keep
-        if long_ and avail >= MIN_WRAP_IN * sum(wrap):
-            w = [n * avail / long_ if wr else n for n, wr in zip(nat, wrap)]
+        if any(wrap) and avail >= wmins:
+            need = sum(n - m for n, m, wr in zip(nat, mn, wrap) if wr) or 1.0
+            w = [m + (avail - wmins) * (n - m) / need if wr else n for n, m, wr in zip(nat, mn, wrap)]
+        elif sum(mn) <= total_in:
+            need = sum(n - m for n, m in zip(nat, mn)) or 1.0
+            w = [m + (total_in - sum(mn)) * (n - m) / need for n, m in zip(nat, mn)]
         else:
-            w = [n * total_in / sum(nat) for n in nat]
+            w = [m * total_in / sum(mn) for m in mn]
     dxa = [int(round(x * 1440)) for x in w]
     dxa[0] += TABLE_DXA - sum(dxa)
     return dxa
 
 
-def write_docx(path, blocks):
+def write_docx(path, blocks, section_per_table=False):
     """APA tables (Essay 1 layout) in a .docx; deterministic (fixed core properties and zip times)."""
     import zipfile
     from docx import Document
@@ -1999,9 +2241,11 @@ def write_docx(path, blocks):
                 p.style = cs
                 p.paragraph_format.keep_with_next = i < len(rows)
                 text = str(v)
+                if i > 0 and re.fullmatch(r'[A-Z]{1,5}-[A-Z]{1,3}', text):
+                    text = text.replace('-', '‑')
                 if i > 0 and numeric[j]:
                     # keep "< .001", "0.39 (177.49)", "-0.02 (0.87)" on one line
-                    text = text.replace('< ', '<\u00a0').replace(' (', '\u00a0(')
+                    text = text.replace('< ', '<\u00a0').replace(' (', '\u00a0(').replace(' to ', '\u00a0to\u00a0')
                 r = p.add_run(text)
                 r.font.size = Pt(10)
                 if i == 0:
@@ -2015,8 +2259,12 @@ def write_docx(path, blocks):
                 elif i == len(rows):
                     border(cell, ['bottom'])
 
+    from docx.enum.section import WD_SECTION
     for bi, b in enumerate(blocks):
-        para(f'Table {b["new"]}', bold=True, keep=True, before=0 if bi == 0 else 24)
+        if section_per_table and bi > 0:
+            doc.add_section(WD_SECTION.NEW_PAGE)   # one table per section, each on a new page
+        para(f'Table {b["new"]}', bold=True, keep=True,
+             before=0 if (bi == 0 or section_per_table) else 24)
         para(b['title'], italic=True, keep=True)
         for pi, (pt, header, rows, _kind) in enumerate(b['panels']):
             if len(b['panels']) > 1:
@@ -2065,7 +2313,7 @@ def write_set(n, docx_too=False):
             if missing:
                 sys.exit(f'cannot write Essay2_Tables_All.docx: sets {missing} not registered')
             write_docx(OUT_DIR / 'Essay2_Tables_All.docx',
-                       [b for k in range(1, LAST_SET + 1) for b in set_blocks(k)])
+                       [b for k in range(1, LAST_SET + 1) for b in set_blocks(k)], section_per_table=True)
 
 
 def set_blocks(n):
