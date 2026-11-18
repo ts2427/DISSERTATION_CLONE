@@ -78,6 +78,7 @@ SETS = {
     1: [1, 2],
     2: [3, 4, 5],
     3: [6, 7, 8],
+    4: [9, 10, 11],
 }
 
 # new table number -> renderer. Each renderer returns the markdown block
@@ -1114,6 +1115,184 @@ def table_8():
 
 
 RENDERERS.update({6: table_6, 7: table_7, 8: table_8})
+
+
+# ------------------------------------------------------------------ Set 4 shared
+MODEL_VARS = [('fcc_form499', 'Form 499 registrant'), ('pre_sd', 'Pre-window abnormal return volatility'),
+              ('delay_w', 'Disclosure gap (days)'), ('firm_size_log', 'Log total assets'),
+              ('leverage', 'Leverage'), ('roa', 'Return on assets'), ('health_breach', 'Health-breach flag'),
+              ('prior_events', 'Prior breach events'), ('const', 'Intercept')]
+SQRT252 = 252 ** 0.5
+
+
+def cv3_text(nb):
+    """The standing CV3 definition, numbers registered."""
+    return (f'CV3 is the cluster jackknife standard error, clustered by parent filer entity (G = '
+            f'{nb.c("primary_G", "i")} parents, {nb.c("primary_G1", "i")} with registrant events); it '
+            f're-estimates the model leaving out one parent at a time, and its p-values use the t distribution '
+            f'with G − 1 = {nb.i(V("primary_G") - 1, "constants primary_G - 1")} degrees of freedom (df)')
+
+
+# ------------------------------------------------------------------ Table 9
+def table_9():
+    nm = appendix_csv('18_nested_models.csv')
+    models = ['M1', 'M2', 'M3', 'M4']
+    cell = {(r.model, r.variable): r for _, r in nm.iterrows()}
+    rows = []
+    for v, lab in MODEL_VARS:
+        dp = 5 if v == 'delay_w' else 3
+        rows.append([lab] + [f'{fmt_num(cell[(m, v)].coef, dp)} ({fmt_num(cell[(m, v)].se_cv3, dp)})'
+                             if (m, v) in cell else '' for m in models])
+        rows.append([' p'] + [fmt_p(cell[(m, v)].p_cv3) if (m, v) in cell else '' for m in models])
+    first = {m: nm[nm.model == m].iloc[0] for m in models}
+    rows.append(['N'] + [fmt_int(first[m].N) for m in models])
+    rows.append(['R²'] + [apa_share(first[m].r2, 3) for m in models])
+    rows.append(['Adjusted R²'] + [apa_share(first[m].adj_r2, 3) for m in models])
+    hdr = ['Variable', 'M1', 'M2', 'M3', 'M4']
+    nb = Notes(9)
+    claim(fmt_num(first['M4'].r2, 6) == fmt_num(V('primary_r2_M4'), 6), 'M4 R2 matches constants')
+    claim(abs(float(cell[('M4', 'fcc_form499')].coef) - V('primary_coef')) < 1e-9, 'M4 coefficient = primary')
+    note = (f'Each column is one ordinary least squares (OLS) regression of the change in abnormal return '
+            f'volatility on the analytical sample (N = {nb.c("primary_N", "i")} events, '
+            f'{nb.c("primary_treated", "i")} of them Form 499 registrant events). The dependent variable is the '
+            f'change in abnormal return volatility: the standard deviation (SD) of daily abnormal returns, '
+            f'RET − vwretd, in percentage points, over trading days {nb.d("[+1, +20]", "constants primary_outcome")} '
+            f'after the agency reporting date minus the same SD over {nb.d("[−60, −11]", "constants primary_outcome")}. '
+            f'M1 regresses it on the pre-window volatility level and the disclosure gap; M2 adds log total assets, '
+            f'leverage and return on assets; M3 adds the Form 499 registrant indicator, the test of the first '
+            f'hypothesis (H1); M4 adds the health-breach flag and prior breach events and is the primary model. '
+            f'Each cell shows the coefficient with its CV3 standard error in parentheses and, on the line below, '
+            f'its p-value. {cv3_text(nb)}. With the pre-window level on the right-hand side, each model is an '
+            f'analysis of covariance: the registrant coefficient compares post-window volatility between groups '
+            f'holding the pre-window level fixed. Because the dependent variable is a change that contains the '
+            f'pre-window level, R² is not the share of post-disclosure volatility the model explains. In M4 the registrant coefficient is '
+            f'{nb.f(cell[("M4", "fcc_form499")].coef, 3, "18, M4 / fcc_form499 / coef")} '
+            f'(p = {nb.p(cell[("M4", "fcc_form499")].p_cv3, "18, M4 / fcc_form499 / p_cv3")}), and adding the '
+            f'registrant indicator raises R² from {nb.r(V("r2_M4_without_treatment"), 3, "constants values.r2_M4_without_treatment")} '
+            f'to {nb.r(V("r2_M4_with_treatment"), 3, "constants values.r2_M4_with_treatment")}. Disclosure-gap '
+            f'coefficients are per day and shown to five decimals. RET is the daily stock return and vwretd the '
+            f'value-weighted market return, both from the Center for Research in Security Prices (CRSP).')
+    return render_table(9, 'Hierarchical Model for H1', [('', hdr, rows)], note)
+
+
+# ------------------------------------------------------------------ Table 10
+def table_10():
+    ld = appendix_csv('19_inference_ladder.csv')
+    lab = {'OLS (classical)': 'OLS, classical', 'HC1': 'HC1', 'HC3': 'HC3',
+           'CV1 parent filer entity': 'CV1, parent filer entity', 'CV3 cluster jackknife (PRIMARY)': 'CV3, parent filer entity (primary)'}
+    rows = []
+    for _, r in ld.iterrows():
+        name = lab.get(r.rung)
+        if name is None:
+            name = (r.rung.replace('WCR restricted Rademacher', 'Wild cluster, restricted, Rademacher weights')
+                    .replace('WCU unrestricted Rademacher', 'Wild cluster, unrestricted, Rademacher weights')
+                    .replace('WCR Webb six-point', 'Wild cluster, restricted, Webb weights'))
+        ci = fmt_ci(r.ci_lo, r.ci_hi) if str(r.ci_lo).strip() else '—'
+        rows.append([name, fmt_num(r.se, 3) if str(r.se).strip() else '—',
+                     fmt_int(float(r.df)) if str(r.df).strip() else '—', fmt_p(r.p), ci])
+    hdr = ['Procedure', 'SE', 'df', 'p', '95% CI']
+    rows_b = [['CV1, two-digit SIC industry', fmt_num(V('sic2_cluster_se_cv1'), 3), fmt_p(V('sic2_cluster_p_cv1'))],
+              ['CV3, two-digit SIC industry', fmt_num(V('sic2_cluster_se_cv3'), 3), fmt_p(V('sic2_cluster_p_cv3'))]]
+    hdr_b = ['Procedure', 'SE', 'p']
+    nb = Notes(10)
+    r0 = ld.iloc[0]
+    claim(len(set(ld.coef)) == 1, 'one coefficient across the ladder')
+    claim(all(float(x) >= .05 for x in ld.p), 'no procedure rejects')
+    hc1, cv3 = V('primary_se_hc1'), V('primary_se_cv3')
+    note = (f'Each row of Panel A reports a different standard error (SE) and test for the same coefficient, the '
+            f'Form 499 registrant coefficient of the primary model M4 '
+            f'({nb.f(r0.coef, 3, "19, coef")}; N = {nb.i(r0.N, "19, N")} events, '
+            f'{nb.i(r0.n_treated, "19, n_treated")} registrant events). OLS is the classical SE, which assumes '
+            f'independent errors of equal variance. HC1 and HC3 allow the error variance to differ across events '
+            f'but treat events as independent; HC3 inflates each residual by its leverage. CV1 clusters by parent '
+            f'filer entity with the usual small-sample correction. {cv3_text(nb)}; it is the primary procedure. '
+            f'The three wild cluster bootstrap rows resample parent-level residuals: the restricted version '
+            f'imposes the null hypothesis of a zero coefficient when it builds the bootstrap samples and the '
+            f'unrestricted version does not; Rademacher weights flip each parent’s residuals with '
+            f'probability one half, and Webb weights draw from six points, which suits few clusters. The '
+            f'Rademacher rows use {nb.d("99,999", "19, rung labels (B)")} draws and the Webb row '
+            f'{nb.d("9,999", "19, rung labels (B)")}, with seed {nb.d("499", "scripts/263 SEED")}. Procedures '
+            f'that ignore clustering understate the SE when treatment varies across few parents, because events '
+            f'at the same parent share shocks: the HC1 SE ({nb.f(hc1, 3, "constants primary_se_hc1")}) is '
+            f'{nb.f(100 * (1 - hc1 / cv3), 0, "constants 1 - primary_se_hc1 / primary_se_cv3 (x 100)")} percent '
+            f'smaller than the CV3 SE ({nb.f(cv3, 3, "constants primary_se_cv3")}). G is the number of parent '
+            f'filer entities ({nb.c("primary_G", "i")}), G1 the number with registrant events '
+            f'({nb.c("primary_G1", "i")}), and G* the effective number of clusters (Carter et al., 2017), '
+            f'{nb.c("primary_G_star", "f", 1)}, which adjusts G for unequal cluster sizes and the concentration of '
+            f'treatment; the coefficient of variation of cluster size is {nb.c("cluster_size_cv_ddof0", "f", 2)}. '
+            f'No procedure gives p below .05. A 95 percent confidence interval (CI) is shown where the procedure '
+            f'produces one; an em dash (—) marks none. Panel B clusters instead by two-digit Standard '
+            f'Industrial Classification (SIC) industry, with {nb.c("sic2_clusters", "i")} clusters.')
+    return render_table(10, 'Inference for the Registrant Coefficient',
+                        [('Inference ladder, clustering by parent filer entity', hdr, rows),
+                         ('Clustering by industry', hdr_b, rows_b)], note)
+
+
+# ------------------------------------------------------------------ Table 11
+def table_11():
+    dr = appendix_csv('20_design_resolution.csv').iloc[0]
+    mult = V('dr_mde80_daily') / V('primary_se_cv3')
+    rows_a = [['Smallest effect size of interest (SESOI)', fmt_num(dr.sesoi_daily, 3), fmt_num(dr.sesoi_ann, 2)],
+              ['Equivalence bound from the announcement-return literature', fmt_num(V('sesoi_car_daily'), 3),
+               fmt_num(V('sesoi_car_ann'), 2)],
+              ['Minimum detectable effect, CV3 (MDE80)', fmt_num(dr.mde80_daily, 3), fmt_num(dr.mde80_ann, 2)],
+              ['Minimum detectable effect, HC3', fmt_num(V('mde80_hc3_daily'), 3), fmt_num(V('mde80_hc3_ann'), 2)],
+              ['MDE80 floor as treated parents grow without limit', fmt_num(dr.floor_daily, 3), fmt_num(dr.floor_ann, 2)]]
+    hdr_a = ['Quantity', 'Daily, pp', 'Annualized, pp']
+    rows_b = [['Registrant coefficient (CV3)', fmt_num(V('primary_coef'), 3)],
+              ['90% confidence interval', fmt_ci(dr.ci90_lo, dr.ci90_hi)],
+              ['90% interval inside ±SESOI', 'Yes' if dr.ci90_inside_sesoi == 'True' else 'No'],
+              ['TOST p, lower test (effect below −SESOI)', fmt_p(dr.tost_p_lower)],
+              ['TOST p, upper test (effect above +SESOI)', fmt_p(dr.tost_p_upper)],
+              ['TOST p against the literature bound', fmt_p(V('tost_car_p'))],
+              ['MDE80 as a multiple of SESOI', fmt_num(dr.mde_over_sesoi, 2)],
+              ['Treated parents needed for MDE80 of 5 pp annualized', fmt_int(dr.required_parents_5pp_ann)],
+              ['Share of events that are registrant events', fmt_num(dr.share_treated, 3)]]
+    hdr_b = ['Quantity', 'Value']
+    nb = Notes(11)
+    claim(dr.ci90_inside_sesoi == 'False', '90% CI not inside SESOI')
+    claim(float(dr.tost_p_lower) < .05 <= float(dr.tost_p_upper), 'lower bound ruled out, upper not')
+    claim(abs(V('sesoi_car_daily') * SQRT252 - V('sesoi_car_ann')) < 1e-9, 'CAR bound conversion')
+    note = (f'The table asks whether the primary estimate (M4, N = {nb.c("primary_N", "i")}, G = '
+            f'{nb.c("primary_G", "i")} parent filer entities, {nb.c("primary_G1", "i")} with registrant events) '
+            f'is precise enough to rule out effects that matter. Daily values are in percentage points (pp) of '
+            f'daily abnormal return volatility; annualized values multiply them by √{nb.d("252", "scripts/263 (trading days per year)")}. '
+            f'The smallest effect size of interest (SESOI) is {nb.d("0.25", "scripts/263 design_resolution sesoi_mult")} '
+            f'times the standard deviation of the dependent variable among other events '
+            f'({nb.f(dr.sd_control, 3, "20, sd_control")}), or {nb.f(dr.sesoi_daily, 3, "20, sesoi_daily")} pp '
+            f'daily and {nb.f(dr.sesoi_ann, 2, "20, sesoi_ann")} pp annualized; it rests on the outcome’s own '
+            f'spread because no commensurable effect size exists in the literature for volatility. TOST (two one-'
+            f'sided tests) asks whether the effect is small enough to treat as practically zero: it runs one test '
+            f'that the effect is above −SESOI and one that it is below +SESOI, using the CV3 standard error and '
+            f'the t distribution with {nb.i(V("primary_G") - 1, "constants primary_G - 1")} degrees of freedom '
+            f'(df), and the TOST p is the larger of the two. The lower test rejects '
+            f'(p = {nb.p(dr.tost_p_lower, "20, tost_p_lower")}), so effects below −SESOI are ruled out; the '
+            f'upper test does not (p = {nb.p(dr.tost_p_upper, "20, tost_p_upper")}), so a positive effect as large '
+            f'as SESOI cannot be excluded and the TOST p is {nb.p(dr.tost_p_upper, "20, tost_p_upper")}. The '
+            f'literature bound is the Essay 1 equivalence bound of ±{nb.f(V("sesoi_car_ann"), 2, "constants sesoi_car_ann")} '
+            f'pp, whose size matches the two-day breach penalty reported by Cavusoglu et al. (2004), divided by '
+            f'√252 to a daily {nb.f(V("sesoi_car_daily"), 3, "constants sesoi_car_daily")} pp; its TOST p is '
+            f'{nb.p(V("tost_car_p"), "constants tost_car_p")}. The 90 percent confidence interval, '
+            f'[{nb.f(dr.ci90_lo, 3, "20, ci90_lo")}, {nb.f(dr.ci90_hi, 3, "20, ci90_hi")}], is '
+            f'the interval that matches TOST at the 5 percent level, because each one-sided test uses 5 percent; it '
+            f'is not inside ±SESOI. MDE80 is the minimum detectable effect, the smallest true effect the '
+            f'regression would detect four times in five at the 5 percent level, computed as '
+            f'(t.975 + t.80, df {nb.i(V("primary_G") - 1, "constants primary_G - 1")}) × SE_CV3 = '
+            f'{nb.f(mult, 2, "constants dr_mde80_daily / primary_se_cv3")} × SE_CV3; it is '
+            f'{nb.f(dr.mde_over_sesoi, 2, "20, mde_over_sesoi")} times SESOI. The HC3 row shows the MDE80 that '
+            f'heteroskedasticity-consistent (HC3) standard errors would imply, '
+            f'{nb.c("mde80_hc3_pct_below_cv3", "f", 0)} percent below the CV3 value. Reaching an MDE80 of '
+            f'{nb.d("5", "scripts/263 design_resolution target_ann")} pp annualized would take '
+            f'{nb.i(dr.required_parents_5pp_ann, "20, required_parents_5pp_ann")} treated parents, holding the other '
+            f'parents and the variance structure fixed; as treated parents grow without limit the MDE80 falls only '
+            f'to a floor of {nb.f(dr.floor_daily, 3, "20, floor_daily")} pp daily '
+            f'({nb.f(dr.floor_ann, 2, "20, floor_ann")} pp annualized), set by the other parents. CV3 is the cluster '
+            f'jackknife standard error by parent filer entity.')
+    return render_table(11, 'Design Resolution: Equivalence and Power',
+                        [('Thresholds', hdr_a, rows_a), ('Tests and design', hdr_b, rows_b)], note)
+
+
+RENDERERS.update({9: table_9, 10: table_10, 11: table_11})
 
 
 # ------------------------------------------------------------------ constants
