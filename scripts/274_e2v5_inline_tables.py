@@ -81,6 +81,7 @@ SETS = {
     4: [9, 10, 11],
     5: [12],
     6: [13],
+    7: [14, 15],
 }
 
 # new table number -> renderer. Each renderer returns the markdown block
@@ -190,6 +191,8 @@ def fmt_p(x, dp=3):
         sys.exit(f'p-value out of range: {x!r}')
     if v < 0.001:
         return '< .001'
+    if v > 0.999:
+        return '> .999'
     s = f'{v:.{dp}f}'
     return s[1:] if s.startswith('0') else s
 
@@ -1558,6 +1561,147 @@ def table_13():
 
 
 RENDERERS.update({13: table_13})
+
+
+# ------------------------------------------------------------------ Table 14
+DELAY_OUT = {'delay (raw days)': 'Delay, days (uncapped)', 'delay (winsorized p99)': 'Delay, days (capped at P99)',
+             'log(1+delay)': 'Log(1 + delay)', 'log(delay)': 'Log(delay)'}
+CTRL_LAB = {'BRIDGE old control': 'Earlier controls', 'v5 control': 'Current controls'}
+
+
+def _ctrl(c):
+    return CTRL_LAB['BRIDGE old control' if c.startswith('BRIDGE') else 'v5 control']
+
+
+def table_14():
+    dl = appendix_csv('25A_disclosure_delay.csv')
+    rows_a = []
+    for (o, c), g in dl.groupby(['outcome', 'control'], sort=False):
+        cv3 = g[g.rung.str.startswith('CV3')].iloc[0]
+        cv1 = g[g.rung.str.startswith('CV1')].iloc[0]
+        wcr = g[g.rung.str.startswith('WCR restricted')].iloc[0]
+        dp = 3 if o.startswith('log') else 2
+        rows_a.append([DELAY_OUT[o], _ctrl(c), f'{fmt_num(cv3.coef, dp)} ({fmt_num(cv3.se, dp)})', fmt_p(cv3.p),
+                       fmt_p(cv1.p), fmt_p(wcr.p), fmt_num(cv3.mde80_cv3, dp)])
+    hdr_a = ['Outcome', 'Controls', 'Estimate (CV3 SE)', 'p', 'CV1 p', 'Wild cluster p', 'MDE80']
+
+    nz = appendix_csv('25B_delay_nonzero.csv')
+    rows_b = [[DELAY_OUT[r.outcome], _ctrl(r.control), f'{fmt_num(r.coef, 3 if "log" in r.outcome else 2)} '
+               f'({fmt_num(r.se_cv3, 3 if "log" in r.outcome else 2)})', fmt_p(r.p_cv3), fmt_p(r.p_cv1),
+               f'{fmt_int(r.N)} ({fmt_int(r.n_treated)})'] for _, r in nz.iterrows()]
+    hdr_b = ['Outcome', 'Controls', 'Estimate (CV3 SE)', 'p', 'CV1 p', 'N (registrant)']
+
+    qt = appendix_csv('25C_delay_quantiles.csv')
+    rows_c = []
+    for q in sorted(set(qt.q), key=float):
+        a_ = qt[(qt.q == q) & (qt.control == 'v5 control')].iloc[0]
+        b_ = qt[(qt.q == q) & (qt.control != 'v5 control')].iloc[0]
+        rows_c.append([f'{int(round(float(q) * 100))}th percentile', f'{fmt_num(a_.coef, 2)} ({fmt_num(a_.se, 2)})',
+                       fmt_p(a_.p), f'{fmt_num(b_.coef, 2)} ({fmt_num(b_.se, 2)})', fmt_p(b_.p)])
+    hdr_c = ['Quantile', 'Current controls: estimate (SE)', 'p', 'Earlier controls: estimate (SE)', 'p']
+
+    ds = appendix_csv('25D_delay_distribution.csv').set_index('group')
+    glab = {'treated': 'Form 499 registrant events', 'control': 'Other events'}
+    rows_d = [[glab[g], fmt_int(ds.loc[g, 'n']), fmt_int(ds.loc[g, 'zeros']), fmt_num(ds.loc[g, 'p50'], 0),
+               fmt_num(ds.loc[g, 'p90'], 0), fmt_num(ds.loc[g, 'max'], 0),
+               f'{fmt_num(ds.loc[g, "mean"], 1)} ({fmt_num(ds.loc[g, "sd"], 1)})'] for g in ['treated', 'control']]
+    hdr_d = ['Group', 'Events', 'Zero delays', 'Median', '90th percentile', 'Maximum', 'M (SD)']
+
+    te = appendix_csv('25E_delay_distribution_tests.csv')
+    tlab = {'Brown-Forsythe, all delays': 'Brown–Forsythe test of equal spread, all delays',
+            'Brown-Forsythe, non-zero': 'Brown–Forsythe test of equal spread, nonzero delays',
+            'KS, non-zero': 'Kolmogorov–Smirnov test of equal distributions, nonzero delays',
+            'log-rank, non-zero': 'Log-rank test of equal timing, nonzero delays'}
+    rows_e = [[tlab[r.test], fmt_num(r.stat, 3), fmt_p(r.p),
+               fmt_num(r.sd_treated, 1) if str(r.sd_treated).strip() else '—',
+               fmt_num(r.sd_control, 1) if str(r.sd_control).strip() else '—']
+              for _, r in te.iterrows() if r.test in tlab]
+    hdr_e = ['Test', 'Statistic', 'p', 'SD, registrant', 'SD, other']
+
+    nb = Notes(14)
+    zr = te[te.test == 'zero-delay events'].iloc[0]
+    claim(int(float(zr.stat)) == V('delay_zero_events') and int(float(zr.sd_treated)) == V('delay_zero_treated')
+          and int(float(zr.sd_control)) == V('delay_zero_control'), 'zero-delay counts match constants')
+    claim(all(float(x) >= .05 for x in list(dl[dl.rung.str.startswith('CV3')].p) + list(nz.p_cv3)), 'no delay test rejects')
+    claim(all(float(x) >= .05 for x in te.p if str(x).strip()), 'no distribution test rejects')
+    claim(float(ds.loc['treated', 'p25']) == 0 and float(ds.loc['control', 'p25']) == 0, 'both 25th percentiles are zero')
+    cap = appendix_csv('02A_descriptives_v5.csv')
+    capv = cap[(cap.group == 'full') & (cap.variable == 'delay_w')]['max'].iloc[0]
+    note = (f'Each row of Panel A regresses a delay outcome on the Form 499 registrant indicator and controls in the '
+            f'analytical sample (N = {nb.c("primary_N", "i")}, G = {nb.c("primary_G", "i")} parent filer entities, '
+            f'{nb.c("primary_G1", "i")} with registrant events). Delay is the number of days from the breach date to '
+            f'the agency reporting date. Delays of {nb.d("−30", "scripts/156")} to {nb.d("−1", "scripts/156")} '
+            f'days, where the reporting date precedes the breach date by a field-level error, are set to 0. '
+            f'{nb.c("delay_zero_events", "i")} events have a zero delay ({nb.c("delay_zero_treated", "i")} registrant, '
+            f'{nb.c("delay_zero_control", "i")} other), because the source records the breach and its report on the '
+            f'same day or because a small negative delay was set to 0. The uncapped rows use the delay as recorded; '
+            f'the capped rows cap it at the in-sample {nb.d("99th", "scripts/163 (P99 winsorization rule)")} percentile (P99), {nb.f(capv, 2, "02A, full / delay_w / max")} '
+            f'days, the disclosure gap of Table 2. The unadjusted difference in mean uncapped delay is '
+            f'{nb.c("delay_raw_unadjusted_diff", "f", 1)} days, while Table 2 reports the capped gap of '
+            f'{nb.f(appendix_csv("02B_descriptives_v5_differences.csv").set_index("variable").loc["delay_w", "diff"], 2, "02B, delay_w / diff")} '
+            f'days. The log rows use log(1 + delay) in Panel A and log(delay) on nonzero delays in Panel B. Current '
+            f'controls are the M4 controls with the pre-window volatility of the current outcome; earlier controls use '
+            f'the pre-window volatility of the earlier raw-return outcome. CV3 is the cluster jackknife standard error '
+            f'(SE) by parent filer entity, with p-values from the t distribution with G − 1 degrees of freedom; '
+            f'CV1 is the cluster-robust SE with the usual small-sample correction; the wild cluster p comes from the '
+            f'restricted wild cluster bootstrap with Rademacher weights. MDE80 is the minimum detectable effect at 80 '
+            f'percent power, (t.975 + t.80) × SE_CV3, in the units of the outcome. No row gives p below .05. Panel B '
+            f'drops the zero delays ({nb.i(nz.N.iloc[0], "25B, N")} events, {nb.i(nz.n_treated.iloc[0], "25B, n_treated")} '
+            f'registrant). Panel C reports quantile regressions of the uncapped delay at five quantiles with SEs in '
+            f'parentheses. Below the median the estimates carry no information: more than a quarter of the delays in '
+            f'each group are zero, so both groups’ {nb.d("10th", "25C, q = 0.1")} and {nb.d("25th", "25C, q = 0.25")} percentiles are 0 and the estimate there is 0 by '
+            f'construction. Panel D describes the uncapped delay by group. Panel E tests whether the two groups’ '
+            f'delays differ in spread or shape: the Brown–Forsythe test compares spread using deviations from '
+            f'each group’s median, the Kolmogorov–Smirnov test compares whole distributions, and the log-rank '
+            f'test compares the time to report as a survival curve; none gives p below .05. SD is the standard '
+            f'deviation and M the mean.')
+    return render_table(14, 'Disclosure Delay by Registration',
+                        [('Delay regressions, all events', hdr_a, rows_a), ('Nonzero delays only', hdr_b, rows_b),
+                         ('Quantile regressions of the uncapped delay', hdr_c, rows_c),
+                         ('Distribution of the uncapped delay', hdr_d, rows_d),
+                         ('Tests of spread and shape', hdr_e, rows_e)], note)
+
+
+# ------------------------------------------------------------------ Table 15
+def table_15():
+    sp = appendix_csv('26_spreads.csv')
+    mlab = {'CPQS change': 'Closing percent quoted spread (CPQS)', 'EDGE change': 'EDGE spread estimator',
+            'log-OCAM change': 'Log open-to-close Amihud illiquidity (OCAM)'}
+    rows = [[mlab[r.outcome], f'{fmt_num(r.coef, 5 if "CPQS" in r.outcome else 3)} '
+             f'({fmt_num(r.se_cv3, 5 if "CPQS" in r.outcome else 3)})', fmt_p(r.p_cv3), fmt_p(r.bh_adj_p),
+             fmt_p(r.p_cv1), fmt_num(r.corr_with_primary_dv, 2)] for _, r in sp.iterrows()]
+    hdr = ['Measure (change, post minus pre)', 'Estimate (CV3 SE)', 'p', 'BH-adjusted p', 'CV1 p',
+           'Correlation with the volatility change']
+    nb = Notes(15)
+    claim(all(float(x) >= .05 for x in sp.bh_adj_p) and all(float(x) >= .05 for x in sp.p_cv3), 'no spread test rejects')
+    r0 = sp.iloc[0]
+    note = (f'Each row regresses the change in one trading-cost measure, its mean over trading days '
+            f'{nb.d("[+1, +20]", "scripts/268 header")} after the agency reporting date minus its mean over '
+            f'{nb.d("[−60, −11]", "scripts/268 header")}, on the Form 499 registrant indicator, the M4 controls '
+            f'and fixed effects for the calendar month of the reporting date, in the analytical sample '
+            f'(N = {nb.i(r0.N, "26, N")}, {nb.i(r0.n_treated, "26, n_treated")} registrant events, G = '
+            f'{nb.i(r0.G, "26, G")} parent filer entities, {nb.i(r0.G1, "26, G1")} with registrant events). CPQS is the '
+            f'closing percent quoted spread, (ask − bid) divided by the quote midpoint, from valid uncrossed '
+            f'closing quotes, with values above {nb.d("0.5", "scripts/268 header")} set to missing (Chung & Zhang, '
+            f'2014); it is shown to five decimals because it is a fraction. EDGE is the efficient estimator of the '
+            f'bid–ask spread from open, high, low and close prices (Ardia et al., 2024). OCAM is the open-to-close '
+            f'Amihud illiquidity measure, the absolute open-to-close return divided by dollar volume (Barardehi et al., '
+            f'2021); its window means are winsorized at the {nb.d("1st", "scripts/268 header (winsorized 1/99)")} and '
+            f'{nb.d("99th", "scripts/268 header")} percentiles within each window and then logged. OCAM is biased '
+            f'toward zero in large stocks, where dollar volume is high. Each window needs trading on at least '
+            f'{nb.d("80", "scripts/268 header")} percent of its days. CV3 is the cluster jackknife standard error (SE) '
+            f'by parent filer entity, with p-values from the t distribution with G − 1 degrees of freedom; CV1 is '
+            f'the cluster-robust SE with the usual small-sample correction. The three measures form one family of '
+            f'{nb.i(load_constants()["bh_families"]["spreads"], "constants bh_families.spreads")} tests, and the '
+            f'BH-adjusted p applies the Benjamini–Hochberg false-discovery-rate adjustment within it; no measure '
+            f'gives p below .05 before or after the adjustment. The last column is the Pearson correlation across '
+            f'events between the change in the measure and the change in abnormal return volatility; all three are '
+            f'small (at most {nb.r(max(abs(float(x)) for x in sp.corr_with_primary_dv), 2, "26, max |corr_with_primary_dv|")} '
+            f'in absolute value), so trading costs and volatility move largely independently around the reporting date.')
+    return render_table(15, 'Trading-Cost Measures', [('', hdr, rows)], note)
+
+
+RENDERERS.update({14: table_14, 15: table_15})
 
 
 # ------------------------------------------------------------------ constants
