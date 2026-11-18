@@ -82,6 +82,7 @@ SETS = {
     5: [12],
     6: [13],
     7: [14, 15],
+    8: [16],
 }
 
 # new table number -> renderer. Each renderer returns the markdown block
@@ -1702,6 +1703,71 @@ def table_15():
 
 
 RENDERERS.update({14: table_14, 15: table_15})
+
+
+# ------------------------------------------------------------------ Table 16
+def table_16():
+    sq = appendix_csv('27A_size_quartiles.csv')
+    lad = appendix_csv('27B_size_quartile_ladder.csv')
+    ci = pd.read_csv(V5 / 'v5_t18c_quartile_ci90.csv', dtype=str, keep_default_na=False).set_index('quartile')
+    rows_a, rows_b, rows_c = [], [], []
+    for _, r in sq.iterrows():
+        q = r.quartile
+        rows_a.append([q, f'{fmt_int(r.N)} ({fmt_int(r.treated_events)})', fmt_int(r.treated_parents), fmt_int(r.G),
+                       f'{fmt_num(r.coef, 3)} ({fmt_num(r.se_cv3, 3)})', fmt_p(r.p_cv3), fmt_p(r.bh_adj_p_cv3)])
+        c_ = ci.loc[q]
+        rows_b.append([q, fmt_int(float(c_.df)), fmt_ci(c_.ci90_lo, c_.ci90_hi),
+                       'Yes' if c_.inside_sesoi == 'True' else 'No', fmt_num(r.mde80_cv3, 3),
+                       fmt_num(r.mde_over_full_sesoi, 2)])
+        g = lad[lad.quartile == q]
+        pick = lambda pre: fmt_p(g[g.rung.str.startswith(pre)].p.iloc[0])
+        rows_c.append([q, pick('HC1'), pick('HC3'), fmt_p(r.bh_adj_p_hc3), pick('CV1'), pick('WCR restricted')])
+    hdr_a = ['Size quartile', 'Events (registrant)', 'Treated parents', 'G', 'Estimate (CV3 SE)', 'p', 'BH-adjusted p']
+    hdr_b = ['Size quartile', 'df', '90% CI', 'Inside ±SESOI', 'MDE80', 'MDE80 / SESOI']
+    hdr_c = ['Size quartile', 'HC1 p', 'HC3 p', 'BH-adjusted HC3 p', 'CV1 p', 'Wild cluster p']
+
+    nb = Notes(16)
+    claim(all(c_.inside_sesoi == 'False' for _, c_ in ci.iterrows()), 'no cell interval inside SESOI')
+    claim(V('q_cells_negligible') == 0, 'constants: no negligible cell')
+    claim(all(int(float(ci.loc[q].df)) == int(sq.set_index('quartile').loc[q].G) - 1 for q in ci.index), 'cell df = G - 1')
+    claim(sum(int(x) for x in sq.N) == V('primary_N'), 'cells sum to N')
+    claim(all(float(x) >= .05 for x in sq.bh_adj_p_cv3), 'no cell rejects under CV3 after BH')
+    q1 = sq.iloc[0]
+    sesoi = float(ci.iloc[0].sesoi)
+    n_hc1 = sum(1 for row in rows_c if row[1] != '' and (row[1] == '< .001' or float('0' + row[1]) < .05))
+    note = (f'Each row of Panel A re-estimates the primary model M4 within one quartile of log total assets in the '
+            f'analytical sample ({nb.c("primary_N", "i")} events in all), with the CV3 standard error (SE) clustered by '
+            f'parent filer entity; G is the number of parent filer entities in the cell, and each cell’s CV3 '
+            f'p-values use the t distribution with that cell’s G − 1 degrees of freedom (df). Registrant events '
+            f'cluster at the top: Q4 holds {nb.i(sq.iloc[3].treated_events, "27A, Q4 / treated_events")} of '
+            f'{nb.c("primary_treated", "i")}, and Q1 rests on {nb.i(q1.treated_events, "27A, Q1 / treated_events")} '
+            f'registrant events at {nb.i(q1.treated_parents, "27A, Q1 / treated_parents")} treated parent, so its '
+            f'estimate compares one firm with the rest of the cell; Q1 also drops the health-breach flag, which does '
+            f'not vary there. The four cells form one family of '
+            f'{nb.i(load_constants()["bh_families"]["size_quartiles"], "constants bh_families.size_quartiles")} tests, '
+            f'and the BH-adjusted p applies the Benjamini–Hochberg false-discovery-rate adjustment within it; no '
+            f'cell gives a BH-adjusted CV3 p below .05 (smallest {nb.c("q_min_bh_p_cv3", "p")}). Panel B asks whether '
+            f'any cell can rule out effects that matter. The smallest effect size of interest (SESOI) is '
+            f'{nb.f(sesoi, 3, "v5_t18c, sesoi (= constants dr_sesoi_daily)")}, 0.25 times the standard deviation of the '
+            f'dependent variable among other events in the full sample. A cell rules out a negligible effect only if '
+            f'its 90 percent confidence interval (CI) lies inside ±SESOI, the equivalence test at the 5 percent '
+            f'level; no cell’s interval does, so no cell is ruled out as negligible. MDE80, the minimum detectable '
+            f'effect at 80 percent power, is (t.975 + t.80, cell df) × SE_CV3; it runs from '
+            f'{nb.c("q_mde_min", "f", 3)} to {nb.c("q_mde_max", "f", 3)}, or {nb.c("q_mde_min_x_sesoi", "f", 2)} to '
+            f'{nb.c("q_mde_max_x_sesoi", "f", 2)} times SESOI. Panel C shows the p-values from procedures that ignore '
+            f'or understate clustering, to document how they over-reject when few treated clusters sit in a cell: HC1 '
+            f'and HC3 treat events as independent and give p below .05 in '
+            f'{nb.i(n_hc1, "27B, HC1 rows with p < .05 (count)")} of the four cells, while CV3 rejects in none. HC1 and '
+            f'HC3 are heteroskedasticity-consistent SEs; CV1 is the cluster-robust SE with the usual small-sample '
+            f'correction; the wild cluster p comes from the restricted wild cluster bootstrap with Rademacher weights. '
+            f'Q1 to Q4 are the size quartiles, Q1 smallest.')
+    nb.d('0.25', 'scripts/263 design_resolution sesoi_mult')
+    return render_table(16, 'Estimates by Size Quartile',
+                        [('Cell estimates', hdr_a, rows_a), ('Equivalence and power by cell', hdr_b, rows_b),
+                         ('Procedures that understate clustering', hdr_c, rows_c)], note)
+
+
+RENDERERS.update({16: table_16})
 
 
 # ------------------------------------------------------------------ constants
