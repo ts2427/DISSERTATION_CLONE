@@ -72,10 +72,13 @@ DROPPED_OLD = [28]
 N_OLD = 33
 
 # set number -> list of new table numbers. Filled in by each set's prompt.
-SETS = {}
+SETS = {
+    1: [1, 2],
+}
 
 # new table number -> renderer. Each renderer returns the markdown block
-# (**Table N**, italic title, panels, *Note.*) for that table.
+# (**Table N**, italic title, panels, *Note.*) for that table. Registered
+# below the renderers' definitions.
 RENDERERS = {}
 
 
@@ -223,6 +226,237 @@ def render_table(new, title, panels, note):
         out += [md_table(header, rows), '']
     out.append(f'*Note.* {note}')
     return '\n'.join(out) + '\n'
+
+
+# ------------------------------------------------------------------ shared labels
+GROUP_TREATED = 'Form 499 registrant'
+GROUP_CONTROL = 'Other firm'
+DV_WORDS = ('abnormal return volatility = SD of daily (RET − vwretd) in percentage points; '
+            'change = post-window [+1, +20] minus pre-window [−60, −11], in trading days '
+            'around the agency reporting date')
+
+VAR_LABELS = {
+    'dv': 'Change in abnormal return volatility',
+    'pre_sd': 'Pre-window abnormal return volatility, [−60, −11]',
+    'post_sd': 'Post-window abnormal return volatility, [+1, +20]',
+    'fcc_form499': 'Form 499 registrant',
+    'delay_w': 'Disclosure gap (days)',
+    'firm_size_log': 'Log total assets',
+    'leverage': 'Leverage',
+    'roa': 'Return on assets',
+    'health_breach': 'Health-breach flag',
+    'prior_events': 'Prior breach events',
+}
+
+PANEL_CSV = V5 / 'v5_event_panel.csv'
+
+
+def appendix_csv(name):
+    p = APPENDIX / name
+    if not p.exists():
+        sys.exit(f'missing committed source {p.relative_to(ROOT)}')
+    return read_csv(p)
+
+
+def blank_dash(x, fmt):
+    """Ledger cells the source leaves empty are not tracked at that level: an em dash."""
+    return '—' if str(x).strip() == '' else fmt(x)
+
+
+def sample_counts():
+    """Final-sample counts by level, from the committed event panel and attrition ledger.
+
+    Events and treated organizations / parents come from the ledger's final row;
+    organization and parent totals and the other-firm counts are distinct counts
+    in v5_event_panel.csv (org_name, final_cik), cross-checked against the ledger.
+    """
+    att = appendix_csv('01_sample_attrition.csv')
+    fin = att.iloc[-1]
+    ev = pd.read_csv(PANEL_CSV, dtype={'final_cik': str, 'org_name': str})
+    t, c = ev[ev.fcc_form499 == 1], ev[ev.fcc_form499 == 0]
+    out = {
+        'events': (len(ev), len(t), len(c)),
+        'orgs': (ev.org_name.nunique(), t.org_name.nunique(), c.org_name.nunique()),
+        'parents': (ev.final_cik.nunique(), t.final_cik.nunique(), c.final_cik.nunique()),
+        'both_parents': sorted(set(t.final_cik) & set(c.final_cik)),
+        # each mixed parent named by its shortest registrant organization name
+        'both_parent_names': sorted(min(t[t.final_cik == k].org_name, key=lambda x: (len(x), x))
+                                    for k in set(t.final_cik) & set(c.final_cik)),
+        'both_orgs': sorted(set(t.org_name) & set(c.org_name)),
+        'date_min': ev.reported_date.min()[:10], 'date_max': ev.reported_date.max()[:10],
+    }
+    ledger = (int(float(fin.N)), int(float(fin.treated)), int(float(fin.control)))
+    if out['events'] != ledger:
+        sys.exit(f'event panel {out["events"]} != attrition ledger {ledger}')
+    if out['orgs'][1] != int(float(fin.t_orgs)) or out['parents'][1] != int(float(fin.t_parents)):
+        sys.exit('treated organizations / parents disagree between event panel and ledger')
+    g = const(load_constants(), 'values.ann_G')
+    if out['parents'][0] != g:
+        sys.exit(f'parent filer entities {out["parents"][0]} != constants values.ann_G {g}')
+    if out['both_orgs']:
+        sys.exit(f'organizations in both groups: {out["both_orgs"]}')
+    return out
+
+
+# ------------------------------------------------------------------ Table 1
+ATTRITION_LABELS = {
+    'PRC universe': 'Records: Privacy Rights Clearinghouse notification records (start)',
+    'Entity resolution + Gate 1': 'Records: not resolved to a public filer entity (entity resolution, Gate 1)',
+    'CIK+date deduplication': 'Records: duplicate records for the same filer and date removed',
+    'Gate 2 adjacency verdicts': 'Records: removed at the Gate 2 adjacency review',
+    'Canonical events (post-Gate 2)': 'Events: canonical events after Gate 2',
+    'CRSP security matched': 'Events: no matched CRSP security',
+    'Public notification date present': 'Events: no public notification date',
+    'Notification on/before 2024-12-31': 'Events: notified after December 31, 2024',
+    'Volatility windows computable': 'Events: volatility windows not computable',
+    'Compustat covariates complete': 'Events: Compustat controls incomplete',
+    'Disclosure delay valid': 'Events: disclosure gap not valid',
+    'Malformed-record exclusion (FINAL)': 'Events: malformed records excluded (final sample)',
+}
+
+
+def table_1():
+    att = appendix_csv('01_sample_attrition.csv')
+    rows_a = []
+    for _, r in att.iterrows():
+        if r.step not in ATTRITION_LABELS:
+            sys.exit(f'Table 1: no plain-language label for attrition step {r.step!r}')
+        rows_a.append([ATTRITION_LABELS[r.step], blank_dash(r.removed, fmt_int), fmt_int(r.N),
+                       blank_dash(r.treated, fmt_int), blank_dash(r.t_orgs, fmt_int),
+                       blank_dash(r.t_parents, fmt_int), blank_dash(r.control, fmt_int)])
+    hdr_a = ['Step', 'Removed', 'Remaining', 'Registrant events', 'Registrant organizations',
+             'Registrant parent filer entities', 'Other events']
+
+    s = sample_counts()
+    rows_b = [['Events'] + [fmt_int(x) for x in s['events']],
+              ['Organizations'] + [fmt_int(x) for x in s['orgs']],
+              ['Parent filer entities'] + [fmt_int(x) for x in s['parents']]]
+    hdr_b = ['Level', 'Total', GROUP_TREATED, GROUP_CONTROL]
+
+    yr = appendix_csv('04_events_by_year.csv')
+    rows_c, one_group = [], []
+    for _, r in yr.iterrows():
+        t, c = int(r.treated), int(r.control)
+        if int(r.total) != t + c:
+            sys.exit(f'Table 1 Panel C: {r.year} total != registrant + other')
+        flag = 'Registrants only' if c == 0 else ('Other firms only' if t == 0 else '')
+        if flag:
+            one_group.append(r.year)
+        rows_c.append([r.year, fmt_int(r.total), fmt_int(r.treated), fmt_int(r.control), flag])
+    tot = [sum(int(x) for x in yr[k]) for k in ('total', 'treated', 'control')]
+    if tot[0] != s['events'][0]:
+        sys.exit(f'Table 1 Panel C: years sum to {tot[0]}, not {s["events"][0]}')
+    rows_c.append(['Total'] + [fmt_int(x) for x in tot] + [''])
+    hdr_c = ['Year', 'Total', 'Registrant events', 'Other events', 'One group only']
+
+    n, nt, nc = s['events']
+    g, gt, gc = s['parents']
+    note = (f'The starting units are Privacy Rights Clearinghouse (PRC) notification records, '
+            f'not breaches; a breach can generate several records, and the record-level steps '
+            f'reduce records to events. Final sample: {fmt_int(n)} events ({fmt_int(nt)} '
+            f'{GROUP_TREATED} events, {fmt_int(nc)} other), {fmt_int(s["orgs"][0])} '
+            f'organizations, and {fmt_int(g)} parent filer entities (G = {fmt_int(g)}; '
+            f'{fmt_int(gt)} with registrant events). Of these, {len(s["both_parents"])} '
+            f'parent filer entities ({" and ".join(s["both_parent_names"])}) have both registrant and other '
+            f'events, so the registrant and other parent counts in Panel B sum to '
+            f'{fmt_int(gt + gc)}, not {fmt_int(g)}. Reporting dates run from '
+            f'{s["date_min"]} to {s["date_max"]}. An em dash (—) marks a count the ledger '
+            f'does not track at that step. In Panel C, "one group only" marks years whose events '
+            f'are all registrant or all other events. Form 499 registrant = event at a firm '
+            f'registered with the Federal Communications Commission on FCC Form 499. '
+            f'Gate 1 = entity-resolution screen; Gate 2 = adjacency review of near-duplicate '
+            f'events. CRSP = Center for Research in Security Prices.')
+    return render_table(1, 'Sample Construction',
+                        [('Attrition from notification records to analytical events', hdr_a, rows_a),
+                         ('Final sample by level', hdr_b, rows_b),
+                         ('Events by reporting year', hdr_c, rows_c)], note)
+
+
+# ------------------------------------------------------------------ Table 2
+DV_VARS = ['dv', 'pre_sd', 'post_sd']
+CONTROL_VARS = ['firm_size_log', 'leverage', 'roa', 'health_breach', 'prior_events', 'delay_w']
+CORR_ORDER = ['dv', 'fcc_form499', 'pre_sd', 'delay_w', 'firm_size_log', 'leverage', 'roa',
+              'health_breach', 'prior_events']
+
+
+def table_2():
+    d = appendix_csv('02A_descriptives_v5.csv')
+    diff = appendix_csv('02B_descriptives_v5_differences.csv').set_index('variable')
+    cell = {(r.group, r.variable): r for _, r in d.iterrows()}
+
+    def ms(g, v):
+        r = cell[(g, v)]
+        return f'{fmt_num(r["mean"], 2)} ({fmt_num(r.sd, 2)})'
+
+    def group_rows(vars_):
+        rows = []
+        for v in vars_:
+            x = diff.loc[v]
+            rows.append([VAR_LABELS[v], ms('treated', v), ms('control', v),
+                         f'{fmt_num(x["diff"], 2)} ({fmt_num(x.se, 2)})',
+                         f'{fmt_num(x.t, 2)} ({fmt_num(x.welch_df, 2)})', fmt_p(x.p)])
+        return rows
+
+    n = {g: fmt_int(cell[(g, 'dv')].N) for g in ('full', 'treated', 'control')}
+    for g in n:
+        if {fmt_int(cell[(g, v)].N) for v in DV_VARS + CONTROL_VARS} != {n[g]}:
+            sys.exit(f'Table 2: N varies across variables in group {g}')
+    hdr_ab = ['Variable', f'{GROUP_TREATED} M (SD)', f'{GROUP_CONTROL} M (SD)',
+              'Difference (SE)', 'Welch t (df)', 'p']
+
+    cor = appendix_csv('03_correlations_v5.csv').set_index('variable')
+    if list(cor.index) != CORR_ORDER or list(cor.columns) != CORR_ORDER:
+        sys.exit('Table 2: correlation matrix order changed')
+    lab = [f'{i + 1}. {VAR_LABELS[v]}' for i, v in enumerate(CORR_ORDER)]
+
+    def corr_panel(cols):
+        rows = []
+        for i, v in enumerate(CORR_ORDER):
+            if i < cols[0]:
+                continue
+            rows.append([lab[i]] + [fmt_num(cor.loc[v, CORR_ORDER[j]], 2) if j <= i else ''
+                                    for j in cols])
+        return ['Variable'] + [str(j + 1) for j in cols], rows
+
+    hdr_c, rows_c = corr_panel(range(0, 6))
+    hdr_d, rows_d = corr_panel(range(6, 9))
+
+    hdr_dist = ['Variable', 'M (SD)', 'Median', '25th percentile', '75th percentile', 'Minimum',
+                'Maximum']
+
+    def dist_rows(g):
+        return [[VAR_LABELS[v], ms(g, v)] + [fmt_num(cell[(g, v)][k], 2)
+                                             for k in ('median', 'p25', 'p75', 'min', 'max')]
+                for v in DV_VARS + CONTROL_VARS]
+
+    note = (f'Sample: {n["full"]} events ({n["treated"]} {GROUP_TREATED} events, '
+            f'{n["control"]} other-firm events). Dependent variable: {DV_WORDS}; the pre- and '
+            f'post-window rows give the two levels. Difference = {GROUP_TREATED} mean '
+            f'minus other-firm mean; Welch t and p are from the unequal-variance two-sample '
+            f't test, with Welch–Satterthwaite df. Correlations are Pearson, lower triangle, '
+            f'over all {n["full"]} events. Log total assets = natural log of Compustat total '
+            f'assets; leverage = total liabilities / total assets; return on assets = net income '
+            f'/ total assets; health-breach flag = 1 when the record lists medical or health '
+            f'information as affected or the organization is a medical organization; prior '
+            f'breach events = earlier sample events at the same parent filer entity; disclosure '
+            f'gap = days from the breach date to the reporting date (negative gaps set to 0), '
+            f'top-coded at the 99th percentile. M = mean; SD = standard '
+            f'deviation; SE = standard error; df = degrees of freedom; Form 499 registrant = '
+            f'event at a firm registered with the Federal Communications Commission on FCC '
+            f'Form 499.')
+    return render_table(2, 'Descriptive Statistics by Registration',
+                        [('Dependent variable', hdr_ab, group_rows(DV_VARS)),
+                         ('Controls', hdr_ab, group_rows(CONTROL_VARS)),
+                         ('Correlations of model variables, variables 1–6', hdr_c, rows_c),
+                         ('Correlations of model variables, variables 7–9', hdr_d, rows_d),
+                         (f'Distribution, all events (N = {n["full"]})', hdr_dist, dist_rows('full')),
+                         (f'Distribution, {GROUP_TREATED} events (N = {n["treated"]})',
+                          hdr_dist, dist_rows('treated')),
+                         (f'Distribution, other-firm events (N = {n["control"]})',
+                          hdr_dist, dist_rows('control'))], note)
+
+
+RENDERERS.update({1: table_1, 2: table_2})
 
 
 # ------------------------------------------------------------------ main
