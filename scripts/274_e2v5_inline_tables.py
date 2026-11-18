@@ -77,6 +77,7 @@ N_OLD = 33
 SETS = {
     1: [1, 2],
     2: [3, 4, 5],
+    3: [6, 7, 8],
 }
 
 # new table number -> renderer. Each renderer returns the markdown block
@@ -937,6 +938,182 @@ def table_5():
 
 
 RENDERERS.update({3: table_3, 4: table_4, 5: table_5})
+
+
+# ------------------------------------------------------------------ Set 3 shared
+CONV_LABEL = {
+    'published_regulated_dummy_4812_4813': ('Published regulated-carrier dummy', '4812, 4813'),
+    'prior_spec_4813_4841_4899': ('Earlier specification of this essay', '4813, 4841, 4899'),
+    'tuned_4812_4813_4841_4899': ('Tuned to the registry', '4812, 4813, 4841, 4899'),
+    'full_range_4800_4899': ('Full communications range', '4800–4899'),
+}
+
+
+def parent_names():
+    """Parent filer entity names: the organization column of 17 (one row per canonical treated parent)."""
+    sv = appendix_csv('17_sich_vs_curated_sic.csv')
+    return {str(r.parent_cik): r.organization for _, r in sv.iterrows()}
+
+
+# ------------------------------------------------------------------ Table 6
+def table_6():
+    reg = appendix_csv('12_form499_registry_matches.csv')
+    names = parent_names()
+    rows_a, tot_rec, tot_ev = [], 0, 0
+    order = (reg.groupby('parent_cik').size().sort_values(ascending=False, kind='stable').index)
+    for pc in order:
+        g = reg[reg.parent_cik == pc]
+        ev = {int(x) for x in g.events_in_sample}
+        span = set(g.event_span)
+        if len(ev) != 1 or len(span) != 1:
+            sys.exit(f'Table 6: events per parent not constant for {pc}')
+        a_, b_ = next(iter(span)).split('..')
+        n_ebs = int((g.end_before_start == 'True').sum())
+        rows_a.append([names.get(pc, pc), pc, fmt_int(len(g)), fmt_int(g.FRN.nunique()), fmt_int(n_ebs),
+                       fmt_int(next(iter(ev))), f'{a_} to {b_}'])
+        tot_rec += len(g)
+        tot_ev += next(iter(ev))
+    if tot_rec != V('registry_family_records') or tot_ev != V('primary_treated'):
+        sys.exit('Table 6 Panel A: totals disagree with the constants')
+    rows_a.append(['All treated parent filer entities', '', fmt_int(tot_rec), '', '', fmt_int(tot_ev), ''])
+    hdr_a = ['Parent filer entity', 'CIK', 'Registry records matched', 'Distinct FRNs',
+             'End date before start date', 'Registrant events', 'Breach dates']
+
+    adj = appendix_csv('13_treatment_adjudications.csv')
+    st = adj[adj.kind == 'stage4_pattern']
+    ep = adj[adj.kind == 'equity_parent']
+    if len(st) != V('adjudication_rules') or len(ep) != V('equity_parent_maps'):
+        sys.exit('Table 6: adjudication counts disagree with the constants')
+    ruling = {'FORCE TREATED': 'Treated', 'FORCE EXCLUDED': 'Excluded'}
+    rows_b = [[r.pattern.replace('^', '').replace(' ?', ' ').replace('|', '; '), ruling[r.direction],
+               r.basis.replace('—', '—')] for _, r in st.iterrows()]
+    hdr_b = ['Organization name pattern', 'Ruling', 'Basis']
+    rows_c = [[r.pattern.split(' -> ')[0], r.pattern.split(' -> ')[1], r.basis] for _, r in ep.iterrows()]
+    hdr_c = ['Registrant CIK', 'Parent CIK assigned', 'Basis']
+
+    nb = Notes(6)
+    dish = st[st.pattern.str.startswith('DISH')]
+    claim(len(dish) == 2 and set(dish.direction) == {'FORCE TREATED', 'FORCE EXCLUDED'}, 'DISH has two rules')
+    ebs = int((reg.end_before_start == 'True').sum())
+    note = (f'Panel A has one row per treated parent filer entity in the analytical sample '
+            f'({nb.i(len(order), "12, distinct parent_cik")} parents, {nb.c("primary_treated", "i")} registrant '
+            f'events). The Federal Communications Commission (FCC) Form 499 registry holds '
+            f'{nb.c("registry_records", "i")} filer records; Registry records matched counts the records whose '
+            f'legal name, doing-business-as name or holding company contains one of the parent’s family '
+            f'keywords ({nb.c("registry_family_records", "i")} records in all). A name match counts toward '
+            f'treatment only when the matched registration is open on the breach date: its start date falls on or '
+            f'before the breach date and its end date, if any, falls after it. Distinct FRNs counts the FCC '
+            f'Registration Numbers among the matched records. End date before start date counts matched records '
+            f'whose registry end date precedes their start date, a data error in the registry '
+            f'({nb.i(ebs, "12, end_before_start == True")} records in all). Registrant events counts the parent’s '
+            f'events in the analytical sample, and Breach dates gives the first and last breach date among them. '
+            f'Panel B lists the adjudication rules. An adjudication rule is a recorded ruling for an organization '
+            f'name pattern that exact name matching against the registry would treat wrongly; it either forces '
+            f'treatment, under clause (a), a registration of the organization itself open on the breach date, or '
+            f'clause (b), the organization is the parent brand of a registered filer whose subscriber operations '
+            f'were breached, or it forces exclusion when neither clause holds. There are '
+            f'{nb.c("adjudication_rules", "i")} rules covering {nb.c("adjudication_names", "i")} organization '
+            f'names; DISH Network has two rules, so it is excluded before '
+            f'{nb.d("July 1, 2020", "13, DISH rules (2020-07-01 divestiture date)")}, when it had no covered '
+            f'wireless operation, and treated on and after that date. Panel C lists the '
+            f'{nb.c("equity_parent_maps", "i")} equity re-parenting rules, which assign a registrant with no '
+            f'traded equity to the parent filer entity that owns it. CIK is the Securities and Exchange Commission '
+            f'(SEC) Central Index Key; FRN is the FCC Registration Number; Form 499 registrant means an event at a '
+            f'firm registered on FCC Form 499.')
+    return render_table(6, 'The Form 499 Registry: Treated Parent Filer Entities and Adjudication Rules',
+                        [('Registry records matched to each treated parent filer entity', hdr_a, rows_a),
+                         ('Adjudication rules', hdr_b, rows_b),
+                         ('Equity re-parenting rules', hdr_c, rows_c)], note)
+
+
+# ------------------------------------------------------------------ Table 7
+def table_7():
+    cv = appendix_csv('14_sic_conventions_vs_form499.csv')
+    er = appendix_csv('15_sic_convention_errors.csv')
+    rows_a = []
+    for _, r in cv.iterrows():
+        lab, codes = CONV_LABEL[r.convention]
+        rows_a.append([f'{lab} (SIC {codes})', fmt_num(r.agree_pct, 1), fmt_int(r.FP), fmt_int(r.FN),
+                       fmt_int(r.parents_identified), fmt_int(r.parents_wrongly_included), r.characteristic_failure])
+    hdr_a = ['Convention (codes)', 'Event agreement, %', 'False positives', 'False negatives',
+             'Treated parents identified', 'Other parents included', 'Characteristic failure']
+    elab = {'FALSE_POSITIVE': 'False positive', 'FALSE_NEGATIVE': 'False negative'}
+    rows_b = [[CONV_LABEL[r.convention][0], elab[r.error_type], r.organization, r.parent_cik, r.sich,
+               fmt_int(r.events)] for _, r in er.iterrows()]
+    hdr_b = ['Convention', 'Error', 'Organization', 'Parent CIK', 'SIC', 'Events']
+
+    nb = Notes(7)
+    nt = int(cv.N_testable.iloc[0])
+    claim(nt == V('sic_testable'), 'testable events match the constants')
+    best = cv.sort_values('agree_pct').iloc[-1]
+    claim(best.convention.startswith('tuned'), 'the tuned set has the highest agreement')
+    pub = cv[cv.convention.str.startswith('published')].iloc[0]
+    note = (f'Each row of Panel A applies one industry-code convention to the '
+            f'{nb.i(nt, "14, N_testable (= constants sic_testable)")} canonical events with a Compustat '
+            f'historical Standard Industrial Classification (SIC) code and compares the result with Federal '
+            f'Communications Commission (FCC) Form 499 registration. The conventions are the published regulated-'
+            f'carrier dummy (SIC 4812 and 4813), the earlier specification of this essay (4813, 4841 and 4899), a '
+            f'set tuned to the registry (4812, 4813, 4841 and 4899) and the full communications range (4800 to '
+            f'4899); literature source for each convention: [NO SOURCE]. The tuned set was chosen after looking '
+            f'at the registry, so its agreement is an upper bound, not a test. Event agreement is the percentage '
+            f'of the {nb.i(nt, "14, N_testable")} events on which the convention and registration agree. A false '
+            f'positive is an event the convention codes as a carrier although its parent filer entity is not a '
+            f'registrant; a false negative is a registrant event the convention does not code. Treated parents '
+            f'identified counts, of the {nb.c("sic_treated_parents_testable", "i")} registrant parent filer '
+            f'entities in the comparison, those with at least one event the convention codes as a carrier; Other '
+            f'parents included counts non-registrant parents the convention codes as carriers. The tuned set '
+            f'agrees most often ({nb.f(best.agree_pct, 1, "14, tuned / agree_pct")} percent) and the published '
+            f'dummy identifies the fewest registrant parents ({nb.i(pub.parents_identified, "14, published / parents_identified")}). '
+            f'Panel B lists the misclassified organizations under the published dummy and the tuned set, with the '
+            f'SIC code that produced the error and the number of events. CIK is the Securities and Exchange '
+            f'Commission Central Index Key.')
+    for code in ('4812', '4813', '4841', '4899', '4800'):
+        nb.d(code, 'scripts/269 CONV (convention code sets)')
+    return render_table(7, 'Industry-Code Conventions Against Form 499 Registration',
+                        [('Agreement with Form 499 registration', hdr_a, rows_a),
+                         ('Misclassified organizations', hdr_b, rows_b)], note)
+
+
+# ------------------------------------------------------------------ Table 8
+def table_8():
+    ot = appendix_csv('16_treated_outside_comparison.csv')
+    sv = appendix_csv('17_sich_vs_curated_sic.csv')
+    rlab = {'no matched ticker': 'No matched ticker',
+            'ticker but no Compustat row in 550-day window': 'Ticker, but no Compustat record in the prior 550 days'}
+    rows_a = [[r.organization, r.parent_cik, r.reported_date, rlab[r.reason]] for _, r in ot.iterrows()]
+    hdr_a = ['Organization', 'Parent CIK', 'Reporting date', 'Reason']
+    rows_b = [[r.organization, r.parent_cik, r.tickers, r.sich or '—', r.curated_sic or '—',
+               'Registrant' if r.form499 == 'treated' else 'Not a registrant',
+               'Yes' if r.sources_disagree == 'True' else 'No'] for _, r in sv.iterrows()]
+    hdr_b = ['Organization', 'Parent CIK', 'Tickers', 'Compustat SIC', 'Breach-record SIC', 'Form 499',
+             'Sources disagree']
+
+    nb = Notes(8)
+    claim(len(ot) == V('outside_treated') and ot.parent_cik.nunique() == V('outside_parents'), 'outside counts')
+    claim(V('sic_treated_total') - V('sic_treated_testable') == V('outside_treated'), '118 - 107 = 11')
+    n_noticker = int((ot.reason == 'no matched ticker').sum())
+    note = (f'Panel A lists the {nb.c("outside_treated", "i")} registrant events, at '
+            f'{nb.c("outside_parents", "i")} parent filer entities, that fall outside the industry-code comparison '
+            f'in Table 7. The comparison starts from the {nb.c("sic_treated_total", "i")} verified registrant events '
+            f'among the canonical events and keeps the {nb.c("sic_treated_testable", "i")} with a Compustat '
+            f'historical Standard Industrial Classification (SIC) code. An event goes uncoded when its firm has no '
+            f'matched stock ticker ({nb.i(n_noticker, "16, reason == no matched ticker")} events) or when the '
+            f'ticker has no Compustat annual record in the {nb.d("550", "scripts/163 sich rule (550-day window)")} '
+            f'days before the breach date ({nb.i(len(ot) - n_noticker, "16, other reason")} events); '
+            f'{nb.c("outside_tmobile", "i")} of the {nb.c("outside_treated", "i")} are T-Mobile events. Panel B '
+            f'compares, for each treated parent filer entity and for Roku, the Compustat historical SIC code with '
+            f'the SIC codes attached to the breach records in the source data. The two sources disagree for '
+            f'{nb.c("sich_sources_disagree_treated", "i")} of the {nb.c("sich_treated_parents", "i")} treated '
+            f'parents. Compustat SIC is the code on the firm’s most recent annual record within '
+            f'{nb.d("550", "scripts/163 sich rule")} days before the breach date; Breach-record SIC is every code '
+            f'found on the parent’s breach records; an em dash (—) marks a missing code. CIK is the '
+            f'Securities and Exchange Commission Central Index Key.')
+    return render_table(8, 'Industry-Code Coverage and Source',
+                        [('Registrant events outside the industry-code comparison', hdr_a, rows_a),
+                         ('Compustat SIC against the breach records’ SIC', hdr_b, rows_b)], note)
+
+
+RENDERERS.update({6: table_6, 7: table_7, 8: table_8})
 
 
 # ------------------------------------------------------------------ constants
