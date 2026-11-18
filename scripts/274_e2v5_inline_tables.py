@@ -233,7 +233,8 @@ def render_table(new, title, panels, note):
             out += [f'Panel {panel_letter(i)}: {ptitle}', '']
         out += [md_table(header, rows, wide_ok=kind == [CORRELATION]), '']
     out.append(f'*Note.* {note}')
-    return '\n'.join(out) + '\n'
+    return dict(new=new, title=title, note=note, md='\n'.join(out) + '\n',
+                panels=[(pt, h, r, (k[0] if k else None)) for pt, h, r, *k in panels])
 
 
 # ------------------------------------------------------------------ shared labels
@@ -545,10 +546,9 @@ def table_3():
 
     gg = appendix_csv('09_gradient_grid.csv')
     alab = {'breach': 'Breach date', 'notification': 'Notification date', 'TOTAL': 'Both anchors'}
-    rows_e = [[alab[r.anchor], fmt_int(r.n_specs), fmt_int(r.q1_gt_q4), fmt_int(r.monotone_stepdown),
-               NO_SOURCE, NO_SOURCE] for _, r in gg.iterrows()]
-    hdr_e = ['Anchor date', 'Specifications', 'Q1 estimate above Q4', 'Monotone decline Q1 to Q4',
-             'Q1 − Q4 significant at .05', 'Range of Q1 − Q4']
+    rows_e = [[alab[r.anchor], fmt_int(r.n_specs), fmt_int(r.q1_gt_q4), fmt_int(r.monotone_stepdown)]
+              for _, r in gg.iterrows()]
+    hdr_e = ['Anchor date', 'Specifications', 'Q1 estimate above Q4', 'Monotone decline Q1 to Q4']
 
     m = cell[('i_industry_codes_records', 'main')]
     g_tot = int(gg[gg.anchor == 'TOTAL'].n_specs.iloc[0])
@@ -633,18 +633,22 @@ def table_4():
     hdr_b = ['Q1 component', 'Records', 'Events', 'Change M (SD)']
 
     mi = gc.loc['missed_by_industry_codes']
+    mc = pd.read_csv(MISSED_CSV)
+    if int(mc.records.sum()) != int(mi.N) or mc.organization.nunique() != int(mi.orgs):
+        sys.exit(f'{MISSED_CSV.name} disagrees with 08A (records / organizations)')
     n_q1, n_q4 = V('q1_added_records'), V('missed_q4_records')
     rows_c = [['All missed registrants', fmt_int(mi.N), fmt_int(mi.orgs),
                f'{fmt_num(mi.mean_vol_change, 2)} ({fmt_num(mi.sd_vol_change, 2)})',
-               f'Q1 {n_q1}; Q2–Q3 {int(mi.N) - n_q1 - n_q4}; Q4 {n_q4}'],
-              ['By firm, with SIC code', NO_SOURCE, NO_SOURCE, NO_SOURCE, NO_SOURCE]]
-    hdr_c = ['Firm', 'Records', 'Organizations', 'Change M (SD)', 'Quartile placement (records)']
+               f'Q1 {n_q1}; Q2\u2013Q3 {int(mi.N) - n_q1 - n_q4}; Q4 {n_q4}']]
+    hdr_c = ['Group', 'Records', 'Organizations', 'Change M (SD)', 'Quartile placement (records)']
 
     note = (f'{RECORD_SPEC} All panels use the {fmt_int(n_all)} notification records; industry-code '
             f'treatment = SIC 4813, 4841 or 4899 on the record; Form 499 treatment = Form 499 '
             f'registration of the parent filer entity. Change = change in raw-return volatility. '
             f'Panel B covers the {fmt_int(q1n)} records in the smallest size quartile (Q1). In Panel C, '
-            f'Q2–Q3 placement is the {fmt_int(mi.N)} records less those in Q1 and Q4. The pre-repair '
+            f'Q2\u2013Q3 placement is the {fmt_int(mi.N)} records less those in Q1 and Q4; the firm names '
+            f'and SIC codes of the {fmt_int(mi.N)} records are in the committed CSV '
+            f'{MISSED_CSV.relative_to(ROOT).as_posix()}. The pre-repair '
             f'sensitivity group and the Welch contrasts for the damaged entries are in the committed '
             f'appendix CSVs. SIC = Standard Industrial Classification; CIK = SEC Central Index Key; '
             f'Q1–Q4 = size quartiles of log market value, Q1 smallest; M = mean; SD = standard '
@@ -717,7 +721,6 @@ def table_5():
     rows_d.append(['All losses', fmt_int(lost[0]), pct(lost[0], nb), fmt_int(lost[1]), fmt_int(lost[2])])
     rows_d.append(['Retained', fmt_int(prev[0]), pct(prev[0], nb), f'{fmt_int(prev[1])} ({pct(prev[1], tb)})',
                    f'{fmt_int(prev[2])} ({pct(prev[2], cb)})'])
-    rows_d.append([f'Registrant events lost, by name', '', '', NO_SOURCE, ''])
     hdr_d = ['Reason', 'Events', f'Share of {fmt_int(nb)}', 'Registrant events', 'Other events']
 
     note = (f'{RECORD_SPEC} Panel A lists the {len(rows_a)} legacy identifiers (SEC Central Index Keys) to '
@@ -773,22 +776,277 @@ def emit_constants():
     print(f'wrote {PART.relative_to(ROOT)}: {out}')
 
 
+# ------------------------------------------------------------------ missed registrants
+MISSED_CSV = V5 / 'missed_registrants_by_firm.csv'
+
+
+def emit_missed_registrants():
+    """Firm names and record SIC codes of the records the industry codes miss (Table 4 Panel C).
+
+    The one mode of this script that reads committed Data/ rather than outputs: it rebuilds
+    the 891-record earlier-specification frame exactly as scripts/269 section B does (same
+    files, merge keys, reparenting map, treatment and SIC rules, complete-case filter and
+    quartiles) and gates the result against 08A, 06A and the constants before writing.
+    """
+    import numpy as np
+    oxs = ['return_volatility_pre', 'firm_size_log', 'leverage', 'roa', 'disclosure_delay_days',
+           'prior_breaches_total', 'health_breach']
+    can = pd.read_csv(ROOT / 'Data/processed/rebuild/CANONICAL_V3.csv', low_memory=False)
+    old = pd.read_csv(ROOT / 'Data/processed/FINAL_DISSERTATION_DATASET_ENRICHED.csv', low_memory=False)
+    s2 = pd.read_csv(ROOT / 'Data/processed/rebuild/stage2_signed.csv', low_memory=False)
+    key = ['org_name', 'breach_date', 'reported_date']
+    for df_ in (old, s2):
+        for c in ['breach_date', 'reported_date']:
+            df_[c] = pd.to_datetime(df_[c], errors='coerce').dt.strftime('%Y-%m-%d')
+    old2 = old.merge(s2.drop_duplicates(subset=key)[key + ['final_cik']], on=key, how='left')
+    equity_parent = {1040573: 1166691, 1512267: 1166691, 1457937: 1105705}   # scripts/154:185
+    old2['final_cik_rep'] = old2['final_cik'].map(
+        lambda c: equity_parent.get(int(c), int(c)) if pd.notna(c) else np.nan)
+    treated = set(can.loc[can['fcc_form499'] == 1, 'final_cik'].astype(int))
+    old2['form499_family'] = old2['final_cik_rep'].isin(treated).astype(float)
+    old2['sic_ind'] = pd.to_numeric(old2['sic'], errors='coerce').isin([4813, 4841, 4899]).astype(float)
+    oc = old2[old2['has_crsp_data'] == True].dropna(subset=['volatility_change'] + oxs).copy()  # noqa: E712
+    oc['q'] = pd.qcut(oc['firm_size_log'], 4, labels=[1, 2, 3, 4]).astype(int)
+    m = oc[(oc['sic_ind'] == 0) & (oc['form499_family'] == 1)]
+    g8 = appendix_csv('08A_misclassified_group_comparisons.csv').set_index('group').loc['missed_by_industry_codes']
+    c = load_constants()['values']
+    checks = [(len(oc), 891), (len(m), int(g8.N)), (m['org_name'].nunique(), int(g8.orgs)),
+              (int((m['q'] == 1).sum()), c['q1_added_records']), (int((m['q'] == 4).sum()), c['missed_q4_records'])]
+    if any(a != b for a, b in checks) or abs(m['volatility_change'].mean() - float(g8.mean_vol_change)) > 1e-9:
+        sys.exit(f'missed-registrant rebuild disagrees with the committed outputs: {checks}')
+    out = (m.assign(parent_cik=m['final_cik_rep'].astype(int),
+                    record_sic=pd.to_numeric(m['sic']).astype(int))
+            .groupby(['parent_cik', 'organization' if 'organization' in m else 'org_name', 'record_sic'])
+            .agg(records=('q', 'size'),
+                 size_quartiles=('q', lambda s: ';'.join(f'Q{x}' for x in sorted(s))))
+            .reset_index().rename(columns={'org_name': 'organization'})
+            .sort_values(['parent_cik', 'organization'], kind='stable'))
+    out.to_csv(MISSED_CSV, index=False, lineterminator='\n', encoding='utf-8')
+    print(f'wrote {MISSED_CSV.relative_to(ROOT)}: {len(out)} organizations, {int(out.records.sum())} records')
+
+
+# ------------------------------------------------------------------ Word output
+LAST_SET = 9
+FIXED_TIME = (1980, 1, 1, 0, 0, 0)
+_NUMERIC_CELL = re.compile(r'^[−\-+<>=.,%()\[\]\d\s;Q–]*$')
+
+
+def _is_numeric(text):
+    t = str(text).strip()
+    return t in ('', '—', NO_SOURCE) or (bool(_NUMERIC_CELL.match(t)) and any(ch.isdigit() for ch in t))
+
+
+CHAR_IN = 0.07     # average Times New Roman 10 pt character width, inches
+PAD_IN = 0.16      # left + right cell margins
+TABLE_DXA = int(6.5 * 1440)
+WRAP_IN = 1.6      # columns wider than this may wrap
+MIN_WRAP_IN = 1.0  # narrowest a wrapping column may get
+
+
+def _column_widths(header, rows, numeric):
+    """Column widths (dxa) sized to content, summing to 6.5 in.
+
+    Each column's natural width is its widest body cell or its longest header word (headers
+    wrap at word breaks). Columns narrower than WRAP_IN never wrap and keep their natural
+    width; wider columns (long labels and names) share what is left, in proportion to their
+    natural widths, wrapping as needed. If the content is narrower than 6.5 in, every column
+    widens in proportion. Deterministic.
+    """
+    nat = []
+    for j, h in enumerate(header):
+        body = max([len(str(r[j])) for r in rows] + [0])
+        word = max([len(w) for w in str(h).split()] + [0])
+        nat.append(max(body, word) * CHAR_IN + PAD_IN)
+    total_in = TABLE_DXA / 1440
+    if sum(nat) <= total_in:
+        w = [n * total_in / sum(nat) for n in nat]
+    else:
+        wrap = [n > WRAP_IN for n in nat]
+        keep = sum(n for n, wr in zip(nat, wrap) if not wr)
+        long_ = sum(n for n, wr in zip(nat, wrap) if wr)
+        avail = total_in - keep
+        if long_ and avail >= MIN_WRAP_IN * sum(wrap):
+            w = [n * avail / long_ if wr else n for n, wr in zip(nat, wrap)]
+        else:
+            w = [n * total_in / sum(nat) for n in nat]
+    dxa = [int(round(x * 1440)) for x in w]
+    dxa[0] += TABLE_DXA - sum(dxa)
+    return dxa
+
+
+def write_docx(path, blocks):
+    """APA tables (Essay 1 layout) in a .docx; deterministic (fixed core properties and zip times)."""
+    import zipfile
+    from docx import Document
+    from docx.enum.table import WD_TABLE_ALIGNMENT
+    from docx.enum.text import WD_ALIGN_PARAGRAPH
+    from docx.oxml import OxmlElement
+    from docx.oxml.ns import qn
+    from docx.shared import Inches, Pt
+    from datetime import datetime
+
+    doc = Document()
+    sec = doc.sections[0]
+    sec.left_margin = sec.right_margin = sec.top_margin = sec.bottom_margin = Inches(1)
+    st = doc.styles['Normal']
+    st.font.name = 'Times New Roman'
+    st.font.size = Pt(12)
+    st.element.rPr.rFonts.set(qn('w:eastAsia'), 'Times New Roman')
+    pf = st.paragraph_format
+    pf.space_before = Pt(0)
+    pf.space_after = Pt(0)
+    pf.line_spacing = 1.0
+    from docx.enum.style import WD_STYLE_TYPE
+    cs = doc.styles.add_style('Table Cell 10', WD_STYLE_TYPE.PARAGRAPH)
+    cs.base_style = st
+    cs.font.size = Pt(10)
+    cs.paragraph_format.space_before = Pt(0)
+    cs.paragraph_format.space_after = Pt(0)
+    cs.paragraph_format.line_spacing = 1.0
+
+    def para(text='', size=12, bold=False, italic=False, keep=False, before=0, runs=None):
+        p = doc.add_paragraph()
+        p.paragraph_format.keep_with_next = keep
+        p.paragraph_format.space_before = Pt(before)
+        for t, it in (runs or [(text, italic)]):
+            r = p.add_run(t)
+            r.font.size = Pt(size)
+            r.bold = bold
+            r.italic = it
+        return p
+
+    def border(cell, edges):
+        tcpr = cell._tc.get_or_add_tcPr()
+        b = tcpr.find(qn('w:tcBorders'))
+        if b is None:
+            b = OxmlElement('w:tcBorders')
+            tcpr.append(b)
+        for e in edges:
+            el = OxmlElement(f'w:{e}')
+            el.set(qn('w:val'), 'single')
+            el.set(qn('w:sz'), '6')
+            el.set(qn('w:space'), '0')
+            el.set(qn('w:color'), '000000')
+            b.append(el)
+
+    def table(header, rows):
+        t = doc.add_table(rows=1 + len(rows), cols=len(header))
+        t.alignment = WD_TABLE_ALIGNMENT.CENTER
+        t.autofit = True
+        tblpr = t._tbl.tblPr
+        w = tblpr.find(qn('w:tblW'))
+        if w is None:
+            w = OxmlElement('w:tblW')
+            tblpr.append(w)
+        w.set(qn('w:w'), str(int(6.5 * 1440)))
+        w.set(qn('w:type'), 'dxa')
+        none = OxmlElement('w:tblBorders')
+        for e in ('top', 'left', 'bottom', 'right', 'insideH', 'insideV'):
+            el = OxmlElement(f'w:{e}')
+            el.set(qn('w:val'), 'nil')
+            none.append(el)
+        tblpr.append(none)
+        numeric = [all(_is_numeric(r[j]) for r in rows) for j in range(len(header))]
+        widths = _column_widths(header, rows, numeric)
+        layout = OxmlElement('w:tblLayout')
+        layout.set(qn('w:type'), 'fixed')
+        tblpr.append(layout)
+        grid = t._tbl.tblGrid
+        for gc_, wd in zip(grid.findall(qn('w:gridCol')), widths):
+            gc_.set(qn('w:w'), str(wd))
+        for i, vals in enumerate([header] + rows):
+            row = t.rows[i]
+            trpr = row._tr.get_or_add_trPr()
+            trpr.append(OxmlElement('w:cantSplit'))
+            if i == 0:
+                trpr.append(OxmlElement('w:tblHeader'))
+            for j, v in enumerate(vals):
+                cell = row.cells[j]
+                tcpr = cell._tc.get_or_add_tcPr()
+                tcw = tcpr.find(qn('w:tcW'))
+                if tcw is None:
+                    tcw = OxmlElement('w:tcW')
+                    tcpr.insert(0, tcw)
+                tcw.set(qn('w:w'), str(widths[j]))
+                tcw.set(qn('w:type'), 'dxa')
+                p = cell.paragraphs[0]
+                p.style = cs
+                p.paragraph_format.keep_with_next = i < len(rows)
+                text = str(v)
+                if i > 0 and numeric[j]:
+                    # keep "< .001", "0.39 (177.49)", "-0.02 (0.87)" on one line
+                    text = text.replace('< ', '<\u00a0').replace(' (', '\u00a0(')
+                r = p.add_run(text)
+                r.font.size = Pt(10)
+                if i == 0:
+                    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                elif j == 0 or not numeric[j]:
+                    p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+                else:
+                    p.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+                if i == 0:
+                    border(cell, ['top', 'bottom'])
+                elif i == len(rows):
+                    border(cell, ['bottom'])
+
+    for bi, b in enumerate(blocks):
+        para(f'Table {b["new"]}', bold=True, keep=True, before=0 if bi == 0 else 24)
+        para(b['title'], italic=True, keep=True)
+        for pi, (pt, header, rows, _kind) in enumerate(b['panels']):
+            if len(b['panels']) > 1:
+                para(f'Panel {panel_letter(pi)}: {pt}', size=10, italic=True, keep=True, before=6)
+            elif pi == 0:
+                para('', size=10, keep=True)
+            table(header, rows)
+        para(size=10, before=6, runs=[('Note.', True), (' ' + b['note'], False)])
+
+    cp = doc.core_properties
+    fixed = datetime(2026, 1, 1)
+    cp.author = cp.last_modified_by = 'scripts/274_e2v5_inline_tables.py'
+    cp.created = cp.modified = cp.last_printed = fixed
+    cp.revision = 1
+    cp.title = 'Essay 2 tables'
+    tmp = path.with_suffix('.tmp.docx')
+    doc.save(tmp)
+    with zipfile.ZipFile(tmp) as zin, zipfile.ZipFile(path, 'w', zipfile.ZIP_DEFLATED) as zout:
+        for item in sorted(zin.infolist(), key=lambda z: (z.filename != '[Content_Types].xml', z.filename)):
+            zi = zipfile.ZipInfo(item.filename, date_time=FIXED_TIME)
+            zi.compress_type = zipfile.ZIP_DEFLATED
+            zi.external_attr = 0o644 << 16
+            zout.writestr(zi, zin.read(item.filename))
+    tmp.unlink()
+    print(f'wrote {path.relative_to(ROOT)} ({len(blocks)} tables)')
+
+
 # ------------------------------------------------------------------ main
-def write_set(n):
-    if n not in SETS:
-        sys.exit(f'set {n} has no tables registered yet (SETS is filled in by each set\'s prompt)')
-    blocks = []
-    for new in SETS[n]:
-        if new not in RENDERERS:
-            sys.exit(f'Table {new} (set {n}) has no renderer')
-        blocks.append(RENDERERS[new]())
-    text = '\n'.join(blocks)
+def write_set(n, docx_too=False):
+    blocks = set_blocks(n)
+    text = '\n'.join(b['md'] for b in blocks)
     no_src = text.count(NO_SOURCE)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     path = OUT_DIR / f'set_{n}.md'
     with open(path, 'w', encoding='utf-8', newline='\n') as f:
         f.write(text)
     print(f'wrote {path.relative_to(ROOT)} (tables {SETS[n]}; {no_src} [NO SOURCE] cells)')
+    if docx_too:
+        write_docx(OUT_DIR / f'Essay2_Tables_Set_{n}.docx', blocks)
+        if n == LAST_SET:
+            missing = [k for k in range(1, LAST_SET + 1) if k not in SETS]
+            if missing:
+                sys.exit(f'cannot write Essay2_Tables_All.docx: sets {missing} not registered')
+            write_docx(OUT_DIR / 'Essay2_Tables_All.docx',
+                       [b for k in range(1, LAST_SET + 1) for b in set_blocks(k)])
+
+
+def set_blocks(n):
+    if n not in SETS:
+        sys.exit(f'set {n} has no tables registered yet (SETS is filled in by each set\'s prompt)')
+    out = []
+    for new in SETS[n]:
+        if new not in RENDERERS:
+            sys.exit(f'Table {new} (set {n}) has no renderer')
+        out.append(RENDERERS[new]())
+    return out
 
 
 def print_layout():
@@ -803,16 +1061,25 @@ def main():
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument('--set', type=int, dest='set_n')
     g.add_argument('--layout', action='store_true')
+    g.add_argument('--missed-registrants', action='store_true',
+                   help=f'write {MISSED_CSV.name} (reads committed Data/, as scripts/269 does)')
     g.add_argument('--constants', action='store_true',
                    help='write constants_parts/274.json (then merge with scripts/270)')
+    ap.add_argument('--docx', action='store_true',
+                    help='with --set N: also write Essay2_Tables_Set_N.docx (and, for the last set, '
+                         'Essay2_Tables_All.docx)')
     a = ap.parse_args()
+    if a.docx and a.set_n is None:
+        ap.error('--docx needs --set N')
     check_layout()
-    if a.constants:
+    if a.missed_registrants:
+        emit_missed_registrants()
+    elif a.constants:
         emit_constants()
     elif a.layout:
         print_layout()
     else:
-        write_set(a.set_n)
+        write_set(a.set_n, docx_too=a.docx)
 
 
 if __name__ == '__main__':

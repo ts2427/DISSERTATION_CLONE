@@ -51,11 +51,11 @@ Panel D: Concentration of records in events
 
 Panel E: Gradient on corrected data, 48 specifications
 
-| Anchor date | Specifications | Q1 estimate above Q4 | Monotone decline Q1 to Q4 | Q1 − Q4 significant at .05 | Range of Q1 − Q4 |
-|:---|---:|---:|---:|---:|---:|
-| Breach date | 24 | 0 | 0 | [NO SOURCE] | [NO SOURCE] |
-| Notification date | 24 | 0 | 0 | [NO SOURCE] | [NO SOURCE] |
-| Both anchors | 48 | 0 | 0 | [NO SOURCE] | [NO SOURCE] |
+| Anchor date | Specifications | Q1 estimate above Q4 | Monotone decline Q1 to Q4 |
+|:---|---:|---:|---:|
+| Breach date | 24 | 0 | 0 |
+| Notification date | 24 | 0 | 0 |
+| Both anchors | 48 | 0 | 0 |
 
 *Note.* Record-level panels use the earlier specification: raw-return volatility on notification records, size measured by market value. Panels A and B: 891 notification records; treatment by industry code (SIC 4813, 4841 or 4899 on the record) in Panel A and by Form 499 registration of the parent filer entity in Panel B; quartiles of log market value. Panel C: the same comparison on 339 canonical events (records collapsed to events), with the earlier breach-date-anchored raw-return outcome; its quartiles are of log total assets from the canonical event file. Estimates are the treatment coefficient from OLS of the change in raw-return volatility on treatment and the earlier specification’s controls (pre-period volatility, size, leverage, return on assets, disclosure gap, prior breaches, health-breach flag), within each cell; SEs are HC3 heteroskedasticity-consistent, not clustered. Q1 − Q4 spread = Q1 estimate minus Q4 estimate. Panel D counts records per event in the Panel A–B records. Panel E summarizes the gradient on corrected data across 48 window specifications (24 per anchor date); the full grid, one row per specification, is in the committed CSV outputs/tables/essay2_v2/t31_gradient_grid.csv. Treated parents in Panel C are parent filer entities. SIC = Standard Industrial Classification; Q1–Q4 = size quartiles, Q1 smallest; SE = standard error; OLS = ordinary least squares; HC3 = heteroskedasticity-consistent covariance, type 3; CIK = SEC Central Index Key.
 
@@ -88,12 +88,11 @@ Panel B: Records added to the smallest quartile
 
 Panel C: Registrants the industry codes miss
 
-| Firm | Records | Organizations | Change M (SD) | Quartile placement (records) |
+| Group | Records | Organizations | Change M (SD) | Quartile placement (records) |
 |:---|---:|---:|---:|---:|
 | All missed registrants | 28 | 16 | −1.49 (17.22) | Q1 10; Q2–Q3 5; Q4 13 |
-| By firm, with SIC code | [NO SOURCE] | [NO SOURCE] | [NO SOURCE] | [NO SOURCE] |
 
-*Note.* Record-level panels use the earlier specification: raw-return volatility on notification records, size measured by market value. All panels use the 891 notification records; industry-code treatment = SIC 4813, 4841 or 4899 on the record; Form 499 treatment = Form 499 registration of the parent filer entity. Change = change in raw-return volatility. Panel B covers the 229 records in the smallest size quartile (Q1). In Panel C, Q2–Q3 placement is the 28 records less those in Q1 and Q4. The pre-repair sensitivity group and the Welch contrasts for the damaged entries are in the committed appendix CSVs. SIC = Standard Industrial Classification; CIK = SEC Central Index Key; Q1–Q4 = size quartiles of log market value, Q1 smallest; M = mean; SD = standard deviation.
+*Note.* Record-level panels use the earlier specification: raw-return volatility on notification records, size measured by market value. All panels use the 891 notification records; industry-code treatment = SIC 4813, 4841 or 4899 on the record; Form 499 treatment = Form 499 registration of the parent filer entity. Change = change in raw-return volatility. Panel B covers the 229 records in the smallest size quartile (Q1). In Panel C, Q2–Q3 placement is the 28 records less those in Q1 and Q4; the firm names and SIC codes of the 28 records are in the committed CSV outputs/essay2_v5/missed_registrants_by_firm.csv. The pre-repair sensitivity group and the Welch contrasts for the damaged entries are in the committed appendix CSVs. SIC = Standard Industrial Classification; CIK = SEC Central Index Key; Q1–Q4 = size quartiles of log market value, Q1 smallest; M = mean; SD = standard deviation.
 
 **Table 5**
 
@@ -139,6 +138,5 @@ Panel D: Losses after the CRSP match
 | Damaged source records | 2 | 0.6% | 0 | 2 |
 | All losses | 22 | 6.2% | 7 | 15 |
 | Retained | 333 | 93.8% | 104 (93.7%) | 229 (93.9%) |
-| Registrant events lost, by name |  |  | [NO SOURCE] |  |
 
 *Note.* Record-level panels use the earlier specification: raw-return volatility on notification records, size measured by market value. Panel A lists the 6 legacy identifiers (SEC Central Index Keys) to which the earlier chain attached unrelated organizations; examples show the first two names, and every name is in the committed CSV. Panel B lists the canonical events that the earlier fallback rule would have matched to an earlier, unrelated owner of the same ticker; the current chain blocks the rule and none of the 7 has a CRSP match. Panel C regresses the earlier dataset’s size variable on each candidate measure; share within = share of records whose absolute gap to the candidate is at most 0.10 or 0.25. Panel D starts from the 355 CRSP-matched events notified by December 31, 2024 (111 registrant, 244 other); retained shares are within group. CIK = SEC Central Index Key; CRSP = Center for Research in Security Prices; PERMNO = CRSP permanent security identifier.
