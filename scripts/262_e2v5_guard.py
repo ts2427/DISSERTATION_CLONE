@@ -37,6 +37,12 @@ ALLOWED_NEW = re.compile(r'^(outputs/essay2_v5/|outputs/essay2_check/|Data/wrds_
 #  * this guard file itself, whose accepted-change list is edited here (it cannot pin its own hash).
 ACCEPTED_MOD = re.compile(r'^(outputs/defense_audit/|scripts/27[3-8]_[a-z0-9_]+\.py$|scripts/262_e2v5_guard\.py$)')
 ACCEPTED_PIN = {
+    # Tim, 2026-11-19 (approved): line 430 reworded (it called 64.2011 a seven-day rule); pinned to that version only.
+    'scripts/260_essay1_chair_tables.py': 'f07d2ce0958ec6dee979b3141ce2d51f2536684dc6701f50f68de5dab7bdcef4',
+    # Same rewording in the definition line only: 260 re-run (variable_definitions.csv line 6) and a
+    # hand edit of the find-list (line 90). ESSAY1_CHAIR_TABLES.md kept at its committed version.
+    'outputs/essay1_chair/variable_definitions.csv': 'c2198d4d5d5c857f9a7e539f2dcb2ba2cae709cb2901948027a5023608cb9fa2',
+    'outputs/essay1_chair/ESSAY1_CHAIR_NOTES_AND_FINDLIST.md': 'd74f1c9e398392427a403ec304357d7bc0114b62f6713fa00c80ced5a052cf09',
     'scripts/210_verify_v3_frozen.py': '7d89c7b7a4114e7603348cc78ee5e89cac98cb4ff74f1db755c8e59321da60ce',
     'scripts/217_v4_offline_tests.py': 'e7c47a080fac65f5806c7fb173815df97222d22b5de290dc55d5638be51f8b1a',
 }
