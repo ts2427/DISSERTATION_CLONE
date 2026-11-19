@@ -1,0 +1,44 @@
+day,date,ar_pp,car_from_day0_pp,ar_key,car_key,source_file
+-5,,NO-SOURCE,NO-SOURCE,,,outputs/defense_supplement/deck_exhibits.csv
+-4,,NO-SOURCE,NO-SOURCE,,,outputs/defense_supplement/deck_exhibits.csv
+-3,,NO-SOURCE,NO-SOURCE,,,outputs/defense_supplement/deck_exhibits.csv
+-2,,NO-SOURCE,NO-SOURCE,,,outputs/defense_supplement/deck_exhibits.csv
+-1,,NO-SOURCE,NO-SOURCE,,,outputs/defense_supplement/deck_exhibits.csv
+0,2021-08-17,0.7395,0.7395,E1_tmobile / ar_day00_2021-08-17,E1_tmobile / cum_day00,outputs/defense_supplement/deck_exhibits.csv
+1,2021-08-18,0.2887,1.0282,E1_tmobile / ar_day01_2021-08-18,E1_tmobile / cum_day01,outputs/defense_supplement/deck_exhibits.csv
+2,2021-08-19,0.984,2.0122,E1_tmobile / ar_day02_2021-08-19,E1_tmobile / cum_day02,outputs/defense_supplement/deck_exhibits.csv
+3,2021-08-20,-0.2149,1.7973,E1_tmobile / ar_day03_2021-08-20,E1_tmobile / cum_day03,outputs/defense_supplement/deck_exhibits.csv
+4,2021-08-23,-0.537,1.2603,E1_tmobile / ar_day04_2021-08-23,E1_tmobile / cum_day04,outputs/defense_supplement/deck_exhibits.csv
+5,2021-08-24,-0.4513,0.809,E1_tmobile / ar_day05_2021-08-24,E1_tmobile / cum_day05,outputs/defense_supplement/deck_exhibits.csv
+6,2021-08-25,-2.1119,-1.3029,E1_tmobile / ar_day06_2021-08-25,E1_tmobile / cum_day06,outputs/defense_supplement/deck_exhibits.csv
+7,2021-08-26,-0.9833,-2.2862,E1_tmobile / ar_day07_2021-08-26,E1_tmobile / cum_day07,outputs/defense_supplement/deck_exhibits.csv
+8,2021-08-27,-0.515,-2.8012,E1_tmobile / ar_day08_2021-08-27,E1_tmobile / cum_day08,outputs/defense_supplement/deck_exhibits.csv
+9,2021-08-30,-0.6496,-3.4508,E1_tmobile / ar_day09_2021-08-30,E1_tmobile / cum_day09,outputs/defense_supplement/deck_exhibits.csv
+10,2021-08-31,-0.5318,-3.9826,E1_tmobile / ar_day10_2021-08-31,E1_tmobile / cum_day10,outputs/defense_supplement/deck_exhibits.csv
+11,2021-09-01,0.327,-3.6556,E1_tmobile / ar_day11_2021-09-01,E1_tmobile / cum_day11,outputs/defense_supplement/deck_exhibits.csv
+12,2021-09-02,-1.5814,-5.237,E1_tmobile / ar_day12_2021-09-02,E1_tmobile / cum_day12,outputs/defense_supplement/deck_exhibits.csv
+13,2021-09-03,-0.0877,-5.3247,E1_tmobile / ar_day13_2021-09-03,E1_tmobile / cum_day13,outputs/defense_supplement/deck_exhibits.csv
+14,2021-09-07,-0.7087,-6.0334,E1_tmobile / ar_day14_2021-09-07,E1_tmobile / cum_day14,outputs/defense_supplement/deck_exhibits.csv
+15,2021-09-08,-0.2458,-6.2792,E1_tmobile / ar_day15_2021-09-08,E1_tmobile / cum_day15,outputs/defense_supplement/deck_exhibits.csv
+16,2021-09-09,-1.3821,-7.6613,E1_tmobile / ar_day16_2021-09-09,E1_tmobile / cum_day16,outputs/defense_supplement/deck_exhibits.csv
+17,2021-09-10,0.2516,-7.4097,E1_tmobile / ar_day17_2021-09-10,E1_tmobile / cum_day17,outputs/defense_supplement/deck_exhibits.csv
+18,2021-09-13,-0.7996,-8.2093,E1_tmobile / ar_day18_2021-09-13,E1_tmobile / cum_day18,outputs/defense_supplement/deck_exhibits.csv
+19,2021-09-14,-0.2234,-8.4327,E1_tmobile / ar_day19_2021-09-14,E1_tmobile / cum_day19,outputs/defense_supplement/deck_exhibits.csv
+20,2021-09-15,-2.2868,-10.7195,E1_tmobile / ar_day20_2021-09-15,E1_tmobile / cum_day20,outputs/defense_supplement/deck_exhibits.csv
+21,2021-09-16,1.5357,-9.1838,E1_tmobile / ar_day21_2021-09-16,E1_tmobile / cum_day21,outputs/defense_supplement/deck_exhibits.csv
+22,2021-09-17,0.0338,-9.15,E1_tmobile / ar_day22_2021-09-17,E1_tmobile / cum_day22,outputs/defense_supplement/deck_exhibits.csv
+23,2021-09-20,-0.0294,-9.1794,E1_tmobile / ar_day23_2021-09-20,E1_tmobile / cum_day23,outputs/defense_supplement/deck_exhibits.csv
+24,2021-09-21,-0.6667,-9.8461,E1_tmobile / ar_day24_2021-09-21,E1_tmobile / cum_day24,outputs/defense_supplement/deck_exhibits.csv
+25,2021-09-22,1.2693,-8.5768,E1_tmobile / ar_day25_2021-09-22,E1_tmobile / cum_day25,outputs/defense_supplement/deck_exhibits.csv
+26,2021-09-23,1.3071,-7.2697,E1_tmobile / ar_day26_2021-09-23,E1_tmobile / cum_day26,outputs/defense_supplement/deck_exhibits.csv
+27,2021-09-24,-1.1421,-8.4118,E1_tmobile / ar_day27_2021-09-24,E1_tmobile / cum_day27,outputs/defense_supplement/deck_exhibits.csv
+28,2021-09-27,-1.1768,-9.5886,E1_tmobile / ar_day28_2021-09-27,E1_tmobile / cum_day28,outputs/defense_supplement/deck_exhibits.csv
+29,2021-09-28,0.9265,-8.6621,E1_tmobile / ar_day29_2021-09-28,E1_tmobile / cum_day29,outputs/defense_supplement/deck_exhibits.csv
+30,2021-09-29,1.4241,-7.238,E1_tmobile / ar_day30_2021-09-29,E1_tmobile / cum_day30,outputs/defense_supplement/deck_exhibits.csv
+summary,,,-7.238,car_30d (pp),E1_tmobile / car_30d,outputs/defense_supplement/deck_exhibits.csv
+summary,,,0.809,car_0_5 (pp),E1_tmobile / car_0_5,outputs/defense_supplement/deck_exhibits.csv
+summary,,,1.0282,car_0_1 (pp),E1_tmobile / car_0_1,outputs/defense_supplement/deck_exhibits.csv
+summary,,,2021-08-17,event_date_day0 (date),E1_tmobile / event_date_day0,outputs/defense_supplement/deck_exhibits.csv
+summary,,,2021-08-19,reported_date (date),E1_tmobile / reported_date,outputs/defense_supplement/deck_exhibits.csv
+summary,,,-12.711828,dollar_car_30d ($B),E1_tmobile / dollar_car_30d,outputs/defense_supplement/deck_exhibits.csv
+summary,,,175.626255,mcap ($B),E1_tmobile / mcap,outputs/defense_supplement/deck_exhibits.csv

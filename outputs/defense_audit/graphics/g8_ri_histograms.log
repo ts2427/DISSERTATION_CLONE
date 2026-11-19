@@ -1,0 +1,22 @@
+====================================================================================================
+SCRIPT 250 — Essay 3 v4 parent-CIK randomization inference (defense supplement)
+Seed 250 (numpy default_rng); B = 9,999 draws per variant
+====================================================================================================
+Sample (event level, Essay 3 v4 analysis sample): N = 405 events; treated = 109 events; G = 119 parent CIKs; G1 = 13 treated parent CIKs
+Sample assert (N=405, treated events 109, G=119, G1=13): PASS
+Observed treated parents: 13 parent CIKs holding 115 events, of which 109 treated. Mixed parents (treated + untreated events): 732712: 10/11; 732717: 24/26; 1166691: 9/12
+Observed treated-parent event counts (sorted): [2, 2, 2, 2, 3, 4, 5, 8, 11, 12, 12, 26, 26]
+All-parent event counts: min 1, median 1, mean 3.40, max 78; parents with 1 event: 61
+
+REPRODUCTION ASSERT (observed assignment) vs committed f1_ladder.csv / f4_placebo.csv
+  [exec_departure_30_rd] event level, primary rung (LPM, CV3), N=405: coef +0.003951 (committed +0.0040) | CV3 SE 0.033433 (committed 0.0334) | CV3 p 0.9061 (committed 0.9061) | 227 ladder(): coef +0.0040 SE 0.0334 p 0.9061 -> PASS
+  [exec_departure_90_rd] event level, primary rung (LPM, CV3), N=405: coef -0.040982 (committed -0.0410) | CV3 SE 0.079095 (committed 0.0791) | CV3 p 0.6053 (committed 0.6053) | 227 ladder(): coef -0.0410 SE 0.0791 p 0.6053 -> PASS
+  [exec_departure_180_rd] event level, primary rung (LPM, CV3), N=405: coef +0.023253 (committed +0.0233) | CV3 SE 0.099634 (committed 0.0996) | CV3 p 0.8159 (committed 0.8159) | 227 ladder(): coef +0.0233 SE 0.0996 p 0.8159 -> PASS
+  [placebo_exec_departure_rd] event level, primary rung (LPM, CV3), N=405: coef -0.086244 (committed -0.0862) | CV3 SE 0.084867 (committed 0.0849) | CV3 p 0.3116 (committed 0.3116) | 227 ladder(): coef -0.0862 SE 0.0849 p 0.3116 -> PASS
+Reproduction assert: PASS (own implementation AND 227 ladder() both match committed CSVs to 4 dp)
+
+Max condition number of leave-one-cluster-out control blocks: 2.23e+04
+
+exec_departure_30_rd: RI p 0.9037 (committed 0.9037, expected 0.9037); coef_obs +0.003951 (committed 0.003951); draw sd 0.037802 (committed 0.037802) -> PASS
+exec_departure_90_rd: RI p 0.5961 (committed 0.5961, expected 0.5961); coef_obs -0.040982 (committed -0.040982); draw sd 0.075306 (committed 0.075306) -> PASS
+exec_departure_180_rd: RI p 0.8455 (committed 0.8455, expected 0.8455); coef_obs +0.023253 (committed 0.023253); draw sd 0.112726 (committed 0.112726) -> PASS

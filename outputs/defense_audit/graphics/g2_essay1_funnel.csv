@@ -1,0 +1,7 @@
+step,dropped,out,unit,reason,treated_events,treated_orgs,treated_parent_ciks,source_file,source_row
+PRC notification records (start),,1054,records,,NO-SOURCE,NO-SOURCE,NO-SOURCE,outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md,The chain: Gate 1 In column
+Gate 1 — entity resolution,296,758,records,No parent CIK could be assigned to the notifying organisation,NO-SOURCE,NO-SOURCE,NO-SOURCE,outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md,The chain: Gate 1 — entity resolution
+Stage 3 — firm-day deduplication,234,524,events,Multiple notification records for the same parent CIK on the same breach date are one firm-day event,NO-SOURCE,NO-SOURCE,NO-SOURCE,outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md,The chain: Stage 3 — firm-day deduplication
+Gate 2 — rolling-campaign rule,35,489,events,Events chained to an earlier event for the same parent within the campaign window are folded into that event,118,39,14,outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md,The chain: Gate 2 — rolling-campaign rule; Treated counts at each level
+Stage 5 — security link to CRSP,133,356,events,"No CRSP security could be linked at the breach date, so no car_30d exists",111,38,13,outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md,The chain: Stage 5 — security link to CRSP; Treated counts at each level
+Stage 6 — complete covariates,16,340,events,"At least one of the eight regression variables is missing (15 missing size/leverage/ROA, 1 missing immediate_disclosure)",106,36,12,outputs/ESSAY1_SAMPLE_ATTRITION_LEDGER_V3.md,The chain: Stage 6 — complete covariates; Treated counts at each level
