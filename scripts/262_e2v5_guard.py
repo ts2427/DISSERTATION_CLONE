@@ -43,6 +43,10 @@ ACCEPTED_PIN = {
     # hand edit of the find-list (line 90). ESSAY1_CHAIR_TABLES.md kept at its committed version.
     'outputs/essay1_chair/variable_definitions.csv': 'c2198d4d5d5c857f9a7e539f2dcb2ba2cae709cb2901948027a5023608cb9fa2',
     'outputs/essay1_chair/ESSAY1_CHAIR_NOTES_AND_FINDLIST.md': 'd74f1c9e398392427a403ec304357d7bc0114b62f6713fa00c80ced5a052cf09',
+    # Tim, 2026-11-19 (approved): '7-Day Rule' -> 47 C.F.R. § 64.2011 at lines 68 and 134, with the matching
+    # 210 exception row appended to docs/claude/V3_FREEZE_EXCEPTIONS.md.
+    'docs/DATA_QUALITY_DOCUMENTATION.md': '2c8ecbcb1d67ce3807b774fccfd44152dfb6644a08ea7e3827e5c77b66d90ed1',
+    'docs/claude/V3_FREEZE_EXCEPTIONS.md': 'a533c55a49cba86028bd469e047a7073a5a497bc490fb578248529b92ef39562',
     'scripts/210_verify_v3_frozen.py': '7d89c7b7a4114e7603348cc78ee5e89cac98cb4ff74f1db755c8e59321da60ce',
     'scripts/217_v4_offline_tests.py': 'e7c47a080fac65f5806c7fb173815df97222d22b5de290dc55d5638be51f8b1a',
 }

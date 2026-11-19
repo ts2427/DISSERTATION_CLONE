@@ -116,3 +116,19 @@ The authorising commits are unchanged and remain the provenance for each edit: F
 `881123b`, G1 `69027d5`, G2 `7cea236`, H `7914d97`, J1 `f5c6bca`, J2 `438814f`, J3
 `bf57474`, I1 `dc5607f`, I2 `fd1a563`, K `e048b97`, L `9ab0ce4`, and the F1 docstring
 follow-up `a91c5be`.
+
+---
+
+# ACTIVE 2026-11-19 - one documentation file (Tim, approved)
+
+- **Path:** `docs/DATA_QUALITY_DOCUMENTATION.md`
+- **Date:** 2026-11-19
+- **Old sha256 (manifest):** `37c171d51be2978367b6b60c43318f39db77a020aafa3ccc4a169ec9bee4c4b0` (blob `01fd4f88f6b21624bcb750c5ef7b34b0f0c69e52`)
+- **New sha256:** `2c8ecbcb1d67ce3807b774fccfd44152dfb6644a08ea7e3827e5c77b66d90ed1` (blob `7cb86de653b1abf52d55269bf0b2fd606501b271`)
+- **Reason:** Documentation wording only: replaces '7-Day Rule' with the rule's citation, 47 C.F.R. § 64.2011, per the project's rule characterization. No code, data, or output changed. Lines 68 and 134 only.
+
+Parsed by `scripts/210` (same row format as above):
+
+| path | old sha256 | new sha256 | old blob | new blob | commits | parts |
+|---|---|---|---|---|---|---|
+| `docs/DATA_QUALITY_DOCUMENTATION.md` | `37c171d51be2978367b6b60c43318f39db77a020aafa3ccc4a169ec9bee4c4b0` | `2c8ecbcb1d67ce3807b774fccfd44152dfb6644a08ea7e3827e5c77b66d90ed1` | `01fd4f88f6b21624bcb750c5ef7b34b0f0c69e52` | `7cb86de653b1abf52d55269bf0b2fd606501b271` | 2026-11-19 | wording-only |

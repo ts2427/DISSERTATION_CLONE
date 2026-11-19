@@ -65,7 +65,7 @@ A consumer brand (e.g., "Comcast") and its subsidiary filing entity (e.g., "Comc
 
 ### Correction Method: Two-Clause Classification Rule
 
-**Rule:** A breach is treated (subject to FCC 7-Day Rule) if:
+**Rule:** A breach is treated (subject to the FCC breach-notification rule, 47 C.F.R. § 64.2011) if:
 1. **(Clause A)** The breached entity is itself a Form 499 filer at the breach date, **OR**
 2. **(Clause B)** The breached entity is a consumer brand of a Form 499 filer **AND** the breach involves telecommunications/subscriber operations
 
@@ -131,7 +131,7 @@ The original Essay 1 analysis classified treatment as:
 treated if SIC ∈ {4812, 4813, 4899}
 ```
 
-This captured firms in the telecom industry but conflated "operates in telecom" with "subject to FCC 7-Day Rule."
+This captured firms in the telecom industry but conflated "operates in telecom" with "subject to the FCC breach-notification rule (47 C.F.R. § 64.2011)."
 
 ### Detection and Impact
 
