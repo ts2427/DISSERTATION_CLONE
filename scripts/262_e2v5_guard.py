@@ -26,8 +26,20 @@ ROOTS = ['outputs', 'Data', 'docs', 'scripts']
 # so the snapshot is not re-taken per set. outputs/essay2_v5/ already covers outputs/essay2_v5/inline/.
 SKIP = re.compile(r'^(outputs/essay2_v5/|outputs/essay2_v5/inline/|outputs/essay2_check/|'
                   r'scripts/274_e2v5_inline_tables\.py$)|/__pycache__/|\.pyc$')
-ALLOWED_NEW = re.compile(r'^(outputs/essay2_v5/|outputs/essay2_check/|Data/wrds_e2v5/|'
-                         r'scripts/2(6[2-9]|7[0-9])_e2v5_[a-z0-9_]+\.py$)')
+ALLOWED_NEW = re.compile(r'^(outputs/essay2_v5/|outputs/essay2_check/|Data/wrds_e2v5/|outputs/defense_audit/|'
+                         r'scripts/2(6[2-9]|7[0-9])_e2v5_[a-z0-9_]+\.py$|'
+                         r'scripts/27[3-5]_[a-z0-9_]+\.py$)')
+# Accepted changes to snapshot files (Tim, 2026-11-19; snapshot NOT re-taken):
+#  * outputs/defense_audit/ (incl. graphics/) and scripts 273-275 may change;
+#  * scripts 210 and 217 may differ only by the one-line SCRIPT_HI edits of 3cce615 (210 allowlist
+#    bound 274 -> 275; 217 test rows 275 allowed / 276 outside). Each is pinned to the SHA-256 of
+#    that exact version, so any further edit to either file fails the guard.
+#  * this guard file itself, whose accepted-change list is edited here (it cannot pin its own hash).
+ACCEPTED_MOD = re.compile(r'^(outputs/defense_audit/|scripts/27[3-5]_[a-z0-9_]+\.py$|scripts/262_e2v5_guard\.py$)')
+ACCEPTED_PIN = {
+    'scripts/210_verify_v3_frozen.py': 'b3e081089a36628a21b6fdacda2210f2fcde34d21745e0fc3ec4676cb8a0a0b7',
+    'scripts/217_v4_offline_tests.py': '12e52b9fb9f8e02f69e00af60661ee1f06adb1faecfcbbd77400b6dba1bf22af',
+}
 # Essay 1 / Essay 3 outputs and constants (the closed essays)
 E13 = re.compile(r'(essay1|essay3|ESSAY1|ESSAY3|e1_|e3_|constants_v3|CONSTANTS_BLOCK|'
                  r'constants_essay3|rebuild_v4|essay3_v4|defense_supplement|'
@@ -65,8 +77,12 @@ def main(mode):
         return
     base = json.loads(SNAP.read_text(encoding='utf-8'))
     cur = scan()
-    modified = sorted(k for k in base if k in cur and cur[k] != base[k])
+    changed = sorted(k for k in base if k in cur and cur[k] != base[k])
+    accepted = [k for k in changed if ACCEPTED_MOD.search(k) or ACCEPTED_PIN.get(k) == cur[k]]
+    modified = [k for k in changed if k not in accepted]
     deleted = sorted(k for k in base if k not in cur)
+    for k in accepted:
+        print('  accepted change:', k)
     new = sorted(k for k in cur if k not in base)
     bad_new = [k for k in new if not ALLOWED_NEW.search(k)]
     e13 = [k for k in base if E13.search(k)]
