@@ -1,0 +1,124 @@
+==========================================================================================
+ESSAY 1 (regression sample)
+  N = 340, treated = 106
+  assert E1 treated mean car_30d: computed -0.932505 vs committed -0.933000 -> PASS
+  assert E1 treated median car_30d: computed -0.436950 vs committed -0.437000 -> PASS
+  assert E1 control mean car_30d: computed 0.014055 vs committed 0.014000 -> PASS
+  assert E1 control median car_30d: computed 0.411800 vs committed 0.412000 -> PASS
+  E1 treated mcap median ($B): mcap_m (day before breach_date) 138.281000 vs E1_dollar 138.281000 (relative gap 0.0000%)
+  E1 treated mcap mean ($B): mcap_m (day before breach_date) 117.006663 vs E1_dollar 117.051703 (relative gap 0.0385%); committed value used
+  E1 control mcap median ($B): mcap_m (day before breach_date) 32.230476 vs E1_dollar 32.210901 (relative gap 0.0608%)
+  E1 control mcap mean ($B): mcap_m (day before breach_date) 103.190110 vs E1_dollar 103.057201 (relative gap 0.1290%); committed value used
+  E1 all mcap median ($B): mcap_m (day before breach_date) 36.066072 vs E1_dollar 36.066072 (relative gap 0.0000%)
+  E1 all mcap mean ($B): mcap_m (day before breach_date) 107.058744 vs E1_dollar 106.975661 (relative gap 0.0777%); committed value used
+==========================================================================================
+ESSAY 2 v5 (analytical sample)
+  assert E2 treated mean firm_size_log (join vs 02A): computed 11.609281 vs committed 11.609281 -> PASS
+  assert E2 treated mean leverage (join vs 02A): computed 0.721615 vs committed 0.721615 -> PASS
+  assert E2 treated mean roa (join vs 02A): computed 0.024314 vs committed 0.024314 -> PASS
+  assert E2 treated mean dv (panel prim_dv vs 02A): computed -0.015215 vs committed -0.015215 -> PASS
+  assert E2 control mean firm_size_log (join vs 02A): computed 9.621063 vs committed 9.621063 -> PASS
+  assert E2 control mean leverage (join vs 02A): computed 0.641165 vs committed 0.641165 -> PASS
+  assert E2 control mean roa (join vs 02A): computed 0.077147 vs committed 0.077147 -> PASS
+  assert E2 control mean dv (panel prim_dv vs 02A): computed -0.053511 vs committed -0.053511 -> PASS
+  assert E2 all mean firm_size_log (join vs 02A): computed 10.242008 vs committed 10.242008 -> PASS
+  assert E2 all mean leverage (join vs 02A): computed 0.666291 vs committed 0.666291 -> PASS
+  assert E2 all mean roa (join vs 02A): computed 0.060647 vs committed 0.060647 -> PASS
+  assert E2 all mean dv (panel prim_dv vs 02A): computed -0.041550 vs committed -0.041550 -> PASS
+  E2 treated: mcap covered 92 of 104
+  E2 control: mcap covered 229 of 229
+  E2 all: mcap covered 321 of 333
+==========================================================================================
+ESSAY 3 v4 (analysis sample)
+  assert E3 treated mean firm_size_log (sample vs table04): computed 11.576185 vs committed 11.576185 -> PASS
+  assert E3 treated median firm_size_log (sample vs table04): computed 11.881200 vs committed 11.881200 -> PASS
+  assert E3 treated mean leverage (sample vs table04): computed 0.725150 vs committed 0.725150 -> PASS
+  assert E3 treated median leverage (sample vs table04): computed 0.684800 vs committed 0.684800 -> PASS
+  assert E3 treated mean roa (sample vs table04): computed 0.022199 vs committed 0.022199 -> PASS
+  assert E3 treated median roa (sample vs table04): computed 0.023700 vs committed 0.023700 -> PASS
+  assert E3 treated exec departure rate 30d (sample vs table06): computed 0.036697 vs committed 0.036700 -> PASS
+  assert E3 treated exec departure rate 90d (sample vs table06): computed 0.100917 vs committed 0.100900 -> PASS
+  assert E3 treated exec departure rate 180d (sample vs table06): computed 0.302752 vs committed 0.302800 -> PASS
+  assert E3 control mean firm_size_log (sample vs table04): computed 9.694533 vs committed 9.694533 -> PASS
+  assert E3 control median firm_size_log (sample vs table04): computed 9.358150 vs committed 9.358150 -> PASS
+  assert E3 control mean leverage (sample vs table04): computed 0.627834 vs committed 0.627834 -> PASS
+  assert E3 control median leverage (sample vs table04): computed 0.625300 vs committed 0.625300 -> PASS
+  assert E3 control mean roa (sample vs table04): computed 0.071674 vs committed 0.071674 -> PASS
+  assert E3 control median roa (sample vs table04): computed 0.073500 vs committed 0.073500 -> PASS
+  assert E3 control exec departure rate 30d (sample vs table06): computed 0.043919 vs committed 0.043900 -> PASS
+  assert E3 control exec departure rate 90d (sample vs table06): computed 0.145270 vs committed 0.145300 -> PASS
+  assert E3 control exec departure rate 180d (sample vs table06): computed 0.246622 vs committed 0.246600 -> PASS
+  assert E3 all exec departure rate 30d (sample vs table06): computed 0.041975 vs committed 0.042000 -> PASS
+  assert E3 all exec departure rate 90d (sample vs table06): computed 0.133333 vs committed 0.133300 -> PASS
+  assert E3 all exec departure rate 180d (sample vs table06): computed 0.261728 vs committed 0.261700 -> PASS
+  E3 treated: mcap covered 94 of 109
+  E3 control: mcap covered 261 of 296
+  E3 all: mcap covered 355 of 405
+
+group                                                                                                           all        control        treated
+essay      variable                                                                           stat                                               
+Essay 1    ROA (NI/AT)                                                                        mean         0.060226       0.076972       0.023258
+                                                                                              median       0.063300       0.073500       0.026700
+                                                                                              n          340.000000     234.000000     106.000000
+           events                                                                             n          340.000000     234.000000     106.000000
+           firm size: log total assets ln(at)                                                 mean        10.264393       9.657503      11.604131
+                                                                                              median      10.259500       9.136400      11.928350
+                                                                                              n          340.000000     234.000000     106.000000
+           leverage (LT/AT)                                                                   mean         0.664938       0.639321       0.721488
+                                                                                              median       0.668800       0.629650       0.684800
+                                                                                              n          340.000000     234.000000     106.000000
+           market cap, $M (day before day 0)                                                  mean    106975.661000  103057.201000  117051.703000
+                                                                                              median   36066.072000   32210.901000  138281.000000
+                                                                                              n          325.000000     234.000000      91.000000
+           outcome: 30-day CAR (pp)                                                           mean        -0.281049       0.014000      -0.933000
+                                                                                              median       0.142300       0.412000      -0.437000
+                                                                                              n          340.000000     234.000000     106.000000
+           total assets, $M = exp(firm_size_log)                                              mean     84980.359546   42302.198538  179194.413093
+                                                                                              median   28563.225080    9287.291182  151669.812323
+                                                                                              n          340.000000     234.000000     106.000000
+Essay 2 v5 ROA (NI/AT)                                                                        mean         0.060647       0.077147       0.024314
+                                                                                              median       0.063300       0.073500       0.028100
+                                                                                              n          333.000000     229.000000     104.000000
+           events                                                                             n          333.000000     229.000000     104.000000
+           firm size: log total assets ln(at)                                                 mean        10.242008       9.621063      11.609281
+                                                                                              median      10.230400       9.014700      12.057050
+                                                                                              n          333.000000     229.000000     104.000000
+           leverage (LT/AT)                                                                   mean         0.666291       0.641165       0.721615
+                                                                                              median       0.668800       0.630900       0.682950
+                                                                                              n          333.000000     229.000000     104.000000
+           market cap, $M (day before day 0)                                                  mean    106844.307094  104106.522124  113659.010985
+                                                                                              median   35803.766142   32219.714800  132396.120000
+                                                                                              n          321.000000     229.000000      92.000000
+           outcome: change in abnormal return volatility, daily pp ([+1,+20] minus [-60,-11]) mean        -0.041550      -0.053511      -0.015215
+                                                                                              median      -0.092250      -0.094589      -0.052278
+                                                                                              n          333.000000     229.000000     104.000000
+           total assets, $M = exp(firm_size_log)                                              mean     84243.402537   40288.557597  181028.589954
+                                                                                              median   27733.601290    8223.079065  172883.203658
+                                                                                              n          333.000000     229.000000     104.000000
+Essay 3 v4 ROA (NI/AT)                                                                        mean         0.058359       0.071674       0.022199
+                                                                                              median       0.060500       0.073500       0.023700
+                                                                                              n          405.000000     296.000000     109.000000
+           events                                                                             n          405.000000     296.000000     109.000000
+           firm size: log total assets ln(at)                                                 mean        10.200953       9.694533      11.576185
+                                                                                              median      10.140000       9.358150      11.881200
+                                                                                              n          405.000000     296.000000     109.000000
+           leverage (LT/AT)                                                                   mean         0.654025       0.627834       0.725150
+                                                                                              median       0.666700       0.625300       0.684800
+                                                                                              n          405.000000     296.000000     109.000000
+           market cap, $M (day before day 0)                                                  mean    103863.423782  101151.164586  111394.271125
+                                                                                              median   34678.973512   31844.993750  129099.699600
+                                                                                              n          355.000000     261.000000      94.000000
+           outcome: executive departure within 180 days of reporting date (share)             mean         0.261700       0.246600       0.302800
+                                                                                              median       0.000000       0.000000       0.000000
+                                                                                              n          405.000000     296.000000     109.000000
+           outcome: executive departure within 30 days of reporting date (share)              mean         0.042000       0.043900       0.036700
+                                                                                              median       0.000000       0.000000       0.000000
+                                                                                              n          405.000000     296.000000     109.000000
+           outcome: executive departure within 90 days of reporting date (share)              mean         0.133300       0.145300       0.100900
+                                                                                              median       0.000000       0.000000       0.000000
+                                                                                              n          405.000000     296.000000     109.000000
+           total assets, $M = exp(firm_size_log)                                              mean     78502.137040   42820.844708  175398.123558
+                                                                                              median   25336.466485   11593.031470  144523.875318
+                                                                                              n          405.000000     296.000000     109.000000
+
+wrote outputs\defense_audit\final\item2_descriptives.csv (198 rows)

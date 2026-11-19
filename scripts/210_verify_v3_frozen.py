@@ -277,7 +277,7 @@ V4_DOCS = (
     "outputs/ESSAY3_DRAFTS_PROVENANCE_CHECK.md",
 )
 SCRIPT_RE = re.compile(r"^scripts/(\d+)_[^/]*\.py$")
-SCRIPT_LO, SCRIPT_HI = 210, 275  # 250-253, 255, 258: defense supplement; 254: CRSP loader; 256: Essay 3 appendix supplement; 257: Essay 3 appendix of record; 260-261: Essay 1 chair tables; 262-272: Essay 2 v5; 273: defense audit facts; 274: Essay 2 inline Results tables; 275: defense audit deck graphics (G8)
+SCRIPT_LO, SCRIPT_HI = 210, 278  # 250-253, 255, 258: defense supplement; 254: CRSP loader; 256: Essay 3 appendix supplement; 257: Essay 3 appendix of record; 260-261: Essay 1 chair tables; 262-272: Essay 2 v5; 273: defense audit facts; 274: Essay 2 inline Results tables; 275: defense audit deck graphics (G8); 276-278: defense audit final items
 
 
 def git(*args, binary=False):

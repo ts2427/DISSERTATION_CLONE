@@ -1,0 +1,22 @@
+====================================================================================================
+SCRIPT 276 — Essay 1 leave-one-treated-parent-out. SUPPLEMENTARY ONLY (not a pre-specified test).
+Baseline: scripts/158 specification, OLS car_30d on fcc_form499 + 6 controls, HC3; 95% CI normal (z) convention as in 158 conf_int().
+====================================================================================================
+Reproduction assert: coef -0.805128 SE 1.402555 p 0.565938 CI [-3.5541, 1.9438] N 340 treated 106 parents 12 vs table_4.csv / constants_v3.json -> PASS
+
+                    deleted_parent deleted_parent_cik  events_removed  treated_events_removed    coef  se_hc3  p_hc3  ci95_lo  ci95_hi   N  treated_events tmobile_flag
+               (none: full sample)                                  0                       0 -0.8051  1.4026 0.5659  -3.5541   1.9438 340             106             
+                   T-Mobile US Inc            1283699              26                      26 -0.5293  1.6139 0.7429  -3.6926   2.6339 314              80     T-MOBILE
+                          AT&T Inc             732717              26                      24 -0.7930  1.5414 0.6069  -3.8141   2.2281 314              82             
+                       Sprint Corp             101830              11                      11 -1.5283  1.2696 0.2287  -4.0167   0.9602 329              95             
+        Verizon Communications Inc             732712              11                      10 -0.9660  1.4418 0.5028  -3.7920   1.8599 329              96             
+                      Comcast Corp            1166691              12                       9 -0.5852  1.4610 0.6888  -3.4487   2.2783 328              97             
+        Charter Communications Inc            1091667               8                       8 -0.9527  1.4295 0.5051  -3.7545   1.8491 332              98             
+            Lumen Technologies Inc              18926               5                       5 -0.5903  1.4496 0.6839  -3.4314   2.2509 335             101             
+Frontier Communications Parent Inc              20520               4                       4 -1.0598  1.4686 0.4705  -3.9383   1.8186 336             102             
+                       GoDaddy Inc            1609711               3                       3 -0.9978  1.4520 0.4919  -3.8436   1.8480 337             103             
+                 DISH Network Corp            1001082               2                       2 -0.2573  1.3219 0.8457  -2.8481   2.3335 338             104             
+                        Twilio Inc            1447669               2                       2 -0.5268  1.4031 0.7073  -3.2768   2.2232 338             104             
+                     Cable One Inc            1632127               2                       2 -0.9277  1.4732 0.5289  -3.8151   1.9597 338             104             
+
+Range of the coefficient across deletions: -1.5283 to -0.2573; min HC3 p 0.2287; deletions with p < .05: 0 of 12

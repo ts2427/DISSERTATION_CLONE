@@ -1,0 +1,199 @@
+essay,group,variable,stat,value,source,computed_or_committed
+Essay 1,treated,events,n,106.0,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS); = constants_v3.json N_regression / treated_regression",computed
+Essay 1,control,events,n,234.0,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS); = constants_v3.json N_regression / treated_regression",computed
+Essay 1,all,events,n,340.0,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS); = constants_v3.json N_regression / treated_regression",computed
+Essay 1,treated,firm size: log total assets ln(at),n,106.0,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,treated,firm size: log total assets ln(at),mean,11.604131,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,treated,firm size: log total assets ln(at),median,11.92835,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,control,firm size: log total assets ln(at),n,234.0,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,control,firm size: log total assets ln(at),mean,9.657503,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,control,firm size: log total assets ln(at),median,9.1364,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,all,firm size: log total assets ln(at),n,340.0,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,all,firm size: log total assets ln(at),mean,10.264393,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,all,firm size: log total assets ln(at),median,10.2595,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,treated,"total assets, $M = exp(firm_size_log)",n,106.0,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,treated,"total assets, $M = exp(firm_size_log)",mean,179194.413093,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,treated,"total assets, $M = exp(firm_size_log)",median,151669.812323,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,control,"total assets, $M = exp(firm_size_log)",n,234.0,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,control,"total assets, $M = exp(firm_size_log)",mean,42302.198538,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,control,"total assets, $M = exp(firm_size_log)",median,9287.291182,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,all,"total assets, $M = exp(firm_size_log)",n,340.0,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,all,"total assets, $M = exp(firm_size_log)",mean,84980.359546,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,all,"total assets, $M = exp(firm_size_log)",median,28563.22508,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,treated,leverage (LT/AT),n,106.0,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,treated,leverage (LT/AT),mean,0.721488,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,treated,leverage (LT/AT),median,0.6848,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,control,leverage (LT/AT),n,234.0,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,control,leverage (LT/AT),mean,0.639321,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,control,leverage (LT/AT),median,0.62965,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,all,leverage (LT/AT),n,340.0,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,all,leverage (LT/AT),mean,0.664938,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,all,leverage (LT/AT),median,0.6688,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,treated,ROA (NI/AT),n,106.0,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,treated,ROA (NI/AT),mean,0.023258,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,treated,ROA (NI/AT),median,0.0267,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,control,ROA (NI/AT),n,234.0,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,control,ROA (NI/AT),mean,0.076972,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,control,ROA (NI/AT),median,0.0735,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,all,ROA (NI/AT),n,340.0,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,all,ROA (NI/AT),mean,0.060226,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,all,ROA (NI/AT),median,0.0633,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS) (no committed by-group table on the 340)",computed
+Essay 1,treated,outcome: 30-day CAR (pp),n,106.0,"outputs/rebuild/appendix_v3/table_3.csv, Comparison=Form 499, Group=Filer",committed
+Essay 1,treated,outcome: 30-day CAR (pp),mean,-0.933,"outputs/rebuild/appendix_v3/table_3.csv, Comparison=Form 499, Group=Filer",committed
+Essay 1,treated,outcome: 30-day CAR (pp),median,-0.437,"outputs/rebuild/appendix_v3/table_3.csv, Comparison=Form 499, Group=Filer",committed
+Essay 1,control,outcome: 30-day CAR (pp),n,234.0,"outputs/rebuild/appendix_v3/table_3.csv, Comparison=Form 499, Group=Non-filer",committed
+Essay 1,control,outcome: 30-day CAR (pp),mean,0.014,"outputs/rebuild/appendix_v3/table_3.csv, Comparison=Form 499, Group=Non-filer",committed
+Essay 1,control,outcome: 30-day CAR (pp),median,0.412,"outputs/rebuild/appendix_v3/table_3.csv, Comparison=Form 499, Group=Non-filer",committed
+Essay 1,all,outcome: 30-day CAR (pp),n,340.0,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS)",computed
+Essay 1,all,outcome: 30-day CAR (pp),mean,-0.281049,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS)",computed
+Essay 1,all,outcome: 30-day CAR (pp),median,0.1423,"computed from Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, complete on car_30d + scripts/158 CONTROLS)",computed
+Essay 1,treated,"market cap, $M (day before day 0)",n,91.0,"outputs/defense_supplement/deck_exhibits.csv, E1_dollar / mcap_treated_*  (scripts/252; $B x 1000)",committed
+Essay 1,treated,"market cap, $M (day before day 0)",n_missing,15.0,"outputs/defense_supplement/deck_exhibits.csv, E1_dollar / mcap_treated_*  (scripts/252; $B x 1000)",committed
+Essay 1,treated,"market cap, $M (day before day 0)",mean,117051.703,"outputs/defense_supplement/deck_exhibits.csv, E1_dollar / mcap_treated_*  (scripts/252; $B x 1000)",committed
+Essay 1,treated,"market cap, $M (day before day 0)",median,138281.0,"outputs/defense_supplement/deck_exhibits.csv, E1_dollar / mcap_treated_*  (scripts/252; $B x 1000)",committed
+Essay 1,control,"market cap, $M (day before day 0)",n,234.0,"outputs/defense_supplement/deck_exhibits.csv, E1_dollar / mcap_control_*  (scripts/252; $B x 1000)",committed
+Essay 1,control,"market cap, $M (day before day 0)",n_missing,0.0,"outputs/defense_supplement/deck_exhibits.csv, E1_dollar / mcap_control_*  (scripts/252; $B x 1000)",committed
+Essay 1,control,"market cap, $M (day before day 0)",mean,103057.201,"outputs/defense_supplement/deck_exhibits.csv, E1_dollar / mcap_control_*  (scripts/252; $B x 1000)",committed
+Essay 1,control,"market cap, $M (day before day 0)",median,32210.901,"outputs/defense_supplement/deck_exhibits.csv, E1_dollar / mcap_control_*  (scripts/252; $B x 1000)",committed
+Essay 1,all,"market cap, $M (day before day 0)",n,325.0,"outputs/defense_supplement/deck_exhibits.csv, E1_dollar / mcap_all_*  (scripts/252; $B x 1000)",committed
+Essay 1,all,"market cap, $M (day before day 0)",n_missing,15.0,"outputs/defense_supplement/deck_exhibits.csv, E1_dollar / mcap_all_*  (scripts/252; $B x 1000)",committed
+Essay 1,all,"market cap, $M (day before day 0)",mean,106975.661,"outputs/defense_supplement/deck_exhibits.csv, E1_dollar / mcap_all_*  (scripts/252; $B x 1000)",committed
+Essay 1,all,"market cap, $M (day before day 0)",median,36066.072,"outputs/defense_supplement/deck_exhibits.csv, E1_dollar / mcap_all_*  (scripts/252; $B x 1000)",committed
+Essay 2 v5,treated,firm size: log total assets ln(at),n,104.0,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=treated, variable=firm_size_log",committed
+Essay 2 v5,treated,firm size: log total assets ln(at),mean,11.609281,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=treated, variable=firm_size_log",committed
+Essay 2 v5,treated,firm size: log total assets ln(at),median,12.05705,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=treated, variable=firm_size_log",committed
+Essay 2 v5,treated,leverage (LT/AT),n,104.0,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=treated, variable=leverage",committed
+Essay 2 v5,treated,leverage (LT/AT),mean,0.721615,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=treated, variable=leverage",committed
+Essay 2 v5,treated,leverage (LT/AT),median,0.68295,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=treated, variable=leverage",committed
+Essay 2 v5,treated,ROA (NI/AT),n,104.0,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=treated, variable=roa",committed
+Essay 2 v5,treated,ROA (NI/AT),mean,0.024314,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=treated, variable=roa",committed
+Essay 2 v5,treated,ROA (NI/AT),median,0.0281,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=treated, variable=roa",committed
+Essay 2 v5,treated,"outcome: change in abnormal return volatility, daily pp ([+1,+20] minus [-60,-11])",n,104.0,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=treated, variable=dv",committed
+Essay 2 v5,treated,"outcome: change in abnormal return volatility, daily pp ([+1,+20] minus [-60,-11])",mean,-0.015215,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=treated, variable=dv",committed
+Essay 2 v5,treated,"outcome: change in abnormal return volatility, daily pp ([+1,+20] minus [-60,-11])",median,-0.052278,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=treated, variable=dv",committed
+Essay 2 v5,treated,events,n,104.0,outputs/essay2_v5/appendix/02A_descriptives_v5.csv (N),committed
+Essay 2 v5,control,firm size: log total assets ln(at),n,229.0,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=control, variable=firm_size_log",committed
+Essay 2 v5,control,firm size: log total assets ln(at),mean,9.621063,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=control, variable=firm_size_log",committed
+Essay 2 v5,control,firm size: log total assets ln(at),median,9.0147,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=control, variable=firm_size_log",committed
+Essay 2 v5,control,leverage (LT/AT),n,229.0,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=control, variable=leverage",committed
+Essay 2 v5,control,leverage (LT/AT),mean,0.641165,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=control, variable=leverage",committed
+Essay 2 v5,control,leverage (LT/AT),median,0.6309,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=control, variable=leverage",committed
+Essay 2 v5,control,ROA (NI/AT),n,229.0,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=control, variable=roa",committed
+Essay 2 v5,control,ROA (NI/AT),mean,0.077147,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=control, variable=roa",committed
+Essay 2 v5,control,ROA (NI/AT),median,0.0735,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=control, variable=roa",committed
+Essay 2 v5,control,"outcome: change in abnormal return volatility, daily pp ([+1,+20] minus [-60,-11])",n,229.0,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=control, variable=dv",committed
+Essay 2 v5,control,"outcome: change in abnormal return volatility, daily pp ([+1,+20] minus [-60,-11])",mean,-0.053511,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=control, variable=dv",committed
+Essay 2 v5,control,"outcome: change in abnormal return volatility, daily pp ([+1,+20] minus [-60,-11])",median,-0.094589,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=control, variable=dv",committed
+Essay 2 v5,control,events,n,229.0,outputs/essay2_v5/appendix/02A_descriptives_v5.csv (N),committed
+Essay 2 v5,all,firm size: log total assets ln(at),n,333.0,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=full, variable=firm_size_log",committed
+Essay 2 v5,all,firm size: log total assets ln(at),mean,10.242008,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=full, variable=firm_size_log",committed
+Essay 2 v5,all,firm size: log total assets ln(at),median,10.2304,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=full, variable=firm_size_log",committed
+Essay 2 v5,all,leverage (LT/AT),n,333.0,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=full, variable=leverage",committed
+Essay 2 v5,all,leverage (LT/AT),mean,0.666291,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=full, variable=leverage",committed
+Essay 2 v5,all,leverage (LT/AT),median,0.6688,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=full, variable=leverage",committed
+Essay 2 v5,all,ROA (NI/AT),n,333.0,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=full, variable=roa",committed
+Essay 2 v5,all,ROA (NI/AT),mean,0.060647,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=full, variable=roa",committed
+Essay 2 v5,all,ROA (NI/AT),median,0.0633,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=full, variable=roa",committed
+Essay 2 v5,all,"outcome: change in abnormal return volatility, daily pp ([+1,+20] minus [-60,-11])",n,333.0,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=full, variable=dv",committed
+Essay 2 v5,all,"outcome: change in abnormal return volatility, daily pp ([+1,+20] minus [-60,-11])",mean,-0.04155,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=full, variable=dv",committed
+Essay 2 v5,all,"outcome: change in abnormal return volatility, daily pp ([+1,+20] minus [-60,-11])",median,-0.09225,"outputs/essay2_v5/appendix/02A_descriptives_v5.csv, group=full, variable=dv",committed
+Essay 2 v5,all,events,n,333.0,outputs/essay2_v5/appendix/02A_descriptives_v5.csv (N),committed
+Essay 2 v5,treated,"total assets, $M = exp(firm_size_log)",n,104.0,"computed: outputs/essay2_v5/v5_event_panel.csv joined 1:1 to CANONICAL_V3 on (final_cik, breach_date, reported_date); join asserted against 02A means",computed
+Essay 2 v5,treated,"total assets, $M = exp(firm_size_log)",mean,181028.589954,"computed: outputs/essay2_v5/v5_event_panel.csv joined 1:1 to CANONICAL_V3 on (final_cik, breach_date, reported_date); join asserted against 02A means",computed
+Essay 2 v5,treated,"total assets, $M = exp(firm_size_log)",median,172883.203658,"computed: outputs/essay2_v5/v5_event_panel.csv joined 1:1 to CANONICAL_V3 on (final_cik, breach_date, reported_date); join asserted against 02A means",computed
+Essay 2 v5,control,"total assets, $M = exp(firm_size_log)",n,229.0,"computed: outputs/essay2_v5/v5_event_panel.csv joined 1:1 to CANONICAL_V3 on (final_cik, breach_date, reported_date); join asserted against 02A means",computed
+Essay 2 v5,control,"total assets, $M = exp(firm_size_log)",mean,40288.557597,"computed: outputs/essay2_v5/v5_event_panel.csv joined 1:1 to CANONICAL_V3 on (final_cik, breach_date, reported_date); join asserted against 02A means",computed
+Essay 2 v5,control,"total assets, $M = exp(firm_size_log)",median,8223.079065,"computed: outputs/essay2_v5/v5_event_panel.csv joined 1:1 to CANONICAL_V3 on (final_cik, breach_date, reported_date); join asserted against 02A means",computed
+Essay 2 v5,all,"total assets, $M = exp(firm_size_log)",n,333.0,"computed: outputs/essay2_v5/v5_event_panel.csv joined 1:1 to CANONICAL_V3 on (final_cik, breach_date, reported_date); join asserted against 02A means",computed
+Essay 2 v5,all,"total assets, $M = exp(firm_size_log)",mean,84243.402537,"computed: outputs/essay2_v5/v5_event_panel.csv joined 1:1 to CANONICAL_V3 on (final_cik, breach_date, reported_date); join asserted against 02A means",computed
+Essay 2 v5,all,"total assets, $M = exp(firm_size_log)",median,27733.60129,"computed: outputs/essay2_v5/v5_event_panel.csv joined 1:1 to CANONICAL_V3 on (final_cik, breach_date, reported_date); join asserted against 02A means",computed
+Essay 2 v5,treated,"market cap, $M (day before day 0)",n,92.0,"computed (scripts/252 convention): crsp_daily_returns.csv |prc| x shrout, last row before anchor_date",computed
+Essay 2 v5,treated,"market cap, $M (day before day 0)",n_missing,12.0,"computed (scripts/252 convention): crsp_daily_returns.csv |prc| x shrout, last row before anchor_date",computed
+Essay 2 v5,treated,"market cap, $M (day before day 0)",mean,113659.010985,"computed (scripts/252 convention): crsp_daily_returns.csv |prc| x shrout, last row before anchor_date",computed
+Essay 2 v5,treated,"market cap, $M (day before day 0)",median,132396.12,"computed (scripts/252 convention): crsp_daily_returns.csv |prc| x shrout, last row before anchor_date",computed
+Essay 2 v5,control,"market cap, $M (day before day 0)",n,229.0,"computed (scripts/252 convention): crsp_daily_returns.csv |prc| x shrout, last row before anchor_date",computed
+Essay 2 v5,control,"market cap, $M (day before day 0)",n_missing,0.0,"computed (scripts/252 convention): crsp_daily_returns.csv |prc| x shrout, last row before anchor_date",computed
+Essay 2 v5,control,"market cap, $M (day before day 0)",mean,104106.522124,"computed (scripts/252 convention): crsp_daily_returns.csv |prc| x shrout, last row before anchor_date",computed
+Essay 2 v5,control,"market cap, $M (day before day 0)",median,32219.7148,"computed (scripts/252 convention): crsp_daily_returns.csv |prc| x shrout, last row before anchor_date",computed
+Essay 2 v5,all,"market cap, $M (day before day 0)",n,321.0,"computed (scripts/252 convention): crsp_daily_returns.csv |prc| x shrout, last row before anchor_date",computed
+Essay 2 v5,all,"market cap, $M (day before day 0)",n_missing,12.0,"computed (scripts/252 convention): crsp_daily_returns.csv |prc| x shrout, last row before anchor_date",computed
+Essay 2 v5,all,"market cap, $M (day before day 0)",mean,106844.307094,"computed (scripts/252 convention): crsp_daily_returns.csv |prc| x shrout, last row before anchor_date",computed
+Essay 2 v5,all,"market cap, $M (day before day 0)",median,35803.766142,"computed (scripts/252 convention): crsp_daily_returns.csv |prc| x shrout, last row before anchor_date",computed
+Essay 3 v4,treated,events,n,109.0,outputs/essay3_q4/table06.csv n,committed
+Essay 3 v4,treated,firm size: log total assets ln(at),n,109.0,"outputs/essay3_q4/table04.csv, part=C3, group=treated, variable=firm_size_log",committed
+Essay 3 v4,treated,firm size: log total assets ln(at),mean,11.576185,"outputs/essay3_q4/table04.csv, part=C3, group=treated, variable=firm_size_log",committed
+Essay 3 v4,treated,firm size: log total assets ln(at),median,11.8812,"outputs/essay3_q4/table04.csv, part=C3, group=treated, variable=firm_size_log",committed
+Essay 3 v4,treated,leverage (LT/AT),n,109.0,"outputs/essay3_q4/table04.csv, part=C3, group=treated, variable=leverage",committed
+Essay 3 v4,treated,leverage (LT/AT),mean,0.72515,"outputs/essay3_q4/table04.csv, part=C3, group=treated, variable=leverage",committed
+Essay 3 v4,treated,leverage (LT/AT),median,0.6848,"outputs/essay3_q4/table04.csv, part=C3, group=treated, variable=leverage",committed
+Essay 3 v4,treated,ROA (NI/AT),n,109.0,"outputs/essay3_q4/table04.csv, part=C3, group=treated, variable=roa",committed
+Essay 3 v4,treated,ROA (NI/AT),mean,0.022199,"outputs/essay3_q4/table04.csv, part=C3, group=treated, variable=roa",committed
+Essay 3 v4,treated,ROA (NI/AT),median,0.0237,"outputs/essay3_q4/table04.csv, part=C3, group=treated, variable=roa",committed
+Essay 3 v4,treated,outcome: executive departure within 30 days of reporting date (share),n,109.0,"outputs/essay3_q4/table06.csv, window=30, group=treated, exec_rate (exec_departure / n)",committed
+Essay 3 v4,treated,outcome: executive departure within 30 days of reporting date (share),mean,0.0367,"outputs/essay3_q4/table06.csv, window=30, group=treated, exec_rate (exec_departure / n)",committed
+Essay 3 v4,treated,outcome: executive departure within 30 days of reporting date (share),median,0.0,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1) (binary outcome; median is 0 or 1),computed
+Essay 3 v4,treated,outcome: executive departure within 90 days of reporting date (share),n,109.0,"outputs/essay3_q4/table06.csv, window=90, group=treated, exec_rate (exec_departure / n)",committed
+Essay 3 v4,treated,outcome: executive departure within 90 days of reporting date (share),mean,0.1009,"outputs/essay3_q4/table06.csv, window=90, group=treated, exec_rate (exec_departure / n)",committed
+Essay 3 v4,treated,outcome: executive departure within 90 days of reporting date (share),median,0.0,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1) (binary outcome; median is 0 or 1),computed
+Essay 3 v4,treated,outcome: executive departure within 180 days of reporting date (share),n,109.0,"outputs/essay3_q4/table06.csv, window=180, group=treated, exec_rate (exec_departure / n)",committed
+Essay 3 v4,treated,outcome: executive departure within 180 days of reporting date (share),mean,0.3028,"outputs/essay3_q4/table06.csv, window=180, group=treated, exec_rate (exec_departure / n)",committed
+Essay 3 v4,treated,outcome: executive departure within 180 days of reporting date (share),median,0.0,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1) (binary outcome; median is 0 or 1),computed
+Essay 3 v4,control,events,n,296.0,outputs/essay3_q4/table06.csv n,committed
+Essay 3 v4,control,firm size: log total assets ln(at),n,296.0,"outputs/essay3_q4/table04.csv, part=C3, group=control, variable=firm_size_log",committed
+Essay 3 v4,control,firm size: log total assets ln(at),mean,9.694533,"outputs/essay3_q4/table04.csv, part=C3, group=control, variable=firm_size_log",committed
+Essay 3 v4,control,firm size: log total assets ln(at),median,9.35815,"outputs/essay3_q4/table04.csv, part=C3, group=control, variable=firm_size_log",committed
+Essay 3 v4,control,leverage (LT/AT),n,296.0,"outputs/essay3_q4/table04.csv, part=C3, group=control, variable=leverage",committed
+Essay 3 v4,control,leverage (LT/AT),mean,0.627834,"outputs/essay3_q4/table04.csv, part=C3, group=control, variable=leverage",committed
+Essay 3 v4,control,leverage (LT/AT),median,0.6253,"outputs/essay3_q4/table04.csv, part=C3, group=control, variable=leverage",committed
+Essay 3 v4,control,ROA (NI/AT),n,296.0,"outputs/essay3_q4/table04.csv, part=C3, group=control, variable=roa",committed
+Essay 3 v4,control,ROA (NI/AT),mean,0.071674,"outputs/essay3_q4/table04.csv, part=C3, group=control, variable=roa",committed
+Essay 3 v4,control,ROA (NI/AT),median,0.0735,"outputs/essay3_q4/table04.csv, part=C3, group=control, variable=roa",committed
+Essay 3 v4,control,outcome: executive departure within 30 days of reporting date (share),n,296.0,"outputs/essay3_q4/table06.csv, window=30, group=control, exec_rate (exec_departure / n)",committed
+Essay 3 v4,control,outcome: executive departure within 30 days of reporting date (share),mean,0.0439,"outputs/essay3_q4/table06.csv, window=30, group=control, exec_rate (exec_departure / n)",committed
+Essay 3 v4,control,outcome: executive departure within 30 days of reporting date (share),median,0.0,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1) (binary outcome; median is 0 or 1),computed
+Essay 3 v4,control,outcome: executive departure within 90 days of reporting date (share),n,296.0,"outputs/essay3_q4/table06.csv, window=90, group=control, exec_rate (exec_departure / n)",committed
+Essay 3 v4,control,outcome: executive departure within 90 days of reporting date (share),mean,0.1453,"outputs/essay3_q4/table06.csv, window=90, group=control, exec_rate (exec_departure / n)",committed
+Essay 3 v4,control,outcome: executive departure within 90 days of reporting date (share),median,0.0,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1) (binary outcome; median is 0 or 1),computed
+Essay 3 v4,control,outcome: executive departure within 180 days of reporting date (share),n,296.0,"outputs/essay3_q4/table06.csv, window=180, group=control, exec_rate (exec_departure / n)",committed
+Essay 3 v4,control,outcome: executive departure within 180 days of reporting date (share),mean,0.2466,"outputs/essay3_q4/table06.csv, window=180, group=control, exec_rate (exec_departure / n)",committed
+Essay 3 v4,control,outcome: executive departure within 180 days of reporting date (share),median,0.0,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1) (binary outcome; median is 0 or 1),computed
+Essay 3 v4,all,events,n,405.0,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1),computed
+Essay 3 v4,all,firm size: log total assets ln(at),n,405.0,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1),computed
+Essay 3 v4,all,firm size: log total assets ln(at),mean,10.200953,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1),computed
+Essay 3 v4,all,firm size: log total assets ln(at),median,10.14,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1),computed
+Essay 3 v4,all,leverage (LT/AT),n,405.0,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1),computed
+Essay 3 v4,all,leverage (LT/AT),mean,0.654025,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1),computed
+Essay 3 v4,all,leverage (LT/AT),median,0.6667,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1),computed
+Essay 3 v4,all,ROA (NI/AT),n,405.0,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1),computed
+Essay 3 v4,all,ROA (NI/AT),mean,0.058359,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1),computed
+Essay 3 v4,all,ROA (NI/AT),median,0.0605,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1),computed
+Essay 3 v4,all,outcome: executive departure within 30 days of reporting date (share),n,405.0,"outputs/essay3_q4/table06.csv, window=30, group=POOLED, exec_rate (exec_departure / n)",committed
+Essay 3 v4,all,outcome: executive departure within 30 days of reporting date (share),mean,0.042,"outputs/essay3_q4/table06.csv, window=30, group=POOLED, exec_rate (exec_departure / n)",committed
+Essay 3 v4,all,outcome: executive departure within 30 days of reporting date (share),median,0.0,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1) (binary outcome; median is 0 or 1),computed
+Essay 3 v4,all,outcome: executive departure within 90 days of reporting date (share),n,405.0,"outputs/essay3_q4/table06.csv, window=90, group=POOLED, exec_rate (exec_departure / n)",committed
+Essay 3 v4,all,outcome: executive departure within 90 days of reporting date (share),mean,0.1333,"outputs/essay3_q4/table06.csv, window=90, group=POOLED, exec_rate (exec_departure / n)",committed
+Essay 3 v4,all,outcome: executive departure within 90 days of reporting date (share),median,0.0,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1) (binary outcome; median is 0 or 1),computed
+Essay 3 v4,all,outcome: executive departure within 180 days of reporting date (share),n,405.0,"outputs/essay3_q4/table06.csv, window=180, group=POOLED, exec_rate (exec_departure / n)",committed
+Essay 3 v4,all,outcome: executive departure within 180 days of reporting date (share),mean,0.2617,"outputs/essay3_q4/table06.csv, window=180, group=POOLED, exec_rate (exec_departure / n)",committed
+Essay 3 v4,all,outcome: executive departure within 180 days of reporting date (share),median,0.0,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1) (binary outcome; median is 0 or 1),computed
+Essay 3 v4,treated,"total assets, $M = exp(firm_size_log)",n,109.0,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1),computed
+Essay 3 v4,treated,"total assets, $M = exp(firm_size_log)",mean,175398.123558,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1),computed
+Essay 3 v4,treated,"total assets, $M = exp(firm_size_log)",median,144523.875318,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1),computed
+Essay 3 v4,control,"total assets, $M = exp(firm_size_log)",n,296.0,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1),computed
+Essay 3 v4,control,"total assets, $M = exp(firm_size_log)",mean,42820.844708,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1),computed
+Essay 3 v4,control,"total assets, $M = exp(firm_size_log)",median,11593.03147,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1),computed
+Essay 3 v4,all,"total assets, $M = exp(firm_size_log)",n,405.0,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1),computed
+Essay 3 v4,all,"total assets, $M = exp(firm_size_log)",mean,78502.13704,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1),computed
+Essay 3 v4,all,"total assets, $M = exp(firm_size_log)",median,25336.466485,computed from outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample == 1),computed
+Essay 3 v4,treated,"market cap, $M (day before day 0)",n,94.0,"computed (scripts/252 convention): crsp_daily_returns.csv |prc| x shrout, last row before reported_date",computed
+Essay 3 v4,treated,"market cap, $M (day before day 0)",n_missing,15.0,"computed (scripts/252 convention): crsp_daily_returns.csv |prc| x shrout, last row before reported_date",computed
+Essay 3 v4,treated,"market cap, $M (day before day 0)",mean,111394.271125,"computed (scripts/252 convention): crsp_daily_returns.csv |prc| x shrout, last row before reported_date",computed
+Essay 3 v4,treated,"market cap, $M (day before day 0)",median,129099.6996,"computed (scripts/252 convention): crsp_daily_returns.csv |prc| x shrout, last row before reported_date",computed
+Essay 3 v4,control,"market cap, $M (day before day 0)",n,261.0,"computed (scripts/252 convention): crsp_daily_returns.csv |prc| x shrout, last row before reported_date",computed
+Essay 3 v4,control,"market cap, $M (day before day 0)",n_missing,35.0,"computed (scripts/252 convention): crsp_daily_returns.csv |prc| x shrout, last row before reported_date",computed
+Essay 3 v4,control,"market cap, $M (day before day 0)",mean,101151.164586,"computed (scripts/252 convention): crsp_daily_returns.csv |prc| x shrout, last row before reported_date",computed
+Essay 3 v4,control,"market cap, $M (day before day 0)",median,31844.99375,"computed (scripts/252 convention): crsp_daily_returns.csv |prc| x shrout, last row before reported_date",computed
+Essay 3 v4,all,"market cap, $M (day before day 0)",n,355.0,"computed (scripts/252 convention): crsp_daily_returns.csv |prc| x shrout, last row before reported_date",computed
+Essay 3 v4,all,"market cap, $M (day before day 0)",n_missing,50.0,"computed (scripts/252 convention): crsp_daily_returns.csv |prc| x shrout, last row before reported_date",computed
+Essay 3 v4,all,"market cap, $M (day before day 0)",mean,103863.423782,"computed (scripts/252 convention): crsp_daily_returns.csv |prc| x shrout, last row before reported_date",computed
+Essay 3 v4,all,"market cap, $M (day before day 0)",median,34678.973512,"computed (scripts/252 convention): crsp_daily_returns.csv |prc| x shrout, last row before reported_date",computed

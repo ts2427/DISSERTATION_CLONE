@@ -1,0 +1,299 @@
+essay,group,measure,value,source
+Essay 1,all,N events,340,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,all,first breach date,2006-12-01,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,all,last breach date,2024-12-20,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,all,first notification date,2007-01-10,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,all,last notification date,2025-02-05,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,all,events with breach date before 2007-12-08,6,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,all,events with notification date before 2007-12-08,6,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,N events,106,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,first breach date,2008-01-29,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,last breach date,2024-10-04,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,first notification date,2008-01-29,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,last notification date,2024-10-04,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events with breach date before 2007-12-08,0,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events with notification date before 2007-12-08,0,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,N events,234,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,first breach date,2006-12-01,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,last breach date,2024-12-20,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,first notification date,2007-01-10,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,last notification date,2025-02-05,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events with breach date before 2007-12-08,6,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events with notification date before 2007-12-08,6,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2006 (breach-date year),0,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2006 (breach-date year),2,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2007 (breach-date year),0,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2007 (breach-date year),4,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2008 (breach-date year),5,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2008 (breach-date year),6,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2009 (breach-date year),3,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2009 (breach-date year),0,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2010 (breach-date year),0,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2010 (breach-date year),4,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2011 (breach-date year),0,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2011 (breach-date year),2,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2012 (breach-date year),1,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2012 (breach-date year),7,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2013 (breach-date year),4,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2013 (breach-date year),13,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2014 (breach-date year),13,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2014 (breach-date year),9,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2015 (breach-date year),4,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2015 (breach-date year),10,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2016 (breach-date year),1,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2016 (breach-date year),39,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2017 (breach-date year),11,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2017 (breach-date year),34,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2018 (breach-date year),4,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2018 (breach-date year),10,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2019 (breach-date year),13,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2019 (breach-date year),15,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2020 (breach-date year),5,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2020 (breach-date year),9,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2021 (breach-date year),9,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2021 (breach-date year),8,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2022 (breach-date year),10,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2022 (breach-date year),13,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2023 (breach-date year),12,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2023 (breach-date year),37,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2024 (breach-date year),11,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2024 (breach-date year),12,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2007 (notification-date year),0,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2007 (notification-date year),6,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2008 (notification-date year),5,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2008 (notification-date year),6,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2009 (notification-date year),3,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2009 (notification-date year),0,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2010 (notification-date year),0,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2010 (notification-date year),4,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2011 (notification-date year),0,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2011 (notification-date year),2,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2012 (notification-date year),1,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2012 (notification-date year),6,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2013 (notification-date year),1,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2013 (notification-date year),13,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2014 (notification-date year),12,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2014 (notification-date year),6,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2015 (notification-date year),7,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2015 (notification-date year),13,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2016 (notification-date year),0,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2016 (notification-date year),37,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2017 (notification-date year),12,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2017 (notification-date year),32,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2018 (notification-date year),4,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2018 (notification-date year),13,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2019 (notification-date year),9,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2019 (notification-date year),14,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2020 (notification-date year),8,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2020 (notification-date year),6,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2021 (notification-date year),9,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2021 (notification-date year),10,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2022 (notification-date year),6,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2022 (notification-date year),15,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2023 (notification-date year),14,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2023 (notification-date year),34,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2024 (notification-date year),15,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2024 (notification-date year),16,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,treated,events in 2025 (notification-date year),0,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 1,control,events in 2025 (notification-date year),1,"Data/processed/rebuild/CANONICAL_V3.csv (has_crsp_data==1, dropna car_30d + 7 regressors; scripts/158 L57-60)"
+Essay 2 v5,all,N events,333,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,all,first breach date,2006-12-01,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,all,last breach date,2024-10-04,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,all,first notification date,2007-01-10,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,all,last notification date,2024-11-08,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,all,events with breach date before 2007-12-08,6,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,all,events with notification date before 2007-12-08,6,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,N events,104,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,first breach date,2008-01-29,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,last breach date,2024-10-04,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,first notification date,2008-01-29,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,last notification date,2024-10-04,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events with breach date before 2007-12-08,0,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events with notification date before 2007-12-08,0,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,N events,229,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,first breach date,2006-12-01,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,last breach date,2024-08-23,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,first notification date,2007-01-10,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,last notification date,2024-11-08,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events with breach date before 2007-12-08,6,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events with notification date before 2007-12-08,6,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2006 (breach-date year),0,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2006 (breach-date year),2,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2007 (breach-date year),0,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2007 (breach-date year),4,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2008 (breach-date year),5,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2008 (breach-date year),6,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2009 (breach-date year),3,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2009 (breach-date year),0,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2010 (breach-date year),0,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2010 (breach-date year),4,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2011 (breach-date year),0,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2011 (breach-date year),2,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2012 (breach-date year),1,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2012 (breach-date year),7,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2013 (breach-date year),4,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2013 (breach-date year),13,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2014 (breach-date year),13,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2014 (breach-date year),7,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2015 (breach-date year),3,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2015 (breach-date year),10,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2016 (breach-date year),1,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2016 (breach-date year),39,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2017 (breach-date year),11,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2017 (breach-date year),34,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2018 (breach-date year),4,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2018 (breach-date year),10,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2019 (breach-date year),12,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2019 (breach-date year),15,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2020 (breach-date year),5,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2020 (breach-date year),9,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2021 (breach-date year),9,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2021 (breach-date year),8,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2022 (breach-date year),10,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2022 (breach-date year),13,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2023 (breach-date year),12,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2023 (breach-date year),36,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2024 (breach-date year),11,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2024 (breach-date year),10,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2007 (notification-date year),0,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2007 (notification-date year),6,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2008 (notification-date year),5,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2008 (notification-date year),6,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2009 (notification-date year),3,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2009 (notification-date year),0,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2010 (notification-date year),0,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2010 (notification-date year),4,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2011 (notification-date year),0,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2011 (notification-date year),2,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2012 (notification-date year),1,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2012 (notification-date year),6,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2013 (notification-date year),1,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2013 (notification-date year),13,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2014 (notification-date year),12,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2014 (notification-date year),4,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2015 (notification-date year),7,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2015 (notification-date year),13,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2016 (notification-date year),0,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2016 (notification-date year),37,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2017 (notification-date year),12,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2017 (notification-date year),32,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2018 (notification-date year),4,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2018 (notification-date year),13,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2019 (notification-date year),9,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2019 (notification-date year),14,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2020 (notification-date year),6,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2020 (notification-date year),6,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2021 (notification-date year),9,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2021 (notification-date year),10,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2022 (notification-date year),6,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2022 (notification-date year),15,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2023 (notification-date year),14,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2023 (notification-date year),34,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,treated,events in 2024 (notification-date year),15,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 2 v5,control,events in 2024 (notification-date year),14,outputs/essay2_v5/v5_event_panel.csv (all 333 rows)
+Essay 3 v4,all,N events,405,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,all,first breach date,2006-12-01,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,all,last breach date,2024-12-24,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,all,first notification date,2007-01-10,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,all,last notification date,2025-04-11,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,all,events with breach date before 2007-12-08,7,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,all,events with notification date before 2007-12-08,7,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,N events,109,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,first breach date,2008-01-29,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,last breach date,2024-10-04,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,first notification date,2008-01-29,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,last notification date,2024-10-04,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events with breach date before 2007-12-08,0,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events with notification date before 2007-12-08,0,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,N events,296,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,first breach date,2006-12-01,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,last breach date,2024-12-24,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,first notification date,2007-01-10,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,last notification date,2025-04-11,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events with breach date before 2007-12-08,7,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events with notification date before 2007-12-08,7,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2006 (breach-date year),0,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2006 (breach-date year),3,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2007 (breach-date year),0,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2007 (breach-date year),5,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2008 (breach-date year),5,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2008 (breach-date year),8,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2009 (breach-date year),4,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2009 (breach-date year),3,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2010 (breach-date year),0,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2010 (breach-date year),4,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2011 (breach-date year),0,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2011 (breach-date year),2,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2012 (breach-date year),1,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2012 (breach-date year),8,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2013 (breach-date year),4,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2013 (breach-date year),16,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2014 (breach-date year),13,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2014 (breach-date year),11,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2015 (breach-date year),4,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2015 (breach-date year),14,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2016 (breach-date year),1,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2016 (breach-date year),47,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2017 (breach-date year),11,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2017 (breach-date year),39,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2018 (breach-date year),4,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2018 (breach-date year),14,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2019 (breach-date year),14,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2019 (breach-date year),16,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2020 (breach-date year),5,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2020 (breach-date year),14,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2021 (breach-date year),9,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2021 (breach-date year),11,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2022 (breach-date year),10,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2022 (breach-date year),18,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2023 (breach-date year),12,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2023 (breach-date year),48,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2024 (breach-date year),12,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2024 (breach-date year),15,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2007 (notification-date year),0,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2007 (notification-date year),7,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2008 (notification-date year),5,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2008 (notification-date year),9,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2009 (notification-date year),4,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2009 (notification-date year),3,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2010 (notification-date year),0,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2010 (notification-date year),4,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2011 (notification-date year),0,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2011 (notification-date year),2,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2012 (notification-date year),1,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2012 (notification-date year),7,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2013 (notification-date year),1,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2013 (notification-date year),15,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2014 (notification-date year),12,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2014 (notification-date year),7,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2015 (notification-date year),7,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2015 (notification-date year),18,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2016 (notification-date year),0,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2016 (notification-date year),42,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2017 (notification-date year),12,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2017 (notification-date year),41,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2018 (notification-date year),4,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2018 (notification-date year),14,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2019 (notification-date year),9,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2019 (notification-date year),17,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2020 (notification-date year),10,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2020 (notification-date year),9,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2021 (notification-date year),9,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2021 (notification-date year),15,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2022 (notification-date year),6,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2022 (notification-date year),19,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2023 (notification-date year),13,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2023 (notification-date year),45,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2024 (notification-date year),16,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2024 (notification-date year),20,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,treated,events in 2025 (notification-date year),0,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 3 v4,control,events in 2025 (notification-date year),2,outputs/essay3_v4/e_analysis_sample.csv (in_analysis_sample==1)
+Essay 2 v5,all,cross-check pre-rule (notification date) vs outputs/essay2_v5/constants_essay2.json :: values.prerule_events (scripts/269 L803: reported_date),6 vs 6 (MATCH),outputs/essay2_v5/constants_essay2.json
+Essay 2 v5,treated,cross-check pre-rule (notification date) vs outputs/essay2_v5/constants_essay2.json :: values.prerule_treated (reported_date),0 vs 0 (MATCH),outputs/essay2_v5/constants_essay2.json
+Essay 2 v5,all,cross-check pre-rule (breach date) vs outputs/essay2_v5/constants_essay2.json :: values.prerule_breach_anchor (breach_date),6 vs 6 (MATCH),outputs/essay2_v5/constants_essay2.json
+Essay 3 v4,treated,"cross-check pre-rule (breach date) vs outputs/essay3_v4/e_ledger.csv :: ANALYSIS SAMPLE row, pre_rule_treated (scripts/224 L366: breach_date)",0 vs 0 (MATCH),outputs/essay3_v4/e_ledger.csv
+Essay 3 v4,control,"cross-check pre-rule (breach date) vs outputs/essay3_v4/e_ledger.csv :: ANALYSIS SAMPLE row, pre_rule_control (breach_date)",7 vs 7 (MATCH),outputs/essay3_v4/e_ledger.csv
+Essay 1,all,"cross-check pre-rule (breach date) vs outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md :: ""Cross-essay pre-rule check (Essay 1 v3 regression sample)"", breach_date row",6 vs 6 (MATCH),outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md
+Essay 1,treated,"cross-check pre-rule (breach date) vs outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md :: same table, breach_date pre-rule treated",0 vs 0 (MATCH),outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md
+Essay 1,all,"cross-check pre-rule (notification date) vs outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md :: same table, reported_date row",6 vs 6 (MATCH),outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md
+Essay 1,treated,"cross-check pre-rule (notification date) vs outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md :: same table, reported_date pre-rule treated",0 vs 0 (MATCH),outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md
