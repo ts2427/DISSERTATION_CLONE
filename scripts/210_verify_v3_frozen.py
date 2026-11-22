@@ -539,16 +539,31 @@ def create():
     return 0
 
 
-def check_prefix(path, prefix_size, prefix_sha):
+def check_prefix(path, prefix_size, prefix_sha, commit=None):
     fp = Path(path)
     if not path_exists(fp):
         return False, "deleted"
     cur = read_bytes(fp)
+    if len(cur) >= prefix_size and sha256_bytes(cur[:prefix_size]) == prefix_sha:
+        return True, f"append-only OK (+{len(cur) - prefix_size} bytes)"
+    # Line endings normalised (added 2026-11-22). The recorded prefix is the CRLF checkout of
+    # the baseline blob, so an LF checkout (macOS, Linux, core.autocrlf=false) failed although
+    # nothing was modified. The baseline blob is accepted as the prefix only if its CRLF form
+    # reproduces the recorded prefix sha exactly; the current file, normalised, must then
+    # begin with it. Any edit to baseline content still fails.
+    if commit:
+        r = subprocess.run(["git", "cat-file", "blob", f"{commit}:{path}"], capture_output=True)
+        if r.returncode == 0:
+            base = r.stdout.replace(b"\r\n", b"\n")
+            if sha256_bytes(base.replace(b"\n", b"\r\n")) == prefix_sha:
+                norm = cur.replace(b"\r\n", b"\n")
+                if norm.startswith(base):
+                    return True, (f"append-only OK, line endings normalised "
+                                  f"(+{len(norm) - len(base)} bytes)")
+                return False, "baseline bytes were MODIFIED, not merely appended to"
     if len(cur) < prefix_size:
         return False, f"SHRANK ({len(cur)} < {prefix_size} bytes)"
-    if sha256_bytes(cur[:prefix_size]) != prefix_sha:
-        return False, "baseline bytes were MODIFIED, not merely appended to"
-    return True, f"append-only OK (+{len(cur) - prefix_size} bytes)"
+    return False, "baseline bytes were MODIFIED, not merely appended to"
 
 
 def verify():
@@ -570,7 +585,7 @@ def verify():
 
     for p, rec in base.items():
         if int(rec["append_only"]):
-            ok, why = check_prefix(p, int(rec["prefix_size"]), rec["prefix_sha256"])
+            ok, why = check_prefix(p, int(rec["prefix_size"]), rec["prefix_sha256"], commit)
             notes.append(f"{p}: {why}")
             if not ok:
                 sha_bad.append((p, "prefix-test", why))

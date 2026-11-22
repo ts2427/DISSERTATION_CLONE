@@ -151,8 +151,8 @@ def card_e2():
                     f"CV3 p = **{fmt_p(r['p'])}**")
         st.caption(f"Disclosure delay: {fmt_num(d['coef'], 1, signed=True)} days, CV3 p = {fmt_p(d['p'])} "
                    f"· N = {fmt_int(d['N'])} events · {fmt_int(d['n_treated_events'])} treated events · "
-                   f"{fmt_int(d['G1'])} treated parent CIKs. The announcement-window elevation is a "
-                   'pre-specified secondary result on the Essay 2 page.')
+                   f"{fmt_int(d['G1'])} treated parent CIKs. The announcement-window elevation is an "
+                   'exploratory secondary result on the Essay 2 page.')
         essay_link('views/2_Essay_2_Information_Environment.py', 'Essay 2 details')
         source('outputs/tables/essay2_v2/t26_inference_ladder.csv',
                'outputs/defense_supplement/e2_delay_ladder.csv')

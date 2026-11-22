@@ -107,6 +107,7 @@ python run_all.py          # full pipeline, all three essays and the defense sup
 - `outputs/RETIREMENT_LEDGER.md` — what was retired, fixed or removed, when, and why
 - `docs/claude/KNOWN_LIMITATIONS.md` — disclosed limitations of the samples and measures
 - `docs/claude/POST_DEFENSE.md` — the change rule after the freeze
+- `scripts/262_e2v5_guard.py` checks the author's working tree only and is not expected to pass in a clone (its snapshot holds untracked local files and that checkout's line endings); in a clone, use `scripts/210` and `scripts/217`.
 - `docs/claude/V3_FREEZE_EXCEPTIONS.md` and `outputs/rebuild_v4/V3_FREEZE_MANIFEST.csv` — the freeze gate's record
 - `docs/claude/REPRODUCE_ESSAY2.md`, `docs/claude/REPRODUCE_ESSAY3_V4.md` — reproduction notes and declared exceptions
 - `docs/DATA_QUALITY_DOCUMENTATION.md` — the data-construction failure modes

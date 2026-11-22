@@ -203,7 +203,7 @@ def sec_findings():
         f'{num3(dr["mde_daily"])} daily pp ({fmt_num(dr["mde_annualized"], 2)} pp annualized)'
         + (' — an underpowered null, not evidence of equivalence.' if not bool(dr['negligible'])
            else '.'),
-        f'**Secondary (pre-specified, added after the primary nulls) — announcement-window '
+        f'**Secondary (exploratory, added after the primary nulls) — announcement-window '
         f'elevation.** Form 499 coefficient {coef3(l3["coef"])} daily pp, CV3 p = '
         f'{fmt_p(l3["p_cv3"])}; {bh_txt} within its {n_fam}-test family.',
     ])
@@ -218,7 +218,7 @@ st.markdown(
     'with a persistent change in the firm\'s return volatility after notification? '
     'The rule sets a notification clock for law enforcement and an embargo on public disclosure until '
     'that clock runs — a *floor* on how soon a registered carrier may go public, not a ceiling on how '
-    'late it may do so. Both primary answers are nulls; a pre-specified secondary result on the '
+    'late it may do so. Both primary answers are nulls; an exploratory secondary result on the '
     'announcement window is reported with its full history below.')
 
 # ====================================================================== sample
@@ -466,8 +466,9 @@ def sec_announce():
     st.info(
         f'**History — read before the number.** This test is not one of the essay\'s original '
         f'hypotheses. It was added by the rescoping directive after the primary tests had returned '
-        f'nulls, and was pre-specified as one of a {n_fam}-test family (ledger label '
-        f'"{fam_label}") before it was estimated. It is reported as a secondary result. It is estimated '
+        f'nulls, and is exploratory, one of a {n_fam}-test family (ledger label '
+        f'"{fam_label}"); the test and its first result appear together in commit 115a72f. '
+        f'It is reported as a secondary result. It is estimated '
         f'on N = {n_l3}, not {n_full}: {n_full - n_l3} IPO-recent control events lack the history '
         'needed to estimate the abnormal-volatility beta.', icon=':material/history:')
 
@@ -530,7 +531,7 @@ def sec_announce():
         'persistent-window null is not an artifact of an insensitive measure.')
     source(f'{E2}/t50_announcement_contrast.csv')
 
-    st.subheader('Multiplicity — Benjamini–Hochberg within the pre-specified family')
+    st.subheader('Multiplicity — Benjamini–Hochberg within the exploratory family')
     rows = parse_bh()
     if rows:
         bh = pd.DataFrame(rows, columns=['test', 'p', 'thr', 'decision'])

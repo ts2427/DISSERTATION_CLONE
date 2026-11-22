@@ -14,6 +14,7 @@ Rules enforced by `verify`:
     be byte-identical unless a change is accepted below (pinned or allowed); the PASS
     line counts those accepted changes rather than calling the subset byte-identical.
 The snapshot lives at outputs/essay2_v5/guard/snapshot.json.
+It checks this working tree only and is not expected to pass in a clone (the snapshot holds untracked local files and this checkout's line endings).
 """
 import hashlib
 import json
@@ -48,7 +49,7 @@ ACCEPTED_PIN = {
     # 210 exception row appended to docs/claude/V3_FREEZE_EXCEPTIONS.md.
     'docs/DATA_QUALITY_DOCUMENTATION.md': '2c8ecbcb1d67ce3807b774fccfd44152dfb6644a08ea7e3827e5c77b66d90ed1',
     'docs/claude/V3_FREEZE_EXCEPTIONS.md': '497d663ed703dd4b3159a6dbf124cfa366dbde833146185702532e61818dacb9',
-    'scripts/210_verify_v3_frozen.py': '42482f69488242d9df93d1e9573de77d6bc92aed6fd267e7eb1cfcbb6aee4bff',
+    'scripts/210_verify_v3_frozen.py': '684de6a273827145c31f188bd2b30fda9693adea92174166270bcd6049ab3d14',
     'scripts/217_v4_offline_tests.py': '42d06e52d4ab09ca225c66daea9b86fd987920b55d079a21568c8bde2115ddce',
     # Tim, 2026-11-22 (approved): unrestricted bootstrap centring fix (165:173) and the WCU values it moves.
     # The 217 pin above now also covers that fix's unit test; the exceptions pin covers its 210 rows.

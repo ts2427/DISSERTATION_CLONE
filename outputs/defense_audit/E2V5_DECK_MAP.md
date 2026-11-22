@@ -70,7 +70,7 @@ Every v5 value is read from `outputs/essay2_v5/constants_essay2.json` and the co
 | wild bootstrap p = .006 | .009 | outputs/essay2_v5/constants_essay2.json ann_p_wcr | REPLACE |  |
 | CV1 p = .004 | .008 | outputs/essay2_v5/v5_t09b_announcement_ladder.csv rung CV1 parent filer entity | REPLACE |  |
 | N = 331 (G = 81, 12 treated parent CIKs) | N = 333 (G = 82, 12 treated parent CIKs) | outputs/essay2_v5/constants_essay2.json ann_N, ann_G, ann_G1 | REPLACE | no events drop on the v5 basis |
-| Pre-specified on 8/31, before estimation, and added after earlier nulls were known | v5 code labels the test "pre-specified" (v5_t09 row "Form 499 on breach elevation (pre-specified)"); the 8/31 date has no v5 source | outputs/essay2_v5/v5_t09_announcement.csv row 4 label | NO-SOURCE | 8/31 appears only in scripts/175 docstring (115a72f); see B11 |
+| Pre-specified on 8/31, before estimation, and added after earlier nulls were known | v5 code labels the test "exploratory" (v5_t09 row "Form 499 on breach elevation (exploratory)"; relabelled 2026-11-22); the 8/31 date has no v5 source | outputs/essay2_v5/v5_t09_announcement.csv row 4 label | NO-SOURCE | 8/31 appears only in scripts/175 docstring (115a72f); see B11 |
 | Survives Benjamini-Hochberg adjustment within its four-test family | survives: BH-adjusted p 0.036 (family of 4, all p read live in scripts/265) | outputs/essay2_v5/constants_essay2.json ann_bh_adj_p, ann_bh_reject | SAME |  |
 | The primary windows skip days [−4, +4]: the effect appears at announcement and is gone by the post window | The primary post window starts at +1. The elevation does not carry into the 20-day post window (primary +0.14, CV3 p .481) or into [+1,+5] (+0.20, CV3 p .320). | outputs/essay2_v5/constants_essay2.json primary_*, dyn_1_5_* | REWORD | v5 primary windows no longer skip [−4,+4] |
 | NOTES: Two control events drop from 333 (Uber, Zscaler) for lack of pre-event return history | no event drops: the v5 elevation is market-adjusted and needs no estimation window (N = 333) | outputs/essay2_v5/constants_essay2.json ann_N | DROP |  |
@@ -234,8 +234,8 @@ Share of events whose [−250,−30] estimation window contains **another** cano
 No deck slide carries the old 71% / 76%.
 
 **B11 Status of the announcement test**
-- **Committed v5 text:** "pre-specified". It appears in the v5_t09 row label ("Form 499 on breach elevation (pre-specified)") and in the scripts/265 docstring ("BH within the pre-specified family of four").
-- **Not in any committed v5 file:** "secondary" and "exploratory". The defense-era ruling calling it a "pre-specified SECONDARY result" is not in a committed file, and the essay draft is not committed.
+- **Committed v5 text:** "exploratory" (relabelled 2026-11-22). It appears in the v5_t09 row label ("Form 499 on breach elevation (exploratory)") and in the scripts/265 docstring ("BH within the exploratory family of four").
+- **Not in any committed v5 file:** "secondary" (nor "exploratory" until the 2026-11-22 relabel). The defense-era ruling calling it a "pre-specified SECONDARY result" is not in a committed file, and the essay draft is not committed.
 
 # Part C: reproducibility
 
