@@ -16,7 +16,7 @@ import streamlit as st
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import ui  # noqa: E402
-from data import (e2_ledger_md, e2_table, guard, read_csv, read_text,  # noqa: E402
+from data import (e2_ledger_md, e2_table, guard, read_csv, read_json, read_text,  # noqa: E402
                   source, supp_table)
 from ui import COLORS, CONTROL, TREATED, fmt_ci, fmt_int, fmt_num, fmt_p  # noqa: E402
 
@@ -26,6 +26,18 @@ LADDER = 'outputs/defense_supplement/e2_delay_ladder.csv'
 Q7 = 'outputs/ESSAY2_QUERY7_REPORT.md'
 PART_S = 'outputs/ESSAY2_QUERY5_PART_S.md'
 CONTRAST_MD = 'outputs/ESSAY2_ANNOUNCEMENT_CONTRAST.md'
+V5 = 'outputs/essay2_v5'
+V5_FAM = f'{V5}/v5_t09_announcement.csv'            # family of four + BH (scripts/265)
+V5_LAD = f'{V5}/v5_t09b_announcement_ladder.csv'    # eight-rung ladder (scripts/265)
+SUPERSEDED = 'earlier specification (superseded)'
+
+
+def v5_announcement():
+    """The v5 announcement test (scripts/265): the family of four and the registrant row."""
+    fam = read_csv(V5_FAM)
+    fam = fam[~fam['test'].astype(str).str.startswith('BRIDGE')].reset_index(drop=True)
+    reg = fam[fam['test'].str.startswith('Form 499')].iloc[0]
+    return fam, reg
 LEDGER_MD = 'outputs/ESSAY2_SAMPLE_ATTRITION_LEDGER.md'
 
 
@@ -183,11 +195,10 @@ def sec_findings():
     vlad = e2_table('t26_inference_ladder')
     v_cv3 = vlad[vlad['procedure'].str.contains('CV3')].iloc[0]
     dr = e2_table('t28_design_resolution').iloc[0]
-    l3 = e2_table('t50_announcement_contrast').query("level == 'L3'").iloc[0]
-    bh = [r for r in parse_bh() if 'treatment' in r[0]]
-    bh_txt = ('survives Benjamini–Hochberg' if bh and bh[0][3] == 'reject'
-              else 'does not survive Benjamini–Hochberg' if bh else 'BH decision not parsed')
-    n_fam = len(parse_bh())
+    fam5, reg5 = v5_announcement()
+    bh_txt = ('survives Benjamini–Hochberg' if str(reg5['bh_reject_05']) == 'True'
+              else 'does not survive Benjamini–Hochberg')
+    n_fam = len(fam5)
     coding = 'raw-day coding' if 'raw' in str(d_cv3['outcome']) else f'coding: {d_cv3["outcome"]}'
 
     def verdict(p):
@@ -204,8 +215,8 @@ def sec_findings():
         + (' — an underpowered null, not evidence of equivalence.' if not bool(dr['negligible'])
            else '.'),
         f'**Secondary (exploratory, added after the primary nulls) — announcement-window '
-        f'elevation.** Form 499 coefficient {coef3(l3["coef"])} daily pp, CV3 p = '
-        f'{fmt_p(l3["p_cv3"])}; {bh_txt} within its {n_fam}-test family.',
+        f'elevation.** Form 499 coefficient {coef3(reg5["coef"])} daily pp, CV3 p = '
+        f'{fmt_p(reg5["p"])}; {bh_txt} within its {n_fam}-test exploratory family.',
     ])
 
 
@@ -453,112 +464,95 @@ ui.section('Secondary result — Announcement-window elevation')
 
 
 def sec_announce():
-    t50 = e2_table('t50_announcement_contrast')
-    t53 = e2_table('t53_test_ledger')
+    fam, reg = v5_announcement()
+    lad = read_csv(V5_LAD)
+    old = e2_table('t50_announcement_contrast').query("level == 'L3'").iloc[0]
+    v = read_json('outputs/essay2_v5/constants_essay2.json')['values']
     n_full = len(read_csv(T1))
-    l3 = t50[t50['level'] == 'L3'].iloc[0]
-    l1 = t50[t50['level'] == 'L1'].copy()
-    fam_mask = t53['family'].str.contains('announcement window', case=False, na=False)
-    fam_label = t53.loc[fam_mask, 'family'].iloc[0]
-    n_fam = int(fam_mask.sum())
-    n_l3 = int(l3['n'])
+    cv3 = lad[lad['rung'].str.startswith('CV3')].iloc[0]
+    wcr = lad[lad['rung'].str.startswith('WCR restricted')].iloc[0]
 
     st.info(
         f'**History — read before the number.** This test is not one of the essay\'s original '
         f'hypotheses. It was added by the rescoping directive after the primary tests had returned '
-        f'nulls, and is exploratory, one of a {n_fam}-test family (ledger label '
-        f'"{fam_label}"); the test and its first result appear together in commit 115a72f. '
-        f'It is reported as a secondary result. It is estimated '
-        f'on N = {n_l3}, not {n_full}: {n_full - n_l3} IPO-recent control events lack the history '
-        'needed to estimate the abnormal-volatility beta.', icon=':material/history:')
+        f'nulls. It is exploratory: one of a {len(fam)}-test exploratory family, and the test and its '
+        f'first result appear together in commit 115a72f. It is reported as a secondary result, '
+        f'estimated on all N = {fmt_int(cv3["N"])} of {fmt_int(n_full)} events (market-adjusted '
+        f'returns need no estimation window).', icon=':material/history:')
 
     c = st.columns(4)
-    c[0].metric('Coefficient (daily pp)', coef4(l3['coef']))
-    c[1].metric('CV3 p (governing)', fmt_p(l3['p_cv3']))
-    c[2].metric('Bootstrap p (governing)', fmt_p(l3['p_wcr']))
-    c[3].metric('N', fmt_int(n_l3))
-    rungs = pd.DataFrame([
-        {'rung': 'CV1 parent CIK', 'se': l3['se'], 'p': l3['p_cv1'], 'B': None},
-        {'rung': 'CV3 jackknife', 'se': l3['se_cv3'], 'p': l3['p_cv3'], 'B': None},
-        {'rung': 'WCR restricted', 'se': None, 'p': l3['p_wcr'], 'B': l3['B_wcr']},
-    ])
-    rungs['coef'] = l3['coef']
-    rungs['label'] = rungs['rung'].map(rung_name)
-    rungs['role'] = rungs['rung'].map(lambda s: ROLE[rung_kind(s)])
+    c[0].metric('Coefficient (daily pp)', coef4(cv3['coef']))
+    c[1].metric('CV3 p (governing)', fmt_p(cv3['p']))
+    c[2].metric('Bootstrap p (governing)', fmt_p(wcr['p']))
+    c[3].metric('N', fmt_int(cv3['N']))
+    rungs = lad.assign(label=lad['rung'].map(rung_name),
+                       role=lad['rung'].map(lambda r_: ROLE[rung_kind(r_)]))
     ui.table(rungs, columns={'label': 'Inference rung', 'role': 'Role', 'coef': 'Coefficient',
-                             'se': 'SE', 'p': 'p-value', 'B': 'Bootstrap draws (B)'},
-             formats={'Coefficient': coef4, 'SE': num3, 'p-value': fmt_p,
-                      'Bootstrap draws (B)': fmt_int},
-             download='essay2_announcement_ladder.csv')
+                             'se': 'SE', 'p': 'p-value', 'ci_lo': '95% CI low', 'ci_hi': '95% CI high'},
+             formats={'Coefficient': coef4, 'SE': num3, 'p-value': fmt_p, '95% CI low': num3,
+                      '95% CI high': num3},
+             download='essay2_v5_announcement_ladder.csv')
     st.markdown(
-        f'Announcement-window elevation is abnormal volatility in the notification window relative to a '
-        f'pre-event baseline. Form 499 events show more elevation than control events by '
-        f'{coef3(l3["coef"])} daily pp, and the difference holds on the governing rungs '
-        f'(CV3 p = {fmt_p(l3["p_cv3"])}; restricted bootstrap p = {fmt_p(l3["p_wcr"])}). Read with the '
-        'level-1 rows below: breach notifications as a whole carry little announcement-window '
-        'information compared with the same firms\' earnings announcements, so the differential '
-        'describes controls\' notifications as slightly volatility-damping and treated notifications as '
-        'roughly neutral.')
-    source(f'{E2}/t50_announcement_contrast.csv')
+        f'Announcement-window elevation is the SD of market-adjusted returns over trading days '
+        f'[−4, +4] around the agency reporting date minus the SD over [−25, −5]. Form 499 events show '
+        f'more elevation than other events by {coef3(cv3["coef"])} daily pp after controls '
+        f'(CV3 p = {fmt_p(cv3["p"])}; restricted bootstrap p = {fmt_p(wcr["p"])}). The mean elevation is '
+        f'{coef3(v["ann_treated_elev"])} for registrant events and {coef3(v["ann_control_elev"])} for '
+        'other events, so the differential describes other firms\' notifications as slightly '
+        'volatility-damping and registrants\' as roughly neutral.')
+    st.caption(
+        f'{SUPERSEDED[0].upper() + SUPERSEDED[1:]}: market-model residuals, N = {fmt_int(old["n"])}, '
+        f'coefficient {coef3(old["coef"])}, CV3 p = {fmt_p(old["p_cv3"])} (scripts/175, t50). '
+        'Replaced by the v5 estimate above.')
+    source(V5_LAD, f'{E2}/t50_announcement_contrast.csv')
 
-    st.subheader('Level 1 — breach notifications vs the same firms\' earnings announcements')
-    label = {'earnings elevation': 'Earnings elevation', 'breach elevation': 'Breach elevation',
-             'contrast (breach-earnings)': 'Contrast (breach − earnings)',
-             'contrast, firm FE': 'Contrast, firm FE'}
-    l1['label'] = l1['row'].map(lambda r: label.get(r, r))
+    st.subheader('Breach notifications vs the same firms\' earnings announcements')
+    lab = {'earnings elevation (mean)': 'Earnings elevation', 'breach elevation (mean)': 'Breach elevation',
+           'breach minus earnings (contrast)': 'Contrast (breach − earnings)'}
+    l1 = fam[fam['test'].isin(list(lab))].copy()
+    l1['label'] = l1['test'].map(lab)
 
-    def bar_color(r):
-        if 'contrast' in r:
+    def bar_color(r_):
+        if 'contrast' in r_:
             return COLORS['red']
-        return TREATED if 'earn' in r else CONTROL
+        return TREATED if 'earn' in r_ else CONTROL
 
     fig = go.Figure(go.Bar(
-        x=l1['label'], y=l1['coef'], marker_color=[bar_color(r) for r in l1['row']],
+        x=l1['label'], y=l1['coef'], marker_color=[bar_color(r_) for r_ in l1['test']],
         error_y=dict(type='data', array=1.96 * l1['se'], color=COLORS['text'], thickness=1.5),
         hovertemplate='%{x}<br>%{y:+.3f}<extra></extra>'))
     fig.add_hline(y=0, line_color=COLORS['muted'])
     fig.update_layout(yaxis_title='daily pp (bars = ± 1.96 SE)', height=380, showlegend=False,
                       margin=dict(l=10, r=20, t=30, b=50))
     ui.chart(fig)
-    ui.table(l1, columns={'label': 'Quantity', 'coef': 'Coefficient', 'se': 'SE', 'n': 'N'},
+    ui.table(l1, columns={'label': 'Quantity', 'coef': 'Coefficient', 'se': 'SE', 'N': 'N'},
              formats={'Coefficient': coef3, 'SE': num3, 'N': fmt_int})
-    e = l1[l1['row'] == 'earnings elevation'].iloc[0]
-    b = l1[l1['row'] == 'breach elevation'].iloc[0]
+    e = l1[l1['test'].str.startswith('earnings')].iloc[0]
+    b = l1[l1['test'].str.startswith('breach elevation')].iloc[0]
     st.caption(
         f'The same instrument that registers earnings announcements ({coef3(e["coef"])}, '
-        f'N = {fmt_int(e["n"])}) registers essentially nothing at breach notifications '
-        f'({coef3(b["coef"])}, N = {fmt_int(b["n"])}). This is the design-validation result: the '
+        f'N = {fmt_int(e["N"])}) registers essentially nothing at breach notifications '
+        f'({coef3(b["coef"])}, N = {fmt_int(b["N"])}). This is the design-validation result: the '
         'persistent-window null is not an artifact of an insensitive measure.')
-    source(f'{E2}/t50_announcement_contrast.csv')
+    source(V5_FAM)
 
     st.subheader('Multiplicity — Benjamini–Hochberg within the exploratory family')
-    rows = parse_bh()
-    if rows:
-        bh = pd.DataFrame(rows, columns=['test', 'p', 'thr', 'decision'])
-        bh['p'] = pd.to_numeric(bh['p'], errors='coerce')
-        bh['thr'] = pd.to_numeric(bh['thr'], errors='coerce')
-        bh['test'] = bh['test'].map(lambda s: s[0].upper() + s[1:])
-        bh['decision'] = bh['decision'].map(lambda s: 'Reject' if s == 'reject'
-                                            else 'Fail to reject' if s == 'fail' else s)
-        ui.table(bh, columns={'test': 'Test', 'p': 'p-value', 'thr': 'BH threshold (FDR 5%)',
-                              'decision': 'Decision'},
-                 formats={'p-value': fmt_p, 'BH threshold (FDR 5%)': lambda v: fmt_num(v, 4)})
-        tr = [r for r in rows if 'treatment' in r[0]]
-        if tr:
-            st.caption(f'The Form 499 test — “{tr[0][0]}” — is evaluated at its CV3 p-value and '
-                       f'{"survives" if tr[0][3] == "reject" else "does not survive"} BH within its '
-                       f'{len(rows)}-test family.')
-    else:
-        st.warning(f'Could not parse the BH lines from {Q7}.')
-    fam = t53.loc[fam_mask, ['test', 'script']].copy()
-    fam['test'] = fam['test'].map(lambda s: s[0].upper() + s[1:])
-    ui.table(fam, columns={'test': 'Test in the family', 'script': 'Script'})
+    bh = fam.assign(test=fam['test'].map(lambda t_: t_[0].upper() + t_[1:]),
+                    decision=fam['bh_reject_05'].map(lambda x: 'Reject' if str(x) == 'True' else 'Fail to reject'))
+    ui.table(bh, columns={'test': 'Test', 'p': 'p-value', 'bh_adj_p': 'BH-adjusted p', 'inference': 'SE',
+                          'decision': 'Decision (FDR 5%)'},
+             formats={'p-value': fmt_p, 'BH-adjusted p': fmt_p})
     st.caption(
-        f'Program-wide context: the test ledger enumerates {len(t53)} tests across '
-        f'{t53["family"].nunique()} families. This is the only Form 499 coefficient in the essay that '
-        'survives calibrated inference; it is one rejection among many tests and is reported as such.')
-    source(Q7, f'{E2}/t53_test_ledger.csv')
-    with st.expander('Full announcement-contrast report'):
+        f'The Form 499 test is evaluated at its CV3 p-value and '
+        f'{"survives" if str(reg["bh_reject_05"]) == "True" else "does not survive"} BH within its '
+        f'{len(fam)}-test exploratory family (BH-adjusted p = {fmt_p(reg["bh_adj_p"])}). Program-wide, '
+        f'the v5 analysis enumerates {fmt_int(v["program_tests_total"])} tests. This is the only Form 499 '
+        'coefficient in the essay that survives calibrated inference; it is one rejection among many '
+        'tests and is reported as such.')
+    source(V5_FAM, 'outputs/essay2_v5/constants_essay2.json')
+    with st.expander(f'Full announcement-contrast report — {SUPERSEDED}'):
+        st.caption('Defense-era report (scripts/175): its numbers are the superseded market-model '
+                   'specification, and its "pre-specified" wording predates the exploratory label.')
         st.text(fix_text(read_text(CONTRAST_MD)))
         source(CONTRAST_MD)
 

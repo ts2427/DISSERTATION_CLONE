@@ -72,17 +72,17 @@
 "Essay 2","Disclosure delay, winsorized p99","fcc_form499","ci_cv3_hi",88.3911013773934
 "Essay 2","Disclosure delay, winsorized p99","fcc_form499","mde80_cv3",111.6884388276
 "Essay 2","Disclosure delay, winsorized p99","fcc_form499","p_wcr",0.76455
-"Essay 2","Announcement-window elevation (daily pp)","fcc_form499","coef",0.471713578835623
-"Essay 2","Announcement-window elevation (daily pp)","fcc_form499","n",331
-"Essay 2","Announcement-window elevation (daily pp)","fcc_form499","G",81
-"Essay 2","Announcement-window elevation (daily pp)","fcc_form499","se_cv1",0.159354033277147
-"Essay 2","Announcement-window elevation (daily pp)","fcc_form499","p_cv1",0.00404455677949889
-"Essay 2","Announcement-window elevation (daily pp)","fcc_form499","se_cv3",0.20002521928755
-"Essay 2","Announcement-window elevation (daily pp)","fcc_form499","p_cv3",0.0208016278704721
-"Essay 2","Announcement-window elevation (daily pp)","fcc_form499","ci_cv3_lo",0.0736507066030708
-"Essay 2","Announcement-window elevation (daily pp)","fcc_form499","ci_cv3_hi",0.869776451068175
-"Essay 2","Announcement-window elevation (daily pp)","fcc_form499","mde80_cv3",0.567311680802895
-"Essay 2","Announcement-window elevation (daily pp)","fcc_form499","p_wcr",0.00502
+"Essay 2","Announcement-window elevation (daily pp)","fcc_form499","coef",0.432696629996608
+"Essay 2","Announcement-window elevation (daily pp)","fcc_form499","n",333
+"Essay 2","Announcement-window elevation (daily pp)","fcc_form499","G",82
+"Essay 2","Announcement-window elevation (daily pp)","fcc_form499","se_cv1",0.159400293830131
+"Essay 2","Announcement-window elevation (daily pp)","fcc_form499","p_cv1",0.00810806980598322
+"Essay 2","Announcement-window elevation (daily pp)","fcc_form499","se_cv3",0.192227363012372
+"Essay 2","Announcement-window elevation (daily pp)","fcc_form499","p_cv3",0.0270975844614438
+"Essay 2","Announcement-window elevation (daily pp)","fcc_form499","ci_cv3_lo",0.0502244748167062
+"Essay 2","Announcement-window elevation (daily pp)","fcc_form499","ci_cv3_hi",0.815168785176511
+"Essay 2","Announcement-window elevation (daily pp)","fcc_form499","mde80_cv3",0.545112134556919
+"Essay 2","Announcement-window elevation (daily pp)","fcc_form499","p_wcr",0.00947
 "Essay 3","Executive departure, 30-day","fcc_form499","coef",0.00395082714238974
 "Essay 3","Executive departure, 30-day","fcc_form499","n",405
 "Essay 3","Executive departure, 30-day","fcc_form499","G",119
@@ -93,7 +93,7 @@
 "Essay 3","Executive departure, 30-day","fcc_form499","ci_cv3_lo",-0.0622552520220564
 "Essay 3","Executive departure, 30-day","fcc_form499","ci_cv3_hi",0.0701569063068359
 "Essay 3","Executive departure, 30-day","fcc_form499","mde80_cv3",0.0944460424962567
-"Essay 3","Executive departure, 30-day","fcc_form499","p_wcr",0.88883
+"Essay 3","Executive departure, 30-day","fcc_form499","p_wcr",0.89083
 "Essay 3","Executive departure, 30-day","fcc_form499","se_hc3",0.0253759288506761
 "Essay 3","Executive departure, 30-day","fcc_form499","p_hc3",0.876355196750788
 "Essay 3","Executive departure, 90-day","fcc_form499","coef",-0.0409824399409493
@@ -106,7 +106,7 @@
 "Essay 3","Executive departure, 90-day","fcc_form499","ci_cv3_lo",-0.197611403285472
 "Essay 3","Executive departure, 90-day","fcc_form499","ci_cv3_hi",0.115646523403573
 "Essay 3","Executive departure, 90-day","fcc_form499","mde80_cv3",0.223438480497204
-"Essay 3","Executive departure, 90-day","fcc_form499","p_wcr",0.51082
+"Essay 3","Executive departure, 90-day","fcc_form499","p_wcr",0.51543
 "Essay 3","Executive departure, 90-day","fcc_form499","se_hc3",0.0432975262874137
 "Essay 3","Executive departure, 90-day","fcc_form499","p_hc3",0.344455150717916
 "Essay 3","Executive departure, 180-day","fcc_form499","coef",0.0232531874531295
@@ -119,7 +119,7 @@
 "Essay 3","Executive departure, 180-day","fcc_form499","ci_cv3_lo",-0.174049954859244
 "Essay 3","Executive departure, 180-day","fcc_form499","ci_cv3_hi",0.220556329765502
 "Essay 3","Executive departure, 180-day","fcc_form499","mde80_cv3",0.281462083220394
-"Essay 3","Executive departure, 180-day","fcc_form499","p_wcr",0.78821
+"Essay 3","Executive departure, 180-day","fcc_form499","p_wcr",0.7872
 "Essay 3","Executive departure, 180-day","fcc_form499","se_hc3",0.0610265200307929
 "Essay 3","Executive departure, 180-day","fcc_form499","p_hc3",0.70338225286667
 "Essay 3","Executive departure, Placebo","fcc_form499","coef",-0.0862438053431819
@@ -132,7 +132,7 @@
 "Essay 3","Executive departure, Placebo","fcc_form499","ci_cv3_lo",-0.25430335924545
 "Essay 3","Executive departure, Placebo","fcc_form499","ci_cv3_hi",0.081815748559086
 "Essay 3","Executive departure, Placebo","fcc_form499","mde80_cv3",0.23974474806657
-"Essay 3","Executive departure, Placebo","fcc_form499","p_wcr",0.23432
+"Essay 3","Executive departure, Placebo","fcc_form499","p_wcr",0.23416
 "Essay 3","Executive departure, Placebo","fcc_form499","se_hc3",0.0560085429975971
 "Essay 3","Executive departure, Placebo","fcc_form499","p_hc3",0.124399711395152
 "Essay 1 supplement","30-day CAR, cluster ladder","H2_FCC","coef",-0.805127679216606
@@ -145,7 +145,7 @@
 "Essay 1 supplement","30-day CAR, cluster ladder","H2_FCC","ci_cv3_lo",-3.55754130076232
 "Essay 1 supplement","30-day CAR, cluster ladder","H2_FCC","ci_cv3_hi",1.94728594232911
 "Essay 1 supplement","30-day CAR, cluster ladder","H2_FCC","mde80_cv3",3.92297288803101
-"Essay 1 supplement","30-day CAR, cluster ladder","H2_FCC","p_wcr",0.54189
+"Essay 1 supplement","30-day CAR, cluster ladder","H2_FCC","p_wcr",0.54005
 "Essay 1 supplement","30-day CAR, cluster ladder","H2_FCC","ci90_cv3_lo",-3.10694638953223
 "Essay 1 supplement","30-day CAR, cluster ladder","H2_FCC","ci90_cv3_hi",1.49669103109902
 "Essay 1 supplement","30-day CAR, cluster ladder","H2_FCC","tost_p_cv3",0.176042949527581
@@ -159,7 +159,7 @@
 "Essay 1 supplement","30-day CAR, cluster ladder","H1_timing","ci_cv3_lo",-0.656970137496384
 "Essay 1 supplement","30-day CAR, cluster ladder","H1_timing","ci_cv3_hi",2.95699471580728
 "Essay 1 supplement","30-day CAR, cluster ladder","H1_timing","mde80_cv3",2.57546431735892
-"Essay 1 supplement","30-day CAR, cluster ladder","H1_timing","p_wcr",0.1788
+"Essay 1 supplement","30-day CAR, cluster ladder","H1_timing","p_wcr",0.1797
 "Essay 1 supplement","30-day CAR, cluster ladder","H1_timing","ci90_cv3_lo",-0.3611508319393
 "Essay 1 supplement","30-day CAR, cluster ladder","H1_timing","ci90_cv3_hi",2.66117541025019
 "Essay 1 supplement","30-day CAR, cluster ladder","H1_timing","tost_p_cv3",0.149352297937756
@@ -173,7 +173,7 @@
 "Essay 1 supplement","30-day CAR, cluster ladder","H3_prior","ci_cv3_lo",-0.141356015073529
 "Essay 1 supplement","30-day CAR, cluster ladder","H3_prior","ci_cv3_hi",0.207746177358067
 "Essay 1 supplement","30-day CAR, cluster ladder","H3_prior","mde80_cv3",0.248784998254048
-"Essay 1 supplement","30-day CAR, cluster ladder","H3_prior","p_wcr",0.56893
+"Essay 1 supplement","30-day CAR, cluster ladder","H3_prior","p_wcr",0.56796
 "Essay 1 supplement","30-day CAR, cluster ladder","H3_prior","ci90_cv3_lo",-0.112780427782145
 "Essay 1 supplement","30-day CAR, cluster ladder","H3_prior","ci90_cv3_hi",0.179170590066684
 "Essay 1 supplement","30-day CAR, cluster ladder","H3_prior","tost_p_cv3",1.48991968261076e-38
@@ -187,7 +187,7 @@
 "Essay 1 supplement","30-day CAR, cluster ladder","H4_health","ci_cv3_lo",-6.2325145433363
 "Essay 1 supplement","30-day CAR, cluster ladder","H4_health","ci_cv3_hi",4.18304619859041
 "Essay 1 supplement","30-day CAR, cluster ladder","H4_health","mde80_cv3",7.42256942858615
-"Essay 1 supplement","30-day CAR, cluster ladder","H4_health","p_wcr",0.69004
+"Essay 1 supplement","30-day CAR, cluster ladder","H4_health","p_wcr",0.68813
 "Essay 1 supplement","30-day CAR, cluster ladder","H4_health","ci90_cv3_lo",-5.37995397046637
 "Essay 1 supplement","30-day CAR, cluster ladder","H4_health","ci90_cv3_hi",3.33048562572047
 "Essay 1 supplement","30-day CAR, cluster ladder","H4_health","tost_p_cv3",0.341167096285567

@@ -11,7 +11,7 @@ For Dr. Affuso. This folder reproduces, in R, the headline estimates of the diss
 | `replicate.R` | The R script. Every inference method is written out in base R, so each number can be read off the code |
 | `essay1_car.csv` | Essay 1 regression sample, N = 340 |
 | `essay2_volatility.csv` | Essay 2 sample, N = 333 (volatility change and disclosure delay) |
-| `essay2_announcement.csv` | Essay 2 announcement-window sample, N = 331 |
+| `essay2_announcement.csv` | Essay 2 announcement-window sample (v5), N = 333 |
 | `essay3_departures.csv` | Essay 3 sample, N = 405 |
 | `DATA_DICTIONARY.md` | Every column: definition, units, and the Python script that builds it |
 | `r_results.csv` | Output of `replicate.R`: essay, model, term, statistic, R value |
@@ -46,4 +46,4 @@ Each R function names the Python file and lines it mirrors.
 See `VERIFICATION.md`.
 
 - **Analytic values:** every coefficient, standard error, analytic p-value, confidence interval, TOST p-value and MDE matches the committed Python value to four decimal places.
-- **Bootstrap p-values:** they agree within Monte Carlo error. They cannot match exactly, because R and Python draw different random numbers. The script uses the same number of draws as Python (99,999; 49,999 for the announcement model) and a fixed seed (499).
+- **Bootstrap p-values:** 11 of 12 agree within the tolerance in `VERIFICATION.md`. The exception, Essay 1 supplement H4 (R .6881, Python .6935), is Monte Carlo variation: since 2026-11-22 the announcement model draws 99,999 numbers instead of 49,999, which shifts the random stream for the models after it, and the tolerance is that of one simulation where two are compared. They cannot match exactly, because R and Python draw different random numbers. The script uses the same number of draws as Python (99,999 for every model) and a fixed seed (499).

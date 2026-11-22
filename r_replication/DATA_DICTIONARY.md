@@ -36,14 +36,14 @@ Sample: events with CRSP returns and no missing value in the outcome or the seve
 | `e2_pre_sd` | Pre-window volatility (the baseline level) | daily percentage points | `scripts/163` |
 | `prior_events` | Number of earlier breach events at the same parent CIK (all prior years) | count | `scripts/156`, `scripts/163` |
 
-## `essay2_announcement.csv` — announcement sample, N = 331 (104 treated events; 81 clusters, 12 treated)
+## `essay2_announcement.csv` — announcement sample (v5), N = 333 (104 treated events; 82 clusters, 12 treated)
 
-The two events missing relative to the 333 are control events at recently listed firms (Uber 2019, Zscaler 2018) with too little return history to estimate a market model.
+The v5 estimate (2026-11-22; it replaced the defense-era N = 331 market-model version). Market-adjusted returns need no estimation window, so no event drops.
 
 | Column | Definition | Units | Constructed by |
 |---|---|---|---|
-| `elev` | Outcome: announcement-window elevation = abnormal volatility over trading days −4 to +4 around notification, minus abnormal volatility over the baseline window −25 to −5. Abnormal volatility is the standard deviation of market-model residuals × 100 | daily percentage points | `scripts/169` (windows), `scripts/175` (difference) |
-| `abn_pre` | Baseline-window abnormal volatility (days −25 to −5) | daily percentage points | `scripts/169` |
+| `elev` | Outcome: announcement-window elevation = standard deviation of market-adjusted returns (r − vwretd) × 100 over trading days −4 to +4 around the reporting date, minus the same over the baseline window −25 to −5; each window needs 80% of its days | daily percentage points | `scripts/263` (windows), `scripts/265` (difference) |
+| `base_sd` | Baseline-window SD of market-adjusted returns (days −25 to −5) | daily percentage points | `scripts/263`, `scripts/265` |
 | `delay_w`, `prior_events` | As in `essay2_volatility.csv` | | |
 
 ## `essay3_departures.csv` — Essay 3, N = 405 (109 treated events; 119 clusters, 13 treated)

@@ -206,11 +206,12 @@ for (mm in e2_models) {
   do.call(add, c(list("Essay 2", mm[[1]], TREAT), r))
 }
 
-# Announcement-window elevation (N = 331): elev ~ Form 499 + baseline abnormal volatility +
-# controls; CV1, CV3 and WCR with B = 49,999, the number scripts/175 uses.  (175:175-218)
+# Announcement-window elevation, v5 (N = 333): elev ~ Form 499 + baseline-window SD +
+# controls; CV1, CV3 and WCR with B = 99,999, as scripts/265 uses.          (265:51-86, 263:249-293)
+# Replaced the defense-era scripts/175 model (N = 331, B = 49,999) on 2026-11-22.
 ea <- read.csv("essay2_announcement.csv")
-r <- ladder(ea, "elev", c(TREAT, "abn_pre", "delay_w", "firm_size_log", "leverage", "roa",
-                          "health_breach", "prior_events"), 49999)
+r <- ladder(ea, "elev", c(TREAT, "base_sd", "delay_w", "firm_size_log", "leverage", "roa",
+                          "health_breach", "prior_events"), 99999)
 show("Announcement elevation (daily pp)", r)
 do.call(add, c(list("Essay 2", "Announcement-window elevation (daily pp)", TREAT), r))
 

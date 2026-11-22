@@ -13,7 +13,7 @@ committed constants, so a file can never describe a different sample from the on
 
   essay1_car.csv            scripts/158  baseline sample, N = 340
   essay2_volatility.csv     scripts/165 (volatility) and scripts/164 (delay) sample, N = 333
-  essay2_announcement.csv   scripts/175  elevation model, N = 331
+  essay2_announcement.csv   scripts/265  v5 elevation model, N = 333 (replaced scripts/175's N = 331 on 2026-11-22)
   essay3_departures.csv     scripts/227  30/90/180-day and placebo models, N = 405
 """
 import json
@@ -77,22 +77,44 @@ finish(fin, ['event_id', 'parent_cik', 'e2_vol_change', 'disclosure_delay_days',
              'e2_pre_sd', 'firm_size_log', 'leverage', 'roa', 'health_breach', 'prior_events'],
        'essay2_volatility.csv')
 
-# ------------------------------------------------------------------ Essay 2 announcement (scripts/175:59-60, 175-180)
-print('Essay 2 - announcement elevation')
-t42 = pd.read_csv('outputs/tables/essay2_v2/t42_final_sample_with_repairs.csv', low_memory=False)
-CTRL = ['delay_w', 'firm_size_log', 'leverage', 'roa', 'health_breach', 'prior_events']
-br = t42.dropna(subset=['abn_ann', 'abn_pre']).copy()
-br['elev'] = br['abn_ann'] - br['abn_pre']
-d3 = br.dropna(subset=[TREAT, 'abn_pre'] + CTRL).copy()
-t50 = pd.read_csv('outputs/tables/essay2_v2/t50_announcement_contrast.csv')
-check('N', len(d3), int(t50.loc[t50['level'] == 'L3', 'n'].iloc[0]))
-check('treated events', int(d3[TREAT].sum()), cs['E2_treated_events'])  # both dropped events are controls
+# ------------------------------------------------------------------ Essay 2 announcement, v5 (scripts/265:51-86)
+# 2026-11-22: the v5 estimate replaces the defense-era scripts/175 one (market-model residuals,
+# N = 331). Elevation is computed exactly as scripts/265 does it, through scripts/263's Market class:
+# SD of market-adjusted returns over trading days [-4,+4] around the reporting date minus SD over
+# [-25,-5], 80% coverage. Before writing, the point estimate and the CV1 and CV3 SEs must
+# reproduce outputs/essay2_v5/v5_t09b_announcement_ladder.csv.
+print('Essay 2 - announcement elevation (v5)')
+import importlib.util as _ilu  # noqa: E402
+_s = _ilu.spec_from_file_location('e2v5', 'scripts/263_e2v5_lib.py')
+L5 = _ilu.module_from_spec(_s)
+_s.loader.exec_module(L5)
+CTRL = list(L5.CONTROLS)
+d3 = L5.load_sample()
+M5 = L5.Market()
+elev, base = [], []
+for _, r_ in d3.iterrows():
+    pos = M5.anchor(r_['permno'], r_['rdt'])
+    if pos is None:
+        elev.append(float('nan')); base.append(float('nan'))
+        continue
+    ar = M5.abnormal(r_['permno'], pos)
+    b_ = M5.window_sd(ar, pos, (-25, -5))[0]
+    elev.append(M5.window_sd(ar, pos, (-4, 4))[0] - b_); base.append(b_)
+d3['elev'], d3['base_sd'] = elev, base
+lad = pd.read_csv('outputs/essay2_v5/v5_t09b_announcement_ladder.csv').set_index('rung')
+got = L5.ladder(d3, 'elev', [TREAT, 'base_sd'] + CTRL, full=False)
+for k_, rung in [('coef', 'CV1 parent filer entity'), ('se_cv1', 'CV1 parent filer entity'),
+                 ('se_cv3', 'CV3 cluster jackknife (PRIMARY)')]:
+    want = float(lad.loc[rung, 'coef' if k_ == 'coef' else 'se'])
+    assert abs(got[k_] - want) < 1e-10, f'v5 announcement {k_}: {got[k_]} != committed {want}'
+    print(f'  ok  {k_} = {got[k_]:.6f} (v5_t09b)')
+check('N', got['N'], int(lad['N'].iloc[0]))
+check('treated events', int(d3[TREAT].sum()), cs['E2_treated_events'])
 d3['event_id'] = event_id(d3)
 d3['parent_cik'] = d3['final_cik'].astype(int)
-print(f"  parent-CIK clusters = {d3['parent_cik'].nunique()}, treated parent CIKs = "
-      f"{d3.loc[d3[TREAT] == 1, 'parent_cik'].nunique()} (reported in ESSAY2_ANNOUNCEMENT_CONTRAST.md)")
-assert d3['parent_cik'].nunique() == 81 and d3.loc[d3[TREAT] == 1, 'parent_cik'].nunique() == 12
-finish(d3, ['event_id', 'parent_cik', 'elev', TREAT, 'abn_pre'] + CTRL, 'essay2_announcement.csv')
+check('parent-CIK clusters', d3['parent_cik'].nunique(), int(lad['G'].iloc[0]))
+check('treated parent CIKs', d3.loc[d3[TREAT] == 1, 'parent_cik'].nunique(), int(lad['G1'].iloc[0]))
+finish(d3, ['event_id', 'parent_cik', 'elev', TREAT, 'base_sd'] + CTRL, 'essay2_announcement.csv')
 
 # ------------------------------------------------------------------ Essay 3 (scripts/227:80-84)
 print('Essay 3')
