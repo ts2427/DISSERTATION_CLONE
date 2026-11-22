@@ -145,7 +145,7 @@ def ladder(d, ycol, xcols, B=99_999, B_ci=9_999, full=True, fe=None):
         a_s = a_row @ S
         Pm = np.stack([a_row @ (Sg_X[g].T @ Sg_X[g]) for g in range(G)])
         W = aq[:, None] + a_s[:, None] * V - Pm @ Bs
-        t_star = (Bs[ti] - beta0) / np.sqrt(adj * np.sum(W ** 2, axis=0))
+        t_star = (Bs[ti] - (beta0 if restricted else b_t)) / np.sqrt(adj * np.sum(W ** 2, axis=0))
         t_obs = (b_t - beta0) / se_cv1
         return (np.sum(np.abs(t_star) >= abs(t_obs)) + 1) / (BB + 1)
 

@@ -35,6 +35,9 @@ Authorised exceptions (2026-09-29). docs/claude/V3_FREEZE_EXCEPTIONS.md may decl
   a FURTHER change to an excepted file fails (its new hash no longer matches), a change to
   any other baseline file fails, and if the manifest is ever re-created every exception
   stops matching and the gate fails closed. Exceptions are printed in full on every run.
+  The new state matches on either the exact on-disk sha256 or, line endings normalised,
+  the content of the pinned new blob (added 2026-11-22), so the same exception holds on a
+  CRLF and an LF checkout. Content is still pinned exactly; only CR/LF is not.
 
 FAIL  a baseline file whose on-disk sha256 changed AND
       `git diff --quiet <baseline> -- <path>` exits nonzero     (real content change)
@@ -463,6 +466,23 @@ def sha256_file_eolnorm(path):
     return hashlib.sha256(read_bytes(path).replace(b"\r\n", b"\n")).hexdigest()
 
 
+def exception_new_state(e, fp, cur_sha):
+    """True if the file on disk is the exception's pinned NEW state.
+
+    Added 2026-11-22. The pinned new sha256 is the bytes of the checkout it was recorded on,
+    so a row recorded on a CRLF checkout failed on an LF one, and a row recorded on an LF
+    file (written by an editor) failed in a fresh CRLF Windows clone. The pinned new blob is
+    the same everywhere, so the file also matches when its line-ending-normalised bytes equal
+    the normalised bytes of that blob. Any content change still fails.
+    """
+    if cur_sha == e["new_sha"]:
+        return True
+    want = git_bytes(e["new_blob"])
+    if want is None:
+        return False
+    return sha256_file_eolnorm(fp) == sha256_bytes(want.replace(b"\r\n", b"\n"))
+
+
 def filtered_baseline(commit, path):
     """Baseline content as it would be written to the working tree (eol + LFS filters)."""
     return git("cat-file", "--filters", f"{commit}:{path}", binary=True)
@@ -620,7 +640,7 @@ def verify():
                 eol_artifacts.append(p)      # same bytes once line endings are normalised
             else:
                 e = exc.get(p)
-                if e and e["old_sha"] == rec["sha256"] and e["new_sha"] == cur_sha:
+                if e and e["old_sha"] == rec["sha256"] and exception_new_state(e, fp, cur_sha):
                     e["used_sha"] = True
                     exc_hit.append(p)
                 else:

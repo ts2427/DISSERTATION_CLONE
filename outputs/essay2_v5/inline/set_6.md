@@ -2,14 +2,14 @@
 
 *Volatility Around the Agency Reporting Date*
 
-Panel A: The pre-specified family of four tests
+Panel A: The exploratory family of four tests
 
 | Test | Estimate (SE) | p | BH-adjusted p | N | Clusters | SE |
 |:---|---:|---:|---:|---:|---:|---:|
 | Elevation on earnings dates (mean) | 0.775 (0.055) | < .001 | < .001 | 5,094 | 79 | CV1, security |
 | Elevation on breach reporting dates (mean) | −0.106 (0.054) | .052 | .052 | 333 | 82 | CV1, parent |
 | Breach minus earnings (contrast) | −0.881 (0.083) | < .001 | < .001 | 5,427 | 83 | CV1, security |
-| Form 499 registrant on breach elevation (pre-specified) | 0.433 (0.192) | .027 | .036 | 333 | 82 | CV3, parent |
+| Form 499 registrant on breach elevation (exploratory) | 0.433 (0.192) | .027 | .036 | 333 | 82 | CV3, parent |
 
 Panel B: Inference for the registrant coefficient
 
@@ -31,7 +31,7 @@ Panel C: Adding controls in steps
 | Registrant indicator only | 0.125 (0.113) | .275 | .00 |
 | + baseline-window SD | 0.253 (0.204) | .218 | .42 |
 | + baseline-window SD and log total assets | 0.375 (0.171) | .031 | .81 |
-| All controls (pre-specified) | 0.433 (0.192) | .027 | 1.00 |
+| All controls (exploratory) | 0.433 (0.192) | .027 | 1.00 |
 
 Panel D: Placebo dates
 
@@ -69,10 +69,10 @@ Panel G: Sensitivities
 
 | Specification | Estimate (CV3 SE) | p | CV1 p | N |
 |:---|---:|---:|---:|---:|
-| Pre-specified model | 0.433 (0.192) | .027 | .008 | 333 |
+| Exploratory model | 0.433 (0.192) | .027 | .008 | 333 |
 | + breach severity (log records and attack-vector fixed effects) | 0.444 (0.207) | .035 | .009 | 333 |
 | + flexible size (size-quartile fixed effects and size squared) | 0.489 (0.211) | .023 | .006 | 333 |
 | + severity and flexible size | 0.490 (0.223) | .031 | .007 | 333 |
 | Common support (other events within the registrant size range) | 0.416 (0.191) | .032 | .010 | 327 |
 
-*Note.* Announcement elevation is the standard deviation (SD) of daily market-adjusted returns over the nine trading days [−4, +4] centered on the agency reporting date minus the SD over the three weeks before, [−25, −5]; each window needs returns on 8 of 9 and 17 of 21 days. Unless a row shows otherwise, each estimate is the Form 499 registrant coefficient from a regression of elevation on registration, baseline-window volatility, and the M4 controls (N = 333, G = 82). Panel A is the pre-specified family of 4 tests: mean elevation on earnings-announcement dates, mean elevation on breach reporting dates, their contrast, and the registrant coefficient; the BH-adjusted p applies the Benjamini–Hochberg adjustment within that family. The two earnings tests are calibration checks expected to reject. The registrant coefficient is 0.433 (CV3 p = .027, BH-adjusted p = .036). Panel B repeats the test under each procedure in Table 10; every procedure gives p below .05. Panel C adds controls in steps; the baseline-window SD closes .42 of the distance from the unadjusted to the full-model coefficient, and log total assets brings the total to .81. Panel D is the placebo test: in each of 200 draws (seed 499), every security receives a random quiet date at least 120 trading days from any breach notification and 30 from any earnings date, and no draw matches the actual coefficient (0 of 200). Relative to their own quiet days, registrant events show elevation 0.008 higher on breach dates and other events 0.140 lower, so the difference comes from other events. Panel E reports the earnings-announcement benchmark, with SEs clustered by security. Panel F removes one treated parent filer entity at a time; the CV3 p stays below .05 in 11 of 12 removals but not when T-Mobile is removed (p = .076). Panel G adds the four sensitivities (breach severity, flexible size, both, and a common-support sample), each with CV3 p below .05.
+*Note.* Announcement elevation is the standard deviation (SD) of daily market-adjusted returns over the nine trading days [−4, +4] centered on the agency reporting date minus the SD over the three weeks before, [−25, −5]; each window needs returns on 8 of 9 and 17 of 21 days. Unless a row shows otherwise, each estimate is the Form 499 registrant coefficient from a regression of elevation on registration, baseline-window volatility, and the M4 controls (N = 333, G = 82). Panel A is the exploratory family of 4 tests: mean elevation on earnings-announcement dates, mean elevation on breach reporting dates, their contrast, and the registrant coefficient; the BH-adjusted p applies the Benjamini–Hochberg adjustment within that family. The two earnings tests are calibration checks expected to reject. The registrant coefficient is 0.433 (CV3 p = .027, BH-adjusted p = .036). Panel B repeats the test under each procedure in Table 10; every procedure gives p below .05. Panel C adds controls in steps; the baseline-window SD closes .42 of the distance from the unadjusted to the full-model coefficient, and log total assets brings the total to .81. Panel D is the placebo test: in each of 200 draws (seed 499), every security receives a random quiet date at least 120 trading days from any breach notification and 30 from any earnings date, and no draw matches the actual coefficient (0 of 200). Relative to their own quiet days, registrant events show elevation 0.008 higher on breach dates and other events 0.140 lower, so the difference comes from other events. Panel E reports the earnings-announcement benchmark, with SEs clustered by security. Panel F removes one treated parent filer entity at a time; the CV3 p stays below .05 in 11 of 12 removals but not when T-Mobile is removed (p = .076). Panel G adds the four sensitivities (breach severity, flexible size, both, and a common-support sample), each with CV3 p below .05.

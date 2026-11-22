@@ -11,7 +11,8 @@ Rules enforced by `verify`:
   * no file in the snapshot may be modified or deleted (any essay);
   * new files are allowed only under the v5 paths (ALLOWED_NEW);
   * the Essay 1 / Essay 3 subset (E13 pattern) is reported separately and must
-    be byte-identical — that is the closed-essay assertion.
+    be byte-identical unless a change is accepted below (pinned or allowed); the PASS
+    line counts those accepted changes rather than calling the subset byte-identical.
 The snapshot lives at outputs/essay2_v5/guard/snapshot.json.
 """
 import hashlib
@@ -46,8 +47,8 @@ ACCEPTED_PIN = {
     # Tim, 2026-11-19 (approved): '7-Day Rule' -> 47 C.F.R. § 64.2011 at lines 68 and 134, with the matching
     # 210 exception row appended to docs/claude/V3_FREEZE_EXCEPTIONS.md.
     'docs/DATA_QUALITY_DOCUMENTATION.md': '2c8ecbcb1d67ce3807b774fccfd44152dfb6644a08ea7e3827e5c77b66d90ed1',
-    'docs/claude/V3_FREEZE_EXCEPTIONS.md': 'c5d50c0a04ea6c0b236fdfca5aa79ff04bf379a876d857e302e9971a5d0fbf57',
-    'scripts/210_verify_v3_frozen.py': '7d89c7b7a4114e7603348cc78ee5e89cac98cb4ff74f1db755c8e59321da60ce',
+    'docs/claude/V3_FREEZE_EXCEPTIONS.md': '497d663ed703dd4b3159a6dbf124cfa366dbde833146185702532e61818dacb9',
+    'scripts/210_verify_v3_frozen.py': '42482f69488242d9df93d1e9573de77d6bc92aed6fd267e7eb1cfcbb6aee4bff',
     'scripts/217_v4_offline_tests.py': '42d06e52d4ab09ca225c66daea9b86fd987920b55d079a21568c8bde2115ddce',
     # Tim, 2026-11-22 (approved): unrestricted bootstrap centring fix (165:173) and the WCU values it moves.
     # The 217 pin above now also covers that fix's unit test; the exceptions pin covers its 210 rows.
@@ -58,6 +59,13 @@ ACCEPTED_PIN = {
     'outputs/defense_supplement/e2_delay_ladder.csv': 'f92f7541c8cc605d69f75c7bf2fbf914e890ad55ee8f75fa9a70208aa89d3c91',
     'outputs/defense_supplement/e2_delay_ladder.log': 'c8e6b60aadabd8b7869343874952ae88dd8337178bd34ce2148ed53b54412798',
     'outputs/defense_supplement/constants_defense_supplement.json': 'd7499ca38602ae4068373b5d6d0e1a1095444d6a642c2d5f300a777fd3dc85a5',
+    # Tim, 2026-11-22 (follow-ups to bec3f2d): the same centring line in the unused unrestricted
+    # branch of 202/227 (outputs byte-identical) with its POST_DEFENSE log row; 265's announcement
+    # labels 'pre-specified' -> 'exploratory'. The 210 pin above covers its exception-matching change.
+    'scripts/202_essay3_q2_estimation.py': '563b63f3062fde4b6a2cd25ffe0b3e25d01b9c42ef061d0d3ab60788201124e4',
+    'scripts/227_essay3_v4_estimation.py': '999df4d906d736eee9ede4b8cc70d592ffbe257d5e293abce5b56161cb4985f3',
+    'scripts/265_e2v5_results.py': '9a50c22979119eae6f6d3640585feaa51685055d442078aeeff78b3d471b1d31',
+    'docs/claude/POST_DEFENSE.md': '5deb8381bcee0f6667580e6cc07b3e3488ddc2ebf447665e192705c8957f13ae',
 }
 # Essay 1 / Essay 3 outputs and constants (the closed essays)
 E13 = re.compile(r'(essay1|essay3|ESSAY1|ESSAY3|e1_|e3_|constants_v3|CONSTANTS_BLOCK|'
@@ -119,8 +127,14 @@ def main(mode):
     assert not e13_bad, f'ESSAY 1/3 FILES CHANGED: {e13_bad}'
     assert not modified and not deleted, 'files changed outside the v5 paths'
     assert not bad_new, 'new files outside the v5 paths'
-    print(f'PASS: all {len(e13)} Essay 1 / Essay 3 files byte-identical; '
-          f'no other baseline file changed.')
+    e13_acc = [k for k in accepted if E13.search(k)]
+    if e13_acc:
+        print(f'PASS: {len(e13) - len(e13_acc)} of {len(e13)} Essay 1 / Essay 3 files byte-identical; '
+              f'{len(e13_acc)} changed under an accepted pin or rule (listed above); '
+              f'{len(accepted)} accepted changes in all, no other baseline file changed.')
+    else:
+        print(f'PASS: all {len(e13)} Essay 1 / Essay 3 files byte-identical; '
+              f'{len(accepted)} accepted changes elsewhere (listed above); no other baseline file changed.')
 
 
 if __name__ == '__main__':

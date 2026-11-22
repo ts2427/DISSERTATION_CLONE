@@ -6,8 +6,9 @@ specification curve, which is scripts/266).
      SD(daily abnormal return, [-25,-5]) around the agency reporting date;
      treatment regression elev ~ Form 499 + baseline SD + delay_w + ln assets +
      leverage + ROA + health + prior events, CV3 on parent filer entity; BH
-     within the pre-specified family of four (earnings elevation, breach
-     elevation, contrast, treatment).
+     within the exploratory family of four (earnings elevation, breach
+     elevation, contrast, treatment). Labelled exploratory, not pre-specified:
+     the test and its first result appear together in commit 115a72f.
      v5 basis: market-adjusted simple abnormal returns (r - vwretd), 80% rule
      (8 of 9, 17 of 21 days). Bridge row: the committed definition (market
      model, beta on [-250,-46]) reproduced from t42 and gated against t50.
@@ -129,7 +130,7 @@ fam = pd.DataFrame([
     dict(test='breach minus earnings (contrast)', coef=float(fc.params['is_breach']),
          se=float(fc.bse['is_breach']), p=float(fc.pvalues['is_breach']), N=int(fc.nobs),
          clusters=int(stack['permno'].nunique()), inference='CV1 by security'),
-    dict(test='Form 499 on breach elevation (pre-specified)', coef=r_new['coef'],
+    dict(test='Form 499 on breach elevation (exploratory)', coef=r_new['coef'],
          se=r_new['se_cv3'], p=r_new['p_cv3'], N=r_new['N'], clusters=r_new['G'],
          inference='CV3 by parent filer entity'),
 ])
@@ -166,7 +167,7 @@ C.update(ann_coef=r_new['coef'], ann_se_cv3=r_new['se_cv3'], ann_p_cv3=r_new['p_
 bu_specs = [('unadjusted (Form 499 only)', [TREAT]),
             ('+ baseline SD', [TREAT, 'base_sd']),
             ('+ baseline SD + ln assets', [TREAT, 'base_sd', 'firm_size_log']),
-            ('full (pre-specified)', [TREAT, 'base_sd'] + CTRL)]
+            ('full (exploratory)', [TREAT, 'base_sd'] + CTRL)]
 nb = new.dropna(subset=['elev', 'base_sd'] + CTRL)
 bu = []
 for lab, xs in bu_specs:

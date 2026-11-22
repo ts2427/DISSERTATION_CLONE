@@ -157,3 +157,23 @@ Parsed by `scripts/210` (same row format as above):
 | `scripts/165_essay2_inference_ladder.py` | `13f73ae2a959aba49f7b2f120ca17aecb2492f899683a0ae2e43ec2312d40253` | `5b325f0e4f73151df87f066a5931ea8427edcd1e2fd17719ad561c9b20c74f42` | `9765de43b9f26ac06d132604bfa38a003a7ed355` | `b741b1650e4e692182325fe0ae00686ac082df0c` | 2026-11-22 | WCU-centring |
 | `outputs/tables/essay2_v2/t26_inference_ladder.csv` | `032c03c8c6a50ac2453f865721c8283a58d7c1b21b2dd33014b536fbe56c3707` | `27cebeb60dc05833fe2ebc7eaf5c807fc28b8b9a4d54ebc61dd73c6f8b43f6ce` | `dd64d77a51a65640956d506b8458ab7e74f1a070` | `a095e3a6f54585a232c1036175a06c1c0c4c55d3` | 2026-11-22 | WCU-centring |
 | `outputs/ESSAY2_QUERY4_PART_DE.md` | `cfd522975e6225793d75ecb15048a80def861cfb7255bd5a8c89074c2c92b2c0` | `70f3e983fc6432ad1cabcd49500118bc527e384066332042a78f409c95baa46c` | `e317e7ee351c8b05f32e737ad7c8b23f943a2531` | `ace7242eaad04688891b496981f9b0f83c5a9319` | 2026-11-22 | WCU-centring |
+
+---
+
+# ACTIVE 2026-11-22 (second) - the same centring line in the Essay 3 ladder (Tim, approved)
+
+- **Path:** `scripts/202_essay3_q2_estimation.py` (v3). `scripts/227` carries the identical line but is
+  outside this manifest; it is pinned in `scripts/262` instead.
+- **Change:** line 123, `(Bs[ti] - beta0)` to `(Bs[ti] - (beta0 if restricted else b_t))`, as in `scripts/165`.
+- **No output changes:** both scripts call `wcb_p` only with the default `restricted=True` (202:127,133;
+  227:152,158), where the new expression is the old one. Re-running 202 and 227 reproduces every committed
+  Essay 3 result file byte for byte and both assert PASS against their constants; only the 227 run log differs,
+  in the line that recorded the first run writing the constants. That log was not replaced.
+- **Same day:** `scripts/210` now also matches an exception when the file equals the pinned new blob with
+  line endings normalised, so a row recorded on one checkout holds on CRLF and LF checkouts alike.
+
+Parsed by `scripts/210` (same row format as above):
+
+| path | old sha256 | new sha256 | old blob | new blob | commits | parts |
+|---|---|---|---|---|---|---|
+| `scripts/202_essay3_q2_estimation.py` | `d804614a397ef203d152d1758fa09e14608df8741f28474ba78168bdc38d7c22` | `563b63f3062fde4b6a2cd25ffe0b3e25d01b9c42ef061d0d3ab60788201124e4` | `79e668925b136fdacd32a16d2370836368d69330` | `ec491d36e121b34677308ab5e16f58804726dfbb` | 2026-11-22 | WCU-centring-unused-branch |
