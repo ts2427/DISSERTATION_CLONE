@@ -181,7 +181,7 @@ For Essay 2, the defense-era code (scripts 163/164/165/169/175/176/180/249) is q
 - **CI by inversion:** restricted bootstrap with B = 9,999 per evaluation; 28 bisection steps on each side, starting from b ± 8·se_CV1 (165:186-206).
 - **Seed:** `rng = np.random.default_rng(499)` (165:39). One random stream is shared, in order, by WCR → WCU → Webb → the CI inversion.
 - **Note:** the announcement model's WCR uses B = 49,999 (t50:6, column B_wcr).
-- **Committed values:** t26_inference_ladder.csv: CV1 p .2983, CV3 p .3863, WCR .3325, WCU .5302, Webb .3325.
+- **Committed values:** t26_inference_ladder.csv: CV1 p .2983, CV3 p .3863, WCR .3325, WCU .3302, Webb .3325.
 - **v5:** this code is lifted unchanged into scripts/263, gated on reproducing t26 and t28 exactly.
 
 **B14. Benjamini–Hochberg family for the announcement window**

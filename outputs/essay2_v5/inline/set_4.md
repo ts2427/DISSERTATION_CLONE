@@ -42,7 +42,7 @@ Panel A: Inference ladder, clustering by parent filer entity
 | CV1, parent filer entity | 0.161 | 81 | .398 | [−0.183, 0.457] |
 | CV3, parent filer entity (primary) | 0.193 | 81 | .481 | [−0.248, 0.521] |
 | Wild cluster, restricted, Rademacher weights (B=99,999) | — | — | .426 | [−0.198, 0.470] |
-| Wild cluster, unrestricted, Rademacher weights (B=99,999) | — | — | .556 | — |
+| Wild cluster, unrestricted, Rademacher weights (B=99,999) | — | — | .426 | — |
 | Wild cluster, restricted, Webb weights (B=9,999) | — | — | .419 | — |
 
 Panel B: Clustering by industry

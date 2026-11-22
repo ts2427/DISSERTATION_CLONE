@@ -46,9 +46,18 @@ ACCEPTED_PIN = {
     # Tim, 2026-11-19 (approved): '7-Day Rule' -> 47 C.F.R. § 64.2011 at lines 68 and 134, with the matching
     # 210 exception row appended to docs/claude/V3_FREEZE_EXCEPTIONS.md.
     'docs/DATA_QUALITY_DOCUMENTATION.md': '2c8ecbcb1d67ce3807b774fccfd44152dfb6644a08ea7e3827e5c77b66d90ed1',
-    'docs/claude/V3_FREEZE_EXCEPTIONS.md': 'a533c55a49cba86028bd469e047a7073a5a497bc490fb578248529b92ef39562',
+    'docs/claude/V3_FREEZE_EXCEPTIONS.md': 'c5d50c0a04ea6c0b236fdfca5aa79ff04bf379a876d857e302e9971a5d0fbf57',
     'scripts/210_verify_v3_frozen.py': '7d89c7b7a4114e7603348cc78ee5e89cac98cb4ff74f1db755c8e59321da60ce',
-    'scripts/217_v4_offline_tests.py': 'e7c47a080fac65f5806c7fb173815df97222d22b5de290dc55d5638be51f8b1a',
+    'scripts/217_v4_offline_tests.py': '42d06e52d4ab09ca225c66daea9b86fd987920b55d079a21568c8bde2115ddce',
+    # Tim, 2026-11-22 (approved): unrestricted bootstrap centring fix (165:173) and the WCU values it moves.
+    # The 217 pin above now also covers that fix's unit test; the exceptions pin covers its 210 rows.
+    # The defense_supplement files are Essay 2 delay results, although E13 matches their folder.
+    'scripts/165_essay2_inference_ladder.py': '5b325f0e4f73151df87f066a5931ea8427edcd1e2fd17719ad561c9b20c74f42',
+    'outputs/tables/essay2_v2/t26_inference_ladder.csv': '27cebeb60dc05833fe2ebc7eaf5c807fc28b8b9a4d54ebc61dd73c6f8b43f6ce',
+    'outputs/ESSAY2_QUERY4_PART_DE.md': '70f3e983fc6432ad1cabcd49500118bc527e384066332042a78f409c95baa46c',
+    'outputs/defense_supplement/e2_delay_ladder.csv': 'f92f7541c8cc605d69f75c7bf2fbf914e890ad55ee8f75fa9a70208aa89d3c91',
+    'outputs/defense_supplement/e2_delay_ladder.log': 'c8e6b60aadabd8b7869343874952ae88dd8337178bd34ce2148ed53b54412798',
+    'outputs/defense_supplement/constants_defense_supplement.json': 'd7499ca38602ae4068373b5d6d0e1a1095444d6a642c2d5f300a777fd3dc85a5',
 }
 # Essay 1 / Essay 3 outputs and constants (the closed essays)
 E13 = re.compile(r'(essay1|essay3|ESSAY1|ESSAY3|e1_|e3_|constants_v3|CONSTANTS_BLOCK|'

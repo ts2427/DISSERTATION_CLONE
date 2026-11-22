@@ -132,3 +132,28 @@ Parsed by `scripts/210` (same row format as above):
 | path | old sha256 | new sha256 | old blob | new blob | commits | parts |
 |---|---|---|---|---|---|---|
 | `docs/DATA_QUALITY_DOCUMENTATION.md` | `37c171d51be2978367b6b60c43318f39db77a020aafa3ccc4a169ec9bee4c4b0` | `2c8ecbcb1d67ce3807b774fccfd44152dfb6644a08ea7e3827e5c77b66d90ed1` | `01fd4f88f6b21624bcb750c5ef7b34b0f0c69e52` | `7cb86de653b1abf52d55269bf0b2fd606501b271` | 2026-11-19 | wording-only |
+
+---
+
+# ACTIVE 2026-11-22 - unrestricted wild cluster bootstrap centring (Tim, approved)
+
+- **Paths:** the three files in the table below.
+- **Date:** 2026-11-22
+- **Error:** `scripts/165_essay2_inference_ladder.py:173` subtracted `beta0` from the bootstrap coefficient in both
+  bootstraps. The unrestricted bootstrap generates its data at the estimate, so it must subtract `b_t`.
+- **Change:** that one line, `(Bs[ti] - beta0)` to `(Bs[ti] - (beta0 if restricted else b_t))`.
+  `scripts/217` carries a test that fails on the old line.
+- **Effect in these files:** t26 unrestricted (WCU) p .5302 to .3302, and the two lines of PART_DE that print it.
+  No coefficient, SE, CI, restricted, Webb, CV1 or CV3 value changed.
+- **Effect outside the manifest:** WCU p-values in the Essay 2 v5 ladders, the defense-supplement delay ladder and
+  the tables that quote them. Two cross .05: announcement elevation .54461 to .00649, and size quartile Q1
+  (1 treated parent) .69042 to .02391. No CV3 verdict changed.
+- **Not re-created:** the manifest, the 262 snapshot, and the tags `defense-final` and `repo-clean`.
+
+Parsed by `scripts/210` (same row format as above):
+
+| path | old sha256 | new sha256 | old blob | new blob | commits | parts |
+|---|---|---|---|---|---|---|
+| `scripts/165_essay2_inference_ladder.py` | `13f73ae2a959aba49f7b2f120ca17aecb2492f899683a0ae2e43ec2312d40253` | `5b325f0e4f73151df87f066a5931ea8427edcd1e2fd17719ad561c9b20c74f42` | `9765de43b9f26ac06d132604bfa38a003a7ed355` | `b741b1650e4e692182325fe0ae00686ac082df0c` | 2026-11-22 | WCU-centring |
+| `outputs/tables/essay2_v2/t26_inference_ladder.csv` | `032c03c8c6a50ac2453f865721c8283a58d7c1b21b2dd33014b536fbe56c3707` | `27cebeb60dc05833fe2ebc7eaf5c807fc28b8b9a4d54ebc61dd73c6f8b43f6ce` | `dd64d77a51a65640956d506b8458ab7e74f1a070` | `a095e3a6f54585a232c1036175a06c1c0c4c55d3` | 2026-11-22 | WCU-centring |
+| `outputs/ESSAY2_QUERY4_PART_DE.md` | `cfd522975e6225793d75ecb15048a80def861cfb7255bd5a8c89074c2c92b2c0` | `70f3e983fc6432ad1cabcd49500118bc527e384066332042a78f409c95baa46c` | `e317e7ee351c8b05f32e737ad7c8b23f943a2531` | `ace7242eaad04688891b496981f9b0f83c5a9319` | 2026-11-22 | WCU-centring |

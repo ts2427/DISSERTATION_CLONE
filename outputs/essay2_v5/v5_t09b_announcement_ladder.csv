@@ -5,5 +5,5 @@ spec,coef,N,n_treated,G,G1,rung,se,df,p,ci_lo,ci_hi
 "announcement elevation, v5 basis",0.4326966299965881,333,104,82,12,CV1 parent filer entity,0.1594002938301251,81.0,0.008108069805984552,0.11554004540777651,0.7498532145853997
 "announcement elevation, v5 basis",0.4326966299965881,333,104,82,12,CV3 cluster jackknife (PRIMARY),0.19222736301237497,81.0,0.027097584461454494,0.05022447481668035,0.8151687851764958
 "announcement elevation, v5 basis",0.4326966299965881,333,104,82,12,"WCR restricted Rademacher (B=99,999)",,,0.00927,0.10425944382834865,0.7774760550919435
-"announcement elevation, v5 basis",0.4326966299965881,333,104,82,12,"WCU unrestricted Rademacher (B=99,999)",,,0.54461,,
+"announcement elevation, v5 basis",0.4326966299965881,333,104,82,12,"WCU unrestricted Rademacher (B=99,999)",,,0.00649,,
 "announcement elevation, v5 basis",0.4326966299965881,333,104,82,12,"WCR Webb six-point (B=9,999)",,,0.0108,,

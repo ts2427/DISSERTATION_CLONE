@@ -2712,6 +2712,77 @@ for _f, _lab in [(w1, "0.038 accepted, rounded from 0.0383"),
 results.append(all([w1, w2, w3, w4, w5, w6, w7, w8, w9, w10, w11, w12, w13, w14, w15,
                     w16, w17, w18, w19, w20, w21, w22, w23, w24, w25]))
 
+print("\n" + "=" * 70)
+print("TEST: 165 wild cluster bootstrap - unrestricted t* is centred on the estimate")
+print("=" * 70)
+# 2026-11-22: 165 centred both bootstraps on beta0. The restricted DGP has true coefficient
+# beta0; the unrestricted DGP has true coefficient b_t, so its t* must subtract b_t. With
+# the wrong centre p tends to about .5 or more however large the observed t is.
+import ast as _ast165
+import numpy as _np165
+
+_fn165 = next(n for n in _ast165.parse(
+    Path("scripts/165_essay2_inference_ladder.py").read_text(encoding="utf-8")).body
+    if isinstance(n, _ast165.FunctionDef) and n.name == "wcb_p")
+_code165 = compile(_ast165.Module(body=[_fn165], type_ignores=[]), "165:wcb_p", "exec")
+
+# synthetic design: 20 clusters of 6, 8 treated, true effect 2
+_r = _np165.random.default_rng(7)
+_g = _np165.repeat(_np165.arange(20), 6)
+_X = _np165.column_stack([_np165.ones(120), (_g < 8).astype(float), _r.normal(size=120)])
+_Y = 2.0 * _X[:, 1] + 0.5 * _X[:, 2] + _r.normal(size=20)[_g] * 0.5 + _r.normal(size=120)
+_D = _np165.eye(20)[_g]
+_H = _np165.linalg.inv(_X.T @ _X)
+_adj = (20 / 19) * (119 / 117)
+
+
+def _fit165(y):
+    b = _H @ (_X.T @ y)
+    score = _D.T @ (_X * (y - _X @ b)[:, None])
+    return b, float(_np165.sqrt(_adj * _np165.sum((score @ _H[1]) ** 2)))
+
+
+_b, _se = _fit165(_Y)
+
+
+def _code_p(beta0, restricted, B=999):
+    ns = dict(np=_np165, rng=_np165.random.default_rng(499), X=_X, Y=_Y, beta=_b, b_t=_b[1],
+              ti=1, others=[0, 2], G=20, G_inv=_g, XtX_inv=_H, a_row=_H[1], adj=_adj,
+              se_cv1=_se, Sg_X=[_X[_g == j] for j in range(20)])
+    exec(_code165, ns)
+    return float(ns["wcb_p"](beta0, B, "rademacher", restricted)[0])
+
+
+def _reference_p(beta0, restricted, B=999):
+    """Draw by draw, full OLS refit: no algebra shared with 165."""
+    V = _np165.random.default_rng(499).choice([-1.0, 1.0], size=(20, B))
+    if restricted:
+        Xr = _X[:, [0, 2]]
+        fitted = (Xr @ _np165.linalg.lstsq(Xr, _Y - beta0 * _X[:, 1], rcond=None)[0]
+                  + beta0 * _X[:, 1])
+        centre = beta0
+    else:
+        fitted, centre = _X @ _b, _b[1]
+    hits = 0
+    for j in range(B):
+        bs, ses = _fit165(fitted + (_Y - fitted) * V[_g, j])
+        hits += abs((bs[1] - centre) / ses) >= abs((_b[1] - beta0) / _se)
+    return float((hits + 1) / (B + 1))
+
+
+_checks165 = [
+    (abs(_b[1] / _se) > 4, "fixture has a clear effect (|t| > 4)"),
+    (_code_p(0.0, False) == _reference_p(0.0, False), "unrestricted, H0 = 0: centred on b_t"),
+    (_code_p(1.0, False) == _reference_p(1.0, False), "unrestricted, H0 = 1: centred on b_t"),
+    (_code_p(0.0, False) < 0.05, "unrestricted rejects a false null"),
+    (_code_p(0.0, True) == _reference_p(0.0, True), "restricted, H0 = 0: centred on beta0"),
+    (_code_p(1.0, True) == _reference_p(1.0, True), "restricted, H0 = 1: centred on beta0"),
+]
+for _f, _lab in _checks165:
+    print(f"  {'PASS' if _f else 'FAIL'} | {_lab}")
+results.append(all(_f for _f, _ in _checks165))
+
+
 print(f"\n{'='*70}")
 print(f"RESULT: {sum(results)}/{len(results)} tests passed")
 print("=" * 70)

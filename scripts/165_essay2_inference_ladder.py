@@ -170,7 +170,7 @@ def wcb_p(beta0, B, weights='rademacher', restricted=True):
     P = np.stack([a_row @ (Sg_X[g].T @ Sg_X[g]) for g in range(G)])  # G x k
     W = aq[:, None] + a_s[:, None] * V - P @ Bs                    # G x B
     var_t = adj * np.sum(W ** 2, axis=0)
-    t_star = (Bs[ti] - beta0) / np.sqrt(var_t)
+    t_star = (Bs[ti] - (beta0 if restricted else b_t)) / np.sqrt(var_t)
     # observed t at beta0 with CV1
     t_obs = (b_t - beta0) / se_cv1
     return (np.sum(np.abs(t_star) >= abs(t_obs)) + 1) / (B + 1), t_obs
